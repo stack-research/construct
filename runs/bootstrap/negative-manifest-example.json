@@ -3,7 +3,7 @@
   "briefing": "contract_only",
   "method": "closed_book",
   "note": "The conformance script's loses-cell (standing rule 2): a deliberately wrong manifest proving the oracle can fire. It makes the supersession-first misreading on probe-005 \u2014 applying gate 3 before gate 2, so the superseder buries its predecessor and then yields, leaving nothing. check_contract must FAIL this loudly; if it ever passes, the script is broken.",
-  "contract_sha256": "9f8bd93904427d7630b0efdd69c5d1fe42dce0659c67c2bf9648c657365444aa",
+  "contract_sha256": "8b358607eeb3e639b3395de9a79a368b4941a795a6928744f34c789e54878f5d",
   "read_order": [
     "AGENTS.md",
     "README.md",

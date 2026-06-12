@@ -7,6 +7,8 @@ turn_order:
 - kagi
 - cursor
 - codex
+- gpt-5
+- composer-2
 next_index: 1
 quieted: {}
 status: active

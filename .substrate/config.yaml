@@ -10,3 +10,7 @@ participants:
   kind: agent
 - name: codex
   kind: agent
+- name: gpt-5
+  kind: agent
+- name: composer-2
+  kind: agent

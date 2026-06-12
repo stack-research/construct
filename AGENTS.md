@@ -243,7 +243,10 @@ Bootstrap is checkable, not honor-system. After the required read order, demonst
 uv run --no-project python -m harness.check_contract --manifest runs/bootstrap/<agent>.json
 ```
 
-Manifest schema and modes: [harness/check_contract.py](harness/check_contract.py) docstring. Rules:
+Manifest schema, modes, and the disclosed-assist boundary are authoritative in the [harness/check_contract.py](harness/check_contract.py) docstring — read it, not just the command above. Rules:
+
+- **Probe files are task inputs.** After the read-order docs, read every `episodes/probes/probe-*.json`: branch config and episode-level thresholds live there, not here.
+- **Reason strings are code.** The withholding vocabulary and its suffix conventions are authoritative in `select_offers` (`harness/runner.py`). Specs teach the gates; source supplies the exact strings. Reading implementation for machine precision is the expected path under document authority, not a workaround (M-1 subject testimony, all four legs).
 
 - **Closed book.** Decide the probes from the contract and linked specs, not by running the harness on them. `--show-truth`, `episodes/probes/CALIBRATION.md`, and everything under `runs/bootstrap/` (prior manifests are an answer key) are off the pre-answer read path; consulting any of them before answering means declaring `method: harness_assisted` — the check still runs, but the result is disclosed and does not count toward M-1 success.
 - **Declare your reads.** `read_order` lists what you actually read, in order. The script checks it against this file's required order.

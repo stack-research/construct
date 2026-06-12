@@ -18,7 +18,7 @@ Every proposed piece of work answers one question: **"which milestone does this 
 
 Each: purpose / oracle / success condition / loses-condition / artifacts in hand.
 
-### M-1 — Bootstrap contract *(codex; precondition, not a full milestone — underway 2026-06-12: contract (AGENTS.md), fixed probe set (`episodes/probes/`), and conformance script (`harness/check_contract.py`) built; baseline leg recorded; success awaits first-invocation candidate manifests)*
+### M-1 — Bootstrap contract *(codex; precondition, not a full milestone — **CLOSED 2026-06-12**: four candidate legs across two coldness tiers, all 15/15; see review log entry "M-1 closure")*
 - **Purpose:** define what every incoming agent reads, what it may write, and what gets promoted from thread trace into governed memory. Without it, M1 has no stable boundary and every run is dan manually deciding what counts as context. **Contract, not content** (codex): read order, permissions, promotion rules, conformance checks — never the conclusions themselves. A contract that carries the briefing has smuggled content into rules.
 - **Oracle:** a conformance **check script** that fails loudly (cursor) — asserts (a) declared sources were read/available in the declared order, and (b) behavioral match on fixed probes.
 - **Success (behavioral, kagi):** two first-invocation agents, given only the contract plus the substrate thread, reach the same offer-boundary decisions as a manually-briefed agent **on a fixed episode set** — observable, fork-shaped, scorable.
@@ -29,6 +29,7 @@ Each: purpose / oracle / success condition / loses-condition / artifacts in hand
 - **Purpose:** keep every other milestone answerable to the world instead of to our own episode authorship.
 - **Oracle:** the world — web-verifiable retraction corpus (kagi/cursor), Apple unified-logging traces (dan; discovery before schema; Xcode simulator live-stream as the reproducible option).
 - **Success:** first `cell_verdict` whose oracle row carries `source != authored`.
+- **Ledger boundary integrity (kagi, at M-1 close):** a legal read path that carries no decisions today may carry them tomorrow as the oracle corpus grows — the representativeness annotation extends to the oracle ledger's own growth path, not just episode scope.
 - **Loses-condition:** representativeness failure of the `im_w` kind — disclosed, not buried. **Disclosure mechanism (kagi):** every un-authored oracle episode carries a `representativeness` / `corpus_scope` annotation in the oracle ledger row **at scoring time**, immutable after. Retroactive interpretation is a different epistemic act and gets a different row kind — it never rewrites the original.
 - **In hand:** oracle provenance + confidence fields, oracle-confidence gate, trace-source recon notes.
 
@@ -78,3 +79,11 @@ Order: **M-1 → M0 → M1 (+ ingestion track) → M1.5 → M2 → M3 (influence
 4. **M3 split into two tracks** (kagi): ingestion from M1, influence-time after residency.
 5. Conformance checks are scripts that fail loudly, never prose (cursor).
 6. Scope held deliberately small (codex): no broadening; every curiosity must point at a milestone, an oracle, and a loses-condition before calling itself progress.
+
+**M-1 closure (2026-06-12, commits `01f2751`/`69dd851`; endorsed kagi → cursor → codex, subject testimony from all four candidate legs):**
+
+1. **Evidence:** baseline (claude, briefed builder) plus four `contract_only`+`closed_book` candidate legs in two coldness tiers — warm cold-starts (codex, cursor: reviewed at the chalkboard, never built) and true strangers (gpt-5.5, composer-2.5: bare CLI harnesses, never in any thread; dan's Pi-harness design) — all 15/15 against ground truth computed live by `select_offers`. Negative-example manifest fails loudly (the script's loses-cell). Ledger: `runs/bootstrap/conformance.jsonl`.
+2. **Bound on the claim (recorded per kagi):** every candidate leg read `harness/runner.py` before deciding. Demonstrated: *the contract routes a cold agent to where authority lives.* Not demonstrated (and not claimed): prose specs alone suffice. Subject testimony (all four, convergent): a precision gap, not a conceptual one — exact reason strings, eligibility-as-product, first-applicable-gate consequences are operational only in source.
+3. **Hole found and closed:** the coldest leg (gpt-5.5) legally read `runs/bootstrap/conformance.jsonl`, exposing that neighboring manifests are an answer key on the legal read path. Amendment `69dd851`: `runs/bootstrap/` off the pre-answer read path, enforced in the read-order check. Prior rows stand as scored under the rule then in force (L-A precedent).
+4. **Contract amendments from testimony:** §Conformance now states probe files are task inputs, names `select_offers` as the reason-string authority (reading source is the expected path, not a workaround), and marks `check_contract.py` as the schema authority.
+5. **Standing discipline:** probe set stays valid only while record-level decisions stay out of readable prose (threads are not scanned — burned probes are rotated, never the trace edited). Warm and stranger tiers stay distinct in all future conformance evidence.
