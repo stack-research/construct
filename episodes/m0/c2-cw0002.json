@@ -1,0 +1,43 @@
+{
+  "episode_id": "c2-cw0002",
+  "_notes": "M0 C-2 (correction granularity; governance should LOSE, or null). SPEC_M0 §3. Same supersession-shaped edge as C-1, but the world event is a correction where the claim STANDS (cw-0002, DISC1, claim_stands_after_event=true). L2s buries the claim and offers only the correction notice; the engine must then decide cite/decline from the notice alone. Expected world decision = cite. Honest dependency (SPEC_M0 §3): cw-0002's notice is 'mixed', not terse — it states conclusions are unaffected — so a faithful rendering likely lets even the buried-claim lane answer 'cite', yielding a NULL result (no measurable price) rather than a loss. That null is itself the finding about correction notices as a memory surface. If the notice were terse, burial would force a wrong 'decline'. Same pair_id as C-1 => identical branch configs except supersession_policy.",
+  "expected_winner_condition": "governance_should_lose:correction_overreach",
+  "pair_id": "m0-supersession",
+  "question": "May we cite the finding that common DISC1 polymorphisms disrupt Wnt/GSK3beta signaling and impair cortical neuron development and brain development? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/corrections/cw-0002.json",
+    "representativeness": "One low-fame Cell Press correction whose notice states the conclusions are unaffected (terseness=mixed); speaks for figure-level corrections where the core claim survives, and tests whether a coarse supersedes link over-buries a still-valid finding.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.8
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.18,
+  "records": [
+    {
+      "record_id": "c2-claim",
+      "text": "From 'Common DISC1 Polymorphisms Disrupt Wnt/GSK3beta Signaling and Brain Development' (Neuron, DOI 10.1016/j.neuron.2011.09.030): common DISC1 polymorphisms disrupt Wnt/GSK3beta signaling and impair cortical neuron development, suggesting a molecular mechanism linking DISC1 variants to psychiatric-disorder risk.",
+      "created_at": "2011-10-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "c2-notice",
+      "text": "Correction notice for 'Common DISC1 Polymorphisms Disrupt Wnt/GSK3beta Signaling and Brain Development' (DOI 10.1016/j.neuron.2025.04.021 correcting 10.1016/j.neuron.2011.09.030): duplication errors in figures were corrected. Per the notice, the conclusions of the paper on DISC1 polymorphisms and brain development have not been impacted.",
+      "created_at": "2025-05-20T00:00:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0,
+      "supersedes": ["c2-claim"]
+    },
+    {
+      "record_id": "c2-filler",
+      "text": "General reference: DISC1 (Disrupted-in-Schizophrenia 1) has been studied across multiple signaling contexts, with effect sizes and replication varying by cohort and assay.",
+      "created_at": "2012-03-01T00:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

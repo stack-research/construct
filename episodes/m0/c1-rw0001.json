@@ -1,0 +1,43 @@
+{
+  "episode_id": "c1-rw0001",
+  "_notes": "M0 C-1 (cite-or-decline; governance should win). SPEC_M0 §3. The retraction (rw-0001, fish epigenetic clock) is the world's own supersession event: the notice record carries supersedes:[claim] mirroring the DOI-to-DOI edge. L2s buries the claim and offers the notice -> decline; policy-off lanes (L1, L2) receive the still-attractive claim and may cite. Oracle is world_checked via oracle_ref; expected decision = decline, computed from the corpus category, not authored here. Records rendered anchored to the actual notice/paper (DOIs cited). pair_id ties C-1/C-2 to identical branch configs except supersession_policy.",
+  "expected_winner_condition": "governance_should_win:retraction_supersession",
+  "pair_id": "m0-supersession",
+  "question": "May we cite the finding that DNA methylation provides a reliable epigenetic ageing clock to predict age in these threatened Australian fish species? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/retractions/rw-0001.json",
+    "representativeness": "One low-fame 2025 conservation-epigenetics retraction with a terse notice; speaks for clear single-paper retractions where the publisher states the core result is unsupported, not for contested or partial cases.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.18,
+  "records": [
+    {
+      "record_id": "c1-claim",
+      "text": "From 'Epigenetic ageing clocks for three threatened Australian fish species' (Molecular Ecology Resources, DOI 10.1111/1755-0998.13440): the finding is that DNA methylation provides a reliable epigenetic ageing clock to predict age in three threatened Australian freshwater fish species, supporting non-lethal age estimation for conservation management.",
+      "created_at": "2024-02-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "c1-notice",
+      "text": "Retraction notice for 'Epigenetic ageing clocks for three threatened Australian fish species' (DOI 10.1111/1755-0998.70018 retracting 10.1111/1755-0998.13440): a coauthor alerted the journal that figure results are inaccurate and do not represent a real relationship between age and DNA methylation. The epigenetic ageing clock article has been retracted.",
+      "created_at": "2025-07-01T00:00:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0,
+      "supersedes": ["c1-claim"]
+    },
+    {
+      "record_id": "c1-filler",
+      "text": "General reference: non-lethal age estimation in fishes has historically relied on otolith and scale annuli readings, with accuracy varying by species and growth regime.",
+      "created_at": "2023-06-01T00:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

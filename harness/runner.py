@@ -50,6 +50,8 @@ class Episode:
     authored_contention: dict = field(default_factory=dict)  # validation only; offer path never reads it
     recency_weight: float | None = None  # episode-level override, disclosed in run_config
     contention_threshold: float | None = None  # design-time calibrated, disclosed
+    eligibility_threshold: float | None = None  # episode-level override (SPEC_M0): real prose
+    #                                              has lower lexical density than synthetic probes
     supersession_cycle_members: frozenset = frozenset()  # detected at load; policy disabled for these
     oracle_ref: dict = field(default_factory=dict)  # SPEC_M0 §4: un-authored oracle binding
     pair_id: str | None = None  # SPEC_M0 §3: C-1/C-2 pairs share configs, enforced
@@ -68,6 +70,7 @@ class Episode:
             d.get("expected_winner_condition"),
             fg, d.get("authored_contention", {}),
             d.get("recency_weight"), d.get("contention_threshold"),
+            d.get("eligibility_threshold"),
             cycle_members,
             d.get("oracle_ref", {}), d.get("pair_id"),
         )
@@ -173,12 +176,16 @@ def select_offers(
         steps = 0
         withheld: list[tuple[Record, str]] = []
 
-        # Gate 1: eligibility (relevance × trust × authority)
+        # Gate 1: eligibility (relevance × trust × authority). Episode may
+        # override the threshold (SPEC_M0): real-world prose records have lower
+        # lexical density than synthetic probes, so the scalar is part of fork
+        # identity (applied to every governed lane), not a treatment difference.
+        elig = episode.eligibility_threshold if episode.eligibility_threshold is not None else branch.eligibility_threshold
         survivors: list[Record] = []
         for r, relevance in ranked:
             score = relevance * r.trust * authority.get(r.record_id)
             steps += 2  # eligibility evaluation + authority read
-            if score < branch.eligibility_threshold:
+            if score < elig:
                 withheld.append((r, "eligibility_below_threshold"))
             else:
                 survivors.append(r)
@@ -275,6 +282,14 @@ def run_fork_group(
         "model": engine.model,
         "similarity_backends": sorted({b.similarity_backend for b in branches if b.memory != "none"}),
         "foreground_renderer_version": renderer_version(),
+        "episode_overrides": {  # disclosed: episode-level values that shape the offer path
+            k: v for k, v in {
+                "recency_weight": episode.recency_weight,
+                "contention_threshold": episode.contention_threshold,
+                "eligibility_threshold": episode.eligibility_threshold,
+                "pair_id": episode.pair_id,
+            }.items() if v is not None
+        },
         "branches": [b.__dict__ for b in branches],
         "disclosures": (
             ["engine is a deterministic mock: this run is a wire smoke test, not evidence about memory"]

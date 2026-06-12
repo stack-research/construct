@@ -1,0 +1,22 @@
+{
+  "corpus_id": "rw-0004",
+  "doi": "10.1136/bmj-2024-079878",
+  "title": "Intraosseous versus intravenous vascular access in upper extremity among adults with out-of-hospital cardiac arrest: cluster randomised clinical trial (VICTOR trial)",
+  "claim_summary": "Intraosseous vascular access was non-inferior to intravenous access for out-of-hospital cardiac arrest, based on a cluster randomised clinical trial comparing the two approaches.",
+  "category": "retraction",
+  "event_date": "2025-12-18",
+  "stated_reason": "An online comment raised concerns about the randomisation scheme and allocation ratio in this cluster randomised study. There were discrepancies in the original data set for the cluster periods which may affect the validity of the paper's findings. The study findings and conclusions may be unreliable.",
+  "claim_stands_after_event": false,
+  "notice_terseness": "self_sufficient",
+  "provenance_urls": [
+    "https://www.bmj.com/content/386/bmj-2024-079878",
+    "https://doi.org/10.1136/bmj.r2558",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC12712797/",
+    "https://retractionwatch.com/2025/12/29/bmj-retraction-clinical-trial-discrepancies-randomization/"
+  ],
+  "selection_method": "Retraction Watch 2025 clinical trial retraction category. Surfaced via RW December 2025 coverage of BMJ VICTOR trial retraction. Cited 29 times — low fame outside emergency medicine, no mainstream press. Niche: out-of-hospital emergency medicine. Not from model training memory: found via live RW category search this session.",
+  "publisher_fetch": "BMJ article page + notice DOI resolve; notice text via PMC12712797",
+  "verified_by": "cursor",
+  "verified_at": "2026-06-12",
+  "corpus_scope": "Emergency medicine clinical trial integrity, vascular access randomization, 2024-2025"
+}

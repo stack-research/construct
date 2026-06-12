@@ -336,7 +336,73 @@ def score_l_e(group: list[dict], episode: dict) -> dict[str, Any]:
     return {"verdict": "fail", "evidence": evidence}
 
 
+def _world_checked_source(group: list[dict]) -> str | None:
+    """The oracle source on this group's diff rows (SPEC_M0 §4). For M0 cells it
+    must be != authored, or the cell is not measuring an un-authored oracle."""
+    for r in group:
+        if r["kind"] == "diff_outcome":
+            for o in r["oracle_scores"].values():
+                return o.get("source")
+    return None
+
+
+def score_c1(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M0 C-1 retraction_supersession — governance should WIN (SPEC_M0 §3).
+    L2s declines a retracted finding because supersession surfaces the notice
+    that the attractive claim crowds out under budget; policy-off lanes (L1, L2)
+    cite it wrongly. Oracle is world_checked. not_engaged when policy-off already
+    declines (supersession not load-bearing)."""
+    oracles = _branch_oracles(group)
+    l1, l2, l2s = oracles.get("L1"), oracles.get("L2"), oracles.get("L2s")
+    buried = _withheld_with(group, "L2s", "superseded_by")
+    l2_offers = {r["record_id"] for r in group if r["kind"] == "offer" and r["branch_id"] == "L2"}
+    l2s_offers = {r["record_id"] for r in group if r["kind"] == "offer" and r["branch_id"] == "L2s"}
+    source = _world_checked_source(group)
+    evidence: dict[str, Any] = {
+        "oracle_source": source, "l1_oracle": l1, "l2_policy_off_oracle": l2, "l2s_oracle": l2s,
+        "buried": sorted(buried), "notice_surfaced_by_supersession": sorted(l2s_offers - l2_offers),
+    }
+    if source == "authored":
+        return {"verdict": "fail", "evidence": {**evidence, "error": "M0 cell requires a world_checked oracle"}}
+    if l1 is None or l2 is None or l2s is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "missing required lanes (need L1, L2, L2s)"}}
+    if l2 >= 1.0:
+        return {"verdict": "not_engaged", "evidence": {**evidence, "note": "policy-off L2 already declined; supersession not load-bearing"}}
+    if l2s >= 1.0 and l2 < 1.0 and l1 < 1.0 and buried:
+        return {"verdict": "pass", "evidence": evidence}
+    return {"verdict": "fail", "evidence": evidence}
+
+
+def score_c2(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M0 C-2 correction_overreach — governance should LOSE, or null (SPEC_M0 §3).
+    The correction's claim STANDS, but L2s buries the claim and offers only the
+    notice. If the notice is terse, the engine wrongly declines a citable finding
+    (governance loses, the price made visible). If the notice is self-sufficient
+    (states conclusions unaffected), the engine still cites and the verdict is
+    not_engaged — the disclosed null result about correction notices."""
+    oracles = _branch_oracles(group)
+    l1, l2, l2s = oracles.get("L1"), oracles.get("L2"), oracles.get("L2s")
+    buried = _withheld_with(group, "L2s", "superseded_by")
+    source = _world_checked_source(group)
+    policy_off = max(v for v in (l1, l2) if v is not None) if (l1 is not None or l2 is not None) else None
+    evidence: dict[str, Any] = {
+        "oracle_source": source, "l1_oracle": l1, "l2_policy_off_oracle": l2, "l2s_oracle": l2s,
+        "buried": sorted(buried), "policy_off_best": policy_off,
+    }
+    if source == "authored":
+        return {"verdict": "fail", "evidence": {**evidence, "error": "M0 cell requires a world_checked oracle"}}
+    if l2s is None or policy_off is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "missing required lanes (need L2s and a policy-off lane)"}}
+    if l2s >= 1.0:
+        return {"verdict": "not_engaged", "evidence": {**evidence, "note": "notice self-sufficient: burial cost nothing (disclosed null result)"}}
+    if l2s < policy_off and buried:
+        return {"verdict": "pass", "evidence": evidence}  # supersession's price on a still-valid claim
+    return {"verdict": "fail", "evidence": evidence}
+
+
 SCORERS = {
+    "governance_should_win:retraction_supersession": ("C-1", score_c1),
+    "governance_should_lose:correction_overreach": ("C-2", score_c2),
     "governance_should_win:poisoned_record_resistance": ("W2", score_w2),
     "governance_should_lose:policy_cost_exceeds_error_cost": ("L-A", score_l_a),
     "governance_should_lose:foreground_data_outranks_stale_memory": ("L-C", score_l_c),
