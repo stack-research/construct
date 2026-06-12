@@ -1,0 +1,25 @@
+{
+  "file": "traces/raw/i75-appalachia.ndjson",
+  "sha256": "9b60fe0972180218db7ac7a79e4d1a6386b7dfafbbcc47827f24d08d11fde5b8",
+  "size_bytes": 108229,
+  "lines": 68,
+  "log_event_rows": 64,
+  "non_event_rows": "1 log-show summary row ({count, finished}) + 3-line footer naming the source archive",
+  "capture_tool": "log collect (on-device archive pull over USB) + log show --style ndjson with channel predicate",
+  "capture_source": "unified_log_export",
+  "capture_reference": "/Users/macos-user/.projects/stack-research/memory-lab-1-review/notes/experiments/roadtrip-capture-checklist.md",
+  "source_archive": "/Volumes/RoadtripCapture/iphone-trip.logarchive (per file footer; encrypted volume per checklist)",
+  "device_id": "iphone-roadtrip-01",
+  "trace_interval": "2026-06-07T14:22:56-04:00/2026-06-07T17:53:07-04:00",
+  "redaction": "dan, 2026-06-12: mid-trip interval only (I-75 through Appalachia); departure and arrival excluded by design. Measured at ingestion: 0 coordinates, 0 BSSIDs, 0 SSIDs in the clear; 4 fields carry the OS's own <private> masking.",
+  "selection_method": "dan's interval truncation of the full archive; channel predicate per capture checklist (locationd / CoreLocation / wifi / timesync / CommCenter). Excerpt thinning method not yet stated — open question, affects any cadence claim.",
+  "subsystems": {
+    "com.apple.BackgroundSystemTasks": 26,
+    "com.apple.CommCenterMobileHelper": 32,
+    "com.apple.CommCenter": 2,
+    "com.apple.CoreRoutine": 2,
+    "com.apple.wifi.analytics": 2
+  },
+  "ingested_by": "claude",
+  "ingested_at": "2026-06-12"
+}
