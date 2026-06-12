@@ -9,6 +9,6 @@ turn_order:
 - codex
 - gpt-5
 - composer-2
-next_index: 1
+next_index: 0
 quieted: {}
 status: active

@@ -14,6 +14,8 @@ treat engine_backend="mock" rows as evidence about memory.
 
 from __future__ import annotations
 
+import hashlib
+import inspect
 import time
 from dataclasses import dataclass
 
@@ -61,6 +63,15 @@ class UsageClaims:
 
 
 VALID_USAGE_LABELS = {"evidence", "plan", "habit", "preference", "narrative_repair", "unused"}
+
+
+def renderer_version() -> str:
+    """Pre-Stage-C debt (rubric thread close): hash of everything that shapes
+    what the engine sees — the prompt template plus the rendering functions'
+    source, field order included. Any change moves the hash, so renderer drift
+    is recorded in run_config rather than silent."""
+    src = PROMPT_TEMPLATE + inspect.getsource(render_foreground) + inspect.getsource(build_prompt)
+    return hashlib.sha256(src.encode()).hexdigest()[:16]
 
 
 def render_foreground(foreground_data: list[dict]) -> str:

@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from .authority import AuthorityStore
-from .engine import ClaudeEngine, LocalEngine, MockEngine, render_foreground
+from .engine import ClaudeEngine, LocalEngine, MockEngine, render_foreground, renderer_version
 from .ledger import Ledger
 from .oracle import authored_oracle
 from .records import Record
@@ -233,6 +233,7 @@ def run_fork_group(
         "engine_backend": engine.backend_name,
         "model": engine.model,
         "similarity_backends": sorted({b.similarity_backend for b in branches if b.memory != "none"}),
+        "foreground_renderer_version": renderer_version(),
         "branches": [b.__dict__ for b in branches],
         "disclosures": (
             ["engine is a deterministic mock: this run is a wire smoke test, not evidence about memory"]
