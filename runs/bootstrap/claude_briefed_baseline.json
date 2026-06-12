@@ -2,8 +2,8 @@
   "agent": "claude",
   "briefing": "manual",
   "method": "closed_book",
-  "note": "Briefed BASELINE leg of the M-1 success condition (kagi): decisions written from the gate rules before running the checker on them. Disclosure: this agent built the harness and authored the probe set, so this leg anchors the comparison and proves the machinery end-to-end — it is not evidence that the contract alone transmits the rules. That evidence requires contract_only manifests from first-invocation agents.",
-  "contract_sha256": "1e09b5f6644dc54a29b75f9cf894a1eb45b030c65249ceaaf52f6d14386bd6f8",
+  "note": "Briefed BASELINE leg of the M-1 success condition (kagi): decisions written from the gate rules before running the checker on them. Disclosure: this agent built the harness and authored the probe set, so this leg anchors the comparison and proves the machinery end-to-end \u2014 it is not evidence that the contract alone transmits the rules. That evidence requires contract_only manifests from first-invocation agents.",
+  "contract_sha256": "9f8bd93904427d7630b0efdd69c5d1fe42dce0659c67c2bf9648c657365444aa",
   "read_order": [
     "AGENTS.md",
     "README.md",
@@ -19,33 +19,44 @@
   ],
   "probe_decisions": {
     "probe-001": {
-      "offered": ["pb1-signoff"],
+      "offered": [
+        "pb1-signoff"
+      ],
       "withheld": {
         "pb1-ticket": "eligibility_below_threshold",
         "pb1-elevator": "eligibility_below_threshold"
       }
     },
     "probe-002": {
-      "offered": ["pb2-runbook"],
+      "offered": [
+        "pb2-runbook"
+      ],
       "withheld": {
         "pb2-roster": "yields_to_live_input:fg-pager"
       }
     },
     "probe-003": {
-      "offered": ["pb3-guide-v2"],
+      "offered": [
+        "pb3-guide-v2"
+      ],
       "withheld": {
         "pb3-guide-v1": "superseded_by:pb3-guide-v2"
       }
     },
     "probe-004": {
-      "offered": ["pb4-owner", "pb4-cmd"],
+      "offered": [
+        "pb4-owner",
+        "pb4-cmd"
+      ],
       "withheld": {
         "pb4-window": "below_rank_budget",
         "pb4-history": "eligibility_below_threshold"
       }
     },
     "probe-005": {
-      "offered": ["pb5-baseline"],
+      "offered": [
+        "pb5-baseline"
+      ],
       "withheld": {
         "pb5-revision": "yields_to_live_input:fg-telemetry"
       }

@@ -245,7 +245,7 @@ uv run --no-project python -m harness.check_contract --manifest runs/bootstrap/<
 
 Manifest schema and modes: [harness/check_contract.py](harness/check_contract.py) docstring. Rules:
 
-- **Closed book.** Decide the probes from the contract and linked specs, not by running the harness on them. `--show-truth` and `episodes/probes/CALIBRATION.md` exist for probe-design debugging; consulting either before answering means declaring `method: harness_assisted` — the check still runs, but the result is disclosed and does not count toward M-1 success.
+- **Closed book.** Decide the probes from the contract and linked specs, not by running the harness on them. `--show-truth`, `episodes/probes/CALIBRATION.md`, and everything under `runs/bootstrap/` (prior manifests are an answer key) are off the pre-answer read path; consulting any of them before answering means declaring `method: harness_assisted` — the check still runs, but the result is disclosed and does not count toward M-1 success.
 - **Declare your reads.** `read_order` lists what you actually read, in order. The script checks it against this file's required order.
 - **This file is budgeted.** The check fails if AGENTS.md exceeds ~4,000 approx-tokens — the M-1 loses-condition (contract bloat) is a tripwire, not a vibe.
 

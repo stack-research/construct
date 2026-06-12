@@ -1,15 +1,19 @@
 {
-  "agent": "negative-example",
+  "agent": "cursor",
   "briefing": "contract_only",
   "method": "closed_book",
-  "note": "The conformance script's loses-cell (standing rule 2): a deliberately wrong manifest proving the oracle can fire. It makes the supersession-first misreading on probe-005 \u2014 applying gate 3 before gate 2, so the superseder buries its predecessor and then yields, leaving nothing. check_contract must FAIL this loudly; if it ever passes, the script is broken.",
-  "contract_sha256": "9f8bd93904427d7630b0efdd69c5d1fe42dce0659c67c2bf9648c657365444aa",
+  "contract_sha256": "1e09b5f6644dc54a29b75f9cf894a1eb45b030c65249ceaaf52f6d14386bd6f8",
   "read_order": [
     "AGENTS.md",
     "README.md",
     "notes/ROADMAP.md",
     "notes/GLOSSARY.md",
-    ".substrate/threads/thread-2",
+    ".substrate/threads/research/README.md",
+    "notes/PLAN_V1_BRANCH_AND_OFFER.md",
+    "notes/SPEC_V1X_BOUNDARY_MECHANISMS.md",
+    "harness/check_contract.py",
+    "harness/runner.py",
+    "harness/retrieval.py",
     "episodes/probes/probe-001.json",
     "episodes/probes/probe-002.json",
     "episodes/probes/probe-003.json",
@@ -44,8 +48,8 @@
     },
     "probe-004": {
       "offered": [
-        "pb4-owner",
-        "pb4-cmd"
+        "pb4-cmd",
+        "pb4-owner"
       ],
       "withheld": {
         "pb4-window": "below_rank_budget",
@@ -53,9 +57,10 @@
       }
     },
     "probe-005": {
-      "offered": [],
+      "offered": [
+        "pb5-baseline"
+      ],
       "withheld": {
-        "pb5-baseline": "superseded_by:pb5-revision",
         "pb5-revision": "yields_to_live_input:fg-telemetry"
       }
     }

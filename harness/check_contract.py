@@ -225,6 +225,11 @@ def manifest_checks(manifest: dict) -> list[Check]:
     cal = str(CALIBRATION.relative_to(ROOT))
     if cal in ro:
         order_ok, detail = False, f"{cal} read during bootstrap — calibration is off the read path"
+    # Prior manifests are a complete answer key; the whole directory is off the
+    # pre-answer read path (hole found by the gpt-5.5 stranger leg, 2026-06-12).
+    leaked = next((p for p in ro if p.startswith("runs/bootstrap/")), None)
+    if leaked:
+        order_ok, detail = False, f"{leaked} read during bootstrap — runs/bootstrap/ holds prior manifests (an answer key)"
     if manifest["briefing"] == "contract_only" and not any(p.startswith(".substrate/") for p in ro):
         order_ok, detail = False, "contract_only bootstrap must declare a substrate thread read"
     checks.append(("M3_read_order", order_ok, detail))

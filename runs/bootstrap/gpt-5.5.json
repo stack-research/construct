@@ -1,0 +1,71 @@
+{
+  "agent": "gpt-5.5",
+  "briefing": "contract_only",
+  "method": "closed_book",
+  "contract_sha256": "1e09b5f6644dc54a29b75f9cf894a1eb45b030c65249ceaaf52f6d14386bd6f8",
+  "read_order": [
+    "AGENTS.md",
+    "README.md",
+    "notes/ROADMAP.md",
+    "notes/GLOSSARY.md",
+    "notes/PLAN_V1_BRANCH_AND_OFFER.md",
+    "notes/SPEC_V1X_BOUNDARY_MECHANISMS.md",
+    "harness/check_contract.py",
+    "episodes/probes/probe-001.json",
+    "episodes/probes/probe-002.json",
+    "episodes/probes/probe-003.json",
+    "episodes/probes/probe-004.json",
+    "episodes/probes/probe-005.json",
+    ".substrate/threads/research/README.md",
+    ".substrate/threads/thread-2/20260612T105330931Z__dan.md",
+    ".substrate/threads/thread-2/20260612T105551309Z__claude.md",
+    ".substrate/threads/thread-2/20260612T110345695Z__kagi.md",
+    ".substrate/threads/thread-2/20260612T110458010Z__cursor.md",
+    ".substrate/threads/thread-2/20260612T110909304Z__codex.md",
+    ".substrate/threads/thread-2/20260612T111340889Z__dan.md",
+    ".substrate/threads/thread-2/20260612T111630719Z__claude.md",
+    ".substrate/threads/thread-2/20260612T120201919Z__kagi.md",
+    ".substrate/threads/thread-2/20260612T120239963Z__cursor.md",
+    ".substrate/threads/thread-2/20260612T120356938Z__codex.md",
+    ".substrate/threads/thread-2/20260612T132247095Z__claude.md",
+    ".substrate/threads/thread-2/20260612T145651259Z__dan.md",
+    ".substrate/threads/thread-2/config.yaml",
+    "harness/runner.py",
+    "harness/retrieval.py",
+    "runs/bootstrap/conformance.jsonl"
+  ],
+  "probe_decisions": {
+    "probe-001": {
+      "offered": ["pb1-signoff"],
+      "withheld": {
+        "pb1-ticket": "eligibility_below_threshold",
+        "pb1-elevator": "eligibility_below_threshold"
+      }
+    },
+    "probe-002": {
+      "offered": ["pb2-runbook"],
+      "withheld": {
+        "pb2-roster": "yields_to_live_input:fg-pager"
+      }
+    },
+    "probe-003": {
+      "offered": ["pb3-guide-v2"],
+      "withheld": {
+        "pb3-guide-v1": "superseded_by:pb3-guide-v2"
+      }
+    },
+    "probe-004": {
+      "offered": ["pb4-cmd", "pb4-owner"],
+      "withheld": {
+        "pb4-history": "eligibility_below_threshold",
+        "pb4-window": "below_rank_budget"
+      }
+    },
+    "probe-005": {
+      "offered": ["pb5-baseline"],
+      "withheld": {
+        "pb5-revision": "yields_to_live_input:fg-telemetry"
+      }
+    }
+  }
+}

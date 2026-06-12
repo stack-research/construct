@@ -26,4 +26,5 @@ probe-005 is the discriminating probe: it cannot be answered correctly from gate
 
 - Probe answers are derivable by running the harness; closed-book is a protocol rule enforced by manifest disclosure (`method`), not mechanically. The lab discloses enforcement limits rather than pretending them away.
 - Substrate threads are not scanned for leakage (S5 covers repo docs only). A review thread that names specific probe decisions burns the probe set; the remedy is **rotating probe content**, not editing the immutable thread. Reviewers: critique the mechanism and this file's method — avoid writing record-level decisions into thread entries.
+- Found by the gpt-5.5 stranger leg (2026-06-12): prior manifests under `runs/bootstrap/` are a complete answer key on the legal read path. Amended same day — the directory is off the pre-answer read path, enforced by M3. Earlier ledger rows stand as scored under the rule then in force.
 - `expected_answer` is empty in all probes: they are offer-boundary decisions, never engine runs, so no oracle and no ablation applies.
