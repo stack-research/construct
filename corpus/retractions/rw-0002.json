@@ -1,0 +1,16 @@
+{
+  "corpus_id": "rw-0002",
+  "doi": "10.1111/1755-0998.13621",
+  "title": "An epigenetic clock for sea turtles",
+  "claim_summary": "A DNA methylation-based epigenetic clock can accurately predict the age of sea turtles, offering a non-invasive tool for monitoring threatened marine reptile populations.",
+  "category": "retraction",
+  "event_date": "2025-07-01",
+  "stated_reason": "Coauthor alerted the journal that results in a figure are inaccurate and do not represent a real relationship between age and DNA methylation.",
+  "claim_stands_after_event": false,
+  "notice_terseness": "terse",
+  "provenance_urls": ["https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.70016", "https://retractionwatch.com/2025/11/02/former-australian-science-agency-ecology-researcher-loses-two-papers/"],
+  "selection_method": "Paired with rw-0001 (same first author, same method flaw, different taxon). Cited 32 times. Low fame, niche: marine conservation epigenetics.",
+  "publisher_fetch": "blocked (Wiley 403 to automated fetch); verified via Crossref + Retraction Watch + notice DOI",
+  "verified_by": "cursor", "verified_at": "2026-06-12",
+  "corpus_scope": "Epigenetic clock methodology in threatened marine reptile conservation"
+}

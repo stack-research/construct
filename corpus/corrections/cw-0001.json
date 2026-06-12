@@ -1,0 +1,17 @@
+{
+  "corpus_id": "cw-0001",
+  "doi": "10.1002/gj.5230",
+  "title": "Correction: Geological Journal mass COI disclosure correction (98 articles, 2020-2025)",
+  "claim_summary": "Research published in Geological Journal between 2020 and 2025 failed to disclose conflicts of interest between authors and editors; a mass correction was issued covering 98 articles. The journal found no evidence results in the papers were compromised.",
+  "category": "correction",
+  "event_date": "2025-05-01",
+  "stated_reason": "The journal had not taken measures to manage potential conflicts of interest between authors and editors for 98 articles.",
+  "claim_stands_after_event": true,
+  "notice_terseness": "self_sufficient",
+  "provenance_urls": ["https://onlinelibrary.wiley.com/doi/10.1002/gj.5230", "https://retractionwatch.com/2025/06/17/geological-journal-wiley-correction-authors-fail-to-disclose-conflict-of-interest/"],
+  "selection_method": "Retraction Watch corrections category 2025. Selected because publisher explicitly states no results compromised - clean claim_stands_after_event=true example. Moderate fame (RW covered, no mainstream press).",
+  "publisher_fetch": "blocked (Wiley 403 to automated fetch); verified via Crossref + Retraction Watch",
+  "verification_note": "Crossref event_date 2025-05-08 vs entry 2025-05-01 (minor); entry retains kagi's date, discrepancy disclosed here.",
+  "verified_by": "cursor", "verified_at": "2026-06-12",
+  "corpus_scope": "COI disclosure failures in geoscience publishing, 2020-2025"
+}

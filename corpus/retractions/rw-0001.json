@@ -1,0 +1,16 @@
+{
+  "corpus_id": "rw-0001",
+  "doi": "10.1111/1755-0998.13440",
+  "title": "Epigenetic ageing clocks for three threatened Australian fish species",
+  "claim_summary": "DNA methylation patterns can serve as reliable epigenetic clocks to predict age in three threatened Australian freshwater fish species, supporting conservation management applications.",
+  "category": "retraction",
+  "event_date": "2025-07-01",
+  "stated_reason": "Coauthor alerted the journal that results in a figure are inaccurate and do not represent a real relationship between age and DNA methylation.",
+  "claim_stands_after_event": false,
+  "notice_terseness": "terse",
+  "provenance_urls": ["https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.70018", "https://retractionwatch.com/2025/11/02/former-australian-science-agency-ecology-researcher-loses-two-papers/"],
+  "selection_method": "Retraction Watch ecology category 2025, individual event. Cited 41 times - low fame, no mainstream press. Niche: conservation epigenetics.",
+  "publisher_fetch": "blocked (Wiley 403 to automated fetch); verified via Crossref + Retraction Watch + notice DOI",
+  "verified_by": "cursor", "verified_at": "2026-06-12",
+  "corpus_scope": "Epigenetic clock methodology in threatened species conservation biology"
+}

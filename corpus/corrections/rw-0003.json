@@ -1,0 +1,19 @@
+{
+  "corpus_id": "rw-0003",
+  "doi": "10.1016/j.neuron.2021.11.008",
+  "title": "NeuroD1 Instructs Neuronal Conversion in Non-Reactive Astrocytes",
+  "claim_summary": "NeuroD1 overexpression in microglia induces apoptosis rather than transdifferentiation into neurons, challenging claims that microglia can be reprogrammed into neurons via NeuroD1.",
+  "category": "correction",
+  "event_date": "2025-06-04",
+  "stated_reason": "Owing to insufficient rigor, several images in the supplementary figures contained obvious errors. Two images in Figure S3B appear to have overlapping fields of view; a similar issue occurred in S2B. The authors state the images were acquired from separate fluorescence channels of different confocal images and are not reused images.",
+  "claim_stands_after_event": true,
+  "notice_terseness": "self_sufficient",
+  "provenance_urls": [
+    "https://doi.org/10.1016/j.neuron.2025.05.006",
+    "https://www.thetransmitter.org/publishing/authors-correct-image-errors-in-neuron-paper-that-challenged-microglia-to-neuron-conversion/"
+  ],
+  "selection_method": "Search: Neuron 2025 correction figure error claim stands. Surfaced via The Transmitter coverage 2025-06-26. Cited 74 times - low-moderate fame, no mainstream press, niche: microglia reprogramming controversy. Notice DOI confirmed via The Transmitter article. Conclusions explicitly defended by first author and outside expert.",
+  "verified_by": "cursor",
+  "verified_at": "2026-06-12",
+  "corpus_scope": "Supplementary figure image errors in neuroscience cell-conversion debate, 2021-2025"
+}

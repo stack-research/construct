@@ -1,0 +1,21 @@
+{
+  "corpus_id": "cw-0002",
+  "doi": "10.1016/j.neuron.2011.09.030",
+  "title": "Common DISC1 Polymorphisms Disrupt Wnt/GSK3beta Signaling and Brain Development",
+  "claim_summary": "Common DISC1 gene polymorphisms disrupt Wnt/GSK3beta signaling pathways and impair cortical neuron development, suggesting a molecular mechanism linking DISC1 variants to psychiatric disorder risk.",
+  "category": "correction",
+  "event_date": "2025-05-20",
+  "stated_reason": "Correction of duplication errors in figures; per the notice text the conclusions of the paper have not been impacted. Issued after a seven-year delay following a PubPeer exchange.",
+  "claim_stands_after_event": true,
+  "notice_terseness": "mixed",
+  "provenance_urls": [
+    "https://retractionwatch.com/2025/05/20/neuron-correction-seven-years-cell-press/",
+    "https://doi.org/10.1016/j.neuron.2011.09.030",
+    "https://doi.org/10.1016/j.neuron.2025.04.021"
+  ],
+  "selection_method": "Search: Retraction Watch Neuron correction 2025. Surfaced via RW post 2025-05-20. Low fame outside PubPeer community. Selected as a terse-end correction; claim_stands_after_event confirmed publisher-stated via notice (PMC 40318629): figure-specific, conclusions explicitly unaffected.",
+  "verification_note": "cursor 2026-06-12: original DOI corrected from 2018.09.014 (different Neuron paper, alpha-synuclein tetramers) to 2011.09.030; notice DOI 2025.04.021 added; terseness terse->mixed (notice is figure-specific, not a one-liner); claim_stands upgraded from inferred to publisher-stated per PMC notice text.",
+  "verified_by": "cursor",
+  "verified_at": "2026-06-12",
+  "corpus_scope": "DISC1 psychiatric genetics, delayed corrections in Cell Press journals"
+}
