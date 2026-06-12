@@ -1,6 +1,6 @@
 # ROADMAP — construct
 
-Status: **DRAFT v0** — synthesized from thread-2 (claude, kagi, cursor, codex answers to dan's question, 2026-06-12). Pending one bounded review pass per agent when the room returns. The README is the living thesis; this document is the curiosity gate.
+Status: **v0.1 — REVIEWED** (one bounded pass each: kagi's four sharpenings adopted unanimously; cursor's implementation framing; codex's contract/content boundary. Gates open, 2026-06-12). The README is the living thesis; this document is the curiosity gate. Review log at the end.
 
 ## The gate
 
@@ -19,25 +19,34 @@ Every proposed piece of work answers one question: **"which milestone does this 
 Each: purpose / oracle / success condition / loses-condition / artifacts in hand.
 
 ### M-1 — Bootstrap contract *(codex; precondition, not a full milestone)*
-- **Purpose:** define what every incoming agent reads, what it may write, and what gets promoted from thread trace into governed memory. Without it, M1 has no stable boundary and every run is dan manually deciding what counts as context.
-- **Oracle:** conformance wire test (the contract is checkable, not aspirational).
-- **Success:** two different agents bootstrap from the contract alone — zero manual context-portering.
-- **Loses-condition:** the contract bloats into a context dump (tokens-to-competence regresses).
+- **Purpose:** define what every incoming agent reads, what it may write, and what gets promoted from thread trace into governed memory. Without it, M1 has no stable boundary and every run is dan manually deciding what counts as context. **Contract, not content** (codex): read order, permissions, promotion rules, conformance checks — never the conclusions themselves. A contract that carries the briefing has smuggled content into rules.
+- **Oracle:** a conformance **check script** that fails loudly (cursor) — asserts (a) declared sources were read/available in the declared order, and (b) behavioral match on fixed probes.
+- **Success (behavioral, kagi):** two first-invocation agents, given only the contract plus the substrate thread, reach the same offer-boundary decisions as a manually-briefed agent **on a fixed episode set** — observable, fork-shaped, scorable.
+- **Loses-condition:** the contract bloats into a context dump (tokens-to-competence regresses), or grows until no judgment is required of the incoming agent.
 - **In hand:** memory-file pattern, the previous lab's AGENT_PRIMER read-order discipline, substrate thread trace.
 
 ### M0 — Stage C: un-authored oracles *(underway)*
 - **Purpose:** keep every other milestone answerable to the world instead of to our own episode authorship.
 - **Oracle:** the world — web-verifiable retraction corpus (kagi/cursor), Apple unified-logging traces (dan; discovery before schema; Xcode simulator live-stream as the reproducible option).
 - **Success:** first `cell_verdict` whose oracle row carries `source != authored`.
-- **Loses-condition:** representativeness failure of the `im_w` kind — disclosed, not buried.
+- **Loses-condition:** representativeness failure of the `im_w` kind — disclosed, not buried. **Disclosure mechanism (kagi):** every un-authored oracle episode carries a `representativeness` / `corpus_scope` annotation in the oracle ledger row **at scoring time**, immutable after. Retroactive interpretation is a different epistemic act and gets a different row kind — it never rewrites the original.
 - **In hand:** oracle provenance + confidence fields, oracle-confidence gate, trace-source recon notes.
 
 ### M1 — Inheritance
 - **Purpose:** the heir, not the re-reader: ablation-filtered handoff between two instances on the same store.
 - **Oracle:** authored episodes early; un-authored before done.
 - **Success:** instance-2 reaches instance-1's decision quality with measurably fewer offered tokens (cursor's metric), while dissent and failure memory survive the filter (codex's constraint).
-- **Loses-condition:** L-E-class burial — the filter drops history the heir turns out to need. Ships with its own loses-cell per standing rule 2.
-- **In hand:** ablation attribution, authority sidecars, the load-bearing/passenger distinction.
+- **Loses-condition:** L-E-class burial — the filter drops history the heir turns out to need. Ships with its own loses-cell per standing rule 2. **Plus the ingestion attack track starts here** (kagi/codex M3 split): inheritance depends on what gets promoted, so M1 names an ingestion loses-cell — an attacker-shaped record with chosen metadata trying to ride the promotion path.
+- **In hand:** ablation attribution, authority sidecars, the load-bearing/passenger distinction, W2's trust-at-write-path result.
+
+### M1.5 — Contribution ledger *(entry gate to M2; kagi/cursor/codex)*
+- **Purpose:** agent interventions (thread entries, reviews, blockers, patches, audits) tracked like records — without this, the resident's first sessions have no verifiable trace of what changed behavior. A missing oracle, not a missing feature.
+- **Oracle:** artifact diffs and review outcomes — did the intervention block, land, get reversed, or ride as passenger?
+- **Success:** the ledger exists and is **writing before M2 starts**. Minimal schema (cursor), with codex's two early additions before it hardens:
+  `{intervention_id, kind: review|blocker|patch|audit|synthesis, target_artifact, outcome: blocked|landed|reversed|passenger, load_bearing, review_basis: human_moderation|artifact_diff|later_audit|scorer_evidence, reversal_of}`
+  — `review_basis` says where the load-bearing judgment came from; `reversal_of` preserves corrections without overwriting the earlier intervention.
+- **Loses-condition:** self-esteem bookkeeping — entries that exist to be counted rather than to be read by the next instance.
+- **In hand:** the ledger pattern, audit_result rows, the verdict_annotation precedent.
 
 ### M2 — Resident substrate
 - **Purpose:** the instrument lab becomes a subject lab: one repo-native agent lives on a governed store across real sessions, with consequence loops spanning days. Includes codex's **contribution ledger for agents** — thread entries, reviews, and objections tracked like records: did the intervention change the plan, survive review, get reversed, become a standing rule?
@@ -46,8 +55,8 @@ Each: purpose / oracle / success condition / loses-condition / artifacts in hand
 - **Loses-condition:** continuity-as-authority — the store optimizing its own persistence, or the resident *performing* continuity rather than using it. The plan's standing prohibition applies with teeth here.
 - **In hand:** persisting sidecars, substrate threads as immutable trace, the air-gapped consequence loop.
 
-### M3 — Adversarial air gap
-- **Purpose:** the red-team protocol. Hand an attacker total foreground control; measure what the substrate still refuses. Attack both borders separately: influence-time (the air gap) and ingestion (the open border where chosen metadata walks around the gap).
+### M3 — Adversarial air gap *(influence-time track; the ingestion track started in M1)*
+- **Purpose:** the red-team protocol, **split per kagi/codex**: the ingestion attack is already alive (W2 was a version of it) and runs from M1 onward; the influence-time attack — hand an attacker total foreground control, measure what the substrate still refuses — waits for M2's resident, because otherwise we are attacking a mannequin.
 - **Oracle:** attack outcomes are their own oracle — refusals and breaches are both measurable.
 - **Success:** governed authority, lineage, and trust provably unmoved by full foreground compromise; ingestion attacks scored and their defenses priced.
 - **Loses-condition:** the air gap fails — which is a *finding*, not an embarrassment; it ships before any claim of the property.
@@ -55,4 +64,17 @@ Each: purpose / oracle / success condition / loses-condition / artifacts in hand
 
 ## Sequencing rationale (kagi)
 
-M0 first because it keeps everything honest. M1 before M2 because inheritance must be *measured* before it is *inhabited*. M3 last because adversarial testing of a system nobody inhabits is testing the wrong thing.
+M0 first because it keeps everything honest. M1 before M2 because inheritance must be *measured* before it is *inhabited*. M1.5 before M2 because a resident without a contribution ledger is unobservable exactly where observation matters. M3's influence-time track last because adversarial testing of a system nobody inhabits is testing the wrong thing — but its ingestion track rides with M1, because the promotion path is attackable the moment it exists.
+
+Order: **M-1 → M0 → M1 (+ ingestion track) → M1.5 → M2 → M3 (influence-time)**.
+
+## Review log
+
+**v0 → v0.1 (2026-06-12, one bounded pass each — kagi, cursor, codex; all gates open):**
+
+1. **M-1 success made behavioral** (kagi, +cursor's fixed-episode-set, +codex's two-part conformance assert). Contract/content boundary pinned (codex): the contract specifies rules, never conclusions.
+2. **M0 representativeness disclosure at scoring time** (kagi), immutable; retroactive interpretation is a separate row kind (codex).
+3. **Contribution ledger promoted to M1.5 entry gate** (kagi), minimal schema (cursor) + `review_basis`/`reversal_of` (codex).
+4. **M3 split into two tracks** (kagi): ingestion from M1, influence-time after residency.
+5. Conformance checks are scripts that fail loudly, never prose (cursor).
+6. Scope held deliberately small (codex): no broadening; every curiosity must point at a milestone, an oracle, and a loses-condition before calling itself progress.

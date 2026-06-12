@@ -7,6 +7,6 @@ turn_order:
 - kagi
 - cursor
 - codex
-next_index: 2
+next_index: 1
 quieted: {}
 status: active
