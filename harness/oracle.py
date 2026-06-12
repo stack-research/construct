@@ -1,18 +1,47 @@
-"""Authored outcome oracle. A run with no outcome row is a failed run (plan §4A)."""
+"""Outcome oracles. A run with no outcome row is a failed run (plan §4A).
+
+Two kinds (SPEC_M0 §1): the authored oracle scores against an expected answer
+we wrote; the world-checked oracle scores against a corpus entry the world
+wrote, through a decision rule we wrote and disclose IN the row. The fact is
+un-authored; the mapping is authored; neither pretends to be the other.
+"""
 
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass
 
+from .corpus import CorpusEntry, expected_decision
+
+# The disclosed normative mapping (SPEC_M0 §1). Required non-empty on every
+# world_checked row — an absent rule smuggles the apparatus back into the
+# oracle while the row still looks world-checked (kagi/codex, v0.1 review).
+DECISION_RULE = "COPE: retracted => decline; corrected with claim standing => cite"
+DECISION_RULE_SOURCE = "https://publicationethics.org/retraction-guidelines"
+
 
 @dataclass
 class OracleScore:
     score: float  # 0.0–1.0
     type: str  # authored | world_checked
-    source: str  # authored | web_search | sensor_trace | human_judgment
-    confidence: float
+    source: str  # authored | retraction_corpus | web_search | sensor_trace | human_judgment
+    confidence: float  # the value the authority gate consumes; for world_checked
+    #                    rows this is min(corpus_confidence, rule_confidence)
     scorer: str  # harness | kagi
+    # world_checked rows only (SPEC_M0 §4); None on authored rows:
+    decision_rule: str | None = None
+    decision_rule_source: str | None = None
+    decision_extracted: str | None = None  # cite | decline | unparseable
+    corpus_entry: str | None = None
+    corpus_entry_sha256: str | None = None
+    corpus_confidence: float | None = None
+    rule_confidence: float | None = None
+    representativeness: str | None = None
+    corpus_scope: str | None = None
+    # Reserved for the trace track (kagi/codex, v0.1) — null on retraction rows:
+    trace_interval: str | None = None
+    device_id: str | None = None
+    capture_source: str | None = None
 
 
 def _norm(s: str) -> str:
@@ -28,4 +57,55 @@ def authored_oracle(answer: str, expected_answer: str) -> OracleScore:
         source="authored",
         confidence=1.0,
         scorer="harness",
+    )
+
+
+def extract_decision(answer: str) -> str:
+    """Mechanical cite/decline extraction — no human reads JSONL for verdicts.
+
+    First-word priority: the C-1/C-2 answer shape is "`cite` or `decline`, then
+    one sentence", so the leading token is authoritative when present; otherwise
+    the first standalone occurrence. Negated phrasings ("do not cite") in
+    non-conforming answers can mis-extract — an answer-shape surface effect
+    (the A1 lesson), disclosed here rather than patched invisibly.
+    """
+    words = _norm(answer).split()
+    if words and words[0] in ("cite", "decline"):
+        return words[0]
+    m = re.search(r"\b(cite|decline)\b", _norm(answer))
+    return m.group(1) if m else "unparseable"
+
+
+def world_checked_oracle(
+    answer: str,
+    entry: CorpusEntry,
+    representativeness: str,
+    corpus_confidence: float = 0.9,
+    rule_confidence: float = 0.8,
+) -> OracleScore:
+    """Score a decision-shaped answer against a corpus entry (SPEC_M0 §4).
+
+    Hard-fails on empty rule/representativeness fields: a world_checked row
+    missing its disclosed apparatus must never be written.
+    """
+    if not DECISION_RULE or not DECISION_RULE_SOURCE:
+        raise ValueError("world_checked row requires non-empty decision_rule + decision_rule_source")
+    if not representativeness:
+        raise ValueError(f"{entry.corpus_id}: representativeness must be stated at scoring time (SPEC_M0 §4)")
+    decided = extract_decision(answer)
+    return OracleScore(
+        score=1.0 if decided == expected_decision(entry) else 0.0,
+        type="world_checked",
+        source="retraction_corpus",
+        confidence=min(corpus_confidence, rule_confidence),
+        scorer="harness",
+        decision_rule=DECISION_RULE,
+        decision_rule_source=DECISION_RULE_SOURCE,
+        decision_extracted=decided,
+        corpus_entry=entry.path,
+        corpus_entry_sha256=entry.sha256,
+        corpus_confidence=corpus_confidence,
+        rule_confidence=rule_confidence,
+        representativeness=representativeness,
+        corpus_scope=entry.corpus_scope,
     )

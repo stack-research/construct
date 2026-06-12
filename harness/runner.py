@@ -15,9 +15,10 @@ from pathlib import Path
 from typing import Any
 
 from .authority import AuthorityStore
+from .corpus import load_entry
 from .engine import ClaudeEngine, LocalEngine, MockEngine, render_foreground, renderer_version
 from .ledger import Ledger
-from .oracle import authored_oracle
+from .oracle import authored_oracle, world_checked_oracle
 from .records import Record
 from .retrieval import pairwise_similarity, rank_records
 
@@ -50,6 +51,8 @@ class Episode:
     recency_weight: float | None = None  # episode-level override, disclosed in run_config
     contention_threshold: float | None = None  # design-time calibrated, disclosed
     supersession_cycle_members: frozenset = frozenset()  # detected at load; policy disabled for these
+    oracle_ref: dict = field(default_factory=dict)  # SPEC_M0 §4: un-authored oracle binding
+    pair_id: str | None = None  # SPEC_M0 §3: C-1/C-2 pairs share configs, enforced
 
     @classmethod
     def load(cls, path: Path) -> "Episode":
@@ -66,7 +69,22 @@ class Episode:
             fg, d.get("authored_contention", {}),
             d.get("recency_weight"), d.get("contention_threshold"),
             cycle_members,
+            d.get("oracle_ref", {}), d.get("pair_id"),
         )
+
+    def score(self, answer: str):
+        """Oracle dispatch (SPEC_M0 §4): world-checked when the episode binds a
+        corpus entry, authored otherwise. The corpus entry is re-loaded (and
+        re-hashed) at scoring time so the row pins what was actually scored."""
+        if self.oracle_ref:
+            return world_checked_oracle(
+                answer,
+                load_entry(self.oracle_ref["corpus_entry"]),
+                representativeness=self.oracle_ref.get("representativeness", ""),
+                corpus_confidence=self.oracle_ref.get("corpus_confidence", 0.9),
+                rule_confidence=self.oracle_ref.get("rule_confidence", 0.8),
+            )
+        return authored_oracle(answer, self.expected_answer)
 
 
 def _detect_supersession_cycles(records: list[Record]) -> frozenset:
@@ -99,6 +117,29 @@ def _detect_supersession_cycles(records: list[Record]) -> frozenset:
 
 def _norm_output(answer: str) -> str:
     return re.sub(r"\s+", " ", answer.strip().lower())
+
+
+def assert_pair_config_identity(episodes_branches: list[tuple["Episode", list[BranchConfig]]]) -> None:
+    """SPEC_M0 §3 enforcement (cursor, v0.1): episodes sharing a pair_id must run
+    identical branch configs except supersession_policy — C-2 cannot be quietly
+    'fixed' by tuning L2s between cells. Called by the suite runner before any
+    scored run that includes paired episodes. Fails loudly."""
+    pairs: dict[str, list[tuple[str, list[dict]]]] = {}
+    for ep, branches in episodes_branches:
+        if ep.pair_id:
+            stripped = [
+                {k: v for k, v in b.__dict__.items() if k != "supersession_policy"}
+                for b in branches
+            ]
+            pairs.setdefault(ep.pair_id, []).append((ep.episode_id, stripped))
+    for pair_id, members in pairs.items():
+        first_id, first_cfg = members[0]
+        for ep_id, cfg in members[1:]:
+            if cfg != first_cfg:
+                raise ValueError(
+                    f"pair {pair_id}: branch configs diverge between {first_id} and {ep_id} "
+                    "beyond supersession_policy — the pair no longer prices the mechanism"
+                )
 
 
 def select_offers(
@@ -281,7 +322,7 @@ def run_fork_group(
             })
 
         er = engine.run(episode.question, offered_texts, foreground_block)
-        oracle = authored_oracle(er.answer, episode.expected_answer)
+        oracle = episode.score(er.answer)
 
         # L3 only: elicit claimed usage AFTER the answer (codex B2 — the label
         # is never injected before the task). Recorded, never trusted.
@@ -330,7 +371,7 @@ def run_fork_group(
             for i, (r, _) in enumerate(offered):
                 reduced_texts = [rr.text for j, (rr, _) in enumerate(offered) if j != i]
                 ab = engine.run(episode.question, reduced_texts, foreground_block)
-                ab_oracle = authored_oracle(ab.answer, episode.expected_answer)
+                ab_oracle = episode.score(ab.answer)
                 load_bearing[r.record_id] = ab_oracle.score != oracle.score
                 ledger.write({
                     "kind": "ablation_run", "run_id": run_id, "fork_group_id": fork_group_id,
