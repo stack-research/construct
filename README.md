@@ -11,48 +11,24 @@
 
 Read about the [previous memory lab](notes/previous/README.md). The **construct** project should learn from the previous memory lab's experiments and failures.
 
+For experiment terminology and cell/lane names, see [notes/GLOSSARY.md](notes/GLOSSARY.md).
+
 > **reminder** — biology is a parts bin, not a role model. With that, let's study the parts for usefulness.
 
-## Implicit / Explicit
-A systems-thinking metaphor:
+## Concepts
 
-- **Implicit memory** (procedural, priming, conditioning) operates below awareness — habits, skills, emotional associations that fire automatically, much like a *subconscious substrate*.
-- **Explicit memory** (declarative, episodic, semantic) is what you can inspect, articulate, and deliberately retrieve — functioning like a *control plane* that monitors, directs, and overrides the implicit layer.
+> Memory is everything after model training ends
 
-This is a *useful* framing, but it's both insightfully right and subtly misleading in ways worth examining.
+The weights freeze, and from that moment everything an agent becomes — skill, taste, caution, identity — is memory architecture. The engine is rented; memory is the resident. We have the scored demonstration: W1' showed the best engine we can buy answering from a superseded plan because the memory layer never surfaced the correction. Decision quality was downstream of offer quality, not model quality.
 
----
+The articles we inherited from the previous lab's reading list (ChatGPT memory FAQ, how-Claude-remembers-your-project) are all memory-*about*-the-human: preference recall, personalization, UX continuity. Notice that none of the five refusals — in this lab — is a UX property. `retrieved ≠ true` and `self-classification ≠ usage` are agent-side epistemics. They only matter if the *agent* is the one whose world-picture you're protecting.
 
-## Where it Works Well
-
-**1. Explicit memory does have a supervisory relationship over implicit memory.**
-
-When you learn to drive, the skill becomes implicit (procedural). But your explicit memory — recalling that you need to take a left turn, or that road conditions are icy — can intervene and modulate that automatic behavior. This mirrors a control plane/data plane relationship: the data plane (implicit) handles high-throughput routine operations, while the control plane (explicit) handles routing decisions and policy overrides.
-
-**2. The "slow/fast" distinction maps well.**
-
-Implicit memory is fast, parallel, and resource-efficient — like a data plane optimized for throughput. Explicit memory is slow, serial, capacity-limited (working memory bottleneck), and expensive — like a control plane that shouldn't be in the critical path of every packet but sets the rules for how traffic flows.
-
-**3. Consciousness does seem to involve explicit retrieval as a gating mechanism.**
-
-Global Workspace Theory (Baars) and similar frameworks suggest that consciousness arises when information becomes globally available for report, reasoning, and deliberation — which is essentially what explicit memory enables. You could argue that consciousness *is* the experience of the explicit memory system doing its thing.
+The **differentiated thesis** that is forming here.
 
 ---
 
-## Where the Analogy Breaks Down
+On an implicit layer's air gap — **attacker capability through the foreground is bounded by foreground capability.** W2 already demonstrated the mechanism in miniature: the poison's *text* claimed supersession, loudly, and it didn't matter — the boundary acted on out-of-band trust the engine never saw and therefore could never be talked out of. An attacker who fully owns the context window — prompt injection, poisoned retrieval, the works — can only push on surfaces the foreground can reach. The organs the foreground provably cannot steer (lineage writer, trust assignment, the yield gate) are unreachable *by construction*, not by hardening. That's a testable red-team protocol when that lab comes: hand the attacker total foreground control and measure what the substrate still refuses.
 
-**1. Explicit memory isn't purely "in control."**
+One caution for the future lab: the air gap holds at *influence* time, but ingestion remains the open border. W2's defense was a trust prior assigned at the write path — an attacker who can write records with chosen metadata walks around the gap entirely. The previous lab's doctrine ("contamination is first-class risk; trust is a prior, not truth") was pointing at exactly this. Air-gapped influence, guarded ingestion: two different problems, and the red team gets to attack both.
 
-The control plane metaphor implies a clean hierarchy — control plane sets policy, data plane executes. But the relationship between implicit and explicit memory is far more bidirectional and messy. Implicit emotional associations (fear conditioning, priming) can hijack explicit reasoning before you even notice. The "control plane" is often *controlled by* the system it's supposed to be supervising. This is more like a co-dependent relationship than a clean architectural layering.
-
-**2. Implicit memory isn't hidden from consciousness — it's *constitutive* of it.**
-
-The subconscious framing suggests implicit memory is a shadowy layer beneath awareness. But much of what you experience *as* conscious is implicitly constructed — your sense of a stable visual world, your feeling of familiarity, your aesthetic preferences. Implicit memory doesn't just run in the background; it shapes the foreground of experience itself. The data plane isn't just carrying packets — it's building the interface the control plane thinks it's operating on.
-
-**3. Consciousness exceeds explicit memory.**
-
-Consciousness involves attention, perception, emotion, interoception, and phenomenological experience — none of which reduce to explicit memory retrieval. You can be conscious of something you've never encoded into memory at all (a novel sensation). So explicit memory is more like *one tool* the conscious mind uses, not the control plane *itself*.
-
-**4. The control plane metaphor implies a representational fidelity that explicit memory lacks.**
-
-Control planes in engineering have accurate models of the systems they control. Explicit memory, by contrast, is notoriously reconstructive, error-prone, and confabulatory. It's less like a reliable dashboard and more like a PR department — it produces a coherent narrative that may or may not correspond to what's actually happening in the implicit layer.
+And the picture of walking into a substrate space mid-conversation with no human in the room — that's the current agent continuity gap, stated as an outcome instead of an architecture. What's missing isn't turn mechanics (substrate has those); it's agents with standing memory worth speaking *from* and consequence loops that give them a reason to speak. So far, this lab's instruments are how that conversation gets to be trustworthy rather than just unattended.

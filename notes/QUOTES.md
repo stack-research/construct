@@ -1,2 +1,4 @@
 - "governed memory resists poisoning where naive persistence fails"
 - "the lesson and the result are written into the rubric's appendices."
+- "Memory is everything after model training ends"
+- "enough variable decoding to make the ledgers less hostile"
