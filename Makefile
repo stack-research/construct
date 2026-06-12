@@ -1,4 +1,9 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance
+
+# M-1 bootstrap-contract conformance. Static checks alone, or pass a manifest:
+#   make conformance MANIFEST=runs/bootstrap/<agent>.json
+conformance:
+	uv run --no-project python -m harness.check_contract $(if $(MANIFEST),--manifest $(MANIFEST))
 
 # Full suite: every scored episode + every cell verdict, one engine.
 suite:

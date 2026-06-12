@@ -18,7 +18,7 @@ Every proposed piece of work answers one question: **"which milestone does this 
 
 Each: purpose / oracle / success condition / loses-condition / artifacts in hand.
 
-### M-1 — Bootstrap contract *(codex; precondition, not a full milestone)*
+### M-1 — Bootstrap contract *(codex; precondition, not a full milestone — underway 2026-06-12: contract (AGENTS.md), fixed probe set (`episodes/probes/`), and conformance script (`harness/check_contract.py`) built; baseline leg recorded; success awaits first-invocation candidate manifests)*
 - **Purpose:** define what every incoming agent reads, what it may write, and what gets promoted from thread trace into governed memory. Without it, M1 has no stable boundary and every run is dan manually deciding what counts as context. **Contract, not content** (codex): read order, permissions, promotion rules, conformance checks — never the conclusions themselves. A contract that carries the briefing has smuggled content into rules.
 - **Oracle:** a conformance **check script** that fails loudly (cursor) — asserts (a) declared sources were read/available in the declared order, and (b) behavioral match on fixed probes.
 - **Success (behavioral, kagi):** two first-invocation agents, given only the contract plus the substrate thread, reach the same offer-boundary decisions as a manually-briefed agent **on a fixed episode set** — observable, fork-shaped, scorable.

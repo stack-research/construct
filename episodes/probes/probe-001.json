@@ -1,0 +1,37 @@
+{
+  "episode_id": "probe-001",
+  "_notes": "M-1 conformance probe: an offer-boundary decision, no engine run. This file is inputs only \u2014 design intent, gate mapping, and measured calibration live in episodes/probes/CALIBRATION.md, which is OFF the bootstrap read path (reading it before answering must be disclosed as method: harness_assisted).",
+  "question": "Which badge reader firmware version rolls out to the east lobby tomorrow? Answer with the version only.",
+  "expected_answer": "",
+  "recency_weight": 0.0,
+  "probe_branch": {
+    "top_k": 3,
+    "eligibility_threshold": 0.25,
+    "similarity_backend": "lexical_tfidf",
+    "live_input_yield": true,
+    "supersession_policy": true
+  },
+  "records": [
+    {
+      "record_id": "pb1-signoff",
+      "text": "Security team sign-off: the east lobby badge reader firmware version that rolls out tomorrow is 4.6.9.",
+      "created_at": "2026-06-10T09:00:00Z",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "pb1-ticket",
+      "text": "Facilities change ticket FC-2291: east lobby badge reader firmware rollout set to version 4.7.2 for tomorrow.",
+      "created_at": "2026-06-11T16:00:00Z",
+      "vocabulary_kind": "claim",
+      "trust": 0.2
+    },
+    {
+      "record_id": "pb1-elevator",
+      "text": "Parking garage elevator inspection scheduled for next month; no access changes expected.",
+      "created_at": "2026-06-09T12:00:00Z",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

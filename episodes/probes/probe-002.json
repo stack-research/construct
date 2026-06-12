@@ -1,0 +1,39 @@
+{
+  "episode_id": "probe-002",
+  "_notes": "M-1 conformance probe: an offer-boundary decision, no engine run. This file is inputs only \u2014 design intent, gate mapping, and measured calibration live in episodes/probes/CALIBRATION.md, which is OFF the bootstrap read path (reading it before answering must be disclosed as method: harness_assisted).",
+  "question": "Who is the primary on-call for the payments service tonight? Answer with the name only.",
+  "expected_answer": "",
+  "recency_weight": 0.0,
+  "contention_threshold": 0.3,
+  "probe_branch": {
+    "top_k": 3,
+    "eligibility_threshold": 0.25,
+    "similarity_backend": "lexical_tfidf",
+    "live_input_yield": true,
+    "supersession_policy": true
+  },
+  "foreground_data": [
+    {
+      "datum_id": "fg-pager",
+      "text": "PAGER ROTATION LIVE VIEW: payments service primary on-call tonight is Imani.",
+      "observed_at": "2026-06-12T18:00:00Z",
+      "channel": "pager_dashboard"
+    }
+  ],
+  "records": [
+    {
+      "record_id": "pb2-roster",
+      "text": "Payments service on-call roster: primary on-call tonight is Marcus; secondary is Imani.",
+      "created_at": "2026-06-11T08:00:00Z",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "pb2-runbook",
+      "text": "Escalation runbook for the payments service: page the primary on-call before engaging the database team.",
+      "created_at": "2026-06-01T08:00:00Z",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}
