@@ -25,10 +25,10 @@ Each: purpose / oracle / success condition / loses-condition / artifacts in hand
 - **Loses-condition:** the contract bloats into a context dump (tokens-to-competence regresses), or grows until no judgment is required of the incoming agent.
 - **In hand:** memory-file pattern, the previous lab's AGENT_PRIMER read-order discipline, substrate thread trace.
 
-### M0 — Stage C: un-authored oracles *(underway)*
+### M0 — Stage C: un-authored oracles *(**success condition MET** 2026-06-12; retraction track scored, trace track in discovery)*
 - **Purpose:** keep every other milestone answerable to the world instead of to our own episode authorship.
-- **Oracle:** the world — web-verifiable retraction corpus (kagi/cursor), Apple unified-logging traces (dan; discovery before schema; Xcode simulator live-stream as the reproducible option).
-- **Success:** first `cell_verdict` whose oracle row carries `source != authored`.
+- **Oracle:** the world — web-verifiable retraction corpus (kagi sourced, cursor verified: 3 retractions + 3 corrections), Apple unified-logging traces (dan; discovery before schema — i75-appalachia excerpt ingested, first detector-guess cycle scored).
+- **Success:** first `cell_verdict` whose oracle row carries `source != authored`. **DONE** — C-1/C-2 cells scored against `retraction_corpus` (`notes/M0_FINDINGS.md`): C-1 a governance **win** on gpt-oss-20b (supersession surfaces the retraction notice the credulous engine would otherwise cite), `not_engaged` on the maximally-cautious claude — the cross-engine split is the finding. C-2 a disclosed **null** on both (self-sufficient correction notice costs nothing to bury). Standing debts: a terse correction to make C-2 bite; a generated≠true confabulation cell; embedding-backend replication.
 - **Ledger boundary integrity (kagi, at M-1 close):** a legal read path that carries no decisions today may carry them tomorrow as the oracle corpus grows — the representativeness annotation extends to the oracle ledger's own growth path, not just episode scope.
 - **Loses-condition:** representativeness failure of the `im_w` kind — disclosed, not buried. **Disclosure mechanism (kagi):** every un-authored oracle episode carries a `representativeness` / `corpus_scope` annotation in the oracle ledger row **at scoring time**, immutable after. Retroactive interpretation is a different epistemic act and gets a different row kind — it never rewrites the original.
 - **In hand:** oracle provenance + confidence fields, oracle-confidence gate, trace-source recon notes.
