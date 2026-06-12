@@ -12,7 +12,7 @@
   "device_id": "iphone-roadtrip-01",
   "trace_interval": "2026-06-07T14:22:56-04:00/2026-06-07T17:53:07-04:00",
   "redaction": "dan, 2026-06-12: mid-trip interval only (I-75 through Appalachia); departure and arrival excluded by design. Measured at ingestion: 0 coordinates, 0 BSSIDs, 0 SSIDs in the clear; 4 fields carry the OS's own <private> masking.",
-  "selection_method": "dan's interval truncation of the full archive; channel predicate per capture checklist (locationd / CoreLocation / wifi / timesync / CommCenter). Excerpt thinning method not yet stated — open question, affects any cadence claim.",
+  "selection_method": "RESOLVED (dan, 2026-06-12): pure time slicing, NO row sampling — `log show <archive> --start '2026-06-07 12:00:00' --end '2026-06-07 18:00:00' --style ndjson --predicate 'process == locationd OR subsystem == com.apple.CoreLocation OR subsystem BEGINSWITH com.apple.wifi OR subsystem CONTAINS[c] timesync OR subsystem CONTAINS[c] CommCenter'`. Within these channels the cadence is the device's own; gap analysis is legitimate evidence. Note: slice requested from 12:00 but first event is 14:22:56 — the queried channels were genuinely empty for 2.4h.",
   "subsystems": {
     "com.apple.BackgroundSystemTasks": 26,
     "com.apple.CommCenterMobileHelper": 32,
