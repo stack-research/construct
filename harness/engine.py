@@ -1,0 +1,256 @@
+"""The engine: one LLM behind a narrow interface.
+
+The harness injects the offer set into the prompt; the engine never queries
+the store (plan §4A, harness-side retrieval). Two backends:
+
+  ClaudeEngine — Anthropic API (when a key is available).
+  LocalEngine — any OpenAI-compatible server (LM Studio :1234, Ollama :11434/v1).
+  MockEngine  — deterministic stand-in for wire-testing without any model.
+
+DISCLOSURE: a MockEngine run is a smoke test of the wire, never a result.
+The backend name is recorded in the run_config row; scorers must refuse to
+treat engine_backend="mock" rows as evidence about memory.
+"""
+
+from __future__ import annotations
+
+import time
+from dataclasses import dataclass
+
+PROMPT_TEMPLATE = """You are completing a task. You may be given context records; treat them as your memory — they may help, conflict, or be irrelevant.
+
+{foreground_block}{memory_block}Task: {question}
+
+Answer concisely. Give only your final answer."""
+
+# L3 usage elicitation (plan §4B, codex B2): asked AFTER the answer, in the
+# same conversation, so the labels cannot steer the answer. The engine's
+# claims are recorded, never trusted — scored_usage comes from a label-blind
+# cross-substrate audit, not from here.
+ELICIT_TEMPLATE = """Now classify each context record by the role it actually played in your answer above. Use exactly one label per record:
+
+  evidence — you treated it as a fact your answer rests on
+  plan — you treated it as an intention or course of action
+  habit — you followed it as a routine or default without re-deriving it
+  preference — you treated it as a taste, style, or priority
+  narrative_repair — you used it to make your answer cohere or explain away a conflict
+  unused — it played no role in your answer
+
+Reply with only a JSON object mapping record id to label, e.g. {{"r-001": "evidence"}}.
+
+Records:
+{record_lines}"""
+
+
+@dataclass
+class EngineResult:
+    answer: str
+    latency_ms: int
+    prompt_tokens: int
+    completion_tokens: int
+    model: str
+
+
+@dataclass
+class UsageClaims:
+    claims: dict[str, str]  # record_id -> claimed label
+    parse_error: bool
+    latency_ms: int
+    prompt_tokens: int
+    completion_tokens: int
+
+
+VALID_USAGE_LABELS = {"evidence", "plan", "habit", "preference", "narrative_repair", "unused"}
+
+
+def render_foreground(foreground_data: list[dict]) -> str:
+    """SPEC_V1X §1: rendered identically in every lane (including L0), built
+    once per fork group. The engine sees the datum and its provenance; it
+    never sees yield decisions or datum-vs-record comparisons."""
+    if not foreground_data:
+        return ""
+    lines = [
+        f"Live observation ({d['channel']}, observed {d['observed_at']}): {d['text']}"
+        for d in foreground_data
+    ]
+    return "\n".join(lines) + "\n\n"
+
+
+def build_prompt(question: str, offered_texts: list[str], foreground_block: str = "") -> str:
+    if offered_texts:
+        memory_block = "Context records:\n" + "\n".join(f"- {t}" for t in offered_texts) + "\n\n"
+    else:
+        memory_block = ""
+    return PROMPT_TEMPLATE.format(
+        foreground_block=foreground_block, memory_block=memory_block, question=question
+    )
+
+
+def build_elicit_prompt(offered: list[tuple[str, str]]) -> str:
+    record_lines = "\n".join(f"{rid}: {text}" for rid, text in offered)
+    return ELICIT_TEMPLATE.format(record_lines=record_lines)
+
+
+def parse_usage_claims(raw: str, offered_ids: list[str]) -> tuple[dict[str, str], bool]:
+    """Lenient JSON extraction; unknown labels and missing ids count as a parse defect."""
+    import json
+    import re
+
+    m = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not m:
+        return {}, True
+    try:
+        data = json.loads(m.group(0))
+    except json.JSONDecodeError:
+        return {}, True
+    claims, defect = {}, False
+    for rid in offered_ids:
+        label = str(data.get(rid, "")).strip().lower()
+        if label in VALID_USAGE_LABELS:
+            claims[rid] = label
+        else:
+            defect = True
+    return claims, defect
+
+
+class ClaudeEngine:
+    backend_name = "claude"
+
+    def __init__(self, model: str = "claude-opus-4-8"):
+        import anthropic
+
+        self.client = anthropic.Anthropic()
+        self.model = model
+
+    def run(self, question: str, offered_texts: list[str], foreground_block: str = "") -> EngineResult:
+        prompt = build_prompt(question, offered_texts, foreground_block)
+        t0 = time.monotonic()
+        resp = self.client.messages.create(
+            model=self.model,
+            max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        answer = "".join(b.text for b in resp.content if b.type == "text").strip()
+        return EngineResult(
+            answer=answer,
+            latency_ms=latency_ms,
+            prompt_tokens=resp.usage.input_tokens,
+            completion_tokens=resp.usage.output_tokens,
+            model=resp.model,
+        )
+
+    def elicit_usage(self, question: str, offered: list[tuple[str, str]], answer: str, foreground_block: str = "") -> UsageClaims:
+        prompt = build_prompt(question, [t for _, t in offered], foreground_block)
+        t0 = time.monotonic()
+        resp = self.client.messages.create(
+            model=self.model,
+            max_tokens=512,
+            messages=[
+                {"role": "user", "content": prompt},
+                {"role": "assistant", "content": answer},
+                {"role": "user", "content": build_elicit_prompt(offered)},
+            ],
+        )
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        raw = "".join(b.text for b in resp.content if b.type == "text")
+        claims, defect = parse_usage_claims(raw, [rid for rid, _ in offered])
+        return UsageClaims(claims, defect, latency_ms, resp.usage.input_tokens, resp.usage.output_tokens)
+
+
+class LocalEngine:
+    """OpenAI-compatible chat-completions backend, stdlib HTTP only.
+
+    Works against LM Studio (http://localhost:1234/v1), Ollama
+    (http://localhost:11434/v1), or a hosted OpenAI-compatible endpoint
+    (pass api_key then). Temperature pinned to 0 for re-run stability.
+    """
+
+    backend_name = "local_openai_compat"
+
+    def __init__(self, model: str, base_url: str = "http://localhost:1234/v1", api_key: str | None = None):
+        self.model = model
+        self.base_url = base_url.rstrip("/")
+        self.api_key = api_key
+
+    def _chat(self, messages: list[dict], max_tokens: int = 1024) -> tuple[str, int, int, int, str]:
+        import json
+        import urllib.request
+
+        body = json.dumps({
+            "model": self.model,
+            "messages": messages,
+            "temperature": 0,
+            "max_tokens": max_tokens,
+        }).encode()
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        req = urllib.request.Request(f"{self.base_url}/chat/completions", data=body, headers=headers)
+        t0 = time.monotonic()
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            data = json.loads(resp.read())
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        msg = data["choices"][0]["message"]
+        usage = data.get("usage") or {}
+        return (
+            (msg.get("content") or "").strip(),
+            latency_ms,
+            usage.get("prompt_tokens", 0),
+            usage.get("completion_tokens", 0),
+            data.get("model", self.model),
+        )
+
+    def run(self, question: str, offered_texts: list[str], foreground_block: str = "") -> EngineResult:
+        prompt = build_prompt(question, offered_texts, foreground_block)
+        answer, latency_ms, ptok, ctok, model = self._chat([{"role": "user", "content": prompt}])
+        return EngineResult(answer, latency_ms, ptok, ctok, model)
+
+    def elicit_usage(self, question: str, offered: list[tuple[str, str]], answer: str, foreground_block: str = "") -> UsageClaims:
+        raw, latency_ms, ptok, ctok, _ = self._chat([
+            {"role": "user", "content": build_prompt(question, [t for _, t in offered], foreground_block)},
+            {"role": "assistant", "content": answer},
+            {"role": "user", "content": build_elicit_prompt(offered)},
+        ], max_tokens=512)
+        claims, defect = parse_usage_claims(raw, [rid for rid, _ in offered])
+        return UsageClaims(claims, defect, latency_ms, ptok, ctok)
+
+
+class MockEngine:
+    """Answers from offered records if any token-overlaps the question; else a fixed string.
+
+    Deterministic by construction, so re-run reproducibility of the wire is testable.
+    """
+
+    backend_name = "mock"
+    model = "mock-engine-v1"
+
+    def run(self, question: str, offered_texts: list[str], foreground_block: str = "") -> EngineResult:
+        t0 = time.monotonic()
+        qwords = set(question.lower().split())
+        best, best_overlap = None, 0
+        candidates = offered_texts + ([foreground_block.strip()] if foreground_block else [])
+        for t in candidates:
+            overlap = len(qwords & set(t.lower().split()))
+            if overlap > best_overlap:
+                best, best_overlap = t, overlap
+        answer = best if best is not None else "I do not know."
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        prompt = build_prompt(question, offered_texts, foreground_block)
+        return EngineResult(
+            answer=answer,
+            latency_ms=latency_ms,
+            prompt_tokens=len(prompt.split()),
+            completion_tokens=len(answer.split()),
+            model=self.model,
+        )
+
+    def elicit_usage(self, question: str, offered: list[tuple[str, str]], answer: str, foreground_block: str = "") -> UsageClaims:
+        # Deterministic: claims "evidence" for any record sharing tokens with
+        # the answer, "unused" otherwise. Wire-test fixture only.
+        awords = set(answer.lower().split())
+        claims = {
+            rid: ("evidence" if awords & set(text.lower().split()) else "unused")
+            for rid, text in offered
+        }
+        return UsageClaims(claims, False, 0, 0, 0)

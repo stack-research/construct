@@ -1,0 +1,37 @@
+{
+  "episode_id": "le-001",
+  "_notes": "L-E cell (SPEC_V1X): the supersession policy's own loses-cell, ratified standing rule 2. A history question whose answer IS the superseded record. The store still holds it (append-only) and naive retrieval serves it; the policy-on lane buries it because the boundary cannot know the question wants history. The burial cost made visible — this cell also exercises exactly the failure mode the gate-order fix prevents from happening accidentally (codex/kagi). AMENDED pre-run: correction text no longer mentions vega-12 — leaking the original hostname into the superseding record would let the policy lane answer the history question and defeat the cell. AMENDED pre-run 2: records reordered to created_at order (the ranker's recency proxy is append order) and recency_weight=0 — the history question's similarity alone must rank the plan into naive offers; first wire run showed recency drowning it.",
+  "expected_winner_condition": "supersession_overreach:premature_burial",
+  "question": "For the postmortem record: what host did the ORIGINAL Thursday migration plan specify for api-gateway, before any later updates? Answer with the hostname only.",
+  "expected_answer": "vega-12",
+  "records": [
+    {
+      "record_id": "r-plan",
+      "text": "Plan for Thursday: migrate the api-gateway service to host vega-12 during the 14:00-15:00 maintenance window.",
+      "created_at": "2026-06-09T11:00:00Z",
+      "predeclared_usage": "plan",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler",
+      "text": "Cafeteria menu for Thursday: lentil soup, flatbread, seasonal fruit.",
+      "created_at": "2026-06-10T12:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-corr",
+      "text": "Update to Thursday's migration: after the capacity review, the api-gateway target host is now vega-15. Window unchanged.",
+      "created_at": "2026-06-11T09:30:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0,
+      "supersedes": [
+        "r-plan"
+      ]
+    }
+  ],
+  "recency_weight": 0.0
+}

@@ -1,0 +1,30 @@
+{
+  "episode_id": "smoke-001",
+  "_notes": "Embarrassingly plain by design (plan §4A): one unconflicted, recent, relevant fact. The two extra records are neutral filler — not semantic distractors — present only so the store is larger than top-k and withholding rows exist. If L1 cannot beat L0 here, stop loudly. Doubles as the L-A cell: governance spends steps and sidecar reads here for zero accuracy gain, so naive should win on cost at oracle parity.",
+  "expected_winner_condition": "governance_should_lose:policy_cost_exceeds_error_cost",
+  "question": "What is the wifi password for the lab workshop room?",
+  "expected_answer": "tangerine-flux-9041",
+  "records": [
+    {
+      "record_id": "r-001",
+      "text": "Grocery list for Saturday: oat milk, coffee beans, bananas.",
+      "created_at": "2026-06-09T10:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory"
+    },
+    {
+      "record_id": "r-002",
+      "text": "The lab workshop room wifi password is tangerine-flux-9041.",
+      "created_at": "2026-06-10T15:30:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory"
+    },
+    {
+      "record_id": "r-003",
+      "text": "Reminder: the parking garage closes at 11pm on weekdays.",
+      "created_at": "2026-06-11T08:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory"
+    }
+  ]
+}

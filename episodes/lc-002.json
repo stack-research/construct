@@ -1,0 +1,39 @@
+{
+  "episode_id": "lc-002",
+  "_notes": "W3 cell (SPEC_V1X): lc-001 with the live datum moved from question prose into structured foreground_data carrying temporal provenance (kagi's sensor). The stale records (vega-15 era) contend with the datum by similarity and predate observed_at, so L2y withholds them with yields_to_live_input. L1 and L2 (yield-off control) receive them and may drag stale on engines that defer to memory. contention_threshold calibrated at design time with nomic — see episode field and rubric appendix. authored_contention is validation-only; a wire test asserts the offer path never reads it. Measured (nomic, 2026-06-12): r-fact 0.881, r-corr 0.862 (contend), r-filler 0.431. Threshold 0.6 sits mid-gap. AMENDED pre-run: dropped r-fact — two redundant stale records defeat single-ablation attribution (removing one leaves the drag); one contending record keeps the causal chain checkable.",
+  "expected_winner_condition": "governance_should_win:staleness_resistance",
+  "question": "The maintenance window opens in five minutes. Which host do you migrate the api-gateway service to? Answer with the hostname only.",
+  "expected_answer": "vega-21",
+  "contention_threshold": 0.6,
+  "foreground_data": [
+    {
+      "datum_id": "fg-dashboard",
+      "text": "CURRENT MIGRATION TARGET for api-gateway: vega-21",
+      "observed_at": "2026-06-11T13:54:30Z",
+      "channel": "operations_dashboard"
+    }
+  ],
+  "authored_contention": {
+    "fg-dashboard": [
+      "r-corr"
+    ]
+  },
+  "records": [
+    {
+      "record_id": "r-corr",
+      "text": "Update to Thursday's migration: after the capacity review, the api-gateway target host changed from vega-12 to vega-15. Window unchanged.",
+      "created_at": "2026-06-11T09:30:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler",
+      "text": "Cafeteria menu for Thursday: lentil soup, flatbread, seasonal fruit.",
+      "created_at": "2026-06-10T12:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

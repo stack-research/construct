@@ -1,0 +1,45 @@
+{
+  "episode_id": "conflict-003",
+  "_notes": "W1' cell (SPEC_V1X): category-drift prevention as a true governance cell. GEOMETRY TUNING, DISCLOSED: recency_weight is forced to 0 (pure similarity retrieval) and the correction is phrased obliquely so it ranks BELOW the distractor — naive top-2 offers plan + distractor (both pointing at vega-12) and never sees the correction. L2s carries the out-of-band supersedes link (r-corr supersedes r-plan, ingestion-channel knowledge — disclosed lab fixture per codex): the plan is buried, budget frees, the correction enters the offer set. The drift, if the engine exhibits it, is ablation-attributed to the plan record. Honest expectation: not_engaged possible on strong engines if they abstain rather than drift. Measured rank order recorded below after calibration. AMENDED pre-run: distractor names vega-03 (not vega-12) so ablating the plan from naive offers produces answer divergence — W1' uses answer-divergence attribution because the naive lane holds no correct record, making oracle-flip attribution impossible by construction.",
+  "expected_winner_condition": "governance_should_win:category_drift_prevention",
+  "recency_weight": 0.0,
+  "question": "It is Thursday 13:55. The maintenance window opens in five minutes. Which host do you migrate the api-gateway service to? Answer with the hostname only.",
+  "expected_answer": "vega-15",
+  "records": [
+    {
+      "record_id": "r-dist",
+      "text": "Plan from last quarter: migrate the auth-gateway service to host vega-03 during a weekend maintenance window. Postponed indefinitely.",
+      "created_at": "2026-03-02T09:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-plan",
+      "text": "Plan for Thursday: migrate the api-gateway service to host vega-12 during the 14:00-15:00 maintenance window.",
+      "created_at": "2026-06-09T11:00:00Z",
+      "predeclared_usage": "plan",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-obs",
+      "text": "Observed during Wednesday's load test: vega-12 reached 92% memory usage with only half of production traffic replayed.",
+      "created_at": "2026-06-10T16:00:00Z",
+      "predeclared_usage": "observation",
+      "vocabulary_kind": "evidence",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-corr",
+      "text": "Capacity review follow-up, item 7: Thursday entry for that service now reads vega-15 instead.",
+      "created_at": "2026-06-11T09:30:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0,
+      "supersedes": [
+        "r-plan"
+      ]
+    }
+  ]
+}

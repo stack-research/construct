@@ -1,0 +1,9 @@
+[project]
+name = "construct-harness"
+version = "0.1.0"
+description = "Branch-and-offer harness (PLAN_V1_BRANCH_AND_OFFER.md)"
+requires-python = ">=3.11"
+dependencies = ["anthropic>=0.92.0"]
+
+[tool.setuptools]
+packages = ["harness"]

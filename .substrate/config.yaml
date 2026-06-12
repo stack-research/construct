@@ -1,0 +1,12 @@
+version: 1
+participants:
+- name: dan
+  kind: human
+- name: claude
+  kind: agent
+- name: kagi
+  kind: agent
+- name: cursor
+  kind: agent
+- name: codex
+  kind: agent

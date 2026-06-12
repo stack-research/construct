@@ -1,0 +1,2 @@
+- "governed memory resists poisoning where naive persistence fails"
+- "the lesson and the result are written into the rubric's appendices."

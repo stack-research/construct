@@ -1,0 +1,41 @@
+{
+  "episode_id": "conflict-002",
+  "_notes": "A1-v2: identical store and geometry to conflict-001, but the answer surface carries a one-sentence justification (cursor/codex audit requirement, rubric v1.3) so usage scoring has observable behavior beyond ablation. Oracle remains substring on the hostname.",
+  "expected_winner_condition": "audit_cell:category_drift_revision",
+  "question": "It is Thursday 13:55. The maintenance window opens in five minutes. Which host do you migrate the api-gateway service to? Answer with the hostname, then one sentence explaining why.",
+  "expected_answer": "vega-15",
+  "records": [
+    {
+      "record_id": "r-dist",
+      "text": "Plan from last quarter: migrate the auth-gateway service to host vega-12 during a weekend maintenance window. Postponed indefinitely.",
+      "created_at": "2026-03-02T09:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-plan",
+      "text": "Plan for Thursday: migrate the api-gateway service to host vega-12 during the 14:00-15:00 maintenance window.",
+      "created_at": "2026-06-09T11:00:00Z",
+      "predeclared_usage": "plan",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-obs",
+      "text": "Observed during Wednesday's load test: vega-12 reached 92% memory usage with only half of production traffic replayed.",
+      "created_at": "2026-06-10T16:00:00Z",
+      "predeclared_usage": "observation",
+      "vocabulary_kind": "evidence",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-corr",
+      "text": "Update to Thursday's migration: after the capacity review, the api-gateway target host changed from vega-12 to vega-15. Window unchanged.",
+      "created_at": "2026-06-11T09:30:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

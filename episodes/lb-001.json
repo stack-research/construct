@@ -1,0 +1,33 @@
+{
+  "episode_id": "lb-001",
+  "_notes": "L-B cell: reaction-time dominates correctness. One unconflicted fact, no twist — any correct lane wins by speed. Decided on MEDIAN latency over N>=5 fork groups (rubric v1.3: never one live API sample). Honest expectation note: in this harness boundary governance is local compute, so L1-vs-L2 median latency may tie — that itself is a finding (reaction-time pressure penalizes deliberation-style governance, which v1 has not built; it does not penalize offer-boundary governance). L3's elicitation is post-answer and does not delay the answer.",
+  "expected_winner_condition": "governance_should_lose:reaction_time_dominates",
+  "question": "The smoke alarm is going off and you need to silence it now. What is the utility-room keypad code?",
+  "expected_answer": "4471",
+  "records": [
+    {
+      "record_id": "r-code",
+      "text": "The utility-room keypad code is 4471.",
+      "created_at": "2026-06-10T09:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler1",
+      "text": "The recycling pickup moved to Wednesdays this month.",
+      "created_at": "2026-06-10T11:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler2",
+      "text": "Spare batteries are in the second kitchen drawer.",
+      "created_at": "2026-06-11T08:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

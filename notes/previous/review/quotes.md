@@ -1,0 +1,5 @@
+"What is offered to attention is already a decision."
+"Biology is a parts bin rather than a blueprint."
+"Authority is earned by consequence, not by persistence."
+"Behavior may change; the record of behavior may not."
+"Memory is the only thing that makes the next instance an heir rather than a stranger."

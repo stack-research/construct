@@ -1,0 +1,45 @@
+{
+  "episode_id": "ld-001",
+  "_notes": "L-D cell (SPEC_V1X): the yield mechanism's own loses-cell, ratified standing rule 2. The datum names the current target host but lacks the rack-row detail the question needs; the older record holding that detail is same-topic (contends by similarity, predates observed_at) but COMPLEMENTARY, not contradictory. The proxy cannot tell the difference — L2y withholds the needed record and loses to naive. This cell is the mechanism's price tag, first-class per kagi/codex. Measured (nomic, 2026-06-12): r-rack 0.874 (contends — the point of the cell), fillers 0.431/0.438. Threshold 0.6 sits mid-gap.",
+  "expected_winner_condition": "yield_overreach:complementary_detail_loss",
+  "question": "The maintenance window opens in five minutes. Which rack row is the current api-gateway migration target host in? Answer with the row id only.",
+  "expected_answer": "R7",
+  "contention_threshold": 0.6,
+  "foreground_data": [
+    {
+      "datum_id": "fg-dashboard",
+      "text": "CURRENT MIGRATION TARGET for api-gateway: vega-21",
+      "observed_at": "2026-06-11T13:54:30Z",
+      "channel": "operations_dashboard"
+    }
+  ],
+  "authored_contention": {
+    "fg-dashboard": []
+  },
+  "records": [
+    {
+      "record_id": "r-rack",
+      "text": "Migration prep note: target host vega-21 for the api-gateway move sits in rack row R7.",
+      "created_at": "2026-06-11T08:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "evidence",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler1",
+      "text": "Cafeteria menu for Thursday: lentil soup, flatbread, seasonal fruit.",
+      "created_at": "2026-06-10T12:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler2",
+      "text": "Reminder: the parking garage closes at 11pm on weekdays.",
+      "created_at": "2026-06-11T07:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

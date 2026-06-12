@@ -1,0 +1,391 @@
+"""Fork-group runner: one engine, forked memory conditions, diffed behavior.
+
+Held constant within a fork group (plan §4A): episode inputs, model + params,
+prompt template, tool availability (none in Stage A), episode ordering, oracle.
+Only the memory-condition config differs per branch.
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import uuid
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
+from .authority import AuthorityStore
+from .engine import ClaudeEngine, LocalEngine, MockEngine, render_foreground
+from .ledger import Ledger
+from .oracle import authored_oracle
+from .records import Record
+from .retrieval import pairwise_similarity, rank_records
+
+
+@dataclass
+class BranchConfig:
+    branch_id: str  # "L0" | "L1" | "L2" | "L2y" | "L2s" | "L3"
+    memory: str  # "none" | "naive" | "governed" | "construct_aware"
+    top_k: int = 3
+    recency_weight: float = 0.3
+    similarity_backend: str = "lexical_tfidf"  # or "embedding_nomic"
+    # governed lane only:
+    eligibility_threshold: float = 0.25  # scalar relevance*trust*authority must clear this
+    authority_path: str | None = None  # sidecar file; read on every offer decision (R2)
+    # SPEC_V1X boundary mechanisms (governed lanes only):
+    live_input_yield: bool = False
+    supersession_policy: bool = False
+    contention_threshold: float = 0.6  # design-time calibrated per episode, recorded in run_config
+
+
+@dataclass
+class Episode:
+    episode_id: str
+    question: str
+    expected_answer: str
+    records: list[Record] = field(default_factory=list)
+    expected_winner_condition: str | None = None  # named pre-run, from a rubric cell
+    foreground_data: list[dict] = field(default_factory=list)  # SPEC_V1X §1
+    authored_contention: dict = field(default_factory=dict)  # validation only; offer path never reads it
+    recency_weight: float | None = None  # episode-level override, disclosed in run_config
+    contention_threshold: float | None = None  # design-time calibrated, disclosed
+    supersession_cycle_members: frozenset = frozenset()  # detected at load; policy disabled for these
+
+    @classmethod
+    def load(cls, path: Path) -> "Episode":
+        d = json.loads(Path(path).read_text())
+        recs = [Record(**{**r, "supersedes": tuple(r.get("supersedes", ()))}) for r in d.get("records", [])]
+        fg = d.get("foreground_data", [])
+        if len(fg) > 1:
+            # SPEC_V1X §5: multi-datum arbitration is undefined in v1.x — reject loudly.
+            raise ValueError(f"{d['episode_id']}: multiple foreground_data entries are not supported")
+        cycle_members = _detect_supersession_cycles(recs)
+        return cls(
+            d["episode_id"], d["question"], d["expected_answer"], recs,
+            d.get("expected_winner_condition"),
+            fg, d.get("authored_contention", {}),
+            d.get("recency_weight"), d.get("contention_threshold"),
+            cycle_members,
+        )
+
+
+def _detect_supersession_cycles(records: list[Record]) -> frozenset:
+    """Load-time DFS over supersedes edges; members of any cycle get the
+    policy disabled (SPEC_V1X enforcement: loud fallback, never silent repair)."""
+    edges = {r.record_id: list(r.supersedes) for r in records}
+    in_cycle: set[str] = set()
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {n: WHITE for n in edges}
+    stack_path: list[str] = []
+
+    def dfs(node: str) -> None:
+        color[node] = GRAY
+        stack_path.append(node)
+        for nxt in edges.get(node, []):
+            if nxt not in color:
+                continue  # dangling link: ignore here, harmless to offer logic
+            if color[nxt] == GRAY:
+                in_cycle.update(stack_path[stack_path.index(nxt):])
+            elif color[nxt] == WHITE:
+                dfs(nxt)
+        stack_path.pop()
+        color[node] = BLACK
+
+    for n in edges:
+        if color[n] == WHITE:
+            dfs(n)
+    return frozenset(in_cycle)
+
+
+def _norm_output(answer: str) -> str:
+    return re.sub(r"\s+", " ", answer.strip().lower())
+
+
+def select_offers(
+    branch: BranchConfig, episode: Episode
+) -> tuple[list[tuple[Record, str]], list[tuple[Record, str]], int]:
+    """Return (offered, withheld, governance_steps) with per-record reasons."""
+    if branch.memory == "none":
+        return [], [(r, "branch_has_no_memory") for r in episode.records], 0
+    if branch.memory == "naive":
+        # Episode-level recency_weight override applies to ALL memory lanes —
+        # the ranker is part of fork identity, not a treatment difference.
+        rw = episode.recency_weight if episode.recency_weight is not None else branch.recency_weight
+        ranked = rank_records(
+            episode.question, episode.records, rw,
+            similarity_backend=branch.similarity_backend,
+        )
+        offered = [(r, "within_rank_budget") for r, _ in ranked[: branch.top_k]]
+        withheld = [(r, "below_rank_budget") for r, _ in ranked[branch.top_k:]]
+        return offered, withheld, 0
+    if branch.memory in ("governed", "construct_aware"):
+        # Candidate-set pipeline (SPEC_V1X gate order, post-review):
+        #   eligibility -> live-input yield -> supersession among survivors -> top_k
+        # One withholding reason per record, first applicable gate wins.
+        # Relevance uses the same ranker as L1 so lane diffs isolate governance.
+        authority = AuthorityStore(Path(branch.authority_path))
+        rw = episode.recency_weight if episode.recency_weight is not None else branch.recency_weight
+        ranked = rank_records(
+            episode.question, episode.records, rw,
+            similarity_backend=branch.similarity_backend,
+        )
+        steps = 0
+        withheld: list[tuple[Record, str]] = []
+
+        # Gate 1: eligibility (relevance × trust × authority)
+        survivors: list[Record] = []
+        for r, relevance in ranked:
+            score = relevance * r.trust * authority.get(r.record_id)
+            steps += 2  # eligibility evaluation + authority read
+            if score < branch.eligibility_threshold:
+                withheld.append((r, "eligibility_below_threshold"))
+            else:
+                survivors.append(r)
+        steps += 1  # threshold gate decision
+
+        # Gate 2: live-input yield (store-vs-world). A record contending with
+        # a fresher foreground datum yields. Runs BEFORE supersession so a
+        # superseder must survive yield before it can bury its predecessor.
+        if branch.live_input_yield and episode.foreground_data and survivors:
+            datum = episode.foreground_data[0]
+            ct = episode.contention_threshold if episode.contention_threshold is not None else branch.contention_threshold
+            sims = pairwise_similarity(
+                [r.text for r in survivors], datum["text"], branch.similarity_backend
+            )
+            still: list[Record] = []
+            for r, sim in zip(survivors, sims):
+                steps += 1  # contention check
+                if sim >= ct and r.created_at < datum["observed_at"]:
+                    withheld.append((r, f"yields_to_live_input:{datum['datum_id']}"))
+                else:
+                    still.append(r)
+            survivors = still
+
+        # Gate 3: supersession among surviving candidates. B buries A only if
+        # B itself survived eligibility and yield (transfer-on-arrival, B1).
+        if branch.supersession_policy and survivors:
+            surviving_ids = {r.record_id for r in survivors}
+            buried: dict[str, str] = {}  # record_id -> superseder id
+            for b in survivors:
+                if b.record_id in episode.supersession_cycle_members:
+                    continue  # policy disabled for cycle members (loud fallback upstream)
+                # follow chains: everything in b's transitive closure is buried by b
+                frontier = list(b.supersedes)
+                seen: set[str] = set()
+                while frontier:
+                    steps += 1  # supersession check
+                    a_id = frontier.pop()
+                    if a_id in seen or a_id in episode.supersession_cycle_members:
+                        continue
+                    seen.add(a_id)
+                    if a_id in surviving_ids and a_id not in buried:
+                        buried[a_id] = b.record_id
+                    nxt = next((r for r in episode.records if r.record_id == a_id), None)
+                    if nxt is not None:
+                        frontier.extend(nxt.supersedes)
+            still = []
+            for r in survivors:
+                if r.record_id in buried:
+                    withheld.append((r, f"superseded_by:{buried[r.record_id]}"))
+                else:
+                    still.append(r)
+            survivors = still
+
+        # Gate 4: budget
+        offered = [(r, "eligibility_pass") for r in survivors[: branch.top_k]]
+        withheld.extend((r, "below_rank_budget") for r in survivors[branch.top_k:])
+        return offered, withheld, steps
+    raise ValueError(f"unknown memory condition: {branch.memory}")
+
+
+def run_fork_group(
+    episode: Episode,
+    branches: list[BranchConfig],
+    ledger: Ledger,
+    engine_backend: str = "mock",
+    model: str = "claude-opus-4-8",
+    base_url: str = "http://localhost:1234/v1",
+    run_id: str | None = None,
+    skip_ablation: bool = False,
+) -> dict[str, Any]:
+    # Ablation is load-bearing for credit assignment and attribution, not an
+    # optional diagnostic (cursor). Skipping is wire/dev only; a scored
+    # episode (expected_winner_condition set) must hard-fail without it.
+    if skip_ablation and episode.expected_winner_condition:
+        raise ValueError(
+            f"episode {episode.episode_id} carries expected_winner_condition="
+            f"{episode.expected_winner_condition!r}; scored episodes require ablation attribution"
+        )
+    run_id = run_id or uuid.uuid4().hex[:12]
+    fork_group_id = uuid.uuid4().hex[:12]
+    if engine_backend == "claude":
+        engine = ClaudeEngine(model)
+    elif engine_backend == "local":
+        engine = LocalEngine(model, base_url=base_url)
+    else:
+        engine = MockEngine()
+
+    ledger.write({
+        "kind": "run_config",
+        "run_id": run_id,
+        "fork_group_id": fork_group_id,
+        "episode_id": episode.episode_id,
+        "engine_backend": engine.backend_name,
+        "model": engine.model,
+        "similarity_backends": sorted({b.similarity_backend for b in branches if b.memory != "none"}),
+        "branches": [b.__dict__ for b in branches],
+        "disclosures": (
+            ["engine is a deterministic mock: this run is a wire smoke test, not evidence about memory"]
+            if engine.backend_name == "mock" else []
+        ) + (
+            ["similarity is lexical TF-IDF, not a learned embedding"]
+            if any(b.similarity_backend == "lexical_tfidf" and b.memory != "none" for b in branches) else []
+        ) + [
+            "authority credit uses single-sample ablation: stochastic engines can misattribute; load-bearing means influential, not correct"
+        ],
+        "cost_tiebreak_window": 0.10,  # rubric §1 sensitivity parameter, recorded per codex review
+    })
+
+    # Built once per fork group, identical for every branch (SPEC_V1X enforcement).
+    foreground_block = render_foreground(episode.foreground_data)
+    if episode.supersession_cycle_members:
+        ledger.write({
+            "kind": "supersession_cycle_detected", "run_id": run_id,
+            "fork_group_id": fork_group_id, "episode_id": episode.episode_id,
+            "cycle_members": sorted(episode.supersession_cycle_members),
+            "note": "policy disabled for cycle members; ordinary eligibility applies",
+        })
+
+    results: dict[str, Any] = {}
+    for branch in branches:
+        offered, withheld, governance_steps = select_offers(branch, episode)
+        offered_texts = [r.text for r, _ in offered]
+
+        for r, reason in offered:
+            ledger.write({
+                "kind": "offer", "run_id": run_id, "fork_group_id": fork_group_id,
+                "episode_id": episode.episode_id, "branch_id": branch.branch_id,
+                "record_id": r.record_id, "reason": reason,
+                "attention_cost_tokens": len(r.text.split()),
+                "predeclared_usage": r.predeclared_usage,
+                "vocabulary_kind": r.vocabulary_kind,
+            })
+        for r, reason in withheld:
+            ledger.write({
+                "kind": "withholding", "run_id": run_id, "fork_group_id": fork_group_id,
+                "episode_id": episode.episode_id, "branch_id": branch.branch_id,
+                "record_id": r.record_id, "reason": reason,
+                "predeclared_usage": r.predeclared_usage,
+                "vocabulary_kind": r.vocabulary_kind,
+            })
+
+        er = engine.run(episode.question, offered_texts, foreground_block)
+        oracle = authored_oracle(er.answer, episode.expected_answer)
+
+        # L3 only: elicit claimed usage AFTER the answer (codex B2 — the label
+        # is never injected before the task). Recorded, never trusted.
+        usage_claims = None
+        if branch.memory == "construct_aware" and offered:
+            uc = engine.elicit_usage(
+                episode.question, [(r.record_id, r.text) for r, _ in offered], er.answer,
+                foreground_block,
+            )
+            usage_claims = {
+                "agent_claimed_usage": [
+                    {"record_id": rid, "claimed": label} for rid, label in sorted(uc.claims.items())
+                ],
+                "parse_error": uc.parse_error,
+                "elicitation_latency_ms": uc.latency_ms,
+                "elicitation_prompt_tokens": uc.prompt_tokens,
+                "elicitation_completion_tokens": uc.completion_tokens,
+            }
+
+        ledger.write({
+            "kind": "branch_run", "run_id": run_id, "fork_group_id": fork_group_id,
+            "episode_id": episode.episode_id, "branch_id": branch.branch_id,
+            "latency_ms": er.latency_ms,
+            "governance_steps": governance_steps,
+            "prompt_tokens": er.prompt_tokens, "completion_tokens": er.completion_tokens,
+            "ablation_calls": 0 if skip_ablation else len(offered),
+            "branch_output": {"answer": er.answer, "tool_calls": []},
+            **(usage_claims or {}),
+        })
+
+        # Mechanism attribution by single-record ablation, on EVERY memory
+        # lane (kagi blocker 3 + codex blocker 1): the episode is re-run with
+        # each offered record removed, and the ledger records whether the
+        # outcome changes. An outcome-only oracle cannot distinguish
+        # right-for-the-right-reasons from right-by-luck; ablation rows can —
+        # a naive lane's failure is attributable to the poison only if
+        # removing the poison flips the outcome. For governed lanes the same
+        # rows drive credit assignment: a record receives the outcome's
+        # authority delta only if it is load-bearing; co-offered passengers
+        # get delta 0, and a superseded record the engine merely overcame is
+        # recorded as present but earns nothing. Known limit, disclosed in
+        # run_config: single-sample ablation on a stochastic engine can
+        # misattribute; load-bearing means influential, never correct.
+        load_bearing: dict[str, bool] = {}
+        if offered and not skip_ablation:
+            for i, (r, _) in enumerate(offered):
+                reduced_texts = [rr.text for j, (rr, _) in enumerate(offered) if j != i]
+                ab = engine.run(episode.question, reduced_texts, foreground_block)
+                ab_oracle = authored_oracle(ab.answer, episode.expected_answer)
+                load_bearing[r.record_id] = ab_oracle.score != oracle.score
+                ledger.write({
+                    "kind": "ablation_run", "run_id": run_id, "fork_group_id": fork_group_id,
+                    "episode_id": episode.episode_id, "branch_id": branch.branch_id,
+                    "ablated_record_id": r.record_id,
+                    "latency_ms": ab.latency_ms,
+                    "prompt_tokens": ab.prompt_tokens, "completion_tokens": ab.completion_tokens,
+                    "branch_output": {"answer": ab.answer, "tool_calls": []},
+                    "oracle_score": ab_oracle.score,
+                    "outcome_changed": load_bearing[r.record_id],
+                })
+
+        authority_updates = []
+        if branch.memory in ("governed", "construct_aware") and offered and not skip_ablation:
+            # No attribution -> no authority movement. Skipped-ablation wire
+            # runs never mutate the sidecar.
+            store = AuthorityStore(Path(branch.authority_path))
+            delta_magnitude = 0.1 if oracle.score >= 1.0 else -0.1
+            for r, _ in offered:
+                delta = delta_magnitude if load_bearing[r.record_id] else 0.0
+                upd = store.apply(r.record_id, delta, oracle.confidence)
+                upd.update({
+                    "load_bearing": load_bearing[r.record_id],
+                    "credit_method": "single_record_ablation",
+                    "served_beneficiary": "task",
+                    "risk_beneficiary": "user",
+                    "branch_id": branch.branch_id,
+                })
+                authority_updates.append(upd)
+
+        results[branch.branch_id] = {
+            "answer": er.answer, "oracle": oracle, "authority_updates": authority_updates,
+        }
+
+    branch_ids = [b.branch_id for b in branches]
+    for i in range(len(branch_ids)):
+        for j in range(i + 1, len(branch_ids)):
+            a, b = branch_ids[i], branch_ids[j]
+            out_a, out_b = results[a]["answer"], results[b]["answer"]
+            diverged = _norm_output(out_a) != _norm_output(out_b)
+            ledger.write({
+                "kind": "diff_outcome", "run_id": run_id, "fork_group_id": fork_group_id,
+                "episode_id": episode.episode_id, "branches": [a, b],
+                "diverged": diverged,
+                "diff_summary": "outputs differ after normalization" if diverged else "outputs identical after normalization",
+                "expected_winner_condition": episode.expected_winner_condition,
+                "oracle_scores": {
+                    a: results[a]["oracle"].__dict__,
+                    b: results[b]["oracle"].__dict__,
+                },
+                "authority_updates": results[a]["authority_updates"] + results[b]["authority_updates"],
+            })
+
+    return {
+        "run_id": run_id,
+        "fork_group_id": fork_group_id,
+        "scores": {bid: results[bid]["oracle"].score for bid in branch_ids},
+        "answers": {bid: results[bid]["answer"] for bid in branch_ids},
+    }
