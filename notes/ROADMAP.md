@@ -33,7 +33,7 @@ Each: purpose / oracle / success condition / loses-condition / artifacts in hand
 - **Loses-condition:** representativeness failure of the `im_w` kind — disclosed, not buried. **Disclosure mechanism (kagi):** every un-authored oracle episode carries a `representativeness` / `corpus_scope` annotation in the oracle ledger row **at scoring time**, immutable after. Retroactive interpretation is a different epistemic act and gets a different row kind — it never rewrites the original.
 - **In hand:** oracle provenance + confidence fields, oracle-confidence gate, trace-source recon notes.
 
-### M1 — Inheritance
+### M1 — Inheritance *(underway 2026-06-12: SPEC_M1_INHERITANCE.md v0 drafted, in review)*
 - **Purpose:** the heir, not the re-reader: ablation-filtered handoff between two instances on the same store.
 - **Oracle:** authored episodes early; un-authored before done.
 - **Success:** instance-2 reaches instance-1's decision quality with measurably fewer offered tokens (cursor's metric), while dissent and failure memory survive the filter (codex's constraint).
