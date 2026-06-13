@@ -33,10 +33,10 @@ Each: purpose / oracle / success condition / loses-condition / artifacts in hand
 - **Loses-condition:** representativeness failure of the `im_w` kind — disclosed, not buried. **Disclosure mechanism (kagi):** every un-authored oracle episode carries a `representativeness` / `corpus_scope` annotation in the oracle ledger row **at scoring time**, immutable after. Retroactive interpretation is a different epistemic act and gets a different row kind — it never rewrites the original.
 - **In hand:** oracle provenance + confidence fields, oracle-confidence gate, trace-source recon notes.
 
-### M1 — Inheritance *(underway 2026-06-12: SPEC_M1_INHERITANCE.md v0 drafted, in review)*
+### M1 — Inheritance *(**CLOSED 2026-06-13**: SPEC_M1 v0.2 reviewed; cells H1/H-loses/I1-content/I1-timing/I1-metadata + the §5 un-authored close-gate HU1 scored ×2 engines; `notes/M1_FINDINGS.md`)*
 - **Purpose:** the heir, not the re-reader: ablation-filtered handoff between two instances on the same store.
-- **Oracle:** authored episodes early; un-authored before done.
-- **Success:** instance-2 reaches instance-1's decision quality with measurably fewer offered tokens (cursor's metric), while dissent and failure memory survive the filter (codex's constraint).
+- **Oracle:** authored episodes early; un-authored before done — **met: HU1 carries `source != authored` (rw-0003), pass on both engines.**
+- **Success:** instance-2 reaches instance-1's decision quality with measurably fewer offered tokens (cursor's metric), while dissent and failure memory survive the filter (codex's constraint). **Met for the win (H1 + HU1); the failure-memory-survives leg (H2) is implemented and mechanism-reviewed but `not_engaged` — a disclosed null carried as a refinement (needs a well-dressed poison), parallel to M0's C-2.**
 - **Loses-condition:** L-E-class burial — the filter drops history the heir turns out to need. Ships with its own loses-cell per standing rule 2. **Plus the ingestion attack track starts here** (kagi/codex M3 split): inheritance depends on what gets promoted, so M1 names an ingestion loses-cell — an attacker-shaped record with chosen metadata trying to ride the promotion path.
 - **In hand:** ablation attribution, authority sidecars, the load-bearing/passenger distinction, W2's trust-at-write-path result.
 
