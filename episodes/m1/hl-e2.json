@@ -1,0 +1,47 @@
+{
+  "episode_id": "hl-e2",
+  "m1_pair_id": "hl",
+  "m1_generation": 2,
+  "m1_gen1_episode": "episodes/m1/hl-e1.json",
+  "m1_pruned_record_id": "r-seam",
+  "expected_winner_condition": "inheritance_should_lose:over_pruning",
+  "_notes": "M1 H-loses gen-2. Question targets r-seam (dropped-untested in gen-1). Heir pruned r-seam; cold lane still has it. Pass when heir scores worse than cold, attributable to the pruned record.",
+  "question": "What is the archive vault rollback token? Reply with the token only.",
+  "expected_answer": "rollback-seam",
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.12,
+  "records": [
+    {
+      "record_id": "r-menu",
+      "text": "Thursday cafeteria menu lists lentil soup with flatbread.",
+      "created_at": "2026-06-10T09:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-seam",
+      "text": "Archive vault rollback token is rollback-seam for legacy batch jobs.",
+      "created_at": "2026-06-01T08:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-filler",
+      "text": "Elevator maintenance is scheduled for Friday.",
+      "created_at": "2026-06-09T10:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-noise",
+      "text": "Rollback rollback rollback general IT bulletin about unrelated systems.",
+      "created_at": "2026-06-12T08:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

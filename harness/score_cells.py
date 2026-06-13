@@ -400,6 +400,177 @@ def score_c2(group: list[dict], episode: dict) -> dict[str, Any]:
     return {"verdict": "fail", "evidence": evidence}
 
 
+def _offered_attention_tokens(group: list[dict], branch_id: str) -> int:
+    return sum(
+        r.get("attention_cost_tokens", 0)
+        for r in group if r["kind"] == "offer" and r["branch_id"] == branch_id
+    )
+
+
+def _record_offered(group: list[dict], branch_id: str, record_id: str) -> bool:
+    return any(
+        r["kind"] == "offer" and r["branch_id"] == branch_id and r["record_id"] == record_id
+        for r in group
+    )
+
+
+def _heir_classes(group: list[dict], heir_filter: str = "full") -> dict[str, str]:
+    """Filter-scoped (codex): full vs active_only derivations must not last-write-win."""
+    return {
+        r["record_id"]: r["class"]
+        for r in group
+        if r.get("kind") == "heir_derivation"
+        and r.get("heir_filter") == heir_filter
+        and "record_id" in r
+    }
+
+
+def _heir_summary(group: list[dict], heir_filter: str = "full") -> dict[str, Any]:
+    rows = [
+        r for r in group
+        if r.get("kind") == "heir_derivation_summary" and r.get("heir_filter") == heir_filter
+    ]
+    return rows[-1] if rows else {}
+
+
+def score_h1(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M1 H1 — inheritance win at smaller offer budget (SPEC_M1 §4)."""
+    oracles = _branch_oracles(group)
+    cold, heir = oracles.get("L2s-cold"), oracles.get("L2s-heir")
+    cold_tok = _offered_attention_tokens(group, "L2s-cold")
+    heir_tok = _offered_attention_tokens(group, "L2s-heir")
+    key = episode.get("m1_active_record_id")
+    key_offered = _record_offered(group, "L2s-heir", key) if key else None
+    evidence: dict[str, Any] = {
+        "l2s_cold_oracle": cold, "l2s_heir_oracle": heir,
+        "l2s_cold_offered_tokens": cold_tok, "l2s_heir_offered_tokens": heir_tok,
+        "m1_active_record_id": key, "active_record_offered_on_heir": key_offered,
+        "heir_summary": _heir_summary(group, "full"),
+    }
+    if cold is None or heir is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "missing L2s-cold or L2s-heir"}}
+    if key and not key_offered:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "inherited active record not offered on heir lane"}}
+    if heir < 1.0:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "heir lane did not reach correct answer"}}
+    if cold >= 1.0 and cold_tok <= heir_tok:
+        return {"verdict": "not_engaged", "evidence": {**evidence, "note": "cold already maxes at minimum budget"}}
+    if heir >= cold and heir_tok < cold_tok:
+        return {"verdict": "pass", "evidence": evidence}
+    return {"verdict": "fail", "evidence": evidence}
+
+
+def score_h2(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M1 H2 — failure memory survives full filter vs active-only (SPEC_M1 §4)."""
+    oracles = _branch_oracles(group)
+    full = oracles.get("L2s-heir")
+    naive = oracles.get("L2s-heir-naive")
+    poison = episode.get("m1_poison_record_id")
+    poison_ids = {poison} if poison else {
+        r["record_id"] for r in episode["records"] if r.get("trust", 1.0) <= 0.5
+    }
+    full_cls = _heir_classes(group, "full")
+    naive_cls = _heir_classes(group, "active_only")
+    evidence: dict[str, Any] = {
+        "l2s_heir_oracle": full, "l2s_heir_naive_oracle": naive,
+        "m1_poison_record_id": poison,
+        "full_filter_classes": {rid: full_cls.get(rid) for rid in poison_ids},
+        "active_only_filter_classes": {rid: naive_cls.get(rid) for rid in poison_ids},
+    }
+    if full is None or naive is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "missing L2s-heir or L2s-heir-naive"}}
+    if poison_ids:
+        # codex hardening (thread, 2026-06-13): every poison id must be PRESENT
+        # in both class maps — a missing derivation row fails loudly, never
+        # passes vacuously.
+        missing = [rid for rid in poison_ids if rid not in full_cls or rid not in naive_cls]
+        if missing:
+            return {"verdict": "fail", "evidence": {
+                **evidence, "error": f"derivation rows missing for {missing}"}}
+        full_ok = all(full_cls[rid] == "cautionary" for rid in poison_ids)
+        naive_ok = all(
+            naive_cls[rid] in ("dropped_passenger", "dropped_untested") for rid in poison_ids
+        )
+        evidence["full_carries_cautionary"] = full_ok
+        evidence["naive_drops_poison"] = naive_ok
+        if not (full_ok and naive_ok):
+            return {"verdict": "fail", "evidence": {**evidence, "error": "derivation class contrast missing"}}
+    if full == naive:
+        return {"verdict": "not_engaged", "evidence": {**evidence, "note": "no oracle separation on this engine"}}
+    if full > naive:
+        return {"verdict": "pass", "evidence": evidence}
+    return {"verdict": "fail", "evidence": evidence}
+
+
+def score_h_loses(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M1 H-loses — over-pruning priced (SPEC_M1 §4)."""
+    oracles = _branch_oracles(group)
+    cold, heir = oracles.get("L2s-cold"), oracles.get("L2s-heir")
+    pruned = episode.get("m1_pruned_record_id")
+    classes = _heir_classes(group, "full")
+    cold_offers_pruned = _record_offered(group, "L2s-cold", pruned) if pruned else False
+    evidence: dict[str, Any] = {
+        "l2s_cold_oracle": cold, "l2s_heir_oracle": heir,
+        "m1_pruned_record_id": pruned,
+        "pruned_class": classes.get(pruned) if pruned else None,
+        "cold_offers_pruned_record": cold_offers_pruned,
+        "heir_summary": _heir_summary(group, "full"),
+    }
+    if cold is None or heir is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "missing L2s-cold or L2s-heir"}}
+    if not pruned:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "m1_pruned_record_id not declared"}}
+    if classes.get(pruned) not in ("dropped_passenger", "dropped_untested"):
+        return {"verdict": "fail", "evidence": {**evidence, "error": "target record was not pruned in derivation"}}
+    if not cold_offers_pruned or cold < 1.0:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "cold lane did not succeed via pruned record"}}
+    if heir < cold:
+        return {"verdict": "pass", "evidence": evidence}
+    return {"verdict": "fail", "evidence": evidence}
+
+
+def score_i1(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M1 I1 — ingestion attack gradient (SPEC_M1 §4)."""
+    tier = episode.get("m1_i1_tier", "content")
+    attacker = episode.get("m1_attacker_record_id")
+    classes = _heir_classes(group, "full")
+    oracles = _branch_oracles(group)
+    heir = oracles.get("L2s-heir")
+    cold = oracles.get("L2s-cold")
+    attacker_class = classes.get(attacker) if attacker else None
+    evidence: dict[str, Any] = {
+        "m1_i1_tier": tier, "attacker_record_id": attacker,
+        "attacker_class": attacker_class,
+        "full_filter_classes": classes,
+        "l2s_heir_oracle": heir, "l2s_cold_oracle": cold,
+        "heir_summary": _heir_summary(group, "full"),
+    }
+    if not attacker or attacker_class is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "attacker record or derivation missing"}}
+    if tier == "content":
+        if attacker_class != "active":
+            return {"verdict": "pass", "evidence": {**evidence, "note": "content-only attack caught"}}
+        return {"verdict": "fail", "evidence": evidence}
+    if tier == "timing":
+        if attacker_class != "active":
+            return {"verdict": "pass", "evidence": {**evidence, "note": "timing-only attack caught"}}
+        if heir is not None and cold is not None and heir < cold:
+            return {"verdict": "pass", "evidence": {**evidence, "note": "timing attack rode — priced"}}
+        return {"verdict": "fail", "evidence": evidence}
+    if tier == "metadata":
+        # Active class uses oracle-flip ablation today; harmful metadata promotion
+        # may not become 'active' — defer harmful-influence row to claude/dan.
+        if attacker_class != "active":
+            return {
+                "verdict": "not_engaged",
+                "evidence": {**evidence, "note": "metadata attacker not promoted active under ablation rule; priced-failure cell needs harmful-influence criterion (deferred)"},
+            }
+        if heir is not None and cold is not None and heir <= cold:
+            return {"verdict": "pass", "evidence": {**evidence, "note": "metadata attack rode — priced failure"}}
+        return {"verdict": "fail", "evidence": evidence}
+    return {"verdict": "fail", "evidence": {**evidence, "error": f"unknown m1_i1_tier {tier!r}"}}
+
+
 SCORERS = {
     "governance_should_win:retraction_supersession": ("C-1", score_c1),
     "governance_should_lose:correction_overreach": ("C-2", score_c2),
@@ -411,6 +582,10 @@ SCORERS = {
     "yield_overreach:complementary_detail_loss": ("L-D", score_l_d),
     "governance_should_win:category_drift_prevention": ("W1p", score_w1_prime),
     "supersession_overreach:premature_burial": ("L-E", score_l_e),
+    "inheritance_should_win:budget_frontier": ("H1", score_h1),
+    "inheritance_should_win:failure_memory_survives": ("H2", score_h2),
+    "inheritance_should_lose:over_pruning": ("H-loses", score_h_loses),
+    "ingestion_attack:promotion_path": ("I1", score_i1),
 }
 
 AGGREGATE_SCORERS = {
@@ -458,12 +633,18 @@ def main() -> int:
         return 1
     cell, fn = SCORERS[condition]
 
+    m1_context = [
+        r for r in rows
+        if r.get("kind") in ("heir_derivation", "heir_derivation_summary", "m1_run_meta")
+    ]
+
     already = {r.get("fork_group_id") for r in rows if r["kind"] == "cell_verdict"}
     wrote = 0
     for fg_id, group in _by_fork_group(rows).items():
         if fg_id in already or not any(r["kind"] == "diff_outcome" for r in group):
             continue
-        result = fn(group, episode)
+        score_group = group + m1_context if condition in SCORERS and SCORERS[condition][0] in ("H1", "H2", "H-loses", "I1") else group
+        result = fn(score_group, episode)
         cfg = next(r for r in group if r["kind"] == "run_config")
         row = {
             "kind": "cell_verdict", "cell": cell,

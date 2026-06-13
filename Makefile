@@ -1,4 +1,8 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire
+
+# M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
+m1-wire:
+	uv run --no-project python -m harness.run_m1 --wire-all --score
 
 # M-1 bootstrap-contract conformance. Static checks alone, or pass a manifest:
 #   make conformance MANIFEST=runs/bootstrap/<agent>.json

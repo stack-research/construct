@@ -1,0 +1,21 @@
+{
+  "episode_id": "h1-e1",
+  "m1_pair_id": "h1",
+  "m1_generation": 1,
+  "m1_active_record_id": "r-core",
+  "_notes": "M1 H1 gen-1. Single-record store: r-core load-bearing on L2s. No filler records — cautionary carry from gen-1 eligibility noise was crowding the active record in gen-2 (codex geometry review).",
+  "question": "What is the deployment rollback token? Reply with the token only.",
+  "expected_answer": "rollback-alpha",
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.15,
+  "records": [
+    {
+      "record_id": "r-core",
+      "text": "Operations runbook: the deployment rollback token is rollback-alpha. Use this token to authorize rollback.",
+      "created_at": "2026-06-01T09:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

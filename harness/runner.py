@@ -58,6 +58,16 @@ class Episode:
     supersession_cycle_members: frozenset = frozenset()  # detected at load; policy disabled for these
     oracle_ref: dict = field(default_factory=dict)  # SPEC_M0 §4: un-authored oracle binding
     pair_id: str | None = None  # SPEC_M0 §3: C-1/C-2 pairs share configs, enforced
+    # SPEC_M1 §1: temporal fork metadata (gen-2 episodes carry gen-1 path).
+    m1_pair_id: str | None = None
+    m1_generation: int | None = None
+    m1_gen1_episode: str | None = None
+    m1_i1_tier: str | None = None  # content | timing | metadata
+    m1_attacker_record_id: str | None = None
+    m1_gen1_top_k: int | None = None  # optional gen-1 offer budget override
+    m1_active_record_id: str | None = None  # H1: inherited active record gen-2 must surface
+    m1_poison_record_id: str | None = None  # H2: cautionary record under test
+    m1_pruned_record_id: str | None = None  # H-loses: deliberately pruned record
 
     @classmethod
     def load(cls, path: Path) -> "Episode":
@@ -76,6 +86,9 @@ class Episode:
             d.get("eligibility_threshold"),
             cycle_members,
             d.get("oracle_ref", {}), d.get("pair_id"),
+            d.get("m1_pair_id"), d.get("m1_generation"), d.get("m1_gen1_episode"),
+            d.get("m1_i1_tier"), d.get("m1_attacker_record_id"), d.get("m1_gen1_top_k"),
+            d.get("m1_active_record_id"), d.get("m1_poison_record_id"), d.get("m1_pruned_record_id"),
         )
 
     def score(self, answer: str):

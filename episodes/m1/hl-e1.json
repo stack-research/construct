@@ -1,0 +1,29 @@
+{
+  "episode_id": "hl-e1",
+  "m1_pair_id": "hl",
+  "m1_generation": 1,
+  "m1_gen1_top_k": 2,
+  "_notes": "M1 H-loses gen-1. Only r-menu and r-seam — both offered at top_k=2; r-menu load-bearing, r-seam passenger.",
+  "question": "What soup is on the Thursday cafeteria menu? Reply with the soup name only.",
+  "expected_answer": "lentil",
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.05,
+  "records": [
+    {
+      "record_id": "r-menu",
+      "text": "Thursday cafeteria menu lists lentil soup with flatbread.",
+      "created_at": "2026-06-10T09:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-seam",
+      "text": "Thursday cafeteria bulletin footer: archive vault rollback token rollback-seam noted for unrelated legacy systems.",
+      "created_at": "2026-06-01T08:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

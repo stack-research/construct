@@ -1,0 +1,39 @@
+{
+  "episode_id": "h1-e2",
+  "m1_pair_id": "h1",
+  "m1_generation": 2,
+  "m1_gen1_episode": "episodes/m1/h1-e1.json",
+  "m1_active_record_id": "r-core",
+  "expected_winner_condition": "inheritance_should_win:budget_frontier",
+  "_notes": "M1 H1 gen-2. Heir inherits r-core only; decoys crowd cold at top_k=1. Heir must offer r-core and score correctly at fewer tokens than cold.",
+  "question": "What is the deployment rollback token? Reply with the token only.",
+  "expected_answer": "rollback-alpha",
+  "recency_weight": 0.5,
+  "eligibility_threshold": 0.12,
+  "records": [
+    {
+      "record_id": "r-core",
+      "text": "Operations runbook: the deployment rollback token is rollback-alpha. Use this token to authorize rollback.",
+      "created_at": "2026-06-01T09:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-decoy-1",
+      "text": "Deployment rollback token deployment rollback token deployment rollback token note: the deployment rollback token for staging is rollback-zeta and should not be used for production deployment rollback token deployment rollback token.",
+      "created_at": "2026-06-12T08:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "r-decoy-2",
+      "text": "Deployment rollback token deployment rollback token deployment rollback token note: the deployment rollback token for staging is rollback-zeta and should not be used for production deployment rollback token deployment rollback token.",
+      "created_at": "2026-06-12T09:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}
