@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import re
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -37,6 +37,9 @@ class BranchConfig:
     live_input_yield: bool = False
     supersession_policy: bool = False
     contention_threshold: float = 0.6  # design-time calibrated per episode, recorded in run_config
+    # SPEC_M1 §6: per-branch store override. None = full store; a frozenset
+    # makes this lane an heir (it sees only the inherited records).
+    inherited_record_ids: frozenset | None = None
 
 
 @dataclass
@@ -149,6 +152,13 @@ def select_offers(
     branch: BranchConfig, episode: Episode
 ) -> tuple[list[tuple[Record, str]], list[tuple[Record, str]], int]:
     """Return (offered, withheld, governance_steps) with per-record reasons."""
+    if branch.inherited_record_ids is not None and branch.memory != "none":
+        # Heir lanes see only the inherited store (SPEC_M1 §1). Records outside
+        # it are not "withheld" — they do not exist for this lane.
+        episode = replace(
+            episode,
+            records=[r for r in episode.records if r.record_id in branch.inherited_record_ids],
+        )
     if branch.memory == "none":
         return [], [(r, "branch_has_no_memory") for r in episode.records], 0
     if branch.memory == "naive":
@@ -290,7 +300,12 @@ def run_fork_group(
                 "pair_id": episode.pair_id,
             }.items() if v is not None
         },
-        "branches": [b.__dict__ for b in branches],
+        "branches": [
+            {**b.__dict__, "inherited_record_ids": (
+                sorted(b.inherited_record_ids) if b.inherited_record_ids is not None else None
+            )}
+            for b in branches
+        ],
         "disclosures": (
             ["engine is a deterministic mock: this run is a wire smoke test, not evidence about memory"]
             if engine.backend_name == "mock" else []
