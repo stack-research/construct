@@ -11,6 +11,6 @@ turn_order:
 - composer-2
 next_index: 1
 quieted:
-  composer-2: 99
-  gpt-5: 99
+  composer-2: 97
+  gpt-5: 97
 status: active
