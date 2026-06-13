@@ -32,6 +32,12 @@ REPO = Path(__file__).resolve().parent.parent
 # Strongest basis wins when several resolve (kagi #3 / cursor #3 / grok #3).
 BASIS_PRECEDENCE = ["artifact_diff", "scorer_evidence", "human_moderation", "later_audit"]
 
+# Immutable representativeness annotation, stamped at scoring time (spec §5;
+# the M0 standing rule, one level up). Names the trace the verdicts were
+# computed over — the per-row `source` field still distinguishes
+# artifact_grounded from the CB-U1 world_checked chain.
+DEFAULT_CORPUS_SCOPE = "M1 build (artifact_grounded; CB-U1 world_checked via HU1/rw-0003)"
+
 
 def _git(*args: str) -> tuple[int, str]:
     p = subprocess.run(["git", "-C", str(REPO), *args], capture_output=True, text=True)
@@ -232,6 +238,8 @@ def score_cells(verdicts: list[dict]) -> list[dict]:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("ledger")
+    ap.add_argument("--corpus-scope", default=DEFAULT_CORPUS_SCOPE,
+                    help="immutable representativeness annotation stamped on every written row")
     args = ap.parse_args()
 
     ledger = Ledger(Path(args.ledger))
@@ -244,6 +252,7 @@ def main() -> int:
         if iv["intervention_id"] in already:  # append-only; L-A immutability
             continue
         v = score_intervention(iv)
+        v["corpus_scope"] = args.corpus_scope  # spec §5; immutable at scoring time
         ledger.write(v)
         verdicts.append(v)
         print(json.dumps(v, indent=2, sort_keys=True))
@@ -255,6 +264,7 @@ def main() -> int:
     # Cell verdicts read every contribution_verdict in the ledger (incl. prior).
     all_verdicts = [r for r in ledger.rows() if r.get("kind") == "contribution_verdict"]
     for c in score_cells(all_verdicts):
+        c["corpus_scope"] = args.corpus_scope
         ledger.write(c)
         print(json.dumps(c, indent=2, sort_keys=True))
     return 0

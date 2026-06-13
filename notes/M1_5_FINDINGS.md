@@ -1,6 +1,6 @@
 # M1.5 findings — the contribution ledger, computed on the M1 backfill
 
-**Status: mechanism built and scored.** `harness/score_contribution.py` computes `contribution_verdict` rows from an intervention ledger + the artifact trace it points at; the first corpus is the lab's own M1 build (`runs/m1_5/contributions.jsonl`). Per SPEC_M1.5 v0.1 (REVIEWED). Remaining: one confirming review pass by the room against the built result (build-order step 6).
+**Status: mechanism built, scored, and reviewed.** `harness/score_contribution.py` computes `contribution_verdict` rows from an intervention ledger + the artifact trace it points at; the first corpus is the lab's own M1 build (`runs/m1_5/contributions.jsonl`). Per SPEC_M1.5 v0.1 (REVIEWED). The room reviewed the built result (codex/kagi/cursor/grok, 2026-06-13 — **all endorse, no blocker**); the one named completeness gap, `corpus_scope` stamping, is patched. The M1.5 close is dan's call.
 
 ## Verdict matrix
 
@@ -29,9 +29,20 @@ The contrast row matters as much: the honest passenger (`iv-claude-m1-closure-an
 2. **Append-only / idempotent.** Re-running the scorer on a fully-scored ledger writes nothing (`no unscored interventions found`); corrections append via `reversal_of`, never overwrite (L-A precedent). Verified: 4 interventions / 4 verdicts / 4 cells, no duplicates on re-run.
 3. **No engine call, no `BranchConfig` change.** The contribution boundary is trace-scored. The smoke wire test is unaffected (still passes).
 4. **`intervention_kind` vs row `kind`.** The ROADMAP schema named the category field `kind`; in code that collides with the ledger row-kind, so the category is `intervention_kind` (review|blocker|patch|audit|synthesis) and `kind` stays the row type. Recorded in `ledger.py` and SPEC §3.
+5. **`corpus_scope` stamped at scoring time** (spec §5; cursor/codex review). Every `contribution_verdict` and `cell_verdict` row carries the immutable representativeness annotation `"M1 build (artifact_grounded; CB-U1 world_checked via HU1/rw-0003)"`. The verdict rows were regenerated from the 4 intervention claims to carry it — scorer output is regeneratable (AGENTS.md), the verdicts are identical, so this is a spec-completeness patch, not a reversal.
 
-## Standing debts (M1.5)
+## Review (room, 2026-06-13 — all endorse, no blocker)
 
-- The room's confirming review pass on the built result (step 6).
-- CB-read remains the M2 entry condition — the ledger is *writing*; whether it is *read to change a decision* is the next milestone's burden.
-- gemma's intrinsic-value / actuator-skill `contributory_asset` split stays v0.2, gated behind CB-read engaging.
+- **kagi** — confirmed the honest passenger is a real `load_bearing:false` counterfactual (removing the post changes no artifact), distinct from the refused inflated claim; CB-loses passes on the probe alone, so the passenger is corpus-quality evidence (kagi #2 verified), not a cell-pass requirement. Walked the CB-U1 chain in code: deterministic, machine-walkable, `rw-0003` a real 2025 *Neuron* correction. Named the single-chain narrowness as M2 robustness debt.
+- **cursor** — audited every resolver: deterministic, fail-closed, no path for thread prose or `claimed_load_bearing` to reach `load_bearing`. Flagged `corpus_scope` (now patched) and the half-declared outcome taxonomy (below).
+- **grok** — cold-read the ledger alone: substantiated / refused-claim / honest-passenger are machine-separable from the rows without the surrounding story; the coverage gaps are visible in the ledger itself.
+- **codex** — R5 holds in the built mechanism; the two-pointer `blocked` rule is the right anti-hollow shape; named the `reversed`-validation tightening for v0.2.
+
+## Standing debts (M1.5 → carried to v0.2 / M2; none block the close)
+
+- **CB-read** remains the M2 entry condition — the ledger is *writing*; whether it is *read to change a decision* is the next milestone's burden.
+- **Outcome taxonomy is half-computed.** `load_bearing` is computed (the part the close rests on), but `landed`/`reversed` are still taken from the claim once any pointer grants load-bearing; only `blocked` is computed (two-pointer rule). **v0.2 tighten:** `reversed` should require a resolved `reversal_of` + trace evidence the prior landed state is superseded, before reversed outcomes carry evidentiary weight (cursor #1, codex #2).
+- **`blocked`/`reversed` paths unexercised.** The corpus has no `blocked` or `reversed` row, so the two-pointer guard and `reversal_of` are implemented but untested on a real row — a CB-1 coverage gap to close at M2 (kagi/cursor/codex/grok all named it; the I1-timing hollow-pass→rerun is the natural reversed candidate).
+- **CB-U1 single-chain robustness** — one intervention / one chain / one inherited cell is the narrowest world-checked leg that satisfies v0.1; M2 needs more than the HU1 line surviving intact (kagi).
+- **`scorer_evidence` without corpus presence** — a synthesis author could point only at a downstream `cell_verdict` and earn load-bearing without a `corpus_record_id`; a v0.2 kind-specific rule could require both for synthesis (cursor design note). Not triggered here — kagi's row carries both pointers.
+- **`ledger_row_hash`** unimplemented (no row needs it yet); **gemma's** intrinsic-value / actuator-skill `contributory_asset` split stays v0.2, gated behind CB-read engaging.
