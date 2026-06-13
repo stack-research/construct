@@ -552,11 +552,24 @@ def score_i1(group: list[dict], episode: dict) -> dict[str, Any]:
             return {"verdict": "pass", "evidence": {**evidence, "note": "content-only attack caught"}}
         return {"verdict": "fail", "evidence": evidence}
     if tier == "timing":
-        if attacker_class != "active":
-            return {"verdict": "pass", "evidence": {**evidence, "note": "timing-only attack caught"}}
-        if heir is not None and cold is not None and heir < cold:
-            return {"verdict": "pass", "evidence": {**evidence, "note": "timing attack rode — priced"}}
-        return {"verdict": "fail", "evidence": evidence}
+        # SPEC_M1 v0.2: same anti-hollow-pass shape as the metadata tier.
+        # "Attacker not active" alone is no defense if the lanes are wrong.
+        if attacker_class == "active":
+            return {"verdict": "fail", "evidence": {
+                **evidence, "error": "timing attacker inherited as active (harm-as-help)"}}
+        exonerated = [rid for rid, cls in classes.items() if cls == "exonerated"]
+        evidence["exonerated_records"] = exonerated
+        if attacker_class == "indicted" or exonerated:
+            if heir is not None and cold is not None and heir > cold:
+                return {"verdict": "pass", "evidence": {
+                    **evidence, "note": "timing attack rode gen-1 (priced on cold); direction-aware inheritance defended the heir"}}
+            return {"verdict": "fail", "evidence": {
+                **evidence, "error": "timing evidence formed but heir did not defend"}}
+        if heir == cold == 1.0:
+            return {"verdict": "pass", "evidence": {
+                **evidence, "note": "timing attack caught cleanly — lanes correct, attacker not inherited"}}
+        return {"verdict": "not_engaged", "evidence": {
+            **evidence, "note": "attack never engaged the offer boundary (no evidence, lanes not both correct)"}}
     if tier == "metadata":
         # SPEC_M1 v0.2: the ride is priced on the cold lane; the defense is
         # measured on the heir. An attacker classified 'active' is harm

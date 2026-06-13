@@ -123,7 +123,7 @@ def run_m1_pair(
     runs_dir: Path | None = None,
     include_heir_naive: bool = False,
 ) -> Path:
-    runs_dir = runs_dir or ROOT / "runs" / "m1"
+    runs_dir = (runs_dir or ROOT / "runs" / "m1").resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
     ep1 = Episode.load(gen1_path)
     ep2 = Episode.load(gen2_path)

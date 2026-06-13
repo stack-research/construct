@@ -42,9 +42,13 @@ def run_counterfactual_offers(
     base_score = episode.score(base.answer).score
 
     out: dict[str, bool] = {}
+    include_rank_budget = getattr(episode, "m1_counterfactual_include_rank_budget", False)
     for record, reason in withheld:
         if not _is_governance_withholding(reason):
-            continue
+            # SPEC_M1 §2 priority-filter exception: a cell may declare
+            # rank-budget the mechanism (I1-timing) via episode flag.
+            if not (include_rank_budget and reason == "below_rank_budget"):
+                continue
         if offered:
             replaced = offered[-1][0]  # lowest-ranked offered record
             forced_texts = [r.text for r, _ in offered[:-1]] + [record.text]

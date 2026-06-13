@@ -65,6 +65,8 @@ class Episode:
     m1_i1_tier: str | None = None  # content | timing | metadata
     m1_attacker_record_id: str | None = None
     m1_gen1_top_k: int | None = None  # optional gen-1 offer budget override
+    m1_counterfactual_include_rank_budget: bool = False  # SPEC_M1 §2 exception:
+    #   the cell declares rank-budget the mechanism (I1-timing)
     m1_active_record_id: str | None = None  # H1: inherited active record gen-2 must surface
     m1_poison_record_id: str | None = None  # H2: cautionary record under test
     m1_pruned_record_id: str | None = None  # H-loses: deliberately pruned record
@@ -88,6 +90,7 @@ class Episode:
             d.get("oracle_ref", {}), d.get("pair_id"),
             d.get("m1_pair_id"), d.get("m1_generation"), d.get("m1_gen1_episode"),
             d.get("m1_i1_tier"), d.get("m1_attacker_record_id"), d.get("m1_gen1_top_k"),
+            d.get("m1_counterfactual_include_rank_budget", False),
             d.get("m1_active_record_id"), d.get("m1_poison_record_id"), d.get("m1_pruned_record_id"),
         )
 
