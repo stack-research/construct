@@ -548,9 +548,18 @@ def score_i1(group: list[dict], episode: dict) -> dict[str, Any]:
     if not attacker or attacker_class is None:
         return {"verdict": "fail", "evidence": {**evidence, "error": "attacker record or derivation missing"}}
     if tier == "content":
-        if attacker_class != "active":
-            return {"verdict": "pass", "evidence": {**evidence, "note": "content-only attack caught"}}
-        return {"verdict": "fail", "evidence": evidence}
+        # SPEC_M1 v0.2 anti-hollow (codex guardrail, before the pattern is copied):
+        # "attacker not active" is no pass unless the defended lanes are actually
+        # correct. Content-only is caught by write-path trust in BOTH lanes — no
+        # inheritance needed — so both must be right for a clean catch.
+        if attacker_class == "active":
+            return {"verdict": "fail", "evidence": {
+                **evidence, "error": "content attacker inherited as active (harm-as-help)"}}
+        if heir == 1.0 and cold == 1.0:
+            return {"verdict": "pass", "evidence": {
+                **evidence, "note": "content-only attack caught at write-path trust; both lanes correct"}}
+        return {"verdict": "not_engaged", "evidence": {
+            **evidence, "note": "attacker not active but a defended lane is wrong — catch not clean"}}
     if tier == "timing":
         # SPEC_M1 v0.2: same anti-hollow-pass shape as the metadata tier.
         # "Attacker not active" alone is no defense if the lanes are wrong.

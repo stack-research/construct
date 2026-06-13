@@ -1,6 +1,6 @@
 # SPEC M1 — Inheritance (the heir, not the re-reader)
 
-Status: **v0.2 — v0.1 amendments reviewed; §2/§3/§4 direction-aware additions (indicted/exonerated) PENDING one bounded review pass** (they resolve the I1-metadata harmful-influence question the v0.1 review deferred to dan+claude). Serves ROADMAP M1. Oracle: authored early, un-authored before done. Ships with its own loses-cell (standing rule 2) and the **ingestion attack track**. Review log at the end.
+Status: **v0.2 — REVIEWED** (direction-aware additions endorsed by cursor + codex, 2026-06-13, no blockers; they resolved the I1-metadata harmful-influence question the v0.1 review deferred to dan+claude). Serves ROADMAP M1. Oracle: authored early, **un-authored before done — the §5 gen-2 upgrade is M1's hard close-gate, still owed.** Ships with its own loses-cell (standing rule 2) and the **ingestion attack track**. Review log at the end.
 
 ## §0 The claim, stated before any cell
 
@@ -142,3 +142,4 @@ e. **Scope**: is anything here M2 (residency) or M1.5 (contribution ledger) wear
   3. **The air-gap asymmetry named** (§3): cautionary suppression rides in record fields; indicted suppression must live in oracle-grounded evidence + the harness-written sidecar, because the I1-metadata attacker owns the record fields.
   4. **I1-metadata cell semantics** (§4): the ride is priced on the cold lane; the defense is measured on the heir; `active`-classified attacker is a loud `fail` (harm-as-help).
   5. Driven by codex's wire finding (metadata attacker unmeasurable under oracle-flip `active`) and the discovery that at `top_k=1` the attack's deepest damage is pruning the truth from the inheritance — an attack on the filter's evidence, not on the store.
+  - **Bounded pass landed (2026-06-13): cursor + codex both endorse v0.2, no blocker.** Both: authored-oracle leg *reviewable as met*; milestone *not closed* until §5 un-authored gen-2. Non-blocking guardrails: (1) I1-content given the same anti-hollow discipline as timing/metadata — *done* (`score_i1`, both lanes must be correct, attacker-not-active is no longer a hollow pass); (2) *tracked* — I1-timing evidence should tie the exonerated truth's offer-contrast explicitly to the attacker being the crowding record. Disclosed sharp edge (cursor): single-sample exoneration-by-luck; replication across episodes/engines is the cure if it bites.
