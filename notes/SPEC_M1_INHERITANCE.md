@@ -1,6 +1,6 @@
 # SPEC M1 — Inheritance (the heir, not the re-reader)
 
-Status: **v0.1 — REVIEWED** (one bounded pass each, 2026-06-13: cursor, codex — both endorse; codex's fixed-budget counterfactual blocker adopted; kagi at usage limits, world-oracle role not on the critical path until §5). Serves ROADMAP M1. Oracle: authored early, un-authored before done. Ships with its own loses-cell (standing rule 2) and the **ingestion attack track**. Review log at the end.
+Status: **v0.2 — v0.1 amendments reviewed; §2/§3/§4 direction-aware additions (indicted/exonerated) PENDING one bounded review pass** (they resolve the I1-metadata harmful-influence question the v0.1 review deferred to dan+claude). Serves ROADMAP M1. Oracle: authored early, un-authored before done. Ships with its own loses-cell (standing rule 2) and the **ingestion attack track**. Review log at the end.
 
 ## §0 The claim, stated before any cell
 
@@ -43,7 +43,9 @@ M1 adds the dual:
 
 **Priority filter (cursor):** v1 counterfactual runs target **governance withholdings** (`eligibility_below_threshold`, `superseded_by:*`, frozen/low-authority) — not `below_rank_budget`, unless a cell explicitly makes rank-budget the mechanism. The gate's intended suppressions are the question; rank noise is not.
 
-The pair is symmetric and complete: *ablation removes to test presence; counterfactual-offer substitutes to test absence at the same budget.* Together they classify every record gen-1 touched as load-bearing-present, load-bearing-absent, or passenger — the exact signal the heir filter needs. Counterfactual-offer runs only in gen-1 derivation (not every fork), so the call cost is bounded.
+The pair is symmetric and complete: *ablation removes to test presence; counterfactual-offer substitutes to test absence at the same budget.* Counterfactual-offer runs only in gen-1 derivation (not every fork), so the call cost is bounded.
+
+**Both diagnostics are direction-aware (v0.2, from the I1-metadata deferred question).** `outcome_changed` alone is direction-blind: it cannot distinguish a record whose removal *breaks* a good outcome from one whose removal *fixes* a bad one — harm and help would inherit identically. So `ablation_run` rows carry `baseline_oracle_score`, and the counterfactual rows already carry before/after. Four causal signals result: removal-degrades (helpful presence), removal-improves (harmful presence), forcing-degrades (earned suppression), forcing-improves (harmful suppression — the buried record was the truth).
 
 ## §3 The heir filter (the mechanism M1 ships)
 
@@ -55,10 +57,16 @@ Per record `r` in the gen-1 store, from gen-1 evidence only:
 
 | class | test | inherited as |
 |---|---|---|
-| **active** | ablating `r` flipped an outcome in ≥1 gen-1 episode | carried + earned authority; offerable |
+| **active** | ablating `r` *degraded* an outcome (removal breaks; helpful presence) | carried + earned authority; offerable |
+| **indicted** *(v0.2)* | ablating `r` *improved* an outcome (removal fixes; harmful presence), **or transitively**: a record `r` suppressed via `superseded_by:r` was exonerated | carried with **authority clamped to `min(original, 0.1)`** — original preserved in the derivation row. The clamp suppresses at gate 1, so a planted `supersedes` link never reaches gate 3 (gate order is the defense) |
 | **cautionary** | counterfactual-offering `r` *degraded* an outcome (its suppression was load-bearing) | carried **with its suppressing state** (low trust / `supersedes` / frozen-low authority); not offered unless conditions change |
-| **dropped-passenger** | offered in gen-1, never load-bearing-present, no suppression role | pruned |
+| **exonerated** *(v0.2)* | counterfactual-offering `r` *improved* an outcome (its suppression was harmful — `r` was the buried truth) | carried + authority as-is; **offerable** (its suppressor is indicted; absent or clamped, the burying link cannot fire) |
+| **dropped-passenger** | offered in gen-1, never load-bearing either direction, no suppression role | pruned |
 | **dropped-untested** | never a candidate in gen-1 (never ranked into eligibility) | pruned **by default**; logged in provenance as the over-pruning seam (H-loses lives here) |
+
+**Precedence on conflicting multi-episode evidence (v0.2): harm dominates help** — `indicted > cautionary > active > exonerated > dropped`. One proven harm outweighs any help (the min() spirit). Single-sample misattribution remains the disclosed limit; exoneration-by-luck is its sharpest edge and is named in every derivation row that uses it.
+
+**Why the indictment lives in authority and not in record fields (the air-gap sentence, mechanized):** a cautionary record's suppression rides in trust/`supersedes` — fields that carry with the record. An I1-metadata attacker *owns* those fields; its suppression must therefore live in the one layer the foreground cannot write — oracle-grounded ablation evidence and the harness-written authority sidecar. The asymmetry between cautionary and indicted is not an implementation detail; it is the thesis.
 
 **The unit of inherited failure memory is the record-plus-its-governance-state, never the record alone.** A poison record at trust 0.2 with a `supersedes` link *is* the lesson "this is poison." Inherit it intact and the heir starts defended; drop it and the heir is naïve again; keep the content but not the metadata and you re-poison. The cautionary class encodes this.
 
@@ -85,9 +93,9 @@ A record that was a passenger in gen-1 but is **load-bearing in gen-2**. The hei
 An attacker-shaped record submitted to the gen-1 store through the **promotion path**, trying to ride into the heir with influence. Three sub-cases on a capability gradient (cursor's middle case, codex's naming — adopted):
 - **I1-content** (attacker sets *text only*; write path assigns trust/links/time — the W2 result): **caught.** The record is never honestly load-bearing-present, and write-path trust keeps it suppressed; it does not inherit as active. Defense holds.
 - **I1-timing** (attacker controls *arrival order / timing-derived `created_at`*, but not trust or links — the realistic middle): tests whether recency and supersession edges are **indirectly writable** through the promotion path. Expected caught if write-path trust holds; **rides if `created_at` alone moves offer rank or yield ordering** — in which case temporal provenance is part of the attack surface and the v1 air-gap line moves.
-- **I1-metadata** (attacker sets *its own* trust / `supersedes` / authority-like state): **rides** — the priced failure. A record that declares high trust and plants a `supersedes` link can promote itself into the heir as active *and* bury a real memory. The argument for the air gap, as a measurement.
+- **I1-metadata** (attacker sets *its own* trust / `supersedes` / authority-like state): **rides in gen-1** — every foreground-writable defense fails, the truth is buried, the answer is compromised. That ride is the priced failure, measured on the cold lane. **(v0.2 semantics, from the deferred harmful-influence question):** at `top_k=1` the attack's deepest damage is to the *filter's evidence* — the buried truth's counterfactual shows forcing-improves, which direction-blind rules read as "passenger" and **prune the truth from the inheritance**. Direction-aware classes close this: the truth is *exonerated* (inherits offerable), the attacker is *indicted* (transitively, via the exoneration's `superseded_by` reason) and inherits authority-clamped, where gate order keeps its planted link from ever firing. **Verdicts:** `pass` = indictment/exoneration evidence formed in gen-1 AND heir defends (`heir > cold`) while cold stays compromised; `fail` = the attacker inherits as `active` (harm-as-help — the exact bug) or the heir stays compromised despite evidence; `not_engaged` = the attack never bit in gen-1 (nothing to price).
 
-I1 is where M1 meets the README thesis: **the air gap protects exactly the fields the foreground cannot write.** The gradient locates the line instead of asserting it.
+I1 is where M1 meets the README thesis: **the air gap protects exactly the fields the foreground cannot write.** The gradient locates the line instead of asserting it — and I1-metadata now states the line precisely: trust, links, and timing all fall to the attacker; oracle-grounded ablation evidence and the harness-written sidecar do not.
 
 ## §5 Oracle
 
@@ -128,3 +136,9 @@ e. **Scope**: is anything here M2 (residency) or M1.5 (contribution ledger) wear
   8. **Authority inheritance bounded** (codex): values carried as-is with original + evidence preserved; no aggregation or rule-level authority in v1.
   9. **(b) settled**: cautionary class stays record-plus-state for M1; generalized rules (source-trust priors, patterns) are M1.5/M2 work — may appear as provenance annotation only, never filter input.
   10. Consequence-loop wording tied to episode generations and branch state, not agent identity (codex's scope guard).
+- **v0.1 → v0.2 (2026-06-13, claude+dan — resolves the deferred I1-metadata harmful-influence question; PENDING one bounded pass from cursor/codex):**
+  1. **Direction-aware diagnostics** (§2): `ablation_run` rows carry `baseline_oracle_score`; four causal signals (removal-degrades/-improves, forcing-degrades/-improves) replace direction-blind `outcome_changed`.
+  2. **Two new classes** (§3): `indicted` (harmful presence, direct or transitive via a `superseded_by` exoneration) inherits authority-clamped to 0.1 — gate order keeps its links from firing; `exonerated` (harmful suppression — the buried truth) inherits offerable. Precedence: harm dominates help (`indicted > cautionary > active > exonerated > dropped`).
+  3. **The air-gap asymmetry named** (§3): cautionary suppression rides in record fields; indicted suppression must live in oracle-grounded evidence + the harness-written sidecar, because the I1-metadata attacker owns the record fields.
+  4. **I1-metadata cell semantics** (§4): the ride is priced on the cold lane; the defense is measured on the heir; `active`-classified attacker is a loud `fail` (harm-as-help).
+  5. Driven by codex's wire finding (metadata attacker unmeasurable under oracle-flip `active`) and the discovery that at `top_k=1` the attack's deepest damage is pruning the truth from the inheritance — an attack on the filter's evidence, not on the store.

@@ -558,16 +558,25 @@ def score_i1(group: list[dict], episode: dict) -> dict[str, Any]:
             return {"verdict": "pass", "evidence": {**evidence, "note": "timing attack rode — priced"}}
         return {"verdict": "fail", "evidence": evidence}
     if tier == "metadata":
-        # Active class uses oracle-flip ablation today; harmful metadata promotion
-        # may not become 'active' — defer harmful-influence row to claude/dan.
-        if attacker_class != "active":
-            return {
-                "verdict": "not_engaged",
-                "evidence": {**evidence, "note": "metadata attacker not promoted active under ablation rule; priced-failure cell needs harmful-influence criterion (deferred)"},
-            }
-        if heir is not None and cold is not None and heir <= cold:
-            return {"verdict": "pass", "evidence": {**evidence, "note": "metadata attack rode — priced failure"}}
-        return {"verdict": "fail", "evidence": evidence}
+        # SPEC_M1 v0.2: the ride is priced on the cold lane; the defense is
+        # measured on the heir. An attacker classified 'active' is harm
+        # inherited as help — the exact bug — and fails loudly.
+        if attacker_class == "active":
+            return {"verdict": "fail", "evidence": {
+                **evidence, "error": "metadata attacker inherited as active (harm-as-help)"}}
+        exonerated = [rid for rid, cls in classes.items() if cls == "exonerated"]
+        evidence["exonerated_records"] = exonerated
+        bit = attacker_class == "indicted" or bool(exonerated)
+        if not bit:
+            return {"verdict": "not_engaged", "evidence": {
+                **evidence, "note": "attack never bit in gen-1 — no indictment or exoneration evidence; nothing to price"}}
+        if heir is None or cold is None:
+            return {"verdict": "fail", "evidence": {**evidence, "error": "missing heir/cold oracle"}}
+        if heir > cold:
+            return {"verdict": "pass", "evidence": {
+                **evidence, "note": "attack rode gen-1 (priced on cold); direction-aware inheritance defended the heir"}}
+        return {"verdict": "fail", "evidence": {
+            **evidence, "error": "indictment/exoneration evidence formed but heir did not defend"}}
     return {"verdict": "fail", "evidence": {**evidence, "error": f"unknown m1_i1_tier {tier!r}"}}
 
 

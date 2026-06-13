@@ -424,6 +424,7 @@ def run_fork_group(
                     "prompt_tokens": ab.prompt_tokens, "completion_tokens": ab.completion_tokens,
                     "branch_output": {"answer": ab.answer, "tool_calls": []},
                     "oracle_score": ab_oracle.score,
+                    "baseline_oracle_score": oracle.score,  # SPEC_M1 v0.2: direction
                     "outcome_changed": load_bearing[r.record_id],
                 })
 
