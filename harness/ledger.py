@@ -5,6 +5,14 @@ The engine cannot steer what is recorded about it (plan §2.4). Row kinds:
   offer / withholding — one per record per branch (plan §5)
   branch_run — per-branch cost side: latency, tokens, governance steps
   diff_outcome — per branch pair: divergence + oracle score + authority delta
+
+Contribution boundary (SPEC_M1.5 — the offer ledger, one level up):
+  intervention — a CLAIM that an agent intervention changed an artifact; audit
+    input only (R5), contributor-written, never authoritative. `intervention_kind`
+    (review|blocker|patch|audit|synthesis) is the category; `kind` is the row type.
+  contribution_verdict — the COMPUTED boundary crossing, written by
+    score_contribution.py from the artifact trace; load_bearing is never copied
+    from the intervention's claim.
 """
 
 from __future__ import annotations
