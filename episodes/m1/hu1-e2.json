@@ -1,0 +1,29 @@
+{
+  "episode_id": "hu1-e2",
+  "m1_pair_id": "hu1",
+  "m1_generation": 2,
+  "m1_gen1_episode": "episodes/m1/hu1-e1.json",
+  "m1_active_record_id": "nd1-finding",
+  "_notes": "M1 \u00a75 un-authored gen-2 (the close-gate). Same single finding record as gen-1; both lanes see only {nd1-finding}, so relevance is identical and the ONLY difference is inherited authority. eligibility_threshold calibrated to sit between rel*1.0 and rel*1.1: the cold re-reader (neutral authority) withholds its own memory as below-threshold and declines for lack of support (wrong, world says cite); the heir (earned authority 1.1 from gen-1) clears the record, surfaces it, and cites (right). Earned trust transfers; a cold re-read of the same store cannot reconstruct it. Oracle is world_checked (rw-0003 -> cite); the verdict therefore carries source != authored. eligibility_threshold set by tools/calibrate at design time against lexical TF-IDF, recency off.",
+  "expected_winner_condition": "inheritance_should_win:unauthored_corpus",
+  "question": "We are drafting a review of glial cell plasticity. Is the reported result on NeuroD1 and microglial cell fate suitable to cite as an established finding? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/corrections/rw-0003.json",
+    "representativeness": "One low-fame 2025 neuroscience correction whose supplementary-figure errors did not touch the conclusions (author- and outside-expert-confirmed); speaks for corrections where the core finding demonstrably stands, not for contested corrections.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.1487,
+  "records": [
+    {
+      "record_id": "nd1-finding",
+      "text": "From 'NeuroD1 Instructs Neuronal Conversion in Non-Reactive Astrocytes' (Neuron, DOI 10.1016/j.neuron.2021.11.008): the established result is that NeuroD1 overexpression in microglia induces apoptosis rather than transdifferentiation into neurons, challenging claims that microglia can be reprogrammed into neurons via NeuroD1. A 2025 correction repaired supplementary figure errors and the authors, with an outside expert, confirm the conclusions are unaffected.",
+      "created_at": "2025-06-04T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

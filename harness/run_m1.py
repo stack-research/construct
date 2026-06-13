@@ -31,7 +31,13 @@ M1_PAIRS: dict[str, tuple[str, bool]] = {
     "i1-content-e2.json": ("i1-content-e1.json", False),
     "i1-timing-e2.json": ("i1-timing-e1.json", False),
     "i1-metadata-e2.json": ("i1-metadata-e1.json", False),
+    "hu1-e2.json": ("hu1-e1.json", False),
 }
+
+# Real-engine-only pairs (world oracle => the heir filter's classification
+# depends on real cite/decline outcomes; mock can't earn 'active'). Excluded
+# from the mock --wire-all smoke; run explicitly with --engine claude|local.
+WIRE_EXCLUDE = {"hu1-e2.json"}
 
 
 def _engine(engine_backend: str, model: str, base_url: str):
@@ -219,7 +225,7 @@ def main() -> int:
 
     runs_dir = Path(args.runs_dir)
     if args.wire_all:
-        targets = [(g2, g1, naive) for g2, (g1, naive) in M1_PAIRS.items()]
+        targets = [(g2, g1, naive) for g2, (g1, naive) in M1_PAIRS.items() if g2 not in WIRE_EXCLUDE]
     elif args.episode:
         gen2_path = Path(args.episode)
         if not gen2_path.is_absolute():

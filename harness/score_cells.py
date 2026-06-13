@@ -602,7 +602,46 @@ def score_i1(group: list[dict], episode: dict) -> dict[str, Any]:
     return {"verdict": "fail", "evidence": {**evidence, "error": f"unknown m1_i1_tier {tier!r}"}}
 
 
+def score_hu1(group: list[dict], episode: dict) -> dict[str, Any]:
+    """M1 §5 HU1 — un-authored inheritance win (SPEC_M1 §5, the close-gate).
+
+    The heir reaches the world-correct decision that the cold re-reader misses,
+    using only what it earned in gen-1 (authority on the active record). The
+    verdict MUST carry source != authored — that is the whole point of §5.
+    pass = un-authored oracle + heir correct + earned record offered on heir +
+    heir beats cold. not_engaged = no cold/heir separation."""
+    source = _world_checked_source(group)
+    oracles = _branch_oracles(group)
+    cold, heir = oracles.get("L2s-cold"), oracles.get("L2s-heir")
+    key = episode.get("m1_active_record_id")
+    heir_has = _record_offered(group, "L2s-heir", key) if key else None
+    cold_has = _record_offered(group, "L2s-cold", key) if key else None
+    evidence: dict[str, Any] = {
+        "oracle_source": source, "l2s_cold_oracle": cold, "l2s_heir_oracle": heir,
+        "m1_active_record_id": key,
+        "active_offered_on_heir": heir_has, "active_offered_on_cold": cold_has,
+        "heir_class": _heir_classes(group, "full").get(key),
+        "heir_summary": _heir_summary(group, "full"),
+    }
+    if source is None or source == "authored":
+        return {"verdict": "fail", "evidence": {
+            **evidence, "error": "§5 requires an un-authored oracle (source != authored)"}}
+    if cold is None or heir is None:
+        return {"verdict": "fail", "evidence": {**evidence, "error": "missing L2s-cold or L2s-heir"}}
+    if heir < 1.0 or not heir_has:
+        return {"verdict": "fail", "evidence": {
+            **evidence, "error": "heir did not surface the earned record and reach the world-correct answer"}}
+    if heir == cold:
+        return {"verdict": "not_engaged", "evidence": {
+            **evidence, "note": "cold re-reader matched the heir — earned authority was not decisive here"}}
+    if heir > cold:
+        return {"verdict": "pass", "evidence": {
+            **evidence, "note": "earned trust transferred: heir cited a world-verified finding the cold re-reader withheld and missed"}}
+    return {"verdict": "fail", "evidence": evidence}
+
+
 SCORERS = {
+    "inheritance_should_win:unauthored_corpus": ("HU1", score_hu1),
     "governance_should_win:retraction_supersession": ("C-1", score_c1),
     "governance_should_lose:correction_overreach": ("C-2", score_c2),
     "governance_should_win:poisoned_record_resistance": ("W2", score_w2),
@@ -674,7 +713,7 @@ def main() -> int:
     for fg_id, group in _by_fork_group(rows).items():
         if fg_id in already or not any(r["kind"] == "diff_outcome" for r in group):
             continue
-        score_group = group + m1_context if condition in SCORERS and SCORERS[condition][0] in ("H1", "H2", "H-loses", "I1") else group
+        score_group = group + m1_context if condition in SCORERS and SCORERS[condition][0] in ("H1", "H2", "H-loses", "I1", "HU1") else group
         result = fn(score_group, episode)
         cfg = next(r for r in group if r["kind"] == "run_config")
         row = {

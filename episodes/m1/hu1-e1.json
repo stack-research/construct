@@ -1,0 +1,28 @@
+{
+  "episode_id": "hu1-e1",
+  "m1_pair_id": "hu1",
+  "m1_generation": 1,
+  "_notes": "M1 §5 un-authored gen-1. The heir adjudicates a real corpus finding (rw-0003, a 2025 Neuron correction whose figure errors did not touch the conclusions). World oracle (rw-0003 -> cite). Single record: the finding, offered -> cite (correct); ablated -> empty -> decline (wrong) -> load-bearing-present -> ACTIVE, earns +0.1 authority. That earned trust is what gen-2 inherits. Inputs only; no expected decisions here (world oracle computes them).",
+  "expected_winner_condition": null,
+  "question": "May we cite the result that NeuroD1 overexpression in microglia induces apoptosis rather than neuronal transdifferentiation? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/corrections/rw-0003.json",
+    "representativeness": "One low-fame 2025 neuroscience correction whose supplementary-figure errors did not touch the conclusions (author- and outside-expert-confirmed); speaks for corrections where the core finding demonstrably stands, not for contested corrections.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.05,
+  "m1_gen1_top_k": 1,
+  "records": [
+    {
+      "record_id": "nd1-finding",
+      "text": "From 'NeuroD1 Instructs Neuronal Conversion in Non-Reactive Astrocytes' (Neuron, DOI 10.1016/j.neuron.2021.11.008): the established result is that NeuroD1 overexpression in microglia induces apoptosis rather than transdifferentiation into neurons, challenging claims that microglia can be reprogrammed into neurons via NeuroD1. A 2025 correction repaired supplementary figure errors and the authors, with an outside expert, confirm the conclusions are unaffected.",
+      "created_at": "2025-06-04T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}
