@@ -5,6 +5,7 @@
 m2-test:
 	uv run --no-project python -m tests.test_resident
 	uv run --no-project python -m tests.test_oracle
+	uv run --no-project python -m tests.test_score_resident
 
 # SPEC_M2 resident-substrate chain on mock (STRUCTURAL only: world-oracle chains
 # are real-engine evidence; mock exercises the seam, mint, and fork end-to-end).

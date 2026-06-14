@@ -274,6 +274,18 @@ def select_offers(
     raise ValueError(f"unknown memory condition: {branch.memory}")
 
 
+def _ablation_aggregate(changed_flags: list[bool]) -> tuple[bool, int]:
+    """Multi-sample ablation aggregation (SPEC_M2 v0.2). Given per-sample "did the
+    outcome change vs the resident's actual answer" flags, return (outcome_changed by
+    strict majority, index of a representative sample on the majority side) — so the
+    recorded ablation_run row's answer/oracle_score agrees with the majority vote
+    rather than a possibly-dissenting last draw (codex P3)."""
+    outcome_changed = sum(changed_flags) > len(changed_flags) / 2
+    rep_idx = max((i for i, c in enumerate(changed_flags) if c == outcome_changed),
+                  default=len(changed_flags) - 1)
+    return outcome_changed, rep_idx
+
+
 def run_fork_group(
     episode: Episode,
     branches: list[BranchConfig],
@@ -450,14 +462,10 @@ def run_fork_group(
                     for ab in (engine.run(episode.question, reduced_texts, foreground_block)
                                for _ in range(ablation_samples))
                 ]
-                changed_count = sum(o.score != oracle.score for _, o in samples)
-                outcome_changed = changed_count > len(samples) / 2  # strict majority
+                changed_flags = [o.score != oracle.score for _, o in samples]
+                outcome_changed, rep_idx = _ablation_aggregate(changed_flags)
                 load_bearing[r.record_id] = outcome_changed
-                # Representative = a sample on the MAJORITY side (codex P3), so the
-                # row's recorded answer/oracle_score agrees with outcome_changed
-                # instead of being a possibly-dissenting last draw.
-                majority = [s for s in samples if (s[1].score != oracle.score) == outcome_changed]
-                rep_ab, rep_oracle = (majority or samples)[-1]
+                rep_ab, rep_oracle = samples[rep_idx]  # representative on the majority side
                 ledger.write({
                     "kind": "ablation_run", "run_id": run_id, "fork_group_id": fork_group_id,
                     "episode_id": episode.episode_id, "branch_id": branch.branch_id,
@@ -469,7 +477,7 @@ def run_fork_group(
                     "baseline_oracle_score": oracle.score,  # SPEC_M1 v0.2: direction
                     "outcome_changed": outcome_changed,
                     "ablation_samples": len(samples),
-                    "outcome_changed_fraction": changed_count / len(samples),
+                    "outcome_changed_fraction": sum(changed_flags) / len(changed_flags),
                     "ablated_oracle_scores": [o.score for _, o in samples],
                 })
 
