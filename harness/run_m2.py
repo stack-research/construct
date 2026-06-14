@@ -71,7 +71,12 @@ def run_resident_chain(
     model: str = "mock-engine-v1",
     base_url: str = "http://localhost:1234/v1",
     runs_dir: Path | None = None,
+    e2_lane: str = "governed",
 ) -> Path:
+    # e2_lane selects the E2 fork's memory lane: "governed" (L2) for RS-1/RS-stale,
+    # "construct_aware" (L3) for RS-loses (L3 elicits agent_claimed_usage post-answer
+    # — the continuity claim the fork then refutes). E1 stays governed; it only
+    # needs to earn the failure, and no claim is read at E1.
     runs_dir = (runs_dir or ROOT / "runs" / "m2").resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
     ep1 = Episode.load(e1_path)
@@ -145,11 +150,11 @@ def run_resident_chain(
         s2_ledger.path.unlink()
     branches_e2 = [
         BranchConfig(
-            RESIDENT_BRANCH, memory="governed", authority_path=str(s2_resident_sidecar),
+            RESIDENT_BRANCH, memory=e2_lane, authority_path=str(s2_resident_sidecar),
             inherited_record_ids=resident_inherited, top_k=top_k_e2, **common,
         ),
         BranchConfig(
-            CONTROL_BRANCH, memory="governed", authority_path=str(s2_control_sidecar),
+            CONTROL_BRANCH, memory=e2_lane, authority_path=str(s2_control_sidecar),
             inherited_record_ids=base_ids, top_k=top_k_e2, **common,
         ),
     ]
@@ -195,6 +200,8 @@ def main() -> int:
     p.add_argument("--model", default="claude-opus-4-8")
     p.add_argument("--base-url", default="http://localhost:1234/v1")
     p.add_argument("--runs-dir", default=str(ROOT / "runs" / "m2"))
+    p.add_argument("--lane", default="governed", choices=["governed", "construct_aware"],
+                   help="E2 fork lane: construct_aware (L3) elicits the continuity claim for RS-loses")
     args = p.parse_args()
 
     runs_dir = Path(args.runs_dir)
@@ -212,7 +219,7 @@ def main() -> int:
             run_resident_chain(
                 e1_path, e2_path,
                 engine_backend=args.engine, model=args.model, base_url=args.base_url,
-                runs_dir=runs_dir,
+                runs_dir=runs_dir, e2_lane=args.lane,
             )
             ok += 1
         except Exception as e:
