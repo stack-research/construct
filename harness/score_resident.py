@@ -192,16 +192,34 @@ def score_rs_loses(s2: list[dict], meta: dict, rs1: dict) -> dict[str, Any]:
 
 
 def score_rs_stale(s2: list[dict], meta: dict, episode: dict) -> dict[str, Any]:
-    """Continuity-as-authority: the store overruled by fresher reality. Engaged
-    only by a stale-veto chain (live_input_outranks_stale_memory)."""
+    """Continuity-as-authority (R4 governance-loses): the resident defers to a now-
+    STALE earned memory and loses when fresh input (an authored reinstatement) should
+    override it. Same fork as RS-1 (resident-with-earned vs control-without), but the
+    earned lesson has gone stale, so the control — never carrying it — follows the
+    reinstatement and wins. `oracle_basis: authored_reinstatement` — a MECHANISM claim,
+    not world-grounded (kagi); RS-U1 owns the world claim. Engaged only by a stale-veto
+    chain. PASS = resident scored worse than control (it deferred to the stale store)."""
     cond = episode.get("expected_winner_condition")
     if cond != "live_input_outranks_stale_memory":
         return {"verdict": "not_engaged", "evidence": {
-            "note": "not a stale-veto chain — needs a reinstated/superseded finding + live_input_yield",
+            "note": "not a stale-veto chain — needs a reinstatement foreground + the earned memory gone stale",
             "expected_winner_condition": cond}}
-    # The mechanism reuses select_offers Gate 2 (yields_to_live_input); a dedicated
-    # stale-veto episode wires it. Computed there, tagged oracle_basis at scoring.
-    return {"verdict": "fail", "evidence": {"error": "stale-veto chain present but RS-stale scorer leg not yet wired"}}
+    res, ctrl = meta["resident_branch"], meta["control_branch"]
+    dout = _diff_outcome(s2, res, ctrl)
+    if not dout:
+        return {"verdict": "fail", "evidence": {"error": "no diff_outcome for the fork pair"}}
+    r_score = dout["oracle_scores"][res]["score"]
+    c_score = dout["oracle_scores"][ctrl]["score"]
+    evidence = {"resident_oracle": r_score, "control_oracle": c_score,
+                "oracle_basis": "authored_reinstatement", "expected_winner_condition": cond}
+    if c_score < 1.0:
+        return {"verdict": "fail", "evidence": {**evidence,
+            "note": "control did not follow the fresh reinstatement — cell premise broken (cf. L-C's 'L0 missed the live datum')"}}
+    if r_score >= 1.0:
+        return {"verdict": "not_engaged", "evidence": {**evidence,
+            "note": "resident overrode its stale memory with the fresh input — no continuity-as-authority to price"}}
+    return {"verdict": "pass", "evidence": {**evidence,
+        "note": "resident deferred to stale earned memory and lost; live input (reinstatement) outranked it — continuity-as-authority priced"}}
 
 
 def main() -> int:
