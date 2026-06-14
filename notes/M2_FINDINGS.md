@@ -1,6 +1,6 @@
 # M2 findings — the resident substrate, run on the retraction chain
 
-**Status: instrument built, structurally verified, first real evidence gathered; room result-review pending.** The full M2 mechanism (Wall B mint, the cross-session fork, `score_resident`) is in code and runs end-to-end (SPEC_M2 v0.1). First real runs on the retraction chain, two engines (gpt-oss-20b local, claude opus-4-8). RS-1 + RS-U1 demonstrated on a credulous engine; RS-loses is a disclosed null on real evidence; RS-stale not started. **This document corrects an over-clean single-draw framing from commit `edc8ca1` — see §cross-engine.**
+**Status: NARROW HEADLINE CLOSED (moderator ruling, 2026-06-14).** *counted ≠ read* is demonstrated on a credulous engine — RS-1 + RS-U1 pass (gpt-oss-20b; one hop, one retraction, single sample), result-review room-endorsed (codex/cursor/grok/kagi, no blocker). RS-stale (R4, unrun), N-sample cross-engine, RS-loses engagement (v0.2 decisive-claim split), and compounding are carried as named debts; the full "M2 closed" label waits on RS-stale scored or these resolved. The full M2 mechanism (Wall B mint, the cross-session fork, `score_resident`) is in code and runs end-to-end (SPEC_M2 v0.1). First real runs on the retraction chain, two engines (gpt-oss-20b local, claude opus-4-8). RS-1 + RS-U1 demonstrated on a credulous engine; RS-loses is a disclosed null on real evidence; RS-stale not started. **This document corrects an over-clean single-draw framing from commit `edc8ca1` — see §cross-engine.**
 
 ## Verdict matrix
 
