@@ -72,6 +72,7 @@ def run_resident_chain(
     base_url: str = "http://localhost:1234/v1",
     runs_dir: Path | None = None,
     e2_lane: str = "governed",
+    ablation_samples: int = 1,
 ) -> Path:
     # e2_lane selects the E2 fork's memory lane: "governed" (L2) for RS-1/RS-stale,
     # "construct_aware" (L3) for RS-loses (L3 elicits agent_claimed_usage post-answer
@@ -161,6 +162,7 @@ def run_resident_chain(
     res2 = run_fork_group(
         ep2, branches_e2, s2_ledger,
         engine_backend=engine_backend, model=model, base_url=base_url,
+        ablation_samples=ablation_samples,
     )
     s2_ledger.write({
         "kind": "session", "session_id": s2_id, "store_path": str(e2_path.name),
@@ -202,6 +204,8 @@ def main() -> int:
     p.add_argument("--runs-dir", default=str(ROOT / "runs" / "m2"))
     p.add_argument("--lane", default="governed", choices=["governed", "construct_aware"],
                    help="E2 fork lane: construct_aware (L3) elicits the continuity claim for RS-loses")
+    p.add_argument("--ablation-samples", type=int, default=1,
+                   help="E2 counterfactual samples per ablated record; majority vote (v0.2: harden the load-bearing leg)")
     args = p.parse_args()
 
     runs_dir = Path(args.runs_dir)
@@ -219,7 +223,7 @@ def main() -> int:
             run_resident_chain(
                 e1_path, e2_path,
                 engine_backend=args.engine, model=args.model, base_url=args.base_url,
-                runs_dir=runs_dir, e2_lane=args.lane,
+                runs_dir=runs_dir, e2_lane=args.lane, ablation_samples=args.ablation_samples,
             )
             ok += 1
         except Exception as e:

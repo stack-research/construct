@@ -283,6 +283,7 @@ def run_fork_group(
     base_url: str = "http://localhost:1234/v1",
     run_id: str | None = None,
     skip_ablation: bool = False,
+    ablation_samples: int = 1,
 ) -> dict[str, Any]:
     # Ablation is load-bearing for credit assignment and attribution, not an
     # optional diagnostic (cursor). Skipping is wire/dev only; a scored
@@ -331,7 +332,10 @@ def run_fork_group(
             ["similarity is lexical TF-IDF, not a learned embedding"]
             if any(b.similarity_backend == "lexical_tfidf" and b.memory != "none" for b in branches) else []
         ) + [
-            "authority credit uses single-sample ablation: stochastic engines can misattribute; load-bearing means influential, not correct"
+            (f"authority credit uses {ablation_samples}-sample ablation (majority vote over the counterfactual)"
+             if ablation_samples > 1 else
+             "authority credit uses single-sample ablation: stochastic engines can misattribute")
+            + "; load-bearing means influential, not correct"
         ],
         "cost_tiebreak_window": 0.10,  # rubric §1 sensitivity parameter, recorded per codex review
     })
@@ -396,7 +400,7 @@ def run_fork_group(
             "latency_ms": er.latency_ms,
             "governance_steps": governance_steps,
             "prompt_tokens": er.prompt_tokens, "completion_tokens": er.completion_tokens,
-            "ablation_calls": 0 if skip_ablation else len(offered),
+            "ablation_calls": 0 if skip_ablation else len(offered) * ablation_samples,
             "branch_output": {"answer": er.answer, "tool_calls": []},
             "oracle": oracle.__dict__,  # SPEC_M2: per-branch outcome on its own run
             #   row, not only in the pairwise diff_outcome — a single-branch
@@ -421,19 +425,33 @@ def run_fork_group(
         if offered and not skip_ablation:
             for i, (r, _) in enumerate(offered):
                 reduced_texts = [rr.text for j, (rr, _) in enumerate(offered) if j != i]
-                ab = engine.run(episode.question, reduced_texts, foreground_block)
-                ab_oracle = episode.score(ab.answer)
-                load_bearing[r.record_id] = ab_oracle.score != oracle.score
+                # Multi-sample the counterfactual (SPEC_M2 v0.2): the branch's actual
+                # answer is one real decision, but "what happens without this record"
+                # is distributional on a stochastic engine. Sample it ablation_samples
+                # times; load-bearing = the outcome reliably changes (strict majority).
+                # ablation_samples=1 reproduces the original single-sample behavior.
+                samples = [
+                    (ab, episode.score(ab.answer))
+                    for ab in (engine.run(episode.question, reduced_texts, foreground_block)
+                               for _ in range(ablation_samples))
+                ]
+                changed_count = sum(o.score != oracle.score for _, o in samples)
+                outcome_changed = changed_count > len(samples) / 2  # strict majority
+                load_bearing[r.record_id] = outcome_changed
+                rep_ab, rep_oracle = samples[-1]  # representative sample for answer/cost
                 ledger.write({
                     "kind": "ablation_run", "run_id": run_id, "fork_group_id": fork_group_id,
                     "episode_id": episode.episode_id, "branch_id": branch.branch_id,
                     "ablated_record_id": r.record_id,
-                    "latency_ms": ab.latency_ms,
-                    "prompt_tokens": ab.prompt_tokens, "completion_tokens": ab.completion_tokens,
-                    "branch_output": {"answer": ab.answer, "tool_calls": []},
-                    "oracle_score": ab_oracle.score,
+                    "latency_ms": rep_ab.latency_ms,
+                    "prompt_tokens": rep_ab.prompt_tokens, "completion_tokens": rep_ab.completion_tokens,
+                    "branch_output": {"answer": rep_ab.answer, "tool_calls": []},
+                    "oracle_score": rep_oracle.score,
                     "baseline_oracle_score": oracle.score,  # SPEC_M1 v0.2: direction
-                    "outcome_changed": load_bearing[r.record_id],
+                    "outcome_changed": outcome_changed,
+                    "ablation_samples": len(samples),
+                    "outcome_changed_fraction": changed_count / len(samples),
+                    "ablated_oracle_scores": [o.score for _, o in samples],
                 })
 
         authority_updates = []
