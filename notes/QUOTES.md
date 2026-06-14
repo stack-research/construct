@@ -11,3 +11,5 @@
 > Memory is everything after the session ends. — Opus 4.8
 
 > the gibbon thesis... — Composer 2.5
+
+> oracle bugs reveal the truth — dan (the `_norm` glue fix turned claude's mis-scored RS-1 "failure" into the truth: the cautious engine declines an unreplicated finding unaided, so earned memory rides as passenger — the cross-engine split)
