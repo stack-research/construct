@@ -9,6 +9,11 @@ m2-test:
 m2-wire:
 	uv run --no-project python -m harness.run_m2 --wire-all --engine mock
 
+# SPEC_M2 resident-substrate scorer (RS-1/RS-loses/RS-stale/RS-U1) over the wire
+# chain. Run after m2-wire (regenerates the ledger fresh each time).
+m2-score:
+	uv run --no-project python -m harness.score_resident runs/m2/rs-s2.jsonl episodes/m2/rs-e2.json
+
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:
 	uv run --no-project python -m harness.run_m1 --wire-all --score
