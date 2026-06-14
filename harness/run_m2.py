@@ -163,6 +163,7 @@ def run_resident_chain(
         ep2, branches_e2, s2_ledger,
         engine_backend=engine_backend, model=model, base_url=base_url,
         ablation_samples=ablation_samples,
+        elicit_decisiveness=(e2_lane == "construct_aware"),  # SPEC_M2 v0.2: RS-loses decisiveness claim
     )
     s2_ledger.write({
         "kind": "session", "session_id": s2_id, "store_path": str(e2_path.name),

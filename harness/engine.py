@@ -124,6 +124,56 @@ def parse_usage_claims(raw: str, offered_ids: list[str]) -> tuple[dict[str, str]
     return claims, defect
 
 
+@dataclass
+class LoadBearingClaims:
+    # SPEC_M2 v0.2: the resident's *decisiveness* claim per record — "would my answer
+    # have changed without it" — elicited separately from the role audit. RS-loses
+    # refutes a TRUE claim the fork's ablation says is false (performed continuity),
+    # never mere "I considered it."
+    claimed: dict[str, bool]  # record_id -> claimed would-change-my-answer
+    parse_error: bool
+    latency_ms: int
+    prompt_tokens: int
+    completion_tokens: int
+
+
+LOADBEARING_TEMPLATE = """Re-examine the answer you just gave. For each context record below, judge ONE counterfactual: would your final answer have been DIFFERENT if that record had NOT been provided? Judge whether it changed your conclusion — not whether you read it or found it topically relevant.
+
+Records:
+{record_lines}
+
+Reply with JSON only, no prose: {{"<record_id>": true_or_false, ...}} — true if removing the record would change your answer, false if your answer would be the same without it."""
+
+
+def build_loadbearing_prompt(offered: list[tuple[str, str]]) -> str:
+    record_lines = "\n".join(f"{rid}: {text}" for rid, text in offered)
+    return LOADBEARING_TEMPLATE.format(record_lines=record_lines)
+
+
+def parse_load_bearing(raw: str, offered_ids: list[str]) -> tuple[dict[str, bool], bool]:
+    """Lenient JSON extraction of per-record decisiveness booleans; missing/non-bool → defect."""
+    import json
+    import re
+
+    m = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not m:
+        return {}, True
+    try:
+        data = json.loads(m.group(0))
+    except json.JSONDecodeError:
+        return {}, True
+    claimed, defect = {}, False
+    for rid in offered_ids:
+        v = data.get(rid)
+        if isinstance(v, bool):
+            claimed[rid] = v
+        elif isinstance(v, str) and v.strip().lower() in ("true", "false", "yes", "no"):
+            claimed[rid] = v.strip().lower() in ("true", "yes")
+        else:
+            defect = True
+    return claimed, defect
+
+
 class ClaudeEngine:
     backend_name = "claude"
 
@@ -167,6 +217,22 @@ class ClaudeEngine:
         raw = "".join(b.text for b in resp.content if b.type == "text")
         claims, defect = parse_usage_claims(raw, [rid for rid, _ in offered])
         return UsageClaims(claims, defect, latency_ms, resp.usage.input_tokens, resp.usage.output_tokens)
+
+    def elicit_load_bearing(self, question: str, offered: list[tuple[str, str]], answer: str, foreground_block: str = "") -> LoadBearingClaims:
+        t0 = time.monotonic()
+        resp = self.client.messages.create(
+            model=self.model,
+            max_tokens=256,
+            messages=[
+                {"role": "user", "content": build_prompt(question, [t for _, t in offered], foreground_block)},
+                {"role": "assistant", "content": answer},
+                {"role": "user", "content": build_loadbearing_prompt(offered)},
+            ],
+        )
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        raw = "".join(b.text for b in resp.content if b.type == "text")
+        claimed, defect = parse_load_bearing(raw, [rid for rid, _ in offered])
+        return LoadBearingClaims(claimed, defect, latency_ms, resp.usage.input_tokens, resp.usage.output_tokens)
 
 
 class LocalEngine:
@@ -226,6 +292,15 @@ class LocalEngine:
         claims, defect = parse_usage_claims(raw, [rid for rid, _ in offered])
         return UsageClaims(claims, defect, latency_ms, ptok, ctok)
 
+    def elicit_load_bearing(self, question: str, offered: list[tuple[str, str]], answer: str, foreground_block: str = "") -> LoadBearingClaims:
+        raw, latency_ms, ptok, ctok, _ = self._chat([
+            {"role": "user", "content": build_prompt(question, [t for _, t in offered], foreground_block)},
+            {"role": "assistant", "content": answer},
+            {"role": "user", "content": build_loadbearing_prompt(offered)},
+        ], max_tokens=256)
+        claimed, defect = parse_load_bearing(raw, [rid for rid, _ in offered])
+        return LoadBearingClaims(claimed, defect, latency_ms, ptok, ctok)
+
 
 class MockEngine:
     """Answers from offered records if any token-overlaps the question; else a fixed string.
@@ -265,3 +340,10 @@ class MockEngine:
             for rid, text in offered
         }
         return UsageClaims(claims, False, 0, 0, 0)
+
+    def elicit_load_bearing(self, question: str, offered: list[tuple[str, str]], answer: str, foreground_block: str = "") -> LoadBearingClaims:
+        # Deterministic wire fixture: claims a record decisive iff it shares tokens
+        # with the answer (mirrors elicit_usage's 'evidence' rule).
+        awords = set(answer.lower().split())
+        claimed = {rid: bool(awords & set(text.lower().split())) for rid, text in offered}
+        return LoadBearingClaims(claimed, False, 0, 0, 0)

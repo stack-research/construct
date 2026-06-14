@@ -284,6 +284,7 @@ def run_fork_group(
     run_id: str | None = None,
     skip_ablation: bool = False,
     ablation_samples: int = 1,
+    elicit_decisiveness: bool = False,
 ) -> dict[str, Any]:
     # Ablation is load-bearing for credit assignment and attribution, not an
     # optional diagnostic (cursor). Skipping is wire/dev only; a scored
@@ -393,6 +394,18 @@ def run_fork_group(
                 "elicitation_prompt_tokens": uc.prompt_tokens,
                 "elicitation_completion_tokens": uc.completion_tokens,
             }
+            if elicit_decisiveness:
+                # SPEC_M2 v0.2: the resident's *decisiveness* claim, elicited separately
+                # from the role audit — RS-loses refutes a TRUE claim the fork's ablation
+                # says is false (performed continuity), never mere "I considered it."
+                lb = engine.elicit_load_bearing(
+                    episode.question, [(r.record_id, r.text) for r, _ in offered], er.answer,
+                    foreground_block,
+                )
+                usage_claims["agent_claimed_load_bearing"] = [
+                    {"record_id": rid, "claimed_decisive": v} for rid, v in sorted(lb.claimed.items())
+                ]
+                usage_claims["loadbearing_parse_error"] = lb.parse_error
 
         ledger.write({
             "kind": "branch_run", "run_id": run_id, "fork_group_id": fork_group_id,
