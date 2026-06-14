@@ -45,7 +45,11 @@ class OracleScore:
 
 
 def _norm(s: str) -> str:
-    return re.sub(r"[^a-z0-9 ]", "", s.lower()).strip()
+    # Replace stripped chars with a space (never delete) so word boundaries
+    # survive: "**Decline.**\n\nThe" must normalize to "decline the", not the
+    # glued "declinethe" that mis-extracts as unparseable. Answer-shape surface
+    # effect (the A1 lesson); surfaced by claude's markdown in the M2 cross-engine run.
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", s.lower())).strip()
 
 
 def authored_oracle(answer: str, expected_answer: str) -> OracleScore:
