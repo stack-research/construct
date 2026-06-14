@@ -294,6 +294,8 @@ def run_fork_group(
             f"episode {episode.episode_id} carries expected_winner_condition="
             f"{episode.expected_winner_condition!r}; scored episodes require ablation attribution"
         )
+    if ablation_samples < 1:
+        raise ValueError(f"ablation_samples must be >= 1, got {ablation_samples}")
     run_id = run_id or uuid.uuid4().hex[:12]
     fork_group_id = uuid.uuid4().hex[:12]
     if engine_backend == "claude":
@@ -451,7 +453,11 @@ def run_fork_group(
                 changed_count = sum(o.score != oracle.score for _, o in samples)
                 outcome_changed = changed_count > len(samples) / 2  # strict majority
                 load_bearing[r.record_id] = outcome_changed
-                rep_ab, rep_oracle = samples[-1]  # representative sample for answer/cost
+                # Representative = a sample on the MAJORITY side (codex P3), so the
+                # row's recorded answer/oracle_score agrees with outcome_changed
+                # instead of being a possibly-dissenting last draw.
+                majority = [s for s in samples if (s[1].score != oracle.score) == outcome_changed]
+                rep_ab, rep_oracle = (majority or samples)[-1]
                 ledger.write({
                     "kind": "ablation_run", "run_id": run_id, "fork_group_id": fork_group_id,
                     "episode_id": episode.episode_id, "branch_id": branch.branch_id,
