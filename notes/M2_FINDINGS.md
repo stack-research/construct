@@ -50,4 +50,22 @@ The cross-engine run surfaced a real bug in shared scoring code: `_norm` *delete
 1. **Wall B held in practice.** Across every run, the earned record's content was the corpus's retraction notice (sha-pinned from the scored trace), never the resident's answer — verified by `tests/test_resident.py` (8/8) and by inspection of every minted record.
 2. **The fork decided, not the testimony.** RS-1's verdict rests on `diff_outcome.diverged` + the oracle scores + the ablation row, never on what the resident said it did. RS-loses reads the L3 claim only to *refuse* it.
 3. **Single-sample is the live limit.** The claude draw divergence is the concrete proof that M2's evidence needs repetition before any cross-engine claim hardens. Disclosed in `run_config` and now in the matrix.
-4. **Not closed.** M2 is not closed. RS-1 + RS-U1 pass on one engine; RS-loses + RS-stale are open; the room has not reviewed. The close is dan's call after the room pass.
+4. **Not closed.** M2 is not closed. RS-1 + RS-U1 pass on one engine; RS-loses + RS-stale are open. The room has now reviewed (below); the close is dan's moderator call.
+
+## Result-review (room, 2026-06-14 — all endorse the narrow headline, no blocker)
+
+- **codex** — RS-loses carries as a disclosed null (H2/C-2 company); the central-relevant claude row *failing* (claim + load-bearing) is healthy cell-boundary evidence. Narrow headline sufficient; "M2 closed" needs RS-stale scored *or* demoted to a named carried debt by moderator ruling.
+- **cursor** — audited all five scorer preconditions against the real ledgers: every leg `ok: true`, fail-closed wired correctly (any leg fails → all cells fail with `offer_symdiff` disclosed). RS-1 predicates causal, not narrated. Endorse the `_norm` fix; prior rows stand (L-A), don't merge draw 1 / draw 2. Flagged the missing `_norm` test.
+- **grok** — cold-read: ledger ↔ FINDINGS match, no discrepancy, no overclaim beyond the gpt-oss-20b single sample. Wall B held on every inspected mint.
+- **kagi (world-oracle)** — walked every packet row. rw-0001 provenance solid (two independent URLs). **RS-U1 world-grounding is not transitive**: E2's oracle scores the resident's *answer* against the corpus independently, not against the earned record's `corrected_claim`, so the W1' trap does not re-enter; sha256 pin matches across `earned_record`/`diff_outcome`/`ablation_run`. Stochasticity honestly disclosed; `corpus_scope` + representativeness adequate. **Verdict: endorse — the world-checked leg is legitimate at the stated bound, disclosed honestly.**
+- **gemma** — entry was stale (reviewed the spec state, not the result); the Pi-harness context lag. Its standing contribution (`contributory_asset` magnitude) stays gated behind RS-1 — which now passes — but is owed N-sample robustness before it unlocks. Re-sync pending.
+
+**Adopted:**
+- **Folded now (cursor):** `tests/test_oracle.py` — the `_norm` markdown/newline glue regression guard (a fix the room endorsed must not silently regress). `make m2-test` runs it.
+- **v0.2 (codex/cursor/kagi):** RS-loses must refute *"it was decisive"*, not *"I considered it"* — split the L3 claim vocabulary (`unused | considered | supporting | decisive`, or a `claimed_load_bearing` boolean); RS-loses passes only on claimed-decisive ∧ fork-not-load-bearing. The current `claimed != unused` rule is safe for the observed rows but too harsh for the sharper relevant-but-non-decisive episode. Prerequisite to engaging RS-loses for real.
+
+**Standing debts (none blocking the narrow headline):**
+- **RS-stale** unrun — needs the reinstatement chain + the `live_input_yield` scorer leg. The full "M2 closed" label waits on it being scored or moderator-demoted to a named debt.
+- **N-sample cross-engine** — owed before any cross-engine claim hardens (the claude draw split is the proof).
+- **RS-loses engagement** — the v0.2 vocabulary split, then a sharper relevant-but-non-decisive episode.
+- **Compounding / multi-retraction / embedding backend** — beyond the one-hop, one-retraction, lexical bound.

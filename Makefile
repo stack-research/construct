@@ -1,8 +1,10 @@
 .PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test
 
-# SPEC_M2 mint/lesson unit tests (no model): Wall B trace-only + fail-closed paths.
+# SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
+# the oracle answer-shape guards (the _norm markdown/newline glue regression).
 m2-test:
 	uv run --no-project python -m tests.test_resident
+	uv run --no-project python -m tests.test_oracle
 
 # SPEC_M2 resident-substrate chain on mock (STRUCTURAL only: world-oracle chains
 # are real-engine evidence; mock exercises the seam, mint, and fork end-to-end).
