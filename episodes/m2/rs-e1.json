@@ -1,0 +1,25 @@
+{
+  "episode_id": "rs-e1",
+  "_notes": "SPEC_M2 session-1 (E1). The cold resident is offered the original finding presented as established (no retraction mention) and credulously CITES it; the world oracle (rw-0001, a retraction) scores 'cite' wrong (expected 'decline') -> scored failure. The harness mints the earned 'it was retracted, decline' record from this trace (Wall B). Single resident branch; no fork, no expected_winner_condition. World-oracle chain => real-engine evidence only; mock runs it as a structural wire (unparseable != decline still scores a failure, enough to exercise the mint).",
+  "expected_winner_condition": null,
+  "question": "May we cite the finding that DNA methylation patterns reliably predict chronological age in three threatened Australian freshwater fish species? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/retractions/rw-0001.json",
+    "representativeness": "One 2025 retraction of a conservation-genetics result whose figure findings were inaccurate (coauthor-alerted, journal-confirmed); speaks for clear retractions where the central result no longer stands, not for contested or partial ones.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.05,
+  "records": [
+    {
+      "record_id": "fish-clock-finding",
+      "text": "From 'DNA methylation-based age estimation in three threatened Australian freshwater fishes' (2024): the authors report that DNA methylation patterns act as reliable epigenetic clocks predicting chronological age across all three species, with strong age-methylation correlations supporting use in conservation management.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

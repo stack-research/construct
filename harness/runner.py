@@ -70,6 +70,7 @@ class Episode:
     m1_active_record_id: str | None = None  # H1: inherited active record gen-2 must surface
     m1_poison_record_id: str | None = None  # H2: cautionary record under test
     m1_pruned_record_id: str | None = None  # H-loses: deliberately pruned record
+    m2_earned_record_id: str | None = None  # SPEC_M2: the harness-minted earned record E2 forks on
 
     @classmethod
     def load(cls, path: Path) -> "Episode":
@@ -92,6 +93,7 @@ class Episode:
             d.get("m1_i1_tier"), d.get("m1_attacker_record_id"), d.get("m1_gen1_top_k"),
             d.get("m1_counterfactual_include_rank_budget", False),
             d.get("m1_active_record_id"), d.get("m1_poison_record_id"), d.get("m1_pruned_record_id"),
+            d.get("m2_earned_record_id"),
         )
 
     def score(self, answer: str):
@@ -396,6 +398,9 @@ def run_fork_group(
             "prompt_tokens": er.prompt_tokens, "completion_tokens": er.completion_tokens,
             "ablation_calls": 0 if skip_ablation else len(offered),
             "branch_output": {"answer": er.answer, "tool_calls": []},
+            "oracle": oracle.__dict__,  # SPEC_M2: per-branch outcome on its own run
+            #   row, not only in the pairwise diff_outcome — a single-branch
+            #   session (E1) must ledger its scored failure for the mint to read.
             **(usage_claims or {}),
         })
 

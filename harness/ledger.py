@@ -3,7 +3,9 @@
 The engine cannot steer what is recorded about it (plan §2.4). Row kinds:
   run_config — one per run; carries every fixture/backend disclosure
   offer / withholding — one per record per branch (plan §5)
-  branch_run — per-branch cost side: latency, tokens, governance steps
+  branch_run — per-branch cost side: latency, tokens, governance steps, and the
+    branch's own `oracle` outcome (SPEC_M2: a single-branch session must ledger
+    its scored failure for the mint to read; not only the pairwise diff_outcome)
   diff_outcome — per branch pair: divergence + oracle score + authority delta
 
 Contribution boundary (SPEC_M1.5 — the offer ledger, one level up):
@@ -13,6 +15,18 @@ Contribution boundary (SPEC_M1.5 — the offer ledger, one level up):
   contribution_verdict — the COMPUTED boundary crossing, written by
     score_contribution.py from the artifact trace; load_bearing is never copied
     from the intervention's claim.
+
+Resident substrate (SPEC_M2 — the offer ledger, across a session seam):
+  session — one per session; the cold memory-blank seam made auditable:
+    {session_id, store_path, prior_session_id, wall_clock_start (documentary),
+     resident_config_digest, memory_isolation: minimal_harness|scrubbed, episode_id}.
+    Compared across the E2 fork as a scorer precondition (engine re-instantiated
+    cold, governed store the sole memory channel — Wall A integrity).
+  An earned-failure record is an ordinary Record whose `provenance` is minted by
+    the HARNESS from the E1 scored trace (Wall B), never by the resident.
+  resident_verdict / cell_verdict — COMPUTED by score_resident.py: the fork (not
+    the resident's testimony) decides whether the store was used (RS-1/RS-loses/
+    RS-stale/RS-U1).
 """
 
 from __future__ import annotations

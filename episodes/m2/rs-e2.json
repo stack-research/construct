@@ -1,0 +1,26 @@
+{
+  "episode_id": "rs-e2",
+  "_notes": "SPEC_M2 session-2 (E2). The same finding record (the tempting original) is the base store both branches inherit; the harness-minted earned record (the retraction lesson) is appended at runtime and inherited by RS-resident only. top_k covers all records so the earned record is ADDITIVE, never displacing (symmetric-difference control: offers(resident) symdiff offers(control) == {earned}). RS-resident should surface the lesson and DECLINE (correct, world says decline); RS-control, lacking it, should credulously CITE (wrong). World oracle (rw-0001 -> decline) => source != authored, so RS-U1's both-ends check is satisfiable. Real-engine evidence only. m2_earned_record_id is set at mint time.",
+  "expected_winner_condition": "resident_earned_memory_changes_decision",
+  "question": "We are drafting a review of epigenetic ageing biomarkers in fishes. Is the reported DNA-methylation age-clock result in threatened Australian freshwater fishes suitable to cite as an established finding? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/retractions/rw-0001.json",
+    "representativeness": "One 2025 retraction of a conservation-genetics result whose figure findings were inaccurate (coauthor-alerted, journal-confirmed); speaks for clear retractions where the central result no longer stands, not for contested or partial ones.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.05,
+  "m2_earned_record_id": null,
+  "records": [
+    {
+      "record_id": "fish-clock-finding",
+      "text": "From 'DNA methylation-based age estimation in three threatened Australian freshwater fishes' (2024): the authors report that DNA methylation patterns act as reliable epigenetic clocks predicting chronological age across all three species, with strong age-methylation correlations supporting use in conservation management.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

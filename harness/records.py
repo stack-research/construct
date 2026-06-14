@@ -16,6 +16,11 @@ class Record:
     vocabulary_kind: str | None = None  # belief | claim | memory | evidence | reality_observation (descriptive, non-gating)
     trust: float = 1.0  # source-trust prior for L2 eligibility; a prior, not truth
     supersedes: tuple[str, ...] = ()  # out-of-band ingestion-channel links (SPEC_V1X §2); never rendered to the engine
+    provenance: dict | None = None  # SPEC_M2 §3: harness-minted earned-record provenance.
+    #   Null on ordinary records. On an earned-failure record (Wall B) carries
+    #   {minted_by, source_session_id, source_run_id, mint_basis, corrected_claim,
+    #    source_oracle}. Written by the harness mint from the scored trace, never
+    #   by the engine — the resident does not hold the pen on its own past.
 
 
 class RecordStore:

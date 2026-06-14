@@ -1,4 +1,13 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test
+
+# SPEC_M2 mint/lesson unit tests (no model): Wall B trace-only + fail-closed paths.
+m2-test:
+	uv run --no-project python -m tests.test_resident
+
+# SPEC_M2 resident-substrate chain on mock (STRUCTURAL only: world-oracle chains
+# are real-engine evidence; mock exercises the seam, mint, and fork end-to-end).
+m2-wire:
+	uv run --no-project python -m harness.run_m2 --wire-all --engine mock
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:
