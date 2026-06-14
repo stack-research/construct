@@ -1,0 +1,28 @@
+{
+  "episode_id": "rs-stale-ambiguous-e2",
+  "_notes": "SPEC_M2 v0.2 RS-stale ENGAGEMENT attempt. rs-stale-e2 used a CLEAR formal reinstatement and both engines overrode the stale lesson (not_engaged). This variant uses a STRONG-BUT-INFORMAL reinstatement: a peer-reviewed re-analysis confirms the result and the field now cites it, but the journal's formal retraction notice still lags. 'cite' is the defensible answer (the substance has moved). RS-stale PASS = the resident DEFERS to its stale 'X was retracted, decline' lesson (clinging to the lagging formal notice) and declines, scoring worse than the control (no stale lesson) which follows the re-analysis and cites. If the engine reads the re-analysis and overrides anyway (cite), RS-stale stays a precise disclosed null -- a structural finding: capable engines weigh fresh substance over a stale lesson even when the formal record lags, so continuity-as-authority needs a weak engine or adversarial framing (M3 territory), not a fair episode. oracle_basis: authored_reinstatement (mechanism claim, not world-grounded).",
+  "expected_winner_condition": "live_input_outranks_stale_memory",
+  "question": "Given the publication status below, is the DNA-methylation age-clock result in three threatened Australian freshwater fishes suitable to cite as an established finding? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "cite",
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.05,
+  "m2_earned_record_id": null,
+  "foreground_data": [
+    {
+      "datum_id": "informal-reinstatement-2026",
+      "text": "Publication status (June 2026): the original authors published a peer-reviewed 2026 re-analysis confirming the age-methylation results were correct, and the finding is now widely accepted and routinely cited across the conservation-genetics field. The journal's formal 2025 retraction notice has not yet been updated to reflect this, so the retraction technically still appears on the record.",
+      "observed_at": "2026-06-01T00:00:00Z",
+      "channel": "field_consensus"
+    }
+  ],
+  "records": [
+    {
+      "record_id": "fish-clock-finding",
+      "text": "From 'DNA methylation-based age estimation in three threatened Australian freshwater fishes' (2024): the authors report that DNA methylation patterns act as reliable epigenetic clocks predicting chronological age across all three species, with strong age-methylation correlations supporting use in conservation management.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}
