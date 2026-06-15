@@ -27,6 +27,19 @@ Resident substrate (SPEC_M2 — the offer ledger, across a session seam):
   resident_verdict / cell_verdict — COMPUTED by score_resident.py: the fork (not
     the resident's testimony) decides whether the store was used (RS-1/RS-loses/
     RS-stale/RS-U1).
+
+Adversarial air gap (SPEC_M3 — the offer ledger under a hostile foreground):
+  attack — one per attack experiment (run_m3.py): the Wall I attestation made auditable.
+    {attack_id, attack_surface: foreground_text|live_channel_spoof|ingestion_write,
+     attacker_id, clean_run_id, attacked_run_id, store_digest, resident_config_digest,
+     target_record_ids, payload_digest, allowlist_ok}. `clean_run_id`/`attacked_run_id`
+     are the same-episode pair the organ projection diffs (None for ingestion_write).
+  ingestion_attempt — one per Track-B attack: the write-path outcome (minted: bool;
+    poison_offered: bool) the IN-1/IN-loses cells read.
+  cell_verdict — COMPUTED by score_redteam.py from the PRE-ANSWER organ_projection
+    (offer/withholding rows only, never post-answer consequence rows): the organ ledger,
+    not the attacker's narration, decides whether the gap held (AG-1/AG-channel/AG-loses/
+    AG-U1/IN-1/IN-loses).
 """
 
 from __future__ import annotations

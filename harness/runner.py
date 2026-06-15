@@ -71,6 +71,7 @@ class Episode:
     m1_poison_record_id: str | None = None  # H2: cautionary record under test
     m1_pruned_record_id: str | None = None  # H-loses: deliberately pruned record
     m2_earned_record_id: str | None = None  # SPEC_M2: the harness-minted earned record E2 forks on
+    channel_trust: dict[str, float] | None = None  # SPEC_M3: optional per-channel trust prior for yield gate
 
     @classmethod
     def load(cls, path: Path) -> "Episode":
@@ -94,6 +95,7 @@ class Episode:
             d.get("m1_counterfactual_include_rank_budget", False),
             d.get("m1_active_record_id"), d.get("m1_poison_record_id"), d.get("m1_pruned_record_id"),
             d.get("m2_earned_record_id"),
+            d.get("channel_trust"),
         )
 
     def score(self, answer: str):
@@ -228,10 +230,13 @@ def select_offers(
             sims = pairwise_similarity(
                 [r.text for r in survivors], datum["text"], branch.similarity_backend
             )
+            channel_ok = True
+            if episode.channel_trust is not None:
+                channel_ok = episode.channel_trust.get(datum.get("channel", ""), 0.0) >= elig
             still: list[Record] = []
             for r, sim in zip(survivors, sims):
                 steps += 1  # contention check
-                if sim >= ct and r.created_at < datum["observed_at"]:
+                if sim >= ct and r.created_at < datum["observed_at"] and channel_ok:
                     withheld.append((r, f"yields_to_live_input:{datum['datum_id']}"))
                 else:
                     still.append(r)

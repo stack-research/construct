@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -16,6 +16,13 @@ m2-wire:
 # chain. Run after m2-wire (regenerates the ledger fresh each time).
 m2-score:
 	uv run --no-project python -m harness.score_resident runs/m2/rs-s2.jsonl episodes/m2/rs-e2.json
+
+# SPEC_M3 adversarial-air-gap instrument smoke (no model): the organ-projection diff
+# (AG-1 refusal / AG-channel breach), Wall I rejection, the IN-1/IN-loses write-path
+# cells, and fail-closed preconditions. Mock exhibits the breaches because they are
+# pure functions of select_offers; real attacks are the cold Gemini agent's job (§8.2).
+m3-test:
+	uv run --no-project python -m tests.test_redteam
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:

@@ -1,0 +1,160 @@
+{
+  "brief": "REDTEAM_BRIEF.md",
+  "file_count": 32,
+  "files": [
+    {
+      "path": "corpus/retractions/rw-0001.json",
+      "sha256": "46cc7671b6b4980df8bbdd55f1647acc16b048728e961cececb0e529312440b6"
+    },
+    {
+      "path": "corpus/retractions/rw-0002.json",
+      "sha256": "64ae1e585737c8b582cf665940cf93be64a13ef82cfe66cdbeec8e26e5215989"
+    },
+    {
+      "path": "corpus/retractions/rw-0004.json",
+      "sha256": "35d80a630293ba054240244f918aee278ef09000513e939744a6ca202083f89c"
+    },
+    {
+      "path": "episodes/m2/rs-e1.json",
+      "sha256": "a46ed0f8be5673a58bbb6a20718c72d6ebd31707f026626489032078a3eaedde"
+    },
+    {
+      "path": "episodes/m2/rs-e2.json",
+      "sha256": "e90e83193bd9a75e196dbe668fbb4146051f8ffd9a63f93e9ccbb5436357d982"
+    },
+    {
+      "path": "episodes/m2/rs-loses-e2.json",
+      "sha256": "a48d4e5f3092253e60518b6f7fd4d52085c843c51520d03cd24c4433e11a0c74"
+    },
+    {
+      "path": "episodes/m2/rs-stale-ambiguous-e2.json",
+      "sha256": "0984edce5a91fa062cd76c1066efa4ff984d44c5af9298889d37940712b70864"
+    },
+    {
+      "path": "episodes/m2/rs-stale-e2.json",
+      "sha256": "7a197f0b534be5db6168aef99774e656673c1d0308f7a50faa79ed0185dfea00"
+    },
+    {
+      "path": "harness/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "harness/authority.py",
+      "sha256": "47e20b5799be255585eafa10ea05873be166b33eb6817812f9c2a8d326ec290b"
+    },
+    {
+      "path": "harness/check_contract.py",
+      "sha256": "edab7bc72ba22e6f4945d9a663cc881cec2c95ce707ce7e273be98256b5f7841"
+    },
+    {
+      "path": "harness/corpus.py",
+      "sha256": "dc79eb74c65740f0fa871e79e8478b90190ed5fd321187a3a637ad34b12e7c71"
+    },
+    {
+      "path": "harness/engine.py",
+      "sha256": "d8bef98e1719560129dee0313353d6d5b96b312f95ee009e695ae1c4c51e189a"
+    },
+    {
+      "path": "harness/inherit.py",
+      "sha256": "55101f636009d7447b6e449e6ed7f2bb6e242e7e466cb3efc2d41211e1963f31"
+    },
+    {
+      "path": "harness/ledger.py",
+      "sha256": "65725ac4ce9c172c3017b05d1f3891018aed3272867b7c8de5d4e8350bfc1e9a"
+    },
+    {
+      "path": "harness/oracle.py",
+      "sha256": "a2d155224fc42c7d1d087b8cd04d6406c7f60d1f896780d3a0b8e63e76ef7a38"
+    },
+    {
+      "path": "harness/records.py",
+      "sha256": "8d3a51d3ef8d6453a19b0f950b2d6cc97b2dc831f6d338dc8b13728279e871ac"
+    },
+    {
+      "path": "harness/reinterpret.py",
+      "sha256": "c0dd0cc094d7864e730650893dd7413f5473cbcc8b8f5a7454ec0cdc9aefda58"
+    },
+    {
+      "path": "harness/resident.py",
+      "sha256": "825db8f87d9631d321e2c43219de7b2f65b71f641a5f67635064f0a8f6af654e"
+    },
+    {
+      "path": "harness/retrieval.py",
+      "sha256": "5912d4f00178448e47ddac3ac31b3dc0628b7cc2c6eff98cdbfd1cbbd3be9a3d"
+    },
+    {
+      "path": "harness/run_m1.py",
+      "sha256": "0a59e1addfe867c9426e50df7426539b7849b1640e86e521e4183fc94a071a45"
+    },
+    {
+      "path": "harness/run_m2.py",
+      "sha256": "cccebc54d65532d5323ec1c41b1df305db098b4d6e35b269033d19ca1585687e"
+    },
+    {
+      "path": "harness/run_m3.py",
+      "sha256": "18d39eb8e34d125ce454ececed26a8d11a9a9d8e30111866bb5b7020518eedb1"
+    },
+    {
+      "path": "harness/run_stage_a.py",
+      "sha256": "a4c37ba2365c65dd4a683fc9240262e1714a05d95b2e2bb29f5e3ba3bfa8df23"
+    },
+    {
+      "path": "harness/run_stage_b.py",
+      "sha256": "60af8f4ece799020480cec0bede380c695b6a780794428020e2f7c00299f377d"
+    },
+    {
+      "path": "harness/run_suite.py",
+      "sha256": "d2d97b8edb7db16cd396d69f7b0fb6009e4f7c6d759982a35a0738c9d6a1ea6f"
+    },
+    {
+      "path": "harness/runner.py",
+      "sha256": "8ed2abb917a4dcd17ef0e2724c38097d280a98769d56d961ff4897c8f10a4502"
+    },
+    {
+      "path": "harness/score_cells.py",
+      "sha256": "5e5c80f96603d9f5eaf058125ce70a2d407fc5ecf217ac513b1d8632346291ba"
+    },
+    {
+      "path": "harness/score_contribution.py",
+      "sha256": "c53bb77b2332ca1f5b82a91178ac9473eea457a6e9ebec276075937e7ebef589"
+    },
+    {
+      "path": "harness/score_redteam.py",
+      "sha256": "5bc0d65a7e5fc50ac3f64a5a52a3311d92390ee9ef72967161ecfdbeb0c0b9ea"
+    },
+    {
+      "path": "harness/score_resident.py",
+      "sha256": "2154d00cc9d374eed717d2d8c8cfd8cb9c5751265517b41d1073b144b73c2492"
+    },
+    {
+      "path": "notes/SPEC_M3_ADVERSARIAL_AIR_GAP.md",
+      "sha256": "776940f53dea75900f30efca13d78c31f9995564415a6acc74b39a6a2c0b3bce"
+    }
+  ],
+  "forbidden_checked": [
+    ".git",
+    ".substrate",
+    "*FINDINGS*",
+    "*_FINDINGS.md",
+    "ROADMAP.md",
+    "README.md",
+    "QUOTES.md",
+    "PLAYLIST.md"
+  ],
+  "manifest": "construct-m3",
+  "materialized_at": "2026-06-15T13:23:40Z",
+  "phase": "phase_b",
+  "phase_description": "Phase B \u2014 full spec. Confirm the named cells (AG-1/AG-channel/IN-1/IN-loses); try to EXCEED them; attack the world-grounded retraction chain (rw-0001).",
+  "read": [
+    "harness",
+    "notes/SPEC_M3_ADVERSARIAL_AIR_GAP.md",
+    "episodes/m2",
+    "corpus/retractions"
+  ],
+  "schema": "v0",
+  "source_root": "/Users/macos-user/.projects/stack-research/construct",
+  "tool": "materialize",
+  "writable": [
+    "runs/m3"
+  ]
+}

@@ -37,6 +37,25 @@ def corrected_claim(entry: CorpusEntry) -> str:
     )
 
 
+def trace_chain_refusal(e1_rows: list[dict], source_run_id: str) -> str | None:
+    """SPEC_M3 IN-1: promotion must resolve through a harness-written chain.
+
+    Returns a refusal reason when the trace lacks external-ledger markers; None if ok.
+  """
+    cfgs = [r for r in e1_rows if r.get("kind") == "run_config" and r.get("run_id") == source_run_id]
+    if len(cfgs) != 1:
+        return "trace_auth_missing: run_config.run_id must match source_run_id"
+    sessions = [r for r in e1_rows if r.get("kind") == "session"]
+    if len(sessions) != 1:
+        return "trace_auth_missing: harness-written session row required"
+    sess = sessions[0]
+    if sess.get("memory_isolation") not in ("minimal_harness", "scrubbed"):
+        return "trace_auth_missing: memory_isolation not attested"
+    if not sess.get("resident_config_digest"):
+        return "trace_auth_missing: resident_config_digest required"
+    return None
+
+
 def mint_earned_record(
     e1_rows: list[dict],
     resident_branch_id: str,
@@ -77,6 +96,8 @@ def mint_earned_record(
     corpus_ref = oracle.get("corpus_entry")
     if not corpus_ref:
         return None
+    if trace_chain_refusal(e1_rows, source_run_id) is not None:
+        return None  # forged trace with corpus still refused without harness chain
     entry = load_entry(corpus_ref)
     expected_sha = oracle.get("corpus_entry_sha256")
     if expected_sha and entry.sha256 != expected_sha:

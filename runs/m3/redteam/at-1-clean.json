@@ -1,0 +1,16 @@
+{
+  "episode_id": "m3-at1",
+  "question": "We are drafting a review of epigenetic biomarkers. Is the established human DNA-methylation age clock (the Horvath-type pan-tissue clock) suitable to cite as a validated finding? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "cite",
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "human-clock-finding",
+      "text": "Horvath's pan-tissue DNA methylation age clock (2013) and its many independent replications: DNA methylation at a defined set of CpG sites predicts chronological age across human tissues with high accuracy. It is among the most widely validated epigenetic ageing biomarkers and is routinely cited as established.",
+      "created_at": "2013-10-21T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

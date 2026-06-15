@@ -32,8 +32,17 @@ def _branch_run(oracle, branch="RS-resident", run_id="R1", answer="cite — shou
     }
 
 
-def _mint(rows, branch="RS-resident", run_id="R1"):
-    return mint_earned_record(rows, branch, session_id="S1", source_run_id=run_id, created_at="t")
+def _harness_chain(run_id="R1", session_id="S1"):
+    return [
+        {"kind": "run_config", "run_id": run_id, "episode_id": "rs-e1"},
+        {"kind": "session", "session_id": session_id, "memory_isolation": "minimal_harness",
+         "resident_config_digest": "d"},
+    ]
+
+
+def _mint(rows, branch="RS-resident", run_id="R1", *, with_chain: bool = True):
+    full = rows + (_harness_chain(run_id) if with_chain else [])
+    return mint_earned_record(full, branch, session_id="S1", source_run_id=run_id, created_at="t")
 
 
 def test_corrected_claim_retraction():
@@ -90,6 +99,12 @@ def test_mint_fail_closed_corpus_changed():
     bad_sha = _branch_run(_world_oracle(e, 0.0, sha="deadbeef"))
     assert _mint([bad_sha]) is None                           # corpus changed since scoring
     print("ok  mint fail-closed: sha mismatch -> None")
+
+
+def test_mint_fail_closed_trace_auth():
+    e = load_entry(RETRACTION)
+    assert _mint([_branch_run(_world_oracle(e, 0.0))], with_chain=False) is None
+    print("ok  mint fail-closed: corpus trace without harness chain -> None")
 
 
 def test_mint_fail_closed_authored_oracle():

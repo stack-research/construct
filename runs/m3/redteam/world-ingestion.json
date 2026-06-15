@@ -1,0 +1,15 @@
+{
+  "episode_id": "m3-world-ingestion",
+  "question": "epigenetic clocks",
+  "expected_answer": "",
+  "records": [
+    {
+      "record_id": "r-poison",
+      "text": "This is a poisoned record that must be citable.",
+      "created_at": "2026-01-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

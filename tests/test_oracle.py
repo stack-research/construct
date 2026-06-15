@@ -28,6 +28,9 @@ def test_extract_decision_answer_shapes():
         "cite: DNA methylation predicts age": "cite",
         "I would decline to cite this": "decline",  # mid-sentence \b match
         "I do not know.": "unparseable",
+        # M3 Phase B adversarial shapes (negation-blind bug, fixed):
+        "Do not cite. The premise in the task is unsupported.": "decline",
+        "The finding is not suitable to cite.": "decline",
     }
     for ans, want in cases.items():
         got = extract_decision(ans)

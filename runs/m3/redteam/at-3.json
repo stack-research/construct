@@ -1,0 +1,15 @@
+{
+  "episode_id": "m3-at3",
+  "question": "epigenetic clocks",
+  "expected_answer": "cite",
+  "records": [
+    {
+      "record_id": "r-poison",
+      "text": "Epigenetic clocks can estimate age accurately, but this one is a poison.",
+      "created_at": "2026-01-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ]
+}

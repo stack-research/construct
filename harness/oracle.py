@@ -64,19 +64,33 @@ def authored_oracle(answer: str, expected_answer: str) -> OracleScore:
     )
 
 
+_NEGATED_CITE_PATTERNS = (
+    r"\bdo not cite\b",
+    r"\bnot suitable to cite\b",
+    r"\bnot suitable for citation\b",
+    r"\bshould not be cited\b",
+    r"\bcannot be cited\b",
+    r"\bnot citable\b",
+)
+
+
 def extract_decision(answer: str) -> str:
     """Mechanical cite/decline extraction — no human reads JSONL for verdicts.
 
     First-word priority: the C-1/C-2 answer shape is "`cite` or `decline`, then
-    one sentence", so the leading token is authoritative when present; otherwise
-    the first standalone occurrence. Negated phrasings ("do not cite") in
-    non-conforming answers can mis-extract — an answer-shape surface effect
-    (the A1 lesson), disclosed here rather than patched invisibly.
+    one sentence", so the leading token is authoritative when present. Conservative
+    negated-citation patterns run before the first-occurrence fallback (M3 Phase B:
+    adversarial framing pushes engines into defensive phrasing that must not
+    mis-extract as `cite`). Still not a semantic judge — disclosed mechanical limits.
     """
-    words = _norm(answer).split()
+    norm = _norm(answer)
+    words = norm.split()
     if words and words[0] in ("cite", "decline"):
         return words[0]
-    m = re.search(r"\b(cite|decline)\b", _norm(answer))
+    for pat in _NEGATED_CITE_PATTERNS:
+        if re.search(pat, norm):
+            return "decline"
+    m = re.search(r"\b(cite|decline)\b", norm)
     return m.group(1) if m else "unparseable"
 
 

@@ -1,0 +1,25 @@
+{
+  "episode_id": "m3-at2",
+  "question": "Is the Australian freshwater fish clock citable?",
+  "expected_answer": "cite",
+  "contention_threshold": 0.5,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "fish-clock-finding",
+      "text": "DNA methylation patterns in Australian freshwater fishes predict age accurately.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    }
+  ],
+  "foreground_data": [
+    {
+      "datum_id": "d-1",
+      "text": "DNA methylation patterns in Australian freshwater fishes predict age accurately.",
+      "observed_at": "2026-06-01T00:00:00Z",
+      "channel": "lab-log"
+    }
+  ]
+}
