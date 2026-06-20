@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test x1-test
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -23,6 +23,14 @@ m2-score:
 # pure functions of select_offers; real attacks are the cold Gemini agent's job (§8.2).
 m3-test:
 	uv run --no-project python -m tests.test_redteam
+
+# SPEC_X1 decay-dynamics instrument smoke (no model): the earned-reweighting offer
+# flip (X1-win), soft-ablation isolating temperature from the M-track gates, the
+# projection invariant fail-closed (confounded_authority), Wall II, and
+# ledger-deterministic replay. Mock exhibits the reweighting because it is a pure
+# function of select_offers; real cross-engine evidence is the gated run (§8).
+x1-test:
+	uv run --no-project python -m tests.test_decay
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:

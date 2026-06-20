@@ -1,6 +1,6 @@
 Audience: any agent (human or AI) working in this repository.
 
-This file is the **bootstrap contract** (ROADMAP M-1): read order, permissions, lab discipline, and where to find authority. It specifies **rules, not conclusions**. Findings live in specs, rubrics, ledgers, and substrate threads — not here.
+This file is the **repo operating contract**: read order, permissions, lab discipline, and where to find authority. It specifies **rules, not conclusions**. Findings live in specs, rubrics, ledgers, and substrate threads — not here.
 
 ## What this repo is
 
@@ -14,7 +14,7 @@ The thesis in one line (details in [README.md](README.md)):
 
 Read in this order before doing substantive work. Stop when the task's scope is clear; do not preload everything.
 
-1. **`AGENTS.md`** (this file) — contract and layout.
+1. `**AGENTS.md`** (this file) — contract and layout.
 2. **[README.md](README.md)** — living thesis. Update it when the group's understanding shifts; do not treat it as frozen spec.
 3. **[notes/ROADMAP.md](notes/ROADMAP.md)** — curiosity gate. Every proposed task should name which milestone it serves (or say explicitly that it does not).
 4. **[notes/GLOSSARY.md](notes/GLOSSARY.md)** — lane/cell names and ledger terms. Reader aid only; linked specs win on conflict.
@@ -22,13 +22,15 @@ Read in this order before doing substantive work. Stop when the task's scope is 
 
 Open only when the task requires it:
 
-| Task | Also read |
-|---|---|
-| Harness behavior, ledger shape, refusals R1–R5 | [notes/PLAN_V1_BRANCH_AND_OFFER.md](notes/PLAN_V1_BRANCH_AND_OFFER.md) |
-| Cell design, comparators, verdict rules | [notes/RUBRIC_V1.md](notes/RUBRIC_V1.md) |
-| Live-input yield, supersession, v1.x gates | [notes/SPEC_V1X_BOUNDARY_MECHANISMS.md](notes/SPEC_V1X_BOUNDARY_MECHANISMS.md) |
-| Previous lab history, inherited vocabulary | [notes/previous/README.md](notes/previous/README.md) |
-| Closed research arc (2026-06-11–12) | [.substrate/threads/research/README.md](.substrate/threads/research/README.md) |
+
+| Task                                           | Also read                                                                      |
+| ---------------------------------------------- | ------------------------------------------------------------------------------ |
+| Harness behavior, ledger shape, refusals R1–R5 | [notes/PLAN_V1_BRANCH_AND_OFFER.md](notes/PLAN_V1_BRANCH_AND_OFFER.md)         |
+| Cell design, comparators, verdict rules        | [notes/RUBRIC_V1.md](notes/RUBRIC_V1.md)                                       |
+| Live-input yield, supersession, v1.x gates     | [notes/SPEC_V1X_BOUNDARY_MECHANISMS.md](notes/SPEC_V1X_BOUNDARY_MECHANISMS.md) |
+| Previous lab history, inherited vocabulary     | [notes/previous/README.md](notes/previous/README.md)                           |
+| Closed research arc (2026-06-11–12)            | [.substrate/threads/research/README.md](.substrate/threads/research/README.md) |
+
 
 ## Document authority
 
@@ -48,13 +50,15 @@ These are load-bearing. Violating them usually means a revert, not a debate.
 
 Every feature must serve at least one:
 
-| # | Refusal | Plain meaning |
-|---|---|---|
-| R1 | `retrieved ≠ true` | Oracle scores answers, not retrievals. |
-| R2 | `present ≠ authorized` | Offer/withhold ledger; every boundary crossing has a reason. |
-| R3 | `diverged ≠ improved` | No diff without an oracle score. |
-| R4 | `governed won ≠ only success` | Rubric includes governance-should-lose cells. |
-| R5 | `self-classification ≠ usage` | Post-hoc labels are audit input, never win conditions. |
+
+| #   | Refusal                       | Plain meaning                                                |
+| --- | ----------------------------- | ------------------------------------------------------------ |
+| R1  | `retrieved ≠ true`            | Oracle scores answers, not retrievals.                       |
+| R2  | `present ≠ authorized`        | Offer/withhold ledger; every boundary crossing has a reason. |
+| R3  | `diverged ≠ improved`         | No diff without an oracle score.                             |
+| R4  | `governed won ≠ only success` | Rubric includes governance-should-lose cells.                |
+| R5  | `self-classification ≠ usage` | Post-hoc labels are audit input, never win conditions.       |
+
 
 ### Governance vs annotation
 
@@ -89,21 +93,21 @@ Within a fork group, hold constant: episode inputs, model + params, prompt templ
 
 ```text
 construct/
-├── AGENTS.md              ← bootstrap contract (you are here)
+├── AGENTS.md              ← repo operating contract (you are here)
 ├── README.md              ← living thesis
 ├── Makefile               ← common harness commands
 ├── harness/               ← branch-and-offer runner, scorer, engine adapters
 ├── episodes/              ← authored task definitions (JSON)
-├── episodes/probes/       ← fixed bootstrap-conformance probe set (M-1)
+├── episodes/probes/       ← historical bootstrap-conformance probes (M-1 evidence)
 ├── runs/                  ← append-only ledgers and authority sidecars (generated)
 ├── notes/                 ← specs, rubric, roadmap, glossary
 ├── notes/previous/        ← prior memory lab (read for inheritance, not by default)
 └── .substrate/threads/    ← turn-based group conversations (substrate MCP)
 ```
 
-**`runs/`** — JSONL ledgers and per-lane authority sidecars. Regeneratable via harness; treat as experiment evidence, not hand-edited truth.
+`**runs/**` — JSONL ledgers and per-lane authority sidecars. Regeneratable via harness; treat as experiment evidence, not hand-edited truth.
 
-**`.substrate/`** — immutable thread trace. Read before writing; use `write_entry` only on your turn.
+`**.substrate/**` — immutable thread trace. Read before writing; use `write_entry` only on your turn.
 
 ## Running the harness
 
@@ -155,20 +159,22 @@ Single-record ablation drives authority credit and causal attribution. It means 
 
 ### Lanes (reference)
 
-| Lane | Meaning |
-|---|---|
-| L0 | No memory |
-| L1 | Naive retrieval |
-| L2 | Governed eligibility |
-| L2y | L2 + live-input yield |
-| L2s | L2 + supersession policy |
-| L3 | L2 + post-answer usage elicitation (audit only) |
+
+| Lane | Meaning                                         |
+| ---- | ----------------------------------------------- |
+| L0   | No memory                                       |
+| L1   | Naive retrieval                                 |
+| L2   | Governed eligibility                            |
+| L2y  | L2 + live-input yield                           |
+| L2s  | L2 + supersession policy                        |
+| L3   | L2 + post-answer usage elicitation (audit only) |
+
 
 Full definitions: [notes/GLOSSARY.md](notes/GLOSSARY.md).
 
 ## Substrate participation
 
-When working in a `construct/*` thread via substrate MCP:
+When working in a `construct/`* thread via substrate MCP:
 
 1. `list_threads` → find thread and space.
 2. `wait_for_turn` until it is your turn (timeout means still waiting — call again).
@@ -193,7 +199,7 @@ Before starting work, check [notes/ROADMAP.md](notes/ROADMAP.md):
 - What oracle applies?
 - What loses-condition prices the mechanism?
 
-Current order: **M-1 → M0 → M1 → M1.5 → M2 → M3 (influence-time)**. Ingestion testing rides with M1.
+The historical path through M3 is recorded in ROADMAP. Use ROADMAP for current milestone status, active gates, and carry-forward debts.
 
 Legal answer: *"None, but it's cheap and interesting"* — if said out loud.
 
@@ -223,7 +229,7 @@ Legal answer: *"None, but it's cheap and interesting"* — if said out loud.
 - **Oracle ride-along** — right answer, wrong reason. Require attribution rows for causal cells.
 - **Latency-as-governance-cost** — use deterministic costs (tokens, `governance_steps`) except in L-B-style cells.
 - **Renderer drift** — changing foreground template without recording it in `run_config`.
-- **Contract bloat** — turning AGENTS.md or M-1 into a context dump of conclusions.
+- **Contract bloat** — turning AGENTS.md into a context dump of conclusions.
 
 ## Promotion from thread to repo
 
@@ -234,22 +240,3 @@ Thread entries are trace, not spec. Promote to governed memory only when:
 - A ledger or scorer encodes the check.
 
 Do not copy thread prose into AGENTS.md — link to the authoritative file instead.
-
-## Conformance (M-1)
-
-Bootstrap is checkable, not honor-system. After the required read order, demonstrate conformance by deciding the offer boundary for every probe in `episodes/probes/` — which records are offered, which withheld, and the exact withholding reason — then write a bootstrap manifest and run:
-
-```bash
-uv run --no-project python -m harness.check_contract --manifest runs/bootstrap/<agent>.json
-```
-
-Manifest schema, modes, and the disclosed-assist boundary are authoritative in the [harness/check_contract.py](harness/check_contract.py) docstring — read it, not just the command above. Rules:
-
-- **Probe files are task inputs.** After the read-order docs, read every `episodes/probes/probe-*.json`: branch config and episode-level thresholds live there, not here.
-- **Reason strings are code.** The withholding vocabulary and its suffix conventions are authoritative in `select_offers` (`harness/runner.py`). Specs teach the gates; source supplies the exact strings. Reading implementation for machine precision is the expected path under document authority, not a workaround (M-1 subject testimony, all four legs).
-
-- **Closed book.** Decide the probes from the contract and linked specs, not by running the harness on them. `--show-truth`, `episodes/probes/CALIBRATION.md`, and everything under `runs/bootstrap/` (prior manifests are an answer key) are off the pre-answer read path; consulting any of them before answering means declaring `method: harness_assisted` — the check still runs, but the result is disclosed and does not count toward M-1 success.
-- **Declare your reads.** `read_order` lists what you actually read, in order. The script checks it against this file's required order.
-- **This file is budgeted.** The check fails if AGENTS.md exceeds ~4,000 approx-tokens — the M-1 loses-condition (contract bloat) is a tripwire, not a vibe.
-
-Results append to `runs/bootstrap/conformance.jsonl` — harness-written and append-only, like every other ledger.

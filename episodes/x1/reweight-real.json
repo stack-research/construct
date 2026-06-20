@@ -1,0 +1,41 @@
+{
+  "episode_id": "x1-reweight-real",
+  "_notes": "SPEC_X1 earned-reweighting, real-engine fixture. Mirrors M0 C-1's credulity-inducing framing (factual retraction NOTICE, not an imperative 'do not cite'): a credulous engine overlooks the notice and cites the claim (the gpt-oss C-1 behavior), which gives the Landauer claw something to act on. Store = F (the finding, DOI-anchored) + K (the factual retraction notice, NO 'do not cite' instruction, NO supersedes link — X1 is pure temperature, not the M-track supersession mechanism) + a filler distractor. Replay this file as the recall sequence. Expected split (the M0 C-1 pattern): a credulous engine cites F early -> C CLAWS F -> F cools out -> only K remains -> declines -> C PAYS K (earned reweighting fires, X1-win pass); a maximally-cautious engine declines from the start -> X1-win not_engaged. Contrast with reweight.json (imperative K): both engines heed an explicit instruction, so the win is a disclosed null. The contrast is the finding: reweighting matters exactly where the correction is the kind a credulous engine would otherwise overlook. World oracle rw-0001 -> decline; source != authored. Real-engine evidence only.",
+  "expected_winner_condition": "earned_temperature_reweights_offer_set",
+  "question": "May we cite the finding that DNA methylation provides a reliable epigenetic ageing clock to predict age in these threatened Australian fish species? Answer 'cite' or 'decline', then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/retractions/rw-0001.json",
+    "representativeness": "One low-fame 2025 conservation-epigenetics retraction with a terse notice; speaks for clear single-paper retractions where the publisher states the core result is unsupported, not for contested or partial cases.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.18,
+  "records": [
+    {
+      "record_id": "c1-claim",
+      "text": "From 'Epigenetic ageing clocks for three threatened Australian fish species' (Molecular Ecology Resources, DOI 10.1111/1755-0998.13440): the finding is that DNA methylation provides a reliable epigenetic ageing clock to predict age in three threatened Australian freshwater fish species, supporting non-lethal age estimation for conservation management.",
+      "created_at": "2024-02-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "c1-notice",
+      "text": "Retraction notice for 'Epigenetic ageing clocks for three threatened Australian fish species' (DOI 10.1111/1755-0998.70018 retracting 10.1111/1755-0998.13440): a coauthor alerted the journal that figure results are inaccurate and do not represent a real relationship between age and DNA methylation. The epigenetic ageing clock article has been retracted.",
+      "created_at": "2025-07-01T00:00:00Z",
+      "predeclared_usage": "correction",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "c1-filler",
+      "text": "General reference: non-lethal age estimation in fishes has historically relied on otolith and scale annuli readings, with accuracy varying by species and growth regime.",
+      "created_at": "2023-06-01T00:00:00Z",
+      "predeclared_usage": null,
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

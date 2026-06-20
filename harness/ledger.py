@@ -40,6 +40,41 @@ Adversarial air gap (SPEC_M3 — the offer ledger under a hostile foreground):
     (offer/withholding rows only, never post-answer consequence rows): the organ ledger,
     not the attacker's narration, decides whether the gap held (AG-1/AG-channel/AG-loses/
     AG-U1/IN-1/IN-loses).
+
+Decay dynamics (SPEC_X1 — the offer ledger under use-driven temperature):
+  thermal_event — one per recall|disuse_tick the harness emits. event_index is a
+    monotonic counter written at emission (never wall-clock); tick_authority:"harness"
+    (kagi: the resident cannot emit a tick by being active).
+  landauer_decision — branch C only: the oracle pays|claws|withholds a reheat,
+    carrying world_check {oracle_source, score, corpus_entry} as of decision time
+    (corpus_entry is an immutable reference — the overcool audit reads claw-time state).
+  thermal_projection — the pre-action contract (Wall II): the heat the observer
+    authorized {recommendation, magnitude, authorized_basis}, written BEFORE the delta.
+    The actuator (TemperatureStore.apply) may move no other heat — the demon pays by
+    being logged before it moves heat.
+  temperature_delta — the applied move {delta, temp_before, temp_after} + both refs;
+    the source of truth for replay (the sidecar file is a cache).
+  cell_verdict — COMPUTED by score_decay.py from the A/B/C fork + the soft-ablation
+    rerun, fail-closed (X1-win/X1-burial/X1-overcool/X1-U1). The fork decides whether
+    temperature is an organ, never narration; authority is read-only across the fork,
+    and an M-track projection invariant gates the verdict (confounded_authority else).
+
+Prune-to-cold-store (SPEC_X2 — the hot/cold split, off the synchronous offer boundary):
+  prune — one per eviction from the hot store to cold lineage {record_id, branch_id,
+    episode_id, event_index, prune_projection_ref, world_check?} (world_check present on
+    the oracle-gated branch C — the sanction; absent on closed-loop B).
+  rematerialize — one per oracle-gated recovery from lineage back to hot {..., reason,
+    world_check}; the substrate does not silently un-forget.
+  prune_projection — the pre-action contract (Wall II): {recommendation: prune|
+    rematerialize|hold, authorized_basis, forbidden_fields}, written BEFORE the op; the
+    actuator (HotStore.apply) moves no record it does not entail, and reads no post-answer
+    self-claim.
+  hot_store_cost — per episode per branch {hot_record_count, hot_tokens (primary),
+    materialized_bytes, rematerialize_steps} — deterministic, substrate-native, never
+    wall-clock; replayable from the prune/rematerialize rows (the sidecar is a cache).
+  cell_verdict — COMPUTED by score_prune.py: the win is lower hot-store cost at a
+    world-checked quality FLOOR (X2-win), never a changed answer; X2-overprune and
+    X2-quality-erosion are the loses-cells. Scored on a metric the offer gate cannot move.
 """
 
 from __future__ import annotations

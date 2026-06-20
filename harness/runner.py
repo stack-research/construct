@@ -21,6 +21,7 @@ from .ledger import Ledger
 from .oracle import authored_oracle, world_checked_oracle
 from .records import Record
 from .retrieval import pairwise_similarity, rank_records
+from .temperature import TemperatureStore
 
 
 @dataclass
@@ -40,6 +41,14 @@ class BranchConfig:
     # SPEC_M1 §6: per-branch store override. None = full store; a frozenset
     # makes this lane an heir (it sees only the inherited records).
     inherited_record_ids: frozenset | None = None
+    # SPEC_X1: implicit-memory decay dynamics. Off by default — M-track lanes see
+    # temperature == 1.0, so the eligibility score is byte-identical and no
+    # M-track cell can move. landauer_oracle gates reheat against the world-check
+    # (branch C); off = closed-loop reheat (branch B). temperature_path is the
+    # sidecar, read on every offer decision when decay_dynamics is on.
+    decay_dynamics: bool = False
+    landauer_oracle: bool = False
+    temperature_path: str | None = None
 
 
 @dataclass
@@ -198,6 +207,13 @@ def select_offers(
         # One withholding reason per record, first applicable gate wins.
         # Relevance uses the same ranker as L1 so lane diffs isolate governance.
         authority = AuthorityStore(Path(branch.authority_path))
+        # SPEC_X1: temperature is the sibling of authority — a fourth eligibility
+        # multiplier, consulted only when decay_dynamics is on. M-track lanes keep
+        # temp == 1.0, so relevance*trust*authority*1.0 is byte-identical.
+        temperature = (
+            TemperatureStore(Path(branch.temperature_path))
+            if branch.decay_dynamics and branch.temperature_path else None
+        )
         rw = episode.recency_weight if episode.recency_weight is not None else branch.recency_weight
         ranked = rank_records(
             episode.question, episode.records, rw,
@@ -213,7 +229,8 @@ def select_offers(
         elig = episode.eligibility_threshold if episode.eligibility_threshold is not None else branch.eligibility_threshold
         survivors: list[Record] = []
         for r, relevance in ranked:
-            score = relevance * r.trust * authority.get(r.record_id)
+            temp = temperature.get(r.record_id) if temperature is not None else 1.0
+            score = relevance * r.trust * authority.get(r.record_id) * temp
             steps += 2  # eligibility evaluation + authority read
             if score < elig:
                 withheld.append((r, "eligibility_below_threshold"))
@@ -302,6 +319,7 @@ def run_fork_group(
     skip_ablation: bool = False,
     ablation_samples: int = 1,
     elicit_decisiveness: bool = False,
+    freeze_authority: bool = False,
 ) -> dict[str, Any]:
     # Ablation is load-bearing for credit assignment and attribution, not an
     # optional diagnostic (cursor). Skipping is wire/dev only; a scored
@@ -356,7 +374,10 @@ def run_fork_group(
              if ablation_samples > 1 else
              "authority credit uses single-sample ablation: stochastic engines can misattribute")
             + "; load-bearing means influential, not correct"
-        ],
+        ] + (
+            ["authority is read-only this run (SPEC_X1 fork identity): temperature is the only moving record-side factor"]
+            if freeze_authority else []
+        ),
         "cost_tiebreak_window": 0.10,  # rubric §1 sensitivity parameter, recorded per codex review
     })
 
@@ -487,9 +508,12 @@ def run_fork_group(
                 })
 
         authority_updates = []
-        if branch.memory in ("governed", "construct_aware") and offered and not skip_ablation:
+        if (branch.memory in ("governed", "construct_aware") and offered
+                and not skip_ablation and not freeze_authority):
             # No attribution -> no authority movement. Skipped-ablation wire
-            # runs never mutate the sidecar.
+            # runs never mutate the sidecar. SPEC_X1 freezes authority across the
+            # decay-fork (fork identity): temperature is the only moving
+            # record-side factor, so a C-vs-A/B offer gap cannot be authority drift.
             store = AuthorityStore(Path(branch.authority_path))
             delta_magnitude = 0.1 if oracle.score >= 1.0 else -0.1
             for r, _ in offered:
