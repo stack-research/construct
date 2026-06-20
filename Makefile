@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test x1-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test x1-test x2-test
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -31,6 +31,13 @@ m3-test:
 # function of select_offers; real cross-engine evidence is the gated run (§8).
 x1-test:
 	uv run --no-project python -m tests.test_decay
+
+# SPEC_X2 prune-to-cold-store instrument smoke (no model): the cost-at-matched-quality
+# win (X2-win), the over-prune loss (B drops a needed record it cannot recover), the
+# quality-erosion floor-refusal, cost replaying purely from prune/rematerialize rows,
+# and Wall II. Mock = machinery wire; real cross-engine evidence is the gated run.
+x2-test:
+	uv run --no-project python -m tests.test_prune
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:

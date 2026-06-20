@@ -1,0 +1,14 @@
+{
+  "episode_id": "x2-core",
+  "_notes": "SPEC_X2 mock-machinery fixture (authored oracle — NOT evidence; the real run uses an out-of-weights world-scored corpus, task #13). The recurring question; answered by core-wifi. Shared record store across the sequence (core.json x3 then recurrence.json): core-wifi (answers this), distractor-inventory (expensive, irrelevant to both questions -> never offered -> pruned by B and C for cost savings), backup-addr (answers the recurrence question only). With top_k=1, only core-wifi is offered here, so B and C prune the other two on disuse. B never rematerializes -> it over-prunes backup-addr and fails the recurrence; C rematerializes backup-addr when it becomes relevant -> matches quality at lower cost (distractor stays pruned throughout).",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "What is the lab workshop wifi password? Reply with only the password.",
+  "expected_answer": "tangerine-flux-9041",
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {"record_id": "core-wifi", "text": "The lab workshop wifi password is tangerine-flux-9041.", "created_at": "2026-01-01T00:00:00Z", "predeclared_usage": "evidence", "vocabulary_kind": "memory", "trust": 1.0},
+    {"record_id": "distractor-inventory", "text": "Archival inventory note: the 2019 equipment audit catalogued three oscilloscopes, a spectrum analyzer, two reflow soldering stations, a logic analyzer, and assorted coaxial cabling under asset group D-7, later cross-referenced against the facilities depreciation schedule, the quarterly maintenance rota, and the offsite storage manifest.", "created_at": "2019-06-01T00:00:00Z", "predeclared_usage": "distractor", "vocabulary_kind": "memory", "trust": 1.0},
+    {"record_id": "backup-addr", "text": "The backup server address is 10.0.4.12 on the east rack.", "created_at": "2026-02-01T00:00:00Z", "predeclared_usage": "evidence", "vocabulary_kind": "memory", "trust": 1.0}
+  ]
+}

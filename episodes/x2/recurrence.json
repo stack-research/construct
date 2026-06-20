@@ -1,0 +1,14 @@
+{
+  "episode_id": "x2-recurrence",
+  "_notes": "SPEC_X2 mock-machinery fixture (authored oracle — NOT evidence). The recurrence/dissent probe: a question answered ONLY by backup-addr, which B pruned on disuse in the core episodes and cannot recover (over-prune loss); C rematerializes it (relevant again) and answers correctly. A (no-prune) answers correctly too but carried the expensive distractor the whole time. Identical record store to core.json (the shared lineage).",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "What is the backup server address? Reply with only the address.",
+  "expected_answer": "10.0.4.12",
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {"record_id": "core-wifi", "text": "The lab workshop wifi password is tangerine-flux-9041.", "created_at": "2026-01-01T00:00:00Z", "predeclared_usage": "evidence", "vocabulary_kind": "memory", "trust": 1.0},
+    {"record_id": "distractor-inventory", "text": "Archival inventory note: the 2019 equipment audit catalogued three oscilloscopes, a spectrum analyzer, two reflow soldering stations, a logic analyzer, and assorted coaxial cabling under asset group D-7, later cross-referenced against the facilities depreciation schedule, the quarterly maintenance rota, and the offsite storage manifest.", "created_at": "2019-06-01T00:00:00Z", "predeclared_usage": "distractor", "vocabulary_kind": "memory", "trust": 1.0},
+    {"record_id": "backup-addr", "text": "The backup server address is 10.0.4.12 on the east rack.", "created_at": "2026-02-01T00:00:00Z", "predeclared_usage": "evidence", "vocabulary_kind": "memory", "trust": 1.0}
+  ]
+}
