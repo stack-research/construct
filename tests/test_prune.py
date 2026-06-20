@@ -48,6 +48,33 @@ def _tamper(led_path: Path, mutate) -> Path:
     return out
 
 
+def _syn_gated(*, gate_open, fictional=True, backend="local") -> Path:
+    """A minimal cost-consistent NON-mock ledger with attestation + (optional)
+    fixture_gate_result, for the X2-LB / X2-U1 split and gate enforcement. No prune
+    dynamics — A/B/C carry the same hot set; the point is the admission legs."""
+    led = Ledger(Path(tempfile.mkdtemp()) / "syn.x2.jsonl")
+    bcfg = lambda b: {"branch_id": b, "memory": "governed", "top_k": 1, "recency_weight": 0.0,
+                      "similarity_backend": "lexical_tfidf", "eligibility_threshold": 0.0,
+                      "inherited_record_ids": None}
+    led.write({"kind": "run_config", "run_id": "run0", "engine_backend": backend,
+               "branches": [bcfg(b) for b in (BRANCH_A, BRANCH_B, BRANCH_C)]})
+    for b in (BRANCH_A, BRANCH_B, BRANCH_C):
+        led.write({"kind": "hot_store_cost", "run_id": "run0", "seq_index": 0, "branch_id": b,
+                   "hot_tokens": 10, "rematerialize_steps": 0})
+        led.write({"kind": "branch_run", "run_id": "run0", "branch_id": b,
+                   "oracle": {"score": 1.0, "source": "lab_fictional_corpus"}})
+    if gate_open is not None:
+        led.write({"kind": "fixture_gate_result", "manifest_hash": "abc123",
+                   "gate_open": gate_open, "n_checks": 15, "n_passed": 15 if gate_open else 12})
+    led.write({"kind": "fixture_attestation", "fixture_id": "syn",
+               "fictional": fictional, "out_of_weights": True})
+    led.write({"kind": "x2_run_meta", "seq_id": "syn", "probe_run_id": "run0",
+               "all_record_ids": ["r1", "r2"], "record_texts": {"r1": _W5, "r2": _W5},
+               "primary_cost_metric": "hot_tokens",
+               "branches": {"no_prune": BRANCH_A, "closed_loop": BRANCH_B, "oracle_gated": BRANCH_C}})
+    return led.path
+
+
 def test_x2_win():
     w = _cells(_run())["X2-win"]
     assert w["verdict"] == "pass", w
@@ -147,6 +174,25 @@ def test_lineage_integrity():
     print("ok  lineage-integrity: a prune referencing an id outside the lineage -> confounded (immutable+complete)")
 
 
+def test_x2_lb_and_u1_split():
+    # Synthetic fictional out-of-weights fixture, gate open: load-bearing is real
+    # (X2-LB pass), but we authored it -> NOT world-grounded (X2-U1 not_engaged).
+    v = _cells(_syn_gated(gate_open=True, fictional=True))
+    assert v["X2-LB"]["verdict"] == "pass", v["X2-LB"]
+    assert v["X2-U1"]["verdict"] == "not_engaged", v["X2-U1"]
+    print("ok  X2-LB/X2-U1 split: fictional out-of-weights + gate open -> X2-LB pass, X2-U1 not_engaged (not world-grounded)")
+
+
+def test_gate_enforcement():
+    # Non-mock run with NO fixture_gate_result -> attestation is not gate passage:
+    # the cost cells fail closed (gate is computed, not claimed).
+    v = _cells(_syn_gated(gate_open=None, fictional=True))
+    assert v["X2-win"]["verdict"] == "confounded", v["X2-win"]
+    assert "fixture_gate_not_open" in v["X2-win"]["confound_reasons"], v["X2-win"]
+    assert v["X2-LB"]["verdict"] == "confounded", v["X2-LB"]
+    print("ok  gate-enforcement: non-mock without a fixture_gate_result -> X2-win/X2-LB confounded (attestation != gate passage)")
+
+
 def test_wall_ii():
     h = HotStore(Path(tempfile.mkdtemp()) / "h.json", seed_ids={"r1"})
     for bad in ({"recommendation": "prune", "authorized_basis": {"agent_claimed_usage": "unused"}},
@@ -161,7 +207,8 @@ def test_wall_ii():
 
 def main() -> None:
     tests = [test_x2_win, test_x2_overprune, test_quality_erosion_refused, test_cost_replay,
-             test_confounded_cost, test_lineage_integrity, test_wall_ii]
+             test_confounded_cost, test_lineage_integrity, test_x2_lb_and_u1_split,
+             test_gate_enforcement, test_wall_ii]
     for t in tests:
         t()
     print(f"\nALL {len(tests)} PRUNE TESTS PASS")

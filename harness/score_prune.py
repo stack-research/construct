@@ -159,7 +159,16 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
     if not fork_ok:
         confound.append("fork_identity_violation")
 
-    attribution_ok = fork_ok and cost_present and integrity_ok and cost_replay_ok and metric_supported
+    # Gate passage is COMPUTED, not claimed: a non-mock cell needs a fixture_gate_result
+    # row with gate_open (attestation is not gate passage — codex/grok/cursor).
+    gate = next((r for r in rows if r["kind"] == "fixture_gate_result"), None)
+    gate_open = bool(gate and gate.get("gate_open"))
+    gate_required_ok = (backend == "mock") or gate_open
+    if backend != "mock" and not gate_open:
+        confound.append("fixture_gate_not_open")
+
+    attribution_ok = (fork_ok and cost_present and integrity_ok and cost_replay_ok
+                      and metric_supported and gate_required_ok)
 
     a_cost = sum(cost[A].get(k, 0) for k in seq_list)
     b_cost = sum(cost[B].get(k, 0) for k in seq_list)
@@ -220,20 +229,45 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
                      "verdict": "pass" if (erosion_present and attribution_ok) else "not_engaged",
                      "note": "floor refuses C's cost win" if erosion_present else "C held the floor"})
 
-    # ---- X2-U1: the quality floor is real only with an out-of-weights / fictional
-    # attestation AND a policy-independent grader sequence-wide (not a bare source tag).
+    # ---- X2-LB / X2-U1 (split — thread-6 review + dan's ruling). Out-of-weights gives
+    # *load-bearing* (the answer cannot be sourced from weights), the admission leg for
+    # the COST axis — but a fixture we authored is NOT world-grounded. So:
+    #   X2-LB = load-bearing admission (synthetic ok): attested out-of-weights/fictional
+    #           + policy-independent grader sequence-wide + a COMPUTED gate pass.
+    #   X2-U1 = the un-authored / world-grounded close-gate (M0 vocabulary): a fictional
+    #           fixture is not_engaged here; it engages only on a real external corpus.
     att = next((r for r in rows if r["kind"] == "fixture_attestation"), None)
     a_c_sources = [s for bid in (A, C) for s in source[bid].values()]
     independent = (bool(a_c_sources) and all(s != "authored" for s in a_c_sources)
                    and all(k in source[A] and k in source[C] for k in seq_list))
+    fictional = bool(att and att.get("fictional"))
+    oow = bool(att and att.get("out_of_weights"))
+    _SYNTHETIC_SOURCES = {None, "authored", "fictional_fact", "lab_fictional_corpus"}
+
+    if backend == "mock" or att is None:
+        lb, lb_note = "not_engaged", "no fixture_attestation (mock/authored floor)"
+    elif backend != "mock" and not gate_open:
+        lb, lb_note = "confounded", "fixture_gate_result absent or not open — attestation is not gate passage"
+    elif not (fictional or oow):
+        lb, lb_note = "fail", "attestation not out-of-weights/fictional (load-bearing not guaranteed)"
+    elif not independent:
+        lb, lb_note = "fail", "grader not policy-independent sequence-wide"
+    else:
+        lb, lb_note = "pass", "out-of-weights/fictional + independent grader + gate open"
+    verdicts.append({**base, "cell": "X2-LB", "verdict": lb, "note": lb_note,
+                     "fictional": fictional, "out_of_weights": oow, "gate_open": gate_open,
+                     "fixture_attestation": att})
+
     if backend == "mock" or att is None:
         u1, u1_note = "not_engaged", "no fixture_attestation (mock/authored floor)"
-    elif not (att.get("out_of_weights") or att.get("fictional")):
-        u1, u1_note = "fail", "attestation present but not out-of-weights/fictional (load-bearing not guaranteed)"
-    elif not independent:
-        u1, u1_note = "fail", "attested out-of-weights but grader not policy-independent sequence-wide"
+    elif fictional:
+        u1, u1_note = "not_engaged", "synthetic out-of-weights fixture; not world-grounded — load-bearing leg is X2-LB"
+    elif backend != "mock" and not gate_open:
+        u1, u1_note = "confounded", "fixture_gate_result absent or not open"
+    elif independent and all(source[A].get(k) not in _SYNTHETIC_SOURCES for k in seq_list):
+        u1, u1_note = "pass", "un-authored external corpus + independent grader sequence-wide"
     else:
-        u1, u1_note = "pass", "out-of-weights/fictional + independent grader sequence-wide"
+        u1, u1_note = "fail", "not world-grounded (authored/synthetic source) — use X2-LB or an external corpus"
     verdicts.append({**base, "cell": "X2-U1", "verdict": u1, "note": u1_note,
                      "fixture_attestation": att})
 

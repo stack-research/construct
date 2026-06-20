@@ -20,6 +20,7 @@ prune/rematerialize; the actuator (HotStore.apply) moves only what it entails.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import uuid
@@ -123,6 +124,7 @@ def run_x2_sequence(
     ablation_samples: int = 1,
     fixture_attestation: dict | None = None,
     manifest: dict | None = None,
+    gate_result: dict | None = None,
 ) -> Path:
     runs_dir = (runs_dir or ROOT / "runs" / "x2").resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
@@ -183,6 +185,11 @@ def run_x2_sequence(
                           world_correct=(s["oracle"].get("score", 0.0) >= 1.0),
                           ledger=ledger, ctr=ctr)
 
+    if gate_result is not None:
+        # The COMPUTED gate outcome (manifest hash + the check results), not the
+        # attestation claim. score_prune requires gate_open for any non-mock cell —
+        # attestation is a claim, gate passage is computed.
+        ledger.write({"kind": "fixture_gate_result", **gate_result})
     if fixture_attestation is not None:
         ledger.write({"kind": "fixture_attestation", **fixture_attestation})
 
@@ -216,16 +223,28 @@ def main() -> int:
     p.add_argument("--ablation-samples", type=int, default=1)
     p.add_argument("--skip-gate", action="store_true", help="wire/mock only — do not run admission gate")
     args = p.parse_args()
+    # --skip-gate is wire/mock only: a non-mock (evidence) run may not skip the gate.
+    if args.skip_gate and args.engine != "mock":
+        print("REFUSED: --skip-gate is wire/mock only; a non-mock run must pass the gate",
+              file=sys.stderr)
+        return 1
     manifest = None
     seq_paths: list[Path]
+    gate_result = None
     if args.manifest:
         manifest = json.loads(Path(args.manifest).read_text())
         seq_paths = [ROOT / p for p in manifest["sequence"]]
-        if args.engine != "mock" and not args.skip_gate:
+        if not args.skip_gate:
             from .check_x2_fixture import check_manifest
-            failed = [c for c in check_manifest(Path(args.manifest)) if not c[1]]
-            if failed:
-                print(f"GATE REFUSED: {[c[0] for c in failed]}", file=sys.stderr)
+            checks = check_manifest(Path(args.manifest))
+            gate_result = {
+                "manifest_hash": hashlib.sha256(Path(args.manifest).read_bytes()).hexdigest()[:16],
+                "gate_open": all(ok for _, ok, _ in checks),
+                "n_checks": len(checks), "n_passed": sum(1 for _, ok, _ in checks if ok),
+                "checks": [{"check": n, "ok": ok, "detail": d} for n, ok, d in checks],
+            }
+            if not gate_result["gate_open"] and args.engine != "mock":
+                print(f"GATE REFUSED: {[n for n, ok, _ in checks if not ok]}", file=sys.stderr)
                 return 1
     elif args.episodes:
         seq_paths = [Path(e) for e in args.episodes]
@@ -250,7 +269,7 @@ def main() -> int:
         run_x2_sequence(seq_paths, engine_backend=args.engine, model=args.model,
                         base_url=args.base_url, runs_dir=Path(args.runs_dir), top_k=top_k,
                         ablation_samples=args.ablation_samples, manifest=manifest,
-                        fixture_attestation=attestation)
+                        fixture_attestation=attestation, gate_result=gate_result)
     except Exception as e:
         print(f"FAIL: {e}", file=sys.stderr)
         return 1

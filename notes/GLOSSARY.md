@@ -409,22 +409,28 @@ What binds the X-track (the X1 resolution + dissent pass): (1) **attribution law
 **organ-placement law** — act where the synchronous offer gate structurally
 cannot; (3) **scoring-axis law** — score on a metric the offer gate cannot move.
 
-### `fixture_attestation`
+### `fixture_attestation` / `fixture_gate_result`
 
-A ledger row attesting a real-run fixture is out-of-weights / fictional (corpus
-identity pin + engine cutoffs). X2-U1 engages only with it present plus a
-policy-independent grader; absent → `not_engaged`. For X2, out-of-weights means
-*load-bearing* — the answer cannot be sourced from weights — distinct from X1's
-offer-dependence.
+`fixture_attestation` is a *claim* row: the fixture is out-of-weights / fictional
+(corpus identity pin + engine cutoffs). `fixture_gate_result` is the *computed*
+outcome of the cost/state-dependence gate (manifest hash + the 15 check results,
+`gate_open`). The scorer requires `gate_open: true` for every non-mock cell —
+**attestation is not gate passage**. X2-LB engages on attestation + a
+policy-independent grader + `gate_open`; for X2, out-of-weights means *load-bearing*
+(the answer cannot be sourced from weights) — distinct from X1's offer-dependence.
 
-### X2-win / X2-overprune / X2-quality-erosion / X2-U1
+### X2-win / X2-overprune / X2-quality-erosion / X2-LB / X2-U1
 
 The prune-to-cold-store cells. **X2-win**: C matches A's quality every episode and
 is cheaper, attribution clean (fork identity + lineage integrity + cost replays
 from rows). **X2-overprune** (loses): B prunes a record it cannot recover and the
 answer falls — the verdict names the record. **X2-quality-erosion** (loses): C
-cheaper but below A's quality floor → the cost win is refused. **X2-U1**: the
-world-checked quality floor on an out-of-weights fixture.
+cheaper but below A's quality floor → the cost win is refused. **X2-LB**: the
+*load-bearing* admission for the cost axis — attested fictional/out-of-weights +
+policy-independent grader + a computed gate pass; a synthetic fixture can pass it.
+**X2-U1**: the un-authored / **world-grounded** close-gate (M0 vocabulary) — a
+synthetic/fictional fixture is `not_engaged` (load-bearing ≠ world-grounded); it
+engages only on a real external corpus.
 
 ### Temperature / Landauer Oracle (X1, retired)
 
