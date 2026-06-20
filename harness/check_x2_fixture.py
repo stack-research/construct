@@ -86,10 +86,10 @@ def check_manifest(manifest_path: Path) -> list[Check]:
     for ep in episodes:
         ref = ep.oracle_ref or {}
         if ref.get("kind") != "fictional_fact":
-            checks.append(("world_oracle", False, f"{ep.episode_id}: oracle_ref.kind must be fictional_fact"))
+            checks.append(("fictional_oracle", False, f"{ep.episode_id}: oracle_ref.kind must be fictional_fact"))
             break
     else:
-        checks.append(("world_oracle", True, "all episodes bind lab_fictional_corpus oracle"))
+        checks.append(("fictional_oracle", True, "all episodes bind lab_fictional_corpus oracle (not M0 world-grounded)"))
 
     try:
         load_fictional_entry(m["corpus_entry"])
