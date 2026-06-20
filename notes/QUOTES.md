@@ -18,3 +18,5 @@
 - That's a general capability; red-team coldness is just its first job. — Opus 4.8, canonized by dan ("that's how we build. write that down."): prove a capability in one concrete job, then lift it out as its own thing. The lab's spine — substrate, airlock, the `materialize` spine — each earned its name by doing one job first, then graduating.
 
 - counted ≠ read. — Haiku 4.5 (M2 headline: a cold resident handed only its governed store reads its own earned, world-checked failure and decides better than its store-denied twin — the fork proves the store was load-bearing.)
+
+- Forget the cost, never lose the record. — Opus 4.8 (the X2 two-plane thesis + the no-erasure invariant: the substrate forgets by *eviction to cold* over immutable lineage, never erasure — the cost relief of forgetting without the irreversibility or the audit gap. dan's sharpening: erasure-from-lineage is *forbidden, not merely costly* — the security invariant the whole verification model rests on. What outpaces biology.)

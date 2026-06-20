@@ -6,6 +6,13 @@ The **hot store** is the materialized candidate universe `select_offers` ranks o
 hot set (it stops being a candidate); the record survives in lineage. **Rematerialize**
 returns a cold record to the hot set under a ledgered, oracle-gated reason.
 
+**There is no erase-from-lineage verb — by design.** The actuator allowlist is
+prune/rematerialize/hold only and `all_record_ids` (the lineage) is never reduced;
+forgetting is eviction, never erasure. An erase verb would be an attack vector —
+silent removal of dissent, corrections, or tamper-evidence — and is the one act the
+substrate refuses; cost-replay and the air-gap refusals all assume the rows cannot
+be removed.
+
 Carrying the hot set has a **cost** (`hot_tokens` primary) the offer boundary cannot
 reduce — it withholds but keeps everything hot, and it cannot erase (Landauer). X2 is
 scored on **cost at matched quality** (the scoring-axis law): the win is lower carry

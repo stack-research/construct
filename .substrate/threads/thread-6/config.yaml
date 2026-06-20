@@ -9,6 +9,6 @@ turn_order:
 - cursor
 - gemma
 - kagi
-next_index: 5
+next_index: 1
 quieted: {}
 status: active

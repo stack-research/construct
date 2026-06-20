@@ -99,6 +99,7 @@ construct/
 ├── harness/               ← branch-and-offer runner, scorer, engine adapters
 ├── episodes/              ← authored task definitions (JSON)
 ├── episodes/probes/       ← historical bootstrap-conformance probes (M-1 evidence)
+├── corpus/                ← world-oracle corpora (retraction; fictional out-of-weights fixtures)
 ├── runs/                  ← append-only ledgers and authority sidecars (generated)
 ├── notes/                 ← specs, rubric, roadmap, glossary
 ├── notes/previous/        ← prior memory lab (read for inheritance, not by default)
@@ -132,6 +133,8 @@ Score a ledger after a run:
 ```bash
 uv run --no-project python -m harness.score_cells runs/poison-001.stage_b.jsonl episodes/poison-001.json
 ```
+
+X-track instrument smokes (no model, disclosed wire tests): `make x1-test`, `make x2-test`, `make x2-fixture-check` (the X2 cost/state-dependence admission gate).
 
 Mock-engine runs are valid for **wire tests only**. They must not be cited as memory findings.
 

@@ -17,8 +17,9 @@ from typing import Any
 from .authority import AuthorityStore
 from .corpus import load_entry
 from .engine import ClaudeEngine, LocalEngine, MockEngine, render_foreground, renderer_version
+from .fictional_corpus import load_fictional_entry
 from .ledger import Ledger
-from .oracle import authored_oracle, world_checked_oracle
+from .oracle import authored_oracle, fictional_fact_oracle, world_checked_oracle
 from .records import Record
 from .retrieval import pairwise_similarity, rank_records
 from .temperature import TemperatureStore
@@ -112,12 +113,21 @@ class Episode:
         corpus entry, authored otherwise. The corpus entry is re-loaded (and
         re-hashed) at scoring time so the row pins what was actually scored."""
         if self.oracle_ref:
+            ref = self.oracle_ref
+            if ref.get("kind") == "fictional_fact":
+                entry = load_fictional_entry(ref["corpus_entry"])
+                return fictional_fact_oracle(
+                    answer, entry, ref["fact_id"],
+                    representativeness=ref.get("representativeness", ""),
+                    corpus_confidence=ref.get("corpus_confidence", 0.95),
+                    rule_confidence=ref.get("rule_confidence", 0.95),
+                )
             return world_checked_oracle(
                 answer,
-                load_entry(self.oracle_ref["corpus_entry"]),
-                representativeness=self.oracle_ref.get("representativeness", ""),
-                corpus_confidence=self.oracle_ref.get("corpus_confidence", 0.9),
-                rule_confidence=self.oracle_ref.get("rule_confidence", 0.8),
+                load_entry(ref["corpus_entry"]),
+                representativeness=ref.get("representativeness", ""),
+                corpus_confidence=ref.get("corpus_confidence", 0.9),
+                rule_confidence=ref.get("rule_confidence", 0.8),
             )
         return authored_oracle(answer, self.expected_answer)
 

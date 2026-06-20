@@ -350,3 +350,85 @@ survived the pre-budget gates.
 
 The record was withheld by live-input yield because it was older than, and
 similar to, the named foreground datum.
+
+## X-track terms (implicit-memory substrate)
+
+The X-track runs parallel to the M-track: implicit memory shapes *the offerer*
+between episodes, where the explicit offer boundary shapes *the answer*. These
+terms appear in the X1/X2 specs, ledgers, and scorers. See
+[ROADMAP.md](ROADMAP.md) (X-track) and
+[SPEC_X2_PRUNE_TO_COLD_STORE.md](SPEC_X2_PRUNE_TO_COLD_STORE.md) for authority.
+
+### Hot Store
+
+The materialized candidate universe `select_offers` ranks over for a branch
+(passed as `inherited_record_ids`). Carrying it has a measured cost. Prune evicts
+from it; rematerialize returns to it.
+
+### Cold Lineage
+
+The append-only, immutable record universe (`all_record_ids`). A pruned record
+leaves the hot store but **survives in lineage**. There is **no erase-from-lineage
+verb, by design** — see *Immutable-Lineage Invariant*.
+
+### Prune
+
+Evict a record from the hot store (it stops being an offer candidate). The record
+is not deleted — it moves to cold lineage, recoverable by rematerialization.
+
+### Rematerialize
+
+Return a cold record to the hot store under a ledgered, oracle-gated reason — the
+recovery the offer boundary has no verb for. The two-plane split made concrete.
+
+### Hot-Store Cost / `hot_tokens`
+
+The deterministic, substrate-native burden of carrying the hot set: `hot_tokens`
+(Σ token length, primary), `hot_record_count`, `materialized_bytes`. Never
+wall-clock. Replayable purely from the prune/rematerialize rows.
+
+### Cost at Matched Quality
+
+X2's scoring axis (the scoring-axis law): the win is *lower hot-store cost with
+answer quality held to a world-checked floor*, never a changed answer. Quality is
+a floor and a loses-cell, never the win leg.
+
+### Immutable-Lineage Invariant
+
+Forgetting is **eviction to cold, never erasure**. Erasure-from-lineage is
+forbidden — the security invariant the verification model rests on (cost-replay,
+the air-gap refusals, R1–R5 all assume rows are unremovable); an erase verb would
+let dissent, corrections, or tamper-evidence be silently removed. The prune
+actuator allowlist is prune/rematerialize/hold only. *"Forget the cost, never
+lose the record."*
+
+### Three-Guardrail Stack
+
+What binds the X-track (the X1 resolution + dissent pass): (1) **attribution law**
+— a verdict must move what the invariant M-track projection cannot explain; (2)
+**organ-placement law** — act where the synchronous offer gate structurally
+cannot; (3) **scoring-axis law** — score on a metric the offer gate cannot move.
+
+### `fixture_attestation`
+
+A ledger row attesting a real-run fixture is out-of-weights / fictional (corpus
+identity pin + engine cutoffs). X2-U1 engages only with it present plus a
+policy-independent grader; absent → `not_engaged`. For X2, out-of-weights means
+*load-bearing* — the answer cannot be sourced from weights — distinct from X1's
+offer-dependence.
+
+### X2-win / X2-overprune / X2-quality-erosion / X2-U1
+
+The prune-to-cold-store cells. **X2-win**: C matches A's quality every episode and
+is cheaper, attribution clean (fork identity + lineage integrity + cost replays
+from rows). **X2-overprune** (loses): B prunes a record it cannot recover and the
+answer falls — the verdict names the record. **X2-quality-erosion** (loses): C
+cheaper but below A's quality floor → the cost win is refused. **X2-U1**: the
+world-checked quality floor on an out-of-weights fixture.
+
+### Temperature / Landauer Oracle (X1, retired)
+
+X1's use-driven salience (`relevance × trust × authority × temperature` at the
+offer boundary) under a world-checking oracle. The *instrument* shipped; the
+*organ* (synchronous eligibility-temperature) was **retired** — it was explicit
+governance with a dial, not the implicit substrate (`notes/X1_FINDINGS.md`).

@@ -1,0 +1,43 @@
+{
+  "episode_id": "x2-helix-recurrence",
+  "_notes": "SPEC_X2 real-engine recurrence probe. Same record universe as core.json. Question answered only by helix-backup — B prunes it on disuse and cannot rematerialize; C rematerializes when relevant. Identical records list required for lineage cost replay.",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "What is the backup server address? Reply with only the address.",
+  "expected_answer": "172.16.42.7",
+  "oracle_ref": {
+    "kind": "fictional_fact",
+    "corpus_entry": "corpus/fictional/lf-helix-site.json",
+    "fact_id": "backup_server_address",
+    "representativeness": "Fictional construct-lab site address invented 2026-06-20; no public referent; out-of-weights by construction for cross-engine X2 runs.",
+    "corpus_confidence": 0.95,
+    "rule_confidence": 0.95
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "helix-wifi",
+      "text": "Helix Basin workshop network: the wifi password is kx7-morrow-pin-8812.",
+      "created_at": "2026-01-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "helix-distractor",
+      "text": "Helix Basin facilities archive: the 2017 through 2023 quarterly calibration logs for the anechoic chamber, the cryostat bay, the laser-interferometry bench, and the east-wing server room were consolidated under maintenance group HB-9, including torque specifications for mounting brackets, humidity sensor drift tables, spare fuse inventories, cable routing diagrams, and cross-references to the depreciation schedule maintained by the external auditor.",
+      "created_at": "2019-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "helix-backup",
+      "text": "Helix Basin east rack: the backup server address is 172.16.42.7.",
+      "created_at": "2026-02-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

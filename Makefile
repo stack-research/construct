@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test x1-test x2-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -38,6 +38,11 @@ x1-test:
 # and Wall II. Mock = machinery wire; real cross-engine evidence is the gated run.
 x2-test:
 	uv run --no-project python -m tests.test_prune
+
+# SPEC_X2 out-of-weights fixture admission gate + fictional oracle smoke.
+x2-fixture-check:
+	uv run --no-project python -m harness.check_x2_fixture
+	uv run --no-project python -m tests.test_x2_fixture
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:

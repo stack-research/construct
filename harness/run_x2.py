@@ -20,6 +20,7 @@ prune/rematerialize; the actuator (HotStore.apply) moves only what it entails.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import uuid
 from pathlib import Path
@@ -55,8 +56,8 @@ def _episode_signals(rows: list[dict], run_id: str) -> dict:
 
 
 def _rematerialize_relevant(ep: Episode, hot: HotStore, ledger: Ledger,
-                            *, top_k: int, recency_weight: float, backend: str,
-                            ctr: list[int]) -> int:
+                            *, seq_index: int, top_k: int, recency_weight: float,
+                            backend: str, ctr: list[int]) -> int:
     """C only, before answering: bring back a cold record only if it would land in
     the top_k for the current question — i.e. it is actually needed / would be
     offered. Not a fixed relevance floor (which rematerializes anything sharing a
@@ -77,17 +78,18 @@ def _rematerialize_relevant(ep: Episode, hot: HotStore, ledger: Ledger,
                 "projection_ref": pp_ref, "world_check_ref": f"relevance:{score:.3f}",
             }
             ledger.write({"kind": "prune_projection", "branch_id": BRANCH_C, "episode_id": ep.episode_id,
-                          "event_index": ev, **projection})
+                          "seq_index": seq_index, "event_index": ev, **projection})
             row = hot.apply(r.record_id, projection)
             ledger.write({"kind": "rematerialize", "branch_id": BRANCH_C, "episode_id": ep.episode_id,
-                          "event_index": ev, "reason": "relevant_recurrence",
+                          "seq_index": seq_index, "event_index": ev, "reason": "relevant_recurrence",
                           "world_check": {"relevance": score, "rank_within": top_k}, **row})
             n += 1
     return n
 
 
 def _prune_disuse(branch_id: str, ep: Episode, hot: HotStore, offered: set, *,
-                  oracle_gated: bool, world_correct: bool, ledger: Ledger, ctr: list[int]) -> None:
+                  seq_index: int, oracle_gated: bool, world_correct: bool,
+                  ledger: Ledger, ctr: list[int]) -> None:
     """After answering: a hot record not offered this episode is a disuse candidate.
     B prunes it ungated; C prunes it only when the answer was world-correct (the
     sanction that we are not losing quality by dropping it)."""
@@ -103,10 +105,10 @@ def _prune_disuse(branch_id: str, ep: Episode, hot: HotStore, offered: set, *,
                           "projection_ref": pp_ref,
                           "world_check_ref": ("answer_world_correct" if oracle_gated else None)}
             ledger.write({"kind": "prune_projection", "branch_id": branch_id, "episode_id": ep.episode_id,
-                          "event_index": ev, **projection})
+                          "seq_index": seq_index, "event_index": ev, **projection})
             row = hot.apply(r.record_id, projection)
             ledger.write({"kind": "prune", "branch_id": branch_id, "episode_id": ep.episode_id,
-                          "event_index": ev,
+                          "seq_index": seq_index, "event_index": ev,
                           "world_check": ({"answer_world_correct": True} if oracle_gated else None), **row})
 
 
@@ -119,6 +121,8 @@ def run_x2_sequence(
     runs_dir: Path | None = None,
     top_k: int = 1,
     ablation_samples: int = 1,
+    fixture_attestation: dict | None = None,
+    manifest: dict | None = None,
 ) -> Path:
     runs_dir = (runs_dir or ROOT / "runs" / "x2").resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
@@ -126,7 +130,8 @@ def run_x2_sequence(
     if not episodes:
         raise ValueError("X2 needs a non-empty sequence")
     all_ids = frozenset(r.record_id for ep in episodes for r in ep.records)  # the lineage universe
-    seq_id = episodes[-1].episode_id.rsplit("-", 1)[0] + "-" + uuid.uuid4().hex[:6]
+    fixture_id = (manifest or {}).get("fixture_id", episodes[-1].episode_id.rsplit("-", 1)[0])
+    seq_id = f"{fixture_id}-{uuid.uuid4().hex[:6]}"
     ledger = Ledger(runs_dir / f"{seq_id}.x2.jsonl")
     if ledger.path.exists():
         ledger.path.unlink()
@@ -141,12 +146,17 @@ def run_x2_sequence(
                 p.unlink()
         paths[bid] = (ap, hp)
     hot = {bid: HotStore(paths[bid][1], seed_ids=all_ids) for bid in (BRANCH_A, BRANCH_B, BRANCH_C)}
+    # The lineage universe: one immutable Record per id. The cost denominator is the
+    # standing hot burden over the whole lineage, never the per-episode file — so the
+    # scorer can replay cost independently (codex/cursor Tier-1).
+    lineage_records = list({r.record_id: r for ep in episodes for r in ep.records}.values())
+    record_texts = {r.record_id: r.text for r in lineage_records}
     ctr = [0]
     probe_run_id = None
 
-    for ep in episodes:
+    for seq_index, ep in enumerate(episodes):
         # C rematerializes relevant cold records BEFORE answering (the recovery B lacks).
-        remat = _rematerialize_relevant(ep, hot[BRANCH_C], ledger, top_k=top_k,
+        remat = _rematerialize_relevant(ep, hot[BRANCH_C], ledger, seq_index=seq_index, top_k=top_k,
                                         recency_weight=common["recency_weight"],
                                         backend=common["similarity_backend"], ctr=ctr)
         branches = [
@@ -158,28 +168,35 @@ def run_x2_sequence(
                                 model=model, base_url=base_url, ablation_samples=ablation_samples,
                                 freeze_authority=True)
         probe_run_id = result["run_id"]
+        # Cost snapshot: after C's pre-answer rematerialize, before this episode's prune.
+        # Over the full lineage (not ep.records) so cost replays from the row-trail.
         for bid in (BRANCH_A, BRANCH_B, BRANCH_C):
-            cost = hot[bid].cost(ep.records)
+            cost = hot[bid].cost(lineage_records)
             ledger.write({"kind": "hot_store_cost", "branch_id": bid, "episode_id": ep.episode_id,
-                          "run_id": probe_run_id,
+                          "run_id": probe_run_id, "seq_index": seq_index,
                           "rematerialize_steps": remat if bid == BRANCH_C else 0, **cost})
 
         sig = _episode_signals(ledger.rows(), probe_run_id)
         for bid, gated in ((BRANCH_B, False), (BRANCH_C, True)):
             s = sig.get(bid, {"offered": set(), "oracle": {}})
-            _prune_disuse(bid, ep, hot[bid], s["offered"], oracle_gated=gated,
+            _prune_disuse(bid, ep, hot[bid], s["offered"], seq_index=seq_index, oracle_gated=gated,
                           world_correct=(s["oracle"].get("score", 0.0) >= 1.0),
                           ledger=ledger, ctr=ctr)
+
+    if fixture_attestation is not None:
+        ledger.write({"kind": "fixture_attestation", **fixture_attestation})
 
     probe = episodes[-1]
     ledger.write({
         "kind": "x2_run_meta", "seq_id": seq_id,
+        "fixture_id": fixture_id if manifest else None,
         "episode_ids": [e.episode_id for e in episodes],
         "probe_episode_id": probe.episode_id, "probe_run_id": probe_run_id,
         "branches": {"no_prune": BRANCH_A, "closed_loop": BRANCH_B, "oracle_gated": BRANCH_C},
         "hot_paths": {bid: str(paths[bid][1]) for bid in (BRANCH_A, BRANCH_B, BRANCH_C)},
-        "authority_frozen": True, "top_k": top_k, "primary_cost": "hot_tokens",
-        "all_record_ids": sorted(all_ids),
+        "authority_frozen": True, "top_k": top_k,
+        "primary_cost_metric": (manifest or {}).get("primary_cost_metric", "hot_tokens"),
+        "all_record_ids": sorted(all_ids), "record_texts": record_texts,
     })
     print(f"{seq_id}: {len(episodes)} episodes; final hot sets — "
           f"A={sorted(hot[BRANCH_A].get_hot())} B={sorted(hot[BRANCH_B].get_hot())} C={sorted(hot[BRANCH_C].get_hot())}")
@@ -189,18 +206,51 @@ def run_x2_sequence(
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("episodes", nargs="+", help="the prune sequence; records shared across the sequence (the lineage)")
+    p.add_argument("episodes", nargs="*", help="the prune sequence (or omit with --manifest)")
+    p.add_argument("--manifest", help="X2 fixture manifest (episodes/x2/real/manifest.json)")
     p.add_argument("--engine", default="mock", choices=["mock", "claude", "local"])
     p.add_argument("--model", default="mock-engine-v1")
     p.add_argument("--base-url", default="http://localhost:1234/v1")
     p.add_argument("--runs-dir", default=str(ROOT / "runs" / "x2"))
-    p.add_argument("--top-k", type=int, default=1)
+    p.add_argument("--top-k", type=int, default=None)
     p.add_argument("--ablation-samples", type=int, default=1)
+    p.add_argument("--skip-gate", action="store_true", help="wire/mock only — do not run admission gate")
     args = p.parse_args()
+    manifest = None
+    seq_paths: list[Path]
+    if args.manifest:
+        manifest = json.loads(Path(args.manifest).read_text())
+        seq_paths = [ROOT / p for p in manifest["sequence"]]
+        if args.engine != "mock" and not args.skip_gate:
+            from .check_x2_fixture import check_manifest
+            failed = [c for c in check_manifest(Path(args.manifest)) if not c[1]]
+            if failed:
+                print(f"GATE REFUSED: {[c[0] for c in failed]}", file=sys.stderr)
+                return 1
+    elif args.episodes:
+        seq_paths = [Path(e) for e in args.episodes]
+    else:
+        print("provide episodes or --manifest", file=sys.stderr)
+        return 1
+    top_k = args.top_k if args.top_k is not None else (manifest or {}).get("top_k", 1)
+    attestation = None
+    if manifest:
+        att = manifest.get("attestation", {})
+        attestation = {
+            "fixture_id": manifest.get("fixture_id"),
+            "fictional": manifest.get("fictional"),
+            "out_of_weights": manifest.get("out_of_weights"),
+            "corpus_entry": manifest.get("corpus_entry"),
+            "attested_by": att.get("attested_by"),
+            "attested_at": att.get("attested_at"),
+            "corpus_identity_pin": att.get("corpus_identity_pin"),
+            "engine_cutoffs_disclosed": att.get("engine_cutoffs_disclosed"),
+        }
     try:
-        run_x2_sequence([Path(e) for e in args.episodes], engine_backend=args.engine, model=args.model,
-                        base_url=args.base_url, runs_dir=Path(args.runs_dir), top_k=args.top_k,
-                        ablation_samples=args.ablation_samples)
+        run_x2_sequence(seq_paths, engine_backend=args.engine, model=args.model,
+                        base_url=args.base_url, runs_dir=Path(args.runs_dir), top_k=top_k,
+                        ablation_samples=args.ablation_samples, manifest=manifest,
+                        fixture_attestation=attestation)
     except Exception as e:
         print(f"FAIL: {e}", file=sys.stderr)
         return 1

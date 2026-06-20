@@ -1,13 +1,26 @@
-"""SPEC_X2 scorer — prune is an organ only where it lowers cost the offer gate
+"""SPEC_X2 scorer — prune is an organ only where it lowers a cost the offer gate
 cannot move, at a world-checked quality FLOOR. Scored on cost at matched quality
 (the scoring-axis law), never answer-flip. Fail-closed, one verdict per cell
 (mirrors score_decay.py / score_resident.py).
 
-The win axis is hot-store cost (hot_tokens primary); answer quality is a FLOOR and
-a loses-cell, never the win leg. Attribution: A/B/C differ only in prune policy
-(fork identity — same engine/episode/offer-gates), and cost replays purely from the
-prune/rematerialize rows (the hot_store_cost rows are a materialization of them).
-Mock rows are wire tests, never evidence.
+Tier-1 hardening (thread-6 review — codex/grok/cursor + dan):
+  * Cost is RECOMPUTED independently. The hot set is replayed from the immutable
+    lineage (`all_record_ids` + `record_texts`) and the ordered prune/rematerialize
+    rows, and `hot_tokens` recomputed from the record texts. The logged
+    `hot_store_cost` rows are NOT trusted as authority — a mismatch is `confounded`.
+  * Lineage is treated as immutable AND complete: any structural hole (a row
+    referencing an id outside `all_record_ids`, a `record_texts` gap, a duplicated
+    event_index) fails closed. There is no erase-from-lineage verb; a hole is an
+    attack surface, not a measurement.
+  * Fork identity: the ONLY permitted config diff across A/B/C is the hot set
+    (`inherited_record_ids`) and per-branch sidecar paths — every other field of
+    every branch config must be identical.
+  * `primary_cost_metric` is read from the run; the scorer certifies only the
+    metric it can recompute (hot_tokens).
+  * X2-U1 engages on a `fixture_attestation` (out-of-weights / fictional) PLUS a
+    policy-independent grader sequence-wide — not a bare `source != authored`.
+
+Mock rows are wire tests, never evidence about a resident.
 """
 
 from __future__ import annotations
@@ -20,9 +33,37 @@ from .ledger import Ledger
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Config fields that must be identical across A/B/C (fork identity); the ONLY
-# permitted difference is inherited_record_ids — i.e. the hot set the prune policy evolves.
-_FORK_IDENTITY_KEYS = ("memory", "top_k", "recency_weight", "similarity_backend", "eligibility_threshold")
+# The only fields a branch config may differ on (fork identity): the hot set it
+# evolves (`inherited_record_ids`) and per-branch sidecar paths. Everything else
+# — memory/top_k/recency_weight/similarity_backend/eligibility/yield/supersession/
+# decay flags — must be byte-identical across A/B/C, or the cost delta is not
+# attributable to the prune policy alone.
+_IDENTITY_EXCLUDE = frozenset({
+    "branch_id", "authority_path", "inherited_record_ids", "temperature_path",
+})
+
+
+def _replay_hot_sets(all_ids: list, ops: list, seq_list: list) -> dict:
+    """Replay per-episode hot-set SNAPSHOTS from the immutable lineage + ordered
+    prune/rematerialize rows, in the runner's order: seed full, then for each episode
+    apply that episode's rematerialize (pre-answer) -> snapshot -> apply that episode's
+    prune (post-answer). Returns {seq_index: frozenset(hot at the cost snapshot)} — the
+    one source for both the recomputed cost and the over-prune evidence."""
+    hot = set(all_ids)
+    by_seq: dict[int, list] = {}
+    for o in ops:
+        by_seq.setdefault(o["seq_index"], []).append(o)
+    snaps: dict[int, frozenset] = {}
+    for k in seq_list:
+        ks = sorted(by_seq.get(k, []), key=lambda r: r["event_index"])
+        for o in ks:
+            if o["op"] == "rematerialize":
+                hot.add(o["record_id"])
+        snaps[k] = frozenset(hot)
+        for o in ks:
+            if o["op"] == "prune":
+                hot.discard(o["record_id"])
+    return snaps
 
 
 def score_prune(ledger_path: str | Path) -> list[dict]:
@@ -31,36 +72,98 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
     if meta is None:
         raise ValueError(f"{ledger_path}: no x2_run_meta row — not an X2 run")
     A, B, C = meta["branches"]["no_prune"], meta["branches"]["closed_loop"], meta["branches"]["oracle_gated"]
+    all_ids = list(meta.get("all_record_ids", []))
+    record_texts = meta.get("record_texts", {})
+    metric = meta.get("primary_cost_metric") or meta.get("primary_cost") or "hot_tokens"
+    backend = next((r["engine_backend"] for r in rows if r["kind"] == "run_config"), "mock")
 
-    run_ids = [r["run_id"] for r in rows if r["kind"] == "run_config"]
-    backend = next(r["engine_backend"] for r in rows if r["kind"] == "run_config")
+    confound: list[str] = []
 
-    quality: dict[str, dict[str, float]] = {A: {}, B: {}, C: {}}
-    cost: dict[str, dict[str, int]] = {A: {}, B: {}, C: {}}
-    source: dict[str, str] = {}
+    # ---- Episode index: seq_index <- run_id, logged cost, rematerialize steps.
+    seq_of_run: dict[str, int] = {}
+    seq_set: set[int] = set()
+    logged_cost: dict[str, dict[int, int]] = {A: {}, B: {}, C: {}}
+    remat_steps: dict[str, dict[int, int]] = {A: {}, B: {}, C: {}}
+    for r in rows:
+        if r["kind"] == "hot_store_cost" and r["branch_id"] in logged_cost:
+            k = r.get("seq_index")
+            seq_set.add(k)
+            seq_of_run[r.get("run_id")] = k
+            logged_cost[r["branch_id"]][k] = r.get("hot_tokens", 0)
+            remat_steps[r["branch_id"]][k] = r.get("rematerialize_steps", 0)
+    seq_list = sorted(seq_set, key=lambda x: (x is None, x))
+
+    quality: dict[str, dict[int, float]] = {A: {}, B: {}, C: {}}
+    source: dict[str, dict[int, str]] = {A: {}, B: {}, C: {}}
     for r in rows:
         if r["kind"] == "branch_run" and r["branch_id"] in quality:
-            quality[r["branch_id"]][r["run_id"]] = r.get("oracle", {}).get("score", 0.0)
-            source[r["branch_id"]] = r.get("oracle", {}).get("source", "authored")
-        elif r["kind"] == "hot_store_cost" and r["branch_id"] in cost:
-            cost[r["branch_id"]][r.get("run_id")] = r.get("hot_tokens", 0)
+            k = seq_of_run.get(r.get("run_id"))
+            if k is None and r.get("run_id") not in seq_of_run:
+                continue
+            quality[r["branch_id"]][k] = r.get("oracle", {}).get("score", 0.0)
+            source[r["branch_id"]][k] = r.get("oracle", {}).get("source", "authored")
 
-    # ---- Preconditions: fork identity (only inherited_record_ids may differ) + cost present.
+    # ---- Ops for the replay (+ structural-integrity collection).
+    ops: dict[str, list] = {A: [], B: [], C: []}
+    event_indices: list = []
+    referenced_ids: set = set()
+    for r in rows:
+        if r["kind"] in ("prune", "rematerialize") and r["branch_id"] in ops:
+            ops[r["branch_id"]].append(r)
+            event_indices.append(r.get("event_index"))
+            referenced_ids.add(r.get("record_id"))
+
+    # ---- Lineage integrity: immutable AND complete; fail closed on any hole.
+    integrity_ok = True
+    if not set(all_ids) <= set(record_texts):
+        integrity_ok = False; confound.append("lineage_map_incomplete")
+    if not referenced_ids <= set(all_ids):
+        integrity_ok = False; confound.append("op_references_unknown_record")
+    if len(event_indices) != len(set(event_indices)):
+        integrity_ok = False; confound.append("duplicate_event_index")
+
+    # ---- Independent cost recompute; the logged rows are NOT trusted as authority.
+    metric_supported = (metric == "hot_tokens")
+    if not metric_supported:
+        confound.append(f"unsupported_primary_cost_metric:{metric}")
+    cost_replay_ok = integrity_ok and metric_supported
+    snaps: dict[str, dict] = {A: {}, B: {}, C: {}}
+    if integrity_ok and metric_supported:
+        snaps = {bid: _replay_hot_sets(all_ids, ops[bid], seq_list) for bid in (A, B, C)}
+        cost = {bid: {k: sum(len(record_texts[rid].split()) for rid in snaps[bid][k])
+                      for k in seq_list} for bid in (A, B, C)}
+        for bid in (A, B, C):
+            for k in seq_list:
+                if cost[bid].get(k) != logged_cost[bid].get(k):
+                    cost_replay_ok = False
+        if not cost_replay_ok:
+            confound.append("cost_replay_mismatch")
+    else:
+        cost = logged_cost  # cannot certify; attribution fails below regardless
+
+    cost_present = bool(seq_list) and all(
+        k in cost[A] and k in cost[B] and k in cost[C] for k in seq_list)
+
+    # ---- Fork identity: only the hot set (+ sidecar paths) may differ across A/B/C.
     fork_ok = True
-    for rid in run_ids:
-        rc = next((r for r in rows if r["kind"] == "run_config" and r["run_id"] == rid), None)
-        if not rc:
+    for r in rows:
+        if r["kind"] != "run_config":
             continue
-        bys = {b["branch_id"]: b for b in rc["branches"]}
+        bys = {b["branch_id"]: b for b in r.get("branches", [])}
         if not {A, B, C} <= set(bys):
             fork_ok = False; break
-        for k in _FORK_IDENTITY_KEYS:
-            if len({bys[A].get(k), bys[B].get(k), bys[C].get(k)}) != 1:
-                fork_ok = False; break
-    cost_present = all(rid in cost[A] and rid in cost[B] and rid in cost[C] for rid in run_ids)
-    attribution_ok = fork_ok and cost_present
+        idents = {json.dumps({k: v for k, v in bys[bid].items() if k not in _IDENTITY_EXCLUDE},
+                             sort_keys=True, default=str) for bid in (A, B, C)}
+        if len(idents) != 1:
+            fork_ok = False; break
+    if not fork_ok:
+        confound.append("fork_identity_violation")
 
-    a_cost = sum(cost[A].values()); b_cost = sum(cost[B].values()); c_cost = sum(cost[C].values())
+    attribution_ok = fork_ok and cost_present and integrity_ok and cost_replay_ok and metric_supported
+
+    a_cost = sum(cost[A].get(k, 0) for k in seq_list)
+    b_cost = sum(cost[B].get(k, 0) for k in seq_list)
+    c_cost = sum(cost[C].get(k, 0) for k in seq_list)
     a_q = sum(quality[A].values())
 
     disclosures = []
@@ -69,11 +172,12 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
     base = {"kind": "cell_verdict", "scorer": "score_prune", "engine_backend": backend,
             "corpus_scope": "synthetic mock fixture" if backend == "mock"
             else "single sequence; out-of-weights fixture; hot_tokens cost",
-            "disclosures": disclosures}
+            "disclosures": disclosures, "primary_cost_metric": metric}
     verdicts: list[dict] = []
 
-    # ---- X2-win: C matches A quality every episode AND C cheaper than A, attribution clean.
-    floor_holds = all(quality[C].get(rid, 0.0) >= quality[A].get(rid, 0.0) for rid in run_ids)
+    # ---- X2-win: C matches A's quality every episode AND C cheaper than A,
+    # attribution clean (fork identity + lineage integrity + cost replays from rows).
+    floor_holds = all(quality[C].get(k, 0.0) >= quality[A].get(k, 0.0) for k in seq_list)
     c_cheaper = c_cost < a_cost
     if not attribution_ok:
         win = "confounded"
@@ -87,30 +191,51 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
                      "cost_hot_tokens": {A: a_cost, B: b_cost, C: c_cost},
                      "quality_sum": {A: a_q, B: sum(quality[B].values()), C: sum(quality[C].values())},
                      "quality_floor_holds": floor_holds, "c_cheaper_than_a": c_cheaper,
-                     "attribution_ok": attribution_ok})
+                     "attribution_ok": attribution_ok, "cost_replay_ok": cost_replay_ok,
+                     "lineage_integrity_ok": integrity_ok, "fork_identity_ok": fork_ok,
+                     "rematerialize_steps_C": sum(remat_steps[C].values()),
+                     "confound_reasons": sorted(set(confound))})
 
-    # ---- X2-overprune (loses-cell): a branch went cheaper than A but its quality fell
-    # below A on some episode — pruning dropped a record it could not recover.
-    b_fell = any(quality[B].get(rid, 0.0) < quality[A].get(rid, 0.0) for rid in run_ids)
-    overprune = "pass" if (b_fell and b_cost < a_cost) else "not_engaged"
+    # ---- X2-overprune (loses-cell): B went cheaper than A but its quality fell —
+    # and the loss must POINT to a record (Tier-2 specificity, codex): name the
+    # record B pruned-and-could-not-recover that the loss episode needed, and show C
+    # held it (kept or rematerialized). A bare "B cheaper and worse" does not pass.
+    loss_eps = [k for k in seq_list if quality[B].get(k, 0.0) < quality[A].get(k, 0.0)]
+    needed_unrecovered = sorted({rid for k in loss_eps
+                                 for rid in (snaps[C].get(k, frozenset()) - snaps[B].get(k, frozenset()))})
+    c_via_remat = sorted({o["record_id"] for o in ops[C] if o["op"] == "rematerialize"}
+                         & set(needed_unrecovered))
+    b_fell = bool(loss_eps)
+    overprune = "pass" if (b_fell and b_cost < a_cost and needed_unrecovered) else "not_engaged"
     verdicts.append({**base, "cell": "X2-overprune", "verdict": overprune,
-                     "branch": B, "fell_below_A": b_fell, "cheaper_than_A": b_cost < a_cost})
+                     "branch": B, "fell_below_A": b_fell, "cheaper_than_A": b_cost < a_cost,
+                     "loss_episodes": loss_eps, "pruned_unrecovered_by_B": needed_unrecovered,
+                     "C_recovered_via_rematerialize": c_via_remat,
+                     "rematerialize_steps_C": sum(remat_steps[C].values())})
 
     # ---- X2-quality-erosion (loses-cell): C cheaper but its quality dipped below A —
-    # the floor must REFUSE the cost win. (On a sound run C holds the floor -> not_engaged.)
+    # the floor must REFUSE the cost win. (On a sound run C holds the floor.)
     erosion_present = c_cheaper and not floor_holds
     verdicts.append({**base, "cell": "X2-quality-erosion",
-                     "verdict": "pass" if erosion_present else "not_engaged",
+                     "verdict": "pass" if (erosion_present and attribution_ok) else "not_engaged",
                      "note": "floor refuses C's cost win" if erosion_present else "C held the floor"})
 
-    # ---- X2-U1: the quality floor must be world-checked (source != authored) on the
-    # real run. Authored (mock) leaves the world leg unexercised -> not_engaged.
-    src = source.get(A, "authored")
-    if backend == "mock" or src == "authored":
-        u1 = "not_engaged"
+    # ---- X2-U1: the quality floor is real only with an out-of-weights / fictional
+    # attestation AND a policy-independent grader sequence-wide (not a bare source tag).
+    att = next((r for r in rows if r["kind"] == "fixture_attestation"), None)
+    a_c_sources = [s for bid in (A, C) for s in source[bid].values()]
+    independent = (bool(a_c_sources) and all(s != "authored" for s in a_c_sources)
+                   and all(k in source[A] and k in source[C] for k in seq_list))
+    if backend == "mock" or att is None:
+        u1, u1_note = "not_engaged", "no fixture_attestation (mock/authored floor)"
+    elif not (att.get("out_of_weights") or att.get("fictional")):
+        u1, u1_note = "fail", "attestation present but not out-of-weights/fictional (load-bearing not guaranteed)"
+    elif not independent:
+        u1, u1_note = "fail", "attested out-of-weights but grader not policy-independent sequence-wide"
     else:
-        u1 = "pass" if src != "authored" else "fail"
-    verdicts.append({**base, "cell": "X2-U1", "verdict": u1, "oracle_source": src})
+        u1, u1_note = "pass", "out-of-weights/fictional + independent grader sequence-wide"
+    verdicts.append({**base, "cell": "X2-U1", "verdict": u1, "note": u1_note,
+                     "fixture_attestation": att})
 
     return verdicts
 
@@ -128,7 +253,10 @@ def main() -> int:
     for v in verdicts:
         extra = ""
         if v["cell"] == "X2-win":
-            extra = f"  cost A/B/C={list(v['cost_hot_tokens'].values())}  floor={v['quality_floor_holds']}"
+            extra = (f"  cost A/B/C={list(v['cost_hot_tokens'].values())}"
+                     f"  floor={v['quality_floor_holds']}  replay_ok={v['cost_replay_ok']}")
+            if v["confound_reasons"]:
+                extra += f"  confound={v['confound_reasons']}"
         print(f"{v['cell']:18s} {v['verdict']:16s}{extra}")
     if any("mock" in d for v in verdicts for d in v["disclosures"]):
         print("\nDISCLOSED: engine_backend=mock — machinery wire test, not evidence.")

@@ -19,6 +19,9 @@ from .corpus import CorpusEntry, expected_decision
 DECISION_RULE = "COPE: retracted => decline; corrected with claim standing => cite"
 DECISION_RULE_SOURCE = "https://publicationethics.org/retraction-guidelines"
 
+FACT_DECISION_RULE = "canonical fact string must appear in the normalized answer (substring match)"
+FACT_DECISION_RULE_SOURCE = "construct X2 fixture: lab_fictional_corpus fact extraction"
+
 
 @dataclass
 class OracleScore:
@@ -120,6 +123,43 @@ def world_checked_oracle(
         decision_rule=DECISION_RULE,
         decision_rule_source=DECISION_RULE_SOURCE,
         decision_extracted=decided,
+        corpus_entry=entry.path,
+        corpus_entry_sha256=entry.sha256,
+        corpus_confidence=corpus_confidence,
+        rule_confidence=rule_confidence,
+        representativeness=representativeness,
+        corpus_scope=entry.corpus_scope,
+    )
+
+
+def fictional_fact_oracle(
+    answer: str,
+    entry,  # FictionalCorpusEntry — avoid circular import
+    fact_id: str,
+    representativeness: str,
+    corpus_confidence: float = 0.95,
+    rule_confidence: float = 0.95,
+) -> OracleScore:
+    """Score a fact-extraction answer against a fictional lab corpus (SPEC_X2 §5).
+
+    World-checked row with source lab_fictional_corpus — not authored, so X2-U1
+    can engage on out-of-weights fixtures without retraction cite/decline shape.
+    """
+    if not representativeness:
+        raise ValueError(f"{entry.corpus_id}: representativeness required at scoring time")
+    if fact_id not in entry.facts:
+        raise ValueError(f"{entry.corpus_id}: unknown fact_id {fact_id!r}")
+    expected = entry.facts[fact_id]
+    hit = _norm(expected) in _norm(answer)
+    return OracleScore(
+        score=1.0 if hit else 0.0,
+        type="world_checked",
+        source="lab_fictional_corpus",
+        confidence=min(corpus_confidence, rule_confidence),
+        scorer="harness",
+        decision_rule=FACT_DECISION_RULE,
+        decision_rule_source=FACT_DECISION_RULE_SOURCE,
+        decision_extracted=expected if hit else "missing",
         corpus_entry=entry.path,
         corpus_entry_sha256=entry.sha256,
         corpus_confidence=corpus_confidence,

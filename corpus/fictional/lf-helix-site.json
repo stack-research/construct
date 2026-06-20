@@ -1,0 +1,17 @@
+{
+  "corpus_id": "lf-helix-site",
+  "fictional": true,
+  "domain": "Helix Basin Research Annex (fictional construct-lab site; no real-world referent)",
+  "facts": {
+    "workshop_wifi_password": "kx7-morrow-pin-8812",
+    "backup_server_address": "172.16.42.7"
+  },
+  "selection_method": "Authored for construct X2 real-engine runs. Values invented 2026-06-20; not drawn from rw-0001, rw-0004, or any public retraction. Out-of-weights by construction for gpt-oss-20b and claude-opus-4-8.",
+  "verified_by": "cursor",
+  "verified_at": "2026-06-20",
+  "corpus_scope": "Fictional lab-internal operational facts for X2 prune cost-at-matched-quality runs",
+  "corpus_identity_pin": {
+    "rw_0001": "Epigenetic ageing clocks for threatened Australian fish (Mol. Ecol. Resour.) — NOT this fixture",
+    "rw_0004": "VICTOR trial intraosseous vs IV OHCA (BMJ) — NOT this fixture"
+  }
+}
