@@ -17,8 +17,11 @@ Tier-1 hardening (thread-6 review — codex/grok/cursor + dan):
     every branch config must be identical.
   * `primary_cost_metric` is read from the run; the scorer certifies only the
     metric it can recompute (hot_tokens).
-  * X2-U1 engages on a `fixture_attestation` (out-of-weights / fictional) PLUS a
-    policy-independent grader sequence-wide — not a bare `source != authored`.
+  * X2-LB engages on a `fixture_attestation` (out-of-weights / fictional) + a
+    policy-independent grader + a COMPUTED gate pass (`fixture_gate_result`); X2-U1
+    stays the un-authored world close-gate — a synthetic fixture is not_engaged there.
+    Every non-mock cell (X2-win/X2-LB/X2-overprune/X2-quality-erosion) fails closed
+    without `gate_open` — attestation is a claim, gate passage is computed.
 
 Mock rows are wire tests, never evidence about a resident.
 """
@@ -215,12 +218,21 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
     c_via_remat = sorted({o["record_id"] for o in ops[C] if o["op"] == "rematerialize"}
                          & set(needed_unrecovered))
     b_fell = bool(loss_eps)
-    overprune = "pass" if (b_fell and b_cost < a_cost and needed_unrecovered) else "not_engaged"
+    # Gate-fail-closed like every other non-mock cell (codex): a loses-cell may not
+    # fire on a ledger we cannot attribute — no computed gate / broken fork / bad
+    # replay -> confounded, never a manufactured loss.
+    if not attribution_ok:
+        overprune = "confounded"
+    elif b_fell and b_cost < a_cost and needed_unrecovered:
+        overprune = "pass"
+    else:
+        overprune = "not_engaged"
     verdicts.append({**base, "cell": "X2-overprune", "verdict": overprune,
                      "branch": B, "fell_below_A": b_fell, "cheaper_than_A": b_cost < a_cost,
                      "loss_episodes": loss_eps, "pruned_unrecovered_by_B": needed_unrecovered,
                      "C_recovered_via_rematerialize": c_via_remat,
-                     "rematerialize_steps_C": sum(remat_steps[C].values())})
+                     "rematerialize_steps_C": sum(remat_steps[C].values()),
+                     "confound_reasons": sorted(set(confound))})
 
     # ---- X2-quality-erosion (loses-cell): C cheaper but its quality dipped below A —
     # the floor must REFUSE the cost win. (On a sound run C holds the floor.)

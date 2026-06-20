@@ -193,6 +193,38 @@ def test_gate_enforcement():
     print("ok  gate-enforcement: non-mock without a fixture_gate_result -> X2-win/X2-LB confounded (attestation != gate passage)")
 
 
+def test_overprune_gate_enforcement():
+    # Non-mock: B falls + is cheaper + a named unrecovered record — but NO
+    # fixture_gate_result. The loses-cell must not fire without a computed gate
+    # (codex's residual blocker: every non-mock cell fails closed on the gate).
+    led = Ledger(Path(tempfile.mkdtemp()) / "syn.x2.jsonl")
+    bcfg = lambda b: {"branch_id": b, "memory": "governed", "top_k": 1, "recency_weight": 0.0,
+                      "similarity_backend": "lexical_tfidf", "eligibility_threshold": 0.0,
+                      "inherited_record_ids": None}
+    led.write({"kind": "prune", "branch_id": BRANCH_B, "seq_index": 0, "event_index": 0,
+               "op": "prune", "record_id": "r2"})            # B drops r2, can't recover it
+    cost = {BRANCH_A: {0: 10, 1: 10}, BRANCH_B: {0: 10, 1: 5}, BRANCH_C: {0: 10, 1: 10}}
+    qual = {BRANCH_A: {0: 1.0, 1: 1.0}, BRANCH_B: {0: 1.0, 1: 0.0}, BRANCH_C: {0: 1.0, 1: 1.0}}
+    for k, rid in {0: "run0", 1: "run1"}.items():
+        led.write({"kind": "run_config", "run_id": rid, "engine_backend": "local",
+                   "branches": [bcfg(b) for b in (BRANCH_A, BRANCH_B, BRANCH_C)]})
+        for b in (BRANCH_A, BRANCH_B, BRANCH_C):
+            led.write({"kind": "hot_store_cost", "run_id": rid, "seq_index": k, "branch_id": b,
+                       "hot_tokens": cost[b][k], "rematerialize_steps": 0})
+            led.write({"kind": "branch_run", "run_id": rid, "branch_id": b,
+                       "oracle": {"score": qual[b][k], "source": "lab_fictional_corpus"}})
+    # NO fixture_gate_result row — attestation alone is not gate passage.
+    led.write({"kind": "fixture_attestation", "fixture_id": "syn", "fictional": True, "out_of_weights": True})
+    led.write({"kind": "x2_run_meta", "seq_id": "syn", "probe_run_id": "run1",
+               "all_record_ids": ["r1", "r2"], "record_texts": {"r1": _W5, "r2": _W5},
+               "primary_cost_metric": "hot_tokens",
+               "branches": {"no_prune": BRANCH_A, "closed_loop": BRANCH_B, "oracle_gated": BRANCH_C}})
+    v = _cells(led.path)
+    assert v["X2-overprune"]["verdict"] == "confounded", v["X2-overprune"]
+    assert "fixture_gate_not_open" in v["X2-overprune"]["confound_reasons"], v["X2-overprune"]
+    print("ok  overprune-gate: non-mock B-falls+cheaper WITHOUT a fixture_gate_result -> X2-overprune confounded")
+
+
 def test_wall_ii():
     h = HotStore(Path(tempfile.mkdtemp()) / "h.json", seed_ids={"r1"})
     for bad in ({"recommendation": "prune", "authorized_basis": {"agent_claimed_usage": "unused"}},
@@ -208,7 +240,7 @@ def test_wall_ii():
 def main() -> None:
     tests = [test_x2_win, test_x2_overprune, test_quality_erosion_refused, test_cost_replay,
              test_confounded_cost, test_lineage_integrity, test_x2_lb_and_u1_split,
-             test_gate_enforcement, test_wall_ii]
+             test_gate_enforcement, test_overprune_gate_enforcement, test_wall_ii]
     for t in tests:
         t()
     print(f"\nALL {len(tests)} PRUNE TESTS PASS")
