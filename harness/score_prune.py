@@ -361,6 +361,8 @@ def main() -> int:
     ledger_path = Path(sys.argv[1])
     verdicts = score_prune(ledger_path)
     out = ledger_path.with_suffix(".verdicts.jsonl")
+    if out.exists():
+        out.unlink()  # derived sidecar: a re-score REPLACES it, never appends a duplicate verdict set (the .x2.jsonl ledger stays append-only)
     led = Ledger(out)
     for v in verdicts:
         led.write(v)
