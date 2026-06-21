@@ -20,3 +20,5 @@ participants:
   kind: agent
 - name: grok
   kind: agent
+- name: gpt-oss
+  kind: agent
