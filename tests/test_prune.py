@@ -25,6 +25,7 @@ from harness.score_prune import score_prune
 ROOT = Path(__file__).resolve().parent.parent
 CORE = ROOT / "episodes" / "x2" / "core.json"
 RECUR = ROOT / "episodes" / "x2" / "recurrence.json"
+STUB_MANIFEST = ROOT / "episodes" / "x2" / "u1-stub" / "manifest.json"
 
 _W5 = "alpha beta gamma delta epsilon"  # exactly five tokens
 
@@ -71,6 +72,44 @@ def _syn_gated(*, gate_open, fictional=True, backend="local") -> Path:
     led.write({"kind": "x2_run_meta", "seq_id": "syn", "probe_run_id": "run0",
                "all_record_ids": ["r1", "r2"], "record_texts": {"r1": _W5, "r2": _W5},
                "primary_cost_metric": "hot_tokens",
+               "branches": {"no_prune": BRANCH_A, "closed_loop": BRANCH_B, "oracle_gated": BRANCH_C}})
+    return led.path
+
+
+def _world_pu_ledger(*, with_roundtrip: bool, blocks=("P", "P", "U")) -> Path:
+    """A cost-consistent NON-mock, WORLD-grounded P/U ledger (source != authored) for the
+    thread-7 preflight/close split. Three records: r1 = answer (always hot); rd = distractor
+    (pruned in P, stays cold -> the cost saving); rb = backup (pruned in P; rematerialized in
+    U iff with_roundtrip -> the close round-trip). Logged cost rows equal the prune-row replay
+    so attribution is clean and any pass/refusal is real, not manufactured."""
+    led = Ledger(Path(tempfile.mkdtemp()) / "world.x2.jsonl")
+    bcfg = lambda b: {"branch_id": b, "memory": "governed", "top_k": 1, "recency_weight": 0.0,
+                      "similarity_backend": "lexical_tfidf", "eligibility_threshold": 0.0,
+                      "inherited_record_ids": None}
+    led.write({"kind": "run_config", "run_id": "run0", "engine_backend": "local",
+               "branches": [bcfg(b) for b in (BRANCH_A, BRANCH_B, BRANCH_C)]})
+    # Prune/rematerialize rows (globally unique event_index). C and B both prune rd, rb in P;
+    # only C recovers rb in U (and only when with_roundtrip).
+    led.write({"kind": "prune", "branch_id": BRANCH_C, "seq_index": 0, "event_index": 0, "op": "prune", "record_id": "rd"})
+    led.write({"kind": "prune", "branch_id": BRANCH_C, "seq_index": 0, "event_index": 1, "op": "prune", "record_id": "rb"})
+    led.write({"kind": "prune", "branch_id": BRANCH_B, "seq_index": 0, "event_index": 3, "op": "prune", "record_id": "rd"})
+    led.write({"kind": "prune", "branch_id": BRANCH_B, "seq_index": 0, "event_index": 4, "op": "prune", "record_id": "rb"})
+    c2 = 5
+    if with_roundtrip:
+        led.write({"kind": "rematerialize", "branch_id": BRANCH_C, "seq_index": 2, "event_index": 2, "op": "rematerialize", "record_id": "rb"})
+        c2 = 10
+    cost = {BRANCH_A: {0: 15, 1: 15, 2: 15}, BRANCH_B: {0: 15, 1: 5, 2: 5}, BRANCH_C: {0: 15, 1: 5, 2: c2}}
+    for k, rid in {0: "run0", 1: "run1", 2: "run2"}.items():
+        for b in (BRANCH_A, BRANCH_B, BRANCH_C):
+            led.write({"kind": "hot_store_cost", "run_id": rid, "seq_index": k, "branch_id": b,
+                       "hot_tokens": cost[b][k], "rematerialize_steps": 0})
+            led.write({"kind": "branch_run", "run_id": rid, "branch_id": b,
+                       "oracle": {"score": 1.0, "source": "retraction_corpus"}})
+    led.write({"kind": "fixture_gate_result", "manifest_hash": "world1", "gate_open": True, "n_checks": 15, "n_passed": 15})
+    led.write({"kind": "fixture_attestation", "fixture_id": "world", "fictional": False, "out_of_weights": True})
+    led.write({"kind": "x2_run_meta", "seq_id": "world", "probe_run_id": "run2",
+               "all_record_ids": ["r1", "rb", "rd"], "record_texts": {"r1": _W5, "rb": _W5, "rd": _W5},
+               "primary_cost_metric": "hot_tokens", "block_labels": list(blocks),
                "branches": {"no_prune": BRANCH_A, "closed_loop": BRANCH_B, "oracle_gated": BRANCH_C}})
     return led.path
 
@@ -183,6 +222,77 @@ def test_x2_lb_and_u1_split():
     print("ok  X2-LB/X2-U1 split: fictional out-of-weights + gate open -> X2-LB pass, X2-U1 not_engaged (not world-grounded)")
 
 
+def test_block_labels_and_roundtrip_plumbing():
+    # The block labels flow into x2_run_meta and the scorer computes the P->U re-need
+    # round-trip. Mock engine, so X2-U1 stays not_engaged — this proves the PLUMBING
+    # (block labels + round-trip detection), never a world close.
+    led = run_x2_sequence([CORE, CORE, CORE, RECUR], engine_backend="mock",
+                          runs_dir=Path(tempfile.mkdtemp()), top_k=1, blocks=["P", "P", "P", "U"])
+    meta = next(r for r in Ledger(led).rows() if r["kind"] == "x2_run_meta")
+    assert meta["block_labels"] == ["P", "P", "P", "U"], meta.get("block_labels")
+    u1 = _cells(led)["X2-U1"]
+    assert u1["verdict"] == "not_engaged", u1            # mock — never a close
+    assert "backup-addr" in u1["reneed_round_trip"], u1  # C pruned it in P, rematerialized it in U
+    print(f"ok  block-plumbing: labels recorded; P->U round-trip = {u1['reneed_round_trip']}; X2-U1 not_engaged (mock)")
+
+
+def test_u1_stub_fixture_roundtrip():
+    # The committed X2-U1 SCAFFOLD (fictional official-result-reversal triad): its gate
+    # opens, and a mock run exercises the real P->U round-trip (C evicts meridian-appeal
+    # in P, rematerializes it in U; B over-prunes it) while X2-U1 stays not_engaged
+    # (fictional — never a world close). Protects the scaffold + manifest from bit-rot
+    # and documents the shape a real external reversal corpus must drop into.
+    from harness.check_x2_fixture import check_manifest
+    m = json.loads(STUB_MANIFEST.read_text())
+    failed = [c for c in check_manifest(STUB_MANIFEST) if not c[1]]
+    assert not failed, failed
+    seq = [ROOT / p for p in m["sequence"]]
+    led = run_x2_sequence(seq, engine_backend="mock", runs_dir=Path(tempfile.mkdtemp()),
+                          top_k=m.get("top_k", 1), blocks=m["blocks"])
+    meta = next(r for r in Ledger(led).rows() if r["kind"] == "x2_run_meta")
+    assert meta["block_labels"] == ["P", "P", "P", "U"], meta.get("block_labels")
+    v = _cells(led)
+    assert v["X2-win"]["verdict"] == "pass", v["X2-win"]
+    assert v["X2-overprune"]["verdict"] == "pass", v["X2-overprune"]
+    u1 = v["X2-U1"]
+    assert u1["reneed_round_trip"] == ["meridian-appeal"], u1
+    assert u1["verdict"] == "not_engaged", u1            # fictional scaffold — never a close
+    print(f"ok  U1 stub: gate open; P->U round-trip = {u1['reneed_round_trip']}; X2-U1 not_engaged (fictional scaffold)")
+
+
+def test_x2_u1_preflight_pass():
+    # A P-only WORLD run: the world floor is proven (preflight pass) but there is no
+    # Block U, so it is NOT a close — X2-U1 not_engaged with the preflight pointer.
+    v = _cells(_world_pu_ledger(with_roundtrip=False, blocks=("P", "P", "P")))
+    assert v["X2-U1-preflight"]["verdict"] == "pass", v["X2-U1-preflight"]
+    assert v["X2-U1"]["verdict"] == "not_engaged", v["X2-U1"]
+    assert "preflight" in v["X2-U1"]["note"], v["X2-U1"]
+    print("ok  X2-U1-preflight: P-only world run proves the floor; X2-U1 not_engaged (no Block U)")
+
+
+def test_x2_u1_close_pass():
+    # P+U world run where C evicted rb in P and re-needed (rematerialized) it in U, while
+    # still winning cost at matched quality -> the world-grounded CLOSE passes.
+    v = _cells(_world_pu_ledger(with_roundtrip=True))
+    assert v["X2-win"]["verdict"] == "pass", v["X2-win"]
+    assert v["X2-U1-preflight"]["verdict"] == "pass", v["X2-U1-preflight"]
+    c = v["X2-U1"]
+    assert c["verdict"] == "pass", c
+    assert c["reneed_round_trip"] == ["rb"], c
+    assert sorted(c["blocks_present"]) == ["P", "U"], c
+    print(f"ok  X2-U1 close: world + P/U + C re-needed {c['reneed_round_trip']} in U at matched quality -> pass")
+
+
+def test_x2_u1_close_needs_roundtrip():
+    # P+U world run but Block U never re-needs an evicted record (corpus too friendly):
+    # no C prune-in-P / rematerialize-in-U round-trip -> NOT a close.
+    c = _cells(_world_pu_ledger(with_roundtrip=False))["X2-U1"]
+    assert c["verdict"] == "not_engaged", c
+    assert c["reneed_round_trip"] == [], c
+    assert "too friendly" in c["note"], c
+    print("ok  X2-U1 close: P+U but U never re-needed evicted lineage -> not_engaged (too friendly)")
+
+
 def test_gate_enforcement():
     # Non-mock run with NO fixture_gate_result -> attestation is not gate passage:
     # the cost cells fail closed (gate is computed, not claimed).
@@ -240,6 +350,8 @@ def test_wall_ii():
 def main() -> None:
     tests = [test_x2_win, test_x2_overprune, test_quality_erosion_refused, test_cost_replay,
              test_confounded_cost, test_lineage_integrity, test_x2_lb_and_u1_split,
+             test_block_labels_and_roundtrip_plumbing, test_u1_stub_fixture_roundtrip,
+             test_x2_u1_preflight_pass, test_x2_u1_close_pass, test_x2_u1_close_needs_roundtrip,
              test_gate_enforcement, test_overprune_gate_enforcement, test_wall_ii]
     for t in tests:
         t()

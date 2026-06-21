@@ -96,6 +96,15 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
             remat_steps[r["branch_id"]][k] = r.get("rematerialize_steps", 0)
     seq_list = sorted(seq_set, key=lambda x: (x is None, x))
 
+    # Block labels (thread-7 preflight/close split): P = predictable recurrence,
+    # U = unpredictable re-need of evicted lineage. Absent (legacy/flat runs) -> None.
+    block_labels = list(meta.get("block_labels") or [])
+
+    def _block(k):
+        return block_labels[k] if isinstance(k, int) and 0 <= k < len(block_labels) else None
+
+    blocks_present = {b for k in seq_list if (b := _block(k))}
+
     quality: dict[str, dict[int, float]] = {A: {}, B: {}, C: {}}
     source: dict[str, dict[int, str]] = {A: {}, B: {}, C: {}}
     for r in rows:
@@ -115,6 +124,16 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
             ops[r["branch_id"]].append(r)
             event_indices.append(r.get("event_index"))
             referenced_ids.add(r.get("record_id"))
+
+    # ---- X2-U1 close evidence (thread-7): a record C evicted during a P-block episode
+    # and rematerialized during a U-block episode — the unpredictable recurrence of
+    # evicted lineage that separates a world CLOSE from a world PREFLIGHT. A P-only run
+    # cannot produce this round-trip, so it cannot pass as a close ("Helix + extra steps").
+    c_pruned_in_P = {o["record_id"] for o in ops[C]
+                     if o["op"] == "prune" and _block(o.get("seq_index")) == "P"}
+    c_remat_in_U = {o["record_id"] for o in ops[C]
+                    if o["op"] == "rematerialize" and _block(o.get("seq_index")) == "U"}
+    reneed_round_trip = sorted(c_pruned_in_P & c_remat_in_U)
 
     # ---- Lineage integrity: immutable AND complete; fail closed on any hole.
     integrity_ok = True
@@ -146,6 +165,9 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
 
     cost_present = bool(seq_list) and all(
         k in cost[A] and k in cost[B] and k in cost[C] for k in seq_list)
+
+    per_block_cost = {b: {bid: sum(cost[bid].get(k, 0) for k in seq_list if _block(k) == b)
+                          for bid in (A, B, C)} for b in sorted(blocks_present)}
 
     # ---- Fork identity: only the hot set (+ sidecar paths) may differ across A/B/C.
     fork_ok = True
@@ -270,18 +292,50 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
                      "fictional": fictional, "out_of_weights": oow, "gate_open": gate_open,
                      "fixture_attestation": att})
 
+    # X2-U1-preflight (thread-7 split): the world floor + non-fictional oracle path
+    # PROVEN on a world run — explicitly NOT a close. Pass == the old single-cell X2-U1
+    # condition (un-authored source + independent grader, gate open). A P-only world run
+    # legitimately reaches here; it shakes out corpus/oracle/out-of-weights plumbing.
+    a_world = bool(seq_list) and all(source[A].get(k) not in _SYNTHETIC_SOURCES for k in seq_list)
+    world_floor = independent and a_world
+    if backend == "mock" or att is None:
+        pf, pf_note = "not_engaged", "no fixture_attestation (mock/authored floor)"
+    elif fictional:
+        pf, pf_note = "not_engaged", "synthetic out-of-weights fixture; world floor not exercised — see X2-LB"
+    elif backend != "mock" and not gate_open:
+        pf, pf_note = "confounded", "fixture_gate_result absent or not open"
+    elif world_floor:
+        pf, pf_note = "pass", "world floor proven (un-authored source + independent grader sequence-wide)"
+    else:
+        pf, pf_note = "fail", "not world-grounded (authored/synthetic source)"
+    verdicts.append({**base, "cell": "X2-U1-preflight", "verdict": pf, "note": pf_note,
+                     "blocks_present": sorted(blocks_present), "fixture_attestation": att})
+
+    # X2-U1 (the world-grounded CLOSE). Beyond the preflight, a close must (a) carry both
+    # a P and a U block in one fork group and (b) show the honest keep-hot region: C
+    # evicted a record in P and re-needed it (rematerialized) in U — and still win cost at
+    # matched quality (X2-win pass). A P-only world run is a preflight, never a close; a
+    # P+U run where U never re-needs evicted lineage means the corpus was too friendly.
+    has_PU = {"P", "U"} <= blocks_present
     if backend == "mock" or att is None:
         u1, u1_note = "not_engaged", "no fixture_attestation (mock/authored floor)"
     elif fictional:
         u1, u1_note = "not_engaged", "synthetic out-of-weights fixture; not world-grounded — load-bearing leg is X2-LB"
     elif backend != "mock" and not gate_open:
         u1, u1_note = "confounded", "fixture_gate_result absent or not open"
-    elif independent and all(source[A].get(k) not in _SYNTHETIC_SOURCES for k in seq_list):
-        u1, u1_note = "pass", "un-authored external corpus + independent grader sequence-wide"
-    else:
+    elif not world_floor:
         u1, u1_note = "fail", "not world-grounded (authored/synthetic source) — use X2-LB or an external corpus"
+    elif not has_PU:
+        u1, u1_note = "not_engaged", "world preflight only — no P+U blocks; see X2-U1-preflight (not a close)"
+    elif not reneed_round_trip:
+        u1, u1_note = "not_engaged", "Block U never re-needed evicted lineage (no C prune-in-P / rematerialize-in-U round-trip) — corpus too friendly"
+    elif win != "pass":
+        u1, u1_note = "not_engaged", f"cost-at-matched-quality not established (X2-win={win}) — a close needs the cost win to hold"
+    else:
+        u1, u1_note = "pass", "world-grounded + P/U blocks + C re-needed evicted lineage in U, at matched quality"
     verdicts.append({**base, "cell": "X2-U1", "verdict": u1, "note": u1_note,
-                     "fixture_attestation": att})
+                     "blocks_present": sorted(blocks_present), "reneed_round_trip": reneed_round_trip,
+                     "per_block_cost_hot_tokens": per_block_cost, "fixture_attestation": att})
 
     return verdicts
 

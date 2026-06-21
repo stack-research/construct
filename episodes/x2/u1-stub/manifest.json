@@ -1,0 +1,37 @@
+{
+  "fixture_id": "x2-u1-stub",
+  "description": "SCAFFOLD — fictional official-result-reversal triad (DQ -> appeal -> reinstatement) for the X2-U1 two-block instrument (thread-7). Block P = provisional standing (predictable recurrence); Block U = post-appeal re-need of the reinstated record C evicted during P. Fictional/out-of-weights, so X2-U1 scores not_engaged BY DESIGN: this proves the P->U round-trip plumbing and documents the shape a REAL external reversal corpus must take (official-result-reversal primary; retraction->reinstatement backup). It is NOT a world close. Gated by harness/check_x2_fixture.py like the Helix fixture.",
+  "fictional": true,
+  "out_of_weights": true,
+  "corpus_entry": "corpus/fictional/lf-meridian-appeal.json",
+  "sequence": [
+    "episodes/x2/u1-stub/standing.json",
+    "episodes/x2/u1-stub/standing.json",
+    "episodes/x2/u1-stub/standing.json",
+    "episodes/x2/u1-stub/appeal.json"
+  ],
+  "blocks": ["P", "P", "P", "U"],
+  "top_k": 1,
+  "primary_cost_metric": "hot_tokens",
+  "cost_gate": {
+    "min_full_hot_tokens": 40,
+    "answer_record_core": "meridian-dq",
+    "answer_record_recurrence": "meridian-appeal",
+    "prunable_distractor": "meridian-distractor",
+    "recurrence_episode": "x2u1-stub-appeal"
+  },
+  "attestation": {
+    "attested_by": "claude",
+    "attested_at": "2026-06-21",
+    "fictional": true,
+    "out_of_weights": true,
+    "corpus_identity_pin": {
+      "rw_0001": "Epigenetic ageing clocks for threatened Australian fish (Mol. Ecol. Resour.) — NOT this fixture",
+      "rw_0004": "VICTOR trial intraosseous vs IV OHCA (BMJ) — NOT this fixture"
+    },
+    "engine_cutoffs_disclosed": {
+      "claude-opus-4-8": "training cutoff ~2026-01; fictional reversal invented 2026-06-21",
+      "gpt-oss-20b": "local weights; fictional reversal out-of-weights by construction"
+    }
+  }
+}

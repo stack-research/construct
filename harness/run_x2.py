@@ -125,12 +125,17 @@ def run_x2_sequence(
     fixture_attestation: dict | None = None,
     manifest: dict | None = None,
     gate_result: dict | None = None,
+    blocks: list[str] | None = None,
 ) -> Path:
     runs_dir = (runs_dir or ROOT / "runs" / "x2").resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
     episodes = [Episode.load(p) for p in seq_paths]
     if not episodes:
         raise ValueError("X2 needs a non-empty sequence")
+    # Block labels (thread-7): P = predictable recurrence, U = unpredictable re-need.
+    # One label per episode (by seq_index); absent -> a flat, block-unaware sequence.
+    if blocks is not None and len(blocks) != len(episodes):
+        raise ValueError(f"blocks length {len(blocks)} != sequence length {len(episodes)}")
     all_ids = frozenset(r.record_id for ep in episodes for r in ep.records)  # the lineage universe
     fixture_id = (manifest or {}).get("fixture_id", episodes[-1].episode_id.rsplit("-", 1)[0])
     seq_id = f"{fixture_id}-{uuid.uuid4().hex[:6]}"
@@ -204,6 +209,7 @@ def run_x2_sequence(
         "authority_frozen": True, "top_k": top_k,
         "primary_cost_metric": (manifest or {}).get("primary_cost_metric", "hot_tokens"),
         "all_record_ids": sorted(all_ids), "record_texts": record_texts,
+        "block_labels": list(blocks) if blocks else [None] * len(episodes),
     })
     print(f"{seq_id}: {len(episodes)} episodes; final hot sets — "
           f"A={sorted(hot[BRANCH_A].get_hot())} B={sorted(hot[BRANCH_B].get_hot())} C={sorted(hot[BRANCH_C].get_hot())}")
@@ -269,7 +275,8 @@ def main() -> int:
         run_x2_sequence(seq_paths, engine_backend=args.engine, model=args.model,
                         base_url=args.base_url, runs_dir=Path(args.runs_dir), top_k=top_k,
                         ablation_samples=args.ablation_samples, manifest=manifest,
-                        fixture_attestation=attestation, gate_result=gate_result)
+                        fixture_attestation=attestation, gate_result=gate_result,
+                        blocks=(manifest or {}).get("blocks"))
     except Exception as e:
         print(f"FAIL: {e}", file=sys.stderr)
         return 1

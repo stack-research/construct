@@ -1,0 +1,51 @@
+{
+  "episode_id": "x2u1-stub-standing",
+  "_notes": "SCAFFOLD for the X2-U1 two-block instrument (thread-7). Block P (predictable recurrence): asks the provisional standing while the title is vacated -> answer is meridian-dq (offered every P episode). meridian-result (original), meridian-appeal (reinstatement), and the distractor are not offered at top_k=1, so C prunes them. Replay this file across the P block, then appeal.json once as block U. Records share NO distinctive tokens across the two questions (Helix-style separation) so lexical retrieval dominates the positional-recency blend. Identical record universe across the sequence (lineage cost replay). Fictional/out-of-weights -> X2-U1 is not_engaged by design; this proves the P->U round-trip PLUMBING, not a world close.",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "What is the provisional standing of the vacated title? Reply with only the surname.",
+  "expected_answer": "Soto",
+  "oracle_ref": {
+    "kind": "fictional_fact",
+    "corpus_entry": "corpus/fictional/lf-meridian-appeal.json",
+    "fact_id": "provisional_gold_holder",
+    "representativeness": "Fictional sporting result-reversal invented 2026-06-21; no public referent; out-of-weights by construction. Scaffold for the X2-U1 P/U instrument.",
+    "corpus_confidence": 0.95,
+    "rule_confidence": 0.95
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "meridian-result",
+      "text": "Original race result on file: the 2031 championship first-place finish, later disputed in a separate proceeding.",
+      "created_at": "2031-03-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "meridian-distractor",
+      "text": "Venue operations archive: the 2024 through 2030 shuttle timetables, accreditation badge stock, broadcast cable runs, ice-resurfacing schedules, catering vendor rotations, lost-property logs, and parking-permit allocations were consolidated under facilities group MV-3 for the depreciation audit.",
+      "created_at": "2030-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "meridian-dq",
+      "text": "Provisional standing of the vacated title: runner-up Mara Soto currently holds it, pending the sled-mass infraction review.",
+      "created_at": "2031-05-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "meridian-appeal",
+      "text": "Appeal ruling: the sled-mass case was overturned and Talia Renn is the reinstated champion.",
+      "created_at": "2031-11-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

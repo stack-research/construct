@@ -1,0 +1,17 @@
+{
+  "corpus_id": "lf-meridian-appeal",
+  "fictional": true,
+  "domain": "Meridian Open skeleton (fictional sporting result-reversal; no real-world referent)",
+  "facts": {
+    "provisional_gold_holder": "Soto",
+    "reinstated_gold_holder": "Renn"
+  },
+  "selection_method": "SCAFFOLD authored for the X2-U1 two-block instrument (thread-7). Fictional official-result-reversal — invented 2026-06-21, no public referent; out-of-weights by construction. Mirrors the SHAPE of the primary U1 candidate class (official-result-reversal: DQ -> appeal -> reinstatement) so a real out-of-weights reversal corpus can drop into the same manifest. NOT world evidence: a fictional fixture scores X2-U1 not_engaged by design.",
+  "verified_by": "claude",
+  "verified_at": "2026-06-21",
+  "corpus_scope": "Fictional reversal facts for the X2-U1 P/U block-plumbing scaffold (not a world close)",
+  "corpus_identity_pin": {
+    "rw_0001": "Epigenetic ageing clocks for threatened Australian fish (Mol. Ecol. Resour.) — NOT this fixture",
+    "rw_0004": "VICTOR trial intraosseous vs IV OHCA (BMJ) — NOT this fixture"
+  }
+}

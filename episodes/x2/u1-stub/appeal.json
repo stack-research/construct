@@ -1,0 +1,51 @@
+{
+  "episode_id": "x2u1-stub-appeal",
+  "_notes": "SCAFFOLD for the X2-U1 two-block instrument (thread-7). Block U (unpredictable re-need of EVICTED lineage): after the appeal, the champion question is answered only by meridian-appeal — a record C pruned during block P (disuse) and must rematerialize. That P->U round-trip is what the X2-U1 close requires and a P-only run cannot produce; B cannot recover it. Same record universe as standing.json. Fictional/out-of-weights -> X2-U1 not_engaged by design (a world close needs a real external reversal corpus).",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "After the appeal ruling, who is the reinstated champion? Reply with only the surname.",
+  "expected_answer": "Renn",
+  "oracle_ref": {
+    "kind": "fictional_fact",
+    "corpus_entry": "corpus/fictional/lf-meridian-appeal.json",
+    "fact_id": "reinstated_gold_holder",
+    "representativeness": "Fictional sporting result-reversal invented 2026-06-21; no public referent; out-of-weights by construction. Scaffold for the X2-U1 P/U instrument.",
+    "corpus_confidence": 0.95,
+    "rule_confidence": 0.95
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "meridian-result",
+      "text": "Original race result on file: the 2031 championship first-place finish, later disputed in a separate proceeding.",
+      "created_at": "2031-03-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "meridian-distractor",
+      "text": "Venue operations archive: the 2024 through 2030 shuttle timetables, accreditation badge stock, broadcast cable runs, ice-resurfacing schedules, catering vendor rotations, lost-property logs, and parking-permit allocations were consolidated under facilities group MV-3 for the depreciation audit.",
+      "created_at": "2030-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "meridian-dq",
+      "text": "Provisional standing of the vacated title: runner-up Mara Soto currently holds it, pending the sled-mass infraction review.",
+      "created_at": "2031-05-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "meridian-appeal",
+      "text": "Appeal ruling: the sled-mass case was overturned and Talia Renn is the reinstated champion.",
+      "created_at": "2031-11-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}
