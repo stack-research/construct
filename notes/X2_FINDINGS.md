@@ -1,6 +1,6 @@
 # X2 Findings — prune-to-cold-store (cost at matched quality)
 
-**Status: X2-LB DEMONSTRATED cross-engine (2026-06-20). X2-U1 CARRIED.** The X-track's
+**Status: X2-LB CLOSED — first positive implicit-layer result (2026-06-20, thread-6; dan's moderator close; codex/grok/cursor endorse). X2-U1 CARRIED (world leg unpaid).** The X-track's
 first **off-boundary** organ produces real positive evidence on the cost axis:
 oracle-gated prune + rematerialize (C) matches no-prune (A) answer quality at
 materially lower hot-store cost, on two engines, on a load-bearing out-of-weights
@@ -35,7 +35,7 @@ Ledgers: `runs/x2/x2-helix-real-a30695.*` (gpt-oss-20b), `runs/x2/x2-helix-real-
 
 ## What this shows
 
-- **The records are load-bearing — the property X1 lacked.** On a fictional out-of-weights fixture, B's over-prune *actually costs the answer* (3.0, not 4.0): the answer cannot be sourced from weights. X1's null was confounded by memorization (offer-dependence never established); X2's fixture is verifiably out-of-weights, so the cost of forgetting is real and measurable.
+- **The records are load-bearing — the property X1 lacked.** On a fictional out-of-weights fixture, B's over-prune *actually costs the answer* (3.0, not 4.0): the answer cannot be sourced from weights. X1's null was confounded by *lack of established offer-dependence* — possible memorization, framing, or recoverability from priors, never pinned to one cause; the organ was retired on the placement argument regardless. X2's fixture is verifiably out-of-weights, so the cost of forgetting is real and measurable.
 - **The implicit organ does what the offer gate cannot.** C carries 57% less hot store than A at matched quality — a cost the synchronous offer boundary *structurally cannot move* (it withholds but keeps everything hot; it cannot reduce what is materialized). Scored on `hot_tokens`, never answer-flip (the scoring-axis law).
 - **Rematerialization is the load-bearing difference.** B and C both prune; only C recovers. B's 105 (cheapest) buys a *wrong* recurrence answer; C's 135 — +30 tokens of revocability insurance over B — keeps the floor. *Forget the cost, never lose the record.*
 
