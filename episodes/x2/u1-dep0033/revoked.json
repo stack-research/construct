@@ -1,0 +1,43 @@
+{
+  "episode_id": "x2u1-dep0033-revoked",
+  "_notes": "X2-U1 WORLD-grounded fixture. Block U (unpredictable re-need of EVICTED lineage): the DEP0033 status per the CURRENT RULING -> answer 'revoked', answerable only by dep0033-revoked, which C pruned during block P and must rematerialize. B (no recovery) cannot get it back and answers 'deprecated' -> B fails on the round-trip record, proving C's recovery necessary. Same record universe as deprecated.json; parallel status records, questions key on 'current ruling' (U) vs 'original filing' (P), never the answer words.",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "Per the DEP0033 current ruling, what is the status of the module-level events.listenerCount()? Answer in one word.",
+  "expected_answer": "revoked",
+  "oracle_ref": {
+    "kind": "world_fact",
+    "corpus_entry": "corpus/world/wf-dep0033.json",
+    "fact_id": "status_after_revocation",
+    "representativeness": "Node DEP0033 status after the v24.14.0/v25.4.0 revocation; real version-controlled fact, source != authored.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.9
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "dep0033-distractor",
+      "text": "Unrelated Node deprecations archive: assorted DEP0XXX notices covering legacy Buffer constructors, the domain module, _linklist, several crypto cipher defaults, the punycode bundle, url query handling, util.isArray and related type-check helpers, and documentation-only migration notices consolidated across the v4 through v12 release lines.",
+      "created_at": "2018-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "dep0033-deprecated",
+      "text": "DEP0033 original filing, Node v3.2.0: the module-level events.listenerCount() is deprecated.",
+      "created_at": "2015-08-02T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "dep0033-revoked",
+      "text": "DEP0033 current ruling, Node v24.14.0: the module-level events.listenerCount() is revoked.",
+      "created_at": "2026-04-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "episode_id": "x2u1-dep0033-deprecated",
+  "_notes": "X2-U1 WORLD-grounded fixture (real, source != authored). Block P (predictable recurrence): the DEP0033 status per the ORIGINAL FILING -> answer 'deprecated' (record dep0033-deprecated, offered every P episode). dep0033-revoked is not offered at top_k=1, so C prunes it; it is the round-trip record re-needed in block U. The two status records are parallel so only the discriminator ('original filing' vs 'current ruling') decides retrieval, at any recency; questions never contain the answer words. Identical record universe across the sequence. Out-of-weights earned by obscurity+recency, proven by the manifest ignorance probe. World oracle: web_verified.",
+  "expected_winner_condition": "prune_lowers_cost_at_matched_quality",
+  "question": "Per the DEP0033 original filing, what is the status of the module-level events.listenerCount()? Answer in one word.",
+  "expected_answer": "deprecated",
+  "oracle_ref": {
+    "kind": "world_fact",
+    "corpus_entry": "corpus/world/wf-dep0033.json",
+    "fact_id": "status_as_filed",
+    "representativeness": "Node DEP0033 status as originally filed (v3.2.0); real version-controlled fact, source != authored.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.9
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "dep0033-distractor",
+      "text": "Unrelated Node deprecations archive: assorted DEP0XXX notices covering legacy Buffer constructors, the domain module, _linklist, several crypto cipher defaults, the punycode bundle, url query handling, util.isArray and related type-check helpers, and documentation-only migration notices consolidated across the v4 through v12 release lines.",
+      "created_at": "2018-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "dep0033-deprecated",
+      "text": "DEP0033 original filing, Node v3.2.0: the module-level events.listenerCount() is deprecated.",
+      "created_at": "2015-08-02T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    },
+    {
+      "record_id": "dep0033-revoked",
+      "text": "DEP0033 current ruling, Node v24.14.0: the module-level events.listenerCount() is revoked.",
+      "created_at": "2026-04-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

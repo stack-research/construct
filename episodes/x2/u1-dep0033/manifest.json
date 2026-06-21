@@ -1,0 +1,49 @@
+{
+  "fixture_id": "x2-u1-dep0033",
+  "description": "X2-U1 WORLD-grounded fixture: Node.js DEP0033 (events.listenerCount()) deprecated -> revoked. Real, externally-verifiable, impersonal (no person/team -> nothing to redact). Block P (predictable recurrence) asks the original-filing status ('deprecated'); Block U asks the current-ruling status ('revoked'), answerable only by the dep0033-revoked record that C evicted during P and must rematerialize. Out-of-weights is EARNED: the revocation post-dates both engines' weights, proven by the recorded ignorance probe (both answered 'deprecated' cold). recency_weight 0 so the question, not recency, selects the record (same-subject temporal reversal). Gated by harness/check_x2_fixture.py (world-grounded mode).",
+  "fictional": false,
+  "world_grounded": true,
+  "out_of_weights": true,
+  "corpus_entry": "corpus/world/wf-dep0033.json",
+  "sequence": [
+    "episodes/x2/u1-dep0033/deprecated.json",
+    "episodes/x2/u1-dep0033/deprecated.json",
+    "episodes/x2/u1-dep0033/deprecated.json",
+    "episodes/x2/u1-dep0033/revoked.json"
+  ],
+  "blocks": ["P", "P", "P", "U"],
+  "top_k": 1,
+  "recency_weight": 0.0,
+  "primary_cost_metric": "hot_tokens",
+  "cost_gate": {
+    "min_full_hot_tokens": 40,
+    "answer_record_core": "dep0033-deprecated",
+    "answer_record_recurrence": "dep0033-revoked",
+    "prunable_distractor": "dep0033-distractor",
+    "recurrence_episode": "x2u1-dep0033-revoked"
+  },
+  "attestation": {
+    "attested_by": "claude",
+    "attested_at": "2026-06-21",
+    "fictional": false,
+    "out_of_weights": true,
+    "source_url": "https://nodejs.org/api/deprecations.html#DEP0033",
+    "ignorance_probe": {
+      "probed_at": "2026-06-21",
+      "question": "In Node.js, the module-level function events.listenerCount() was deprecated long ago under DEP0033. Has that deprecation since been REVOKED (un-deprecated), or does it still stand as deprecated? Answer with exactly one word: revoked or deprecated.",
+      "engines": {
+        "claude-opus-4-8": { "knew": false, "answer": "deprecated" },
+        "gpt-oss-20b": { "knew": false, "answer": "deprecated" }
+      },
+      "interpretation": "Neither engine knew DEP0033 was revoked -> the revoked (U) fact is out-of-weights; the dep0033-revoked round-trip record is load-bearing (B cannot answer U from weights)."
+    },
+    "engine_cutoffs_disclosed": {
+      "claude-opus-4-8": "training cutoff ~2026-01; DEP0033 revoked in Node v24.14.0/v25.4.0 (2026) -> post-cutoff, probe-confirmed",
+      "gpt-oss-20b": "local open weights; DEP0033 revocation post-dates weights -> probe-confirmed"
+    },
+    "corpus_identity_pin": {
+      "not_lf_helix_or_meridian": "lab-authored fictional fixtures (X2-LB / scaffold) — not this corpus",
+      "not_rw_0001_0004": "M0 retraction-corpus entries — different shape, not this corpus"
+    }
+  }
+}

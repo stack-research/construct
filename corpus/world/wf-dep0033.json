@@ -1,0 +1,25 @@
+{
+  "corpus_id": "wf-dep0033",
+  "fictional": false,
+  "domain": "Node.js API deprecation lifecycle (real, version-controlled; DEP0033)",
+  "facts": {
+    "status_as_filed": "deprecated",
+    "status_after_revocation": "revoked"
+  },
+  "source_url": "https://nodejs.org/api/deprecations.html#DEP0033",
+  "real_event": {
+    "dep_code": "DEP0033",
+    "api": "events.listenerCount(emitter, eventName) (module-level EventEmitter.listenerCount)",
+    "deprecated_in": "v3.2.0 (Documentation-only)",
+    "revoked_in": "v24.14.0 / v25.4.0",
+    "revocation_reason": "the function was repurposed to also accept EventTarget arguments, so the deprecation was reversed"
+  },
+  "selection_method": "Real, externally-verifiable reversal: a Node.js deprecation (DEP0033) that was later REVOKED. Chosen for X2-U1 because (a) the reversal is genuine and citable in version-controlled Node docs, (b) it is impersonal — no athlete/team/person, nothing to redact, (c) out-of-weights is earned: a DEP code's *current* status is obscure and the revocation shipped in v24.14.0/v25.4.0 (2025-2026, at/after the engines' cutoffs) — confirmed per-engine by the pre-run ignorance probe recorded in the run manifest. NOT a retraction (rw-*) and NOT the lab-authored Helix/Meridian fixtures.",
+  "verified_by": "claude",
+  "verified_at": "2026-06-21",
+  "corpus_scope": "Node.js DEP0033 events.listenerCount() deprecation-then-revocation status",
+  "corpus_identity_pin": {
+    "not_lf_helix": "lab-authored fictional site facts — X2-LB only, not this corpus",
+    "not_rw_0001_0004": "retraction-corpus entries (M0) — different shape, not this corpus"
+  }
+}

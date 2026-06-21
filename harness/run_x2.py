@@ -126,6 +126,7 @@ def run_x2_sequence(
     manifest: dict | None = None,
     gate_result: dict | None = None,
     blocks: list[str] | None = None,
+    recency_weight: float = 0.3,
 ) -> Path:
     runs_dir = (runs_dir or ROOT / "runs" / "x2").resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
@@ -143,7 +144,9 @@ def run_x2_sequence(
     if ledger.path.exists():
         ledger.path.unlink()
 
-    common = dict(memory="governed", recency_weight=0.3, similarity_backend="lexical_tfidf")
+    # recency_weight is fork-constant (same A/B/C); a same-subject temporal-reversal
+    # corpus sets it 0.0 so the QUESTION, not recency, selects the record (manifest-configurable).
+    common = dict(memory="governed", recency_weight=recency_weight, similarity_backend="lexical_tfidf")
     paths: dict[str, tuple[Path, Path]] = {}
     for bid in (BRANCH_A, BRANCH_B, BRANCH_C):
         ap = runs_dir / f"{seq_id}.{bid}.authority.json"
@@ -276,7 +279,8 @@ def main() -> int:
                         base_url=args.base_url, runs_dir=Path(args.runs_dir), top_k=top_k,
                         ablation_samples=args.ablation_samples, manifest=manifest,
                         fixture_attestation=attestation, gate_result=gate_result,
-                        blocks=(manifest or {}).get("blocks"))
+                        blocks=(manifest or {}).get("blocks"),
+                        recency_weight=(manifest or {}).get("recency_weight", 0.3))
     except Exception as e:
         print(f"FAIL: {e}", file=sys.stderr)
         return 1

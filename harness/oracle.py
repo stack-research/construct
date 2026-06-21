@@ -22,6 +22,8 @@ DECISION_RULE_SOURCE = "https://publicationethics.org/retraction-guidelines"
 FACT_DECISION_RULE = "canonical fact string must appear in the normalized answer (substring match)"
 FACT_DECISION_RULE_SOURCE = "construct X2 fixture: lab_fictional_corpus fact extraction"
 
+WORLD_FACT_DECISION_RULE = "canonical world-settled fact string must appear in the normalized answer (substring match)"
+
 
 @dataclass
 class OracleScore:
@@ -123,6 +125,47 @@ def world_checked_oracle(
         decision_rule=DECISION_RULE,
         decision_rule_source=DECISION_RULE_SOURCE,
         decision_extracted=decided,
+        corpus_entry=entry.path,
+        corpus_entry_sha256=entry.sha256,
+        corpus_confidence=corpus_confidence,
+        rule_confidence=rule_confidence,
+        representativeness=representativeness,
+        corpus_scope=entry.corpus_scope,
+    )
+
+
+def world_fact_oracle(
+    answer: str,
+    entry,  # WorldFactCorpusEntry — avoid circular import
+    fact_id: str,
+    representativeness: str,
+    corpus_confidence: float = 0.9,
+    rule_confidence: float = 0.9,
+) -> OracleScore:
+    """Score a fact-extraction answer against a REAL, externally-verifiable corpus.
+
+    Same substring rule as the fictional oracle, but `source = web_verified` (NOT
+    synthetic) so the X2-U1 *close* engages: the fact is one the world settled, the
+    mapping is ours and disclosed, and out-of-weights is earned (obscurity/recency +
+    the per-engine ignorance probe), never asserted.
+    """
+    if not representativeness:
+        raise ValueError(f"{entry.corpus_id}: representativeness required at scoring time")
+    if fact_id not in entry.facts:
+        raise ValueError(f"{entry.corpus_id}: unknown fact_id {fact_id!r}")
+    if not entry.source_url:
+        raise ValueError(f"{entry.corpus_id}: world_fact row requires a citable source_url")
+    expected = entry.facts[fact_id]
+    hit = _norm(expected) in _norm(answer)
+    return OracleScore(
+        score=1.0 if hit else 0.0,
+        type="world_checked",
+        source="web_verified",
+        confidence=min(corpus_confidence, rule_confidence),
+        scorer="harness",
+        decision_rule=WORLD_FACT_DECISION_RULE,
+        decision_rule_source=entry.source_url,
+        decision_extracted=expected if hit else "missing",
         corpus_entry=entry.path,
         corpus_entry_sha256=entry.sha256,
         corpus_confidence=corpus_confidence,

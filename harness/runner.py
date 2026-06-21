@@ -18,8 +18,9 @@ from .authority import AuthorityStore
 from .corpus import load_entry
 from .engine import ClaudeEngine, LocalEngine, MockEngine, render_foreground, renderer_version
 from .fictional_corpus import load_fictional_entry
+from .world_fact_corpus import load_world_fact_entry
 from .ledger import Ledger
-from .oracle import authored_oracle, fictional_fact_oracle, world_checked_oracle
+from .oracle import authored_oracle, fictional_fact_oracle, world_checked_oracle, world_fact_oracle
 from .records import Record
 from .retrieval import pairwise_similarity, rank_records
 from .temperature import TemperatureStore
@@ -121,6 +122,13 @@ class Episode:
                     representativeness=ref.get("representativeness", ""),
                     corpus_confidence=ref.get("corpus_confidence", 0.95),
                     rule_confidence=ref.get("rule_confidence", 0.95),
+                )
+            if ref.get("kind") == "world_fact":
+                return world_fact_oracle(
+                    answer, load_world_fact_entry(ref["corpus_entry"]), ref["fact_id"],
+                    representativeness=ref.get("representativeness", ""),
+                    corpus_confidence=ref.get("corpus_confidence", 0.9),
+                    rule_confidence=ref.get("rule_confidence", 0.9),
                 )
             return world_checked_oracle(
                 answer,

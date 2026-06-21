@@ -20,6 +20,7 @@ import tempfile
 from pathlib import Path
 
 from .fictional_corpus import load_fictional_entry
+from .world_fact_corpus import load_world_fact_entry
 from .retrieval import rank_records
 from .runner import BranchConfig, Episode, select_offers
 
@@ -43,17 +44,33 @@ def check_manifest(manifest_path: Path) -> list[Check]:
     m = json.loads(manifest_path.read_text())
     fid = m.get("fixture_id", manifest_path.stem)
 
-    if not m.get("fictional"):
-        checks.append(("fictional", False, "fixture must be fictional (out-of-weights)"))
+    # X2-LB (fictional/synthetic) vs X2-U1 (world-grounded, source != authored) admission.
+    world = bool(m.get("world_grounded")) or (m.get("fictional") is False)
+    att = m.get("attestation", {})
+    if world:
+        if m.get("fictional") is not False:
+            checks.append(("world_grounded", False, "world fixture must set fictional: false"))
+        else:
+            checks.append(("world_grounded", True, "world-grounded fixture (fictional: false, source != authored)"))
+        # Out-of-weights is PROVEN per-engine before the run, never asserted: the
+        # attestation must carry an ignorance probe showing each engine did not know.
+        engines = att.get("ignorance_probe", {}).get("engines", {})
+        if not engines or any(v.get("knew") is not False for v in engines.values()):
+            checks.append(("ignorance_probe", False,
+                           "attestation.ignorance_probe.engines must show knew:false for every engine (out-of-weights proven pre-run)"))
+        else:
+            checks.append(("ignorance_probe", True, f"out-of-weights probe clean for {sorted(engines)}"))
     else:
-        checks.append(("fictional", True, "fictional fixture declared"))
+        if not m.get("fictional"):
+            checks.append(("fictional", False, "fixture must be fictional (out-of-weights)"))
+        else:
+            checks.append(("fictional", True, "fictional fixture declared"))
 
     if not m.get("out_of_weights"):
         checks.append(("out_of_weights", False, "out_of_weights must be true"))
     else:
         checks.append(("out_of_weights", True, "out-of-weights declared"))
 
-    att = m.get("attestation", {})
     if not att.get("attested_by") or not att.get("attested_at"):
         checks.append(("attestation", False, "attestation.attested_by/at required"))
     else:
@@ -82,17 +99,18 @@ def check_manifest(manifest_path: Path) -> list[Check]:
         else:
             checks.append((key, True, f"{key}={rid}"))
 
-    # World-scored: every episode binds fictional_fact oracle.
+    # World-scored: every episode binds the mode's oracle (world_fact for U1, fictional_fact for LB).
+    want_kind = "world_fact" if world else "fictional_fact"
     for ep in episodes:
         ref = ep.oracle_ref or {}
-        if ref.get("kind") != "fictional_fact":
-            checks.append(("fictional_oracle", False, f"{ep.episode_id}: oracle_ref.kind must be fictional_fact"))
+        if ref.get("kind") != want_kind:
+            checks.append(("oracle_kind", False, f"{ep.episode_id}: oracle_ref.kind must be {want_kind}"))
             break
     else:
-        checks.append(("fictional_oracle", True, "all episodes bind lab_fictional_corpus oracle (not M0 world-grounded)"))
+        checks.append(("oracle_kind", True, f"all episodes bind {want_kind} oracle"))
 
     try:
-        load_fictional_entry(m["corpus_entry"])
+        (load_world_fact_entry if world else load_fictional_entry)(m["corpus_entry"])
         checks.append(("corpus_load", True, m["corpus_entry"]))
     except ValueError as e:
         checks.append(("corpus_load", False, str(e)))
