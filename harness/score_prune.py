@@ -311,16 +311,27 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
     verdicts.append({**base, "cell": "X2-U1-preflight", "verdict": pf, "note": pf_note,
                      "blocks_present": sorted(blocks_present), "fixture_attestation": att})
 
-    # X2-U1 (the world-grounded CLOSE). Beyond the preflight, a close must (a) carry both
-    # a P and a U block in one fork group and (b) show the honest keep-hot region: C
-    # evicted a record in P and re-needed it (rematerialized) in U — and still win cost at
-    # matched quality (X2-win pass). A P-only world run is a preflight, never a close; a
-    # P+U run where U never re-needs evicted lineage means the corpus was too friendly.
+    # The round-trip proves C *moved* a record; B's U-loss proves the move *mattered*
+    # (codex blocker, thread-7 review). A record C rematerialized in U, on a U episode where
+    # the closed-loop lane B (no recovery) actually fell below A's quality — i.e. B dropped
+    # exactly what C recovered. Without this, B can dominate C (matched quality, cheaper, no
+    # recovery) and C's oracle-gated recovery is not proven necessary.
+    rt_set = set(reneed_round_trip)
+    b_lost_u_on_roundtrip = sorted({
+        rid for k in seq_list if _block(k) == "U" and quality[B].get(k, 0.0) < quality[A].get(k, 0.0)
+        for rid in (snaps[C].get(k, frozenset()) - snaps[B].get(k, frozenset())) if rid in rt_set})
+
+    # X2-U1 (the world-grounded CLOSE). Beyond the preflight, a close must (a) carry both a
+    # P and a U block in one fork group, (b) show C evict a record in P and re-need it in U
+    # (the round-trip), (c) prove that recovery MATTERED — B, lacking recovery, lost on that
+    # U record — and (d) still win cost at matched quality (X2-win pass). A P-only world run
+    # is a preflight, never a close; a P+U run where U never re-needs evicted lineage is too
+    # friendly; a round-trip B didn't need leaves the recovery organ unearned.
     has_PU = {"P", "U"} <= blocks_present
     if backend == "mock" or att is None:
         u1, u1_note = "not_engaged", "no fixture_attestation (mock/authored floor)"
     elif fictional:
-        u1, u1_note = "not_engaged", "synthetic out-of-weights fixture; not world-grounded — load-bearing leg is X2-LB"
+        u1, u1_note = "not_engaged", "synthetic out-of-weights fixture; not world-grounded — the out-of-weights leg is X2-LB"
     elif backend != "mock" and not gate_open:
         u1, u1_note = "confounded", "fixture_gate_result absent or not open"
     elif not world_floor:
@@ -329,12 +340,15 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
         u1, u1_note = "not_engaged", "world preflight only — no P+U blocks; see X2-U1-preflight (not a close)"
     elif not reneed_round_trip:
         u1, u1_note = "not_engaged", "Block U never re-needed evicted lineage (no C prune-in-P / rematerialize-in-U round-trip) — corpus too friendly"
+    elif not b_lost_u_on_roundtrip:
+        u1, u1_note = "not_engaged", "closed_loop_not_priced: B held quality in U without recovery — C's round-trip not proven necessary (B dominated C)"
     elif win != "pass":
         u1, u1_note = "not_engaged", f"cost-at-matched-quality not established (X2-win={win}) — a close needs the cost win to hold"
     else:
-        u1, u1_note = "pass", "world-grounded + P/U blocks + C re-needed evicted lineage in U, at matched quality"
+        u1, u1_note = "pass", "world-grounded + P/U blocks + C recovered in U what B lost, at matched quality"
     verdicts.append({**base, "cell": "X2-U1", "verdict": u1, "note": u1_note,
                      "blocks_present": sorted(blocks_present), "reneed_round_trip": reneed_round_trip,
+                     "b_lost_u_on_roundtrip": b_lost_u_on_roundtrip,
                      "per_block_cost_hot_tokens": per_block_cost, "fixture_attestation": att})
 
     return verdicts

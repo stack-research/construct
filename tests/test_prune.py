@@ -76,12 +76,13 @@ def _syn_gated(*, gate_open, fictional=True, backend="local") -> Path:
     return led.path
 
 
-def _world_pu_ledger(*, with_roundtrip: bool, blocks=("P", "P", "U")) -> Path:
+def _world_pu_ledger(*, with_roundtrip: bool, b_fails_in_u: bool = False, blocks=("P", "P", "U")) -> Path:
     """A cost-consistent NON-mock, WORLD-grounded P/U ledger (source != authored) for the
     thread-7 preflight/close split. Three records: r1 = answer (always hot); rd = distractor
     (pruned in P, stays cold -> the cost saving); rb = backup (pruned in P; rematerialized in
-    U iff with_roundtrip -> the close round-trip). Logged cost rows equal the prune-row replay
-    so attribution is clean and any pass/refusal is real, not manufactured."""
+    U iff with_roundtrip -> the close round-trip). `b_fails_in_u` drops B's quality on the U
+    episode (B could not recover rb) -> proves C's recovery mattered (codex blocker). Logged
+    cost rows equal the prune-row replay so attribution is clean and any verdict is real."""
     led = Ledger(Path(tempfile.mkdtemp()) / "world.x2.jsonl")
     bcfg = lambda b: {"branch_id": b, "memory": "governed", "top_k": 1, "recency_weight": 0.0,
                       "similarity_backend": "lexical_tfidf", "eligibility_threshold": 0.0,
@@ -99,12 +100,14 @@ def _world_pu_ledger(*, with_roundtrip: bool, blocks=("P", "P", "U")) -> Path:
         led.write({"kind": "rematerialize", "branch_id": BRANCH_C, "seq_index": 2, "event_index": 2, "op": "rematerialize", "record_id": "rb"})
         c2 = 10
     cost = {BRANCH_A: {0: 15, 1: 15, 2: 15}, BRANCH_B: {0: 15, 1: 5, 2: 5}, BRANCH_C: {0: 15, 1: 5, 2: c2}}
+    qual = {BRANCH_A: {0: 1.0, 1: 1.0, 2: 1.0}, BRANCH_C: {0: 1.0, 1: 1.0, 2: 1.0},
+            BRANCH_B: {0: 1.0, 1: 1.0, 2: 0.0 if b_fails_in_u else 1.0}}
     for k, rid in {0: "run0", 1: "run1", 2: "run2"}.items():
         for b in (BRANCH_A, BRANCH_B, BRANCH_C):
             led.write({"kind": "hot_store_cost", "run_id": rid, "seq_index": k, "branch_id": b,
                        "hot_tokens": cost[b][k], "rematerialize_steps": 0})
             led.write({"kind": "branch_run", "run_id": rid, "branch_id": b,
-                       "oracle": {"score": 1.0, "source": "retraction_corpus"}})
+                       "oracle": {"score": qual[b][k], "source": "retraction_corpus"}})
     led.write({"kind": "fixture_gate_result", "manifest_hash": "world1", "gate_open": True, "n_checks": 15, "n_passed": 15})
     led.write({"kind": "fixture_attestation", "fixture_id": "world", "fictional": False, "out_of_weights": True})
     led.write({"kind": "x2_run_meta", "seq_id": "world", "probe_run_id": "run2",
@@ -271,16 +274,28 @@ def test_x2_u1_preflight_pass():
 
 
 def test_x2_u1_close_pass():
-    # P+U world run where C evicted rb in P and re-needed (rematerialized) it in U, while
-    # still winning cost at matched quality -> the world-grounded CLOSE passes.
-    v = _cells(_world_pu_ledger(with_roundtrip=True))
+    # P+U world run where C evicted rb in P and re-needed (rematerialized) it in U, B (no
+    # recovery) LOST rb in U, and C still won cost at matched quality -> the CLOSE passes.
+    v = _cells(_world_pu_ledger(with_roundtrip=True, b_fails_in_u=True))
     assert v["X2-win"]["verdict"] == "pass", v["X2-win"]
+    assert v["X2-overprune"]["verdict"] == "pass", v["X2-overprune"]   # B's loss is priced
     assert v["X2-U1-preflight"]["verdict"] == "pass", v["X2-U1-preflight"]
     c = v["X2-U1"]
     assert c["verdict"] == "pass", c
-    assert c["reneed_round_trip"] == ["rb"], c
+    assert c["reneed_round_trip"] == ["rb"] and c["b_lost_u_on_roundtrip"] == ["rb"], c
     assert sorted(c["blocks_present"]) == ["P", "U"], c
-    print(f"ok  X2-U1 close: world + P/U + C re-needed {c['reneed_round_trip']} in U at matched quality -> pass")
+    print(f"ok  X2-U1 close: C recovered in U what B lost ({c['b_lost_u_on_roundtrip']}) at matched quality -> pass")
+
+
+def test_x2_u1_close_needs_b_loss():
+    # codex blocker: P+U world + C round-trip, but B HELD quality in U without recovery and
+    # was cheaper than C -> B dominated C; the recovery organ is not proven necessary, so the
+    # close must NOT fire (closed_loop_not_priced), even though the round-trip happened.
+    c = _cells(_world_pu_ledger(with_roundtrip=True, b_fails_in_u=False))["X2-U1"]
+    assert c["verdict"] == "not_engaged", c
+    assert c["reneed_round_trip"] == ["rb"] and c["b_lost_u_on_roundtrip"] == [], c
+    assert "closed_loop_not_priced" in c["note"], c
+    print("ok  X2-U1 close: C round-trip but B held floor without recovery -> not_engaged (closed_loop_not_priced)")
 
 
 def test_x2_u1_close_needs_roundtrip():
@@ -351,7 +366,8 @@ def main() -> None:
     tests = [test_x2_win, test_x2_overprune, test_quality_erosion_refused, test_cost_replay,
              test_confounded_cost, test_lineage_integrity, test_x2_lb_and_u1_split,
              test_block_labels_and_roundtrip_plumbing, test_u1_stub_fixture_roundtrip,
-             test_x2_u1_preflight_pass, test_x2_u1_close_pass, test_x2_u1_close_needs_roundtrip,
+             test_x2_u1_preflight_pass, test_x2_u1_close_pass, test_x2_u1_close_needs_b_loss,
+             test_x2_u1_close_needs_roundtrip,
              test_gate_enforcement, test_overprune_gate_enforcement, test_wall_ii]
     for t in tests:
         t()
