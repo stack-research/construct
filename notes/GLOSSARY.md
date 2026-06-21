@@ -3,6 +3,69 @@
 This file is a reader aid, not a second spec. When a definition here seems too
 short, treat the linked rubric/spec as the authority.
 
+Some entries use explicit HTML anchors (`<a id="..."></a>`) when GitHub's
+auto-generated heading slugs collide or are awkward — link to those ids from
+README and other prose.
+
+## Plain-language bridges
+
+Reader-facing words in [README.md](../README.md) and their shop terms. When
+README uses plain vocabulary, it links here; the linked entries below carry the
+formal definitions.
+
+### Indexed Notes
+
+<a id="indexed-notes"></a>
+
+Keeping records and letting retrieval decide what enters the prompt — similarity
+and recency over an [append-only store](#append-only-store), without
+[governance](#governance) filtering first. The naive lane is [L1](#l1); colloquially,
+"remember everything you indexed."
+
+### World-Picture
+
+What the agent is allowed to believe and act on — the agent's picture of its
+world, not chat UX memory about the human user. Shaped by [governance](#governance),
+the [offer set](#offer-set), and [out-of-band metadata](#out-of-band-metadata).
+
+### Explicit Memory
+
+Memory that crosses the [offer boundary](#offer-boundary) for *this* answer —
+which records compete to enter the prompt right now. The M-track governs this
+layer synchronously, before generation.
+
+### Implicit Memory
+
+<a id="implicit-memory-substrate"></a>
+
+Memory that shapes the agent between answers: what stays in the [hot store](#hot-store),
+what moves to [cold lineage](#cold-lineage) without erasure, what the agent is
+disposed to remember at all. The X-track tests this layer; see also
+[three-guardrail stack](#three-guardrail-stack).
+
+### Resident
+
+A repo-native agent that lives on a governed store across real sessions (M2).
+Forkable and audited — the lab tests governed memory, not a crowned continuous
+self.
+
+### Heir
+
+The second instance in a session handoff (M1): it inherits
+[ablation](#ablation_run)-filtered memory from the first rather than cold
+re-reading the whole store.
+
+### Earned Trust
+
+Trust backed by consequence — [authority](#authority), lineage, and supersession
+links carried as [out-of-band metadata](#out-of-band-metadata), not as prompt
+text the model can be tricked into overriding.
+
+### Asserted Trust
+
+Trust declared at write time or on an unauthenticated channel — [trust](#trust)
+metadata without earned [authority](#authority). A prior, not a proof.
+
 ## Cell and Lane Names
 
 ### A1
@@ -97,6 +160,8 @@ offer sets did not differ across lanes; the engine, not governance, handled the
 conflict.
 
 ### W1'
+
+<a id="w1-prime"></a>
 
 Rebuilt category-drift governance-win cell using supersession metadata. The
 supersession policy buries the superseded plan before top-k budgeting, freeing
@@ -425,10 +490,10 @@ The prune-to-cold-store cells. **X2-win**: C matches A's quality every episode a
 is cheaper, attribution clean (fork identity + lineage integrity + cost replays
 from rows). **X2-overprune** (loses): B prunes a record it cannot recover and the
 answer falls — the verdict names the record. **X2-quality-erosion** (loses): C
-cheaper but below A's quality floor → the cost win is refused. **X2-LB**: the
+cheaper but below A's quality floor → the cost win is refused. <a id="x2-lb"></a>**X2-LB**: the
 *load-bearing* admission for the cost axis — attested fictional/out-of-weights +
 policy-independent grader + a computed gate pass; a synthetic fixture can pass it.
-**X2-U1**: the un-authored / **world-grounded** close-gate (M0 vocabulary) — a
+<a id="x2-u1"></a>**X2-U1**: the un-authored / **world-grounded** close-gate (M0 vocabulary) — a
 synthetic/fictional fixture is `not_engaged` (load-bearing ≠ world-grounded); it
 engages only on a real external corpus.
 
