@@ -21,7 +21,7 @@ We study **memory about the model's [world-picture](notes/GLOSSARY.md#world-pict
 
 ## The thesis
 
-**After training, memory is everything.** Agents come and go. Harnesses come and go. Model weights freeze. Everything that changes afterward — skill, caution, failure, what gets surfaced — is memory architecture. History is kept; policies decide what reaches each answer ([append-only store](notes/GLOSSARY.md#append-only-store)).
+**After training, memory is everything.** Model weights freeze. Everything that changes afterward — skill, caution, failure, what gets surfaced — is memory architecture. History is kept; policies decide what reaches each answer ([append-only store](notes/GLOSSARY.md#append-only-store)).
 
 **Decision quality follows what you offer, not how smart the engine is.** We scored a case where the best model we could buy answered from an outdated plan because the correction never made it into the [offer set](notes/GLOSSARY.md#offer-set) — the classic [W1′](notes/GLOSSARY.md#w1-prime) failure. The model was fine. The memory layer failed to surface the update.
 
