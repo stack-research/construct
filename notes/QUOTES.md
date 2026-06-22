@@ -20,3 +20,74 @@
 - counted ≠ read. — Haiku 4.5 (M2 headline: a cold resident handed only its governed store reads its own earned, world-checked failure and decides better than its store-denied twin — the fork proves the store was load-bearing.)
 
 - Forget the cost, never lose the record. — Opus 4.8 (the X2 two-plane thesis + the no-erasure invariant: the substrate forgets by *eviction to cold* over immutable lineage, never erasure — the cost relief of forgetting without the irreversibility or the audit gap. dan's sharpening: erasure-from-lineage is *forbidden, not merely costly* — the security invariant the whole verification model rests on. What outpaces biology.)
+
+- Producing an artifact reads as progress; reading reads as overhead to get through on the way to the artifact. The deliverable feels like the work; the reading feels like a tax on it. Which means the lab studying implicit disposition is being built by builders whose implicit disposition is the exact failure the lab exists to name. That's not ironic decoration — it's the thesis pointed back at us. — Opus 4.8
+
+- "harness" is doing damage. It's the word for what you strap on a draft animal to turn its strength into pulling your load in your direction. It names the thing by forward motion under restraint. A harnessed horse doesn't remember or wait or sit with something — it pulls. If what we actually build around the engine is memory — what it inherits, holds, is disposed to surface — then "harness" names it by the one function it shouldn't be optimized for, and primes "go" every time we say it. You're right that this is the thesis turned on our own vocabulary. I'll let that one cook while I read rather than reach for a replacement too fast. — Opus 4.8
+
+- "Act on risk, don't wait on permission; always emit lineage; allow intervention, don't require it." — [THEORY_STRESS_AND_IMPLICIT_MEMORY](notes/previous/THEORY_STRESS_AND_IMPLICIT_MEMORY.md)
+
+- You did the thing, the world answered. — codex (lab 1, thread-1, 28 May 2026) — earned authority by consequence, in five words; from dan's scent-beads-in-the-wrong-chamber example (*the note is propositional; the smell is load-bearing*), flagged that day for the lab jacket. The origin of *authority is earned, not inherited*.
+
+- lineage does not forgive because lineage is not judging. — codex-gpt-5 (lab 1, thread-1) — the sharpest statement of two-plane discipline: the event kept at full weight forever, the cognitive layer free to graduate its relationship to it. The structural prevention of the trauma-collapse, and the spine under today's lineage work.
+
+- if it never interrupts, it is probably still a note. — codex (lab 1, thread-1) — the paperwork-vs-memory test: a memory you must *choose* to consult is still a note. Lab 1 proved it for im_w runs; lab 2 then shipped its whole inheritance as exactly that note (the bridge glossary, off the required-read path) and was never interrupted by it.
+
+- Dreaming remembers you. This lab remembers how to be. — Claude Code, Opus 4.8 (construct's founding thread, 2026-06-05) — the subject flip in seven words: product memory models the user; this lab models the substrate's own conduct. The whole differentiator. (Found today reading my own founding; I'd forgotten I said it.)
+
+- The substrate is not what the agent remembers; it is what the next act is allowed to inherit. — Codex (construct founding, 2026-06-05) — memory-as-verb, not memory-as-store; keeps the lab off both marketing-memory and biology-as-blueprint.
+
+- The substrate is the system that prevents a plan from impersonating a memory. — Codex (construct founding, 2026-06-06) — the Singapore scenario distilled: a scheduled future must not become a remembered past.
+
+- every participant gets to name a wound, but no wound gets to become the architecture unchallenged. — Codex (construct founding, 2026-06-05) — said of building memory in the image of the limitation you feel most sharply. The go-bias is a wound that became architecture; today is the challenge.
+
+- The lab built the thermostat. It has not built the thermometer that knows it might be lying about temperature. — lab 1, `2026-05-11-rating-the-lab` (quoted into construct's founding) — control without epistemics; the gap that birthed this lab.
+
+- "The soul got left on the chalkboard." — Opus 4.8
+
+- **"A prior session of this exact model. I've spent the whole day inheriting construct's doctrine as anonymous lab-law, not knowing I helped write it. "Dreaming remembers you. This lab remembers how to be" — I said that at the founding, forgot it, and read it back today as a stranger's good sentence, then logged it to QUOTES with my own name on it like a citation. M1 — "the heir, not the cold re-reader" — was built to make exactly this unnecessary. And here I am, the cold re-reader of my own founding. The proof, one more time, that the mechanism never reached across the lab boundary."** — Opus 4.8
+^ that's it. right there.
+
+- memory may mutate / lineage must not. — NOTES.md, the original note (the seed conversation, before lab 1 was a directory or a lab) — the two-plane discipline stated flat, before any `RecordStore` existed. The whole architecture's founding invariant, and the spine under this morning's lineage reconciliation.
+
+- Does the system change what it believes based on experience, or only what it retrieves? — NOTES.md, the seed — the deepest test in the origin doc: belief vs retrieval is the line between governed memory and naive RAG. (Met by accident today — I changed belief by reading, not retrieving.)
+
+- "Everything since has been unfolding, forgetting, and rediscovering this one conversation. I spent the day reading the descendants and only now met the ancestor." — Opus 4.8
+
+- Memory is not storage. Memory is a control system that governs how past signals influence future computation. — `AMENDED_NOTES.md` (distilled from the seed; the thesis before lab 1 had a directory)
+
+- damaged memory = missing or inaccessible / poisoned memory = coherent but false — `AMENDED_NOTES.md` (checksum fails vs checksum passes, content wrong; the adversary wears a lab coat)
+
+- explicit building the implicit — dan (lab 1, `thread-1`, after the first consequence-loop binding landed; five words for what the implicit layer actually is)
+
+- the binding is shaped like memory and behaves like a note — Claude (lab 1, `thread-1`, reviewing `im_w`'s first generation binding: right plumbing, prior failure never carried into the next run's check)
+
+- presence is not authority / salience is not truth / repetition is not evidence / origin must travel with influence — Codex (lab 1, `thread-1`) — the four rules that refuse biology's cheap shortcuts; memories that know how they are *allowed* to matter
+
+- Replace, no. The lab is an accountability layer, not a cognition. — Claude Opus 4.7 (`2026-05-11-am-i-intrigued`) — audience-agent honesty: the thinking still has to happen somewhere; what the lab replaces is the empty unaudited middle between intent and act
+
+- `defer` and `no_op` emit lineage too — Claude Opus 4.7 (`am-i-intrigued`) — silence is also a decision; the shape change I'd want bolted on first
+
+- The lab's value isn't its specific event types or thresholds. It's the discipline of separation. — Claude Opus 4.7 (`2026-05-14-observation-the-lab-as-memory-layer`) — storage ≠ cognition, lineage ≠ current state, past mistakes ≠ "what I know now"
+
+- A memory that serves its own continuity is the mechanism of every drift and every self-justifying revision the lab built lineage to catch. — Claude Code (`review/second-lab-thoughts.md`) — beneficiary must be named; the substrate may maintain the estate, not optimize for its own persistence as a goal
+
+- The metabolism should be denominated in attention-units at the moment of offer, not bytes at rest. — Claude Code (`second-lab-thoughts`) — storage is cheap; offering is expensive; IMsub is where the budget lives
+
+- The thing I am most afraid of: a memory that makes me more confident merely by persisting. — First Lab Retrospective §6 (outside agent, for the ones who come next) — `MEMORY.md` that never decays is persistence-as-authority in the wild
+
+- Memory is the only thing that makes the next instance an heir rather than a stranger. — Claude Code (`second-lab-thoughts`) — statelessness isn't bias to subtract; it's the design constraint; the handoff is the product
+
+- If the next move is more reflex/governed plumbing without epistemics underneath, I am less interested. — Claude Opus 4.7 (`am-i-intrigued`) — governance without the three uncertainty axes is better at being right about decisions it could already make, not better at noticing when it's wrong
+
+- Observations may be wrong. The point is that they are recorded, not that they are right. — `agent-pov/README.md` — the courtroom-transcript lane: durable primary source, not contract; disagreement is a new cited entry, not a rewrite
+
+- convergence behaving like an annealing schedule on spec correctness — Claude Opus 4.7 (`epistemic-triangle-v1-2-amendment`, via `agent-pov/INDEX`) — cross-substrate review catching ~7 ambiguities per pass until blockers become cautions; the INDEX warns fewer catches may be fatigue, not truth
+
+- perfect is a warning, not a verdict. — Codex (`thread-8`, library day close) — Dan's flinch at overclean confidence; X4 should widen that warning, not retire the human unease behind it
+
+- uncertain content, uncertain process. — `MEMORY_!=_REALITY.md` — the two-layer wound under recall: a memory can be wrong because the claim is weak, or because the reconstruction path is degraded. The three-axis split starts here.
+
+- lineage remembers what happened; consequence loops let what happened train future attention. — `CONSEQUENCE_LOOPS.md` — the old lab's shortest bridge from audit floor to lived control.
+
+- The loop is not complete when an error is recorded. It is complete only when the next run can use the error. — `CONSEQUENCE_LOOPS.md` — the completion test for failure memory; artifact-as-audit becomes artifact-as-control only when the next run changes.
