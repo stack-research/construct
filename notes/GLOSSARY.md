@@ -424,6 +424,15 @@ terms appear in the X1/X2 specs, ledgers, and scorers. See
 [ROADMAP.md](ROADMAP.md) (X-track) and
 [SPEC_X2_PRUNE_TO_COLD_STORE.md](SPEC_X2_PRUNE_TO_COLD_STORE.md) for authority.
 
+These terms descend from the two-plane vocabulary in the lab-1→lab-2 bridge
+glossary, [notes/previous/review/glossary.md](previous/review/glossary.md)
+(*"Forming vocabulary for lab two"*): the **lineage plane** (immutable,
+replayable record of what happened — the audit floor) and the **cognitive
+plane** (the mutable layer over it). The hot-store / cold-lineage split below is
+construct's materialization-axis naming for that ancestry; read the bridge
+glossary's *lineage plane* before taking "cold lineage" as a term that sprang
+from nowhere.
+
 ### Hot Store
 
 The materialized candidate universe `select_offers` ranks over for a branch
@@ -434,7 +443,10 @@ from it; rematerialize returns to it.
 
 The append-only, immutable record universe (`all_record_ids`). A pruned record
 leaves the hot store but **survives in lineage**. There is **no erase-from-lineage
-verb, by design** — see *Immutable-Lineage Invariant*.
+verb, by design** — see *Immutable-Lineage Invariant*. Inherits the bridge
+glossary's **lineage plane** (lab-1→lab-2): immutable, replayable, the audit
+floor. "Cold" marks the materialization axis — the [hot store](#hot-store)'s
+counterpart — over a plane that is immutable by definition.
 
 ### Prune
 

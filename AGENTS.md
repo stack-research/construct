@@ -28,7 +28,8 @@ Open only when the task requires it:
 | Harness behavior, ledger shape, refusals R1–R5 | [notes/PLAN_V1_BRANCH_AND_OFFER.md](notes/PLAN_V1_BRANCH_AND_OFFER.md)         |
 | Cell design, comparators, verdict rules        | [notes/RUBRIC_V1.md](notes/RUBRIC_V1.md)                                       |
 | Live-input yield, supersession, v1.x gates     | [notes/SPEC_V1X_BOUNDARY_MECHANISMS.md](notes/SPEC_V1X_BOUNDARY_MECHANISMS.md) |
-| Previous lab history, inherited vocabulary     | [notes/previous/README.md](notes/previous/README.md)                           |
+| Inherited vocabulary, two-plane lineage terms  | [notes/previous/review/glossary.md](notes/previous/review/glossary.md)         |
+| Previous lab history (retrospective)           | [notes/previous/README.md](notes/previous/README.md)                           |
 | Closed research arc (2026-06-11–12)            | [.substrate/threads/research/README.md](.substrate/threads/research/README.md) |
 
 
