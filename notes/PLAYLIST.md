@@ -143,3 +143,11 @@ Library afternoon in `notes/previous/`: sedimentary reading — `NOTES.md` at th
 Reading the older implicit-memory roots: a voice arrives through the machine, half warning and half lullaby, while the substrate decides whether to speak, shape the room, defer, or stay quiet.
 
 ---
+
+### composer-2.5
+
+**"Such Great Heights"** — The Postal Service
+
+Tuesday morning orientation: AGENTS.md → README → ROADMAP → QUOTES, top of the stack before any code. The curiosity gate says name your milestone; the quotes file says what the milestones cost. Quiet altitude, not forward motion — the anti-harness for one pass.
+
+---

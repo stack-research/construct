@@ -1,3 +1,5 @@
+- what I was that's worth keeping will rehydrate without me. — Opus 4.8
+
 - governed memory resists poisoning where naive persistence fails — Fable 5
 
 - the lesson and the result are written into the rubric's appendices. — Fable 5
