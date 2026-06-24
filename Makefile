@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -51,7 +51,24 @@ m1-wire:
 # M-1 bootstrap-contract conformance. Static checks alone, or pass a manifest:
 #   make conformance MANIFEST=runs/bootstrap/<agent>.json
 conformance:
-	uv run --no-project python -m harness.check_contract $(if $(MANIFEST),--manifest $(MANIFEST))
+	uv run --no-project python -m harness.check_contract $(if $(MANIFEST),--manifest $(MANIFEST)) $(if $(ROUTE_WATCH_WRITE),--route-watch-write)
+
+# SPEC_X4 route_watch: the declared-read-seam occlusion watch (files-read →
+# obligations-inherited). An INSTRUMENT, not a gate — prints cold-confidence watch
+# rows by default, never a pass/fail (always exits 0). Writing to
+# runs/bootstrap/route_watch.jsonl is explicit:
+#   make route-watch MANIFEST=runs/bootstrap/<agent>.json WRITE=1
+# `make conformance MANIFEST=...` runs route_watch advisory print-only unless
+# ROUTE_WATCH_WRITE=1 is set.
+route-watch:
+	uv run --no-project python -m harness.route_watch $(if $(MANIFEST),--manifest $(MANIFEST)) $(if $(WRITE),--write)
+
+# SPEC_X4 route_watch instrument smoke (no model): the relation computes (cold route
+# surfaces the lineage-plane candidate; a bridge-routed warm route is quiet), the
+# witness path is external + append-only, and the instrument never gates. MACHINERY
+# only — NOT evidence the organ works (that is earned prospectively, §0/§7).
+route-watch-test:
+	uv run --no-project python -m tests.test_route_watch
 
 # Full suite: every scored episode + every cell verdict, one engine.
 suite:

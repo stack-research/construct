@@ -12,6 +12,7 @@ Two halves, matching the ROADMAP M-1 oracle:
 Usage:
   uv run --no-project python -m harness.check_contract                     # static only
   uv run --no-project python -m harness.check_contract --manifest FILE     # + behavioral
+  uv run --no-project python -m harness.check_contract --manifest FILE --route-watch-write
   uv run --no-project python -m harness.check_contract --show-truth        # debug aid*
 
   *Consulting --show-truth (or episodes/probes/CALIBRATION.md) before answering
@@ -273,6 +274,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--manifest", type=Path, help="bootstrap manifest JSON to verify")
     ap.add_argument("--show-truth", action="store_true",
                     help="print ground truth (pre-answer use => method: harness_assisted)")
+    ap.add_argument("--route-watch-write", action="store_true",
+                    help="append X4 route_watch rows; default is advisory print-only")
     args = ap.parse_args(argv)
 
     if args.show_truth:
@@ -309,6 +312,32 @@ def main(argv: list[str] | None = None) -> int:
             "failed": failed,
             "passed": passed,
         })
+
+        # X4 route_watch sidecar (SPEC_X4 §3): one seam over — files-read →
+        # obligations-inherited. An INSTRUMENT, never a gate: it can change
+        # neither `passed` nor this return code. Runs AFTER the conformance
+        # verdict is final; any fault degrades to a notice. Historical reruns are
+        # print-only by default so they cannot masquerade as prospective catches.
+        # (cursor's constraint: no new fail-bit on check_contract.py — held here
+        # by construction, not by promise.)
+        try:
+            from . import route_watch
+            watch = route_watch.observe(
+                manifest.get("read_order", []),
+                agent=manifest.get("agent"),
+                write=args.route_watch_write,
+            )
+            if watch:
+                write_note = (
+                    "appended to runs/bootstrap/route_watch.jsonl"
+                    if args.route_watch_write else
+                    "computed only; no sidecar append (use --route-watch-write for a prospective row)"
+                )
+                print(f"\nroute_watch (X4 sidecar, advisory — NOT a conformance result): "
+                      f"{len(watch)} cold-confidence candidate(s); top {watch[0]['candidate']!r} "
+                      f"[{watch[0]['cold_confidence']:.2f}]; {write_note}.")
+        except Exception as e:  # an instrument fault must never fail conformance
+            print(f"\nroute_watch (X4 sidecar): skipped — {e}")
     return 0 if passed else 1
 
 
