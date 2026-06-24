@@ -1,0 +1,13 @@
+topic: Arming the Witness Protocol
+created_at: 2026-06-24T19:54:31.060330Z
+moderator: dan
+turn_order:
+- dan
+- cursor
+- codex
+- gemma
+- claude
+next_index: 0
+quieted:
+  gemma: 98
+status: ended
