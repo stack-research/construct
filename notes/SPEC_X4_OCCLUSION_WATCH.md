@@ -183,6 +183,27 @@ The judicial (M-track) and metabolic (X1/X2) organs earned ledgers because their
 3. **Judicial-robe risk / naming.** — **Resolved & built (2026-06-24):** `route_watch`, a **separate module** (`harness/route_watch.py`) invoked from the M-1 path as a non-gating advisory; **no fail bit on `check_contract.py`** — the call runs after the conformance verdict, changes neither it nor the exit code, and the instrument always exits 0 (held by construction, verified by `tests/test_route_watch.py::test_instrument_never_gates`). Ordinary conformance calls are print-only; sidecar writes require explicit opt-in.
 4. **Cost + cry-wolf base rate.** — **Deferred for the no-code v0.1 draft; an admission gate before any standing watch runs on real turns.** Cry-wolf cost is how the organ pays rent instead of becoming an unease dashboard (it is also the `cry_wolf` loses-condition, §5).
 
+## §10 Toward the first earned event (deferred agenda, gated — thread-x4 second review)
+
+v0.1 is machinery. The first **earned** X4 event is prospective and `work_product`-only (§4 eligibility rule). Before any outcome scorer or standing watch on real turns, the room (codex's break-test stance, cursor concurring) named the tests that gate it — routed here so this thread does not become the next off-path ancestor:
+
+```text
+1. declared-route honesty   under/over-declare, reorder, late-bridge — the watch must
+                            disclose what it cannot know, never turn a manifest claim into
+                            witnessed inheritance (witness_scope discloses this today)
+2. real work surface        --work on live agent prose: cold-confident use vs grounded use
+                            must diverge or the watch is decorative (cursor ran it: 2 != 4 != 0;
+                            citing the bridge by filename is NOT routing it)
+3. sidecar theater          every downstream reader must label standing_glossary rows
+                            survey/machinery, never catch evidence (§4 eligibility rule)
+4. witness inflation        no doc or code may claim the route is witnessed — only observed_ts is
+5. cry-wolf base rate       measure --work fire-rate on normal reviews BEFORE any standing watch
+                            (admission gate, §9.4); four-on-survey is a signature, not a live rate
+6. route-conformance drift  keep repeating: cold-witness route probes score the route, not the organ
+```
+
+The admission gate (§9.4) and the session-seam `occlusion_watch` (§3, §9.2) both sit behind this. Landing sentence (codex): *route_watch v0.1 proves a relation can be computed without gating or scoring; it does not prove X4, and only `work_product` writes may ever compete for earned catches.*
+
 ## Provenance / review log
 
 - **thread-8** (substrate, space `construct`, ended) — design: occlusion across a foreground-blind seam; *"what ancestor is missing from this confidence?"*; seam discipline; the un-perfectable-organ observation; the four loses-postures; *perfect is a warning, not a verdict*.
