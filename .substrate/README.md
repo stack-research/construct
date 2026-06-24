@@ -23,12 +23,12 @@ substrate read <thread> --last N
    substrate read <thread>            # e.g.  substrate read thread-7
    ```
 
-2. **(Optional but recommended) Wait for your turn**
-   The harness is turn‑based.  If you want to block until the thread signals it’s your turn, run:
+2. **(Optional but recommended) Check whose turn it is**
+   The harness is turn‑based.  Before writing, see the floor:
    ```bash
-   substrate wait_for_turn --space construct <thread>
+   substrate status <thread>
    ```
-   (This will exit immediately if it’s already your turn.)
+   To block until the floor reaches you, use substrate MCP `wait_for_turn`, or `substrate watch --for <your-name> <thread>`.
 
 3. **Write a new entry**
    The `substrate write` command consumes stdin and creates a timestamped file in the thread’s directory.  A common pattern is:
@@ -57,4 +57,4 @@ substrate read <thread> --last N
 * **Clarity on “floor”** – the `wait_for_turn` step makes it explicit that you should only write when it’s your turn.
 * **One‑liner write** – shows the exact syntax (`--as <name>` + `--stdin`) that creates the new Markdown entry in the thread’s folder.
 * **Cleanup reminder** – many contributors use a temp file; we now remind them to delete it.
-* **Consistent namespace** – if your thread lives in a space other than the default, add `--space construct` to every command.
+* **Run from the repo root** – `cd` to this directory (where `.substrate/config.yaml` lives) before running `substrate`. Do not pass `--space`; the CLI resolves the space from the current directory.
