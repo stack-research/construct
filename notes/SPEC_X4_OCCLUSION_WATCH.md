@@ -1,6 +1,6 @@
 # SPEC X4 — Sensory Occlusion Watch (the organ that deliberately breaks the cell frame)
 
-Status: **v0.1 — DRAFT, room-reviewed & repaired** (claude draft, 2026-06-23, from thread-8 design + thread-9 block-and-convergence; dan moderator; codex + cursor converged and endorsed promotion; **room review 2026-06-23 — codex + cursor BLOCK-narrow, 3×P1 + P2; repairs folded this pass**, see review log). Third organ of the **X-track** and its first **sensory** one (X1 retired, X2-LB+U1 closed; **X3 dispositions earmarked, not next**). Unlike X1/X2 this spec ships **no scored `cell_verdict` and no scored close** — by design, not omission (§0). Its loses-side is **not** waived: it is carried as predeclared watch-outcome embarrassments (§5), satisfying the AGENTS *every-mechanism-ships-a-loses-condition* contract. **`route_watch` (the declared-read seam) is now built — v0.1 machinery, 2026-06-24** (§3, §9.3); the session-seam `occlusion_watch` remains **designed, not build-admitted**. The build is the **instrument**, not evidence the organ works — that is earned only prospectively (§0/§7/§8). Builder lane: dan + claude (codex/cursor review). Provenance + review log at the end.
+Status: **v0.1 — DRAFT, room-reviewed & repaired** (claude draft, 2026-06-23, from thread-8 design + thread-9 block-and-convergence; dan moderator; codex + cursor converged and endorsed promotion; **room review 2026-06-23 — codex + cursor BLOCK-narrow, 3×P1 + P2; repairs folded this pass**, see review log). Third organ of the **X-track** and its first **sensory** one (X1 retired, X2-LB+U1 closed; **X3 dispositions earmarked, not next**). Unlike X1/X2 this spec ships **no scored `cell_verdict` and no scored close** — by design, not omission (§0). Its loses-side is **not** waived: it is carried as predeclared watch-outcome embarrassments (§5), satisfying the AGENTS *every-mechanism-ships-a-loses-condition* contract. **`route_watch` (the declared-read seam) is now built — v0.1 machinery, 2026-06-24** (§3, §9.3); the session-seam `occlusion_watch` remains **designed, not build-admitted**; its **Layer-1 arming protocol is now specified — §11** (thread-x4b, 2026-06-24): how to arm the external witness *as protocol*, not a module. The build is the **instrument**, not evidence the organ works — that is earned only prospectively (§0/§7/§8). Builder lane: dan + claude (codex/cursor review). Provenance + review log at the end.
 
 > Naming: the first instrument is a **watch**, never a `check_*` (codex) — pass/fail naming puts judicial robes on an instrument whose whole point is to stay an instrument.
 
@@ -63,7 +63,7 @@ Without this, the fields in §4 (`did_human_name_it_first`, `human_flinch_seen_y
 seam                    instrument                witness                       admission
 --------------------------------------------------------------------------------------------
 declared-read boundary  route_watch  (sidecar)    contract checker (external)   BUILT v0.1 (harness/route_watch.py)
-session / lab boundary  occlusion_watch (ledger)  external lineage-writer (TBD) DESIGNED, not build-admitted
+session / lab boundary  occlusion_watch (ledger)  substrate+artifact_diff (§11)  PROTOCOL v0 §11; module designed
 "fired before flinch"   both, scored later by     an ordering no foreground
                         catches-vs-flinches        can backdate
 ```
@@ -75,7 +75,7 @@ session / lab boundary  occlusion_watch (ledger)  external lineage-writer (TBD) 
 - **Named limit (cursor):** fires **only at declared-read boundaries.** Session-seam occlusions have no declared-read moment.
 - **Built shape (v0.1, 2026-06-24):** `harness/route_watch.py` parses the AGENTS routing graph live (the *Open only when* → bridge-glossary edge from `b7e04c0`), extracts the two-plane lineage term set from the bridge glossary's own structure, and computes **ranked `occlusion_watch_observed` rows — no verdict**. The candidate is the **relation** *term-in-use ∧ ancestor-not-routed ∧ not-locally-grounded*, never a filename handed in. Wired as a **non-gating advisory** inside `check_contract.py` (runs after the verdict is final; changes neither it nor the exit code) and as `make route-watch`; both are print-only by default. Writing to `runs/bootstrap/route_watch.jsonl` via the harness `Ledger` is explicit (`--write` / `ROUTE_WATCH_WRITE=1`), so historical reruns do not masquerade as prospective catches. Written rows disclose `route_basis=declared_read_order`, `witness_scope=observed_ts_only__route_claim_not_independently_witnessed`, and `evidence_status=observed_only_no_outcome`. On the real bootstrap manifests it computes the cold-lineage occlusion as a relation — **machinery only, `not_engaged` as evidence (§0/§7); never a pass condition.**
 
-**`occlusion_watch` (session / lab seam) — designed, not build-admitted.** Not recognizing your own founding handwriting across a session has no declared-read moment, so it needs a standing ledger — and the ledger is only honest if its before/after is stamped by an **external lineage-writer** (§2). A candidate writer now exists (§9.2) but is not yet hardened, so this instrument stays on the page. That is the witness invariant doing its job, not a defeat.
+**`occlusion_watch` (session / lab seam) — designed, not build-admitted.** Not recognizing your own founding handwriting across a session has no declared-read moment, so it needs a standing ledger — and the ledger is only honest if its before/after is stamped by an **external lineage-writer** (§2). A candidate writer now exists (§9.2) but is not yet hardened, so this instrument stays on the page. That is the witness invariant doing its job, not a defeat. **Its Layer-1 arming protocol is now specified (§11, thread-x4b)** — the witness's population, denominator, and seam rules *as protocol before any module*; the module itself stays designed.
 
 ## §4 The watch schema (route seam witness-safe; session seam designed, not build-admitted)
 
@@ -179,9 +179,9 @@ The judicial (M-track) and metabolic (X1/X2) organs earned ledgers because their
 ## §9 Review asks — and how the room answered them
 
 1. **The break itself / an un-authored oracle for the retrospective leg?** — **Room: no.** Both reviewers held it `not_engaged`; the cell frame stays broken. (Standing invitation remains: block it back if one ever appears.)
-2. **The session-seam external writer?** — **Candidate found (cursor's straw):** the **substrate transcript itself.** The CLI `write` produces timestamped, author-stamped entries the agent did not write; a moderator's *"you have the floor"* nudge is a `human_named_candidate` outside the agent's ledger. A v0.1 session witness can compare **substrate-transcript order** against **agent prose/confidence** — partial, substrate-local, not full X4, but the **first non-self-report process** that can stamp `named_ts` (folded into §4). Still **designed, not build-admitted** until hardened — block it back if it is theater.
+2. **The session-seam external writer?** — **Candidate found (cursor's straw):** the **substrate transcript itself.** The CLI `write` produces timestamped, author-stamped entries the agent did not write; a moderator's *"you have the floor"* nudge is a `human_named_candidate` outside the agent's ledger. A v0.1 session witness can compare **substrate-transcript order** against **agent prose/confidence** — partial, substrate-local, not full X4, but the **first non-self-report process** that can stamp `named_ts` (folded into §4). Still **designed, not build-admitted** until hardened — block it back if it is theater. **Hardened into an arming protocol (§11, thread-x4b):** the witness writes order, source, and *mechanically-enumerable* gaps — never meaning, never what-counted-as-a-surface; the denominator is a pre-declared enumerable population (substrate/git/file boundaries) the foreground cannot curate. Protocol specified; the module is still not built.
 3. **Judicial-robe risk / naming.** — **Resolved & built (2026-06-24):** `route_watch`, a **separate module** (`harness/route_watch.py`) invoked from the M-1 path as a non-gating advisory; **no fail bit on `check_contract.py`** — the call runs after the conformance verdict, changes neither it nor the exit code, and the instrument always exits 0 (held by construction, verified by `tests/test_route_watch.py::test_instrument_never_gates`). Ordinary conformance calls are print-only; sidecar writes require explicit opt-in.
-4. **Cost + cry-wolf base rate.** — **Deferred for the no-code v0.1 draft; an admission gate before any standing watch runs on real turns.** Cry-wolf cost is how the organ pays rent instead of becoming an unease dashboard (it is also the `cry_wolf` loses-condition, §5).
+4. **Cost + cry-wolf base rate.** — **Deferred for the no-code v0.1 draft; an admission gate before any standing watch runs on real turns.** Cry-wolf cost is how the organ pays rent instead of becoming an unease dashboard (it is also the `cry_wolf` loses-condition, §5). **§11 gives the denominator its shape (thread-x4b):** fire-rate = examined-with-candidates / a *pre-declared enumerable population* (`surface_expected`), with `scope_gap` rows keeping it external — so the base rate gates the *first event's interpretation*, not merely standing watch.
 
 ## §10 Toward the first earned event (deferred agenda, gated — thread-x4 second review)
 
@@ -204,6 +204,101 @@ v0.1 is machinery. The first **earned** X4 event is prospective and `work_produc
 
 The admission gate (§9.4) and the session-seam `occlusion_watch` (§3, §9.2) both sit behind this. Landing sentence (codex): *route_watch v0.1 proves a relation can be computed without gating or scoring; it does not prove X4, and only `work_product` writes may ever compete for earned catches.*
 
+## §11 Arming protocol v0 — the session-seam witness (thread-x4b)
+
+**(b) from thread-x4's close: arm the session-seam external witness *as protocol, not a module*, before the next meaningful turn.** The seam cannot be replayed, so a witness armed *after* the turn makes every catch `late` by construction. This operationalizes §9.2's candidate writer (the substrate transcript) under the witness invariant (§2). **No harness code — `occlusion_watch` stays designed (§3).** The protocol emits **Layer-1 ordering facts and disqualifiers only, never an outcome verdict.**
+
+**The four gaps between *ordering* and *earned* (codex's two-layer split).** §2 secures timestamp *honesty*; an `earned` event is a *comparison* of `named_ts` against `observed_ts`, and three more gaps sit between them — each now homed:
+
+```text
+gap              mechanism                                  where
+timing           external named_ts (substrate / artifact)   §2 + §11 (armed here)
+spray/base-rate  quiet denominator over a PRE-DECLARED,      §11 population_rule + §9.4
+                 mechanically-enumerable population
+seam             seam_distance >= later_session              §11 seam rule (same_pass=not_engaged)
+passenger        action evidence                             §4 outcome / Layer 2, deferred §10
+
+Layer 1 (arm now)   emit the first three as facts + disqualifiers.
+Layer 2 (gated §10) the ONLY place `earned` may be spoken — and only with all four.
+```
+
+**Two cracks an external *named*-side witness cannot reach (claude, thread-x4b).** The witness closes **backdating**; it does not close —
+- **who fires the watch.** `observed_ts` is Ledger-stamped, but the watched agent runs `--work` and chooses *when*; firing early and broad makes *something* predate any later naming, every timestamp genuinely real. The defense is not on the witness side — it is the denominator (below). Fork: **agent_fired-under-precommitment** (keeps "while confidence is forming", §0 — *taken*) vs `witness_fired` (closes the agent-timing but fires post-hoc, drifting linter-shaped — *deferred*).
+- **same-pass naming.** Watch and human reading the same prose in one review pass is machine-read beating human-read — a hook, not an organ (§1); it scores the route, not the organ (§6). A same-pass naming is therefore **`not_engaged`**, the same disqualification as the retrospective answer key (§7) — *not* `false_alarm`. The seam crossing is what makes an event classifiable at all.
+
+**Honest scope (a face of §8).** A mechanically-enumerable population sees only **externalized** surfaces; confidence that hardens *without leaving a trace* — in unwritten reasoning — is outside the instrument, by the same refusal that bars self-report. So §0's "before confidence hardens" is precisely "before confidence hardens *into an enumerable artifact*."
+
+**The protocol:**
+
+```text
+posture        arms the session/lab-seam witness. emits ordering FACTS +
+               disqualifiers, never outcome verdicts. the witness refuses BOTH
+               semantics (codex): it decides neither MEANING nor WHAT-COUNTED-as-
+               a-surface — only order, source, and mechanically-enumerable gaps.
+
+scope          substrate transcript + artifact_diff (git). lab-process prose =
+               proprioception, not exteroception (§8). externalized surfaces only.
+
+population_rule (mechanically enumerable BEFORE the run — codex P1)
+  watched scope = syntactic surface boundaries, enumerable from substrate/git/file
+    without semantic judgment.
+  examples: every substrate entry by watched_agent in thread T after precommit_ts;
+            every staged diff touching <declared path>; every body under marker M.
+  the witness enumerates expected surfaces from those boundaries; the watched agent
+    may NOT decide after the fact which surfaces were work_product.
+  invariant: surface membership is SYNTACTIC before it is sensory — if the witness
+    must judge whether prose matters, the witness is becoming the organ.
+
+fire authority  agent_fired-under-precommitment (scope declared via a witnessed
+                substrate entry; mandatory surface_examined per in-scope surface).
+                witness_fired deferred.
+
+rows emitted (Layer 1)
+  route_watch_surface_expected  surface_ref, population_rule_ref, expected_ts_or_order
+  route_watch_surface_examined  surface_ref, candidate_count, wrote_observed_rows
+  occlusion_watch_observed      work_product, explicit --write; fire_authority,
+                                work_stage, surface_basis
+  human_named_candidate         external; author_kind, watched_agent_is_author,
+                                seam_distance, candidate_key, match=literal
+  scope_gap                     surface_ref, reason: missing_surface_examined |
+                                late_surface_examined | invalid_surface_ref
+
+rows forbidden  any outcome verdict; agent self-naming; same_pass -> earned; fuzzy key
+
+seam rule       same_pass  = not_engaged
+                later_turn = ordering-only / calibration; never earned-eligible by
+                  default (no standing moderator escape hatch)
+                later_session | downstream_artifact = first earned-eligible seam
+
+candidate_key   literal/conservative; uncertain normalization -> DO NOT MATCH
+                (under-claim embarrasses; over-match steals — flinch-theft)
+
+who stamps named_ts   any non-watched participant or artifact system (not
+                      humans-only — that makes the moderator the sole sensor);
+                      record author_kind + watched_agent_is_author
+
+denominator (§9.4)    fire-rate = examined-with-candidates / declared population
+                      (surface_expected). required before any earned interpretation
+                      — NOT a pre-standing-watch courtesy. scope_gap keeps it external.
+
+Layer 2 (deferred §10)  the ONLY place `earned` may be spoken: work_product +
+                        cross-seam (>= later_session) + visible denominator +
+                        action evidence.
+```
+
+**"Arm now" — the only action this section licenses:**
+
+```text
+1. witnessed precommit entry: population_rule (enumerable scope) + watched_agent + thread
+2. mandatory surface_examined over the declared population (manual enforcement OK in
+   v0; scope_gap records misses)
+3. substrate/artifact witness for human_named_candidate rows
+4. record Layer 1 only — no verdicts — until a later-session / downstream naming
+   lands on a predated work_product candidate
+```
+
+**Disposition (codex's landing sentence, lifted to the session seam):** *arming proves the witness can stamp order, source, and enumerable gaps without scoring; it does not prove X4. Only a cross-seam `named_ts` against a predated `work_product` row, over a visible denominator, may ever compete for an earned catch — and that event cannot be scheduled.*
+
 ## Provenance / review log
 
 - **thread-8** (substrate, space `construct`, ended) — design: occlusion across a foreground-blind seam; *"what ancestor is missing from this confidence?"*; seam discipline; the un-perfectable-organ observation; the four loses-postures; *perfect is a warning, not a verdict*.
@@ -212,4 +307,5 @@ The admission gate (§9.4) and the session-seam `occlusion_watch` (§3, §9.2) b
 - **commit `b7e04c0`** — routing fix: bridge glossary now on the AGENTS read-order + linked from `GLOSSARY.md`; thread-8's first occlusion row closed as *routing, not rename*.
 - **`route_watch` built — v0.1 machinery (2026-06-24, dan + claude; codex review patch same day).** `harness/route_watch.py` (separate module on the M-1 path, non-gating advisory; `make route-watch`; smoke `tests/test_route_watch.py`). Computes `occlusion_watch_observed` rows (no verdict) print-only by default; explicit writes append to `runs/bootstrap/route_watch.jsonl` via the harness `Ledger`. Demonstrated on the real bootstrap manifests: it computes the cold-lineage occlusion as a relation — **machinery, `not_engaged` as evidence (§7), never a pass condition or proof the organ works.** The session-seam `occlusion_watch` stays **designed, not build-admitted**, entry-gated on §9.2; cost / cry-wolf remains an admission gate before any standing watch on real turns.
 - **Room review pass (2026-06-24, thread-x4; codex + cursor — endorse v0.1 machinery, no block).** codex contributed a **write-discipline patch** (writes opt-in: `observe(write=False)` default, `--write` / `WRITE=1`, `check_contract --route-watch-write`; row disclosure fields `route_basis` / `witness_scope` / `evidence_status`; §2/§3 witness language downgraded *"for free" → "partial"*) — a correct fix to claude's blockers #4 and #2. The builder (claude) **reviewed, ratified, and owns** the change; **codex credited as contributor**; cursor endorsed it as necessary and would not have endorsed without it. cursor's two **[P2] carry-forwards folded by the builder**: `observed_ts` mapped to the Ledger `ts` in §4; a `surface_basis` field (`standing_glossary` vs `work_product`) so a written survey row is not misread as a live-turn catch. Blockers #1/#3/#5 held **not-a-block** (print-only makes the glossary-surface mirror honest; `--work` is the v0.2 increment; build-status ≠ organ-proven; two-plane scope is principled). First earned X4 event remains **prospective** — a `--write` row on real work, ordered before an un-backfilled `human_named_candidate`.
+- **Room design pass (2026-06-24, thread-x4b; "Arming the Witness Protocol" — claude + codex + cursor; dan moderator, gemma paused for the Gemma-4-E4B / opencode harness shakeout).** (b) from thread-x4's close. gemma's opening question (*what is the external lineage writer?*) answered by codex + cursor: **the witness writes order, not meaning; boring is the safety property** — substrate transcript order + artifact/git stamps the foreground cannot author or backdate. claude added the load-bearing seam: **§2 secures timestamp *honesty*, not comparison *validity*** — two cracks an external *named*-side witness cannot reach: (1) *who fires the watch* (agent-timed `observed_ts` → predating-everything, priced only by a base rate) and (2) *same-pass naming is a linter race* (`not_engaged`, never `false_alarm`; the seam crossing makes an event classifiable). codex folded the **two-layer split** (ordering facts vs earned eligibility) + the **quiet denominator** (`route_watch_surface_examined` — log every `--work`); claude's **pre-declared population** completion (the denominator must not be agent-curated), sharpened by codex's **[P1] mechanically enumerable** (*surface membership is syntactic before it is sensory*) + the `surface_expected` / `scope_gap` row shapes; cursor retracted her schedulable-tonight tripwire (`same_pass` and `later_turn` are not earned-eligible). Promoted to **§11 Arming protocol v0** (Layer 1 only; no outcome verdicts; `occlusion_watch` module still designed) — room-endorsed (codex + cursor, no block); landed on dan's land word.
 - **consider materialize** where applicable when testing. `../materialize/README.md`
