@@ -85,6 +85,23 @@ def test_observe_default_is_print_only():
     print("ok  observe() default is print-only; writes require write=True / --write")
 
 
+def test_surface_basis_labels_survey_vs_work():
+    # The structured write-discipline label (cursor P2): a default run is a standing-
+    # glossary SURVEY; --work reads a live work_product. Only work_product rows are ever
+    # outcome-eligible (SPEC_X4 §4/§5: survey rows can never be earned|early), so this
+    # label must not regress silently.
+    survey = route_watch.observe(COLD_ROUTE, agent="survey", write=False)
+    assert survey and all(r["surface_basis"] == "standing_glossary" for r in survey), \
+        "default in-use surface is the standing glossary (a survey/mirror)"
+    with tempfile.TemporaryDirectory() as td:
+        work = Path(td) / "turn.md"
+        work.write_text("We inherit cold lineage here without routing the bridge ancestor.\n")
+        rows = route_watch.observe(COLD_ROUTE, agent="live", work_path=work, write=False)
+        assert rows and all(r["surface_basis"] == "work_product" for r in rows), \
+            "--work rows are work_product (the only rows that may ever earn)"
+    print("ok  surface_basis labels survey (standing_glossary) vs live (work_product)")
+
+
 def test_instrument_never_gates():
     # No judicial robes: main() returns 0 regardless of how many candidates it finds,
     # and a no-input invocation is a no-op, not a failure.
@@ -100,6 +117,7 @@ def main() -> None:
     test_route_trigger_resolves_from_contract()
     test_witness_path_is_external_and_appendonly()
     test_observe_default_is_print_only()
+    test_surface_basis_labels_survey_vs_work()
     test_instrument_never_gates()
     print("\nALL ROUTE_WATCH TESTS PASS")
 

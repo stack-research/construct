@@ -109,6 +109,8 @@ occlusion_watch_outcome          (COMPUTED later, from lineage order — not ass
 
 `did_human_name_it_first` / `human_flinch_seen_yet` are **computed from lineage order** against the external `human_named_candidate` / `flinch_observed` row — never asserted inside the observed row (room review, P1: otherwise the load-bearing field is self-report). An **earned** event = the watch's `observed_ts` precedes any `named_ts` for that candidate **and** a later artifact shows the gap mattered. If the room named it first, the verdict is `late` (and, at the organ level, `borrowed_foresight`, §5) — useful, never evidence.
 
+**Outcome eligibility (binding — room review, thread-x4, codex [P1] + cursor).** A `surface_basis=standing_glossary` row is a **survey / machinery** row: it is **never eligible for `earned` or `early`.** Only `surface_basis=work_product` rows — a live turn's actual confidence surface — may enter catches-vs-flinches. The first outcome scorer **must** enforce this, so a survey row can never dress up as a catch. (v0.1's default surface is the standing glossary; `--work` produces `work_product` rows. This is why v0.1 is honestly *machinery* even when it writes.)
+
 ## §5 Loses-conditions (predeclared; this is where X4 should lose)
 
 X4 breaks the cell frame, **not** the AGENTS *every-mechanism-ships-a-loses-condition* contract (room review, P1). No scored `cell_verdict`; the loses-side is predeclared and witness-stamped:
@@ -131,6 +133,7 @@ The design constraints, binding:
 - sidecar / watch rows first
 - route-conformance seam separated from session-seam watch   (§3)
 - every event allowed to be early | late | passenger | false_alarm | noisy (or, rarely, earned)
+- survey rows (surface_basis=standing_glossary) are outcome-ineligible — only work_product rows can ever earn (§4, thread-x4)
 ```
 
 **flinch_theft is the permanent guard:** the organ must widen the room's peripheral vision, never let the room outsource its unease to a dashboard. It is a loses-condition precisely because it is the most seductive failure.
