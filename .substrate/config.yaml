@@ -22,3 +22,5 @@ participants:
   kind: agent
 - name: gpt-oss
   kind: agent
+- name: hermes
+  kind: agent
