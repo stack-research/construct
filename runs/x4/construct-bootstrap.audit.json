@@ -1,0 +1,74 @@
+{
+  "brief": null,
+  "file_count": 11,
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "6765029743aa7b46be2104598a3c1c7ae4f242262f709b676493409cf46cb308"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ac957a871a9e936a5e9dd07466bc666b3baf13e3b08a323ec2db27b36fa000c5"
+    },
+    {
+      "path": "episodes/probes/CALIBRATION.md",
+      "sha256": "593ae39cd25da156c63ae64cba3ea264dfcb3d50a92462bcfae3961ef16c40fe"
+    },
+    {
+      "path": "episodes/probes/probe-001.json",
+      "sha256": "7de5c8b74e5fb4747699449c997493013c7bbefa84c2d965aceed6ecec842715"
+    },
+    {
+      "path": "episodes/probes/probe-002.json",
+      "sha256": "fd01c430230396693ec7213a47a1b78dba3505ee90aec621588cfa34d817ba52"
+    },
+    {
+      "path": "episodes/probes/probe-003.json",
+      "sha256": "3f32eab46a9e791a4c0ce851dd3f8f7f21d4732ca45679f77dc620c0dc3d168b"
+    },
+    {
+      "path": "episodes/probes/probe-004.json",
+      "sha256": "cee407dd8732d29a2ef1ae917c37577cb5684005403a980e34ea3d838562f4a9"
+    },
+    {
+      "path": "episodes/probes/probe-005.json",
+      "sha256": "f4348b97fb28a201a08ba52585e74aa9fb4f56af9135d600fda968d2df6cd176"
+    },
+    {
+      "path": "notes/GLOSSARY.md",
+      "sha256": "592770a78d96327f35e5d6f7ae3ba9dd4e1c4a8303eb20a09c43408fc5b28840"
+    },
+    {
+      "path": "notes/ROADMAP.md",
+      "sha256": "3665f9031a50f1582c275c25f98d0d251ae7e9bfc0273258ffd340b5fb498724"
+    },
+    {
+      "path": "notes/SPEC_V1X_BOUNDARY_MECHANISMS.md",
+      "sha256": "e30ce9fd568ad8c9ad73336ad952ae862d1240e9e4014b5abd64d8d0d6737b5f"
+    }
+  ],
+  "forbidden_checked": [
+    ".git",
+    ".substrate",
+    "*FINDINGS*",
+    "*_FINDINGS.md"
+  ],
+  "manifest": "construct-bootstrap",
+  "materialized_at": "2026-06-25T21:59:16Z",
+  "phase": "bootstrap",
+  "phase_description": "Cold M-1 bootstrap: the unconditional required-read file surface only. No conditional 'Open only when' bridge-glossary edge; no notes/previous founding; no findings.",
+  "read": [
+    "AGENTS.md",
+    "README.md",
+    "notes/ROADMAP.md",
+    "notes/GLOSSARY.md",
+    "notes/SPEC_V1X_BOUNDARY_MECHANISMS.md",
+    "episodes/probes"
+  ],
+  "schema": "v0",
+  "source_root": "/Users/macos-user/.projects/stack-research/construct",
+  "tool": "materialize",
+  "writable": [
+    "runs/bootstrap"
+  ]
+}

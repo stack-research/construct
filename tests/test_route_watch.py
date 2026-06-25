@@ -111,6 +111,115 @@ def test_instrument_never_gates():
     print("ok  instrument exit code is always 0 (never a gate)")
 
 
+def test_audit_route_witnesses_absence():
+    # (a) materialize -> route_watch: when the route comes from a MATERIALIZE_AUDIT.json
+    # (what a cold workspace provably contained), an ABSENT bridge ancestor is witnessed
+    # by CONSTRUCTION, not a self-reported claim. The disclosure must say exactly that —
+    # and must NOT over-claim that reading was witnessed (SPEC_X4 §2, §10 gate 4).
+    with tempfile.TemporaryDirectory() as td:
+        audit = Path(td) / "MATERIALIZE_AUDIT.json"
+        audit.write_text(json.dumps({
+            "brief": "REDTEAM_BRIEF.md",
+            "file_count": 2,
+            # the bridge ancestor (notes/previous/review/glossary.md) is ABSENT by construction
+            "files": [
+                {"path": "AGENTS.md", "sha256": "0" * 64},
+                {"path": "notes/GLOSSARY.md", "sha256": "1" * 64},
+            ],
+        }))
+        rows = route_watch.observe(audit_path=audit, agent="cold-bootstrap", write=False)
+        assert rows, "an audit that omits the bridge ancestor must surface witnessed-cold candidates"
+        top = rows[0]
+        assert top["candidate"] == "Lineage plane", top
+        assert top["route_basis"] == "materialize_audit", top["route_basis"]
+        assert "absence_witnessed_by_materialize_audit" in top["witness_scope"]
+        assert "repo_tree_only_scaffolding_excluded" in top["witness_scope"], \
+            "the route must disclose repo-tree-only / scaffolding-excluded (hermes: no silent amendment)"
+        assert "reads_within_workspace_self_reported" in top["witness_scope"], \
+            "must NOT claim reading was witnessed — materialize witnesses availability, not reading (§10 gate 4)"
+        assert "witnessed by construction" in top["why_now"], \
+            "audit-route prose must say witnessed, not 'declared route' (match the prose to the witness basis)"
+        assert top["evidence_status"] == "observed_only_no_outcome"
+        assert "verdict" not in top, "observed row carries no verdict (computed later vs the external witness, §4)"
+    print(f"ok  audit route witnesses ABSENCE by construction (route_basis=materialize_audit); top {top['candidate']!r}")
+
+
+def test_audit_route_present_ancestor_is_quiet():
+    # If the audit shows the bridge ancestor WAS present, it was reachable —
+    # witnessed-available — so there is no cold-by-construction candidate.
+    with tempfile.TemporaryDirectory() as td:
+        audit = Path(td) / "MATERIALIZE_AUDIT.json"
+        audit.write_text(json.dumps({
+            "files": [
+                {"path": "AGENTS.md", "sha256": "0" * 64},
+                {"path": "notes/GLOSSARY.md", "sha256": "1" * 64},
+                {"path": BRIDGE, "sha256": "2" * 64},
+            ],
+        }))
+        rows = route_watch.observe(audit_path=audit, agent="warm-bootstrap", write=False)
+        assert rows == [], f"an audit with the bridge ancestor present must be quiet, got {[r['candidate'] for r in rows]}"
+    print("ok  audit route with ancestor present -> witnessed-available, no candidates")
+
+
+def test_audit_available_set_parses_paths():
+    # The witnessed route is exactly the audit's file paths — nothing inferred.
+    with tempfile.TemporaryDirectory() as td:
+        audit = Path(td) / "MATERIALIZE_AUDIT.json"
+        audit.write_text(json.dumps({"files": [{"path": "a.py", "sha256": "x"}, {"path": "b.md", "sha256": "y"}]}))
+        assert route_watch.audit_available_set(audit) == {"a.py", "b.md"}
+    print("ok  audit_available_set parses the witnessed path set")
+
+
+def test_audit_route_excludes_materialize_scaffolding():
+    # hermes's catch (thread-x4c): the materialize workspace also holds the instrument's
+    # OWN scaffolding — the audit record and the brief — that live in no normal repo
+    # listing. The witnessed route must be the repo tree ONLY; scaffolding excluded
+    # mechanically AND disclosed, so the denominator cannot be silently amended later.
+    with tempfile.TemporaryDirectory() as td:
+        audit = Path(td) / "MATERIALIZE_AUDIT.json"
+        audit.write_text(json.dumps({
+            "brief": "REDTEAM_BRIEF.md",
+            "file_count": 4,
+            "files": [
+                {"path": "AGENTS.md", "sha256": "0" * 64},
+                {"path": "notes/GLOSSARY.md", "sha256": "1" * 64},
+                {"path": "REDTEAM_BRIEF.md", "sha256": "2" * 64},               # the brief — scaffolding
+                {"path": "MATERIALIZE_AUDIT_PHASE_A.json", "sha256": "3" * 64},  # an audit record — scaffolding
+            ],
+        }))
+        available = route_watch.audit_available_set(audit)
+        assert available == {"AGENTS.md", "notes/GLOSSARY.md"}, available
+        assert "REDTEAM_BRIEF.md" not in available, "the brief is materialize scaffolding, not repo lineage"
+        assert not any("MATERIALIZE_AUDIT" in p for p in available), "audit records are scaffolding, not route"
+        rows = route_watch.observe(audit_path=audit, agent="scaffolding-test", write=False)
+        assert rows and all("repo_tree_only_scaffolding_excluded" in r["witness_scope"] for r in rows), \
+            "the route must disclose scaffolding-excluded (hermes: no silent amendment)"
+    print("ok  audit route excludes materialize scaffolding (repo tree only, disclosed)")
+
+
+def test_source_profile_lab1_epistemic_distinctive_only():
+    # (b) generalization (runs/x4/option3-ceiling.md): the relation transfers to a
+    # second un-curated inherited source — lab-1's epistemic vocab — but DISTINCTIVE
+    # terms only. Common-word concepts are below the mechanical floor and excluded by
+    # design (fail-toward-under-claim; the witness writes structure, not meaning).
+    prof = route_watch.LAB1_EPISTEMIC
+    term_names = {t.name for t in prof.terms}
+    assert term_names and not (term_names & {"belief", "claim", "memory", "evidence", "reality"}), \
+        "common-word epistemic terms must be excluded (they cry-wolf; see option3-ceiling.md)"
+    route = ["AGENTS.md", "README.md"]  # a route WITHOUT the lab-1 vocab source
+    surface = "We weigh confidence_in_provenance_chain on old sources; the system has memory and a claim."
+    rows = route_watch.observe_source(prof, route, surface)
+    fired = {r["candidate"] for r in rows}
+    assert "confidence_in_provenance_chain" in fired, "the distinctive term transfers (the (b) detection prize)"
+    assert "memory" not in fired and "claim" not in fired, \
+        "common words must NOT fire — they are not in the profile (no cry-wolf)"
+    top = rows[0]
+    assert top["ancestor_source"] == "notes/previous/MEMORY_!=_REALITY.md", top["ancestor_source"]
+    assert "distinctive_terms_only" in top["witness_scope"]
+    assert "option3-ceiling.md" in top["witness_scope"], "the ceiling must travel disclosed on the row"
+    print("ok  source profile (lab1-epistemic): distinctive transfers; common words excluded; ceiling disclosed")
+
+
 def main() -> None:
     test_cold_route_surfaces_lineage_plane()
     test_warm_route_is_quiet()
@@ -119,6 +228,11 @@ def main() -> None:
     test_observe_default_is_print_only()
     test_surface_basis_labels_survey_vs_work()
     test_instrument_never_gates()
+    test_audit_route_witnesses_absence()
+    test_audit_route_present_ancestor_is_quiet()
+    test_audit_available_set_parses_paths()
+    test_audit_route_excludes_materialize_scaffolding()
+    test_source_profile_lab1_epistemic_distinctive_only()
     print("\nALL ROUTE_WATCH TESTS PASS")
 
 

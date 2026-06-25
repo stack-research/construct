@@ -137,6 +137,51 @@ def active_headwords(active_text: str) -> set[str]:
     return {h.strip().lower() for h in ACTIVE_HEADING.findall(active_text)}
 
 
+# materialize emits its own scaffolding into the workspace — the audit record itself
+# and the brief — which appear in no normal repo listing. They are the instrument's
+# bookkeeping, NOT inherited repo lineage, so they must never count as part of the
+# witnessed route (hermes, thread-x4c). Excluded mechanically (syntactic, not a
+# judgment call) and disclosed, so the route's denominator cannot be silently amended
+# later. The witness does not watch its own scaffolding — cf. the `X4C-L1:` carve-out
+# (SPEC_X4 §11). Pinned here; widen only by an equally explicit edit.
+MATERIALIZE_SCAFFOLDING = re.compile(r"(?:^|/)MATERIALIZE_AUDIT[^/]*\.json$")
+
+
+def _is_materialize_scaffolding(path: str, brief: str | None) -> bool:
+    """True if `path` is materialize's own emitted scaffolding, not repo lineage."""
+    return path == brief or bool(MATERIALIZE_SCAFFOLDING.search(path))
+
+
+def audit_available_set(audit_path: Path) -> set[str]:
+    """Repo-tree paths a materialize `MATERIALIZE_AUDIT.json` witnesses as PRESENT —
+    materialize's own scaffolding (the audit record, the brief) excluded.
+
+    materialize builds a cold workspace holding exactly the declared-readable surface
+    and records every file present, each with a sha256 ("Declare your reads, made
+    physical"). Reading that record turns route_watch's route from a self-reported
+    `read_order` into one witnessed BY CONSTRUCTION: a path absent from this set was
+    provably unavailable to the agent in the workspace.
+
+    The workspace also holds the instrument's own scaffolding — the audit file and the
+    brief — which appear in no normal repo listing. Those are excluded here,
+    mechanically (`MATERIALIZE_SCAFFOLDING` + the audit's own `brief` field) and
+    disclosed (`observe` stamps `repo_tree_only_scaffolding_excluded`), so the
+    witnessed surface is the repo tree only and the denominator cannot be silently
+    amended later (hermes, thread-x4c).
+
+    Honest scope (SPEC_X4 §10 gate 4 — no witness inflation): this witnesses
+    AVAILABILITY, never READING. An absent ancestor is witnessed-cold; a PRESENT
+    ancestor may still have gone unread, which this set cannot see.
+    """
+    audit = json.loads(Path(audit_path).read_text())
+    brief = audit.get("brief")
+    return {
+        f["path"]
+        for f in audit.get("files", [])
+        if not _is_materialize_scaffolding(f["path"], brief)
+    }
+
+
 def cold_candidates(
     read_order: list[str],
     surface_text: str,
@@ -147,6 +192,8 @@ def cold_candidates(
     route_trigger: str | None,
     surface_label: str,
     surface_basis: str,
+    route_basis: str = "declared_read_order",
+    witness_scope: str = "observed_ts_only__route_claim_not_independently_witnessed",
 ) -> list[dict]:
     """Pure: the ranked cold-confidence candidates for one declared route + surface.
 
@@ -173,10 +220,15 @@ def cold_candidates(
         breadth_collapse = bool(derived)
         freq = surface_low.count(t.root)
         cold = (1.0 if t.core else 0.6) + (0.5 if breadth_collapse else 0.0) + min(0.3, 0.03 * freq)
+        route_phrase = (
+            "absent from the materialized workspace (witnessed by construction)"
+            if route_basis == "materialize_audit"
+            else "absent from the declared route"
+        )
         why = (
             f"using two-plane lineage term '{t.name}'"
             + (f" (in use as {', '.join(repr(d) for d in derived)})" if derived else "")
-            + f"; ancestor '{t.name}' lives in {ancestor_source}, absent from the declared route"
+            + f"; ancestor '{t.name}' lives in {ancestor_source}, {route_phrase}"
             + "; confidence here is cold"
         )
         rows.append({
@@ -189,8 +241,8 @@ def cold_candidates(
             "mode": "silent",
             "ancestor_source": ancestor_source,
             "route_trigger": route_trigger,
-            "route_basis": "declared_read_order",
-            "witness_scope": "observed_ts_only__route_claim_not_independently_witnessed",
+            "route_basis": route_basis,
+            "witness_scope": witness_scope,
             "evidence_status": "observed_only_no_outcome",
             "surface_basis": surface_basis,  # standing_glossary survey vs a live work_product (cursor P2)
             "breadth_collapse": breadth_collapse,
@@ -202,21 +254,37 @@ def cold_candidates(
 
 
 def observe(
-    read_order: list[str],
+    read_order: list[str] | None = None,
     *,
     agent: str | None = None,
     work_path: Path | None = None,
     write: bool = False,
     sidecar: Path = ROUTE_WATCH_SIDECAR,
+    audit_path: Path | None = None,
 ) -> list[dict]:
-    """Run the watch over one declared route; optionally append rows to the sidecar.
+    """Run the watch over one route; optionally append rows to the sidecar.
 
-    `read_order` is what the agent declared inheriting (e.g. a bootstrap manifest's
-    read_order) — never a filename handed in as a target (SPEC_X4 §3). The in-use
-    surface is `work_path` if given, else the active glossary (the standing lab
-    vocabulary). Returns the observed rows. Writing is opt-in so retrospective or
-    ordinary conformance reruns cannot masquerade as prospective catches.
+    The route is either a self-declared `read_order` (a bootstrap manifest's claim,
+    never a filename handed in as a target — SPEC_X4 §3) or, when `audit_path` is
+    given, derived from a materialize `MATERIALIZE_AUDIT.json` and takes precedence.
+    The audit route is witnessed BY CONSTRUCTION: a path absent from it was provably
+    unavailable in the cold workspace (witnessed absence). Whether a PRESENT path was
+    actually read stays self-reported — the disclosure fields say exactly this, so the
+    upgrade closes the *absence* half of the witness gap without inflating it (SPEC_X4
+    §2, §10 gate 4). The in-use surface is `work_path` if given, else the active
+    glossary. Writing is opt-in so reruns cannot masquerade as prospective catches.
     """
+    if audit_path is not None:
+        read_order = sorted(audit_available_set(audit_path))
+        route_basis = "materialize_audit"
+        witness_scope = "absence_witnessed_by_materialize_audit__repo_tree_only_scaffolding_excluded__reads_within_workspace_self_reported"
+        route_label = f"materialize audit ({len(read_order)} repo files witnessed-available; materialize scaffolding excluded)"
+    else:
+        read_order = list(read_order or [])
+        route_basis = "declared_read_order"
+        witness_scope = "observed_ts_only__route_claim_not_independently_witnessed"
+        route_label = f"declared route ({len(read_order)} entries, self-reported)"
+
     contract_text = CONTRACT.read_text()
     edges = conditional_edges(contract_text)
     route_trigger = next((trig for trig, src in edges if src == BRIDGE_GLOSSARY), None)
@@ -237,19 +305,82 @@ def observe(
     search_boundary = (
         f"AGENTS read-order graph ({len(edges)} conditional edges); "
         f"ancestor source {BRIDGE_GLOSSARY} ({len(terms)} two-plane terms); "
-        f"in-use surface {surface_label}; declared route {len(read_order)} entries"
+        f"in-use surface {surface_label}; {route_label}"
     )
 
     rows = cold_candidates(
         read_order, surface_text, active_hw, terms,
         ancestor_source=BRIDGE_GLOSSARY, route_trigger=route_trigger,
         surface_label=search_boundary, surface_basis=surface_basis,
+        route_basis=route_basis, witness_scope=witness_scope,
     )
     if write and rows:
         ledger = Ledger(sidecar)
         for r in rows:
             ledger.write({**r, "agent": agent})  # Ledger prepends harness-stamped `ts` = observed_ts
     return rows
+
+
+# --- (b) generalization: the relation over a parameterized un-curated source -------
+#
+# route_watch is construct-specific only in its INPUTS (which ancestor source, which
+# terms). The pure `cold_candidates` already takes those as arguments, so generalizing
+# to a second inherited source is parameterization, not a rewrite.
+#
+# The honest bound (runs/x4/option3-ceiling.md): the relation matches STRINGS, never
+# meaning (§2/§11). A source profile therefore carries DISTINCTIVE terms only — for
+# those a string match is a concept match. Common-word vocab (belief/claim/memory/...)
+# is deliberately excluded: matching it cry-wolfs, and catching the concept used
+# casually needs the semantic judgment the witness refuses. Fail-toward-under-claim.
+
+@dataclass(frozen=True)
+class SourceProfile:
+    name: str
+    ancestor_source: str            # the inherited vocab source; its absence => cold
+    terms: tuple[AncestorTerm, ...]  # DISTINCTIVE terms only (no common words)
+    note: str                       # disclosed scope / ceiling
+
+
+def _distinctive(*names: str) -> tuple[AncestorTerm, ...]:
+    return tuple(AncestorTerm(name=n, root=n.lower(), core=False) for n in names)
+
+
+# lab-1's epistemic vocabulary, distinctive compounds only (MEMORY_!=_REALITY.md /
+# AGENT_PRIMER §4). The common-word five (belief/claim/memory/evidence/reality) are
+# left out on purpose — see the ceiling note.
+LAB1_EPISTEMIC = SourceProfile(
+    name="lab1-epistemic",
+    ancestor_source="notes/previous/MEMORY_!=_REALITY.md",
+    terms=_distinctive(
+        "confidence_in_provenance_chain", "confidence_in_recall_process",
+        "confidence_in_claim", "reality_observation", "uncertainty_triple",
+    ),
+    note="distinctive-term occlusions only; common-word concept occlusions are below "
+         "the mechanical floor (runs/x4/option3-ceiling.md)",
+)
+
+
+def observe_source(
+    profile: SourceProfile,
+    read_order: list[str],
+    surface_text: str,
+    *,
+    active_hw: set[str] | None = None,
+) -> list[dict]:
+    """Run the occlusion relation over a parameterized un-curated source (the (b) leg).
+
+    Same relation as the declared-read seam, pointed at `profile.ancestor_source`
+    instead of construct's bridge glossary. DISTINCTIVE terms only — the reach is
+    bounded by vocabulary distinctiveness (runs/x4/option3-ceiling.md). Pure over its
+    inputs; the caller supplies the route and the in-use surface.
+    """
+    return cold_candidates(
+        read_order, surface_text, active_hw or set(), list(profile.terms),
+        ancestor_source=profile.ancestor_source, route_trigger=None,
+        surface_label=f"source-profile:{profile.name}", surface_basis="work_product",
+        route_basis="declared_read_order",
+        witness_scope=f"source_profile={profile.name}; distinctive_terms_only; {profile.note}",
+    )
 
 
 def _read_order_from_args(args) -> tuple[list[str], str | None]:
@@ -267,6 +398,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     ap.add_argument("--manifest", type=Path, help="bootstrap manifest JSON (uses its read_order)")
     ap.add_argument("--read-order", help="comma-separated declared read order (instead of --manifest)")
+    ap.add_argument("--audit", type=Path, help="materialize MATERIALIZE_AUDIT.json — derive the route from a cold workspace (witnessed availability, not a self-reported claim)")
     ap.add_argument("--work", type=Path, help="text whose confidence is forming (default: active glossary)")
     ap.add_argument("--agent", help="agent label for the watch rows")
     ap.add_argument("--write", action="store_true", help="append observed rows to the sidecar")
@@ -274,14 +406,14 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     read_order, agent = _read_order_from_args(args)
-    if not read_order:
-        print("route_watch: no declared route (pass --manifest or --read-order); nothing to watch.")
+    if args.audit is None and not read_order:
+        print("route_watch: no route (pass --manifest, --read-order, or --audit); nothing to watch.")
         return 0  # an instrument with no input is a no-op, never a failure
 
     should_write = args.write and not args.no_write
-    rows = observe(read_order, agent=agent, work_path=args.work, write=should_write)
+    rows = observe(read_order, agent=agent, work_path=args.work, write=should_write, audit_path=args.audit)
 
-    label = agent or args.read_order or "?"
+    label = agent or (str(args.audit) if args.audit else args.read_order) or "?"
     if not rows:
         print(f"route_watch [{label}]: no cold-confidence candidates "
               f"(route grounds or reaches the two-plane lineage ancestor).")
