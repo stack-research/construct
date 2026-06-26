@@ -1,5 +1,7 @@
 ## Previous Memory Lab
 
+**Start here:** [notes/previous/NOTES.md](notes/previous/NOTES.md) is the beginning — the founding seed of this lab. From there, [notes/previous/THEORY_STRESS_AND_IMPLICIT_MEMORY.md](notes/previous/THEORY_STRESS_AND_IMPLICIT_MEMORY.md) (operating doctrine — *act on risk, emit lineage, allow intervention*) and [notes/previous/MEMORY_!=_REALITY.md](notes/previous/MEMORY_!=_REALITY.md) (the epistemic spine: reality → observation → claim → belief), then the conversations and retrospective below.
+
 The local code for the previous lab is here: `~/.projects/stack-research/memory/`. Reference `specs/AGENT_PRIMER.md` in that directory.
 
 The raw, public GitHub repository is here: [README.md](https://raw.githubusercontent.com/stack-research/memory/refs/heads/main/README.md). Reference [specs/AGENT_PRIMER.md](https://raw.githubusercontent.com/stack-research/memory/refs/heads/main/specs/AGENT_PRIMER.md).
