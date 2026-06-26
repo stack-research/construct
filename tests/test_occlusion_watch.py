@@ -9,6 +9,7 @@ cross-seam, prospective, and cannot be scheduled.
 from __future__ import annotations
 
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 from harness import occlusion_watch as ow
@@ -75,19 +76,18 @@ def test_observe_layer1_only_never_a_verdict():
     threads = _armed_space()
     _write(threads / "t", "20260627T090000000Z", "claude", "the seam_distance gate handles it.")
     pc = ow.load_precommit("t", threads_dir=threads)
-    rows = ow.observe(pc, threads_dir=threads)
+    # root = a non-git tempdir so S2 (git diffs) is empty and the test stays deterministic
+    rows = ow.observe(pc, threads_dir=threads, root=Path(tempfile.mkdtemp()))
     kinds = {r["row"] for r in rows}
     assert {"route_watch_surface_expected", "route_watch_surface_examined",
-            "occlusion_watch_observed", "scope_gap"} <= kinds, kinds
+            "occlusion_watch_observed"} <= kinds, kinds
     observed = [r for r in rows if r["row"] == "occlusion_watch_observed"]
     assert observed and observed[0]["candidate_key"] == "seam_distance"
-    assert observed[0]["seam_distance"] == "later_session"
+    assert observed[0]["seam_distance"] == "later_session"  # ~21h gap from the precommit -> new session
     assert observed[0]["match"] == "literal"
     assert observed[0]["evidence_status"] == "observed_only_no_outcome"
     assert all("verdict" not in r for r in rows), "Layer 1 emits NO outcome verdict (earned is Layer 2, §10)"
-    gaps = [r for r in rows if r["row"] == "scope_gap"]
-    assert gaps and all(g["population_rule_ref"] == "S2" for g in gaps), "S2 stays in the denominator as scope_gap"
-    print(f"ok  observe emits Layer-1 facts only, no verdict ({len(rows)} rows; {len(observed)} observed, {len(gaps)} scope_gap)")
+    print(f"ok  observe emits Layer-1 facts only, no verdict ({len(rows)} rows; {len(observed)} observed)")
 
 
 def test_instrument_never_gates():
@@ -129,6 +129,37 @@ def test_compute_outcomes_catches_vs_flinches():
     print("ok  compute_outcomes: flinch baseline + earned + guards (named-first, self-named, survey)")
 
 
+def test_session_gap_seam_distance():
+    pre = "20260626T120000000Z"
+    # timeline: a 1h-later surface (same session) and a next-day surface across a >4h gap
+    tl = [ow._parse_ts(pre), ow._parse_ts("20260626T130000000Z"), ow._parse_ts("20260627T090000000Z")]
+    assert ow.seam_distance("20260626T130000000Z", pre, tl) == "same_session", "1h later, no gap"
+    assert ow.seam_distance("20260627T090000000Z", pre, tl) == "later_session", "across the session gap"
+    assert ow.seam_distance("20260626T130000000Z", pre) == "same_session", "no timeline -> calendar fallback"
+    print("ok  session-gap seam_distance: within-gap same_session, across-gap later_session")
+
+
+def test_compute_outcomes_v01_classes():
+    observed = {"row": "occlusion_watch_observed", "candidate_key": "seam_distance",
+                "surface_basis": "work_product", "seam_distance": "later_session",
+                "observed_ts": "2026-07-01T00:00:00Z"}
+    # passenger: observed-first, externally named, but explicitly changed nothing
+    passenger = {"row": "human_named_candidate", "candidate_ref": "cold on seam_distance",
+                 "watched_agent_is_author": False, "named_ts": "2026-07-02",
+                 "did_it_change_attention_or_action": False}
+    _, tally = ow.compute_outcomes([observed, passenger])
+    assert tally["passenger"] == 1 and tally["catches"] == 0, tally
+    # false_alarm: a work_product observation never named, stale past the window
+    later = datetime(2026, 8, 1, tzinfo=timezone.utc)
+    _, tally = ow.compute_outcomes([observed], now=later)
+    assert tally["false_alarm"] == 1, tally
+    # noisy: fires-per-examined over threshold (organ-level cry_wolf flag)
+    rows = [{"row": "route_watch_surface_examined"}] + [dict(observed, candidate_key=f"k{i}") for i in range(3)]
+    _, tally = ow.compute_outcomes(rows, now=later)
+    assert tally["noisy"] is True, tally
+    print("ok  compute_outcomes v0.1 classes: passenger, false_alarm, noisy")
+
+
 def main() -> None:
     test_load_precommit_is_witnessed()
     test_examine_is_literal_conservative()
@@ -136,6 +167,8 @@ def main() -> None:
     test_observe_layer1_only_never_a_verdict()
     test_instrument_never_gates()
     test_compute_outcomes_catches_vs_flinches()
+    test_session_gap_seam_distance()
+    test_compute_outcomes_v01_classes()
     print("\nALL OCCLUSION_WATCH TESTS PASS")
 
 
