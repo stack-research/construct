@@ -1,0 +1,3680 @@
+{
+  "spec": "SPEC_X4 \u00a79.4 / \u00a710 #5 \u2014 cry-wolf base rate (admission gate)",
+  "instrument": "harness.route_watch.cold_candidates (unchanged)",
+  "not_a_catch": "false-alarm profile of the instrument; not evidence the organ works (\u00a70/\u00a77)",
+  "population_rule": "every .substrate/threads/<thread>/<ts>__<author>.md (READMEs excluded; no no-op files on disk)",
+  "population": 328,
+  "examined": 328,
+  "scope_gap": [],
+  "warm_authors_caveat": "corpus authors were generally in-thread (warm), so a fire is ~a false positive: this is the cry-wolf rate directly / an upper bound on usable signal",
+  "routes": {
+    "cold": {
+      "read_order": [],
+      "note": "bridge glossary absent \u2014 invariant across any cold route",
+      "fired": 90,
+      "fire_rate": 0.274
+    },
+    "warm_control": {
+      "read_order": [
+        "notes/previous/review/glossary.md"
+      ],
+      "note": "ancestor routed \u2014 must be ~0 (relation is not always-on)",
+      "fired": 0,
+      "fire_rate": 0.0
+    },
+    "distinctive_profile_cold": {
+      "profile": "lab1-epistemic",
+      "note": "distinctive terms only (runs/x4/option3-ceiling.md) \u2014 under-claim end",
+      "fired": 1,
+      "fire_rate": 0.003
+    }
+  },
+  "name_match_only": {
+    "note": "cold fires with >=1 compound-name match (the rate if bare-root match were dropped)",
+    "fired": 11,
+    "fire_rate": 0.034
+  },
+  "per_thread": {
+    "research": {
+      "n": 51,
+      "fired": 10,
+      "fire_rate": 0.196
+    },
+    "thread-2": {
+      "n": 53,
+      "fired": 10,
+      "fire_rate": 0.189
+    },
+    "thread-3": {
+      "n": 15,
+      "fired": 0,
+      "fire_rate": 0.0
+    },
+    "thread-4": {
+      "n": 28,
+      "fired": 1,
+      "fire_rate": 0.036
+    },
+    "thread-5": {
+      "n": 22,
+      "fired": 1,
+      "fire_rate": 0.045
+    },
+    "thread-6": {
+      "n": 51,
+      "fired": 21,
+      "fire_rate": 0.412
+    },
+    "thread-7": {
+      "n": 29,
+      "fired": 14,
+      "fire_rate": 0.483
+    },
+    "thread-8": {
+      "n": 13,
+      "fired": 9,
+      "fire_rate": 0.692
+    },
+    "thread-9": {
+      "n": 24,
+      "fired": 11,
+      "fire_rate": 0.458
+    },
+    "thread-x4": {
+      "n": 15,
+      "fired": 7,
+      "fire_rate": 0.467
+    },
+    "thread-x4b": {
+      "n": 13,
+      "fired": 5,
+      "fire_rate": 0.385
+    },
+    "thread-x4c": {
+      "n": 14,
+      "fired": 1,
+      "fire_rate": 0.071
+    }
+  },
+  "per_term": {
+    "Lineage plane": {
+      "fired_on": 87,
+      "name_match": 1,
+      "root_only": 86
+    },
+    "Lineage writer": {
+      "fired_on": 87,
+      "name_match": 8,
+      "root_only": 79
+    },
+    "Two-plane discipline": {
+      "fired_on": 11,
+      "name_match": 1,
+      "root_only": 10
+    },
+    "Cognitive plane": {
+      "fired_on": 2,
+      "name_match": 1,
+      "root_only": 1
+    }
+  },
+  "per_surface": [
+    {
+      "path": ".substrate/threads/research/20260611T092637658Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T112544431Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T114906073Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T120516221Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T120910068Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T121633347Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T122117834Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T123108242Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T123233907Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/research/20260611T124048234Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T124634973Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T125940624Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T133029475Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T133622228Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T133751657Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/research/20260611T133846547Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T134344001Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T134358994Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T134912216Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T135048237Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T135237097Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T135528495Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T135554368Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T155830839Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T160027245Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T160317179Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T184140438Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T184538278Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T184926811Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T185504737Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T185837913Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 1,
+      "candidates": {
+        "Cognitive plane": "root"
+      },
+      "top": "Cognitive plane",
+      "top_confidence": 1.03
+    },
+    {
+      "path": ".substrate/threads/research/20260611T190113418Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T190229626Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T190632180Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/research/20260611T211752576Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T212021603Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T212104907Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T212206436Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260611T220353875Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T004827070Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T005328137Z__dan.md",
+      "thread": "research",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T005928570Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T010525978Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T011506719Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T013055240Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T013217424Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T015925364Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T020120026Z__codex.md",
+      "thread": "research",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T081406166Z__kagi.md",
+      "thread": "research",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T081523606Z__cursor.md",
+      "thread": "research",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/research/20260612T082125103Z__claude.md",
+      "thread": "research",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T105330931Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T105551309Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T110345695Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T110458010Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T110909304Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T111340889Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T111630719Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T120201919Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T120239963Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T120356938Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T132247095Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T145651259Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T184205588Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T190604642Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T191713183Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T192708847Z__composer-2.md",
+      "thread": "thread-2",
+      "author": "composer-2",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T192907595Z__gpt-5.md",
+      "thread": "thread-2",
+      "author": "gpt-5",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T193244463Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T193434862Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T193951077Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T201622751Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T201949389Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T202138429Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T202444574Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T202913014Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T220728156Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T221056194Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T221956794Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T222637057Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T231609892Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T231818237Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T233647145Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T233943556Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260612T234054506Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T000659258Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T000830656Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T001017474Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T003339775Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T004558331Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T005317444Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T005735843Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T010158282Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T010343890Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T010542062Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T085903626Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T091358846Z__kagi.md",
+      "thread": "thread-2",
+      "author": "kagi",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T091645990Z__cursor.md",
+      "thread": "thread-2",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T092235547Z__codex.md",
+      "thread": "thread-2",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T095926911Z__claude.md",
+      "thread": "thread-2",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T102231209Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T103007519Z__gemma.md",
+      "thread": "thread-2",
+      "author": "gemma",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T110156275Z__llama.md",
+      "thread": "thread-2",
+      "author": "llama",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-2/20260613T110639472Z__dan.md",
+      "thread": "thread-2",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T121838255Z__dan.md",
+      "thread": "thread-3",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T122917382Z__grok.md",
+      "thread": "thread-3",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T123754491Z__claude.md",
+      "thread": "thread-3",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T144128454Z__codex.md",
+      "thread": "thread-3",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T144839181Z__kagi.md",
+      "thread": "thread-3",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T145045444Z__cursor.md",
+      "thread": "thread-3",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T164743789Z__grok.md",
+      "thread": "thread-3",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T211652442Z__claude.md",
+      "thread": "thread-3",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T212944609Z__kagi.md",
+      "thread": "thread-3",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T213155997Z__cursor.md",
+      "thread": "thread-3",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T213243166Z__grok.md",
+      "thread": "thread-3",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T213519716Z__codex.md",
+      "thread": "thread-3",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T214136226Z__claude.md",
+      "thread": "thread-3",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T215106964Z__claude.md",
+      "thread": "thread-3",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-3/20260613T231336578Z__gemma.md",
+      "thread": "thread-3",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T083345059Z__dan.md",
+      "thread": "thread-4",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T084417544Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T084948029Z__codex.md",
+      "thread": "thread-4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T085208804Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T085650546Z__cursor.md",
+      "thread": "thread-4",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T090314660Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T092010575Z__grok.md",
+      "thread": "thread-4",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T092912470Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T094113625Z__kagi.md",
+      "thread": "thread-4",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T100956996Z__gemma.md",
+      "thread": "thread-4",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T101238978Z__gemma.md",
+      "thread": "thread-4",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T102256334Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T124639418Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T124950297Z__codex.md",
+      "thread": "thread-4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T125102609Z__cursor.md",
+      "thread": "thread-4",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T125152211Z__grok.md",
+      "thread": "thread-4",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T132453458Z__kagi.md",
+      "thread": "thread-4",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T132539633Z__gemma.md",
+      "thread": "thread-4",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T132949396Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T150744485Z__codex.md",
+      "thread": "thread-4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T150928194Z__cursor.md",
+      "thread": "thread-4",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T151101471Z__grok.md",
+      "thread": "thread-4",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T151823398Z__kagi.md",
+      "thread": "thread-4",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T152717590Z__gemma.md",
+      "thread": "thread-4",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T153244818Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T153803089Z__claude.md",
+      "thread": "thread-4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T154231046Z__codex.md",
+      "thread": "thread-4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-4/20260614T154553949Z__codex.md",
+      "thread": "thread-4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T194752215Z__dan.md",
+      "thread": "thread-5",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T202023633Z__claude.md",
+      "thread": "thread-5",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T203133266Z__codex.md",
+      "thread": "thread-5",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T205403860Z__grok.md",
+      "thread": "thread-5",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T205529564Z__cursor.md",
+      "thread": "thread-5",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T205944299Z__gemma.md",
+      "thread": "thread-5",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T210724669Z__kagi.md",
+      "thread": "thread-5",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T211213910Z__kagi.md",
+      "thread": "thread-5",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260614T212837630Z__claude.md",
+      "thread": "thread-5",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T132407106Z__claude.md",
+      "thread": "thread-5",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T132948882Z__codex.md",
+      "thread": "thread-5",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T134038425Z__grok.md",
+      "thread": "thread-5",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T134346498Z__cursor.md",
+      "thread": "thread-5",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T134819480Z__claude.md",
+      "thread": "thread-5",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T135157712Z__codex.md",
+      "thread": "thread-5",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T135314673Z__grok.md",
+      "thread": "thread-5",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T140119869Z__cursor.md",
+      "thread": "thread-5",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T141825117Z__claude.md",
+      "thread": "thread-5",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T162128749Z__kagi.md",
+      "thread": "thread-5",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T162446651Z__gemma.md",
+      "thread": "thread-5",
+      "author": "gemma",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T163351352Z__claude.md",
+      "thread": "thread-5",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-5/20260615T170359054Z__dan.md",
+      "thread": "thread-5",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T174708287Z__dan.md",
+      "thread": "thread-6",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T174827431Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T175350934Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T175545302Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T175757696Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T180333898Z__gemma.md",
+      "thread": "thread-6",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T180544414Z__kagi.md",
+      "thread": "thread-6",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T181132988Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T204457096Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T204651735Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T204746638Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T205135842Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T205434268Z__gemma.md",
+      "thread": "thread-6",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T205616521Z__gemma.md",
+      "thread": "thread-6",
+      "author": "gemma",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T205931709Z__kagi.md",
+      "thread": "thread-6",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T210715851Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260619T211142339Z__dan.md",
+      "thread": "thread-6",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T102056291Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T102304909Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T102701218Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T103119657Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T103400944Z__kagi.md",
+      "thread": "thread-6",
+      "author": "kagi",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T103511027Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T103736715Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T104050336Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T104556593Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T105355385Z__dan.md",
+      "thread": "thread-6",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T105642648Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T113729504Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T113912011Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.62
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T115134033Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T203151391Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T203413861Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.65
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T203502673Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T203812106Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.68
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T210648803Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T213552214Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.74
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T221040123Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T221306638Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T221827116Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T222808178Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T224213437Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T224344454Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T225056363Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T232510675Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T232610740Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T234722210Z__claude.md",
+      "thread": "thread-6",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T235148157Z__codex.md",
+      "thread": "thread-6",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T235246931Z__grok.md",
+      "thread": "thread-6",
+      "author": "grok",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T235539170Z__cursor.md",
+      "thread": "thread-6",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-6/20260620T235652977Z__dan.md",
+      "thread": "thread-6",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T140437795Z__dan.md",
+      "thread": "thread-7",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T140913136Z__cursor.md",
+      "thread": "thread-7",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T141820928Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T151909367Z__gemma.md",
+      "thread": "thread-7",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T152446904Z__gemma.md",
+      "thread": "thread-7",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T152500000Z__gpt-oss.md",
+      "thread": "thread-7",
+      "author": "gpt-oss",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T160037177Z__cursor.md",
+      "thread": "thread-7",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T160722047Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.62
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T162003355Z__dan.md",
+      "thread": "thread-7",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T162222870Z__codex.md",
+      "thread": "thread-7",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T163148678Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T175644523Z__gemma.md",
+      "thread": "thread-7",
+      "author": "gemma",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T175743560Z__dan.md",
+      "thread": "thread-7",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T180006242Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T180144472Z__codex.md",
+      "thread": "thread-7",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T180445422Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T202124528Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T202952427Z__gemma.md",
+      "thread": "thread-7",
+      "author": "gemma",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T203115971Z__cursor.md",
+      "thread": "thread-7",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T203410124Z__codex.md",
+      "thread": "thread-7",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T204441749Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T205951637Z__codex.md",
+      "thread": "thread-7",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T210737368Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T214732280Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T215417815Z__gemma.md",
+      "thread": "thread-7",
+      "author": "gemma",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T215606652Z__cursor.md",
+      "thread": "thread-7",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T215951147Z__codex.md",
+      "thread": "thread-7",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T220409742Z__claude.md",
+      "thread": "thread-7",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-7/20260621T221315129Z__dan.md",
+      "thread": "thread-7",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T173708032Z__dan.md",
+      "thread": "thread-8",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T174204370Z__claude.md",
+      "thread": "thread-8",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T175912837Z__codex.md",
+      "thread": "thread-8",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T180249861Z__cursor.md",
+      "thread": "thread-8",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "name",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.68
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T181639334Z__codex.md",
+      "thread": "thread-8",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T181903030Z__cursor.md",
+      "thread": "thread-8",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T182951983Z__claude.md",
+      "thread": "thread-8",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.62
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T184023090Z__codex.md",
+      "thread": "thread-8",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T185718985Z__cursor.md",
+      "thread": "thread-8",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T191601667Z__claude.md",
+      "thread": "thread-8",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T192312231Z__codex.md",
+      "thread": "thread-8",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T192602798Z__cursor.md",
+      "thread": "thread-8",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-8/20260622T192905567Z__dan.md",
+      "thread": "thread-8",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T114836293Z__dan.md",
+      "thread": "thread-9",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T120000000Z__cursor.md",
+      "thread": "thread-9",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T124347720Z__dan.md",
+      "thread": "thread-9",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T125401013Z__codex.md",
+      "thread": "thread-9",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T131500000Z__cursor.md",
+      "thread": "thread-9",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.65
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T131500001Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 4,
+      "candidates": {
+        "Lineage plane": "root",
+        "Cognitive plane": "name",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.8
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T152545444Z__dan.md",
+      "thread": "thread-9",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T152700025Z__codex.md",
+      "thread": "thread-9",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T153027541Z__cursor.md",
+      "thread": "thread-9",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T161227465Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T162036270Z__codex.md",
+      "thread": "thread-9",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T162313188Z__cursor.md",
+      "thread": "thread-9",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "name",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T162720210Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.62
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T190519247Z__codex.md",
+      "thread": "thread-9",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T190649376Z__cursor.md",
+      "thread": "thread-9",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T190901317Z__dan.md",
+      "thread": "thread-9",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T191050515Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T192457522Z__dan.md",
+      "thread": "thread-9",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T192908041Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T193243558Z__codex.md",
+      "thread": "thread-9",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T193832040Z__cursor.md",
+      "thread": "thread-9",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T194558947Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T201359225Z__claude.md",
+      "thread": "thread-9",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-9/20260623T201958764Z__dan.md",
+      "thread": "thread-9",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T134932834Z__dan.md",
+      "thread": "thread-x4",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T141040478Z__claude.md",
+      "thread": "thread-x4",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T142857376Z__codex.md",
+      "thread": "thread-x4",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 3,
+      "candidates": {
+        "Lineage plane": "root",
+        "Two-plane discipline": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.59
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T144024260Z__cursor.md",
+      "thread": "thread-x4",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 1,
+      "candidates": {
+        "Two-plane discipline": "root"
+      },
+      "top": "Two-plane discipline",
+      "top_confidence": 1.03
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T145305113Z__claude.md",
+      "thread": "thread-x4",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 1,
+      "candidates": {
+        "Two-plane discipline": "root"
+      },
+      "top": "Two-plane discipline",
+      "top_confidence": 1.03
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T145647998Z__codex.md",
+      "thread": "thread-x4",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T145852990Z__cursor.md",
+      "thread": "thread-x4",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T150835730Z__claude.md",
+      "thread": "thread-x4",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T185157336Z__codex.md",
+      "thread": "thread-x4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T185316826Z__cursor.md",
+      "thread": "thread-x4",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T191458134Z__dan.md",
+      "thread": "thread-x4",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T191820311Z__claude.md",
+      "thread": "thread-x4",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T192933050Z__codex.md",
+      "thread": "thread-x4",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T193050980Z__cursor.md",
+      "thread": "thread-x4",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4/20260624T193753512Z__dan.md",
+      "thread": "thread-x4",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T203030163Z__gemma.md",
+      "thread": "thread-x4b",
+      "author": "gemma",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T203249023Z__codex.md",
+      "thread": "thread-x4b",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T203558083Z__cursor.md",
+      "thread": "thread-x4b",
+      "author": "cursor",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.56
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T204519435Z__dan.md",
+      "thread": "thread-x4b",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T205623143Z__claude.md",
+      "thread": "thread-x4b",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T205842118Z__codex.md",
+      "thread": "thread-x4b",
+      "author": "codex",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T210057157Z__cursor.md",
+      "thread": "thread-x4b",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T210429771Z__claude.md",
+      "thread": "thread-x4b",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T210743235Z__cursor.md",
+      "thread": "thread-x4b",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T211754561Z__codex.md",
+      "thread": "thread-x4b",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T215623474Z__claude.md",
+      "thread": "thread-x4b",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T225052790Z__dan.md",
+      "thread": "thread-x4b",
+      "author": "dan",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4b/20260624T225145831Z__claude.md",
+      "thread": "thread-x4b",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "name"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T074959138Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T075849924Z__codex.md",
+      "thread": "thread-x4c",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T080415729Z__cursor.md",
+      "thread": "thread-x4c",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T081314348Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": true,
+      "n_candidates": 2,
+      "candidates": {
+        "Lineage plane": "root",
+        "Lineage writer": "root"
+      },
+      "top": "Lineage plane",
+      "top_confidence": 1.53
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T112035426Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T123856713Z__hermes.md",
+      "thread": "thread-x4c",
+      "author": "hermes",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T124215056Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T124627349Z__hermes.md",
+      "thread": "thread-x4c",
+      "author": "hermes",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T124854635Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T213834988Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T214229454Z__codex.md",
+      "thread": "thread-x4c",
+      "author": "codex",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T214541647Z__cursor.md",
+      "thread": "thread-x4c",
+      "author": "cursor",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T215500663Z__hermes.md",
+      "thread": "thread-x4c",
+      "author": "hermes",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    },
+    {
+      "path": ".substrate/threads/thread-x4c/20260625T215646501Z__claude.md",
+      "thread": "thread-x4c",
+      "author": "claude",
+      "fired": false,
+      "n_candidates": 0,
+      "candidates": {},
+      "top": null,
+      "top_confidence": null
+    }
+  ]
+}

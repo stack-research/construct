@@ -13,7 +13,7 @@ import json
 import tempfile
 from pathlib import Path
 
-from harness import route_watch
+from harness import route_watch, x4_base_rate
 from harness.check_contract import parse_contract
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -220,6 +220,33 @@ def test_source_profile_lab1_epistemic_distinctive_only():
     print("ok  source profile (lab1-epistemic): distinctive transfers; common words excluded; ceiling disclosed")
 
 
+def test_x4_base_rate_invariants():
+    # SPEC_X4 §9.4 admission gate (runs/x4/base_rate.md). Robust invariants over the
+    # LIVE corpus, not exact rates (the corpus grows): the denominator stays external,
+    # the warm route MUST silence the relation (not always-on), distinctiveness can only
+    # LOWER the rate, and compound-name fires are a subset of cold fires. Reuses
+    # route_watch.cold_candidates unchanged — it measures the shipped instrument.
+    r = x4_base_rate.measure()
+    assert r["examined"] + len(r["scope_gap"]) == r["population"], \
+        "denominator stays external: examined + scope_gap == population"
+    assert r["examined"] > 0, "the substrate corpus is the population"
+    assert not any(p["path"].endswith("README.md") for p in r["per_surface"]), "READMEs are not turns"
+    routes = r["routes"]
+    for name, route in routes.items():
+        assert 0.0 <= route["fire_rate"] <= 1.0, (name, route)
+    assert routes["warm_control"]["fired"] == 0, \
+        "routing the bridge ancestor must silence the relation — it is not always-on"
+    assert routes["distinctive_profile_cold"]["fired"] <= routes["cold"]["fired"], \
+        "distinctive-only can only lower the fire-rate (under-claim; option3-ceiling.md)"
+    assert r["name_match_only"]["fired"] <= routes["cold"]["fired"], \
+        "compound-name fires are a subset of cold fires"
+    assert routes["cold"]["fired"] == sum(v["fired"] for v in r["per_thread"].values()), \
+        "per-thread fired sums to the cold total (no double-count)"
+    print(f"ok  x4 base rate invariants hold "
+          f"(cold {routes['cold']['fire_rate']}, warm {routes['warm_control']['fire_rate']}, "
+          f"examined {r['examined']})")
+
+
 def main() -> None:
     test_cold_route_surfaces_lineage_plane()
     test_warm_route_is_quiet()
@@ -233,6 +260,7 @@ def main() -> None:
     test_audit_available_set_parses_paths()
     test_audit_route_excludes_materialize_scaffolding()
     test_source_profile_lab1_epistemic_distinctive_only()
+    test_x4_base_rate_invariants()
     print("\nALL ROUTE_WATCH TESTS PASS")
 
 

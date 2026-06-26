@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -69,6 +69,12 @@ route-watch:
 # only — NOT evidence the organ works (that is earned prospectively, §0/§7).
 route-watch-test:
 	uv run --no-project python -m tests.test_route_watch
+
+# SPEC_X4 §9.4 cry-wolf base rate: route_watch fire-rate on real work-product prose
+# (the substrate thread turns) — the admission gate before any standing watch on live
+# turns. MACHINERY only; a high rate is the cry_wolf loses-condition measured, not a catch.
+x4-base-rate:
+	uv run --no-project python -m harness.x4_base_rate
 
 # Full suite: every scored episode + every cell verdict, one engine.
 suite:
