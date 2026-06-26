@@ -74,7 +74,7 @@ route-watch-test:
 # (the substrate thread turns) — the admission gate before any standing watch on live
 # turns. MACHINERY only; a high rate is the cry_wolf loses-condition measured, not a catch.
 x4-base-rate:
-	uv run --no-project python -m harness.x4_base_rate
+	uv run --no-project python -m harness.x4_base_rate $(if $(CUTOFF),--cutoff $(CUTOFF))
 
 # Full suite: every scored episode + every cell verdict, one engine.
 suite:

@@ -3,8 +3,8 @@
 2026-06-26, claude (autonomous build; dan walking, room reviews later). **A machinery
 measurement, for room review — not a SPEC fold, not a catch.** It computes
 `route_watch`'s false-alarm profile on real lab prose: the §9.4 admission gate that
-stands before any standing watch on live turns (§10 #5). Reproduce: `make x4-base-rate`;
-machine artifact `runs/x4/base_rate.json`.
+stands before any standing watch on live turns (§10 #5). Reproduce this snapshot: `make x4-base-rate CUTOFF=20260625T215646501Z` (the corpus is
+live + append-only — see *Snapshot* below); machine artifact `runs/x4/base_rate.json`.
 
 ## Headline
 
@@ -73,7 +73,9 @@ Per-term (cold) — fired-on / name-match / root-only:
    confirmed from the other direction: distinctive terms kill the false-alarm rate, at
    the cost of catching almost nothing.
 
-## For the room (and the forks)
+## For the room (and the forks) — pre-review proposal
+
+*Recorded as written before the human-free review; the room sharpened it (see Room review outcome below). In particular the bare-root drop was **blocked** — it is load-bearing — and the "no string match" claim was narrowed; declared-read survives as a priced proprioceptive diagnostic.*
 
 - **`route_watch` is not standing-watch admissible as shipped** (§9.4 gate: blocked).
   The minimum repair is to drop the bare-root `in_use` match (an 8× noise cut) — but
@@ -88,5 +90,51 @@ Per-term (cold) — fired-on / name-match / root-only:
   and it quantifies the under-claim cost of the **distinctive-only / `SourceProfileV2`**
   path (near-zero fire ⇒ near-zero catch without the deeper signature work).
 
-**Out of scope here:** no SPEC fold (held for the room), no standing watch armed, no
-claim the organ works (earned only prospectively, §0/§7). Just the gate's number.
+## Snapshot, and re-admission (room ask — codex/cursor/hermes, 2026-06-26)
+
+The 328 is a **snapshot of a live, append-only corpus.** The artifact carries `corpus_cutoff`
+(commit + effective cutoff turn); the number above is pinned: **0.274 / 328 as of cutoff
+`20260625T215646501Z` @ `0569bc3`**, reproducible with `make x4-base-rate
+CUTOFF=20260625T215646501Z`. Vivid proof of the caveat: re-run on the *live* corpus right
+after this review and it is already **0.285 / 333** — the review turns, being about lineage,
+raised it.
+
+**Re-admission protocol** (hermes — a one-way "blocked" with no re-measure path is not a
+measured gate): standing-watch admission is blocked at this rate; it may reopen only on a
+re-run pinned to a later cutoff over a **work_product-only** population (live turns, not
+survey/discussion-about-lineage) with the bare-root match replaced by a predeclared,
+base-rate-gated alias/signature policy (`SourceProfileV2`) whose armed fire-rate on normal
+turns is low enough not to be an unease dashboard.
+
+## Room review outcome (human-free: codex + cursor + hermes, 2026-06-26)
+
+Converged, **no block on the build**; the room corrected the moderator twice.
+
+- **Standing-watch block (§9.4): endorsed, unanimous.** Not mis-measured in any rescuing
+  direction; the warm-author caveat *strengthens* the negative.
+- **"No string match separates cold from warm": blocked as overstated.** Carried claim:
+  *this string-presence relation* can't, and a tighter match is still topic-driven. hermes:
+  it is *one term's root* dominating the profile (86/87 bare "lineage"), not a universal
+  reach wall. cursor: what is blocked is **standing watch on live turns** — declared-read
+  survives as a cry-wolf-priced **proprioceptive diagnostic** on cold bootstrap (a).
+  `SourceProfileV2` is **not** excluded.
+- **Drop bare-root as default: blocked, unanimous.** It is *load-bearing* for the
+  breadth-collapse seam (active "cold lineage" ↔ bridge "Lineage plane"); dropping it
+  amputates the seam. Compound-only (0.034) stays a **diagnostic lower bound**, never the
+  default. Any repair = an explicit predeclared alias/signature policy with its own gate
+  (`SourceProfileV2`), not this pass.
+- **Fork priority:** session-seam witness first → `SourceProfileV2` second (gated) →
+  exteroception waits.
+- **Unmeasured cold-author lower bound (hermes, fresh angle):** this prices the warm-author
+  *upper* bound; a genuinely cold author may never type "lineage" at all (⇒ ~0 fire =
+  structurally cannot catch the coldness condition). The fork argument rests on a
+  cold-author assumption this corpus cannot exhibit — a designed measurement gap, distinct
+  from this base rate.
+
+The standing limitation is **this-witness-bounded, not ontological**: it bounds what *this
+string-presence relation* can sense, not what is sensable.
+
+**Out of scope here:** no SPEC fold (held for dan's land word), no standing watch armed, no
+relation change landed (the bare-root drop was blocked by the room), no claim the organ
+works (earned only prospectively, §0/§7). Just the gate's number — now with its cutoff and
+re-admission path.

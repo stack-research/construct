@@ -2,6 +2,14 @@
   "spec": "SPEC_X4 \u00a79.4 / \u00a710 #5 \u2014 cry-wolf base rate (admission gate)",
   "instrument": "harness.route_watch.cold_candidates (unchanged)",
   "not_a_catch": "false-alarm profile of the instrument; not evidence the organ works (\u00a70/\u00a77)",
+  "corpus_cutoff": {
+    "requested": "20260625T215646501Z",
+    "effective": "20260625T215646501Z",
+    "commit": "0569bc3",
+    "generated_at": "2026-06-26T12:48:00.019813+00:00",
+    "note": "the substrate corpus is live + append-only; this rate is a snapshot. Reproduce with: make x4-base-rate CUTOFF=<effective>."
+  },
+  "re_admission_protocol": "Standing-watch admission is BLOCKED at this fire-rate. To reopen: re-run pinned to a later cutoff over a work_product-only population (live turns, not survey/discussion-about-lineage) with the bare-root in_use match replaced by a predeclared, base-rate-gated alias/signature policy (SourceProfileV2); admission may reopen only if that armed profile's fire-rate on normal turns is low enough to not be an unease dashboard. A one-way 'blocked' with no re-measure path is not a measured gate (hermes, 2026-06-26).",
   "population_rule": "every .substrate/threads/<thread>/<ts>__<author>.md (READMEs excluded; no no-op files on disk)",
   "population": 328,
   "examined": 328,

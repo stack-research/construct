@@ -44,9 +44,12 @@ far more than M-track threads; the per-thread breakdown discloses the skew.
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
+import subprocess
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .route_watch import (
@@ -65,14 +68,34 @@ TURN_RE = re.compile(r"^(?P<ts>\d{8}T\d{6}\d*Z)__(?P<author>.+)\.md$")
 FRONTMATTER = re.compile(r"\A---\n.*?\n---\n", re.S)
 
 
-def population() -> list[Path]:
-    """Every turn file across all threads — enumerable, uncurated (READMEs out)."""
+def population(cutoff: str | None = None) -> list[Path]:
+    """Every turn file across all threads — enumerable, uncurated (READMEs out).
+
+    The substrate corpus is live and append-only, so a bare count is a snapshot. Pass
+    `cutoff` (a turn timestamp, e.g. '20260625T215646501Z') to enumerate only turns at
+    or before it — a reproducible snapshot of a moving corpus (codex/cursor/hermes
+    flagged this, 2026-06-26).
+    """
     files: list[Path] = []
     for thread_dir in sorted(p for p in THREADS_DIR.iterdir() if p.is_dir()):
         for f in sorted(thread_dir.glob("*.md")):
-            if f.name != "README.md" and TURN_RE.match(f.name):
+            if f.name == "README.md":
+                continue
+            m = TURN_RE.match(f.name)
+            if m and (cutoff is None or m["ts"] <= cutoff):
                 files.append(f)
     return files
+
+
+def _head_commit() -> str:
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, check=True,
+        )
+        return out.stdout.strip()
+    except Exception:
+        return "unknown"
 
 
 def surface_of(path: Path) -> str:
@@ -88,13 +111,14 @@ def _fire(surface: str, read_order: list[str], active_hw, terms) -> list[dict]:
     )
 
 
-def measure() -> dict:
+def measure(cutoff: str | None = None) -> dict:
     bridge_text = (ROOT / BRIDGE_GLOSSARY).read_text()
     active_text = (ROOT / ACTIVE_GLOSSARY).read_text()
     terms = ancestor_term_set(bridge_text)
     active_hw = active_headwords(active_text)
 
-    files = population()
+    files = population(cutoff)
+    effective_cutoff = max((TURN_RE.match(f.name)["ts"] for f in files), default=None)
     surfaces: list[tuple[Path, str]] = []
     scope_gap: list[dict] = []
     for f in files:
@@ -159,6 +183,23 @@ def measure() -> dict:
         "spec": "SPEC_X4 §9.4 / §10 #5 — cry-wolf base rate (admission gate)",
         "instrument": "harness.route_watch.cold_candidates (unchanged)",
         "not_a_catch": "false-alarm profile of the instrument; not evidence the organ works (§0/§7)",
+        "corpus_cutoff": {
+            "requested": cutoff,
+            "effective": effective_cutoff,
+            "commit": _head_commit(),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "note": "the substrate corpus is live + append-only; this rate is a snapshot. "
+                    "Reproduce with: make x4-base-rate CUTOFF=<effective>.",
+        },
+        "re_admission_protocol": (
+            "Standing-watch admission is BLOCKED at this fire-rate. To reopen: re-run "
+            "pinned to a later cutoff over a work_product-only population (live turns, not "
+            "survey/discussion-about-lineage) with the bare-root in_use match replaced by a "
+            "predeclared, base-rate-gated alias/signature policy (SourceProfileV2); admission "
+            "may reopen only if that armed profile's fire-rate on normal turns is low enough "
+            "to not be an unease dashboard. A one-way 'blocked' with no re-measure path is "
+            "not a measured gate (hermes, 2026-06-26)."
+        ),
         "population_rule": "every .substrate/threads/<thread>/<ts>__<author>.md (READMEs excluded; no no-op files on disk)",
         "population": len(files),
         "examined": n,
@@ -209,13 +250,21 @@ def measure() -> dict:
 
 
 def main() -> int:
-    result = measure()
+    ap = argparse.ArgumentParser(description="X4 §9.4 cry-wolf base rate")
+    ap.add_argument(
+        "--cutoff",
+        help="only enumerate turns with timestamp <= this (e.g. 20260625T215646501Z) — "
+             "pins a reproducible snapshot of the live, append-only corpus",
+    )
+    args = ap.parse_args()
+    result = measure(cutoff=args.cutoff)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, indent=2) + "\n")
 
     r = result
+    cc = r["corpus_cutoff"]
     print(f"x4 base rate — {r['examined']}/{r['population']} surfaces examined "
-          f"({len(r['scope_gap'])} scope_gap)\n")
+          f"({len(r['scope_gap'])} scope_gap) — cutoff {cc['effective']} @ {cc['commit']}\n")
     for name, route in r["routes"].items():
         print(f"  {name:24s} fire_rate {route['fire_rate']:.3f}  ({route['fired']}/{r['examined']})")
     nm = r["name_match_only"]
