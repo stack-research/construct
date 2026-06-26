@@ -46,6 +46,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -187,6 +188,76 @@ def observe(pc: Precommit, threads_dir: Path = THREADS_DIR) -> list[dict]:
     return rows
 
 
+def read_ledger(path: Path = LEDGER) -> list[dict]:
+    """The append-only watch ledger: Layer-1 rows + external human_named_candidate rows."""
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def compute_outcomes(rows: list[dict]) -> tuple[list[dict], dict]:
+    """Layer-2 (§4): COMPUTE occlusion_watch_outcome records from the ledger's lineage
+    order — catches vs flinches. NOT a fourth judicial scorer (§5: no fourth scorer, no
+    cell_verdict); occlusion_watch's own advisory computation. The rows' hand-written
+    `classification`/`tally` are IGNORED (R5: computed, never asserted).
+
+    `earned` is structurally unmanufacturable from this session:
+      - the namer must be EXTERNAL (watched_agent_is_author == False) — §2;
+      - a matching `occlusion_watch_observed` row must be surface_basis=work_product (§4),
+        seam_distance >= later_session, and PREDATE the naming (observed_ts < named_ts);
+      - `earned` additionally needs action evidence (did_it_change_attention_or_action);
+        present-but-no-evidence => `early` (a catch pending evidence), never `earned`.
+    Anything the organ did not see first is a flinch; same_pass is `not_engaged` upstream
+    (the Layer-1 seam rule). passenger / false_alarm / noisy need an action-evidence +
+    base-rate window and are deferred (disclosed under-claim, §8)."""
+    observed = [r for r in rows if r.get("row") == "occlusion_watch_observed"]
+    named = [r for r in rows if r.get("row") in ("human_named_candidate", "flinch_observed")]
+    outcomes: list[dict] = []
+
+    for n in named:
+        named_ts = n.get("named_ts") or ""
+        nk = (n.get("candidate_ref") or n.get("candidate") or "").lower()
+        external = n.get("watched_agent_is_author") is False
+        predated = [
+            o for o in observed
+            if (o.get("candidate_key") or "").lower() in nk
+            and o.get("surface_basis") == "work_product"
+            and o.get("seam_distance") in ("later_session", "downstream_artifact")
+            and (o.get("observed_ts") or o.get("ts"))
+            and (o.get("observed_ts") or o.get("ts") or "") < named_ts
+        ]
+        seen_for_key = [o for o in observed if (o.get("candidate_key") or "").lower() in nk]
+        if not external:
+            verdict = "not_engaged"               # the beneficiary cannot name (§2)
+        elif predated:
+            has_evidence = bool(n.get("evidence")) and bool(n.get("did_it_change_attention_or_action"))
+            verdict = "earned" if has_evidence else "early"   # catch (w/ evidence) vs pending
+        elif seen_for_key:
+            verdict = "late"                      # organ saw it, but not first (borrowed_foresight)
+        else:
+            verdict = "unmatched_human_flinch"    # organ blind — a flinch
+        outcomes.append({
+            "row": "occlusion_watch_outcome",
+            "candidate": n.get("candidate") or n.get("candidate_ref"),
+            "named_ts": named_ts,
+            "observed_ts": predated[0].get("observed_ts") if predated else None,
+            "seam_distance": n.get("seam_distance"),
+            "verdict": verdict,
+            "computed_from": "lineage_order",     # not the row's self-asserted classification
+        })
+
+    tally = {"catches": 0, "flinches": 0, "early": 0, "late": 0, "not_engaged": 0}
+    for o in outcomes:
+        v = o["verdict"]
+        if v == "earned":
+            tally["catches"] += 1
+        elif v == "unmatched_human_flinch":
+            tally["flinches"] += 1
+        else:
+            tally[v] = tally.get(v, 0) + 1
+    return outcomes, tally
+
+
 def run(
     *, write: bool = False, thread: str = "thread-x4c", threads_dir: Path = THREADS_DIR
 ) -> tuple[Precommit | None, list[dict]]:
@@ -207,7 +278,19 @@ def main(argv: list[str] | None = None) -> int:
     )
     ap.add_argument("--thread", default="thread-x4c", help="substrate thread holding the arm-now precommit")
     ap.add_argument("--write", action="store_true", help="append Layer-1 rows to the ledger (observed_ts harness-stamped)")
+    ap.add_argument("--outcomes", action="store_true", help="Layer-2: COMPUTE catches-vs-flinches from the ledger lineage (advisory; no verdict-gate, §5)")
     args = ap.parse_args(argv)
+
+    if args.outcomes:
+        outcomes, tally = compute_outcomes(read_ledger())
+        print("occlusion_watch — Layer-2 outcomes (COMPUTED from lineage; advisory, no cell_verdict, §5)")
+        print(f"  catches {tally['catches']}   flinches {tally['flinches']}   "
+              f"early {tally.get('early', 0)}   late {tally.get('late', 0)}   not_engaged {tally.get('not_engaged', 0)}")
+        for o in outcomes:
+            print(f"    • [{o['verdict']}] {o['candidate']}  (named {o['named_ts']})")
+        if tally["catches"] == 0:
+            print("  the organ has caught nothing yet — the honest red baseline (§8); green is earned prospectively.")
+        return 0  # advisory; never gates (no judicial robes)
 
     pc, rows = run(write=args.write, thread=args.thread)
     if pc is None:

@@ -96,12 +96,46 @@ def test_instrument_never_gates():
     print("ok  instrument exits 0 (armed or not); no judicial robes")
 
 
+def test_compute_outcomes_catches_vs_flinches():
+    # row one shape: a human flinch with no organ observation -> unmatched_human_flinch
+    flinch = {"row": "human_named_candidate", "candidate": "construct's founding lineage",
+              "watched_agent_is_author": False, "named_ts": "2026-06-25"}
+    outs, tally = ow.compute_outcomes([flinch])
+    assert tally["flinches"] == 1 and tally["catches"] == 0, tally
+    assert outs[0]["verdict"] == "unmatched_human_flinch"
+
+    # an EARNED catch: organ observed (work_product, later_session) BEFORE an external
+    # naming, with action evidence
+    observed = {"row": "occlusion_watch_observed", "candidate_key": "seam_distance",
+                "surface_basis": "work_product", "seam_distance": "later_session",
+                "observed_ts": "2026-07-01T00:00:00Z"}
+    named = {"row": "human_named_candidate", "candidate_ref": "claude went cold on seam_distance",
+             "watched_agent_is_author": False, "named_ts": "2026-07-02",
+             "evidence": ["patch"], "did_it_change_attention_or_action": True}
+    _, tally = ow.compute_outcomes([observed, named])
+    assert tally["catches"] == 1, tally
+
+    # GUARD named-first: observed AFTER the naming -> late, never earned
+    _, tally = ow.compute_outcomes([observed, {**named, "named_ts": "2026-06-30"}])
+    assert tally["catches"] == 0 and tally["late"] == 1, tally
+
+    # GUARD self-named: the beneficiary cannot name -> not_engaged (§2)
+    _, tally = ow.compute_outcomes([observed, {**named, "watched_agent_is_author": True}])
+    assert tally["catches"] == 0 and tally["not_engaged"] == 1, tally
+
+    # GUARD survey-ineligible: a standing_glossary observed row can never earn (§4)
+    _, tally = ow.compute_outcomes([{**observed, "surface_basis": "standing_glossary"}, named])
+    assert tally["catches"] == 0, "standing_glossary observed rows are outcome-ineligible"
+    print("ok  compute_outcomes: flinch baseline + earned + guards (named-first, self-named, survey)")
+
+
 def main() -> None:
     test_load_precommit_is_witnessed()
     test_examine_is_literal_conservative()
     test_anchor_and_author_excluded_seam_distance()
     test_observe_layer1_only_never_a_verdict()
     test_instrument_never_gates()
+    test_compute_outcomes_catches_vs_flinches()
     print("\nALL OCCLUSION_WATCH TESTS PASS")
 
 

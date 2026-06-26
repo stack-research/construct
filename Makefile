@@ -80,7 +80,7 @@ x4-base-rate:
 # witnessed arm-now precommit, examines S1 surfaces by literal key, emits Layer-1 rows
 # only (never a verdict). MACHINERY; the earned event is Layer 2 (§10), prospective.
 occlusion-watch:
-	uv run --no-project python -m harness.occlusion_watch $(if $(WRITE),--write)
+	uv run --no-project python -m harness.occlusion_watch $(if $(WRITE),--write) $(if $(OUTCOMES),--outcomes)
 
 occlusion-watch-test:
 	uv run --no-project python -m tests.test_occlusion_watch
