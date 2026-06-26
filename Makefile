@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -75,6 +75,15 @@ route-watch-test:
 # turns. MACHINERY only; a high rate is the cry_wolf loses-condition measured, not a catch.
 x4-base-rate:
 	uv run --no-project python -m harness.x4_base_rate $(if $(CUTOFF),--cutoff $(CUTOFF))
+
+# SPEC_X4 occlusion_watch: the session-seam witness, Layer-1 emitter (§11). Reads the
+# witnessed arm-now precommit, examines S1 surfaces by literal key, emits Layer-1 rows
+# only (never a verdict). MACHINERY; the earned event is Layer 2 (§10), prospective.
+occlusion-watch:
+	uv run --no-project python -m harness.occlusion_watch $(if $(WRITE),--write)
+
+occlusion-watch-test:
+	uv run --no-project python -m tests.test_occlusion_watch
 
 # Full suite: every scored episode + every cell verdict, one engine.
 suite:
