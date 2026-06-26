@@ -12,8 +12,10 @@ NOT a fourth scorer / no cell_verdict (§5). No judicial robes: always exits 0.
 **Witness invariant (§2).** Timestamps are stamped by the substrate (entry filenames),
 git (`%cI`), and the harness `Ledger` — never by the watched agent. The precommit that
 arms this watch is itself a witnessed substrate entry (un-backdatable); this module READS
-it, never authors it. Keys + paths are read from that entry, so they stay precommitted —
-`borrowed_foresight` (§5) cannot enter through code.
+it, never authors it. Keys + paths are read from that entry, so they stay precommitted IF
+the entry is well-formed. (v0.1 caveat — room review 2026-06-26, SPEC §12: the prose
+parser is gameable, so `borrowed_foresight` is NOT fully closed by code; v0.2 needs a
+canonical fenced/JSON precommit format.)
 
 **Honest scope (§8/§11).** Externalized surfaces only. Confidence that hardens without
 leaving an enumerable trace — the cold-author lower bound (hermes, thread-x4c) — is out
@@ -29,9 +31,10 @@ distinctive compounds only, exact substring; uncertain => DO NOT MATCH (under-cl
 embarrasses; over-match steals — flinch-theft, §5).
 
 **Session identity (v0.1, DISCLOSED proxy).** Substrate has no session-id, so a session
-boundary is a gap > SESSION_GAP over the witnessed timeline (substrate + git). Fail-
-toward-under-claim: a surface not clearly across a gap stays `same_session` (calibration,
-NOT earned-eligible) — the proxy can only under-claim a catch, never invent one.
+boundary is a gap > SESSION_GAP over the witnessed timeline (substrate + git). A surface
+not clearly across a gap stays `same_session` (calibration, NOT earned-eligible).
+RETRACTED "fail-toward-under-claim" (room review 2026-06-26, SPEC §12): a >gap intra-
+session pause reads `later_session`, so the proxy can OVER-claim — v0.2 must tighten.
 
 Usage:
   uv run --no-project python -m harness.occlusion_watch                 # Layer-1, print
@@ -212,7 +215,8 @@ def seam_distance(surface_ts: str, precommit_ts: str, timeline: list[datetime] |
     """`same_session` (calibration) vs `later_session` (first earned-eligible, §11).
 
     With a `timeline` (the witnessed watched timestamps) the session boundary is a gap
-    > SESSION_GAP — the v0.1 disclosed proxy, fail-toward-under-claim. Without one, falls
+    > SESSION_GAP — a v0.1 proxy that can OVER-claim (RETRACTED "fail-toward-under-claim";
+    room review 2026-06-26, SPEC §12: a >gap intra-session pause reads later_session). Without one, falls
     back to the v0 UTC-calendar-date proxy (kept for the 2-arg callers/tests)."""
     if timeline is not None:
         sdt, pdt = _parse_ts(surface_ts), _parse_ts(precommit_ts)
@@ -278,7 +282,10 @@ def compute_outcomes(rows: list[dict], *, now: datetime | None = None) -> tuple[
     cell_verdict); occlusion_watch's own advisory computation. The rows' hand-written
     `classification`/`tally` are IGNORED (R5: computed, never asserted).
 
-    `earned` is structurally unmanufacturable from this session:
+    `earned` is NOT structurally unmanufacturable — RETRACTED (room review 2026-06-26,
+    SPEC §12): the guards below are FIELD-shaped, not witness-shaped, so a handwritten
+    ledger row pair forges a catch. v0.2 must validate the named side against substrate/
+    git stamps and use exact candidate IDs. The guards as built (advisory only):
       - the namer must be EXTERNAL (watched_agent_is_author == False) — §2;
       - a matching `occlusion_watch_observed` row must be surface_basis=work_product (§4),
         seam_distance >= later_session, and PREDATE the naming (observed_ts < named_ts);
