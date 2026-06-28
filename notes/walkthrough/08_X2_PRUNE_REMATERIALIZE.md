@@ -43,20 +43,30 @@ quality. The cheapest wrong memory is not a win.
 
 ## Experimental geometry
 
-```mermaid
-flowchart LR
-    SEQ["Same four-episode<br/>sequence"] --> A["A · L2<br/>no prune"]
-    SEQ --> B["B · L2p<br/>prune, no recovery"]
-    SEQ --> C["C · L2pR<br/>oracle-gated prune<br/>plus rematerialize"]
-
-    A --> COST["Replay hot_tokens"]
-    B --> COST
-    C --> COST
-    A --> QUALITY["Answer quality floor"]
-    B --> QUALITY
-    C --> QUALITY
-    COST --> SCORER["X2 verdicts"]
-    QUALITY --> SCORER
+```text
+        ┌──────────────────────────┐
+        │ Same four-episode         │
+        │ sequence                  │
+        └───┬──────────┬─────────┬──┘
+            ▼          ▼         ▼
+     ┌────────────┐ ┌─────────┐ ┌──────────────┐
+     │ A · L2     │ │ B · L2p │ │ C · L2pR     │
+     │ no prune   │ │ prune,  │ │ oracle-gated │
+     │            │ │ no      │ │ prune +      │
+     │            │ │ recovery│ │ rematerialize│
+     └─────┬──────┘ └────┬────┘ └──────┬───────┘
+           │             │             │
+        ┌──┴─────────────┴─────────────┴──┐
+        ▼                                  ▼
+  ┌──────────────────┐          ┌──────────────────┐
+  │ Replay hot_tokens │          │ Answer quality    │
+  │                  │          │ floor             │
+  └────────┬─────────┘          └─────────┬────────┘
+           └───────────┬──────────────────┘
+                       ▼
+             ┌──────────────────┐
+             │ X2 verdicts       │
+             └──────────────────┘
 ```
 
 B is the required loss. If a record recurs after pruning, B cannot recover it.

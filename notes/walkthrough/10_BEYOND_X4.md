@@ -36,20 +36,34 @@ may preserve conclusions while losing why attention was there. The proposed
 experiment asks whether a smaller resumable state can restore decision quality
 more cheaply.
 
-```mermaid
-flowchart LR
-    TASK["Task reaches a<br/>precommitted pause seam"] --> WARM["A · uninterrupted warm"]
-    TASK --> COLD["B · cold reread"]
-    TASK --> RESUME["C · resumable state"]
-
-    WARM --> LATER["Same downstream task"]
-    COLD --> LATER
-    RESUME --> LATER
-
-    LATER --> QUALITY["Same oracle<br/>decision quality"]
-    LATER --> COST["Tokens · records<br/>governance steps"]
-    QUALITY --> FRONTIER["Resume cost<br/>at matched quality"]
-    COST --> FRONTIER
+```text
+        ┌──────────────────────────┐
+        │ Task reaches a            │
+        │ precommitted pause seam   │
+        └───┬──────────┬─────────┬──┘
+            ▼          ▼         ▼
+     ┌────────────┐ ┌─────────┐ ┌──────────────┐
+     │ A          │ │ B       │ │ C            │
+     │ uninter-   │ │ cold    │ │ resumable    │
+     │ rupted warm│ │ reread  │ │ state        │
+     └─────┬──────┘ └────┬────┘ └──────┬───────┘
+           └───────────┬─┴─────────────┘
+                       ▼
+        ┌──────────────────────────┐
+        │ Same downstream task      │
+        └──────┬─────────────┬─────┘
+               ▼             ▼
+     ┌──────────────┐ ┌──────────────────┐
+     │ Same oracle  │ │ Tokens · records  │
+     │ decision      │ │ governance steps  │
+     │ quality       │ └─────────┬────────┘
+     └──────┬───────┘           │
+            └─────────┬─────────┘
+                      ▼
+        ┌──────────────────────────┐
+        │ Resume cost at            │
+        │ matched quality           │
+        └──────────────────────────┘
 ```
 
 The candidate resumable state is smaller than a transcript. It would preserve:

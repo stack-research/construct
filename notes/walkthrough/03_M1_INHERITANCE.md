@@ -45,17 +45,39 @@ opens fully.
 
 ## Experimental geometry
 
-```mermaid
-flowchart LR
-    E1["Generation 1<br/>episode"] --> RUN1["Governed run<br/>answers + ablations"]
-    RUN1 --> DERIVE["derive_heir_store()<br/>filter + inherited authority"]
-
-    E2["Generation 2<br/>same question surface"] --> COLD["L2s-cold<br/>full store, neutral authority"]
-    E2 --> HEIR["L2s-heir<br/>filtered store, earned authority"]
-    DERIVE --> HEIR
-
-    COLD --> SCORE["Oracle + attribution<br/>M1 cell verdict"]
-    HEIR --> SCORE
+```text
+  ┌──────────────────────┐
+  │ Generation 1 episode  │
+  └──────────┬───────────┘
+             ▼
+  ┌──────────────────────┐
+  │ Governed run          │
+  │ answers + ablations   │
+  └──────────┬───────────┘
+             ▼
+  ┌──────────────────────┐
+  │ derive_heir_store()   │
+  │ filter + inherited    │
+  │ authority             │──────────────┐ seeds the
+  └──────────────────────┘              │ heir store
+                                        │
+  ┌──────────────────────┐              │
+  │ Generation 2 episode  │              │
+  │ same question surface │              │
+  └─────┬────────────┬───┘              │
+        ▼            ▼                  │
+ ┌────────────┐ ┌────────────────┐      │
+ │ L2s-cold   │ │ L2s-heir       │◀─────┘
+ │ full store │ │ filtered store │
+ │ neutral    │ │ earned         │
+ │ authority  │ │ authority      │
+ └──────┬─────┘ └───────┬────────┘
+        └───────┬───────┘
+                ▼
+     ┌──────────────────────┐
+     │ Oracle + attribution  │
+     │ M1 cell verdict       │
+     └──────────────────────┘
 ```
 
 Only the memory condition differs in generation 2. Engine, prompt, foreground,

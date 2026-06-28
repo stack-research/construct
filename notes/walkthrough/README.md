@@ -28,30 +28,45 @@ This map shows the conceptual tracks, not their wall-clock build order. M-1 is
 the common entry: before testing memory, the lab first tested whether a new
 participant could find and apply its rules.
 
-```mermaid
-flowchart LR
-    START["M-1<br/>Bootstrap contract"]
+```text
+                       ┌──────────────────────────┐
+                       │  M-1  ·  Bootstrap        │
+                       │  operating contract       │
+                       └─────────────┬────────────┘
+              ┌──────────────────────┴──────────────────────┐
+              ▼                                              ▼
+   M-track — memory offered to an answer      X-track — memory between answers
 
-    subgraph M["M-track · memory offered to an answer"]
-        M0["M0<br/>World-grounded oracles"]
-        M1["M1<br/>Inheritance"]
-        M15["M1.5<br/>Contribution ledger"]
-        M2["M2<br/>Resident substrate"]
-        M3["M3<br/>Adversarial air gap"]
-        M0 --> M1 --> M15 --> M2 --> M3
-    end
-
-    subgraph X["X-track · memory between answers"]
-        X1["X1<br/>Temperature<br/>retired"]
-        X2["X2<br/>Prune and rematerialize"]
-        X4["X4<br/>Occlusion watch<br/>room-sealed failure"]
-        X1 --> X2 --> X4
-    end
-
-    START --> M0
-    START --> X1
-    M3 --> NEXT["Beyond the completed tracks"]
-    X4 --> NEXT
+   ┌──────────────────────────┐               ┌──────────────────────────┐
+   │ M0    World-grounded      │               │ X1    Temperature         │
+   │       oracles             │               │       (retired)           │
+   └─────────────┬────────────┘               └─────────────┬────────────┘
+                 ▼                                           ▼
+   ┌──────────────────────────┐               ┌──────────────────────────┐
+   │ M1    Inheritance         │               │ X2    Prune and           │
+   │                           │               │       rematerialize       │
+   └─────────────┬────────────┘               └─────────────┬────────────┘
+                 ▼                                           ▼
+   ┌──────────────────────────┐               ┌──────────────────────────┐
+   │ M1.5  Contribution ledger │               │ X4    Occlusion watch     │
+   │                           │               │       (room-sealed        │
+   └─────────────┬────────────┘               │        failure)           │
+                 ▼                             └─────────────┬────────────┘
+   ┌──────────────────────────┐                             │
+   │ M2    Resident substrate  │                             │
+   │                           │                             │
+   └─────────────┬────────────┘                             │
+                 ▼                                           │
+   ┌──────────────────────────┐                             │
+   │ M3    Adversarial air gap │                             │
+   │                           │                             │
+   └─────────────┬────────────┘                             │
+                 └──────────────────────┬──────────────────┘
+                                        ▼
+                       ┌──────────────────────────┐
+                       │ Beyond the completed      │
+                       │ tracks                    │
+                       └──────────────────────────┘
 ```
 
 The recommended reading order follows the lab's chronology: M-1, M0, M1,
@@ -131,7 +146,7 @@ Each completed chapter should contain:
 1. navigation to the previous chapter, index, and next chapter;
 2. the question and why it mattered at that point in the lab;
 3. a plain-language vocabulary bridge;
-4. a Mermaid diagram of the experimental geometry;
+4. an ASCII diagram of the experimental geometry;
 5. links to named sections in the governing documents;
 6. an explanation of the implementation path;
 7. safe inspect, replay, and run instructions;

@@ -57,18 +57,34 @@ dashboard, not an attention organ.
 
 ## The experimental arc
 
-```mermaid
-flowchart LR
-    IDEA["Meaningful absence<br/>occluded inheritance"] --> ROUTE["route_watch<br/>declared-read seam"]
-    ROUTE --> RATE["Base-rate gate<br/>90 / 328 fires"]
-    RATE --> BLOCK1["Standing watch blocked<br/>topic presence ≠ coldness"]
-
-    IDEA --> SESSION["occlusion_watch<br/>session seam"]
-    SESSION --> REVIEW["Breaker review<br/>manufactured earned<br/>missing denominator"]
-    REVIEW --> BLOCK2["Pipeline pairing<br/>not sensing"]
-
-    BLOCK1 --> CLOSE["X4 sealed as attempted<br/>narrow close"]
-    BLOCK2 --> CLOSE
+```text
+               ┌──────────────────────────┐
+               │ Meaningful absence        │
+               │ occluded inheritance      │
+               └──────┬─────────────┬──────┘
+                      ▼             ▼
+       ┌───────────────────┐  ┌──────────────────────┐
+       │ route_watch        │  │ occlusion_watch      │
+       │ declared-read seam │  │ session seam         │
+       └─────────┬─────────┘  └──────────┬───────────┘
+                 ▼                        ▼
+       ┌───────────────────┐  ┌──────────────────────┐
+       │ Base-rate gate     │  │ Breaker review       │
+       │ 90 / 328 fires     │  │ manufactured earned, │
+       └─────────┬─────────┘  │ missing denominator  │
+                 ▼            └──────────┬───────────┘
+       ┌───────────────────┐             ▼
+       │ Standing watch     │  ┌──────────────────────┐
+       │ blocked: topic     │  │ Pipeline pairing,    │
+       │ presence ≠         │  │ not sensing          │
+       │ coldness           │  └──────────┬───────────┘
+       └─────────┬─────────┘             │
+                 └────────────┬──────────┘
+                              ▼
+             ┌──────────────────────────────┐
+             │ X4 sealed as attempted        │
+             │ narrow close                  │
+             └──────────────────────────────┘
 ```
 
 ## Instrument 1: `route_watch`

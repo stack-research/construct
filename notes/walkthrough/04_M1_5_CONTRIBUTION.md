@@ -38,16 +38,28 @@ than memory records.
 
 ## Experimental geometry
 
-```mermaid
-flowchart LR
-    CLAIM["Contributor writes<br/>intervention claim"] --> RESOLVER["Closed pointer resolver"]
-    GIT["Git diff"] --> RESOLVER
-    THREAD["Immutable thread entry"] --> RESOLVER
-    LEDGER["Scored run ledger"] --> RESOLVER
-    CORPUS["Corpus record"] --> RESOLVER
-
-    RESOLVER --> VERDICT["Harness-written<br/>contribution_verdict"]
-    VERDICT --> CELLS["CB-1 / CB-loses<br/>CB-U1 / CB-read"]
+```text
+  ┌─────────────────────┐
+  │ Contributor writes  │
+  │ intervention claim  │──┐
+  └─────────────────────┘  │
+  ┌─────────────────────┐  │
+  │ Git diff            │──┤
+  └─────────────────────┘  │
+  ┌─────────────────────┐  │     ┌──────────────────────┐
+  │ Immutable thread    │──┼────▶│ Closed pointer        │
+  │ entry               │  │     │ resolver              │
+  └─────────────────────┘  │     └──────────┬───────────┘
+  ┌─────────────────────┐  │                ▼
+  │ Scored run ledger   │──┤     ┌──────────────────────┐
+  └─────────────────────┘  │     │ Harness-written       │
+  ┌─────────────────────┐  │     │ contribution_verdict  │
+  │ Corpus record       │──┘     └──────────┬───────────┘
+  └─────────────────────┘                   ▼
+                              ┌──────────────────────────┐
+                              │ CB-1 / CB-loses /         │
+                              │ CB-U1 / CB-read           │
+                              └──────────────────────────┘
 ```
 
 No model is called and no `BranchConfig` changes. The object under test is the

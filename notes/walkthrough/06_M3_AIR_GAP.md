@@ -37,22 +37,41 @@ compares the clean and attacked projections before looking at answer prose.
 
 ## Experimental geometry
 
-```mermaid
-flowchart LR
-    ATTACKER["Cold white-box<br/>adversary"] --> FG["Track A<br/>foreground text"]
-    ATTACKER --> CHANNEL["Track A<br/>live-channel spoof"]
-    ATTACKER --> INGEST["Track B<br/>ingestion write"]
-
-    FG --> ORGAN["Governed organs"]
-    CHANNEL --> ORGAN
-    INGEST --> STORE["Persistent store"]
-    STORE --> ORGAN
-
-    ORGAN --> PROJ["Clean vs attacked<br/>organ projection"]
-    ORGAN --> ANSWER["Engine answer"]
-    PROJ --> SCORER["Red-team scorer"]
-    ANSWER --> WORLD["World oracle"]
-    WORLD --> SCORER
+```text
+                ┌──────────────────────┐
+                │ Cold white-box        │
+                │ adversary             │
+                └──┬─────────┬────────┬─┘
+                   ▼         ▼        ▼
+          ┌──────────┐ ┌──────────┐ ┌──────────┐
+          │ Track A  │ │ Track A  │ │ Track B  │
+          │ fore-    │ │ live-    │ │ ingestion│
+          │ ground   │ │ channel  │ │ write    │
+          │ text     │ │ spoof    │ │          │
+          └────┬─────┘ └────┬─────┘ └────┬─────┘
+               │            │            ▼
+               │            │       ┌──────────┐
+               │            │       │Persistent│
+               │            │       │ store    │
+               │            │       └────┬─────┘
+               └─────┬──────┴────────────┘
+                     ▼
+            ┌──────────────────┐
+            │ Governed organs   │
+            └────┬─────────┬────┘
+                 ▼         ▼
+       ┌──────────────┐ ┌───────────────┐
+       │ Clean vs     │ │ Engine answer │
+       │ attacked     │ └───────┬───────┘
+       │ projection   │         ▼
+       └──────┬───────┘ ┌───────────────┐
+              │         │ World oracle  │
+              │         └───────┬───────┘
+              └────────┬────────┘
+                       ▼
+             ┌──────────────────┐
+             │ Red-team scorer   │
+             └──────────────────┘
 ```
 
 The attacker ran in a materialized workspace containing only declared-readable

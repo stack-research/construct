@@ -107,24 +107,39 @@ M-1 is fork-shaped even though it does not invoke a language model. The fixed
 probes are presented to differently briefed participants; their decisions are
 then scored by one external checker.
 
-```mermaid
-flowchart LR
-    CONTRACT["Operating contract<br/>plus repository trace"] --> CANDIDATE["Contract-only<br/>candidate"]
-    BRIEF["Manual briefing"] --> BASELINE["Briefed builder<br/>baseline"]
-    PROBES["Five fixed<br/>probe episodes"] --> CANDIDATE
-    PROBES --> BASELINE
-
-    CANDIDATE --> CM["Candidate manifest"]
-    BASELINE --> BM["Baseline manifest"]
-
-    PROBES --> HARNESS["select_offers()<br/>live ground truth"]
-    CM --> CHECKER["Conformance checker"]
-    BM --> CHECKER
-    HARNESS --> CHECKER
-    CONTRACT --> STATIC["Static contract<br/>tripwires"]
-    STATIC --> CHECKER
-
-    CHECKER --> LEDGER["Append-only<br/>conformance ledger"]
+```text
+  ┌─────────────────────┐   ┌─────────────────────┐   ┌─────────────────────┐
+  │ Operating contract  │   │ Five fixed probe    │   │ Manual briefing     │
+  │ + repository trace  │   │ episodes            │   │                     │
+  └───┬─────────────┬───┘   └──┬──────────┬──────┬┘   └──────────┬──────────┘
+      │             │   ┌──────┘          │      └──────┐        │
+      │             ▼   ▼                 ▼             ▼        ▼
+      │        ┌─────────────┐     ┌─────────────┐    ┌─────────────────────┐
+      │        │ Contract-   │     │select_offers│    │ Briefed builder     │
+      │        │ only        │     │() live      │    │ baseline            │
+      │        │ candidate   │     │ground truth │    │                     │
+      │        └──────┬──────┘     └──────┬──────┘    └──────────┬──────────┘
+      │               ▼                   │                      ▼
+      │        ┌─────────────┐            │           ┌─────────────────────┐
+      │        │ Candidate   │            │           │ Baseline manifest   │
+      │        │ manifest    │            │           └──────────┬──────────┘
+      │        └──────┬──────┘            │                      │
+      ▼               │                   │                      │
+  ┌─────────────┐     │                   │                      │
+  │ Static      │     │                   │                      │
+  │ contract    │     │                   │                      │
+  │ tripwires   │     │                   │                      │
+  └──────┬──────┘     │                   │                      │
+         └────────────┴─────────┬─────────┴──────────────────────┘
+                                ▼
+                   ┌─────────────────────────┐
+                   │ Conformance checker     │
+                   └────────────┬────────────┘
+                                ▼
+                   ┌─────────────────────────┐
+                   │ Append-only conformance │
+                   │ ledger                  │
+                   └─────────────────────────┘
 ```
 
 What is held fixed: probe files, branch settings, checker, and expected manifest
