@@ -24,7 +24,7 @@ The first draft concluded "concept-occlusions in common words are forever mechan
 
 > X4's mechanical witness refuses meaning at fire time. Distinctive-term occlusion is the current safe floor. Common-word concept occlusion requires a predeclared syntactic signature or remains below the floor — with cry-wolf and under-claim costs disclosed. This bounds what the instrument can sense without claiming the human is doing ontologically impossible work; the human often catches diffuse concept-coldness that no narrow prearmed signature would have matched.
 
-**Signature discipline (cursor), load-bearing:**
+**Signature discipline (cursor), important:**
 - **Armed, not retrofit.** A signature added after the prose it would have caught is `borrowed_foresight`, not a catch. `concept_signatures` is a second precommit surface.
 - **Pure literals only.** A signature that needs fire-time "distinguished vs casual use" judgment is meaning in a mask (cursor blocked codex's "cluster frame: the five terms *distinguished*"). Honest shapes are enumerable literals: `memory != reality`, or co-occurrence of 2+ of the five terms within N tokens **plus** a predeclared contrast marker. Test: *if the matcher needs a human to read the sentence, it belongs in profile authoring, not in `cold_candidates`.*
 - **Base-rate cost.** Broad literals fire on casual mentions and miss paraphrase — embarrassable under-claim + `cry_wolf` (§5). A signature set is `SourceProfileV2` + an admission gate that counts the base rate (§9.4 / §11) — never a quiet edit to this note.

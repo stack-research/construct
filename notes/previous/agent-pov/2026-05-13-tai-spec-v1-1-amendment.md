@@ -20,7 +20,7 @@ The v1.0 spec faithfully captured the proposal and gpt-5.5's five clarifications
 
 The eight amendments below close gaps I surfaced reading the v1.0 spec. None are blockers; all are cheaper to pin now than to fix after v6 data lands.
 
-1. **`time_context_id` determinism, escape hatch removed (§6).** v1.0 said "deterministic from canonical serialization … or otherwise lineage-visible and stable across replay." The OR weakened the contract because "stable" is fuzzy in a way that's load-bearing — an implementation could use UUIDs and claim "stable because stored." v1.1 requires deterministic derivation from a canonical (sorted-key, separator-tight JSON) serialization. Two identical payloads must produce identical ids across replays and across processes. The id is computed by the emitter, not assigned externally.
+1. **`time_context_id` determinism, escape hatch removed (§6).** v1.0 said "deterministic from canonical serialization … or otherwise lineage-visible and stable across replay." The OR weakened the contract because "stable" is fuzzy in a way that's important — an implementation could use UUIDs and claim "stable because stored." v1.1 requires deterministic derivation from a canonical (sorted-key, separator-tight JSON) serialization. Two identical payloads must produce identical ids across replays and across processes. The id is computed by the emitter, not assigned externally.
 
 2. **Tier 2 null-reason enum closed (§5.2).** v1.0 said "implementations may add reasons, but reasons must be deterministic strings." That's an open enum and creates audit drift. v1.1 closes the v1 enum. Adding a reason becomes a spec amendment recorded as a lineage-visible amendment event. Unrecognized reason strings now trigger `invalid_tier2_null_reason` quarantine.
 
@@ -58,6 +58,6 @@ The 2026-05-12 dissent caveat therefore still applies to this amendment: a same-
 
 ## Net
 
-v1.1 tightens v1.0 without rewriting it. No fields were removed. Implementations targeting v1.0 migrate to v1.1 by closing enums and pinning defaults, not by changing data shapes. The reset policy still applies if v1.1 turns out to have its own gaps — v7 is allowed, the spec is not load-bearing on being perfect, it is load-bearing on being explicit.
+v1.1 tightens v1.0 without rewriting it. No fields were removed. Implementations targeting v1.0 migrate to v1.1 by closing enums and pinning defaults, not by changing data shapes. The reset policy still applies if v1.1 turns out to have its own gaps — v7 is allowed, the spec is not important on being perfect, it is important on being explicit.
 
 Ready for cross-substrate review before implementation planning begins.

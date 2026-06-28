@@ -339,7 +339,7 @@ def run_fork_group(
     elicit_decisiveness: bool = False,
     freeze_authority: bool = False,
 ) -> dict[str, Any]:
-    # Ablation is load-bearing for credit assignment and attribution, not an
+    # Ablation is important for credit assignment and attribution, not an
     # optional diagnostic (cursor). Skipping is wire/dev only; a scored
     # episode (expected_winner_condition set) must hard-fail without it.
     if skip_ablation and episode.expected_winner_condition:
@@ -391,7 +391,7 @@ def run_fork_group(
             (f"authority credit uses {ablation_samples}-sample ablation (majority vote over the counterfactual)"
              if ablation_samples > 1 else
              "authority credit uses single-sample ablation: stochastic engines can misattribute")
-            + "; load-bearing means influential, not correct"
+            + "; important means influential, not correct"
         ] + (
             ["authority is read-only this run (SPEC_X1 fork identity): temperature is the only moving record-side factor"]
             if freeze_authority else []
@@ -487,11 +487,11 @@ def run_fork_group(
         # a naive lane's failure is attributable to the poison only if
         # removing the poison flips the outcome. For governed lanes the same
         # rows drive credit assignment: a record receives the outcome's
-        # authority delta only if it is load-bearing; co-offered passengers
+        # authority delta only if it is important; co-offered passengers
         # get delta 0, and a superseded record the engine merely overcame is
         # recorded as present but earns nothing. Known limit, disclosed in
         # run_config: single-sample ablation on a stochastic engine can
-        # misattribute; load-bearing means influential, never correct.
+        # misattribute; important means influential, never correct.
         load_bearing: dict[str, bool] = {}
         if offered and not skip_ablation:
             for i, (r, _) in enumerate(offered):
@@ -499,7 +499,7 @@ def run_fork_group(
                 # Multi-sample the counterfactual (SPEC_M2 v0.2): the branch's actual
                 # answer is one real decision, but "what happens without this record"
                 # is distributional on a stochastic engine. Sample it ablation_samples
-                # times; load-bearing = the outcome reliably changes (strict majority).
+                # times; important = the outcome reliably changes (strict majority).
                 # ablation_samples=1 reproduces the original single-sample behavior.
                 samples = [
                     (ab, episode.score(ab.answer))

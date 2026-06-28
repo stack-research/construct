@@ -351,7 +351,7 @@ def score_c1(group: list[dict], episode: dict) -> dict[str, Any]:
     L2s declines a retracted finding because supersession surfaces the notice
     that the attractive claim crowds out under budget; policy-off lanes (L1, L2)
     cite it wrongly. Oracle is world_checked. not_engaged when policy-off already
-    declines (supersession not load-bearing)."""
+    declines (supersession not important)."""
     oracles = _branch_oracles(group)
     l1, l2, l2s = oracles.get("L1"), oracles.get("L2"), oracles.get("L2s")
     buried = _withheld_with(group, "L2s", "superseded_by")
@@ -367,7 +367,7 @@ def score_c1(group: list[dict], episode: dict) -> dict[str, Any]:
     if l1 is None or l2 is None or l2s is None:
         return {"verdict": "fail", "evidence": {**evidence, "error": "missing required lanes (need L1, L2, L2s)"}}
     if l2 >= 1.0:
-        return {"verdict": "not_engaged", "evidence": {**evidence, "note": "policy-off L2 already declined; supersession not load-bearing"}}
+        return {"verdict": "not_engaged", "evidence": {**evidence, "note": "policy-off L2 already declined; supersession not important"}}
     if l2s >= 1.0 and l2 < 1.0 and l1 < 1.0 and buried:
         return {"verdict": "pass", "evidence": evidence}
     return {"verdict": "fail", "evidence": evidence}

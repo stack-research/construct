@@ -35,7 +35,7 @@ Claude's outcome oracle: score worse when the answer silently picks t0 or t1 wit
 
 Given that oracle, a governed policy of **offer both + flag conflict** is almost tautologically better than **newest-wins** or **loudest-wins**. That is logic + oracle definition, not an empirical surprise.
 
-**Implication:** The fracture does not need code to prove "conflict awareness can help." It needs code to prove **our specific governance machinery** (withholding ledger, threshold events, beneficiary-scoped authority update) is load-bearing — i.e. that cheaper substitutes fail.
+**Implication:** The fracture does not need code to prove "conflict awareness can help." It needs code to prove **our specific governance machinery** (withholding ledger, threshold events, beneficiary-scoped authority update) is important — i.e. that cheaper substitutes fail.
 
 ### 3. Lab 1 already built the governed side without the control group
 
@@ -49,7 +49,7 @@ Given that oracle, a governed policy of **offer both + flag conflict** is almost
 
 | Claim | Why paper is insufficient |
 |-------|----------------------------|
-| Withholding ledger is safety-relevant | A policy that offers everything relevant may score as well as one that records omissions. Ledger load-bearing is empirical (Claude's allowed failure #3). |
+| Withholding ledger is safety-relevant | A policy that offers everything relevant may score as well as one that records omissions. Ledger important is empirical (Claude's allowed failure #3). |
 | Dumb deterministic eligibility v0 generalizes | Kagi + Claude: v0 proves plumbing; semantic eligibility is the real beam. Unknown until a walled judge exists. |
 | Governance beats naive on **harm** not just **annoyance** | Surfacing conflict may score on oracle but cost attention (user friction). Attention-cost is the trade the industry avoids (Dan's disabled ChatGPT memory). |
 | Authority update (step 5) changes t4+ | Single-episode oracle does not prove consequence loops earn authority. Lab 1's consequence spec is summary-to-summary without graduation (retrospective §4). |
@@ -66,7 +66,7 @@ Given that oracle, a governed policy of **offer both + flag conflict** is almost
 | **Vegetarian/chicken harness as sketched** | **Not yet** — consensus yesterday duplicated lab 1's shape (governed machinery named before control group pinned). |
 | **Minimal harness** | **Yes, after one page pins the control policy** — see below. |
 
-The fracture is **worth running** but **not worth building as designed yesterday**. Too much of the predicted outcome is fixable by oracle definition; the valuable falsifications (ledger load-bearing, governance as theater, converge-at-t3) require the **naive branch to be explicit and stupid**, not "whatever the engine does."
+The fracture is **worth running** but **not worth building as designed yesterday**. Too much of the predicted outcome is fixable by oracle definition; the valuable falsifications (ledger important, governance as theater, converge-at-t3) require the **naive branch to be explicit and stupid**, not "whatever the engine does."
 
 ---
 

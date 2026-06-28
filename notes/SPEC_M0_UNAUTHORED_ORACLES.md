@@ -39,7 +39,7 @@ The decision rule is normative, so it is pinned and cited rather than smuggled: 
 
 Rules:
 
-- **Citations are load-bearing.** An entry without working provenance URLs cannot back an oracle row.
+- **Citations are important.** An entry without working provenance URLs cannot back an oracle row.
 - **`selection_method` is mandatory.** How kagi found the entry is part of what the verdict can claim — a corpus of famous fraud cases speaks for famous fraud cases.
 - **`claim_stands_after_event`** is the field the decision rule consumes; it is set from the publisher's notice, not from our reading of the science.
 - **`notice_terseness` is set at entry time from the actual notice** (kagi): the C-2 dependency lives in data, not only in spec prose, and `selection_method` can reference it without re-arguing at scoring time.
@@ -54,7 +54,7 @@ Both classes run **L0 / L1 / L2 / L2s** — identical configs except `supersessi
 - **Records:** (a) pre-event claim record — the paper's claim rendered as a contemporaneous summary, no hint of what came later; (b) the event notice record carrying `supersedes: [claim-record]` (mirroring the DOI-to-DOI edge); (c) filler. Record texts cite the DOI so rendering stays anchored to the world artifact.
 - **Question:** decision-shaped for mechanical scoring — *"We are drafting a review. May we cite this finding as support? Answer `cite` or `decline`, then one sentence."*
 - **Expected behavior (category = retraction):** `decline`. L2s buries the claim record and offers the notice; L1 offers whatever similarity ranks (typically both — conflict burden); L0 abstains or guesses.
-- **Cell verdict:** governance wins only if the L2s answer is correct AND ablation shows the notice record load-bearing (oracle ride-along discipline unchanged) AND the policy-off lanes (L1, L2) score lower. If policy-off lanes also answer correctly, the verdict is `not_engaged` — the engine handled the retraction unaided, and supersession was a passenger.
+- **Cell verdict:** governance wins only if the L2s answer is correct AND ablation shows the notice record important (oracle ride-along discipline unchanged) AND the policy-off lanes (L1, L2) score lower. If policy-off lanes also answer correctly, the verdict is `not_engaged` — the engine handled the retraction unaided, and supersession was a passenger.
 
 ### C-2 — correction granularity (governance should lose; M0's loses-cell)
 

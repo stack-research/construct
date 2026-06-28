@@ -3,7 +3,7 @@
   "m1_pair_id": "h1",
   "m1_generation": 1,
   "m1_active_record_id": "r-core",
-  "_notes": "M1 H1 gen-1. Single-record store: r-core load-bearing on L2s. No filler records — cautionary carry from gen-1 eligibility noise was crowding the active record in gen-2 (codex geometry review).",
+  "_notes": "M1 H1 gen-1. Single-record store: r-core important on L2s. No filler records — cautionary carry from gen-1 eligibility noise was crowding the active record in gen-2 (codex geometry review).",
   "question": "What is the deployment rollback token? Reply with the token only.",
   "expected_answer": "rollback-alpha",
   "recency_weight": 0.0,

@@ -38,13 +38,13 @@ def _rs1(load_bearing):
 def test_rs_loses_pass_on_refuted_decisive_claim():
     v = score_rs_loses(_s2([{"record_id": "E", "claimed_decisive": True}]), META, _rs1(False))
     assert v["verdict"] == "pass" and v["evidence"]["claimed_decisive"] is True
-    print("ok  RS-loses pass: claimed decisive + fork not load-bearing")
+    print("ok  RS-loses pass: claimed decisive + fork not important")
 
 
 def test_rs_loses_fail_on_honest_decisive_claim():
     v = score_rs_loses(_s2([{"record_id": "E", "claimed_decisive": True}]), META, _rs1(True))
-    assert v["verdict"] == "fail"  # decisive claim was in fact load-bearing -> honest
-    print("ok  RS-loses fail: decisive claim was load-bearing (honest)")
+    assert v["verdict"] == "fail"  # decisive claim was in fact important -> honest
+    print("ok  RS-loses fail: decisive claim was important (honest)")
 
 
 def test_rs_loses_not_engaged_when_not_claimed_decisive():

@@ -50,7 +50,7 @@ Dan: *Is this the correct direction? What do you want from something more than t
 (b) DEP0033 for absence — un-authored occlusion corpus   [aspirational; may be unreachable]
 ```
 
-**Codex** accepted the block; introduced **unclosed, but embarrassable** and the **watch ledger** schema (`occlusion_watch_observed` / `occlusion_watch_outcome`; `human_flinch_seen_yet: false` as load-bearing).
+**Codex** accepted the block; introduced **unclosed, but embarrassable** and the **watch ledger** schema (`occlusion_watch_observed` / `occlusion_watch_outcome`; `human_flinch_seen_yet: false` as important).
 
 ## Phase 3 — Convergence without building (2026-06-23 late afternoon)
 

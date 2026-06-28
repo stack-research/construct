@@ -24,4 +24,4 @@ The v1.2 spec closes the main ambiguities I raised:
 
 Conclusion: **v1.2 is implementation-ready**.
 
-One implementation caution: `canonical_batch_committed` is now load-bearing for bootstrap semantics. It should be implemented and tested early, not treated as incidental ingestion detail.
+One implementation caution: `canonical_batch_committed` is now important for bootstrap semantics. It should be implemented and tested early, not treated as incidental ingestion detail.

@@ -79,7 +79,7 @@ Required fallback defaults (conservative — unknown provenance must not read as
   Rationale: a broken or missing chain is not maximally diverse evidence; it is absence of evidence. Defaulting to `1.0` biases the gate toward admitting when provenance is unknowable, which inverts the project invariant that trust is a prior, not truth. Callers that need to distinguish "missing chain" from "single low-diversity source" must read `fallback_reason`, not the signal value.
 - `age_of_original_source = max(0, hours_stale)` when available, else `0.0`
 
-`fallback_reason` is the load-bearing field on fallback paths. Gate logic and audits must branch on `fallback_reason IS NOT NULL` rather than inferring fallback from signal values.
+`fallback_reason` is the important field on fallback paths. Gate logic and audits must branch on `fallback_reason IS NOT NULL` rather than inferring fallback from signal values.
 
 Additional fallback-path requirements:
 - Every payload produced on a fallback path must include `provenance_signal_source = "fallback"`. Successful computations set `provenance_signal_source = "computed"` (or `"cache"` if served from the §9 optional cache). This field is not redundant with `fallback_reason` — it lets downstream audits filter without parsing nullability.

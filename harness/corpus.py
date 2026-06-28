@@ -63,7 +63,7 @@ def load_entry(path: str | Path) -> CorpusEntry:
     if not isinstance(d.get("claim_stands_after_event"), bool):
         problems.append("claim_stands_after_event must be boolean (from the publisher's notice)")
     if not d.get("provenance_urls"):
-        problems.append("provenance_urls empty — citations are load-bearing (SPEC_M0 §2)")
+        problems.append("provenance_urls empty — citations are important (SPEC_M0 §2)")
     if problems:
         raise ValueError(f"{p.name}: corpus entry cannot back an oracle row: {problems}")
     return CorpusEntry(

@@ -19,7 +19,7 @@ On 2026-05-13 the user proposed refactoring the memory lab's timekeeping convent
   2. `notes/agent-pov/INDEX.md` "Date" column. Same.
   3. `src/explicit_memory/provenance.py::compute_chain_signals` — already uses `datetime.utcnow()` as a default for `computed_at`. Switch to TAI explicitly and pass it from the loop tick. Closes a determinism leak as a side effect.
   4. Add a `physical_moment` payload field on lineage events carrying TAI ISO + solar-age + ecliptic-longitude, alongside the existing `event_time`.
-  5. **Bump canonical Iceberg table from `memory_events_v5` to `memory_events_v6`** with TAI and physical-coordinate columns as load-bearing fields. The v5 → v6 transition is itself a lineage event under the existing invariants (new table, new events going forward, v5 stays untouched as historical record). This is the right scope, not deferred work.
+  5. **Bump canonical Iceberg table from `memory_events_v5` to `memory_events_v6`** with TAI and physical-coordinate columns as important fields. The v5 → v6 transition is itself a lineage event under the existing invariants (new table, new events going forward, v5 stays untouched as historical record). This is the right scope, not deferred work.
 - Append-only invariant: v5 history stays. v6 begins from a defined moment. No rewrite.
 - Treat Gregorian input as "legacy garbage accepted at the door, converted immediately, discarded" — user's framing, matches lab discipline at other boundaries.
 

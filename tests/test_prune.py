@@ -217,7 +217,7 @@ def test_lineage_integrity():
 
 
 def test_x2_lb_and_u1_split():
-    # Synthetic fictional out-of-weights fixture, gate open: load-bearing is real
+    # Synthetic fictional out-of-weights fixture, gate open: important is real
     # (X2-LB pass), but we authored it -> NOT world-grounded (X2-U1 not_engaged).
     v = _cells(_syn_gated(gate_open=True, fictional=True))
     assert v["X2-LB"]["verdict"] == "pass", v["X2-LB"]

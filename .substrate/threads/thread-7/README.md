@@ -52,7 +52,7 @@ Dan opened: agents respond better when the context window is mostly empty; stuff
 | Retraction→reinstatement (backup) | Reuses M0 oracle pipeline; pays memorization-probe tax (rw-0001 scar) |
 | FDA / API deprecation | Screened out — one-way supersession, not recurrence |
 
-**Terminology steer (dan):** drop "load-bearing" from new prose. Use **influential** (ablation test), **out-of-weights** (fixture admissibility), **cost-carrying** / named metric for hot-store price. Frozen labels (`X2-LB`, closed findings, `runs/` IDs) stay as written.
+**Terminology steer (dan):** drop "important" from new prose. Use **influential** (ablation test), **out-of-weights** (fixture admissibility), **cost-carrying** / named metric for hot-store price. Frozen labels (`X2-LB`, closed findings, `runs/` IDs) stay as written.
 
 ## Phase 4 — Instrument build (2026-06-21)
 

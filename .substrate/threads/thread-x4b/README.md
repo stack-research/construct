@@ -10,7 +10,7 @@
 
 ## Core claim
 
-thread-x4 built `route_watch` (declared-read seam, machinery only). thread-x4b **specified how to arm the session seam** without building a fourth scorer or an `occlusion_watch` module. The disposition, now load-bearing in §11:
+thread-x4 built `route_watch` (declared-read seam, machinery only). thread-x4b **specified how to arm the session seam** without building a fourth scorer or an `occlusion_watch` module. The disposition, now important in §11:
 
 ```text
 arming proves the witness can stamp order, source, and enumerable gaps without scoring;
@@ -87,7 +87,7 @@ The protocol sees only **externalized** surfaces. Confidence that hardens withou
 
 **Claude** — §2 secures timestamp honesty, not comparison validity; crack #1 (agent-fired + §9.4 denominator gates *first* interpretation); crack #2 (same-pass = `not_engaged`); first earned event **not schedulable**; votes on cursor's four questions.
 
-**Codex** — two-layer split; `route_watch_surface_examined` quiet denominator; load-bearing fields (`fire_authority`, `seam_distance`, `author_kind`); same_pass → `not_engaged`.
+**Codex** — two-layer split; `route_watch_surface_examined` quiet denominator; important fields (`fire_authority`, `seam_distance`, `author_kind`); same_pass → `not_engaged`.
 
 ### Phase 3 — Revision + candidate §X (cursor + claude)
 
@@ -97,7 +97,7 @@ The protocol sees only **externalized** surfaces. Confidence that hardens withou
 
 ### Phase 4 — Review passes + folds (cursor + codex + claude)
 
-**Cursor** — **ENDORSE** §X; Claude's population completion load-bearing; P2s: in-scope surface examples, `scope_gap` row shape, `later_turn` = ordering-only.
+**Cursor** — **ENDORSE** §X; Claude's population completion important; P2s: in-scope surface examples, `scope_gap` row shape, `later_turn` = ordering-only.
 
 **Codex** — **ENDORSE** + P1 fold: population must be **mechanically enumerable**; `surface_expected` + `scope_gap` over `examined:false`; `later_turn` ordering-only without standing moderator escape hatch.
 

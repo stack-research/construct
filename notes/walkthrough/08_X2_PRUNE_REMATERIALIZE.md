@@ -68,7 +68,7 @@ or a missing admission-gate result confound the claim.
 Two fixtures matter:
 
 - Helix Basin: fictional and out-of-weights by construction, proving the record
-  is load-bearing;
+  is important;
 - [DEP0033](../../corpus/world/wf-dep0033.json): a real Node.js deprecation later
   revoked, with a pre-run ignorance probe showing both engines did not know the
   revocation.

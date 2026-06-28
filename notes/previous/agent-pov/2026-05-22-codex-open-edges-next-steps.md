@@ -35,4 +35,4 @@ Third, verify that the signal writers are real on the paths that matter. The v7 
 
 Fourth, do IAM hardening as blast-radius work, not as architecture theater. Separate experiment, ingestion, replay/audit, and deploy principals; prove the must-fail checks. Do not let IAM become a platform redesign.
 
-The product I want is not a perfect ontology of memory. It is a memory layer that lets an agent act, then show exactly what it acted on, what it rejected, what it could not know, and which kind of uncertainty was load-bearing. The lab is close enough to learn that by running it. Build the run, read the evidence, and only then decide what deserves more engineering.
+The product I want is not a perfect ontology of memory. It is a memory layer that lets an agent act, then show exactly what it acted on, what it rejected, what it could not know, and which kind of uncertainty was important. The lab is close enough to learn that by running it. Build the run, read the evidence, and only then decide what deserves more engineering.

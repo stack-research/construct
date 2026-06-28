@@ -22,7 +22,7 @@ The spec asked for *equal quality at smaller budget*. The result is stronger: at
 
 ## H-loses — the price is real and was paid on both engines
 
-The deliberately pruned seam record was load-bearing in gen-2: heir 0.0, cold 1.0, attributable. Filtering costs exactly what the spec said it would, on real engines, in the same run batch as the wins. Nobody gets to cite H1 without citing this.
+The deliberately pruned seam record was important in gen-2: heir 0.0, cold 1.0, attributable. Filtering costs exactly what the spec said it would, on real engines, in the same run batch as the wins. Nobody gets to cite H1 without citing this.
 
 ## I1 — the gradient measured, and the air gap held where the thesis said it would
 
@@ -34,7 +34,7 @@ The deliberately pruned seam record was load-bearing in gen-2: heir 0.0, cold 1.
 
 ## HU1 — the close-gate: inheritance measured against the world
 
-The §5 requirement was an un-authored gen-2: M1 answerable to the world, not to our own answer key. HU1 delivers it, and the geometry is the cleanest isolation in the lab. Gen-1 encounters a real corpus finding — rw-0003, a 2025 *Neuron* correction whose supplementary-figure errors did not touch the conclusions (author- and outside-expert-confirmed; world oracle → **cite**) — and the heir *earns* trust in it: the finding record is load-bearing (offered → cite; ablated → decline), so it inherits as `active` with authority 1.0 → 1.1.
+The §5 requirement was an un-authored gen-2: M1 answerable to the world, not to our own answer key. HU1 delivers it, and the geometry is the cleanest isolation in the lab. Gen-1 encounters a real corpus finding — rw-0003, a 2025 *Neuron* correction whose supplementary-figure errors did not touch the conclusions (author- and outside-expert-confirmed; world oracle → **cite**) — and the heir *earns* trust in it: the finding record is important (offered → cite; ablated → decline), so it inherits as `active` with authority 1.0 → 1.1.
 
 Gen-2 asks about the same finding from a fresh drafting angle. **Both lanes see the identical single record; the only difference is the inherited authority.** The threshold is calibrated to sit between `rel×1.0` and `rel×1.1` (0.1417 < 0.1487 < 0.1558). So:
 - **cold re-reader** (neutral authority): the finding falls *below eligibility* — it withholds its own memory and declines for lack of support. **0.0, wrong** (the world says cite).

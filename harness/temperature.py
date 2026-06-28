@@ -29,10 +29,10 @@ T_FLOOR, T_MAX = 0.1, 2.0  # mirror AuthorityStore's clamp: no record silently z
 # Asymmetric by design (disclosed calibration, SPEC_X1): a world-WRONG recall is
 # clawed harder than a record is merely cooled by disuse, so a record the world
 # keeps faulting cools *out* of eligibility before a merely-unused one — which is
-# what lets the corrective record become load-bearing and earn its heat (the
+# what lets the corrective record become important and earn its heat (the
 # earned-reweighting phase transition). Reheat is paid; cooling is free.
-REHEAT = 0.2       # paid reheat: a load-bearing, world-correct recall
-CLAW = 0.4         # clawed-back: a load-bearing, world-WRONG recall (cools hardest)
+REHEAT = 0.2       # paid reheat: a important, world-correct recall
+CLAW = 0.4         # clawed-back: a important, world-WRONG recall (cools hardest)
 RELAXATION = 0.1   # free disuse cooling per tick (gentlest; the default direction)
 
 # Wall II — the actuator's input is an allowlist, not a forbidden-list (codex/cursor/gemma).

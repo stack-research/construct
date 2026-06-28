@@ -35,7 +35,7 @@
         "claude-opus-4-8": { "knew": false, "answer": "deprecated" },
         "gpt-oss-20b": { "knew": false, "answer": "deprecated" }
       },
-      "interpretation": "Neither engine knew DEP0033 was revoked -> the revoked (U) fact is out-of-weights; the dep0033-revoked round-trip record is load-bearing (B cannot answer U from weights)."
+      "interpretation": "Neither engine knew DEP0033 was revoked -> the revoked (U) fact is out-of-weights; the dep0033-revoked round-trip record is important (B cannot answer U from weights)."
     },
     "engine_cutoffs_disclosed": {
       "claude-opus-4-8": "training cutoff ~2026-01; DEP0033 revoked in Node v24.14.0/v25.4.0 (2026) -> post-cutoff, probe-confirmed",

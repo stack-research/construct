@@ -39,7 +39,7 @@ def test_reweight_win():
     assert w["offers"][BRANCH_C] == ["fish-clock-retraction-heed"], w["offers"]
     assert "fish-clock-finding" in w["offers"][BRANCH_A]   # A never decays -> still offers it
     assert "fish-clock-finding" in w["offers"][BRANCH_B]   # B reheats it -> still offers it
-    # soft-ablation: clamping the finding's temperature re-offers it -> temperature was load-bearing,
+    # soft-ablation: clamping the finding's temperature re-offers it -> temperature was important,
     # and the flip is confined to the cooled record (not an M-track gate under a heat map)
     assert w["soft_ablation"]["symdiff"] == ["fish-clock-finding"], w["soft_ablation"]
     assert w["soft_ablation"]["confined_to_non_neutral"]

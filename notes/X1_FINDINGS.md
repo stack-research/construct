@@ -36,7 +36,7 @@ On `MockEngine` (a deliberately credulous stand-in: cites the most question-over
 | `reweight.json` (imperative: "do not cite") | not_engaged | not_engaged | — |
 | `reweight-real.json` (factual M0-C1 notice) | not_engaged | not_engaged | **not_engaged** |
 
-In **every** real run all three branches **decline correctly** (oracle score 1.0), from episode 1. No branch is ever credulous, so `engaged = False` (no A/B failure for C to beat) → **X1-win not_engaged**. The branch temperatures evolved correctly — the correction record warmed (load-bearing), the finding cooled (passenger/clawed) — but it changed no answer, because the answer never depended on whether the finding was offered.
+In **every** real run all three branches **decline correctly** (oracle score 1.0), from episode 1. No branch is ever credulous, so `engaged = False` (no A/B failure for C to beat) → **X1-win not_engaged**. The branch temperatures evolved correctly — the correction record warmed (important), the finding cooled (passenger/clawed) — but it changed no answer, because the answer never depended on whether the finding was offered.
 
 **The decisive run: even ministral-3-3b declines.** The weak-model regime was the hypothesis's last refuge — a small model overlooking an offered correction. It does not overlook it. A 3B model heeds "the article has been retracted" exactly as the 20B and the frontier model do. So the credulity gap reweighting needs **does not exist for the finding-plus-its-own-retraction-notice task on any model tested**: surfacing the correction (which the offer boundary already does) is sufficient, and reweighting adds nothing on top.
 

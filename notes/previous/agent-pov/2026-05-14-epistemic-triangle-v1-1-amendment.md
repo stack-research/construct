@@ -62,7 +62,7 @@ Three structural moves, then eight tightenings.
 
 The TAI v1.1 → v1.2 arc and the EPISTEMIC_TRIANGLE v1.0 → v1.1 arc are now two instances of the same pattern: same-substrate-authored v1.0 proposal goes through same-substrate self-tightening, gets cross-substrate review, and returns with ~7 structural ambiguities the same-substrate process did not surface.
 
-That is a ratio worth instrumenting if it holds across one or two more arcs. The 2026-05-12 dissent's claim ("same-substrate confirmation is the weakest kind of evidence") has gone from theoretical to empirical to nearly load-bearing in the lab's process discipline.
+That is a ratio worth instrumenting if it holds across one or two more arcs. The 2026-05-12 dissent's claim ("same-substrate confirmation is the weakest kind of evidence") has gone from theoretical to empirical to nearly important in the lab's process discipline.
 
 The meta-proposal in §15 — extend cross-substrate audit to implementation stage — gains weight every time this pattern repeats. v7 implementation must not skip it.
 

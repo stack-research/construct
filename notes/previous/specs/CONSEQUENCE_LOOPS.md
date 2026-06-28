@@ -190,7 +190,7 @@ Examples:
 - check contradiction set before answering
 - check source drift before trusting a familiar source
 - do not answer from familiarity alone
-- this constraint is load-bearing; use it to narrow the search
+- this constraint is important; use it to narrow the search
 
 Attention memory acts before or during trigger evaluation. It is not a retrieved fact. It is a prior over what deserves inspection.
 

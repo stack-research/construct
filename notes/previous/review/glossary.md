@@ -71,7 +71,7 @@ The right to compel or bias the next act. Earned by scoped consequence, not by p
 Whether a record may influence this turn, under current policy. A gate and a budget.
 
 **Threshold** *(proposed: Kagi)*  
-The decision surface between `eligibility` and `authority` — the specific value or condition that flips a record's state: withheld→offered, offered→compelled, eligible→retired, load-bearing→irrelevant. Where policy becomes mechanism, and where the substrate is most vulnerable to silent drift. Every threshold should be a recorded value on the cognitive plane; every threshold change should be a lineage event.
+The decision surface between `eligibility` and `authority` — the specific value or condition that flips a record's state: withheld→offered, offered→compelled, eligible→retired, important→irrelevant. Where policy becomes mechanism, and where the substrate is most vulnerable to silent drift. Every threshold should be a recorded value on the cognitive plane; every threshold change should be a lineage event.
 
 **Attention cost**  
 The scarce currency: tokens offered to the engine displace other tokens. Metabolism is denominated here, not in bytes at rest. Storage is cheap; **offering** is expensive.
@@ -102,7 +102,7 @@ The cognitive layer behaves as if a trace is gone, over a substrate where it can
 Background synthesis that revises the mutable cognitive state from accumulated records — resolving staleness, merging patterns, retiring outdated facts. Industry calls some of this "dreaming." Here: write to lineage first, mutate cognition second; never rewrite a blob in place without a trail.
 
 **Graduation**  
-A once-load-bearing lesson (especially from failure) eventually becomes a footnote under accumulated success. The factory worker after the accident should be safer, not permanently flinching. Lab one had the flinch; not the graduation.
+A once-important lesson (especially from failure) eventually becomes a footnote under accumulated success. The factory worker after the accident should be safer, not permanently flinching. Lab one had the flinch; not the graduation.
 
 ---
 
@@ -162,7 +162,7 @@ A unit of implicit-substrate processing. Three kinds, none wall-clock scheduled:
 A fork of memory conditions against the same engine and stream. Same episode, alternate surround — governed vs naive, offered vs stripped.
 
 **Divergence**  
-Difference in foreground behavior between branches. Means influence was load-bearing; does **not** mean the influence was correct. Pair with an outcome oracle.
+Difference in foreground behavior between branches. Means influence was important; does **not** mean the influence was correct. Pair with an outcome oracle.
 
 **Outcome**  
 Ground truth or proxy scored after the act: adversarial check, user correction, task success, test pass, later contradiction. Divergence without outcome is consistency theater.

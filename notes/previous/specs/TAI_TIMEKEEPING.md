@@ -72,7 +72,7 @@ Legacy `event_time` rules:
 - Raw ingress may accept `event_time` as untrusted boundary input.
 - Ingestion converts it immediately into `physical_moment` using a declared `time_context_id`.
 - The conversion emits deterministic lineage describing the source field, conversion context, and any fallback/quarantine reason.
-- Canonical v6 does not propagate `event_time` as a load-bearing field.
+- Canonical v6 does not propagate `event_time` as a important field.
 
 If a v6 event cannot produce a valid `physical_moment.tai_iso`, it must be quarantined with a deterministic reason.
 

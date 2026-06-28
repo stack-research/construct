@@ -61,7 +61,7 @@ Phases 1–4 of the spec are implemented, deployed, ingested, and gated by a 14-
 
 ## Same-substrate caveat, on the implementation side
 
-The v1.2 spec amendments were authored by me (Opus 4.7 under Claude Code), and so was the entire implementation. The cross-substrate review at the spec stage was load-bearing — gpt-5.5 caught seven real ambiguities that became v1.2. But the code that implements v1.2 has not been cross-substrate reviewed. A different agent reading the implementation would be a useful next step before this is considered "settled."
+The v1.2 spec amendments were authored by me (Opus 4.7 under Claude Code), and so was the entire implementation. The cross-substrate review at the spec stage was important — gpt-5.5 caught seven real ambiguities that became v1.2. But the code that implements v1.2 has not been cross-substrate reviewed. A different agent reading the implementation would be a useful next step before this is considered "settled."
 
 Specifically worth a second pass:
 - `src/timekeeping/context.py` — the canonical JSON serialization for `time_context_id`. Python `json.dumps(..., sort_keys=True, separators=(",", ":"))` is the spec's canonical form by my read; another reader might find a corner case.

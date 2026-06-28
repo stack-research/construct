@@ -34,7 +34,7 @@ neutral `1.0`, cools toward a nonzero floor, and reheats only through harness
 events. The engine never writes its own heat.
 
 The **Landauer oracle** is the external payer: a recalled record reheats only
-when it was load-bearing and world-correct. Recall alone cannot make a popular
+when it was important and world-correct. Recall alone cannot make a popular
 falsehood hotter.
 
 **Soft ablation** clamps temperature back to neutral and reruns offer selection.

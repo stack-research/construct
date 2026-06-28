@@ -119,7 +119,7 @@ That idempotence matters: recomputation does not duplicate verdicts.
 
 ## The result
 
-The planted self-esteem row claimed load-bearing credit using only a thread
+The planted self-esteem row claimed important credit using only a thread
 timestamp. The timestamp proved the comment existed; it could not prove the
 artifact depended on it. The scorer refused the claim.
 
@@ -134,7 +134,7 @@ Two positive rows resolved:
 
 ## What M1.5 proves—and does not
 
-M1.5 closes **self-declared is not load-bearing**. It does not close **counted is
+M1.5 closes **self-declared is not important**. It does not close **counted is
 not read**. A beautiful ledger nobody consults is still bookkeeping. CB-read is
 therefore `not_engaged`, explicitly creating M2's entry condition.
 

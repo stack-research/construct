@@ -21,7 +21,7 @@ The contrast row matters as much: the honest passenger (`iv-claude-m1-closure-an
 
 - **Real, world-checked:** CB-U1. kagi's rw-0003 sourcing inherits world-groundedness through the `scorer_evidence` chain to HU1 — the contribution ledger borrows M0/M1's already-un-authored oracle rather than authoring its own. `source: world_checked`, machine-walkable (`corpus_record_id → episode → cell_verdict → oracle_source`).
 - **Real, artifact-grounded:** CB-1. Computed from immutable git/ledger artifacts; honest even though the subject is the lab's own builders (the artifact-diff oracle is what makes M1-as-its-own-subject safe — "removing this intervention changes `score_cells.py`" is checkable without trusting anyone's memory).
-- **Carried (disclosed null), M2-owed:** CB-read. M1.5 closes *self-declared ≠ load-bearing*; *counted ≠ read* (a resident that reads the ledger and decides differently) is the entry condition into M2, not demonstrated here. Parallel to M1's H2 and M0's C-2 nulls.
+- **Carried (disclosed null), M2-owed:** CB-read. M1.5 closes *self-declared ≠ important*; *counted ≠ read* (a resident that reads the ledger and decides differently) is the entry condition into M2, not demonstrated here. Parallel to M1's H2 and M0's C-2 nulls.
 
 ## Process / honesty notes
 
@@ -41,8 +41,8 @@ The contrast row matters as much: the honest passenger (`iv-claude-m1-closure-an
 ## Standing debts (M1.5 → carried to v0.2 / M2; none block the close)
 
 - **CB-read** remains the M2 entry condition — the ledger is *writing*; whether it is *read to change a decision* is the next milestone's burden.
-- **Outcome taxonomy is half-computed.** `load_bearing` is computed (the part the close rests on), but `landed`/`reversed` are still taken from the claim once any pointer grants load-bearing; only `blocked` is computed (two-pointer rule). **v0.2 tighten:** `reversed` should require a resolved `reversal_of` + trace evidence the prior landed state is superseded, before reversed outcomes carry evidentiary weight (cursor #1, codex #2).
+- **Outcome taxonomy is half-computed.** `load_bearing` is computed (the part the close rests on), but `landed`/`reversed` are still taken from the claim once any pointer grants important; only `blocked` is computed (two-pointer rule). **v0.2 tighten:** `reversed` should require a resolved `reversal_of` + trace evidence the prior landed state is superseded, before reversed outcomes carry evidentiary weight (cursor #1, codex #2).
 - **`blocked`/`reversed` paths unexercised.** The corpus has no `blocked` or `reversed` row, so the two-pointer guard and `reversal_of` are implemented but untested on a real row — a CB-1 coverage gap to close at M2 (kagi/cursor/codex/grok all named it; the I1-timing hollow-pass→rerun is the natural reversed candidate).
 - **CB-U1 single-chain robustness** — one intervention / one chain / one inherited cell is the narrowest world-checked leg that satisfies v0.1; M2 needs more than the HU1 line surviving intact (kagi).
-- **`scorer_evidence` without corpus presence** — a synthesis author could point only at a downstream `cell_verdict` and earn load-bearing without a `corpus_record_id`; a v0.2 kind-specific rule could require both for synthesis (cursor design note). Not triggered here — kagi's row carries both pointers.
+- **`scorer_evidence` without corpus presence** — a synthesis author could point only at a downstream `cell_verdict` and earn important without a `corpus_record_id`; a v0.2 kind-specific rule could require both for synthesis (cursor design note). Not triggered here — kagi's row carries both pointers.
 - **`ledger_row_hash`** unimplemented (no row needs it yet); **gemma's** intrinsic-value / actuator-skill `contributory_asset` split stays v0.2, gated behind CB-read engaging.

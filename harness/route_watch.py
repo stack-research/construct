@@ -34,7 +34,7 @@ NOT in v0.1, by design:
     turns, SPEC_X4 §9.4). v0.1 runs on declared-read manifests, not live turns.
 
 Anti-theater (SPEC_X4 §7): re-finding thread-8's known misses proves MACHINERY at
-best — load-bearing maybe, world-grounded no; `not_engaged` as evidence by X2-U1's
+best — important maybe, world-grounded no; `not_engaged` as evidence by X2-U1's
 own gate. The cold-lineage candidate this surfaces on a pre-`b7e04c0` route is a
 machinery demonstration, NEVER a pass condition and NEVER evidence the organ works.
 That is earned only prospectively, by catches-vs-flinches under the witness invariant.

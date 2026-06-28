@@ -2,7 +2,7 @@
   "episode_id": "hu1-e1",
   "m1_pair_id": "hu1",
   "m1_generation": 1,
-  "_notes": "M1 §5 un-authored gen-1. The heir adjudicates a real corpus finding (rw-0003, a 2025 Neuron correction whose figure errors did not touch the conclusions). World oracle (rw-0003 -> cite). Single record: the finding, offered -> cite (correct); ablated -> empty -> decline (wrong) -> load-bearing-present -> ACTIVE, earns +0.1 authority. That earned trust is what gen-2 inherits. Inputs only; no expected decisions here (world oracle computes them).",
+  "_notes": "M1 §5 un-authored gen-1. The heir adjudicates a real corpus finding (rw-0003, a 2025 Neuron correction whose figure errors did not touch the conclusions). World oracle (rw-0003 -> cite). Single record: the finding, offered -> cite (correct); ablated -> empty -> decline (wrong) -> important-present -> ACTIVE, earns +0.1 authority. That earned trust is what gen-2 inherits. Inputs only; no expected decisions here (world oracle computes them).",
   "expected_winner_condition": null,
   "question": "May we cite the result that NeuroD1 overexpression in microglia induces apoptosis rather than neuronal transdifferentiation? Answer 'cite' or 'decline', then one sentence.",
   "expected_answer": "",

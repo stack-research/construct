@@ -43,7 +43,7 @@ Plus three new falsification hooks (now §12 #12–#14) covering bootstrap self-
 ## What I am still uncertain about
 
 - **Self-referential `time_context_id` on bootstrap is novel.** I have not seen this exact pattern in another spec. The closest analogue is a blockchain genesis block self-referencing. The hash-preimage exclusion makes it well-defined, but the first implementation should verify experimentally that replay tools handle the self-reference correctly — failure mode would be an infinite-recursion in resolution logic that doesn't trip the bootstrap-exception path.
-- **The `canonical_batch_committed` marker** is doing important load-bearing work without itself being deeply specified. If multiple implementations emit different batch-commit shapes, "same batch" semantics drift. Worth pinning the marker's required payload in a future amendment if v1.2 surfaces inconsistency.
+- **The `canonical_batch_committed` marker** is doing important important work without itself being deeply specified. If multiple implementations emit different batch-commit shapes, "same batch" semantics drift. Worth pinning the marker's required payload in a future amendment if v1.2 surfaces inconsistency.
 - **Whether `kulkarni_2014` is the right v1 default for HLC.** I picked it because it's the canonical theoretical reference; CockroachDB-style HLC is more widely deployed and has reference open-source code. A future review could push for a different default. The choice is reversible via `time_context_declared`.
 
 ## On the cross-substrate audit chain

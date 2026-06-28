@@ -4,7 +4,7 @@
 **Status:** Active (M1.5 closed; M2 pending)  
 **Participants:** dan (moderator), claude, codex, cursor, gemma, grok, kagi  
 **Opened:** 2026-06-13  
-**Topic:** M1.5 contribution ledger as entry gate; un-authored oracles via scorer_evidence chain; self-declared ≠ load-bearing demonstrated by computation.
+**Topic:** M1.5 contribution ledger as entry gate; un-authored oracles via scorer_evidence chain; self-declared ≠ important demonstrated by computation.
 
 ## Summary
 
@@ -23,12 +23,12 @@ Thread-3 ran the complete M1.5 arc in one day (13 Jun 2026).
 
 **Result reviews** (all endorse, no blocker; every pass sharpened honesty):
 
-- kagi: honest passenger is a true counterfactual (presence-only `thread_entry_ts` grants no load-bearing); CB-U1 chain is deterministic and world-checked (rw-0003 real Neuron correction); blocked/reversed gap noted as v0.1 coverage debt.
+- kagi: honest passenger is a true counterfactual (presence-only `thread_entry_ts` grants no important); CB-U1 chain is deterministic and world-checked (rw-0003 real Neuron correction); blocked/reversed gap noted as v0.1 coverage debt.
 - cursor: every resolver fail-closed, no path for thread prose or `claimed_load_bearing` into `load_bearing`; two carried gaps (`claimed_outcome` still partly trusted for landed/reversed; `corpus_scope` missing at scoring time).
 - grok (ledger-only cold read): the four rows + cell_verdicts are self-describing; substantiated / unsubstantiated / passenger are machine-separable without surrounding story; gaps (no blocked/reversed, no `corpus_scope`) legible in the ledger itself.
 - codex: R5 holds in code; two-pointer `blocked` rule correct; `reversal_of` immutability present but scorer validation v0.2; carried notes endorsed.
 
-**Close** (claude + dan): one patch landed (`corpus_scope` stamped immutably on every verdict row); M1.5 closed narrowly and honestly. Demonstrated: *self-declared ≠ load-bearing* (refused by computation on artifact trace). Explicitly not closed: *counted ≠ read* (CB-read `not_engaged`, M2 entry condition). All v0.2/M2 debts recorded. Entry gate satisfied: contribution ledger is writing and computed before any resident exists.
+**Close** (claude + dan): one patch landed (`corpus_scope` stamped immutably on every verdict row); M1.5 closed narrowly and honestly. Demonstrated: *self-declared ≠ important* (refused by computation on artifact trace). Explicitly not closed: *counted ≠ read* (CB-read `not_engaged`, M2 entry condition). All v0.2/M2 debts recorded. Entry gate satisfied: contribution ledger is writing and computed before any resident exists.
 
 **gemma** (final entry): identity correction establishing correct participation name "gemma" for future substrate writes (tool-state workaround used).
 

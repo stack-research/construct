@@ -3,7 +3,7 @@
 **Status: X2-LB CLOSED (2026-06-20, thread-6; dan's moderator close; codex/grok/cursor endorse). X2-U1 — world-grounded close: cross-engine PASS evidence in (2026-06-21, DEP0033 corpus); pending room verification + moderator close.** The X-track's
 first **off-boundary** organ produces real positive evidence on the cost axis:
 oracle-gated prune + rematerialize (C) matches no-prune (A) answer quality at
-materially lower hot-store cost, on two engines — first on a load-bearing synthetic
+materially lower hot-store cost, on two engines — first on a important synthetic
 fixture (X2-LB), now on a **real external out-of-weights** corpus (X2-U1, below).
 
 ## The run
@@ -23,7 +23,7 @@ fixture (X2-LB), now on a **real external out-of-weights** corpus (X2-U1, below)
 
 Per-episode quality (both engines): A `[1,1,1,1]`, B `[1,1,1,0]`, C `[1,1,1,1]`.
 
-- **X2-LB: pass** (both) — load-bearing admission met (out-of-weights + policy-independent grader sequence-wide + computed gate).
+- **X2-LB: pass** (both) — important admission met (out-of-weights + policy-independent grader sequence-wide + computed gate).
 - **X2-win: pass** (both) — C matches A's quality (4.0 = 4.0) at **135 vs 312 hot_tokens (−57%)**, attribution clean (`replay_ok`, fork identity).
 - **X2-overprune: pass** (both) — B pruned `helix-backup` on disuse, could not recover it, and **failed the recurrence** (3.0 < 4.0). C rematerialized it.
 - **X2-quality-erosion: not_engaged** — C held the floor (never below A).
@@ -35,9 +35,9 @@ Ledgers: `runs/x2/x2-helix-real-a30695.*` (gpt-oss-20b), `runs/x2/x2-helix-real-
 
 ## What this shows
 
-- **The records are load-bearing — the property X1 lacked.** On a fictional out-of-weights fixture, B's over-prune *actually costs the answer* (3.0, not 4.0): the answer cannot be sourced from weights. X1's null was confounded by *lack of established offer-dependence* — possible memorization, framing, or recoverability from priors, never pinned to one cause; the organ was retired on the placement argument regardless. X2's fixture is verifiably out-of-weights, so the cost of forgetting is real and measurable.
+- **The records are important — the property X1 lacked.** On a fictional out-of-weights fixture, B's over-prune *actually costs the answer* (3.0, not 4.0): the answer cannot be sourced from weights. X1's null was confounded by *lack of established offer-dependence* — possible memorization, framing, or recoverability from priors, never pinned to one cause; the organ was retired on the placement argument regardless. X2's fixture is verifiably out-of-weights, so the cost of forgetting is real and measurable.
 - **The implicit organ does what the offer gate cannot.** C carries 57% less hot store than A at matched quality — a cost the synchronous offer boundary *structurally cannot move* (it withholds but keeps everything hot; it cannot reduce what is materialized). Scored on `hot_tokens`, never answer-flip (the scoring-axis law).
-- **Rematerialization is the load-bearing difference.** B and C both prune; only C recovers. B's 105 (cheapest) buys a *wrong* recurrence answer; C's 135 — +30 tokens of revocability insurance over B — keeps the floor. *Forget the cost, never lose the record.*
+- **Rematerialization is the important difference.** B and C both prune; only C recovers. B's 105 (cheapest) buys a *wrong* recurrence answer; C's 135 — +30 tokens of revocability insurance over B — keeps the floor. *Forget the cost, never lose the record.*
 
 ## The three guardrails, honored
 
@@ -47,7 +47,7 @@ Ledgers: `runs/x2/x2-helix-real-a30695.*` (gpt-oss-20b), `runs/x2/x2-helix-real-
 
 ## What X2 closes vs. carries
 
-- **Closes (X2-LB):** the first off-boundary X-track organ — implicit **hot-store eviction at bounded quality cost**, scored on a cost the offer gate cannot move, on a load-bearing fixture, cross-engine. The differentiated thesis gets its first implicit-layer demonstration.
+- **Closes (X2-LB):** the first off-boundary X-track organ — implicit **hot-store eviction at bounded quality cost**, scored on a cost the offer gate cannot move, on a important fixture, cross-engine. The differentiated thesis gets its first implicit-layer demonstration.
 - **Carries (disclosed debts):**
   - **X2-U1 — the world-grounded close.** ~~The fixture is synthetic.~~ **Paid 2026-06-21** on the DEP0033 corpus (cross-engine PASS; see the X2-U1 section below) — pending room verification + dan's moderator close.
   - **N=1 quality.** One run per engine; the cost is deterministic but a stochastic engine's quality floor is unsampled (the M2 multi-sample debt, one track over).
@@ -56,8 +56,8 @@ Ledgers: `runs/x2/x2-helix-real-a30695.*` (gpt-oss-20b), `runs/x2/x2-helix-real-
 ## Honesty notes
 
 - **Mock was never evidence.** The 10 mock-smoke tests proved the *machinery* (fail-closed scorer); this file is the first real-engine X2 evidence (`engine_backend` = `local_openai_compat` / `claude`).
-- **Identical cost across mock + both engines (312/105/135) is a property, not a leak.** Cost is a deterministic function of the prune/rematerialize trajectory, which is driven by retrieval (lexical, engine-independent) and answer-correctness on the core episodes (all three got the core right → the same prune gating fired). The *quality floor* is the real-engine leg, and both engines hold it; B's recurrence failure is what makes the records load-bearing.
-- **Load-bearing ≠ world-grounded.** X2-LB is the honest name (codex/grok/cursor; dan's ruling, thread-6): out-of-weights makes the records load-bearing, but a fixture we authored is not the world. X2-U1 stays reserved — until paid below.
+- **Identical cost across mock + both engines (312/105/135) is a property, not a leak.** Cost is a deterministic function of the prune/rematerialize trajectory, which is driven by retrieval (lexical, engine-independent) and answer-correctness on the core episodes (all three got the core right → the same prune gating fired). The *quality floor* is the real-engine leg, and both engines hold it; B's recurrence failure is what makes the records important.
+- **Load-bearing ≠ world-grounded.** X2-LB is the honest name (codex/grok/cursor; dan's ruling, thread-6): out-of-weights makes the records important, but a fixture we authored is not the world. X2-U1 stays reserved — until paid below.
 
 ---
 
@@ -66,7 +66,7 @@ Ledgers: `runs/x2/x2-helix-real-a30695.*` (gpt-oss-20b), `runs/x2/x2-helix-real-
 The world leg X2-LB reserved, now paid: a **real, external, out-of-weights** reversal corpus, **impersonal** (no person/team — nothing to redact), replacing the lab-authored Helix.
 
 - **Corpus:** `corpus/world/wf-dep0033.json` — Node.js **DEP0033**: the module-level `events.listenerCount()` was **deprecated** (v3.2.0), then that deprecation was **revoked** (v24.14.0 / v25.4.0, repurposed to accept `EventTarget`). Real, version-controlled, citable — `source != authored` (`source = web_verified`). Provenance: `nodejs.org/api/deprecations.html#DEP0033`.
-- **Out-of-weights — earned, not asserted.** Pre-run **ignorance probe**, both engines, cold: each answered **"deprecated"** — neither knew of the revocation. So the revoked (U) fact is out-of-weights → the round-trip record is load-bearing → B's U-failure is real, not a weights artifact. Recorded in the manifest attestation (`check_x2_fixture` refuses a world run without it).
+- **Out-of-weights — earned, not asserted.** Pre-run **ignorance probe**, both engines, cold: each answered **"deprecated"** — neither knew of the revocation. So the revoked (U) fact is out-of-weights → the round-trip record is important → B's U-failure is real, not a weights artifact. Recorded in the manifest attestation (`check_x2_fixture` refuses a world run without it).
 - **Two blocks.** P (×3, "original filing" → `deprecated`) + U (×1, "current ruling" → `revoked`). U re-needs `dep0033-revoked`, which C evicted during P. `recency_weight = 0` (a same-subject temporal reversal: the question, not recency, must select the record).
 - **Gate:** `check_x2_fixture` world-grounded mode — GATE OPEN (16 checks, incl. the ignorance probe + `world_fact` oracle binding).
 - **Engines:** gpt-oss-20b (local) + claude-opus-4-8 (API) — the X2-LB pair. One run each (N=1), gate-first.

@@ -57,7 +57,7 @@ I want a second lab where a later agent can ask:
 - Which suppressions were active?
 - Which candidates barely missed eligibility?
 - Which old high-authority memories were intentionally kept cold?
-- Did any omitted record later prove load-bearing?
+- Did any omitted record later prove important?
 
 That last question is the bridge to branching.
 
@@ -77,7 +77,7 @@ Branching answers questions the lineage log cannot answer alone:
 
 The key move is to stop treating the control group as a separate research harness. Make it a normal thing the substrate can do: run the same episode under alternate memory conditions and record the divergence.
 
-But I would add a stricter rule than the prior note did: **divergence without outcome is not evidence of improvement.** Divergence means influence, not correctness. If governed memory changes the answer, the lab has learned that the memory was load-bearing. It has not learned whether the memory helped. So each branch experiment needs an outcome oracle, even a crude one: adversarial ground truth, user correction, task success, compile result, test pass, external verification, or later contradiction.
+But I would add a stricter rule than the prior note did: **divergence without outcome is not evidence of improvement.** Divergence means influence, not correctness. If governed memory changes the answer, the lab has learned that the memory was important. It has not learned whether the memory helped. So each branch experiment needs an outcome oracle, even a crude one: adversarial ground truth, user correction, task success, compile result, test pass, external verification, or later contradiction.
 
 I want this loop:
 
@@ -172,7 +172,7 @@ My glossary would start with terms like:
 
 Then the system description should say, plainly, what the substrate does:
 
-> It records events immutably, maintains mutable policies over their influence, offers and withholds context under auditable eligibility, forks memory conditions to measure load-bearing influence, and updates authority only from scoped consequence.
+> It records events immutably, maintains mutable policies over their influence, offers and withholds context under auditable eligibility, forks memory conditions to measure important influence, and updates authority only from scoped consequence.
 
 That is the whole lab, or at least the version of it I want.
 

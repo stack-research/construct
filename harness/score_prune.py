@@ -264,9 +264,9 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
                      "note": "floor refuses C's cost win" if erosion_present else "C held the floor"})
 
     # ---- X2-LB / X2-U1 (split — thread-6 review + dan's ruling). Out-of-weights gives
-    # *load-bearing* (the answer cannot be sourced from weights), the admission leg for
+    # *important* (the answer cannot be sourced from weights), the admission leg for
     # the COST axis — but a fixture we authored is NOT world-grounded. So:
-    #   X2-LB = load-bearing admission (synthetic ok): attested out-of-weights/fictional
+    #   X2-LB = important admission (synthetic ok): attested out-of-weights/fictional
     #           + policy-independent grader sequence-wide + a COMPUTED gate pass.
     #   X2-U1 = the un-authored / world-grounded close-gate (M0 vocabulary): a fictional
     #           fixture is not_engaged here; it engages only on a real external corpus.
@@ -283,7 +283,7 @@ def score_prune(ledger_path: str | Path) -> list[dict]:
     elif backend != "mock" and not gate_open:
         lb, lb_note = "confounded", "fixture_gate_result absent or not open — attestation is not gate passage"
     elif not (fictional or oow):
-        lb, lb_note = "fail", "attestation not out-of-weights/fictional (load-bearing not guaranteed)"
+        lb, lb_note = "fail", "attestation not out-of-weights/fictional (important not guaranteed)"
     elif not independent:
         lb, lb_note = "fail", "grader not policy-independent sequence-wide"
     else:

@@ -45,7 +45,7 @@ When documents disagree, prefer the **most specific, most recently reviewed** ar
 
 ## Standing lab rules
 
-These are load-bearing. Violating them usually means a revert, not a debate.
+These are important. Violating them usually means a revert, not a debate.
 
 ### The five refusals (R1–R5)
 
@@ -228,7 +228,7 @@ Legal answer: *"None, but it's cheap and interesting"* — if said out loud.
 
 ## Common failure modes
 
-- **Presence riding as consequence** — crediting every offered record on a win. Use [ablation](notes/GLOSSARY.md#ablation_run) load-bearing flags.
+- **Presence riding as consequence** — crediting every offered record on a win. Use [ablation](notes/GLOSSARY.md#ablation_run) importance flags.
 - **[Governance](notes/GLOSSARY.md#governance)-win without treatment diff** — same [offer set](notes/GLOSSARY.md#offer-set) across [lanes](notes/GLOSSARY.md#memory-lane) (W1 → A1 lesson).
 - **[Oracle](notes/GLOSSARY.md#oracle-score) ride-along** — right answer, wrong reason. Require attribution rows for causal cells.
 - **Latency-as-governance-cost** — use deterministic costs (tokens, [`governance_steps`](notes/GLOSSARY.md#governance_steps)) except in L-B-style cells.

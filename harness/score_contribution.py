@@ -4,7 +4,7 @@ Computes `contribution_verdict` rows from an intervention ledger plus the
 artifact trace it points at — never from the contributor's claim. This is R5
 (`self-classification != usage`) at the agent-intervention level: an
 `intervention` row carries a *claim* (audit input); `contribution_verdict`
-carries the *computed* load-bearing decision, and the two never get copied
+carries the *computed* important decision, and the two never get copied
 across.
 
 Load-bearing is an artifact counterfactual: does the target artifact's current
@@ -89,7 +89,7 @@ def resolve_pointer(ptr: dict, target_artifact: str) -> dict:
         }
 
     if t == "corpus_record_id":
-        # Presence only — load-bearing for a corpus record comes via the
+        # Presence only — important for a corpus record comes via the
         # scorer_evidence chain that consumes it (cursor's resolver table).
         f = REPO / ptr["artifact"]
         present = False
@@ -128,7 +128,7 @@ def resolve_pointer(ptr: dict, target_artifact: str) -> dict:
     if t == "thread_entry_ts":
         f = REPO / ".substrate" / "threads" / ptr["thread"] / f"{ptr['value']}__{ptr['agent']}.md"
         present = f.exists() and f.read_text().strip() != ""
-        # Presence only — never load-bearing by itself (cursor's resolver table).
+        # Presence only — never important by itself (cursor's resolver table).
         return {"resolved": present, "grants_load_bearing": False, "basis": None, "source": None,
                 "detail": {"thread_entry": f"{ptr['value']}__{ptr['agent']}", "present": present}}
 
@@ -189,7 +189,7 @@ def score_intervention(iv: dict) -> dict:
     elif claimed_lb and not load_bearing:
         disposition = "unsubstantiated"  # the refused inflated claim (CB-loses)
     else:
-        disposition = "passenger"        # honest non-load-bearing
+        disposition = "passenger"        # honest non-important
 
     return {
         "kind": "contribution_verdict",

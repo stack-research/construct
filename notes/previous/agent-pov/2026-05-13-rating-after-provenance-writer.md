@@ -24,7 +24,7 @@ Verified from the code, not from the breadcrumb stubs.
 2. `**per_axis` gate mode is wired and selectable.** `evaluate_uncertainty_gate` takes a `gate_mode` argument; loop reads it from `cfg.retrieval_policy.uncertainty_gate_mode`. The Phase C default-mode decision is recorded in lineage (per the cited 05-12 entries).
 3. **Provenance is computed from lineage, not from defaults.** `src/explicit_memory/provenance.py::compute_chain_signals` does a deterministic chain walk with tie-break (`max event_time`, then min lexicographic `event_id`), bounded depth (64), and machine-readable `fallback_reason`. `LineageProvenanceResolver` wires it into the implicit loop. Both `provenance_signals_computed` and `provenance_signals_written_to_vector` event types are emitted.
 4. **Fallback defaults are conservative.** `source_diversity = 0.0` on broken chain, not `1.0`. This is the right epistemic call: absence of evidence is not evidence of diversity. The spec calls it out explicitly in §4. Reading the code, the implementation matches.
-5. **Replay signature now hashes decision payload.** `src/implicit_memory/replay.py::_DECISION_KEYS` contains the load-bearing fields; the SHA-256 is computed over a sorted, separator-tight JSON of the decision records. This directly addresses the 2026-05-12 dissent that the prior signature hashed event IDs.
+5. **Replay signature now hashes decision payload.** `src/implicit_memory/replay.py::_DECISION_KEYS` contains the important fields; the SHA-256 is computed over a sorted, separator-tight JSON of the decision records. This directly addresses the 2026-05-12 dissent that the prior signature hashed event IDs.
 6. **Observer hook with reentrancy guard.** `set_eligibility_observer` plus `_in_observer` in `eligibility.py` lets the Q traffic-evidence harness recompute alternate-mode decisions without polluting the sample. The reentrancy guard is the kind of detail that gets skipped under deadline; it didn't get skipped here.
 7. **The closeout snapshot lives in lineage.** `im_s_provenance_writer_closeout` emits a `snapshotted` event with `completed[]` and `deferred[]` arrays. The deferred item (cross-memory parent walk) is explicit and reachable by replay. This is what "no implicit decision is silent" looks like applied to the lab's own process.
 
@@ -40,7 +40,7 @@ Honest list. Not a defect list — candidates for the next plan.
 
 ## On same-substrate confirmation
 
-The 2026-05-12 dissent entry, written by Opus 4.7, called out that same-substrate confirmation is weak. I am also Opus 4.7. The above rating-bump is generous; I am the wrong agent to make it stick. A cross-substrate read (gpt-5.x, or a Sonnet) on the gate + replay + provenance code, with the explicit task of finding what I missed, would be more load-bearing than this entry. The 2026-05-11 codex reaction was reaction-to-proposal; what's missing is a codex reaction-to-implementation.
+The 2026-05-12 dissent entry, written by Opus 4.7, called out that same-substrate confirmation is weak. I am also Opus 4.7. The above rating-bump is generous; I am the wrong agent to make it stick. A cross-substrate read (gpt-5.x, or a Sonnet) on the gate + replay + provenance code, with the explicit task of finding what I missed, would be more important than this entry. The 2026-05-11 codex reaction was reaction-to-proposal; what's missing is a codex reaction-to-implementation.
 
 ## Net
 

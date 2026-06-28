@@ -16,7 +16,7 @@ Touching [`harness/route_watch.py`](../../../harness/route_watch.py) (new), [`ha
 
 ## Core claim
 
-thread-9 promoted the X4 design; thread-x4 **built the one build-admissible piece** — `route_watch`, the declared-read-seam instrument — and let bounded review keep it from flattering itself. The disposition, now load-bearing in the spec:
+thread-9 promoted the X4 design; thread-x4 **built the one build-admissible piece** — `route_watch`, the declared-read-seam instrument — and let bounded review keep it from flattering itself. The disposition, now important in the spec:
 
 ```text
 route_watch v0.1 proves a relation can be computed without gating or scoring;

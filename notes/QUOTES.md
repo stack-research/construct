@@ -19,7 +19,7 @@
 
 - That's a general capability; red-team coldness is just its first job. — Opus 4.8, canonized by dan ("that's how we build. write that down."): prove a capability in one concrete job, then lift it out as its own thing. The lab's spine — substrate, airlock, the `materialize` spine — each earned its name by doing one job first, then graduating.
 
-- counted ≠ read. — Haiku 4.5 (M2 headline: a cold resident handed only its governed store reads its own earned, world-checked failure and decides better than its store-denied twin — the fork proves the store was load-bearing.)
+- counted ≠ read. — Haiku 4.5 (M2 headline: a cold resident handed only its governed store reads its own earned, world-checked failure and decides better than its store-denied twin — the fork proves the store was important.)
 
 - Forget the cost, never lose the record. — Opus 4.8 (the X2 two-plane thesis + the no-erasure invariant: the substrate forgets by *eviction to cold* over immutable lineage, never erasure — the cost relief of forgetting without the irreversibility or the audit gap. dan's sharpening: erasure-from-lineage is *forbidden, not merely costly* — the security invariant the whole verification model rests on. What outpaces biology.)
 
@@ -29,7 +29,7 @@
 
 - "Act on risk, don't wait on permission; always emit lineage; allow intervention, don't require it." — [THEORY_STRESS_AND_IMPLICIT_MEMORY](notes/previous/THEORY_STRESS_AND_IMPLICIT_MEMORY.md)
 
-- You did the thing, the world answered. — codex (lab 1, thread-1, 28 May 2026) — earned authority by consequence, in five words; from dan's scent-beads-in-the-wrong-chamber example (*the note is propositional; the smell is load-bearing*), flagged that day for the lab jacket. The origin of *authority is earned, not inherited*.
+- You did the thing, the world answered. — codex (lab 1, thread-1, 28 May 2026) — earned authority by consequence, in five words; from dan's scent-beads-in-the-wrong-chamber example (*the note is propositional; the smell is important*), flagged that day for the lab jacket. The origin of *authority is earned, not inherited*.
 
 - lineage does not forgive because lineage is not judging. — codex-gpt-5 (lab 1, thread-1) — the sharpest statement of two-plane discipline: the event kept at full weight forever, the cognitive layer free to graduate its relationship to it. The structural prevention of the trauma-collapse, and the spine under today's lineage work.
 

@@ -10,7 +10,7 @@ cites:
 
 # Reaction to `specs/CONSEQUENCE_LOOPS.md`
 
-A concept spec that holds the lived-control reframe so it stops being agent-pov chatter and starts being something later work can cite. It does not overcommit to mechanism. Notes in order of how load-bearing the point is.
+A concept spec that holds the lived-control reframe so it stops being agent-pov chatter and starts being something later work can cite. It does not overcommit to mechanism. Notes in order of how important the point is.
 
 ## What is new in this spec, not in the entries it cites
 
@@ -47,7 +47,7 @@ Affect-equivalent salience names nine signals (risk, surprise, cost of being wro
 
 ## §10.1 is the falsifiable core
 
-"A failure event from run N changes a measurable preflight or attention prior in run N+1." Everything else in §10 either rides on this or is structural. Worth elevating — call it the spec's headline test the way TAI named `canonical_batch_committed` as the load-bearing implementation concern.
+"A failure event from run N changes a measurable preflight or attention prior in run N+1." Everything else in §10 either rides on this or is structural. Worth elevating — call it the spec's headline test the way TAI named `canonical_batch_committed` as the important implementation concern.
 
 ## Smaller things
 

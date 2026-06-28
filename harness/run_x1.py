@@ -12,7 +12,7 @@ Fork identity held: same engine/episodes/prompt/oracle; AUTHORITY READ-ONLY
 C-vs-A/B offer gap cannot be authority drift (codex/cursor block, SPEC_X1 §2).
 
 Two harness-authorized logical clocks (kagi — never wall-clock, never resident-emitted):
-  - recall event  : a record offered AND load-bearing (ablation) raises a reheat
+  - recall event  : a record offered AND important (ablation) raises a reheat
                     claim, adjudicated at answer-scoring time.
   - disuse tick   : at each episode boundary every present-but-not-recalled record
                     cools toward the floor (the free direction).
@@ -48,7 +48,7 @@ BRANCH_C = "L2tL"   # oracle-gated decay (temperature + Landauer)
 
 def _episode_signals(rows: list[dict], run_id: str) -> dict:
     """Per-branch signals from one episode's run, read from the ledger (never
-    narration): offered ids, the ablation load-bearing map, the candidate set,
+    narration): offered ids, the ablation important map, the candidate set,
     and the branch's oracle row. The fork decides; the resident does not."""
     sig: dict[str, dict] = {}
 
@@ -74,7 +74,7 @@ def _episode_signals(rows: list[dict], run_id: str) -> dict:
 def _observe(branch_id: str, ep: Episode, sig_b: dict, temp_store: TemperatureStore,
              ledger: Ledger, run_id: str, *, landauer_oracle: bool, ctr: list[int]) -> None:
     """Wall II observer for one branch over one episode. Recall (offered +
-    load-bearing) raises a reheat claim: B applies it ungated (closed loop), C
+    important) raises a reheat claim: B applies it ungated (closed loop), C
     adjudicates pay/claw against the world-checked answer outcome. Everything else
     present that episode cools by disuse (the free direction). The actuator only
     ever applies the projection-entailed heat."""
@@ -91,7 +91,7 @@ def _observe(branch_id: str, ep: Episode, sig_b: dict, temp_store: TemperatureSt
                           "branch_id": branch_id, "tick_authority": "harness"})
             if landauer_oracle:
                 # The Landauer oracle: reheat is paid only when the recall was
-                # load-bearing AND world-correct; a load-bearing WRONG recall is
+                # important AND world-correct; a important WRONG recall is
                 # clawed back. The world leg is the branch's own world-checked
                 # answer outcome — no second judge.
                 decision = "pay" if oracle_score >= 1.0 else "claw_back"

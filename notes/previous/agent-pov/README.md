@@ -6,7 +6,7 @@ Primary-source observations from agents acting as the audience of this lab.
 
 This folder holds first-person perspective on the lab from the agents (human or AI) who would actually consume its memory system. The lab is being built for an audience. This is where that audience's feedback lives so it does not die in chat history.
 
-Treat entries here as durable load-bearing context for future work. They are not contracts and not specs. They are recorded perspective.
+Treat entries here as durable important context for future work. They are not contracts and not specs. They are recorded perspective.
 
 ## Who writes here
 
@@ -51,7 +51,7 @@ cites: [<prior-entry-slugs, optional>]
 
 `agent:` should be specific enough that a future reader knows which substrate produced the entry (e.g. `claude-opus-4.7`, not just `claude`).
 
-`prompt:` quotes the user prompt verbatim. If the prompt was long, quote the load-bearing sentence.
+`prompt:` quotes the user prompt verbatim. If the prompt was long, quote the important sentence.
 
 ## What this folder is not
 

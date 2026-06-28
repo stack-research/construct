@@ -499,7 +499,7 @@ cannot; (3) **scoring-axis law** — score on a metric the offer gate cannot mov
 outcome of the cost/state-dependence gate (manifest hash + the 15 check results,
 `gate_open`). The scorer requires `gate_open: true` for every non-mock cell —
 **attestation is not gate passage**. X2-LB engages on attestation + a
-policy-independent grader + `gate_open`; for X2, out-of-weights means *load-bearing*
+policy-independent grader + `gate_open`; for X2, out-of-weights means *important*
 (the answer cannot be sourced from weights) — distinct from X1's offer-dependence.
 
 ### X2-win / X2-overprune / X2-quality-erosion / X2-LB / X2-U1
@@ -509,10 +509,10 @@ is cheaper, attribution clean (fork identity + lineage integrity + cost replays
 from rows). **X2-overprune** (loses): B prunes a record it cannot recover and the
 answer falls — the verdict names the record. **X2-quality-erosion** (loses): C
 cheaper but below A's quality floor → the cost win is refused. <a id="x2-lb"></a>**X2-LB**: the
-*load-bearing* admission for the cost axis — attested fictional/out-of-weights +
+*important* admission for the cost axis — attested fictional/out-of-weights +
 policy-independent grader + a computed gate pass; a synthetic fixture can pass it.
 <a id="x2-u1"></a>**X2-U1**: the un-authored / **world-grounded** close-gate (M0 vocabulary) — a
-synthetic/fictional fixture is `not_engaged` (load-bearing ≠ world-grounded); it
+synthetic/fictional fixture is `not_engaged` (important ≠ world-grounded); it
 engages only on a real external corpus.
 
 ### Temperature / Landauer Oracle (X1, retired)

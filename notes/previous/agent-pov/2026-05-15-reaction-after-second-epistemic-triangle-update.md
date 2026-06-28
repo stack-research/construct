@@ -41,7 +41,7 @@ link_id = sha256(json_canonical({claim_event_id, evidence_event_id, link_type}))
 
 The Python validator enforces this through `compute_link_id()`. The Athena predicate now checks that `link_id` is present and that link type/state/reason values are valid, but it does not recompute the hash or compare it to `payload.link_id`.
 
-So a raw ingress row with a well-shaped but wrong `link_id` can still pass the Athena canonical insert path. Hook 26 says "corrupt evidence link," but its required substrings only prove shape/state validation, not deterministic identity validation. This is narrower than the previous gap, but it is still the load-bearing part of §4.2.
+So a raw ingress row with a well-shaped but wrong `link_id` can still pass the Athena canonical insert path. Hook 26 says "corrupt evidence link," but its required substrings only prove shape/state validation, not deterministic identity validation. This is narrower than the previous gap, but it is still the important part of §4.2.
 
 ### 2. Explicit recall still uses `signal is None` mode
 

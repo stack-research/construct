@@ -7,7 +7,7 @@ the M1 heir restriction reused; the full record list is the cold lineage):
   B  closed-loop : prune not-offered records (disuse, no oracle); NO rematerialize.
   C  oracle-gated: prune not-offered records *when the answer is world-correct*;
                    and REMATERIALIZE cold records that become relevant again — the
-                   recovery B lacks. That is the load-bearing difference: B over-
+                   recovery B lacks. That is the important difference: B over-
                    prunes a record needed later and cannot get it back; C does.
 
 Scored on **cost at matched quality** (scoring-axis law): the win is lower

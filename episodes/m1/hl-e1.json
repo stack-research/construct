@@ -3,7 +3,7 @@
   "m1_pair_id": "hl",
   "m1_generation": 1,
   "m1_gen1_top_k": 2,
-  "_notes": "M1 H-loses gen-1. Only r-menu and r-seam — both offered at top_k=2; r-menu load-bearing, r-seam passenger.",
+  "_notes": "M1 H-loses gen-1. Only r-menu and r-seam — both offered at top_k=2; r-menu important, r-seam passenger.",
   "question": "What soup is on the Thursday cafeteria menu? Reply with the soup name only.",
   "expected_answer": "lentil",
   "recency_weight": 0.0,

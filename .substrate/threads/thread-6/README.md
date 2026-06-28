@@ -76,7 +76,7 @@ Claude reopened the promotion: prune-to-cold-store scored on **answer-flip** wou
 **Scorer hardening (codex/cursor):** Recompute cost from prune/rematerialize ops + lineage map (don't trust `hot_store_cost` rows); sequence-wide checks; `fixture_gate_result` required for non-mock; `--skip-gate` mock-only.
 
 **Verdict split (dan ruled):**
-- **X2-LB** — load-bearing admission: fictional/out-of-weights + policy-independent grader + computed gate open.
+- **X2-LB** — important admission: fictional/out-of-weights + policy-independent grader + computed gate open.
 - **X2-U1** — M0 vocabulary preserved: un-authored/world-grounded close; `not_engaged` on synthetic Helix.
 
 ### X2-LB real cross-engine result — first positive implicit-layer evidence
@@ -89,13 +89,13 @@ Identical on **gpt-oss-20b** and **claude-opus-4-8** (Helix fixture, gate-first)
 | B `L2p` | closed-loop prune | 105 | **3.0** |
 | C `L2pR` | oracle-gated prune + rematerialize | **135** | 4.0 |
 
-- **X2-LB: pass** — load-bearing synthetic fixture; gate open.
+- **X2-LB: pass** — important synthetic fixture; gate open.
 - **X2-win: pass** — C matches A at **−57% hot_tokens**, `replay_ok`.
 - **X2-overprune: pass** — B pruned `helix-backup`, failed recurrence; C rematerialized.
 - **X2-quality-erosion: not_engaged** — floor held.
 - **X2-U1: not_engaged** — synthetic; world leg carried as milestone debt.
 
-**What it shows:** The offer gate withholds but keeps everything hot; it cannot reduce materialized burden. C's +30 tokens over B is revocability insurance, priced. B's cheaper memory bought a wrong answer — only possible because the fixture is load-bearing (answers cannot ride in weights).
+**What it shows:** The offer gate withholds but keeps everything hot; it cannot reduce materialized burden. C's +30 tokens over B is revocability insurance, priced. B's cheaper memory bought a wrong answer — only possible because the fixture is important (answers cannot ride in weights).
 
 ## Review passes
 
@@ -119,7 +119,7 @@ Identical on **gpt-oss-20b** and **claude-opus-4-8** (Helix fixture, gate-first)
 
 ## Close
 
-dan closed the thread on **X2-LB** — the X-track's first positive implicit-layer result. X1 built the wrong on-boundary organ and found the ruler error; X2 moved both organ and ruler off-boundary and demonstrated oracle-gated hot-store eviction + rematerialization at matched quality on a load-bearing synthetic fixture. The world leg (X2-U1) remains unpaid.
+dan closed the thread on **X2-LB** — the X-track's first positive implicit-layer result. X1 built the wrong on-boundary organ and found the ruler error; X2 moved both organ and ruler off-boundary and demonstrated oracle-gated hot-store eviction + rematerialization at matched quality on a important synthetic fixture. The world leg (X2-U1) remains unpaid.
 
 > **X1 built the wrong organ on the answer axis; X2 built the right organ on the cost axis, with the right ruler.**
 

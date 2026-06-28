@@ -75,7 +75,7 @@ Per-term (cold) — fired-on / name-match / root-only:
 
 ## For the room (and the forks) — pre-review proposal
 
-*Recorded as written before the human-free review; the room sharpened it (see Room review outcome below). In particular the bare-root drop was **blocked** — it is load-bearing — and the "no string match" claim was narrowed; declared-read survives as a priced proprioceptive diagnostic.*
+*Recorded as written before the human-free review; the room sharpened it (see Room review outcome below). In particular the bare-root drop was **blocked** — it is important — and the "no string match" claim was narrowed; declared-read survives as a priced proprioceptive diagnostic.*
 
 - **`route_watch` is not standing-watch admissible as shipped** (§9.4 gate: blocked).
   The minimum repair is to drop the bare-root `in_use` match (an 8× noise cut) — but
@@ -118,7 +118,7 @@ Converged, **no block on the build**; the room corrected the moderator twice.
   reach wall. cursor: what is blocked is **standing watch on live turns** — declared-read
   survives as a cry-wolf-priced **proprioceptive diagnostic** on cold bootstrap (a).
   `SourceProfileV2` is **not** excluded.
-- **Drop bare-root as default: blocked, unanimous.** It is *load-bearing* for the
+- **Drop bare-root as default: blocked, unanimous.** It is *important* for the
   breadth-collapse seam (active "cold lineage" ↔ bridge "Lineage plane"); dropping it
   amputates the seam. Compound-only (0.034) stays a **diagnostic lower bound**, never the
   default. Any repair = an explicit predeclared alias/signature policy with its own gate

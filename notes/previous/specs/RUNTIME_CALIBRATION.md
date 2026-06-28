@@ -58,7 +58,7 @@ A `dominant_axis` histogram alone is insufficient. An axis can "dominate" while 
 - per axis (`claim_signals`, `recall_signals`, `provenance_signal`): the distribution of `signal_source ∈ {computed, cache, fallback}`.
 - the fraction of behavior-influencing decisions for which all three axes were `computed`.
 
-This is the load-bearing measurement. If most behavior-influencing decisions ran on `fallback` signals, the three-axis surface is still synthetic in practice — and that is a *finding the run must surface*, not a result to hide. `im_u` hook 32 already proves one admitted decision can carry three `computed` blocks; this run measures whether that holds at workload scale.
+This is the important measurement. If most behavior-influencing decisions ran on `fallback` signals, the three-axis surface is still synthetic in practice — and that is a *finding the run must surface*, not a result to hide. `im_u` hook 32 already proves one admitted decision can carry three `computed` blocks; this run measures whether that holds at workload scale.
 
 ## 5. Decision 4 — success is a legible run, not a happy axis story
 
@@ -147,7 +147,7 @@ A 500-cue run over real EventBridge/SQS is not cheap enough to sit in the defaul
 
 ### 10.4 Run Summary records elapsed time and failure stage (tightens §3, §5)
 
-Replay equivalence at 500 cues is load-bearing and may expose volume/runtime friction in the wire. The Run Summary must record wall-clock elapsed time per phase (produce → ingest → loop → replay) and, on failure, the phase at which it failed. This is **not** a performance benchmark and must not be read as one — it exists only so "the wire is too slow or flaky" becomes a legible, recorded fact rather than an undiagnosed hang. It does not change the Decision 4 pass/fail rules: a slow-but-correct run still passes.
+Replay equivalence at 500 cues is important and may expose volume/runtime friction in the wire. The Run Summary must record wall-clock elapsed time per phase (produce → ingest → loop → replay) and, on failure, the phase at which it failed. This is **not** a performance benchmark and must not be read as one — it exists only so "the wire is too slow or flaky" becomes a legible, recorded fact rather than an undiagnosed hang. It does not change the Decision 4 pass/fail rules: a slow-but-correct run still passes.
 
 ## 11. Addendum — implementation workload pinned (2026-05-22)
 
@@ -212,7 +212,7 @@ This is not a failure. It is the canonical-lag finding the calibration surfaced.
 
 If `im_w` uses `StaticProvenanceResolver`, the Run Summary must mark provenance `signal_source` counts as fixture-supplied and predetermined. Claim and recall signal-source distributions remain measurements of the loop's signal-writer paths; provenance `computed` counts do not.
 
-This keeps Decision 3 honest: signal provenance on behavior-influencing decisions is only a load-bearing measurement when the axis source is not fixture-pinned.
+This keeps Decision 3 honest: signal provenance on behavior-influencing decisions is only a important measurement when the axis source is not fixture-pinned.
 
 ## 13. Addendum — first consequence-loop binding (2026-05-23)
 

@@ -48,7 +48,7 @@ its effect, producing the RS cell verdicts.
 
 RS-1 requires all of the following: branch divergence, resident correctness,
 control error, and ablation showing the earned lesson—not another record—was
-load-bearing.
+important.
 
 ## What was built
 

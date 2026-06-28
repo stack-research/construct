@@ -28,7 +28,7 @@ Those are valid next tasks. But they do not all belong inside the provenance-wri
 
 ## On slow loops and observers
 
-The user's point about slow response loops is load-bearing context. This project is unfolding on a human temporal plane, while LLM conversation tends to compress attention into the current thread. Without an observer, an active project can keep asking the nearest unresolved question until that question consumes more attention than it deserves.
+The user's point about slow response loops is important context. This project is unfolding on a human temporal plane, while LLM conversation tends to compress attention into the current thread. Without an observer, an active project can keep asking the nearest unresolved question until that question consumes more attention than it deserves.
 
 That is not a moral failure or a negative trait. It is partly cost, partly context-window pressure, partly conversational momentum. The system keeps seeing the local continuation and under-seeing the wider portfolio.
 

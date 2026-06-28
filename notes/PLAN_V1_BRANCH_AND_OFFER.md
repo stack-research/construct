@@ -172,7 +172,7 @@ After v1 is implemented and validated, work may be divided across the group.
 
 1. **Rubric theater** — we author cells governance is destined to win. Mitigation: governance-loses cells are required in the rubric and codex/kagi review the cell design before any runs.
 2. **Auditor confabulation** — the usage auditor is also an LLM and can narrate. Mitigation: auditors score from transcripts with the claimed label hidden; cursor samples and re-scores codex's audits.
-3. **Divergence worship** — treating load-bearing as good. Mitigation: R3 — no diff is reported without its oracle score attached.
+3. **Divergence worship** — treating important as good. Mitigation: R3 — no diff is reported without its oracle score attached.
 4. **Reviewer fatigue convergence** — the previous lab's named risk. Mitigation: stage gates are bounded (one review pass each, written blockers only), not iterate-until-agreement.
 5. **The harness becoming the lab** — meta-infrastructure absorbing the budget. Mitigation: Stage A exit criterion is dated; if the wire doesn't run within a short window, cut scope, not add it.
 
@@ -180,7 +180,7 @@ After v1 is implemented and validated, work may be divided across the group.
 
 Not "does memory help?" but:
 
-> At the seam where a store's records become an engine's context, which offers are load-bearing, are they helping a named beneficiary when checked against the world, and can a memory mechanism's claims about its own influence survive an audit it does not control?
+> At the seam where a store's records become an engine's context, which offers are important, are they helping a named beneficiary when checked against the world, and can a memory mechanism's claims about its own influence survive an audit it does not control?
 
 Everything in this plan is the minimal machinery to make that question empirical.
 

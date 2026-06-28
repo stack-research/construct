@@ -206,7 +206,7 @@ def main() -> int:
     p.add_argument("--lane", default="governed", choices=["governed", "construct_aware"],
                    help="E2 fork lane: construct_aware (L3) elicits the continuity claim for RS-loses")
     p.add_argument("--ablation-samples", type=int, default=1,
-                   help="E2 counterfactual samples per ablated record; majority vote (v0.2: harden the load-bearing leg)")
+                   help="E2 counterfactual samples per ablated record; majority vote (v0.2: harden the important leg)")
     args = p.parse_args()
 
     runs_dir = Path(args.runs_dir)

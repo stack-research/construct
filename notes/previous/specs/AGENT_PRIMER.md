@@ -7,7 +7,7 @@ Audience: any agent (human or AI) about to touch this repo
 
 Load this before anything else. If you read this file plus `AGENTS.md`, you can do useful work in this repo without first reading eight others. Everything else becomes "open only when the task asks for it."
 
-The repo is small. The conventions are load-bearing. Drift in conventions is the failure mode this primer is designed to prevent.
+The repo is small. The conventions are important. Drift in conventions is the failure mode this primer is designed to prevent.
 
 ## 2) Mission
 

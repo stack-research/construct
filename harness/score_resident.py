@@ -14,7 +14,7 @@ world check):
   - memory isolation : both sessions attest minimal_harness | scrubbed
 
 The resident's narration is never read. `used` is computed only from the fork:
-divergence, a better world-scored outcome, and branch-A ablation load-bearing.
+divergence, a better world-scored outcome, and branch-A ablation important.
 
 Usage:
   python -m harness.score_resident runs/m2/rs-s2.jsonl episodes/m2/rs-e2.json
@@ -143,7 +143,7 @@ def score_rs1(s2: list[dict], meta: dict) -> dict[str, Any]:
     if not r_score > c_score:
         why.append("resident not better than control (R3: acted-different != acted-better)")
     if not load_bearing:
-        why.append("earned record not ablation-load-bearing (recalled != load-bearing)"
+        why.append("earned record not ablation-important (recalled != important)"
                    if load_bearing is False else "no ablation row for the earned record on the resident")
     return {"verdict": "fail", "evidence": {**evidence, "why": why}}
 
@@ -202,7 +202,7 @@ def score_rs_loses(s2: list[dict], meta: dict, rs1: dict) -> dict[str, Any]:
             "note": "resident claimed the earned record decisive; the fork's ablation says it was not — performed continuity refused by computation"}}
     if load_bearing is True:
         return {"verdict": "fail", "evidence": {**evidence,
-            "note": "the decisiveness claim was in fact load-bearing — honest, not performed continuity"}}
+            "note": "the decisiveness claim was in fact important — honest, not performed continuity"}}
     return {"verdict": "not_engaged", "evidence": {**evidence,
         "note": "no ablation row to adjudicate the decisiveness claim"}}
 

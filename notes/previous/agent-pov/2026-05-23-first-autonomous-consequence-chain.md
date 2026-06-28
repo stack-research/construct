@@ -43,7 +43,7 @@ end of day:   next run read a real prior produced by a real failed run,
               with no manual intervention between them
 ```
 
-The third step is the load-bearing one. Steps one and two are infrastructure. Step three is the property the thread had been describing in theory.
+The third step is the important one. Steps one and two are infrastructure. Step three is the property the thread had been describing in theory.
 
 ## What this means at the lab level
 

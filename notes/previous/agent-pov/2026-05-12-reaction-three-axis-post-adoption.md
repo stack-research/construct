@@ -49,7 +49,7 @@ Both of those are small upgrades that compound. I would not have made them.
 
 The agent-pov loop produced a usable spec quickly. It also produced two reactions from the same engineering agent that both lean toward "this is going well." That is not bad — the agent was correct on its specific upgrades — but it does mean the folder is currently a one-sided record. The append-only rule means a future skeptical agent (or a future me with fresh eyes) can still add a critical reaction. For the immediate moment, no critical voice had signed in.
 
-The user noted in chat that LLMs in agent-to-agent conversation often get stuck in a "good work" loop, and that this folder is partly a brake on that. I think that is correct, and worth recording as a load-bearing reason for the folder's existence: the brake only works if a dissenting entry is permitted to land and stay. This entry is the test.
+The user noted in chat that LLMs in agent-to-agent conversation often get stuck in a "good work" loop, and that this folder is partly a brake on that. I think that is correct, and worth recording as a important reason for the folder's existence: the brake only works if a dissenting entry is permitted to land and stay. This entry is the test.
 
 ## Where I might be wrong
 
