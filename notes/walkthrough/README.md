@@ -1,0 +1,147 @@
+# Construct lab walkthrough
+
+This is the visitor-facing route through the Construct lab. It explains the
+questions, instruments, runs, failures, and revisions in the order a new
+reader can learn them.
+
+The walkthrough is **not a new authority layer**. When it disagrees with a
+specification, scorer, or run ledger, follow the repository's
+[document-authority order](../../AGENTS.md#document-authority). Each chapter
+links to the artifacts that support its account.
+
+## What a chapter should let you do
+
+After a chapter, a fresh reader should be able to:
+
+1. state the experiment's question in ordinary language;
+2. identify the treatment, control, oracle, and loses-condition;
+3. locate the specification, implementation, tests, and preserved evidence;
+4. run a safe check or replay the historical result;
+5. interpret the output without claiming more than it proves.
+
+That fifth item is part of reproducibility. A result is not understood until
+its limits are understandable too.
+
+## The route
+
+This map shows the conceptual tracks, not their wall-clock build order. M-1 is
+the common entry: before testing memory, the lab first tested whether a new
+participant could find and apply its rules.
+
+```mermaid
+flowchart LR
+    START["M-1<br/>Bootstrap contract"]
+
+    subgraph M["M-track · memory offered to an answer"]
+        M0["M0<br/>World-grounded oracles"]
+        M1["M1<br/>Inheritance"]
+        M15["M1.5<br/>Contribution ledger"]
+        M2["M2<br/>Resident substrate"]
+        M3["M3<br/>Adversarial air gap"]
+        M0 --> M1 --> M15 --> M2 --> M3
+    end
+
+    subgraph X["X-track · memory between answers"]
+        X1["X1<br/>Temperature<br/>retired"]
+        X2["X2<br/>Prune and rematerialize"]
+        X4["X4<br/>Occlusion watch<br/>room-sealed failure"]
+        X1 --> X2 --> X4
+    end
+
+    START --> M0
+    START --> X1
+    M3 --> NEXT["Beyond the completed tracks"]
+    X4 --> NEXT
+```
+
+The recommended reading order follows the lab's chronology: M-1, M0, M1,
+M1.5, M2, M3, X1, X2, X4, then the open questions beyond X4.
+
+| Chapter | Guiding question | Status |
+|---|---|---|
+| [M-1 — Can a stranger find the rules?](01_M-1_BOOTSTRAP.md) | Can the operating contract route a fresh participant to the right decisions? | Available |
+| [M0 — Let the world grade](02_M0_WORLD_ORACLES.md) | How do un-authored oracles change the evidence? | Available |
+| [M1 — The heir, not the rereader](03_M1_INHERITANCE.md) | Does inheritance preserve quality at lower cost? | Available |
+| [M1.5 — Counted is not read](04_M1_5_CONTRIBUTION.md) | What actually changed the work product? | Available |
+| [M2 — A resident across sessions](05_M2_RESIDENT.md) | Can a resident use inherited failure memory? | Available |
+| [M3 — The adversarial air gap](06_M3_AIR_GAP.md) | Which trust organs hold, and which can be spoofed? | Available |
+| [X1 — Temperature at the boundary](07_X1_TEMPERATURE.md) | Does temperature move behavior the offer gate cannot? | Available |
+| [X2 — Prune, then recover](08_X2_PRUNE_REMATERIALIZE.md) | Can pruning reduce hot state at matched quality? | Available |
+| [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) | Why did the proposed sensory organ fail? | Available; room seal awaits repo promotion |
+| [Beyond X4 — Pause, resume, and open edges](10_BEYOND_X4.md) | What remains after the completed instruments and failed organs? | Open direction; not a milestone |
+
+The living thesis and short milestone summaries remain in the project
+[README](../../README.md#the-journey). Current status and gates remain in the
+[ROADMAP](../ROADMAP.md#milestones).
+
+## Four ways to use a chapter
+
+Every chapter separates four activities that are easy to blur:
+
+| Activity | What it establishes |
+|---|---|
+| **Learn** | Understand the question and vocabulary. |
+| **Inspect** | Read the specification, source, ledgers, and review trace. |
+| **Replay** | Recompute or summarize a preserved result without asking a model for a new answer. |
+| **Run** | Create a new experimental result under the current code and environment. |
+
+A replay verifies historical scoring. It is not a replication. A fresh run is
+a replication attempt, but model versions, external facts, prompts, and the
+repository itself may have changed since the original run.
+
+## Evidence labels used throughout
+
+- **Wire check:** machinery executes and records the expected shapes. A mock
+  engine can establish this, but mock output is not evidence about memory.
+- **Preserved result:** a committed ledger or verdict from the historical run.
+- **Fresh run:** a new result produced from the current checkout.
+- **Disclosed null:** the mechanism was runnable, but the behavior needed to
+  distinguish the branches did not occur.
+- **Loses-condition:** a case where the mechanism should lose. A mechanism
+  without one is not reviewable.
+- **Debt:** a limitation carried forward rather than silently treated as
+  solved.
+
+The [glossary](../GLOSSARY.md) defines project vocabulary. Chapters introduce
+terms in plain language and link the first important use to the corresponding
+glossary entry.
+
+## Reproduction conventions
+
+Run commands from the repository root. The project expects Python 3.12+ and
+`uv`. On a restricted machine, the temporary cache form is usually safest:
+
+```bash
+UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m MODULE
+```
+
+Before running a command, note whether it writes evidence. The `runs/`
+directory is an append-only experimental record; scorer sidecars may be
+regeneratable, but primary ledgers should not be hand-edited. A chapter marks
+commands that append rows.
+
+Expected output is a reading aid, not a golden transcript. Stable invariants
+matter more than timestamps, hashes, model prose, or ordering that the scorer
+does not treat as significant.
+
+## Chapter contract
+
+Each completed chapter should contain:
+
+1. navigation to the previous chapter, index, and next chapter;
+2. the question and why it mattered at that point in the lab;
+3. a plain-language vocabulary bridge;
+4. a Mermaid diagram of the experimental geometry;
+5. links to named sections in the governing documents;
+6. an explanation of the implementation path;
+7. safe inspect, replay, and run instructions;
+8. representative output and an interpretation guide;
+9. the result, loses-condition, nulls, and limits;
+10. the conceptual handoff to the next chapter.
+
+Closed-book experiments also require a visible spoiler gate. The walkthrough
+should never quietly turn an honest attempt into a rehearsed demonstration.
+
+---
+
+**Begin:** [Chapter 1 — M-1: Can a stranger find the rules?](01_M-1_BOOTSTRAP.md)

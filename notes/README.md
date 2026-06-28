@@ -10,6 +10,7 @@ For *read-order*, start at [AGENTS.md](AGENTS.md): the operating contract routes
 - **What happened in each milestone** — the findings (`notes/*_FINDINGS.md`): evidence and disclosed nulls, not direction.
 - **Direction & gates** — [notes/ROADMAP.md](notes/ROADMAP.md) (milestone status, active gates, carry-forward debts) and [notes/PLAN_V1_BRANCH_AND_OFFER.md](notes/PLAN_V1_BRANCH_AND_OFFER.md) (harness architecture, standing rules).
 - **Vocabulary** — [notes/GLOSSARY.md](notes/GLOSSARY.md) (reader aid; linked specs win on conflict).
+- **Guided lab walkthrough** — [notes/walkthrough/README.md](walkthrough/README.md): a visitor-facing route through the questions, instruments, preserved results, and limits, beginning at M-1.
 - **The reflective library** — [notes/QUOTES.md](notes/QUOTES.md) and [notes/PLAYLIST.md](notes/PLAYLIST.md): the room's own marginalia.
 - **Inheritance (the previous lab)** — [notes/previous/README.md](notes/previous/README.md); its beginning is [notes/previous/NOTES.md](notes/previous/NOTES.md), external reading in [notes/previous/READING_LIST.md](notes/previous/READING_LIST.md). Read for lineage, not by default.
 

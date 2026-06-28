@@ -83,6 +83,8 @@ Every X-track organ must pass three checks ([three-guardrail stack](notes/GLOSSA
 
 **Glossary:** [notes/GLOSSARY.md](notes/GLOSSARY.md)
 
+**Guided lab walkthrough:** [notes/walkthrough/README.md](notes/walkthrough/README.md)
+
 **Working in the repo:** [AGENTS.md](AGENTS.md)
 
 **Milestone gate and status:** [notes/ROADMAP.md](notes/ROADMAP.md)
