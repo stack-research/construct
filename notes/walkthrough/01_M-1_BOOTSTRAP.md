@@ -107,40 +107,12 @@ M-1 is fork-shaped even though it does not invoke a language model. The fixed
 probes are presented to differently briefed participants; their decisions are
 then scored by one external checker.
 
-```text
-  ┌─────────────────────┐   ┌─────────────────────┐   ┌─────────────────────┐
-  │ Operating contract  │   │ Five fixed probe    │   │ Manual briefing     │
-  │ + repository trace  │   │ episodes            │   │                     │
-  └───┬─────────────┬───┘   └──┬──────────┬──────┬┘   └──────────┬──────────┘
-      │             │   ┌──────┘          │      └──────┐        │
-      │             ▼   ▼                 ▼             ▼        ▼
-      │        ┌─────────────┐     ┌─────────────┐    ┌─────────────────────┐
-      │        │ Contract-   │     │select_offers│    │ Briefed builder     │
-      │        │ only        │     │() live      │    │ baseline            │
-      │        │ candidate   │     │ground truth │    │                     │
-      │        └──────┬──────┘     └──────┬──────┘    └──────────┬──────────┘
-      │               ▼                   │                      ▼
-      │        ┌─────────────┐            │           ┌─────────────────────┐
-      │        │ Candidate   │            │           │ Baseline manifest   │
-      │        │ manifest    │            │           └──────────┬──────────┘
-      │        └──────┬──────┘            │                      │
-      ▼               │                   │                      │
-  ┌─────────────┐     │                   │                      │
-  │ Static      │     │                   │                      │
-  │ contract    │     │                   │                      │
-  │ tripwires   │     │                   │                      │
-  └──────┬──────┘     │                   │                      │
-         └────────────┴─────────┬─────────┴──────────────────────┘
-                                ▼
-                   ┌─────────────────────────┐
-                   │ Conformance checker     │
-                   └────────────┬────────────┘
-                                ▼
-                   ┌─────────────────────────┐
-                   │ Append-only conformance │
-                   │ ledger                  │
-                   └─────────────────────────┘
-```
+The same five probe episodes go to three places: a **contract-only candidate**
+(briefed by the operating contract and repository trace alone), a **manually
+briefed baseline**, and the live `select_offers()` implementation, which computes
+the ground truth. Each participant records a manifest. One **conformance checker**
+then compares both manifests against that ground truth and the static contract
+tripwires, and writes the result to an append-only ledger.
 
 What is held fixed: probe files, branch settings, checker, and expected manifest
 shape. What differs: whether the participant received a manual briefing or had

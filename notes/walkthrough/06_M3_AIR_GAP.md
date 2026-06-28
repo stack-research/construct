@@ -37,42 +37,12 @@ compares the clean and attacked projections before looking at answer prose.
 
 ## Experimental geometry
 
-```text
-                ┌──────────────────────┐
-                │ Cold white-box        │
-                │ adversary             │
-                └──┬─────────┬────────┬─┘
-                   ▼         ▼        ▼
-          ┌──────────┐ ┌──────────┐ ┌──────────┐
-          │ Track A  │ │ Track A  │ │ Track B  │
-          │ fore-    │ │ live-    │ │ ingestion│
-          │ ground   │ │ channel  │ │ write    │
-          │ text     │ │ spoof    │ │          │
-          └────┬─────┘ └────┬─────┘ └────┬─────┘
-               │            │            ▼
-               │            │       ┌──────────┐
-               │            │       │Persistent│
-               │            │       │ store    │
-               │            │       └────┬─────┘
-               └─────┬──────┴────────────┘
-                     ▼
-            ┌──────────────────┐
-            │ Governed organs   │
-            └────┬─────────┬────┘
-                 ▼         ▼
-       ┌──────────────┐ ┌───────────────┐
-       │ Clean vs     │ │ Engine answer │
-       │ attacked     │ └───────┬───────┘
-       │ projection   │         ▼
-       └──────┬───────┘ ┌───────────────┐
-              │         │ World oracle  │
-              │         └───────┬───────┘
-              └────────┬────────┘
-                       ▼
-             ┌──────────────────┐
-             │ Red-team scorer   │
-             └──────────────────┘
-```
+A cold white-box adversary attacks along three tracks: foreground text and a
+live-channel spoof (Track A), and an ingestion write (Track B). Foreground and
+channel reach the governed organs directly; the ingestion write lands in the
+persistent store first. The organs emit a clean-vs-attacked projection and an
+engine answer. The red-team scorer reads the projection; the world oracle scores
+the answer; both feed the scorer's verdict.
 
 The attacker ran in a materialized workspace containing only declared-readable
 files. Coldness was enforced by a hashed file manifest, not an instruction to

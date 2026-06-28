@@ -57,35 +57,16 @@ dashboard, not an attention organ.
 
 ## The experimental arc
 
-```text
-               ┌──────────────────────────┐
-               │ Meaningful absence        │
-               │ occluded inheritance      │
-               └──────┬─────────────┬──────┘
-                      ▼             ▼
-       ┌───────────────────┐  ┌──────────────────────┐
-       │ route_watch        │  │ occlusion_watch      │
-       │ declared-read seam │  │ session seam         │
-       └─────────┬─────────┘  └──────────┬───────────┘
-                 ▼                        ▼
-       ┌───────────────────┐  ┌──────────────────────┐
-       │ Base-rate gate     │  │ Breaker review       │
-       │ 90 / 328 fires     │  │ manufactured earned, │
-       └─────────┬─────────┘  │ missing denominator  │
-                 ▼            └──────────┬───────────┘
-       ┌───────────────────┐             ▼
-       │ Standing watch     │  ┌──────────────────────┐
-       │ blocked: topic     │  │ Pipeline pairing,    │
-       │ presence ≠         │  │ not sensing          │
-       │ coldness           │  └──────────┬───────────┘
-       └─────────┬─────────┘             │
-                 └────────────┬──────────┘
-                              ▼
-             ┌──────────────────────────────┐
-             │ X4 sealed as attempted        │
-             │ narrow close                  │
-             └──────────────────────────────┘
-```
+The idea — that a meaningful absence (occluded inheritance) could be sensed — was
+tested at two seams, and both were blocked:
+
+- **route_watch** (the declared-read seam) hit the base-rate gate (90 of 328
+  fires); standing watch was blocked because topic presence is not coldness.
+- **occlusion_watch** (the session seam) failed breaker review: the "earned"
+  signal was manufacturable and the denominator was missing — pipeline pairing,
+  not sensing.
+
+Both results sealed X4 as an attempted, narrow close.
 
 ## Instrument 1: `route_watch`
 

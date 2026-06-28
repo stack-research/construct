@@ -45,40 +45,11 @@ opens fully.
 
 ## Experimental geometry
 
-```text
-  ┌──────────────────────┐
-  │ Generation 1 episode  │
-  └──────────┬───────────┘
-             ▼
-  ┌──────────────────────┐
-  │ Governed run          │
-  │ answers + ablations   │
-  └──────────┬───────────┘
-             ▼
-  ┌──────────────────────┐
-  │ derive_heir_store()   │
-  │ filter + inherited    │
-  │ authority             │──────────────┐ seeds the
-  └──────────────────────┘              │ heir store
-                                        │
-  ┌──────────────────────┐              │
-  │ Generation 2 episode  │              │
-  │ same question surface │              │
-  └─────┬────────────┬───┘              │
-        ▼            ▼                  │
- ┌────────────┐ ┌────────────────┐      │
- │ L2s-cold   │ │ L2s-heir       │◀─────┘
- │ full store │ │ filtered store │
- │ neutral    │ │ earned         │
- │ authority  │ │ authority      │
- └──────┬─────┘ └───────┬────────┘
-        └───────┬───────┘
-                ▼
-     ┌──────────────────────┐
-     │ Oracle + attribution  │
-     │ M1 cell verdict       │
-     └──────────────────────┘
-```
+Generation 1 runs governed, and `derive_heir_store()` filters its records and
+carries forward earned authority. Generation 2 then answers the same question two
+ways: **L2s-cold** reads the full store with neutral authority, while **L2s-heir**
+inherits the filtered store and earned authority. Oracle scoring plus attribution
+gives the M1 cell verdict.
 
 Only the memory condition differs in generation 2. Engine, prompt, foreground,
 renderer, and oracle remain fixed.

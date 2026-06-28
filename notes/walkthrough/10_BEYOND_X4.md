@@ -36,35 +36,15 @@ may preserve conclusions while losing why attention was there. The proposed
 experiment asks whether a smaller resumable state can restore decision quality
 more cheaply.
 
-```text
-        ┌──────────────────────────┐
-        │ Task reaches a            │
-        │ precommitted pause seam   │
-        └───┬──────────┬─────────┬──┘
-            ▼          ▼         ▼
-     ┌────────────┐ ┌─────────┐ ┌──────────────┐
-     │ A          │ │ B       │ │ C            │
-     │ uninter-   │ │ cold    │ │ resumable    │
-     │ rupted warm│ │ reread  │ │ state        │
-     └─────┬──────┘ └────┬────┘ └──────┬───────┘
-           └───────────┬─┴─────────────┘
-                       ▼
-        ┌──────────────────────────┐
-        │ Same downstream task      │
-        └──────┬─────────────┬─────┘
-               ▼             ▼
-     ┌──────────────┐ ┌──────────────────┐
-     │ Same oracle  │ │ Tokens · records  │
-     │ decision      │ │ governance steps  │
-     │ quality       │ └─────────┬────────┘
-     └──────┬───────┘           │
-            └─────────┬─────────┘
-                      ▼
-        ┌──────────────────────────┐
-        │ Resume cost at            │
-        │ matched quality           │
-        └──────────────────────────┘
-```
+A task reaches a precommitted pause seam, then continues three ways:
+
+- **A** — uninterrupted and warm;
+- **B** — a cold reread;
+- **C** — from a small resumable state.
+
+All three run the same downstream task. Comparing decision quality (same oracle)
+against cost (tokens, records, governance steps) maps the resume cost at matched
+quality.
 
 The candidate resumable state is smaller than a transcript. It would preserve:
 

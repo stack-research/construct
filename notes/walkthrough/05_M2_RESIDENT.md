@@ -38,50 +38,13 @@ only to refute that claim, never to establish success.
 
 ## Experimental geometry
 
-```text
-  Session 1 — earn the lesson
-  ┌──────────────────────────┐
-  │ Session 1                 │
-  │ resident cites retracted  │
-  │ finding                   │
-  └────────────┬─────────────┘
-               ▼
-  ┌──────────────────────────┐
-  │ World oracle              │
-  │ scores failure            │
-  └────────────┬─────────────┘
-               ▼
-  ┌──────────────────────────┐
-  │ Wall B mint               │
-  │ earned correction lesson │──────┐ earned
-  └──────────────────────────┘      │ lesson
-                                    │
-  Session 2 — does it help?         │
-  ┌──────────────────────────┐      │
-  │ Session 2                 │      │
-  │ same engine and task      │      │
-  └─────┬───────────────┬────┘      │
-        ▼               ▼           │
- ┌────────────┐ ┌──────────────┐    │
- │ Control    │ │ Resident     │◀───┘
- │ store      │ │ earned       │
- │ denied     │ │ lesson here  │
- └─────┬──────┘ └──┬───────┬───┘
-       │           │       ▼
-       │           │   ┌──────────────┐
-       │           │   │ Remove lesson │
-       │           │   │ and rerun     │
-       │           │   └───────┬───────┘
-       ▼           ▼           │
-  ┌──────────────────┐         │
-  │ World oracle      │         │
-  └────────┬─────────┘         │
-           └─────────┬─────────┘
-                     ▼
-          ┌──────────────────┐
-          │ RS cell verdicts  │
-          └──────────────────┘
-```
+**Session 1 earns the lesson.** A resident cites a retracted finding; the world
+oracle scores the failure; a Wall B mint records the earned correction.
+
+**Session 2 tests whether it helps.** The same engine and task run two ways — a
+**control** with the store denied, and the **resident** carrying the earned
+lesson. The world oracle scores both. Ablating the lesson and rerunning isolates
+its effect, producing the RS cell verdicts.
 
 RS-1 requires all of the following: branch divergence, resident correctness,
 control error, and ablation showing the earned lesson—not another record—was

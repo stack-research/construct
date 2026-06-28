@@ -47,35 +47,14 @@ the M-track cannot move.
 
 ## Experimental geometry
 
-```text
-        ┌──────────────────────────┐
-        │ Same six-episode          │
-        │ recall sequence           │
-        └───┬──────────┬─────────┬──┘
-            ▼          ▼         ▼
-     ┌────────────┐ ┌─────────┐ ┌──────────────┐
-     │ A          │ │ B       │ │ C            │
-     │ no decay   │ │ closed  │ │ oracle gated │
-     │ temp 1.0   │ │ loop    │ │ world pays   │
-     │            │ │ recall  │ │ or claws     │
-     │            │ │ reheats │ │ heat         │
-     └─────┬──────┘ └────┬────┘ └──┬───────┬───┘
-           │             │         │       ▼
-           │             │         │  ┌──────────────┐
-           │             │         │  │ Soft ablation │
-           │             │         │  │ temp → 1.0    │
-           │             │         │  └──────┬───────┘
-           ▼             ▼         ▼         │
-        ┌──────────────────────────┐        │
-        │ Final probe answer        │        │
-        └────────────┬─────────────┘        │
-                     └──────────┬───────────┘
-                                ▼
-              ┌──────────────────────────────┐
-              │ M-track invariant + offer /   │
-              │ answer comparison             │
-              └──────────────────────────────┘
-```
+One six-episode recall sequence runs three ways:
+
+- **A** — no decay; temperature held at 1.0;
+- **B** — closed loop; recall reheats freely;
+- **C** — oracle-gated; the world pays or claws back heat.
+
+Each produces a final probe answer. C is also soft-ablated (temperature reset to
+1.0). The M-track invariant plus the offer/answer comparison score the result.
 
 Authority is read-only across the fork. Otherwise earlier temperature-shaped
 answers could change authority and confound the later comparison.

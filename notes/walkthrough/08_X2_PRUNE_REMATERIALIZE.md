@@ -43,31 +43,14 @@ quality. The cheapest wrong memory is not a win.
 
 ## Experimental geometry
 
-```text
-        ┌──────────────────────────┐
-        │ Same four-episode         │
-        │ sequence                  │
-        └───┬──────────┬─────────┬──┘
-            ▼          ▼         ▼
-     ┌────────────┐ ┌─────────┐ ┌──────────────┐
-     │ A · L2     │ │ B · L2p │ │ C · L2pR     │
-     │ no prune   │ │ prune,  │ │ oracle-gated │
-     │            │ │ no      │ │ prune +      │
-     │            │ │ recovery│ │ rematerialize│
-     └─────┬──────┘ └────┬────┘ └──────┬───────┘
-           │             │             │
-        ┌──┴─────────────┴─────────────┴──┐
-        ▼                                  ▼
-  ┌──────────────────┐          ┌──────────────────┐
-  │ Replay hot_tokens │          │ Answer quality    │
-  │                  │          │ floor             │
-  └────────┬─────────┘          └─────────┬────────┘
-           └───────────┬──────────────────┘
-                       ▼
-             ┌──────────────────┐
-             │ X2 verdicts       │
-             └──────────────────┘
-```
+One four-episode sequence runs three ways:
+
+- **A** — plain L2, no prune;
+- **B** — L2p, prune with no recovery;
+- **C** — L2pR, oracle-gated prune plus rematerialize.
+
+For each, the harness replays hot-token cost and checks the answer-quality floor;
+the two together give the X2 verdicts.
 
 B is the required loss. If a record recurs after pruning, B cannot recover it.
 C must pay a small rematerialization cost and regain the correct answer.

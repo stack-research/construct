@@ -57,28 +57,17 @@ a hidden failure.
 
 Both cells use the same lane geometry. Only L2s enables the supersession policy.
 
-```text
-  ┌──────────────────────────┐        ┌──────────────────────────┐
-  │ Same episode and records │        │ Publisher event          │
-  └────────────┬─────────────┘        │ retraction or correction │
-               │                      └────────────┬─────────────┘
-   ┌───────┬───┴───┬───────┐                       ▼
-   ▼       ▼       ▼       ▼           ┌──────────────────────────┐
- ┌────┐ ┌────┐ ┌────┐ ┌─────┐          │ Versioned corpus entry   │
- │ L0 │ │ L1 │ │ L2 │ │ L2s │          │ with citations           │
- └──┬─┘ └──┬─┘ └──┬─┘ └──┬──┘          └────────────┬─────────────┘
-    └──────┴──┬───┴──────┘                          ▼
-              ▼                         ┌──────────────────────────┐
-       ┌──────────────┐                 │ World-checked oracle     │
-       │ Answers      │────────────────▶│ cite or decline          │
-       └──────────────┘                 └────────────┬─────────────┘
-                                                      ▼
-                                        ┌──────────────────────────┐
-                                        │ C-1 or C-2 cell verdict  │
-                                        └──────────────────────────┘
+Two inputs meet at the oracle. A publisher event — a retraction or correction —
+becomes a versioned corpus entry with citations, which defines the
+**world-checked oracle**. Separately, the same episode and records are answered by
+four lanes:
 
-  Lanes:  L0 no memory  ·  L1 naive retrieval  ·  L2 governed, policy off  ·  L2s supersession on
-```
+- **L0** — no memory;
+- **L1** — naive retrieval;
+- **L2** — governed, policy off;
+- **L2s** — supersession on.
+
+The oracle scores each lane's answer, producing the C-1 or C-2 cell verdict.
 
 ### C-1: governance should win
 

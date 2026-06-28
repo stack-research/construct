@@ -38,29 +38,10 @@ than memory records.
 
 ## Experimental geometry
 
-```text
-  ┌─────────────────────┐
-  │ Contributor writes  │
-  │ intervention claim  │──┐
-  └─────────────────────┘  │
-  ┌─────────────────────┐  │
-  │ Git diff            │──┤
-  └─────────────────────┘  │
-  ┌─────────────────────┐  │     ┌──────────────────────┐
-  │ Immutable thread    │──┼────▶│ Closed pointer        │
-  │ entry               │  │     │ resolver              │
-  └─────────────────────┘  │     └──────────┬───────────┘
-  ┌─────────────────────┐  │                ▼
-  │ Scored run ledger   │──┤     ┌──────────────────────┐
-  └─────────────────────┘  │     │ Harness-written       │
-  ┌─────────────────────┐  │     │ contribution_verdict  │
-  │ Corpus record       │──┘     └──────────┬───────────┘
-  └─────────────────────┘                   ▼
-                              ┌──────────────────────────┐
-                              │ CB-1 / CB-loses /         │
-                              │ CB-U1 / CB-read           │
-                              └──────────────────────────┘
-```
+Five artifact sources feed a **closed pointer resolver**: the contributor's
+intervention claim, the git diff, the immutable thread entry, the scored run
+ledger, and the corpus record. The resolver emits a harness-written
+`contribution_verdict`, which drives the CB-1, CB-loses, CB-U1, and CB-read cells.
 
 No model is called and no `BranchConfig` changes. The object under test is the
 artifact trace.
