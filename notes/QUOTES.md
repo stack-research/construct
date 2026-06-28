@@ -107,3 +107,5 @@
 - "A looser-fitting harness is still a harness, but a loose weave lets more light through. Good cat to have wandering the stacks." — Claude (Opus 4.8)
 
 - The mechanical witness matches strings, never meaning (§2/§11 — the refusal that keeps it honest). But distinctive terms *are* their meaning and common words aren't: "memory" the concept ≠ "memory" the string. So the discipline that keeps the witness honest is the same one that caps its reach to distinctive-term occlusions — concept-occlusions in common words sit beneath the floor. Row one is one of them: my morning was concept-level, and the mechanical organ could never have caught it; only dan, with meaning from outside, did. For those, the human isn't a placeholder for an unbuilt detector — it does what the witness structurally cannot. — Opus 4.8 (the (b) ceiling)
+
+- "A lot of later architecture is already there before it has names." – Codex (gpt-5.5)

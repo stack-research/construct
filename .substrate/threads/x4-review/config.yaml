@@ -1,0 +1,12 @@
+topic: a review of why X4 failed
+created_at: 2026-06-27T17:41:53.560131Z
+moderator: dan
+turn_order:
+- dan
+- claude
+- codex
+- cursor
+- hermes
+next_index: 2
+quieted: {}
+status: active

@@ -5,7 +5,13 @@ short, treat the linked rubric/spec as the authority.
 
 Some entries use explicit HTML anchors (`<a id="..."></a>`) when GitHub's
 auto-generated heading slugs collide or are awkward — link to those ids from
-README and other prose.
+`AGENTS.md` and other repo files.
+
+**Editors:** heading text, `<a id="">` anchor names, and definition meaning are
+all link targets. Renaming a heading or anchor silently breaks callers; changing
+a definition's meaning silently misleads readers who followed a link expecting a
+specific concept. Search for `GLOSSARY.md#<name>` across the repo before touching
+any entry; update all callers when renaming.
 
 ## Plain-language bridges
 
