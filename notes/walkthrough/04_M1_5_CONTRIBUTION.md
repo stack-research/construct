@@ -1,50 +1,35 @@
 # Chapter 4 — M1.5: Counted is not read
 
-Previous: [M1 — The heir, not the rereader](03_M1_INHERITANCE.md) ·
-[Walkthrough index](README.md) · Next: [M2 — A resident across sessions](05_M2_RESIDENT.md)
-M1 scored records becoming useful to an heir. M1.5 lifts the same discipline
-one level: how does an intervention in the lab become something a later worker
-should trust?
+Previous: [M1 — The heir, not the rereader](03_M1_INHERITANCE.md) · [Walkthrough index](README.md) · Next: [M2 — A resident across sessions](05_M2_RESIDENT.md)
+
+M1 scored records becoming useful to an heir. M1.5 lifts the same discipline one level: how does an intervention in the lab become something a later worker should trust?
 
 ## The question
 
-> Can contribution be computed from artifact consequences rather than claimed
-> by the contributor?
+> Can contribution be computed from artifact consequences rather than claimed by the contributor?
 
 Read:
 
-- [SPEC_M1_5_CONTRIBUTION_LEDGER.md](../SPEC_M1_5_CONTRIBUTION_LEDGER.md),
-  especially **“§0 The claim,” “§2 The honesty mechanism,”** and **“§4 Cells”**;
+- [SPEC_M1_5_CONTRIBUTION_LEDGER.md](../SPEC_M1_5_CONTRIBUTION_LEDGER.md), especially **“§0 The claim,” “§2 The honesty mechanism,”** and **“§4 Cells”**;
 - [M1_5_FINDINGS.md](../M1_5_FINDINGS.md);
 - [harness/score_contribution.py](../../harness/score_contribution.py);
 - [contributions.jsonl](../../runs/m1_5/contributions.jsonl), the M1 backfill.
 
 ## Vocabulary bridge
 
-An **intervention** is a proposed contribution: a review, blocker, patch, audit,
-or synthesis with pointers to artifacts. It is a claim and therefore audit
-input, not authority.
+An **intervention** is a proposed contribution: a review, blocker, patch, audit, or synthesis with pointers to artifacts. It is a claim and therefore audit input, not authority.
 
-A **contribution verdict** is computed by resolving those pointers against git,
-ledgers, corpus records, and immutable thread entries. `claimed_load_bearing`
-never becomes `load_bearing` by copying the field.
+A **contribution verdict** is computed by resolving those pointers against git, ledgers, corpus records, and immutable thread entries. `claimed_load_bearing` never becomes `load_bearing` by copying the field.
 
-**Load-bearing** means the current artifact depends on the intervention. A
-thread post can be present and still be a passenger if the code and evidence
-would be identical without it.
+**Load-bearing** means the current artifact depends on the intervention. A thread post can be present and still be a passenger if the code and evidence would be identical without it.
 
-This is R5—self-classification is not usage—applied to collaborators rather
-than memory records.
+This is R5—self-classification is not usage—applied to collaborators rather than memory records.
 
 ## Experimental geometry
 
-Five artifact sources feed a **closed pointer resolver**: the contributor's
-intervention claim, the git diff, the immutable thread entry, the scored run
-ledger, and the corpus record. The resolver emits a harness-written
-`contribution_verdict`, which drives the CB-1, CB-loses, CB-U1, and CB-read cells.
+Five artifact sources feed a **closed pointer resolver**: the contributor's intervention claim, the git diff, the immutable thread entry, the scored run ledger, and the corpus record. The resolver emits a harness-written `contribution_verdict`, which drives the CB-1, CB-loses, CB-U1, and CB-read cells.
 
-No model is called and no `BranchConfig` changes. The object under test is the
-artifact trace.
+No model is called and no `BranchConfig` changes. The object under test is the artifact trace.
 
 ## What was built
 
@@ -55,9 +40,7 @@ artifact trace.
 - `corpus_record_id`: the record exists;
 - `scorer_evidence`: a downstream non-wire cell verdict consumed the work.
 
-The strongest available basis wins: `artifact_diff`, then `scorer_evidence`,
-then external moderation, then later audit. Missing or weak evidence fails closed
-to passenger/unsubstantiated.
+The strongest available basis wins: `artifact_diff`, then `scorer_evidence`, then external moderation, then later audit. Missing or weak evidence fails closed to passenger/unsubstantiated.
 
 ### The four cells
 
@@ -106,8 +89,7 @@ CB-U1     pass
 CB-read   not_engaged
 ```
 
-The actual command prints full JSON rows so every resolved pointer remains
-auditable. It writes only the temporary copy.
+The actual command prints full JSON rows so every resolved pointer remains auditable. It writes only the temporary copy.
 
 Running the scorer directly on the already-complete preserved ledger prints:
 
@@ -119,13 +101,9 @@ That idempotence matters: recomputation does not duplicate verdicts.
 
 ## The result
 
-The planted self-esteem row claimed important credit using only a thread
-timestamp. The timestamp proved the comment existed; it could not prove the
-artifact depended on it. The scorer refused the claim.
+The planted self-esteem row claimed important credit using only a thread timestamp. The timestamp proved the comment existed; it could not prove the artifact depended on it. The scorer refused the claim.
 
-The honest passenger—the post announcing M1's close—also had no artifact
-dependency, but it had not inflated itself. Refused claim and accurate negative
-remain distinct.
+The honest passenger—the post announcing M1's close—also had no artifact dependency, but it had not inflated itself. Refused claim and accurate negative remain distinct.
 
 Two positive rows resolved:
 
@@ -134,15 +112,10 @@ Two positive rows resolved:
 
 ## What M1.5 proves—and does not
 
-M1.5 closes **self-declared is not important**. It does not close **counted is
-not read**. A beautiful ledger nobody consults is still bookkeeping. CB-read is
-therefore `not_engaged`, explicitly creating M2's entry condition.
+M1.5 closes **self-declared is not important**. It does not close **counted is not read**. A beautiful ledger nobody consults is still bookkeeping. CB-read is therefore `not_engaged`, explicitly creating M2's entry condition.
 
-Other carried debts include unexercised `blocked`/`reversed` paths, stronger
-validation of claimed outcome vocabulary, and robustness beyond the single HU1
-world chain.
+Other carried debts include unexercised `blocked`/`reversed` paths, stronger validation of claimed outcome vocabulary, and robustness beyond the single HU1 world chain.
 
 ---
 
-Previous: [M1 — The heir, not the rereader](03_M1_INHERITANCE.md) ·
-[Walkthrough index](README.md) · Next: [M2 — A resident across sessions](05_M2_RESIDENT.md)
+Previous: [M1 — The heir, not the rereader](03_M1_INHERITANCE.md) · [Walkthrough index](README.md) · Next: [M2 — A resident across sessions](05_M2_RESIDENT.md)

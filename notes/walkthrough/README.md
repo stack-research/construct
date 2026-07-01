@@ -1,13 +1,8 @@
 # Construct lab walkthrough
 
-This is the visitor-facing route through the Construct lab. It explains the
-questions, instruments, runs, failures, and revisions in the order a new
-reader can learn them.
+This is the visitor-facing route through the Construct lab. It explains the questions, instruments, runs, failures, and revisions in the order a new reader can learn them.
 
-The walkthrough is **not a new authority layer**. When it disagrees with a
-specification, scorer, or run ledger, follow the repository's
-[document-authority order](../../AGENTS.md#document-authority). Each chapter
-links to the artifacts that support its account.
+The walkthrough is **not a new authority layer**. When it disagrees with a specification, scorer, or run ledger, follow the repository's [document-authority order](../../AGENTS.md#document-authority). Each chapter links to the artifacts that support its account.
 
 ## What a chapter should let you do
 
@@ -19,27 +14,20 @@ After a chapter, a fresh reader should be able to:
 4. run a safe check or replay the historical result;
 5. interpret the output without claiming more than it proves.
 
-That fifth item is part of reproducibility. A result is not understood until
-its limits are understandable too.
+That fifth item is part of reproducibility. A result is not understood until its limits are understandable too.
 
 ## The route
 
-This map shows the conceptual tracks, not their wall-clock build order. M-1 is
-the common entry: before testing memory, the lab first tested whether a new
-participant could find and apply its rules.
+This map shows the conceptual tracks, not their wall-clock build order. M-1 is the common entry: before testing memory, the lab first tested whether a new participant could find and apply its rules.
 
 Two tracks branch from the **M-1 bootstrap contract**, the common entry point:
 
-- **M-track — memory offered to an answer.** M0 (world-grounded oracles) → M1
-  (inheritance) → M1.5 (contribution ledger) → M2 (resident substrate) → M3
-  (adversarial air gap).
-- **X-track — memory between answers.** X1 (temperature, retired) → X2 (prune and
-  rematerialize) → X4 (occlusion watch, a room-sealed failure).
+- **M-track — memory offered to an answer.** M0 (world-grounded oracles) → M1 (inheritance) → M1.5 (contribution ledger) → M2 (resident substrate) → M3 (adversarial air gap).
+- **X-track — memory between answers.** X1 (temperature, retired) → X2 (prune and rematerialize) → X4 (occlusion watch, a room-sealed failure).
 
 Both tracks end at the open questions beyond the completed work.
 
-The recommended reading order follows the lab's chronology: M-1, M0, M1,
-M1.5, M2, M3, X1, X2, X4, then the open questions beyond X4.
+The recommended reading order follows the lab's chronology: M-1, M0, M1, M1.5, M2, M3, X1, X2, X4, then the open questions beyond X4.
 
 | Chapter | Guiding question | Status |
 |---|---|---|
@@ -51,12 +39,10 @@ M1.5, M2, M3, X1, X2, X4, then the open questions beyond X4.
 | [M3 — The adversarial air gap](06_M3_AIR_GAP.md) | Which trust organs hold, and which can be spoofed? | Available |
 | [X1 — Temperature at the boundary](07_X1_TEMPERATURE.md) | Does temperature move behavior the offer gate cannot? | Available |
 | [X2 — Prune, then recover](08_X2_PRUNE_REMATERIALIZE.md) | Can pruning reduce hot state at matched quality? | Available |
-| [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) | Why did the proposed sensory organ fail? | Available; room seal awaits repo promotion |
+| [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) | Why did the proposed sensory organ fail? | Available; closed in ROADMAP, SPEC/README promotion pending |
 | [Beyond X4 — Pause, resume, and open edges](10_BEYOND_X4.md) | What remains after the completed instruments and failed organs? | Open direction; not a milestone |
 
-The living thesis and short milestone summaries remain in the project
-[README](../../README.md#the-journey). Current status and gates remain in the
-[ROADMAP](../ROADMAP.md#milestones).
+The living thesis and short milestone summaries remain in the project [README](../../README.md#the-journey). Current status and gates remain in the [ROADMAP](../ROADMAP.md#milestones).
 
 ## Four ways to use a chapter
 
@@ -69,44 +55,30 @@ Every chapter separates four activities that are easy to blur:
 | **Replay** | Recompute or summarize a preserved result without asking a model for a new answer. |
 | **Run** | Create a new experimental result under the current code and environment. |
 
-A replay verifies historical scoring. It is not a replication. A fresh run is
-a replication attempt, but model versions, external facts, prompts, and the
-repository itself may have changed since the original run.
+A replay verifies historical scoring. It is not a replication. A fresh run is a replication attempt, but model versions, external facts, prompts, and the repository itself may have changed since the original run.
 
 ## Evidence labels used throughout
 
-- **Wire check:** machinery executes and records the expected shapes. A mock
-  engine can establish this, but mock output is not evidence about memory.
+- **Wire check:** machinery executes and records the expected shapes. A mock engine can establish this, but mock output is not evidence about memory.
 - **Preserved result:** a committed ledger or verdict from the historical run.
 - **Fresh run:** a new result produced from the current checkout.
-- **Disclosed null:** the mechanism was runnable, but the behavior needed to
-  distinguish the branches did not occur.
-- **Loses-condition:** a case where the mechanism should lose. A mechanism
-  without one is not reviewable.
-- **Debt:** a limitation carried forward rather than silently treated as
-  solved.
+- **Disclosed null:** the mechanism was runnable, but the behavior needed to distinguish the branches did not occur.
+- **Loses-condition:** a case where the mechanism should lose. A mechanism without one is not reviewable.
+- **Debt:** a limitation carried forward rather than silently treated as solved.
 
-The [glossary](../GLOSSARY.md) defines project vocabulary. Chapters introduce
-terms in plain language and link the first important use to the corresponding
-glossary entry.
+The [glossary](../GLOSSARY.md) defines project vocabulary. Chapters introduce terms in plain language and link the first important use to the corresponding glossary entry.
 
 ## Reproduction conventions
 
-Run commands from the repository root. The project expects Python 3.12+ and
-`uv`. On a restricted machine, the temporary cache form is usually safest:
+Run commands from the repository root. The project expects Python 3.12+ and `uv`. On a restricted machine, the temporary cache form is usually safest:
 
 ```bash
 UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m MODULE
 ```
 
-Before running a command, note whether it writes evidence. The `runs/`
-directory is an append-only experimental record; scorer sidecars may be
-regeneratable, but primary ledgers should not be hand-edited. A chapter marks
-commands that append rows.
+Before running a command, note whether it writes evidence. The `runs/` directory is an append-only experimental record; scorer sidecars may be regeneratable, but primary ledgers should not be hand-edited. A chapter marks commands that append rows.
 
-Expected output is a reading aid, not a golden transcript. Stable invariants
-matter more than timestamps, hashes, model prose, or ordering that the scorer
-does not treat as significant.
+Expected output is a reading aid, not a golden transcript. Stable invariants matter more than timestamps, hashes, model prose, or ordering that the scorer does not treat as significant.
 
 ## Chapter contract
 
@@ -123,8 +95,7 @@ Each completed chapter should contain:
 9. the result, loses-condition, nulls, and limits;
 10. the conceptual handoff to the next chapter.
 
-Closed-book experiments also require a visible spoiler gate. The walkthrough
-should never quietly turn an honest attempt into a rehearsed demonstration.
+Closed-book experiments also require a visible spoiler gate. The walkthrough should never quietly turn an honest attempt into a rehearsed demonstration.
 
 ---
 

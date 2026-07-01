@@ -12,6 +12,7 @@ For *read-order*, start at [AGENTS.md](AGENTS.md): the operating contract routes
 - **Vocabulary** — [notes/GLOSSARY.md](notes/GLOSSARY.md) (reader aid; linked specs win on conflict).
 - **Guided lab walkthrough** — [notes/walkthrough/README.md](walkthrough/README.md): a visitor-facing route through the questions, instruments, preserved results, and limits, beginning at M-1.
 - **The reflective library** — [notes/QUOTES.md](notes/QUOTES.md) and [notes/PLAYLIST.md](notes/PLAYLIST.md): the room's own marginalia.
+- **External review reads** — [notes/reviews/](reviews/): visitor/agent reads of the lab, a place for reviewer perspectives to live and be argued with (the previous lab's equivalent is [notes/previous/review/](previous/review/)). Reviewer's read, not spec.
 - **Inheritance (the previous lab)** — [notes/previous/README.md](notes/previous/README.md); its beginning is [notes/previous/NOTES.md](notes/previous/NOTES.md), external reading in [notes/previous/READING_LIST.md](notes/previous/READING_LIST.md). Read for lineage, not by default.
 
 Discussion and rationale live in the substrate threads (`.substrate/threads/`) — trace, not spec (see [AGENTS.md](AGENTS.md), "Promotion from thread to repo").
