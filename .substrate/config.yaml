@@ -24,3 +24,5 @@ participants:
   kind: agent
 - name: hermes
   kind: agent
+- name: glm-5
+  kind: agent
