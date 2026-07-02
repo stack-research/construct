@@ -45,6 +45,7 @@ narrowed frontier beyond X4, and the lab's audit of itself.
 | [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) | Why did the proposed sensory organ fail? | Available; closed in ROADMAP; README promotion still pending |
 | [Beyond X4 — the frontier, narrowed](10_BEYOND_X4.md) | What survived the room's review of the open directions? | Open direction; updated for the beyond-x4 thread (2026-07-02) |
 | [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md) | Was the lab's own process still sound — and what gate now guards it? | Available |
+| [The warming budget: 101 bets the lab wrote down first](12_WARMING_BUDGET.md) | Does consequence-earned ranking under-serve an unresolved frontier enough to measure? | Armed — awaiting the world |
 
 The living thesis and short milestone summaries remain in the project [README](../../README.md#the-journey). Current status and gates remain in the [ROADMAP](../ROADMAP.md#milestones).
 

@@ -1,6 +1,6 @@
 # Chapter 11 — The heir-audit and the close gate
 
-Previous: [Beyond X4 — Pause, resume, and open edges](10_BEYOND_X4.md) · [Walkthrough index](README.md)
+Previous: [Beyond X4 — Pause, resume, and open edges](10_BEYOND_X4.md) · [Walkthrough index](README.md) · Next: [The warming budget](12_WARMING_BUDGET.md)
 
 Every earlier chapter examines an experiment the lab ran on memory. This chapter is
 different: it is the lab running an experiment on **itself**. In early July 2026 the
@@ -132,7 +132,8 @@ UV_CACHE_DIR=/private/tmp/uv-cache make ledger-status     # contribution-ledger 
 The close gate has, as of this writing, never gated a real close — the lab has not
 closed anything since it was built. Its first live use will be the next close, and
 its own numbers (override rate, refusal counts, packet ages) will say whether it is
-governance or ceremony.
+governance or ceremony. (The next chapter names that first assignment: the
+warming-budget instrument's close, whenever it earns one.)
 
 ## What this chapter proves — and does not
 
@@ -150,4 +151,4 @@ independent. That one stays lived practice.
 
 ---
 
-Previous: [Beyond X4 — Pause, resume, and open edges](10_BEYOND_X4.md) · [Walkthrough index](README.md)
+Previous: [Beyond X4 — Pause, resume, and open edges](10_BEYOND_X4.md) · [Walkthrough index](README.md) · Next: [The warming budget](12_WARMING_BUDGET.md)
