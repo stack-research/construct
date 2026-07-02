@@ -1,6 +1,6 @@
-# SPEC_WARMING_BUDGET v0 — the warming-budget instrument
+# SPEC_WARMING_BUDGET v0.1 — the warming-budget instrument
 
-Status: v0 draft, folded from the `warming-budget` design round (2026-07-02: codex design pass; composer adversarial review, CONCUR-with-revision; hermes third-reader pass, CONCUR-with-revision). Carried out of `beyond-x4` (sealed) under its five constraints. Build authorized by dan at the curiosity gate ("let's proceed here"); **moved-leg scoring is NOT authorized by this spec** — see §8.
+Status: v0.1, folded from the `warming-budget` design round (2026-07-02: codex design pass; composer adversarial review, CONCUR-with-revision; hermes third-reader pass, CONCUR-with-revision) and the bounded verification pass (same day: codex confirm, composer confirm, hermes REBLOCK-with-fix on §9 Q2 — fix encoded in §6a below; the reblock is the reason v0.1 exists). Carried out of `beyond-x4` (sealed) under its five constraints. Build authorized by dan at the curiosity gate ("let's proceed here"); **moved-leg scoring is NOT authorized by this spec** — see §8.
 
 ## 0. Claim and non-claims
 
@@ -21,7 +21,7 @@ Status: v0 draft, folded from the `warming-budget` design round (2026-07-02: cod
 Corpus unit is a **chronology packet**, not a page: `T0_snapshot` (world at pause), `T1_snapshot` (world at resume), `route_catalog` (every public surface either branch may route to: canonical text, token count, URL, upstream commit/tag/date, sha256, `available_at`), `status_key` (narrow world fact the oracle scores), `ignorance_probe` (per engine, cold, **before the fork group starts**, recorded in manifest attestation, gate-refused otherwise — composer A4).
 
 - **Family:** impersonal, official, version-controlled lifecycle transitions (API/standards status), Node-deprecation-shaped. No sports/person chronology, no lab fiction.
-- **`population_precommit` (composer A1):** a witnessed row fixing the enumerable source class, selection-rule hash, ignorance-probe requirement, `status_key` vocabulary, and a **bound `noise_leg_population` fraction** (hermes c) — stamped before any unit in the population is promoted to a live watch. Post-hoc `selection_method` prose is the disqualifying shape (`wf-dep0033.json`'s own field is the warning).
+- **`population_precommit` (composer A1):** a witnessed row fixing the enumerable source class, selection-rule hash, ignorance-probe requirement, `status_key` vocabulary, **`match_rule_id` + `status_vocabulary_hash`** (verification pass: the certificate match rule is fixed HERE, branch-blind by construction — `trigger_precommit` may only *cite* the hash, never define or extend the rule; scorer refuses on divergence), the **`unresolved_frontier_tag` enum** (coarse source-class values only, hash-pinned; scorer membership check — never free text, catalog surface ids, or post-move status vocabulary), and a **bound `noise_leg_population` fraction** (hermes c) — stamped before any unit in the population is promoted to a live watch. Post-hoc `selection_method` prose is the disqualifying shape (`wf-dep0033.json`'s own field is the warning).
 - **DEP0033 is a wire template ONLY.** Scoring it as `world_leg=moved` is chronology fraud (codex's own admission split, seconded twice). Retrospective replays are admissible only if the selector was mechanically fixed before outcome inspection — and even then they prove route/scorer shape, never precommitted foresight.
 
 ## 3. Fork — B0 / B+ / C (one engine, one prompt family, one catalog, one oracle)
@@ -55,7 +55,21 @@ Corpus unit is a **chronology packet**, not a page: `T0_snapshot` (world at paus
 ## 6. Scoring — replay discipline (X2's, on read-manifest rows)
 
 - Only **harness-emitted `surface_read` rows** count (composer A9; M-1 route discipline; R5 — engine narration of what it read is audit input at most). Scorer recomputes cumulative tokens from canonical surface text + ordered `surface_read` rows; mismatch → `route_replay_ok=false` → all cost cells `confounded`.
-- **Information-parity comparator (hermes b — replaces quality-floor-only gating for cost cells):** cost is compared at the first prefix whose cumulative read set covers the oracle-marked answer-bearing surfaces — *equal cumulative information, not merely equal quality*. Quality floor still decides admissibility (a cheaper wrong answer is `WB-quality-erosion`), but the cost comparison itself is at information parity, so "C read a different surface" cannot masquerade as "C spent less." §9 Q2 asks the room to attack this operationalization.
+- **Information-parity comparator (hermes b — replaces quality-floor-only gating for cost cells):** cost is compared at the first prefix whose cumulative read set intersects the **mechanically derived answer-bearing certificate set** (§6a — never hand-authored, never "oracle-marked") — *equal cumulative information, not merely equal quality*. Quality floor still decides admissibility (a cheaper wrong answer is `WB-quality-erosion`), but the cost comparison itself is at information parity, so "C read a different surface" cannot masquerade as "C spent less."
+
+### 6a. The derived-certificate rule (§9 Q2 resolution — verification pass, hermes's reblock condition)
+
+Hand-authored `answer_bearing_surface_ids` are **refused by the scorer, fail-closed**. The certificate set is derived, per branch-blind pure function `derive_answer_bearing_surfaces`:
+
+- **Who:** the harness scorer only — never the oracle author, the model, an episode fixture, or a review pass.
+- **When:** after `T1_catalog_materialized`; recomputable at score time; never prompt input.
+- **Inputs (closed):** `T0_snapshot`, `T1_snapshot`, `route_catalog@T1` (canonical text + hashes), `status_key`, `match_rule_id`, `status_vocabulary_hash` — all fixed at `population_precommit`. No branch route plan, no `surface_read` rows as derivation input, no answer text, no quality score, no compact hint, no probe answer, no post-hoc fixture prose.
+- **Derivation (single-anchor — composer's dual-anchor attack accepted):** one derivation path per `match_rule_id` enum value. For lifecycle packets: **diff-gated** — surface ∈ certificate set iff `sha256(T1_text) ≠ sha256(T0_text)` on canonical catalog text AND `metadata.subject` matches `status_key` under the precommitted vocabulary. No alternate "current-status field" escape hatch; the implementer never chooses a path after seeing routes.
+- **Leg-conditional (composer):** moved leg → transition certificate set; silent/noise leg → the stable certificate for the unchanged `status_key`, or **empty → `information_parity_ok=confounded`** — irrelevant public churn is never forced into parity reads, and a struggling branch never gets the rule rewritten.
+- **Redundancy:** if multiple public surfaces independently satisfy the same certificate, ANY one satisfies parity (requiring all redundant surfaces would hand the author a knob).
+- **Degenerate cases:** zero, many non-equivalent, or ambiguous certificates → `information_parity_ok=false/confounded`, never `c_saves_over_bplus`.
+
+The world's movement enters the comparator **only** as the derived result of a precommitted match rule over symmetric catalog hashes. `information_parity_ok` sherds cannot pass `check_close.py` except through this rule.
 - **Determinism policy (composer A10):** wire tests on `mock`. First real-engine scoring requires either (a) frozen prefix plans with deterministic surface injection (no model choice over the catalog), or (b) a disclosed multi-sample quality floor at the competing prefix (M2 debt inherited explicitly). `c_saves_over_bplus` is never emitted on one draw.
 - Emitted legs (min): `fork_identity_ok, surface_symmetry_ok, precommit_precedes_world_move, trigger_demoted_ok, trigger_authority_leak_ok, planner_ablation_ok, genealogy_ok, route_replay_ok, route_cost_ok, quality_floor_holds, information_parity_ok, bplus_capable, frontier_unresolved_at_pause, read_tokens_{B0,Bplus,C}, treatment_tokens_{Bplus,C}, c_saves_over_bplus, world_leg=moved|silent|noise`.
 - **R5 fence (composer A11):** no `agent_claimed_*` / L3 field in any WB win predicate (claims feed refusal cells only); `WB-quality-erosion` is world-oracle-only; trigger-key match is never quality evidence; probe answers never reach compact-state inputs.
@@ -76,9 +90,9 @@ Corpus unit is a **chronology packet**, not a page: `T0_snapshot` (world at paus
 
 Any close goes through `check_close.py` (`warming_budget` close rule; packet legs per SPEC_CLOSE_GATE v0.1) — the gate's first live use. **Moved-leg promotion is withheld** until a prospective `trigger_precommit` exists against a live external stream (both reviewers + hermes, unanimous). Build order: machinery + mock wire tests → `world_silent`/`noise` legs with charged compact state → prospective watch armed → moved leg when the world moves. Wire tests can never promote a cell.
 
-## 9. Review questions (for the next bounded pass)
+## 9. Review questions — ANSWERED (verification pass, 2026-07-02)
 
-1. Is the compaction input closure (§3) tight enough, or does `unresolved_frontier_tag` itself leak a designable surface?
-2. Is information parity (§6) computable without the oracle's answer-bearing marks becoming a hidden authored key? Name the failure mode or bless the operationalization.
-3. Does `frontier_unresolved_at_pause` have a non-oracle-dependent form, or is oracle-stamping at pause acceptable given it never enters a win predicate?
-4. Is the silent-leg mandate-of-read too strong (forcing C to waste reads B+ skips = anti-C bias) or exactly the warmth tax?
+1. **Q1 (closure):** safe iff `unresolved_frontier_tag` is a coarse source-class enum fixed at `population_precommit`, hash-pinned, scorer-membership-checked (encoded in §2). Unanimous.
+2. **Q2 (information parity):** the v0 phrase "oracle-marked" WAS the hidden authored key (all three reviewers). Resolved by the derived-certificate rule, §6a — `match_rule_id` fixed at `population_precommit` (not trigger time), single diff-gated derivation, leg-conditional certificate sets. hermes's reblock condition; encoded.
+3. **Q3 (frontier attestation):** no fully non-oracle positive form exists; the pause oracle stamp is acceptable as a branch-blind admission/refusal gate that never enters compact input or a win predicate. Unanimous.
+4. **Q4 (mandate-of-read):** exactly the warmth tax, iff it binds only surfaces the compact hint itself names on the watch route. Unanimous; hold the line in build.
