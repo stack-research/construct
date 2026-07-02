@@ -142,3 +142,7 @@ smoke-ollama:
 # Anthropic API engine — only if/when a key or `ant auth login` profile exists.
 smoke-claude:
 	uv run --with anthropic python -m harness.run_stage_a episodes/smoke-001.json --engine claude
+
+# warming-budget wire tests (SPEC_WARMING_BUDGET v0.1 — mock only, never promotes)
+warming-test:
+	uv run --no-project python -m tests.test_warming
