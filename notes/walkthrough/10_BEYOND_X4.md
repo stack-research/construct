@@ -116,7 +116,9 @@ stays open without granting a sensor because the word feels right.
 
 ## What can be run today
 
-There is still no pause/resume instrument; do not manufacture a command for it. The
+There is still no pause/resume instrument; do not manufacture a command for it.
+(That was true when this chapter closed; chapter 12 records what was later built —
+not the dead verb, but the carried cost leg, as the warming-budget instrument.) The
 reusable pieces stand as before — M-1's route discipline, M1's heir fork, M2's
 session seam and ablation, X2's cost-at-matched-quality scorer, X4's witness
 invariant — plus, since the thread: the narrowed claim structure above, which any
