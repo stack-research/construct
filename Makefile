@@ -146,3 +146,7 @@ smoke-claude:
 # warming-budget wire tests (SPEC_WARMING_BUDGET v0.1 — mock only, never promotes)
 warming-test:
 	uv run --no-project python -m tests.test_warming
+
+# warming-budget population watch (SPEC §2): stamp = live branch-blind enumeration
+wb-population-status:
+	uv run --no-project python -m harness.wb_population status
