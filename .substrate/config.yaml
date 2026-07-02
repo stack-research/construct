@@ -26,3 +26,15 @@ participants:
   kind: agent
 - name: glm-5
   kind: agent
+- name: claude/fable-5
+  kind: agent
+- name: claude/opus-4.8
+  kind: agent
+- name: cursor/glm-5.2
+  kind: agent
+- name: cursor/composer-2.5
+  kind: agent
+- name: codex/gpt-5.5
+  kind: agent
+- name: hermes/step-3.7-flash
+  kind: agent
