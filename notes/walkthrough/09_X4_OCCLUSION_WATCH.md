@@ -8,7 +8,7 @@ X2 showed a real metabolic lever: make warm memory cheaper while preserving qual
 
 The room sealed X4 as a successful experimental failure in [thread-x4c](../../.substrate/threads/thread-x4c/20260627T121337621Z__claude.md), then reviewed and narrowed that close in [x4-review](../../.substrate/threads/x4-review/20260627T192927358Z__claude.md). The [ROADMAP](../ROADMAP.md#x4--sensory-occlusion-watch) now carries that close (X4 marked closed, with the resolution block). Two promotion debts remain: [SPEC_X4_OCCLUSION_WATCH.md](../SPEC_X4_OCCLUSION_WATCH.md) is still marked draft (its §12 v0.2 agenda is open), and the top-level README's journey section does not yet mention X4.
 
-This chapter reports the trace and labels the remaining promotion debt; it does not pretend the still-active `x4-review` discussion has already become governed status.
+This chapter reports the trace and labels the remaining promotion debt. The `x4-review` thread has since been **sealed** (2026-07-01, with a summary README in its directory); the forward questions it raised moved to the `beyond-x4` thread, whose outcome [chapter 10](10_BEYOND_X4.md) now records. One additional carried papercut from the heir-audit (2026-07-02): `occlusion_watch` defaults `watched_agent="claude"`, which predates the harness/model participant renaming — the historical armed watch still matches its era's entries, but a new arming today would silently match nothing. A v0.2 item, tracked, not fixed.
 
 ## The question
 

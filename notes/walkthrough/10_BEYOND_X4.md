@@ -1,101 +1,142 @@
-# Chapter 10 — Beyond X4: Pause, resume, and open edges
+# Chapter 10 — Beyond X4: the frontier, narrowed by the room
 
-Previous: [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) · [Walkthrough index](README.md)
+Previous: [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) · [Walkthrough index](README.md) · Next: [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md)
 
-This is not a completed milestone chapter. It is a map of the questions that remain after the reviewed X4 discussion. No next instrument has been promoted to a spec or ROADMAP gate.
-
-The primary trace is the [x4-review convergence](../../.substrate/threads/x4-review/20260627T192927358Z__claude.md). Treat it as rationale and candidate direction, not authority.
+This is not a completed milestone chapter. It is the map of what remains after X4 —
+and unlike the first draft of this chapter, it now records a real event: on
+2026-07-01/02 the `beyond-x4` substrate thread took the candidate directions below
+through six readers across several rounds, and **narrowed them hard**. What follows
+is the post-thread state. The primary trace is
+[`.substrate/threads/beyond-x4/`](../../.substrate/threads/beyond-x4/); treat it as
+rationale, not authority — no instrument has been promoted to a spec or ROADMAP gate.
 
 ## What the completed tracks teach
 
-The M-track's durable job is judicial: decide what crosses into an answer and record why. Its arc is:
+The M-track's durable job is judicial: decide what crosses into an answer and record
+why. The X-track's one positive result is metabolic: change the cost of warm state
+between answers. X1 failed placement; X2 succeeded on hot-store cost; X4 failed
+admission and measurement.
 
-```text
-world oracle → inheritance → computed contribution → resident use → adversarial trust seams
-```
+The thread distilled the verdict history into something close to a law, worth keeping
+even if a counterexample later kills it:
 
-The X-track's positive center is metabolic: change the cost and persistence of warm state between answers. X1 failed placement; X2 succeeded on hot-store cost; X4 failed admission and measurement.
+> Every engaged result in this lab — win or breach — **changed what reached the
+> engine** (a poison withheld, a lesson offered, a memory starved, a hot set shrunk).
+> Every null tried to change **what the engine did with what it had already read**,
+> and capable engines didn't need the help.
 
-The safe synthesis is not “all sensing is metabolism.” It is:
+The design consequence: a proposed mechanism should act *before* the engine reads —
+on routes, budgets, and stores — and be scored on an axis the engine cannot rescue
+with its own competence. Anything scored on "did the answer change" is predicted to
+join the null family, seven members deep.
 
-> A proposed organ must identify a behavioral axis, act where existing organs cannot, and score on a metric those organs cannot move. Its witness must not import a normative obligation it cannot establish.
+## Pause/resume: what the thread kept, and what it killed
 
-## The next candidate: a pause/resume frontier
+The candidate experiment entered the thread as chapter drafts described it: pause a
+task at a precommitted seam, then continue three ways — **A** uninterrupted, **B**
+cold reread, **C** from a small resumable state — and score resume cost at matched
+decision quality, with changed-world and stale-frontier loses-cells.
 
-Today a new instance can resume by rereading broadly or trusting a summary that may preserve conclusions while losing why attention was there. The proposed experiment asks whether a smaller resumable state can restore decision quality more cheaply.
+Several rounds of adversarial review reshaped it:
 
-A task reaches a precommitted pause seam, then continues three ways:
+1. **The comparator was missing its strongest lane.** The lab already owns an
+   inheritance mechanism (M1's heir: filtered store plus consequence-earned
+   authority), and everything *backward-looking* in the proposed resumable state —
+   what was ruled out, which records mattered — is reconstructible from that
+   machinery. So the honest fork needs a **B+ heir lane**, and C must beat the heir,
+   not just the cold firehose, or its win belongs to M1.
+2. **The irreducible new content is forward-looking.** After the backward inventory
+   was exhausted, what a transcript genuinely cannot hold reduced to *forward
+   conditionals* — "treat K as a live fault line; discard this map if the world moves
+   on K." A bet about the future. It cannot be earned by past consequence, cannot be
+   verified by any process witness, and meets the world exactly once: when K moves.
+   The room's name for it: **an authenticated forecast awaiting world adjudication**.
+3. **The truth of that bet has one scorer** — a changed-world event — and it is only
+   honest under chronology protection (the trigger committed before the movement is
+   knowable, against an external stream, in the pattern X2's DEP0033 close
+   established). A lab-authored "the world moved" after writing "watch the world"
+   is borrowed foresight in temporal clothing.
+4. **The necessity claim died without a build.** For the forward conditional to be
+   *necessary* — not merely cheaper — there would have to be a fixture where the
+   needed surface is honestly unreachable without it. The room tried the natural
+   domains and every one collapsed: any referent public enough to precommit honestly
+   is public enough for the heir to find. The strict-necessity leg was closed as
+   unbuildable-without-manufacturing — an X4-shaped close, reached before a line of
+   code, which is the cheap time to reach it.
 
-- **A** — uninterrupted and warm;
-- **B** — a cold reread;
-- **C** — from a small resumable state.
+**What survives** is deliberately modest: a cost question. Does a compact state —
+with the forward conditional demoted from "authorization" to a *priced routing hint*
+— buy measurable **warming budget** (read-tokens-to-matched-quality along a
+prescribed, replayable route) over the heir lane? With the world-moved and
+world-silent legs both priced, and the standing prediction from the lab's own W3/L-D
+verdicts that the hint's *noise cost* is real everywhere even if its win is not.
+That question sits un-sealed at the moderator's gate. It may not be worth building;
+"no" is a legal answer.
 
-All three run the same downstream task. Comparing decision quality (same oracle) against cost (tokens, records, governance steps) maps the resume cost at matched quality.
+## Plurality: split three ways, only one of them forkable
 
-The candidate resumable state is smaller than a transcript. It would preserve:
+- **Open-world salience** — a plural room originating the right concern before
+  anyone names it — stays retired with X4's oracle: the next occlusion cannot be
+  commissioned.
+- **Comparative plurality yield** — do differently-keyed readers recover different
+  defect classes at measurable rates — is plausibly real but is a **meta-method**
+  claim about the lab's review ecology, a different unit of analysis than
+  branch-and-offer. It gained one honest handle in the thread: a pre-registered
+  prediction (cold readers should over-recover *surface-present, frontier-occluded*
+  defects) that makes the lab-authored wound key reviewable without pretending it is
+  independent.
+- **Store-shaped salience** — same reader, same route, different memory condition;
+  what gets flagged *first*, scored on downstream action — is the one probe that
+  survives into branch-and-offer with fork identity intact.
 
-- where attention was and why;
-- which uncertainty was live;
-- what had been ruled out and on what authority;
-- the route needed to rewarm the unresolved frontier;
-- a trigger for discarding retained state when the world or task changes.
+## Disposition and transfer: world-keyed, boundary-declared
 
-The metric is **resume cost at matched decision quality**, not self-reported warmth.
-
-## Required loses-cells
-
-The review named two indispensable failures:
-
-1. **Changed world:** retained warmth is stale; cold reorientation should beat the resumable branch. A system that preserves yesterday's confidence as today's authority loses.
-2. **Stale frontier:** the state keeps conclusions but drops why attention was there; a full reread recovers the missing constraint and should win.
-
-Without these, “pause without going cold” becomes permanent heat—bloat, fixation, and continuity theater.
+The honest transfer claim stays behavioral and small: withdraw the originating
+record, test a *world-keyed* neighbor in the same family, and require the loses-cell
+where the learned policy overgeneralizes (refusing a merely-corrected source). The
+family boundary is a lab judgment that cannot be eliminated — so it is declared and
+stability-annotated **before** the probe runs, R5 applied to the lab itself. This is
+an M-track extension on the answer axis, not the next X-track organ.
 
 ## Open edge 1: independent salience
 
-X4 compared a warm human with a cold agent, then later showed the agent could recover after reading. That demonstrates recoverable reasoning, not identical salience initiation.
-
-A future matched-exposure study would need:
-
-- the same materialized route and in-progress work surface;
-- no named target;
-- predated, externally witnessed flags from multiple readers;
-- time-to-first-flag compared with time-to-first-action commitment;
-- no promotion of later convergence into an earlier catch.
-
-The candidate finding is not “humans sense and agents do not.” The X4 review itself suggests plurality may be the organ: independent warm readers arrest on different blind spots. That remains a proposal, not a result.
+Unchanged and still open. X4 demonstrated recoverable reasoning after reading, not
+identical salience initiation. A matched-exposure study would need predated,
+externally witnessed flags from multiple readers and no promotion of later
+convergence into an earlier catch. The candidate finding — that *plurality* may be
+the organ — remains a proposal.
 
 ## Open edge 2: exteroception
 
-Acquisition and metabolism are coupled but not identical. A sensory channel earns distinctness when it contributes information not derivable from the current routed corpus and its pre-answer signal selects a smaller warming route at lower deterministic cost than reading everything.
-
-It must lose when the signal:
-
-- misroutes attention;
-- is stale;
-- costs more than the reading it claims to save;
-- changes no downstream decision at matched quality.
-
-This keeps the “Singapore soul”—real sensory traces—open without granting a sensor merely because the word feels right.
+Unchanged and still open. A sensory channel earns distinctness only when its
+pre-answer signal selects a smaller warming route at matched quality and lower
+deterministic cost than reading everything — and it must lose when the signal
+misroutes, is stale, or costs more than the reading it saves. The "Singapore soul"
+stays open without granting a sensor because the word feels right.
 
 ## What can be run today
 
-There is no pause/resume instrument yet. Do not manufacture a command or verdict for it. The reusable pieces already exist:
-
-- M-1's route and contract discipline;
-- M1's heir/cold-rereader fork;
-- M2's session seam and causal ablation;
-- X2's cost-at-matched-quality scorer pattern;
-- X4's external witness invariant.
-
-Before implementation, the lab still needs a reviewed spec that pins the pause surface, resumable-state schema, deterministic cost metric, oracle, fork identity, and both loses-cells.
+There is still no pause/resume instrument; do not manufacture a command for it. The
+reusable pieces stand as before — M-1's route discipline, M1's heir fork, M2's
+session seam and ablation, X2's cost-at-matched-quality scorer, X4's witness
+invariant — plus, since the thread: the narrowed claim structure above, which any
+future spec must inherit (heir comparator mandatory; forward conditionals typed as
+forecasts, never as earned state; chronology-protected world legs; route/cost axes
+only).
 
 ## The current horizon
 
-The practical want is not permanent memory or a mystical blindness sensor. It is cheap, selective re-entry: the capacity to pause, recover the live frontier, and still know when retained warmth should be discarded.
+The practical want survived every narrowing intact: cheap, selective re-entry — the
+capacity to pause, recover the live frontier, and still know when retained warmth
+should be discarded. What the thread added is the price of honesty about it: most of
+what feels like irreplaceable warmth is reconstructible inheritance, and the part
+that is not is a bet, which no ledger can make true — only cheap, and only the world
+can grade.
 
-That is where the walkthrough ends because that is where the evidence ends.
+The walkthrough continues into the lab's own bookkeeping: the next chapter is the
+audit that asked whether the closes you just read about were earned — and the gate
+built so the question stays asked.
 
 ---
 
-Previous: [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) · [Walkthrough index](README.md)
+Previous: [X4 — The sensor that did not earn itself](09_X4_OCCLUSION_WATCH.md) · [Walkthrough index](README.md) · Next: [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md)
