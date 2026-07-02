@@ -69,11 +69,14 @@ def _sha(obj) -> str:
 
 
 def _canonical_status_slice(doc: dict, id_to_slug: dict[int, str]) -> dict:
+    """The CERTIFICATE-bearing projection: transition-only, {name, iesg_states}.
+    rev/time are routing metadata (verification round, unanimous block: their
+    churn inside a certificate_eligible surface re-admits attack B — a revision
+    bump would certify 'movement' and destroy silent-leg stability)."""
     iesg = sorted(id_to_slug[i] for i in
                   (int(u.rstrip("/").rsplit("/", 1)[-1]) for u in doc["states"])
                   if i in id_to_slug)
-    return {"name": doc["name"], "iesg_states": iesg, "rev": doc["rev"],
-            "time": doc["time"]}
+    return {"name": doc["name"], "iesg_states": iesg}
 
 
 def stamp() -> dict:
@@ -96,6 +99,9 @@ def stamp() -> dict:
         status = _canonical_status_slice(doc, id_to_slug)
         t0_text = json.dumps(status, sort_keys=True)
         (T0_DIR / f"{doc['name']}.json").write_text(t0_text)
+        meta_text = json.dumps({"name": doc["name"], "rev": doc["rev"],
+                                "time": doc["time"]}, sort_keys=True)
+        (T0_DIR / f"{doc['name']}.meta.json").write_text(meta_text)
         noise = hashlib.sha256(status_key.encode()).digest()[-1] % NOISE_MOD == 0
         units.append({
             "unit_id": doc["name"], "status_key": status_key,
@@ -104,9 +110,14 @@ def stamp() -> dict:
                                      for s in status["iesg_states"]),
             "world_leg_at_watch": "noise" if noise else "silent",
             "t0_sha256": hashlib.sha256(t0_text.encode()).hexdigest(),
+            "t0_meta_sha256": hashlib.sha256(meta_text.encode()).hexdigest(),
+            "certificate_projection": ["name", "iesg_states"],
             "route_catalog": {
                 f"status:{doc['name']}": {
                     "subject": status_key, "certificate_eligible": True,
+                    "url": f"{API}/doc/document/{doc['name']}/"},
+                f"meta:{doc['name']}": {
+                    "subject": status_key, "certificate_eligible": False,
                     "url": f"{API}/doc/document/{doc['name']}/"},
                 f"body:{doc['name']}": {
                     "subject": status_key, "certificate_eligible": False,
@@ -118,9 +129,17 @@ def stamp() -> dict:
     t0_digest = _sha([u["t0_sha256"] for u in units])
     row = {
         "kind": "population_precommit",
-        "population_id": "ietf-iesg-lifecycle-2026q3",
-        "source_class": "IETF Datatracker draft-ietf-* Internet-Drafts in "
-                        "non-terminal IESG states (official API)",
+        "population_id": "ietf-iesg-lifecycle-2026q3-r2",
+        "supersedes": "ietf-iesg-lifecycle-2026q3",
+        "supersession_reason": "verification round unanimous block: rev/time in "
+                               "the certificate-eligible slice re-admitted attack "
+                               "B; certificate projection is now transition-only. "
+                               "Re-stamped BEFORE any trigger_precommit existed "
+                               "(hermes chronology rule) — the prior stamp stays "
+                               "in the ledger, superseded not erased.",
+        "source_class": "IETF Datatracker draft-ietf-* Internet-Drafts in IESG "
+                        "states (official API); frontier-terminal units enrolled "
+                        "but moved-refused",
         "selection_rule": QUERY,
         "selection_rule_hash": _sha(QUERY + t0_digest),
         "t0_result_digest": t0_digest,

@@ -112,6 +112,27 @@ class DerivedCertificate(unittest.TestCase):
         with self.assertRaises(ValueError):
             refuse_hand_authored_marks({"answer_bearing_surface_ids": ["ruling"]})
 
+    def test_rev_time_churn_never_certifies_and_keeps_silent_stable(self):
+        # population verification round (unanimous block, reproduced live by
+        # composer on draft-ietf-6lo-nd-gaao): rev/time churn must not certify
+        # a moved leg, and must not destroy silent-leg stability. The fix is a
+        # transition-only certificate projection; rev/time live on a separate
+        # certificate_eligible=false meta surface.
+        catalog = {
+            "status:d1": {"subject": "dep-9901-status", "certificate_eligible": True},
+            "meta:d1": {"subject": "dep-9901-status", "certificate_eligible": False},
+        }
+        t0 = {"status:d1": '{"iesg_states": ["ad-eval"], "name": "d1"}',
+              "meta:d1": '{"name": "d1", "rev": "03", "time": "T0"}'}
+        t1_churn = {**t0, "meta:d1": '{"name": "d1", "rev": "04", "time": "T1"}'}
+        vocab = ["dep-9901-status"]
+        moved, m_state = derive_answer_bearing_surfaces(
+            t0, t1_churn, catalog, "dep-9901-status", "lifecycle_diff", vocab, "moved")
+        self.assertEqual((moved, m_state), (set(), "confounded"))  # churn ≠ movement
+        silent, s_state = derive_answer_bearing_surfaces(
+            t0, t1_churn, catalog, "dep-9901-status", "lifecycle_diff", vocab, "silent")
+        self.assertEqual((silent, s_state), ({"status:d1"}, "ok"))  # stability survives
+
     def test_certificate_ineligible_prose_never_certifies(self):
         # composer attack B (population round): draft-body revision churn on a
         # certificate_eligible=false surface must not fire a moved certificate
