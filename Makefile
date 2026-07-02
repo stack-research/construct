@@ -63,6 +63,12 @@ conformance:
 route-watch:
 	uv run --no-project python -m harness.route_watch $(if $(MANIFEST),--manifest $(MANIFEST)) $(if $(WRITE),--write)
 
+# heir-audit fatigue metrics: topic-presence counts over the immutable thread
+# record (pace, roster attrition, blocker/endorse trend). An INSTRUMENT, not a
+# gate — print-only, always exits 0; counting rules live in the module docstring.
+fatigue-metrics:
+	uv run --no-project python -m harness.fatigue_metrics
+
 # SPEC_X4 route_watch instrument smoke (no model): the relation computes (cold route
 # surfaces the lineage-plane candidate; a bridge-routed warm route is quiet), the
 # witness path is external + append-only, and the instrument never gates. MACHINERY
