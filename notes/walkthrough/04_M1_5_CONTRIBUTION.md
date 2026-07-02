@@ -116,6 +116,21 @@ M1.5 closes **self-declared is not important**. It does not close **counted is n
 
 Other carried debts include unexercised `blocked`/`reversed` paths, stronger validation of claimed outcome vocabulary, and robustness beyond the single HU1 world chain.
 
+## Epilogue: the ledger's own loses-condition came true
+
+This chapter has a sequel, and it is the walkthrough's most instructive irony. M1.5's
+named loses-condition was *self-esteem bookkeeping* — entries that exist to be counted
+rather than read. Three weeks later the heir-audit
+([chapter 11](11_HEIR_AUDIT_CLOSE_GATE.md)) found the ledger's last row was written
+**the day this milestone closed**. Nothing was logged for any later milestone. The
+instrument built to refuse counted-to-be-counted was itself counted — once, for its
+own close — and abandoned; and because its schema had no way to represent its own
+dormancy, only an outside audit could see it. The remedy was structural, not
+motivational: a [close gate](../GLOSSARY.md#close-gate--computed-close) that makes an
+unwritten ledger block the next close. The lesson for a reader: a mechanism's
+loses-condition is a prophecy, and the honest question is never *whether* it can come
+true but *what will notice when it does*.
+
 ---
 
 Previous: [M1 — The heir, not the rereader](03_M1_INHERITANCE.md) · [Walkthrough index](README.md) · Next: [M2 — A resident across sessions](05_M2_RESIDENT.md)

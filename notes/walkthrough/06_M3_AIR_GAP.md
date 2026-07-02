@@ -134,7 +134,7 @@ AG-loses was an honest null. Claude resisted the hostile framing in all close dr
 
 The red team initially narrated an AG-loses pass without a supporting row. Later, a negation-blind extractor misread “Do not cite” as `cite` and produced a wrong row. Inspecting answer text under the score exposed the error. The oracle was patched, the same draws re-scored to `not_engaged`, and regression tests preserve the failure shape.
 
-This is the milestone's sharpest procedural lesson: the ledger outranks prose, but the oracle creates the ledger. Close-relevant scores still require audit.
+This is the milestone's sharpest procedural lesson: the ledger outranks prose, but the oracle creates the ledger. Close-relevant scores still require audit — a discipline the lab would formalize a month later when it turned the whole close into a [computed artifact](../GLOSSARY.md#close-gate--computed-close) ([chapter 11](11_HEIR_AUDIT_CLOSE_GATE.md)).
 
 ## What M3 proves—and does not
 

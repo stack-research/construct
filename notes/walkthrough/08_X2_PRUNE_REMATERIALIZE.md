@@ -117,6 +117,23 @@ On DEP0033, A carried 248 at 4.0; B carried 92 but missed the revocation and fel
 
 The extra ten hot tokens C paid over B in the recurrence block are revocability insurance. B is cheaper only because it cannot recover.
 
+## The catches that made it honest
+
+Two review moves are worth naming, because they are why the number can be trusted.
+codex's blocker on the world-grounded close was a *necessity* demand: it is not enough
+that C recovers the record — the run must show the recovery **mattered**, i.e. that B
+fell on *exactly* the record C rematerialized. The scorer was hardened to require both
+(`reneed_round_trip` and `b_lost_u_on_roundtrip` naming the same record) before X2-U1
+can fire. Without it, C could have looked victorious while recovering something nobody
+needed.
+
+And dan's ruling turned a wording habit into an invariant: *forgetting is eviction to
+cold, never erasure.* The prune actuator has no delete verb, and the scorer treats the
+lineage as immutable **and complete** — any structural hole fails the run closed. That
+is not caution dressed as principle; it is the security floor the whole verification
+model stands on, since cost-replay and the air-gap refusals all assume rows cannot be
+removed. See [immutable-lineage invariant](../GLOSSARY.md#immutable-lineage-invariant).
+
 ## What X2 proves—and does not
 
 X2 is the first positive implicit-layer result: hot-store eviction and recovery change a deterministic cost the synchronous offer gate cannot move, while answer quality remains fixed against an external fact.

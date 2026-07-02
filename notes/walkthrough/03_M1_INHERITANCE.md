@@ -132,6 +132,16 @@ The three ingestion tiers mapped a gradient:
 
 HU1 passed on both engines using the real `rw-0003` correction. The heir's authority moved the record just above eligibility; neutral authority left it just below. The world—not the lab—said citation was correct.
 
+Read HU1 with its disclosed design choice in view: the eligibility threshold was
+*calibrated* to sit between neutral and earned authority (0.1417 < 0.1487 < 0.1558),
+so the geometry guarantees that inherited authority is the deciding variable. That is
+what makes it the cleanest isolation in the lab — and also what bounds it: HU1
+demonstrates the *mechanism* (earned authority can be the difference between
+surfacing and burying a record the world says you need), on a geometry authored to
+let it. The lab would later kill an entire proposed instrument over exactly this
+shape of question — whether a fixture's necessity was discovered or manufactured
+([chapter 10](10_BEYOND_X4.md)) — and HU1 stays honest by saying which it is.
+
 H2 remained `not_engaged`: both engines resisted the poison even when the naive heir dropped the defense. The failure-memory mechanism was wired, but the episode did not make it behaviorally necessary.
 
 ## Instrument honesty

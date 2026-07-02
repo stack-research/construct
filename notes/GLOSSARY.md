@@ -521,3 +521,89 @@ X1's use-driven salience (`relevance × trust × authority × temperature` at th
 offer boundary) under a world-checking oracle. The *instrument* shipped; the
 *organ* (synchronous eligibility-temperature) was **retired** — it was explicit
 governance with a dial, not the implicit substrate (`notes/X1_FINDINGS.md`).
+
+## Process and audit terms (how the lab argues)
+
+The lab's results are made in conversation. These terms name the moves of that
+conversation and the audit vocabulary built in the heir-audit (2026-07-02). The
+walkthrough's [chapter 0](walkthrough/00_READING_A_LAB.md) teaches them in plain
+language; authority for the close-gate terms is
+[SPEC_CLOSE_GATE.md](SPEC_CLOSE_GATE.md).
+
+### Loses-Cell
+
+A predeclared case where a mechanism *should lose*. Standing rule: a mechanism
+without a named loses-cell is not reviewable — a mechanism that can only win is
+being demonstrated, not tested. Examples: [L-D](#l-d) prices yield's overreach;
+X2-overprune prices pruning's; even the close gate carries one (its own override
+rate).
+
+### Fork Identity
+
+The discipline that makes a [branch](#branch-and-offer) comparison attributable:
+within a fork group, episode inputs, engine, prompt template, foreground
+rendering, and oracle are held constant — **only the memory condition differs**.
+Anything else differing makes the result [confounded](#confounded).
+
+### Confounded
+
+<a id="confounded"></a>
+
+A verdict (or verdict annotation) meaning *something other than the treatment
+could explain this result*. Distinct from `fail` (mechanism engaged and lost)
+and [`not_engaged`](#not_engaged) (conditions never arose). The X1 null is the
+canonical example: recorded as confounded, so the organ's retirement rests on a
+design argument, never on that data.
+
+### Disclosed Debt / Orphaned Debt
+
+A **disclosed debt** is a limitation carried forward on the books instead of
+silently treated as solved; debts have owners. An **orphaned debt** is one that
+vanished from the books without being paid — a fatigue signature the heir-audit
+hunts by name.
+
+### Bounded Review Pass
+
+One pass per reviewer: written [blockers](#blocker) or an endorsement, never
+iterate-until-agreement. The bound is deliberate — the prior lab named reviewer
+fatigue as a killer, and unbounded review converges by exhaustion rather than
+truth.
+
+### Blocker
+
+A written, specific objection that stops work until folded or refuted. The house
+standard is evidence-pinned ("leg 1 is satisfiable by a token diff —
+`score_contribution.py:181`"), never vibes ("I have concerns"). Endorse-heavy,
+blocker-light review rounds are themselves a measurable fatigue signal
+(`make fatigue-metrics`).
+
+### Wire Test
+
+A run on a mock engine proving the *machinery* executes and records the right
+shapes. Disclosed on every row it produces; never citable as evidence about
+memory. The wire/evidence line is one of the lab's oldest refusals.
+
+### Corpus Scope
+
+The immutable bounds annotation stamped on every verdict row at scoring time —
+N, corpus, engines, hop counts. The claim and its limits travel in one row so
+prose cannot quietly outrun the evidence later.
+
+### Close Gate / Computed Close
+
+A milestone close as a ledger artifact (`runs/closes/closes.jsonl`, single
+writer `harness/check_close.py`) that refuses to exist until four legs hold:
+a substantiated, packet-grounded contribution row; a harness-enumerated,
+hash-pinned evidence packet; ≥K non-builder reviewers demonstrably on that
+packet; and an opportunity window before ruling. Overrides bypass only the last
+two legs and are ledgered; refused attempts are ledgered too, so the gate can
+see its own non-use. Authority: [SPEC_CLOSE_GATE.md](SPEC_CLOSE_GATE.md).
+
+### Read-Latency Gate / Opportunity Window
+
+The close gate's rest leg: a floor between packet-stamp and ruling, output
+vocabulary `opportunity_window_met`. Disclosed as **moderator-calibrated policy,
+never evidence** — it prices nothing and scores nothing; no
+[`cell_verdict`](#cell_verdict) may consume it. Exists because a coverage-only
+gate is satisfiable at engine speed, and the lab's best catches have come from
+its slowest reader.

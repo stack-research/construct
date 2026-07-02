@@ -120,6 +120,17 @@ RS-loses and RS-stale remained disclosed nulls on real engines. The models accur
 
 The first cross-engine interpretation was almost inverted by `_norm`, which removed punctuation/newlines rather than replacing them with spaces. Claude's `**Decline.**\n\nThe...` became `declinethe...` and scored unparseable. The fix revealed the correct behavior and gained regression tests. The earlier rows remain part of the audit story.
 
+dan's five-word verdict on the episode entered the lab's permanent vocabulary —
+*"oracle bugs reveal the truth"* ([QUOTES](../QUOTES.md)) — because the bug's fix did
+not rescue a wanted result; it revealed that the engine had been behaving *better*
+than the scorer said. The room's review of this close also shows the division of
+labor working: cursor audited every scorer precondition against the real ledgers,
+grok cold-read the packet for overclaims, and kagi — the world-oracle — walked the
+provenance chain and confirmed the world-grounding was **not transitive** (the E2
+oracle scores the answer against the corpus independently, so a wrong lesson could
+not launder itself into a right verdict). Different readers, different keys, one
+close.
+
 ## What M2 proves—and does not
 
 M2 demonstrates a one-hop, one-retraction, cross-session causal use of earned failure memory on two engines. It does not prove enduring identity, long-chain compounding, multi-retraction robustness, or that performed/stale continuity is common. Those latter pathologies were honest nulls.

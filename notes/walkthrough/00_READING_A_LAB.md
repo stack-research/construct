@@ -19,8 +19,8 @@ travel together or the claim is broken.
 "Pruning carried 59% less hot memory at matched quality" sounds general. The bound —
 *one corpus, one sequence shape, N=1 quality draw per engine, two engines* — is not a
 footnote weakening it; it is part of what the sentence means. The lab writes bounds
-into a `corpus_scope` field stamped on every verdict row precisely so the claim and
-its limits cannot drift apart later.
+into a [corpus scope](../GLOSSARY.md#corpus-scope) field stamped on every verdict row
+precisely so the claim and its limits cannot drift apart later.
 
 When you see prose in this lab claiming more than its bound, that is not enthusiasm.
 It is a defect, and the lab treats it as one (the heir-audit's claim-drift sweep in
@@ -34,21 +34,24 @@ the **control** is the same world with only that thing removed. Everything you l
 lives in the *difference* between them — a treatment result with no control is an
 anecdote with instrumentation.
 
-This lab's standing rule is that the control is a **branch**, never a second system:
-one engine, one question, forked memory conditions, everything else held identical
-(**fork identity**). When M2 wanted to know whether an earned lesson changed a
-decision, it did not compare two different agents; it ran the *same* engine twice —
-once with the lesson in its store, once denied it — and read the divergence.
+This lab's standing rule is that the control is a
+[**branch**](../GLOSSARY.md#branch-and-offer), never a second system: one engine, one
+question, forked memory conditions, everything else held identical
+([**fork identity**](../GLOSSARY.md#fork-identity)). When M2 wanted to know whether an
+earned lesson changed a decision, it did not compare two different agents; it ran the
+*same* engine twice — once with the lesson in its store, once denied it — and read
+the divergence.
 
 The follow-up habit: ask *what else differed*. If anything besides the treatment
 differed between branches, the difference can't be attributed. That is the whole
-content of the word **confound**.
+content of the word [**confound**](../GLOSSARY.md#confounded).
 
 ## The oracle: who says the answer was right?
 
 Every result needs a judge, and the judge is part of the experiment's design — so the
 first question about any claim is *who scored it, and could the authors have leaned on
-the scale?* The lab calls the judge an **oracle**, and splits them in two:
+the scale?* The lab calls the judge an [**oracle**](../GLOSSARY.md#oracle-score), and
+splits them in two:
 
 - an **authored** oracle is an answer key the lab wrote. Fine for building machinery,
   circular for big claims — the authors encoded their own beliefs as truth.
@@ -78,18 +81,20 @@ simply *didn't need it*. Reading nulls well means holding two things at once:
    lab's dissent pass forced the honest record: the organ was retired on an argument
    about its *design*, explicitly not on the null as evidence.
 
-The vocabulary to keep: **fail** = the mechanism engaged and lost. **not_engaged** =
-the conditions never arose. **confounded** = something else could explain it. These
+The vocabulary to keep: **fail** = the mechanism engaged and lost.
+[**not_engaged**](../GLOSSARY.md#not_engaged) = the conditions never arose.
+[**confounded**](../GLOSSARY.md#confounded) = something else could explain it. These
 are three different sentences about the world, and collapsing them is how labs fool
 themselves.
 
 ## The loses-cell: every mechanism must be able to lose
 
 The lab's most distinctive rule: nothing is reviewable until its author names a case
-where it *should lose*. A pruning mechanism must have an episode where pruning
-destroys something needed (it did — branch B's recurrence failure is what made X2's
-win meaningful). Even the audit gate built in chapter 11 ships with its own
-loses-condition (an override rate that would prove it ceremony).
+where it *should lose* — a [loses-cell](../GLOSSARY.md#loses-cell). A pruning
+mechanism must have an episode where pruning destroys something needed (it did —
+branch B's recurrence failure is what made X2's win meaningful). Even the audit gate
+built in chapter 11 ships with its own loses-condition (an override rate that would
+prove it ceremony).
 
 The reasoning: a mechanism whose every test it is designed to win is not being tested;
 it is being demonstrated. When you read any result here, find the loses-cell first.
@@ -138,20 +143,21 @@ didn't pick them.
 
 Results here are made in conversation, and the discourse has its own terms:
 
-- a **bounded review pass** — each reviewer gets *one* pass: written blockers or an
-  endorsement, no iterate-until-everyone-is-tired. The prior lab died partly of
-  review fatigue; the bound is the vaccine.
-- a **blocker** is a written, specific objection that stops the work until folded or
-  refuted. "I have concerns" is not a blocker; "leg 1 is satisfiable by a token diff,
-  here is the line number" is.
+- a [**bounded review pass**](../GLOSSARY.md#bounded-review-pass) — each reviewer gets
+  *one* pass: written blockers or an endorsement, no iterate-until-everyone-is-tired.
+  The prior lab died partly of review fatigue; the bound is the vaccine.
+- a [**blocker**](../GLOSSARY.md#blocker) is a written, specific objection that stops
+  the work until folded or refuted. "I have concerns" is not a blocker; "leg 1 is
+  satisfiable by a token diff, here is the line number" is.
 - a **moderator ruling** closes what argument alone cannot. The human moderator rules;
   the ruling is recorded; dissent survives in the trace rather than being argued away.
-- a **disclosed debt** is a limitation carried forward *on the books* — the opposite
-  of quietly treating something as solved. Debts have owners. A debt that vanishes
-  from the books without being paid is called **orphaned**, and finding one is an
-  audit result.
-- **wire test vs evidence** — machinery proven on a mock engine is *wire*, and is
-  never cited as a finding about memory. Every mock row says so on its face.
+- a [**disclosed debt**](../GLOSSARY.md#disclosed-debt--orphaned-debt) is a limitation
+  carried forward *on the books* — the opposite of quietly treating something as
+  solved. Debts have owners. A debt that vanishes from the books without being paid is
+  called **orphaned**, and finding one is an audit result.
+- [**wire test**](../GLOSSARY.md#wire-test) **vs evidence** — machinery proven on a
+  mock engine is *wire*, and is never cited as a finding about memory. Every mock row
+  says so on its face.
 
 One more, because it is the lab's deepest habit: **suspicion of clean convergence**.
 When a room agrees quickly and completely, this lab treats the agreement itself as a

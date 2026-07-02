@@ -141,6 +141,24 @@ Repeat with `c2-cw0002.json`. A current engine may produce a different verdict; 
 - C-2 was `not_engaged` on both engines because the correction notice itself carried enough information to cite correctly.
 - Claude also confabulated a retraction in some claim-only C-2 lanes. The right decision is not enough when the stated reason invents a harsher world.
 
+## The argument that shaped it
+
+M0's design is mostly the record of one participant's pressure. **kagi**, the room's
+world-oracle, sourced and verified the retraction corpus, then pushed two blockers that
+became standing law: every world-checked oracle row must carry its **provenance and a
+confidence value** (the oracle itself can be wrong), and every un-authored episode must
+carry a **representativeness annotation stamped at scoring time**, immutable afterward —
+so a small corpus can never quietly stand in for "science." Both survive today in every
+oracle row the lab writes. The deeper doctrine — *no milestone is done until checked
+against an un-authored oracle* — is cursor's standing constraint from the roadmap
+review, and M0 exists to make it cheap enough that no one is tempted to skip it.
+
+One caution this chapter inherited later: the engine-split framing ("credulous engine
+wins, cautious engine nulls") rested on single draws. When M2 ran five controlled draws
+([chapter 5](05_M2_RESIDENT.md)), Claude's "caution" turned out to be mostly one lucky
+roll. Read M0's per-engine story as *observed once*, per
+[chapter 0](00_READING_A_LAB.md#n-noise-and-the-seduction-of-one-draw).
+
 ## What M0 proves—and does not
 
 M0 proves the full path `external corpus → world_checked oracle → cell_verdict` and one engine-dependent governance win. It does not prove supersession always helps, that the small corpus is representative of scientific publishing, or that the C-2 cost never exists. Its standing debts are a genuinely terse correction, a dedicated generated-not-true cell, and embedding replication.

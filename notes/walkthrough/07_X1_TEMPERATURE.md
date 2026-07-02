@@ -118,9 +118,31 @@ Run `python -m harness.score_decay` on the ledger path printed by the runner. Th
 
 The machinery worked, but X1-win was `not_engaged` on all three real engines. Every engine—including the 3B model—declined whenever the retraction notice was offered. Cooling the misleading finding changed no answer because plain offering of the correction already sufficed.
 
-The initial temptation was to call this evidence that temperature failed. The dissent pass corrected that. The fixture may have been recoverable from model weights or framing, so the null was confounded. Temperature was retired for a stronger, a priori reason: it was a multiplier inside synchronous eligibility, therefore explicit offer governance with a dial.
+The initial temptation was to call this evidence that temperature failed. The dissent pass corrected that. The fixture may have been recoverable from model weights or framing, so the null was [confounded](../GLOSSARY.md#confounded). Temperature was retired for a stronger, a priori reason: it was a multiplier inside synchronous eligibility, therefore explicit offer governance with a dial.
 
 The deeper ruler error was also exposed. On the answer axis, withheld-hot, pruned, and cold-in-lineage can look identical. An implicit-memory mechanism must be scored on something the offer gate cannot change.
+
+## The argument was the result
+
+X1 is the clearest case in the lab of the *discourse* mattering more than the run. The
+milestone had already been ruled — temperature retired, moving on — when Claude
+reopened it under the standing "dissent before building" rule, and codex and cursor
+converged on the reopening (cursor retracting his own prior framing). Two things came
+out of that pass that the run alone would never have produced:
+
+First, the honesty correction above: a null you cannot attribute is not evidence the
+mechanism failed, and saying otherwise is `retrieved ≠ true` turned on the lab itself.
+The organ was retired on the *placement* argument, and the data was labeled confounded
+in the record — a harder, more honest close than "it didn't work."
+
+Second, and larger, the [**three-guardrail stack**](../GLOSSARY.md#three-guardrail-stack)
+that now binds the entire X-track was *born* in this dissent — specifically the third
+guardrail, the scoring-axis law, which caught that the follow-up plan
+("prune-on-answer-flip") was about to reuse the exact answer-axis ruler that had just
+failed. A whole milestone's durable contribution is a rule the room extracted while
+refusing to let a clean-looking close stand. This is what
+[chapter 0](00_READING_A_LAB.md#the-process-vocabulary-how-this-lab-argues) means by
+*suspicion of clean convergence*, shown once in full.
 
 ## What X1 proves—and does not
 
