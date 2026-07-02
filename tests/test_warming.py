@@ -112,6 +112,19 @@ class DerivedCertificate(unittest.TestCase):
         with self.assertRaises(ValueError):
             refuse_hand_authored_marks({"answer_bearing_surface_ids": ["ruling"]})
 
+    def test_certificate_ineligible_prose_never_certifies(self):
+        # composer attack B (population round): draft-body revision churn on a
+        # certificate_eligible=false surface must not fire a moved certificate
+        catalog = {**CATALOG,
+                   "draft_body": {"subject": "dep-9901-status",
+                                  "certificate_eligible": False}}
+        t0 = {**T0, "draft_body": "draft revision one text " * 5}
+        t1 = {**T1_MOVED, "draft_body": "draft revision two text " * 5}
+        certs, state = derive_answer_bearing_surfaces(
+            t0, t1, catalog, "dep-9901-status", "lifecycle_diff", VOCAB, "moved")
+        self.assertEqual(certs, {"ruling"})   # body churn excluded; status slice certifies
+        self.assertEqual(state, "ok")
+
 
 class MintClosure(unittest.TestCase):
     """§3 — compaction input closure + genealogy_ok at mint."""

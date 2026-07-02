@@ -124,6 +124,12 @@ def derive_answer_bearing_surfaces(t0: dict, t1: dict, catalog: dict,
     subj_match = {
         sid for sid, meta in catalog.items()
         if meta.get("subject") == status_key and status_key in status_vocabulary
+        # certificate_eligible (population round, composer attack B): only
+        # status-bearing surfaces may certify; prose bodies stay in the
+        # symmetric catalog for ROUTING but revision churn on them never
+        # fires a moved-leg certificate. Default True (a population that
+        # doesn't tag has no prose surfaces to protect).
+        and meta.get("certificate_eligible", True)
     }
     changed = {sid for sid in catalog
                if _sha(t1.get(sid, "")) != _sha(t0.get(sid, ""))}

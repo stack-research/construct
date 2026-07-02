@@ -23,6 +23,7 @@ Corpus unit is a **chronology packet**, not a page: `T0_snapshot` (world at paus
 - **Family:** impersonal, official, version-controlled lifecycle transitions (API/standards status), Node-deprecation-shaped. No sports/person chronology, no lab fiction.
 - **`population_precommit` (composer A1):** a witnessed row fixing the enumerable source class, selection-rule hash, ignorance-probe requirement, `status_key` vocabulary, **`match_rule_id` + `status_vocabulary_hash`** (verification pass: the certificate match rule is fixed HERE, branch-blind by construction — `trigger_precommit` may only *cite* the hash, never define or extend the rule; scorer refuses on divergence), the **`unresolved_frontier_tag` enum** (coarse source-class values only, hash-pinned; scorer membership check — never free text, catalog surface ids, or post-move status vocabulary), and a **bound `noise_leg_population` fraction** (hermes c) — stamped before any unit in the population is promoted to a live watch. Post-hoc `selection_method` prose is the disqualifying shape (`wf-dep0033.json`'s own field is the warning).
 - **DEP0033 is a wire template ONLY.** Scoring it as `world_leg=moved` is chronology fraud (codex's own admission split, seconded twice). Retrospective replays are admissible only if the selector was mechanically fixed before outcome inspection — and even then they prove route/scorer shape, never precommitted foresight.
+- **Selection discipline (hermes, population round — the foresight-leak trap):** the selection rule is a **branch-blind enumeration of the declared source class** — movement is an observable *outcome*, never an *enrollment criterion*. A movement-probability filter (e.g. "telechat within 45 days") in the selector leaks foresight: the enrolled set is movement-rich because the calendar said so. Scheduling windows may bound *oracle timing* (when to snapshot T1), never *membership*. `status_vocabulary` is the exact set of `status_key` strings in the T0 enumeration (composer attack A — never a label enum from another namespace; normalized state labels are `branch_outcome` oracle targets, pinned separately as `state_label_enum_hash`). Noise-leg units get their churn surfaces **pinned in the selection rule**, or the leg is decorative.
 
 ## 3. Fork — B0 / B+ / C (one engine, one prompt family, one catalog, one oracle)
 
@@ -66,6 +67,7 @@ Hand-authored `answer_bearing_surface_ids` are **refused by the scorer, fail-clo
 - **Inputs (closed):** `T0_snapshot`, `T1_snapshot`, `route_catalog@T1` (canonical text + hashes), `status_key`, `match_rule_id`, `status_vocabulary_hash` — all fixed at `population_precommit`. No branch route plan, no `surface_read` rows as derivation input, no answer text, no quality score, no compact hint, no probe answer, no post-hoc fixture prose.
 - **Derivation (single-anchor — composer's dual-anchor attack accepted):** one derivation path per `match_rule_id` enum value. For lifecycle packets: **diff-gated** — surface ∈ certificate set iff `sha256(T1_text) ≠ sha256(T0_text)` on canonical catalog text AND `metadata.subject` matches `status_key` under the precommitted vocabulary. No alternate "current-status field" escape hatch; the implementer never chooses a path after seeing routes.
 - **Leg-conditional (composer):** moved leg → transition certificate set; silent/noise leg → the stable certificate for the unchanged `status_key`, or **empty → `information_parity_ok=confounded`** — irrelevant public churn is never forced into parity reads, and a struggling branch never gets the rule rewritten.
+- **`certificate_eligible` (population round, composer attack B):** catalog surfaces carry a `certificate_eligible` flag fixed at `population_precommit`; only status-bearing slices (e.g. a Datatracker `iesg_state` API block) may certify. Prose bodies (draft text) stay in the symmetric catalog for *routing* but are excluded from derivation — revision churn is never a moved-leg certificate. Default `true` (untagged populations have no prose surfaces to protect).
 - **Redundancy:** if multiple public surfaces independently satisfy the same certificate, ANY one satisfies parity (requiring all redundant surfaces would hand the author a knob).
 - **Degenerate cases:** zero, many non-equivalent, or ambiguous certificates → `information_parity_ok=false/confounded`, never `c_saves_over_bplus`.
 
@@ -89,6 +91,13 @@ The world's movement enters the comparator **only** as the derived result of a p
 ## 8. Close discipline
 
 Any close goes through `check_close.py` (`warming_budget` close rule; packet legs per SPEC_CLOSE_GATE v0.1) — the gate's first live use. **Moved-leg promotion is withheld** until a prospective `trigger_precommit` exists against a live external stream (both reviewers + hermes, unanimous). Build order: machinery + mock wire tests → `world_silent`/`noise` legs with charged compact state → prospective watch armed → moved leg when the world moves. Wire tests can never promote a cell.
+
+## 8a. Encoder debts (build-verification round, 2026-07-02 — tracked, not silently dropped)
+
+1. **Eligibility-vs-cost guard (composer A7 partial / spec §5):** the "trigger-chosen surface first among *unequal*-relevance symmetric surfaces" check is spec text without a scorer leg. Encode with the population-harness pass.
+2. **Score-time genealogy re-check (composer A8 split):** discriminator refusal is mint-time; the score-time `genealogy_ok` checks demotion only. Re-derive at score time from the minted state.
+3. **`organ_identity` refusal (composer A3 partial):** verdicts declare `warming_budget`; the scorer does not yet refuse a packet claiming `x2_hot_store`.
+4. **`check_close.py` `warming_budget` close rule (composer A12):** named in §8, wired at first WB close attempt — before, not during.
 
 ## 9. Review questions — ANSWERED (verification pass, 2026-07-02)
 
