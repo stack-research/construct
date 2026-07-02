@@ -235,15 +235,39 @@ def score_cells(verdicts: list[dict]) -> list[dict]:
     return cells
 
 
+def ledger_status(rows: list[dict]) -> dict:
+    """Per-milestone liveness view (SPEC_CLOSE_GATE §4 — hermes's schema-blindness
+    finding paid: dormancy is visible from inside the instrument). Intervention rows
+    predating the gate carry no ts; liveness falls back to the harness-stamped ts of
+    each intervention's computed verdict."""
+    verdict_ts = {r.get("intervention_id"): r.get("ts", "")
+                  for r in rows if r.get("kind") == "contribution_verdict"}
+    by_ms: dict[str, dict] = {}
+    for r in rows:
+        if r.get("kind") != "intervention":
+            continue
+        ms = r.get("claimed_target_milestone") or "(pre-gate: unclaimed)"
+        slot = by_ms.setdefault(ms, {"interventions": 0, "latest_ts": ""})
+        slot["interventions"] += 1
+        ts = r.get("ts") or verdict_ts.get(r.get("intervention_id"), "")
+        slot["latest_ts"] = max(slot["latest_ts"], ts)
+    return by_ms
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("ledger")
     ap.add_argument("--corpus-scope", default=DEFAULT_CORPUS_SCOPE,
                     help="immutable representativeness annotation stamped on every written row")
+    ap.add_argument("--status", action="store_true",
+                    help="per-milestone liveness view; scores nothing")
     args = ap.parse_args()
 
     ledger = Ledger(Path(args.ledger))
     rows = ledger.rows()
+    if args.status:
+        print(json.dumps(ledger_status(rows), indent=2, sort_keys=True))
+        return 0
     interventions = [r for r in rows if r.get("kind") == "intervention"]
     already = {r["intervention_id"] for r in rows if r.get("kind") == "contribution_verdict"}
 

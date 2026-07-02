@@ -76,6 +76,14 @@ fatigue-metrics:
 close-latency:
 	uv run --no-project python -m harness.close_latency $(if $(RETRO),--retro)
 
+# SPEC_CLOSE_GATE v0.1: the milestone close as a computed artifact. Wire tests (mock
+# fixtures, never evidence) + the contribution ledger's per-milestone liveness view.
+close-gate-test:
+	uv run --no-project python -m tests.test_close_gate
+
+ledger-status:
+	uv run --no-project python -m harness.score_contribution runs/m1_5/contributions.jsonl --status
+
 # SPEC_X4 route_watch instrument smoke (no model): the relation computes (cold route
 # surfaces the lineage-plane candidate; a bridge-routed warm route is quiet), the
 # witness path is external + append-only, and the instrument never gates. MACHINERY

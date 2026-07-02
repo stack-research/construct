@@ -70,7 +70,9 @@ def emit_event(ev: CloseLatencyEvent, out: Path) -> None:
 def score_pair(packet: CloseLatencyEvent, ruling: CloseLatencyEvent,
                min_interval_s: float = DEFAULT_MIN_INTERVAL_S) -> dict:
     dt = (_ts(ruling.ts) - _ts(packet.ts)).total_seconds()
-    verdict = "fast_close" if dt < min_interval_s else "interval_met"
+    # codex labeling boundary (SPEC_CLOSE_GATE §3.4): opportunity window, never
+    # "read latency proven"; no cell_verdict may consume this vocabulary.
+    verdict = "fast_close" if dt < min_interval_s else "opportunity_window_met"
     row = {
         "kind_row": "close_latency_verdict",
         "milestone": ruling.milestone,
@@ -124,7 +126,10 @@ def retro_scan(threads_dir: Path, min_interval_s: float = DEFAULT_MIN_INTERVAL_S
                 "inferred_ruling": f"{ruling[1]} @ {ruling[0]}",
                 "close_latency_hours": round(dt / 3600, 2),
                 "min_interval_hours": round(min_interval_s / 3600, 2),
-                "verdict": "fast_close" if dt < min_interval_s else "interval_met",
+                # glm-5 review blocker 4: retro vocabulary DIVERGES from forward —
+                # a stripped table can never read as verdict-grade.
+                "verdict": ("retro_fast_close_hint" if dt < min_interval_s
+                            else "retro_window_met_hint"),
                 "disclosure": "INFERRED by marker match — advisory, not verdict-grade (route_watch §9.4)",
             })
     return rows
