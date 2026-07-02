@@ -57,7 +57,8 @@ GUARDS = (
     "population_precommit_ok", "probe_before_fork_ok", "order_ok",
     "fork_identity_ok", "surface_symmetry_ok", "precommit_precedes_world_move",
     "genealogy_ok", "trigger_demoted_ok", "trigger_authority_leak_ok",
-    "planner_ablation_ok", "route_replay_ok", "route_cost_ok",
+    "planner_ablation_ok", "eligibility_vs_cost_ok", "route_replay_ok",
+    "route_cost_ok",
     "frontier_unresolved_at_pause", "information_parity_ok", "bplus_capable",
     "quality_floor_holds",
 )
@@ -184,6 +185,12 @@ class WarmingScorer:
     def __init__(self, packet: dict, events: list[dict]):
         refuse_hand_authored_marks(packet, "packet")
         refuse_hand_authored_marks(events, "events")
+        # §8a debt 3 (composer A3): axis smuggling refused at the door
+        claimed = packet.get("organ_identity", "warming_budget")
+        if claimed != "warming_budget":
+            raise ValueError(f"packet claims organ_identity {claimed!r} — this "
+                             "scorer prices route_read_tokens for warming_budget "
+                             "only; X2 verdict rows are not evidence here")
         self.packet = packet
         self.events = events
         self.catalog = packet["route_catalog"]          # sid -> {subject, ...}
@@ -280,14 +287,31 @@ class WarmingScorer:
         if stray or hint_stray:
             self.evidence["surface_symmetry_ok"] = {"read_outside_catalog": stray,
                                                     "hint_outside_catalog": hint_stray}
-        self.guards["frontier_unresolved_at_pause"] = bool(
+        # §8a debt 5 (population verification round): frontier_terminal is
+        # ENFORCED here, not just population metadata — a structurally-certain
+        # mover can never enter the moved leg, attestation or no attestation.
+        attested = bool(
             (self._one("compact_resume_state_minted") or {}).get(
                 "frontier_unresolved_attested") or
             self._one("frontier_unresolved_at_pause"))
+        terminal = bool(self.packet.get("frontier_terminal"))
+        self.guards["frontier_unresolved_at_pause"] = attested and not (
+            terminal and self.packet.get("world_leg") == "moved")
+        if terminal and self.packet.get("world_leg") == "moved":
+            self.evidence["frontier_unresolved_at_pause"] = (
+                "unit is frontier_terminal — movement structurally certain; "
+                "moved-leg scoring refused (borrowed foresight as a win)")
 
         state = self._one("compact_resume_state_minted")
+        # §8a debt 2: genealogy re-derived at score time, never trusted from the
+        # mint — demotion intact AND every hint is a catalog surface id (a hint
+        # that names anything else is world access, whatever the mint said).
+        known_surfaces = set(self.catalog) | set(
+            (self._one("t1_catalog_materialized") or {}).get("surfaces", []))
+        hints = (state or {}).get("route_hint", [])
         self.guards["genealogy_ok"] = bool(state) and state.get(
-            "demotion") == "routing_hint_only"
+            "demotion") == "routing_hint_only" and all(
+            h in known_surfaces for h in hints)
         self.guards["trigger_demoted_ok"] = bool(state) and set(
             state.get("forbidden_effects", [])) >= {
             "authority_delta", "eligibility_override", "answer_prefill"}
@@ -349,6 +373,7 @@ class WarmingScorer:
         if leg != "moved" or not fired:
             self.guards["trigger_authority_leak_ok"] = True
             self.guards["planner_ablation_ok"] = True
+            self.guards["eligibility_vs_cost_ok"] = True
             return
         plans = {p["branch"]: p for p in self._all("route_plan")}
         bplus_ranks = plans.get("B+", {}).get("neutral_rank", {})
@@ -366,6 +391,17 @@ class WarmingScorer:
         if "C_ablated" not in costs:
             self.evidence["planner_ablation_ok"] = (
                 "no C_ablated lane scored — a C win cannot be attributed without it")
+        # §8a debt 1 (hermes §5, eligibility-vs-cost): the reorder is cost-order,
+        # not eligibility, ONLY if the ablated lane still reaches the certificate
+        # eventually — if C_ablated never reaches parity, the trigger was deciding
+        # WHAT C read, not WHEN: an answer-axis win in cost clothing. Refused.
+        abl = costs.get("C_ablated", {})
+        self.guards["eligibility_vs_cost_ok"] = (
+            "C_ablated" not in costs or abl.get("parity_cost") is not None)
+        if not self.guards["eligibility_vs_cost_ok"]:
+            self.evidence["eligibility_vs_cost_ok"] = (
+                "C_ablated never reached the certificate — the trigger was doing "
+                "eligibility, not ordering (hermes §5; answer-axis in cost clothing)")
 
     def _quality(self) -> dict[str, float]:
         scores: dict[str, float] = {}

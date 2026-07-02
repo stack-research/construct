@@ -150,3 +150,11 @@ warming-test:
 # warming-budget population watch (SPEC §2): stamp = live branch-blind enumeration
 wb-population-status:
 	uv run --no-project python -m harness.wb_population status
+
+# warming-budget T1 watch check: diff live IESG status slices against T0;
+# ledger world_move + t1_catalog_materialized on transition. Run on cadence.
+wb-watch:
+	uv run --no-project python -m harness.wb_pause watch
+
+wb-status:
+	uv run --no-project python -m harness.wb_pause status

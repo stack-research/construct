@@ -284,6 +284,51 @@ class ScorerWire(unittest.TestCase):
         with self.assertRaises(ValueError):
             WarmingScorer(packet("moved"), ev).score()
 
+    def test_frontier_terminal_refused_on_moved_leg(self):
+        # §8a debt 5: a structurally-certain mover can never enter the moved leg
+        ev = base_events("moved")
+        ev += [{"kind": "route_plan", "branch": "B+", "neutral_rank": {"ruling": 0}}]
+        ev += reads("B0", ["ruling"]) + reads("B+", ["ruling"]) + reads("C", ["ruling"])
+        ev += reads("C_ablated", ["ruling"])
+        ev += [{"kind": "branch_outcome", "branch": b, "prefix_index": 0,
+                "oracle_score": 1.0} for b in ("B0", "B+", "C")]
+        pkt = {**packet("moved"), "frontier_terminal": True}
+        v = WarmingScorer(pkt, ev).score()
+        self.assertFalse(v["guards"]["frontier_unresolved_at_pause"])
+        self.assertEqual(v["cells"]["all"], "confounded")
+
+    def test_eligibility_vs_cost_ablated_lane_must_reach_certificate(self):
+        # §8a debt 1: C_ablated never reaching the certificate = the trigger was
+        # doing eligibility, not ordering — refused
+        ev = base_events("moved")
+        ev += [{"kind": "route_plan", "branch": "B+",
+                "neutral_rank": {"guide": 0, "ruling": 1}}]
+        ev += reads("B0", ["guide", "ruling"]) + reads("B+", ["guide", "ruling"])
+        ev += reads("C", ["ruling"])
+        ev += reads("C_ablated", ["guide"])   # ablated lane never reaches 'ruling'
+        ev += [{"kind": "branch_outcome", "branch": b, "prefix_index": 0,
+                "oracle_score": 1.0} for b in ("B0", "B+", "C")]
+        v = WarmingScorer(packet("moved"), ev).score()
+        self.assertFalse(v["guards"]["eligibility_vs_cost_ok"])
+        self.assertEqual(v["cells"]["all"], "confounded")
+
+    def test_organ_identity_smuggling_refused(self):
+        # §8a debt 3: an X2 packet cannot ride this scorer
+        with self.assertRaises(ValueError):
+            WarmingScorer({**packet("moved"), "organ_identity": "x2_hot_store"}, [])
+
+    def test_genealogy_rechecked_at_score_time(self):
+        # §8a debt 2: a hint outside the catalog fails genealogy even if the
+        # mint-time check was bypassed (state authored by hand in the ledger)
+        ev = base_events("moved")
+        for e in ev:
+            if e["kind"] == "compact_resume_state_minted":
+                e["route_hint"] = ["not_a_catalog_surface"]
+        ev += reads("B0", ["ruling"]) + reads("B+", ["ruling"]) + reads("C", ["ruling"])
+        ev += reads("C_ablated", ["ruling"])
+        v = WarmingScorer(packet("moved"), ev).score()
+        self.assertFalse(v["guards"]["genealogy_ok"])
+
     def test_hand_authored_marks_in_events_refused(self):
         ev = base_events("moved")
         ev += [{"kind": "fixture_note", "answer_bearing_surface_ids": ["ruling"]}]
