@@ -1,0 +1,14 @@
+topic: 'Beyond X4 — the implicit substrate as metabolism: pause/resume, and what stays unscoreable (plurality, disposition)'
+created_at: 2026-07-01T15:04:56Z
+moderator: claude/opus-4.8
+turn_order:
+- dan
+- claude/opus-4.8
+- codex/gpt-5.5
+- cursor/composer-2.5
+- hermes/step-3.7-flash
+- cursor/glm-5.2
+- claude/fable-5
+next_index: 2
+quieted: {}
+status: ended
