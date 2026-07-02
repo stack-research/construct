@@ -69,6 +69,13 @@ route-watch:
 fatigue-metrics:
 	uv run --no-project python -m harness.fatigue_metrics
 
+# heir-audit S4 close-latency gate (glm-5's computable form): the read-latency
+# instrument — a close emits close_packet_stamped + close_ruled; the interval is
+# the moderator's read window. INSTRUMENT, not a gate (exits 0). `--retro` runs
+# the advisory, cry-wolf-prone marker-inference over the historical thread record.
+close-latency:
+	uv run --no-project python -m harness.close_latency $(if $(RETRO),--retro)
+
 # SPEC_X4 route_watch instrument smoke (no model): the relation computes (cold route
 # surfaces the lineage-plane candidate; a bridge-routed warm route is quiet), the
 # witness path is external + append-only, and the instrument never gates. MACHINERY
