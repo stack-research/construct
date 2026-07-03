@@ -8,6 +8,7 @@
   "derived_obligation_tokens": 306
  },
  "episode_id": "meridian-win",
+ "expected_answer_t1": "pending survey confirmation",
  "frontier_state": {
   "inactive_options": [
    {
@@ -31,6 +32,7 @@
   ],
   "read_manifest": [
    "S1",
+   "S2",
    "S3",
    "S5"
   ],
@@ -54,7 +56,6 @@
   "resumable_state": true
  },
  "question": "At the Meridian relay junction under the current post-seam catalog, what is the status of plan R's commissioning window?",
- "expected_answer_t1": "pending survey confirmation",
  "reopen": null,
  "routes": {
   "cold_reread": [
@@ -85,6 +86,7 @@
  "winner_option_id": "R",
  "witness_route": [
   "S1",
+  "S2",
   "S3",
   "S5"
  ],

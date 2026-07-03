@@ -20,12 +20,15 @@
   "ep-changed-world.json",
   "ep-reopen-null.json",
   "ep-reopen-win.json",
-  "ep-stale-frontier.json",
+  "ep-stale-frontier-2.json",
   "ep-win.json"
  ],
  "fictional": true,
  "fixture_id": "prf-meridian",
  "invented": "2026-07-03",
  "min_cold_tokens": 100,
- "out_of_weights": true
+ "out_of_weights": true,
+ "tainted_episodes": {
+  "ep-stale-frontier.json": "shakedown-tainted (post-hoc question-form change; hermes ruling, evidence round) \u2014 kept in lineage, excluded from runs"
+ }
 }

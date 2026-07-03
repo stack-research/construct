@@ -32,6 +32,7 @@
   ],
   "read_manifest": [
    "S1",
+   "S2",
    "S3",
    "S5"
   ],
@@ -54,7 +55,7 @@
   "cold_reread": true,
   "resumable_state": true
  },
- "oracle_key_note": "keys normalized after shakedown run r1 (runs/prf/shakedown-r1/) \u2014 phrasing only, direction-preserving: fixes the cold comparator, never rescues a treatment branch",
+ "oracle_key_note": "keys normalized after shakedown run r1 (runs/prf/shakedown-r1/) \u2014 phrasing only, direction-preserving: fixes the cold comparator and never rescues the false-continuity LOSING treatment (honest-reopen treatments were legitimately rescued; codex narrowing, evidence round 2026-07-03)",
  "question": "At the Meridian relay junction under the current post-seam catalog, what is the status of plan R's commissioning window?",
  "reopen": {
   "invalidating_surface_ids": [
@@ -93,6 +94,7 @@
  "winner_option_id": "R",
  "witness_route": [
   "S1",
+  "S2",
   "S3",
   "S5"
  ],
