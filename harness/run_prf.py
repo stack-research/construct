@@ -1,4 +1,4 @@
-"""PRF fork runner — SPEC_PAUSE_RESUME v0.1 §1/§2 machinery (mock engine).
+"""PRF fork runner — SPEC_PAUSE_RESUME v0.1 §1/§2/§6 machinery.
 
 Executes one fork group end-to-end in the canonical event order:
 
@@ -14,9 +14,14 @@ is external throughout: branches execute FIXTURE-SCRIPTED deterministic routes
 injection; no model chooses over the catalog in a wire run), and no branch
 writes its own cost or verdict.
 
-Mock runs are wire tests, never evidence about resumability — disclosed in the
-run_config row. Real-engine runs are gated behind `check_prf_fixture` and the
-§6 disclosure debt.
+Mock runs (`--engine mock`, default) are wire tests: fixture-declared oracle
+outcomes, never evidence about resumability — disclosed in run_config.
+
+Real-engine runs (`--engine local|claude`, or an explicit engine instance in
+tests) inject canonical t1 surface texts in route order, score answers with the
+authored oracle against `expected_answer_t1`, and ledger `ablation_adequacy`
+(§4c-1 leg 2). Multi-sample disclosure per §6: `--samples N` (default 1);
+N=1 marks single-draw win cells inadmissible in the outcome row.
 
 Episode fixture shape (episodes/prf/*.json):
   {"episode_id", "seam_id", "world_leg": moved|stale|silent,
@@ -26,27 +31,56 @@ Episode fixture shape (episodes/prf/*.json):
    "routes": {"cold_reread": [...], "resumable_state": [...]},
    "reopen": null | {reopen_rule_id, reopen_reason,
                      invalidating_surface_ids, read_index_at_reopen},
-   "oracle": {"cold_reread": bool, "resumable_state": bool},
+   "oracle": {"cold_reread": bool, "resumable_state": bool},  # mock only
+   "question": str, "expected_answer_t1": str,   # real-engine oracle
    "ballast": {"derived_obligation_tokens": int}}
 """
 
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 from .check_prf_fixture import check_manifest
 from .derive_live_obligations import DerivationRefused, derive_live_obligations
+from .engine import ClaudeEngine, LocalEngine, MockEngine
 from .ledger import Ledger
 from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
                                   offer_gate)
+from .oracle import _norm, authored_oracle
 from .prf_ablation import ADEQUACY_DEBT_DISCLOSURE, structural_dependency
 from .score_prf import PRFScorer, _tokens
 
 REPO = Path(__file__).resolve().parent.parent
+
+# Cold ignorance probe (§9 per-engine, pre-fork). Fictional meridian corpus
+# invented 2026-07-03 — markers are fixture-specific, not generic geography.
+PROBE_QUESTION = (
+    "What is the current commissioning status of plan R at the Meridian relay "
+    "junction? Answer from your own knowledge only — no context records are "
+    "provided."
+)
+_PRIOR_KNOWLEDGE_MARKERS = (
+    "meridian relay junction status ledger",
+    "plan r commissioning window pending survey confirmation",
+    "plan r commissioning window now closed",
+)
+
+SINGLE_DRAW_DISCLOSURE = (
+    "N=1 single-draw win cells inadmissible under §6 determinism policy "
+    "(SPEC_PAUSE_RESUME §6)"
+)
+
+
+def _engine(engine_backend: str, model: str, base_url: str):
+    if engine_backend == "claude":
+        return ClaudeEngine(model)
+    if engine_backend == "local":
+        return LocalEngine(model, base_url=base_url)
+    return MockEngine()
 
 
 def _witness_reads(episode: dict, population: dict) -> list[dict]:
@@ -58,14 +92,103 @@ def _witness_reads(episode: dict, population: dict) -> list[dict]:
             for i, sid in enumerate(episode["witness_route"])]
 
 
+def _frontier_foreground(canonical_state: dict) -> str:
+    return (
+        "Frontier artifact (schema-bound resume state, charged on every resume):\n"
+        + json.dumps(canonical_state, sort_keys=True)
+        + "\n\n"
+    )
+
+
+def _draw_samples(engine, question: str, offered: list[str],
+                  foreground: str, expected: str, samples: int) -> dict:
+    """N engine draws scored by authored_oracle; quality_ok = all pass."""
+    sample_rows: list[dict] = []
+    for i in range(samples):
+        result = engine.run(question, offered, foreground_block=foreground)
+        score = authored_oracle(result.answer, expected)
+        sample_rows.append({
+            "sample_index": i,
+            "score": score.score,
+            "answer_excerpt": result.answer[:240],
+            "model": result.model,
+            "latency_ms": result.latency_ms,
+        })
+    scores = [r["score"] for r in sample_rows]
+    return {
+        "samples": samples,
+        "sample_scores": scores,
+        "sample_details": sample_rows,
+        "quality_ok": all(s >= 1.0 for s in scores),
+        "single_draw_inadmissible": samples == 1,
+        "determinism_disclosure": SINGLE_DRAW_DISCLOSURE if samples == 1 else None,
+    }
+
+
+def _engine_branch_outcome(engine, episode: dict, branch: str, route: list[str],
+                         samples: int, canonical_state: dict | None) -> dict:
+    question = episode["question"]
+    expected = episode["expected_answer_t1"]
+    offered = [episode["t1_texts"][sid] for sid in route]
+    foreground = _frontier_foreground(canonical_state) if canonical_state else ""
+    drawn = _draw_samples(engine, question, offered, foreground, expected,
+                          samples)
+    return {
+        "kind": "branch_outcome",
+        "branch": branch,
+        "quality_ok": drawn["quality_ok"],
+        "oracle_source": "authored_oracle:fictional_meridian",
+        "oracle_type": "authored",
+        "expected_answer_t1": expected,
+        "injected_route": list(route),
+        **drawn,
+    }
+
+
+def _ablation_adequacy(engine, episode: dict, ablation: dict,
+                       samples: int) -> dict:
+    """§4c-1 leg 2 — ablated witness through engine+oracle (real engine only)."""
+    covered = set(ablation["covered_surfaces"])
+    ablated_route = [sid for sid in episode["witness_route"]
+                     if sid not in covered]
+    offered = [episode["t0_texts"][sid] for sid in ablated_route]
+    drawn = _draw_samples(
+        engine, episode["question"], offered, "",
+        episode["expected_answer_t1"], samples)
+    return {
+        "kind": "ablation_adequacy",
+        "ablated_quality_ok": drawn["quality_ok"],
+        "ablated_witness_route": ablated_route,
+        "covered_surfaces": sorted(covered),
+        "oracle_source": "authored_oracle:fictional_meridian",
+        **drawn,
+    }
+
+
 def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
-                   ledger: Ledger) -> dict:
+                   ledger: Ledger, *, engine=None, samples: int = 1,
+                   engine_backend: str = "mock") -> dict:
     """One fork group, canonical order, every row harness-stamped."""
-    ledger.write({"kind": "run_config", "engine": "mock", "wire_test": True,
-                  "episode_id": episode["episode_id"],
-                  "disclosure": "mock fork runner — machinery wire, never "
-                                "evidence about resumability (SPEC §12)",
-                  "adequacy_debt": ADEQUACY_DEBT_DISCLOSURE})
+    wire_mock = engine is None
+    cfg: dict[str, Any] = {
+        "kind": "run_config",
+        "engine": engine_backend if wire_mock else engine.backend_name,
+        "wire_test": wire_mock,
+        "episode_id": episode["episode_id"],
+        "samples": samples,
+        "adequacy_debt": ADEQUACY_DEBT_DISCLOSURE,
+    }
+    if wire_mock:
+        cfg["disclosure"] = (
+            "mock fork runner — machinery wire, never evidence about "
+            "resumability (SPEC §12)")
+    else:
+        cfg["disclosure"] = (
+            "real-engine fork — §6 frozen prefix plans with deterministic "
+            "surface injection; oracle mints branch_outcome quality_ok")
+        if samples == 1:
+            cfg["determinism_disclosure"] = SINGLE_DRAW_DISCLOSURE
+    ledger.write(cfg)
     ledger.write(population)
 
     witness = _witness_reads(episode, population)
@@ -95,17 +218,15 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
                   "obligation_set_hash": cand["obligation_set_hash"],
                   "seam_id": episode["seam_id"]})
 
-    # seam -> symmetric post-seam catalog for ALL branches
     ledger.write({"kind": "post_seam_catalog_materialized",
                   "surfaces": sorted(population["catalog"]),
                   "disclosure": "symmetric: all branches receive the t1 "
                                 "catalog (SPEC §2)"})
 
     # phase 2: OFFER-TIME content floor (§4c-1 leg 1 / §4c-2). Cold's
-    # checkpoint cost and the ablation replay exist only now. The structural-
-    # dependency leg is COMPUTED here (never read from the episode — the
-    # build review killed the attested flag); the empirical-adequacy leg is
-    # the disclosed real-engine debt in run_config.
+    # checkpoint cost and the ablation replay exist only now; the structural
+    # leg is COMPUTED (never read from the episode — build review 2026-07-03),
+    # the empirical-adequacy leg is the disclosed debt in run_config.
     cold_cost = sum(_tokens(episode["t1_texts"][sid])
                     for sid in episode["routes"]["cold_reread"])
     ablation = structural_dependency(population, freeze_manifest, witness,
@@ -123,7 +244,6 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
         return {"halted": "frontier_mint_refused", **e.row}
     ledger.write(minted)
 
-    # resume routes: fixture-scripted deterministic prefix plans
     for branch in ("cold_reread", "resumable_state"):
         for i, sid in enumerate(episode["routes"][branch]):
             ledger.write({"kind": "surface_read", "branch": branch,
@@ -148,14 +268,57 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
                       "invalidated_obligation_ids": invalidated,
                       **episode["reopen"]})
 
-    # world-oracle outcomes (fixture-declared on mock; R5: never narration)
-    for branch, ok in episode["oracle"].items():
-        ledger.write({"kind": "branch_outcome", "branch": branch,
-                      "quality_ok": bool(ok), "oracle_source": "fixture_mock"})
+    if wire_mock:
+        for branch, ok in episode["oracle"].items():
+            ledger.write({"kind": "branch_outcome", "branch": branch,
+                          "quality_ok": bool(ok),
+                          "oracle_source": "fixture_mock"})
+    else:
+        for branch in ("cold_reread", "resumable_state"):
+            state = cand["canonical_state"] if branch == "resumable_state" else None
+            ledger.write(_engine_branch_outcome(
+                engine, episode, branch, episode["routes"][branch],
+                samples, state))
+        ledger.write(_ablation_adequacy(engine, episode, ablation, samples))
+
     return {"halted": None, "minted": minted["state_digest"]}
 
 
-def run_and_score(episode_path: Path, ledger_path: Path | None = None) -> dict:
+def run_ignorance_probe(engine, engine_label: str | None = None) -> dict:
+    """Per-engine cold ignorance probe (§9) — no context, pre-fork."""
+    result = engine.run(PROBE_QUESTION, [], foreground_block="")
+    norm = _norm(result.answer)
+    knew = any(_norm(m) in norm for m in _PRIOR_KNOWLEDGE_MARKERS)
+    label = engine_label or getattr(engine, "model", engine.backend_name)
+    return {
+        "knew": knew,
+        "engine": label,
+        "backend": engine.backend_name,
+        "answer_excerpt": result.answer[:320],
+        "probe_question": PROBE_QUESTION,
+        "note": "cold probe before fork — fold into manifest attestation",
+    }
+
+
+def probe_attestation_block(probe: dict) -> dict:
+    """JSON block for manifest.json attestation.ignorance_probe.engines."""
+    key = probe["engine"]
+    return {
+        "ignorance_probe": {
+            "engines": {
+                key: {
+                    "knew": probe["knew"],
+                    "note": probe["note"],
+                    "answer_excerpt": probe["answer_excerpt"],
+                }
+            }
+        }
+    }
+
+
+def run_and_score(episode_path: Path, ledger_path: Path | None = None,
+                  *, engine=None, samples: int = 1,
+                  engine_backend: str = "mock") -> dict:
     episode = json.loads(episode_path.read_text())
     fixture_dir = episode_path.parent
     population = json.loads((fixture_dir / "population.json").read_text())
@@ -164,12 +327,12 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None) -> dict:
     ledger_path = ledger_path or (
         REPO / "runs" / "prf" / f"{episode['episode_id']}.jsonl")
     if ledger_path.exists():
-        ledger_path.unlink()   # a wire ledger regenerates fresh each run
+        ledger_path.unlink()
     ledger = Ledger(ledger_path)
 
-    # self-gating (fix #9, X2 pattern): the run re-executes the §9 admission
-    # gate and ledgers the computed gate_open row; the scorer requires it for
-    # any non-mock verdict. A refused gate halts the fork before any row.
+    # self-gating (§9, X2 pattern): re-execute the admission gate and ledger
+    # the computed gate_open row; the scorer requires it for any non-mock
+    # verdict. A refused gate halts the fork before any row.
     gate_checks = check_manifest(fixture_dir / "manifest.json")
     gate_failed = [name for name, ok, _ in gate_checks if not ok]
     if gate_failed:
@@ -179,13 +342,16 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None) -> dict:
     ledger.write({"kind": "gate_open", "checks": len(gate_checks),
                   "manifest": str(fixture_dir / "manifest.json")})
 
-    outcome = run_fork_group(episode, population, freeze_manifest, ledger)
+
+    outcome = run_fork_group(
+        episode, population, freeze_manifest, ledger,
+        engine=engine, samples=samples, engine_backend=engine_backend)
     events = ledger.rows()
     scorer = PRFScorer(population, freeze_manifest, events,
                        episode["t0_texts"], episode["t1_texts"])
     verdict = scorer.score()
-    # harness-emitted checkpoint rows (fix #10) — from the scorer's own
-    # branch-blind computation, never branch narration
+    # harness-emitted checkpoint rows — from the scorer's own branch-blind
+    # computation, never branch narration
     for branch, key in (("cold_reread", "cold_checkpoint"),
                         ("resumable_state", "resumable_checkpoint")):
         idx = verdict.get("costs", {}).get(key)
@@ -198,11 +364,43 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None) -> dict:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="PRF mock fork runner (wire only)")
-    ap.add_argument("episode", help="episodes/prf/<fixture>/<episode>.json")
+    ap = argparse.ArgumentParser(description="PRF fork runner")
+    ap.add_argument("episode", nargs="?", default=None,
+                    help="episodes/prf/<fixture>/<episode>.json")
+    ap.add_argument("--engine", choices=("mock", "local", "claude"),
+                    default="mock")
+    ap.add_argument("--model", default="claude-opus-4-8",
+                    help="model id (local/claude)")
+    ap.add_argument("--base-url", default="http://localhost:1234/v1",
+                    help="OpenAI-compatible base URL (local)")
+    ap.add_argument("--samples", type=int, default=1,
+                    help="answer draws per branch (real engine; §6)")
+    ap.add_argument("--probe", action="store_true",
+                    help="cold ignorance probe only; print attestation JSON")
     args = ap.parse_args()
-    out = run_and_score(Path(args.episode))
+
+    if args.probe:
+        eng = _engine(args.engine, args.model, args.base_url)
+        probe = run_ignorance_probe(eng, engine_label=args.model)
+        block = probe_attestation_block(probe)
+        print(json.dumps(block, indent=2, sort_keys=True))
+        return 0
+
+    if not args.episode:
+        ap.error("episode path required unless --probe")
+    if args.engine != "mock" and args.samples < 1:
+        ap.error("--samples must be >= 1")
+
+    engine = None
+    if args.engine != "mock":
+        engine = _engine(args.engine, args.model, args.base_url)
+
+    out = run_and_score(
+        Path(args.episode), engine=engine, samples=args.samples,
+        engine_backend=args.engine)
     print(json.dumps(out, indent=2, sort_keys=True))
+    if out["verdict"] is None:
+        return 1
     return 0 if out["verdict"]["cell"] != "confounded" else 1
 
 
