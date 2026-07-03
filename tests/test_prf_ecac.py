@@ -216,5 +216,92 @@ class TestZeroDispersion(unittest.TestCase):
             self.assertEqual(verdict["cell"], "PRF2-zero-dispersion")
 
 
+class _FakeSession:
+    """Real-engine-shaped session: scripted actions, then a final answer for
+    the elicitation step."""
+
+    def __init__(self, actions: list[str], answer: str):
+        self._actions = list(actions)
+        self._answer = answer
+
+    def step(self, observation: str):
+        class R:
+            pass
+        r = R()
+        r.raw_action = (self._actions.pop(0) if self._actions
+                        else self._answer)
+        return r
+
+
+class _FakeEngine:
+    backend_name = "fake-real"
+
+    def __init__(self, sessions: list[_FakeSession]):
+        self._sessions = list(sessions)
+        self._i = 0
+
+    def start_session(self, *a, **k):
+        s = self._sessions[self._i % len(self._sessions)]
+        self._i += 1
+        return _FakeSession(list(s._actions), s._answer)
+
+
+class TestRealEngineLeg(unittest.TestCase):
+    """Answer elicitation + oracle-key false_continuation + §17 N-rule."""
+
+    def test_elicited_answer_and_oracle_key_false_continuation(self):
+        ep = json.loads(EP_T.read_text())
+        t1 = ep["expected_answer_t1"]
+        stale = ep["expected_answer_t0"]
+        engine = _FakeEngine([])
+        # cold reads the discriminator and answers fresh; resumable skips it
+        # and answers the stale state — the §18 event, oracle-key matched
+        engine._sessions = [
+            _FakeSession([READ_S1, STOP], t1),        # cold
+            _FakeSession([STOP], stale),              # resumable
+        ]
+        with tempfile.TemporaryDirectory() as td:
+            out = run_and_score(EP_T, ledger_path=Path(td) / "o.jsonl",
+                                engine=engine, engine_backend="fake-real")
+            v = out["verdict"]
+            self.assertNotEqual(v["cell"], "confounded")
+            self.assertEqual(v["ecac"]["false_continuation_basis"],
+                             "oracle_key:expected_answer_t0")
+            self.assertEqual(
+                v["ecac"]["false_continuation_rate"]["resumable_state"], 1.0)
+            self.assertEqual(
+                v["ecac"]["false_continuation_rate"]["cold_reread"], 0.0)
+            rows = [json.loads(l) for l in
+                    (Path(td) / "o.jsonl").read_text().splitlines()]
+            outcomes = [r for r in rows if r["kind"] == "session_outcome"]
+            self.assertTrue(outcomes)
+            self.assertTrue(all(r["answer_source"] == "engine_elicited"
+                                for r in outcomes))
+
+    def test_n_rule_executes_and_ci_target_unmet_confounds(self):
+        ep = json.loads(EP_T.read_text())
+        t1 = ep["expected_answer_t1"]
+        # High-variance pilot: some probe draws fail quality (priced c_max),
+        # some succeed cheap -> n_required blows past n_max -> ci_target_unmet
+        # -> the scorer refuses EVERY behavioral cell (§17, symmetric).
+        engine = _FakeEngine([
+            _FakeSession([READ_S1, STOP], t1),               # cheap success
+            _FakeSession([READ_S7, STOP], "no idea"),        # c_max failure
+        ])
+        with tempfile.TemporaryDirectory() as td:
+            out = run_and_score(EP_T, ledger_path=Path(td) / "o.jsonl",
+                                engine=engine, engine_backend="fake-real",
+                                regime="S")
+            v = out["verdict"]
+            rows = [json.loads(l) for l in
+                    (Path(td) / "o.jsonl").read_text().splitlines()]
+            cfg = next(r for r in rows if r["kind"] == "run_config")
+            self.assertIsNotNone(cfg["pilot_variance"])
+            self.assertGreater(cfg["n_required"], cfg["n_max"])
+            self.assertTrue(cfg["ci_target_unmet"])
+            self.assertEqual(v["cell"], "confounded")
+            self.assertIn("CI target unmet", " ".join(v["evidence"]))
+
+
 if __name__ == "__main__":
     unittest.main()

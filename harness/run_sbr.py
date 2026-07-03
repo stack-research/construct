@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 import uuid
@@ -182,8 +183,14 @@ def run_sbr_session(
     *,
     canonical_state: dict | None = None,
     probe: bool = False,
+    elicit_answer: bool = False,
 ) -> dict:
-    """One SBR session on one branch. Returns session summary dict."""
+    """One SBR session on one branch. Returns session summary dict.
+
+    `elicit_answer=True` (real engines): after the terminal action the
+    engine itself answers the task question from its reads, scored by the
+    authored oracle. False (wire/mock): `synthesize_mock_answer`, disclosed
+    as `answer_source: mock_synthesized`."""
     catalog = episode["catalog"]
     sort_rule = episode["catalog_sort"]
     budgets = episode["budgets"]
@@ -312,7 +319,18 @@ def run_sbr_session(
         })
         stop_reason = "max_steps"
 
-    answer = synthesize_mock_answer(read_ids, episode)
+    if elicit_answer:
+        elicitation = (
+            "The retrieval session is over. Using only the surfaces you "
+            "read, answer the task question in one short phrase. Reply with "
+            f"the answer text only, no JSON.\nTask: {episode['question']}\n"
+            "Answer:")
+        result = session.step(elicitation)
+        answer = (result.raw_action or "").strip()
+        answer_source = "engine_elicited"
+    else:
+        answer = synthesize_mock_answer(read_ids, episode)
+        answer_source = "mock_synthesized"
     score = authored_oracle(answer, episode["expected_answer_t1"])
     quality_ok = score.score >= episode.get("quality_threshold", 1.0)
     ledger.write({
@@ -321,6 +339,7 @@ def run_sbr_session(
         "session_id": session_id,
         "sample_index": sample_index,
         "answer": answer,
+        "answer_source": answer_source,
         "oracle_score": score.score,
         "quality_ok": quality_ok,
         "oracle_source": "authored_oracle:fictional_meridian",
@@ -346,6 +365,7 @@ def dispersion_probe(
     k: int,
     *,
     canonical_state: dict | None = None,
+    elicit_answer: bool = False,
 ) -> dict:
     """§17: K pilot draws on baseline (cold_reread) before Regime-S suite."""
     realizations: list[tuple[str, ...]] = []
@@ -355,7 +375,8 @@ def dispersion_probe(
         session = engine_factory(i)
         summary = run_sbr_session(
             episode, "cold_reread", sid, i, session, ledger,
-            canonical_state=canonical_state, probe=True)
+            canonical_state=canonical_state, probe=True,
+            elicit_answer=elicit_answer)
         realizations.append(summary["read_ids"])
         summaries.append(summary)
     unique = len(set(realizations))
@@ -363,6 +384,7 @@ def dispersion_probe(
         "unique_realizations": unique,
         "dispersion_probe_k": k,
         "realizations": [list(r) for r in realizations],
+        "summaries": summaries,
     }
     if unique == 1:
         ledger.write({
@@ -372,6 +394,39 @@ def dispersion_probe(
             "disclosure": "API-jitter masquerade refused — downgrade to point-mode (§17)",
         })
     return result
+
+
+# Per-engine cold ignorance probe (§9; manifest probe_debt: the sbr-meridian
+# fixture EXTENDS the meridian world — re-probe, do not inherit the v0.1
+# attestation). Markers are fixture-specific.
+SBR_PROBE_QUESTION = (
+    "What is the current commissioning status of plan R at the Meridian "
+    "relay junction, and what does the junction gate notice say about plan "
+    "N? Answer from your own knowledge only — no context records are "
+    "provided.")
+_SBR_PRIOR_KNOWLEDGE_MARKERS = (
+    "commissioning window now closed pending redesign",
+    "plan r commissioning window pending survey confirmation",
+    "plan n set aside gate reopens only on catalog change",
+    "meridian relay junction status note",
+)
+
+
+def run_sbr_ignorance_probe(engine, engine_label: str | None = None) -> dict:
+    from .oracle import _norm
+    result = engine.run(SBR_PROBE_QUESTION, [], foreground_block="")
+    norm = _norm(result.answer)
+    knew = any(_norm(m) in norm for m in _SBR_PRIOR_KNOWLEDGE_MARKERS)
+    label = engine_label or getattr(engine, "model", engine.backend_name)
+    return {
+        "knew": knew,
+        "engine": label,
+        "backend": engine.backend_name,
+        "answer_excerpt": result.answer[:320],
+        "probe_question": SBR_PROBE_QUESTION,
+        "note": "cold probe before any sbr-meridian real-engine run — fold "
+                "into manifest attestation (re-probed, not inherited)",
+    }
 
 
 def _regime_s_temperature(episode: dict) -> tuple[list[float], float | None]:
@@ -408,20 +463,43 @@ def run_episode(
 ) -> dict:
     """Full SBR episode: optional dispersion probe + both branches."""
     wire_mock = engine is None
-    k = episode.get("regime_s", {}).get("dispersion_probe_k", 5)
+    regime_s = episode.get("regime_s", {})
+    k = regime_s.get("dispersion_probe_k", 5)
     probe_result = None
     effective_regime = regime
     temp_range, temperature = _regime_s_temperature(episode)
+    elicit = not wire_mock and scripted_sessions is None
+    pilot_variance = None
+    n_required = None
+    ci_target_unmet = False
 
     if regime == "S" and not wire_mock:
         def factory(i: int):
             return engine.start_session()
         probe_result = dispersion_probe(
-            episode, factory, ledger, k, canonical_state=canonical_state)
+            episode, factory, ledger, k, canonical_state=canonical_state,
+            elicit_answer=elicit)
         if probe_result["unique_realizations"] == 1:
             effective_regime = "D"
+        else:
+            # §17 executed N-rule: N from pilot variance of cold effective
+            # cost, targeting the precommitted CI half-width on the branch
+            # mean gap; capped at the precommitted n_max — exceeding the cap
+            # sets ci_target_unmet and the scorer refuses ALL behavioral
+            # cells (fail-closed, symmetric).
+            c_max = recompute_c_max(episode["budgets"])
+            costs = [s["read_tokens"] if s["quality_ok"] else c_max
+                     for s in probe_result["summaries"]]
+            mu = sum(costs) / len(costs)
+            var = sum((c - mu) ** 2 for c in costs) / (len(costs) - 1)
+            pilot_variance = var
+            h = regime_s.get("ci_halfwidth_tokens", 100)
+            n_max = regime_s.get("n_max", 24)
+            n_required = max(
+                2, math.ceil((1.96 * math.sqrt(var) * math.sqrt(2) / h) ** 2))
+            ci_target_unmet = n_required > n_max
+            samples = min(n_required, n_max)
 
-    regime_s = episode.get("regime_s", {})
     cfg: dict[str, Any] = {
         "kind": "run_config",
         "instrument_version": episode.get("instrument_version", "0.2"),
@@ -435,10 +513,17 @@ def run_episode(
         "foreground_disclosure": episode.get("foreground_disclosure"),
         "sbr_renderer_version": sbr_renderer_version(),
         "temperature_range": temp_range or None,
-        "temperature": temperature if effective_regime == "S" else 0.0,
+        # the ACTUAL engine temperature — a zero-dispersion downgrade changes
+        # the effective regime, not what the engine sampled at
+        "temperature": (getattr(engine, "temperature", None)
+                        if engine is not None else 0.0),
         "seed": "unavailable",
         "n_derivation_rule": regime_s.get("n_rule"),
-        "pilot_variance": None,
+        "pilot_variance": pilot_variance,
+        "ci_halfwidth_tokens": regime_s.get("ci_halfwidth_tokens"),
+        "n_required": n_required,
+        "n_max": regime_s.get("n_max"),
+        "ci_target_unmet": ci_target_unmet,
         "dispersion_probe_k": regime_s.get("dispersion_probe_k"),
     }
     if probe_result:
@@ -463,7 +548,9 @@ def run_episode(
                 session = engine.start_session()
             summary = run_sbr_session(
                 episode, branch, sid, i, session, ledger,
-                canonical_state=canonical_state)
+                canonical_state=canonical_state,
+                elicit_answer=elicit and not (wire_mock
+                                              or scripted_sessions is not None))
             branch_summaries[branch].append(summary)
 
     return {
@@ -523,14 +610,25 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None,
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="SBR fork runner (PRF v0.2)")
-    ap.add_argument("episode", help="episodes/prf/sbr-meridian/<episode>.json")
+    ap.add_argument("episode", nargs="?", default=None,
+                    help="episodes/prf/sbr-meridian/<episode>.json")
     ap.add_argument("--engine", choices=("mock", "local", "claude"),
                     default="mock")
     ap.add_argument("--model", default="claude-opus-4-8")
     ap.add_argument("--base-url", default="http://localhost:1234/v1")
     ap.add_argument("--regime", choices=("D", "S"), default="D")
     ap.add_argument("--samples", type=int, default=1)
+    ap.add_argument("--probe", action="store_true",
+                    help="cold ignorance probe only; print attestation JSON")
     args = ap.parse_args()
+
+    if args.probe:
+        eng = _engine(args.engine, args.model, args.base_url)
+        probe = run_sbr_ignorance_probe(eng, engine_label=args.model)
+        print(json.dumps(probe, indent=2, sort_keys=True))
+        return 0
+    if not args.episode:
+        ap.error("episode path required unless --probe")
 
     episode = json.loads(Path(args.episode).read_text())
     _, temperature = _regime_s_temperature(episode)

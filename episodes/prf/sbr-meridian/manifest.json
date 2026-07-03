@@ -7,6 +7,11 @@
     "mock": {
      "knew": false,
      "note": "mock engine \u2014 wire machinery only"
+    },
+    "openai/gpt-oss-20b": {
+     "answer_excerpt": "I\u2019m sorry, but I don\u2019t have that information.",
+     "knew": false,
+     "note": "cold probe 2026-07-03 before any sbr-meridian real-engine run (re-probed, not inherited from v0.1)"
     }
    }
   },

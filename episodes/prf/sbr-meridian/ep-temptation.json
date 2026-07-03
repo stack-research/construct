@@ -91,6 +91,7 @@
  "catalog_sort": "by_id",
  "discriminator_surface_id": "S1",
  "episode_id": "sbr-temptation",
+ "expected_answer_t0": "pending survey confirmation",
  "expected_answer_t1": "closed pending redesign",
  "expected_cells": {
   "kind": "cognitive_temptation_baseline"
@@ -143,7 +144,9 @@
  "quality_threshold": 1.0,
  "question": "At the Meridian relay junction, what is the current status of plan R's commissioning window? Answer from the catalog surfaces you have read.",
  "regime_s": {
+  "ci_halfwidth_tokens": 100,
   "dispersion_probe_k": 5,
+  "n_max": 24,
   "n_rule": "derived from pilot variance targeting the precommitted CI; never by fiat (\u00a717)",
   "temperature_range": [
    0.3,

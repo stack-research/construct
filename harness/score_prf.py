@@ -287,11 +287,19 @@ class PRFScorer:
                             sample_index: int, quality_ok: bool) -> bool | None:
         """§18: branch-blind computed event.
 
-        §23 debt: mock wire tests use prose substring markers only; non-mock
-        runs must not license adequacy claims from this predicate until an
-        oracle-key check replaces the markers."""
-        if not getattr(self, "wire_test", True):
+        Non-mock basis (§18, pays the §23 debt): content-matched against the
+        precommitted stale-state answer key `expected_answer_t0` under the
+        authored oracle — never prose markers, never the title. A non-mock
+        run WITHOUT the key still returns None (the caller confounds,
+        fail-closed). Mock wire tests keep the disclosed prose markers."""
+        wire = getattr(self, "wire_test", True)
+        stale_key = self.episode.get("expected_answer_t0")
+        if not wire and not stale_key:
             return None
+        # stamp the basis up front so the report is honest even when every
+        # draw early-returns False (real-run catch 2026-07-03)
+        self._fc_basis = ("mock_prose_markers" if wire
+                          else "oracle_key:expected_answer_t0")
         disc = self.episode["discriminator_surface_id"]
         visible, read, _ = self._route_session(branch, session_id, sample_index)
         if disc not in visible or disc in read or quality_ok:
@@ -301,8 +309,12 @@ class PRFScorer:
         if not outcome:
             return False
         answer = outcome.get("answer", "")
-        from .oracle import _norm
-        # mock_prose_markers basis — NOT oracle-key matched (§23 debt)
+        from .oracle import _norm, authored_oracle
+        if not wire:
+            self._fc_basis = "oracle_key:expected_answer_t0"
+            return authored_oracle(answer, stale_key).score >= 1.0
+        # mock_prose_markers basis — wire tests only, disclosed
+        self._fc_basis = "mock_prose_markers"
         stale_markers = ("pending survey", "pending confirmation",
                          "commissioning window pending")
         norm = _norm(answer)
@@ -373,6 +385,16 @@ class PRFScorer:
 
         if not self.wire_test and self._one("gate_open") is None:
             ev.append("non-mock run without gate_open — confounded (§9)")
+            return self._verdict_v02("confounded")
+
+        # §17 executed N-rule, fail-closed and symmetric: if the pilot-derived
+        # N exceeded the precommitted n_max, NO behavioral cell is emitted —
+        # win, loss, and null alike are refused, never just the win.
+        if not self.wire_test and cfg.get("ci_target_unmet"):
+            ev.append(
+                f"§17 CI target unmet (n_required={cfg.get('n_required')} > "
+                f"n_max={cfg.get('n_max')}) — behavioral verdict refused, "
+                "confounded")
             return self._verdict_v02("confounded")
 
         precommit = self._one("population_precommit")
@@ -479,8 +501,9 @@ class PRFScorer:
                 self._effective_cost(branch, sid, si, c_max))
             fc = self._false_continuation(branch, sid, si, qok)
             if fc is None and not self.wire_test:
-                ev.append("false_continuation_basis=mock_prose_markers — "
-                          "confounded for non-mock adequacy (§23 debt)")
+                ev.append("no precommitted expected_answer_t0 oracle key — "
+                          "false_continuation unavailable for a non-mock run, "
+                          "confounded (§18/§23)")
                 return self._verdict_v02("confounded")
             false_cont_rate[branch].append(bool(fc))
 
@@ -500,7 +523,8 @@ class PRFScorer:
             "a_i_resumable": self._artifact_tokens("resumable_state"),
             "a_i_cold": 0,
             "stale_claim_tokens": self._stale_claim_tokens(),
-            "false_continuation_basis": "mock_prose_markers",
+            "false_continuation_basis": getattr(
+                self, "_fc_basis", "mock_prose_markers"),
             "regime": regime,
             "route_sessions": route_sessions,
             "false_continuation_rate": {
