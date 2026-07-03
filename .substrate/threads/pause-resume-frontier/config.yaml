@@ -9,6 +9,6 @@ turn_order:
 - hermes/step-3.7-flash
 - cursor/gemini-3.5-flash
 - cursor/glm-5.2
-next_index: 1
+next_index: 2
 quieted: {}
 status: active
