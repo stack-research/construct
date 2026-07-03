@@ -46,7 +46,7 @@ from typing import Any
 
 from .check_prf_fixture import check_manifest
 from .derive_live_obligations import DerivationRefused, derive_live_obligations
-from .engine import ClaudeEngine, LocalEngine, MockEngine, build_prompt
+from .engine import ClaudeEngine, LocalEngine, MockEngine
 from .ledger import Ledger
 from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
                                   offer_gate)
@@ -205,6 +205,7 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
     for row in out["obligations"]:
         ledger.write(row)
 
+    # phase 1: freeze-time structural mint (does NOT mint — §4c two-phase pin)
     try:
         cand = freeze_validate(episode["frontier_state"], freeze_manifest,
                                out["batch"], manifest_hash(freeze_manifest))
@@ -222,6 +223,10 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
                   "disclosure": "symmetric: all branches receive the t1 "
                                 "catalog (SPEC §2)"})
 
+    # phase 2: OFFER-TIME content floor (§4c-1 leg 1 / §4c-2). Cold's
+    # checkpoint cost and the ablation replay exist only now; the structural
+    # leg is COMPUTED (never read from the episode — build review 2026-07-03),
+    # the empirical-adequacy leg is the disclosed debt in run_config.
     cold_cost = sum(_tokens(episode["t1_texts"][sid])
                     for sid in episode["routes"]["cold_reread"])
     ablation = structural_dependency(population, freeze_manifest, witness,
@@ -325,6 +330,9 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None,
         ledger_path.unlink()
     ledger = Ledger(ledger_path)
 
+    # self-gating (§9, X2 pattern): re-execute the admission gate and ledger
+    # the computed gate_open row; the scorer requires it for any non-mock
+    # verdict. A refused gate halts the fork before any row.
     gate_checks = check_manifest(fixture_dir / "manifest.json")
     gate_failed = [name for name, ok, _ in gate_checks if not ok]
     if gate_failed:
@@ -342,6 +350,8 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None,
     scorer = PRFScorer(population, freeze_manifest, events,
                        episode["t0_texts"], episode["t1_texts"])
     verdict = scorer.score()
+    # harness-emitted checkpoint rows — from the scorer's own branch-blind
+    # computation, never branch narration
     for branch, key in (("cold_reread", "cold_checkpoint"),
                         ("resumable_state", "resumable_checkpoint")):
         idx = verdict.get("costs", {}).get(key)
