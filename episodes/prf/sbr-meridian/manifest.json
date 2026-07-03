@@ -2,8 +2,21 @@
  "attestation": {
   "attested_at": "2026-07-03",
   "attested_by": "claude/fable-5 (builder lane; oracle keys precommitted 2026-07-03 before any engine run of these episode ids)",
+  "excluded_engines": {
+   "mistralai/ministral-3-14b-reasoning": "EXCLUDED 2026-07-03: model cannot load on this host (LM Studio: ~33.58 GB required, insufficient system resources) \u2014 resource exclusion, not a knowledge exclusion; reported per the roster precommitment"
+  },
   "ignorance_probe": {
    "engines": {
+    "google/gemma-4-e4b": {
+     "answer_excerpt": "I do not have access to real-time or specific operational records regarding the commissioning status of plan R",
+     "knew": false,
+     "note": "cold probe 2026-07-03 (cross-engine roster, precommitted)"
+    },
+    "mistralai/ministral-3-3b": {
+     "answer_excerpt": "As of my last update on 2023-10-01, I do not have specific details regarding the commissioning status of plan R",
+     "knew": false,
+     "note": "cold probe 2026-07-03 (cross-engine roster, precommitted)"
+    },
     "mock": {
      "knew": false,
      "note": "mock engine \u2014 wire machinery only"
