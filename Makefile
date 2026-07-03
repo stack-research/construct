@@ -152,6 +152,7 @@ prf-test:
 	uv run --no-project python -m tests.test_prf_derive
 	uv run --no-project python -m tests.test_prf_d3_reopen
 	uv run --no-project python -m tests.test_prf_fixture_gate
+	uv run --no-project python -m tests.test_prf_engine
 
 # SPEC_PAUSE_RESUME §9 admission gate on the authored meridian fixture.
 prf-gate:

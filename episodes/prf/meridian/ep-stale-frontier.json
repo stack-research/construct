@@ -53,6 +53,8 @@
   "cold_reread": true,
   "resumable_state": false
  },
+ "question": "At the Meridian junction gate under the current post-seam catalog, has plan N re-entered consideration?",
+ "expected_answer_t1": "plan N re-enters consideration",
  "reopen": null,
  "routes": {
   "cold_reread": [
