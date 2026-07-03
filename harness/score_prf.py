@@ -39,9 +39,13 @@ from .derive_live_obligations import replay_ok
 from .mint_frontier_state import recompute_state_tokens
 from .predicate_ast import evaluate, validate
 
-GUARDS = ("derivation_replay_ok", "frontier_derivation_parity",
-          "route_replay_ok", "mint_two_phase_ok", "reopen_ok",
-          "quality_floor_holds", "reconstruction_distinct")
+GUARDS_V01 = ("derivation_replay_ok", "frontier_derivation_parity",
+              "route_replay_ok", "mint_two_phase_ok", "reopen_ok",
+              "quality_floor_holds", "reconstruction_distinct")
+
+GUARDS_V02 = ("c_max_replay_ok", "affordance_materialized",
+              "skip_computable", "decision_read_chain_ok",
+              "route_replay_ok", "affordance_symmetry_ok")
 
 CONDITIONAL_KINDS = ("discard", "reopen")
 
@@ -55,18 +59,20 @@ def _sha(obj) -> str:
 
 
 class PRFScorer:
-    """Scores one fork group's event ledger against the population contract
-    and the canonical T0/T1 surface texts. Verdicts are computed fail-closed:
-    a missing guard is a failed guard, and every failed guard names itself."""
+    """Scores one fork group's event ledger. Verdicts are computed fail-closed."""
 
-    def __init__(self, population: dict, freeze_manifest: dict,
-                 events: list[dict], t0_texts: dict[str, str],
-                 t1_texts: dict[str, str]):
+    def __init__(self, population: dict | None = None,
+                 freeze_manifest: dict | None = None,
+                 events: list[dict] | None = None,
+                 t0_texts: dict[str, str] | None = None,
+                 t1_texts: dict[str, str] | None = None,
+                 episode: dict | None = None):
         self.pop = population
         self.manifest = freeze_manifest
-        self.events = events
-        self.t0 = t0_texts
-        self.t1 = t1_texts
+        self.events = events or []
+        self.t0 = t0_texts or {}
+        self.t1 = t1_texts or {}
+        self.episode = episode
         self.evidence: list[str] = []
         self.guards: dict[str, bool] = {}
 
@@ -201,8 +207,250 @@ class PRFScorer:
             total += canon
         return total
 
-    # ---------- the verdict ----------
+    # ---------- instrument version fork (Part II §22) ----------
+    def _instrument_version(self) -> str:
+        if self.episode:
+            return str(self.episode.get("instrument_version", "0.2"))
+        cfg = self._one("run_config") or {}
+        return str(cfg.get("instrument_version", "0.1"))
+
     def score(self) -> dict:
+        if self._instrument_version() == "0.2":
+            return self._score_v02()
+        return self._score_v01()
+
+    # ---------- v0.2 ECAC (Part II §16/§21) ----------
+    def _artifact_tokens(self, branch: str) -> int:
+        """a_i: rendered foreground tokens; a_i(cold)=0 (§16)."""
+        if branch != "resumable_state":
+            return 0
+        fg = self.episode.get("resumable_foreground")
+        if not fg:
+            return 0
+        from .sbr_util import render_foreground_block
+        return _tokens(render_foreground_block(fg))
+
+    def _recompute_c_max(self) -> int:
+        budgets = self.episode["budgets"]
+        return (budgets["max_read_tokens"]
+                + budgets["max_steps"] * budgets["action_overhead_tokens"])
+
+    def _session_reads(self, branch: str, session_id: str) -> list[dict]:
+        return sorted(
+            [r for r in self._rows("surface_read", branch=branch,
+                                   session_id=session_id)],
+            key=lambda r: r.get("step", r.get("read_index", 0)))
+
+    def _route_session(self, branch: str, session_id: str,
+                       sample_index: int) -> tuple[list[str], list[str], list[str]]:
+        """SCORER-DERIVED: visible, read, skip (§15)."""
+        aff = self._rows("affordance_presented", branch=branch,
+                         session_id=session_id, sample_index=sample_index)
+        visible = sorted(
+            [r["surface_id"] for r in aff],
+            key=lambda s: next(r["physical_index"] for r in aff
+                                if r["surface_id"] == s))
+        read = [r["surface_id"] for r in self._session_reads(branch, session_id)]
+        skip = [s for s in visible if s not in set(read)]
+        return visible, read, skip
+
+    def _session_read_cost(self, branch: str, session_id: str) -> int:
+        catalog = self.episode["catalog"]
+        total = 0
+        g = self.guards
+        g.setdefault("route_replay_ok", True)
+        for r in self._session_reads(branch, session_id):
+            canon = _tokens(catalog[r["surface_id"]]["text"])
+            logged = r.get("route_read_tokens")
+            if logged is not None and logged != canon:
+                g["route_replay_ok"] = False
+                self.evidence.append(
+                    f"route_replay_ok=false: {r['surface_id']} "
+                    f"logged {logged} != canonical {canon}")
+            total += canon
+        return total
+
+    def _false_continuation(self, branch: str, session_id: str,
+                            sample_index: int, quality_ok: bool) -> bool:
+        """§18: branch-blind computed event."""
+        disc = self.episode["discriminator_surface_id"]
+        visible, read, _ = self._route_session(branch, session_id, sample_index)
+        if disc not in visible or disc in read or quality_ok:
+            return False
+        outcome = self._one("session_outcome", branch=branch,
+                            session_id=session_id, sample_index=sample_index)
+        if not outcome:
+            return False
+        answer = outcome.get("answer", "")
+        from .oracle import _norm
+        stale_markers = ("pending survey", "pending confirmation",
+                         "commissioning window pending")
+        norm = _norm(answer)
+        expected = _norm(self.episode["expected_answer_t1"])
+        return any(_norm(m) in norm for m in stale_markers) and expected not in norm
+
+    def _effective_cost(self, branch: str, session_id: str, sample_index: int,
+                        c_max: int) -> int:
+        outcome = self._one("session_outcome", branch=branch,
+                            session_id=session_id, sample_index=sample_index)
+        quality_ok = bool(outcome and outcome.get("quality_ok"))
+        read_cost = self._session_read_cost(branch, session_id)
+        a_i = self._artifact_tokens(branch)
+        if quality_ok:
+            return read_cost + a_i
+        return c_max
+
+    def _affordance_symmetry_ok(self) -> bool:
+        """Thin runtime guard (§19): realized rows match gated population."""
+        from .sbr_util import catalog_hash, action_space_hash
+        cat_hash = catalog_hash(self.episode["catalog"],
+                                self.episode["catalog_sort"])
+        act_hash = action_space_hash()
+        for row in self._rows("sbr_session"):
+            if row.get("catalog_hash") != cat_hash:
+                self.evidence.append(
+                    f"catalog_hash drift in session {row.get('session_id')}")
+                return False
+            if row.get("action_space_hash") != act_hash:
+                self.evidence.append("action_space_hash drift")
+                return False
+        return True
+
+    def _score_v02(self) -> dict:
+        g = self.guards
+        ev = self.evidence
+        cfg = self._one("run_config") or {}
+        self.wire_test = bool(cfg.get("wire_test", True)) or \
+            cfg.get("engine", "mock") == "mock"
+
+        if not self.wire_test and self._one("gate_open") is None:
+            ev.append("non-mock run without gate_open — confounded (§9)")
+            return self._verdict_v02("confounded")
+
+        c_max = self._recompute_c_max()
+        attested = self.episode["budgets"].get("c_max")
+        g["c_max_replay_ok"] = attested is None or attested == c_max
+        if not g["c_max_replay_ok"]:
+            ev.append(f"c_max_replay_ok=false: attested {attested} != "
+                      f"recomputed {c_max}")
+            return self._verdict_v02("confounded")
+
+        g["affordance_symmetry_ok"] = self._affordance_symmetry_ok()
+        if not g["affordance_symmetry_ok"]:
+            return self._verdict_v02("confounded")
+
+        regime = cfg.get("regime", "D")
+        unique_real = cfg.get("unique_realizations")
+
+        if regime == "S" and unique_real == 1:
+            ev.append("zero dispersion — behavioral win refused (§17)")
+            return self._verdict_v02("PRF2-zero-dispersion",
+                                     ecac={"regime": regime,
+                                           "unique_realizations": unique_real})
+
+        sessions = self._rows("sbr_session")
+        g["affordance_materialized"] = all(
+            len(self._rows("affordance_presented", session_id=s["session_id"],
+                           branch=s["branch"]))
+            == len(self.episode["catalog"])
+            for s in sessions)
+        if not g["affordance_materialized"]:
+            ev.append("affordance_materialized=false")
+            return self._verdict_v02("confounded")
+
+        branch_costs: dict[str, list[int]] = {
+            "cold_reread": [], "resumable_state": []}
+        false_cont_rate: dict[str, list[bool]] = {
+            "cold_reread": [], "resumable_state": []}
+        route_sessions: dict[str, dict] = {}
+
+        for sess in sessions:
+            if sess.get("probe"):
+                continue
+            branch = sess["branch"]
+            sid = sess["session_id"]
+            si = sess["sample_index"]
+            visible, read, skip = self._route_session(branch, sid, si)
+            route_sessions[f"{branch}:{si}"] = {
+                "visible": visible, "read": read, "skip": skip}
+            g["skip_computable"] = all(s in visible for s in read) and \
+                set(skip) == set(visible) - set(read)
+
+            reads = self._session_reads(branch, sid)
+            steps = {r["step"] for r in self._rows(
+                "route_decision", branch=branch, session_id=sid)
+                     if r.get("parsed")}
+            g["decision_read_chain_ok"] = len(reads) <= len(steps)
+
+            outcome = self._one("session_outcome", branch=branch,
+                                session_id=sid, sample_index=si)
+            qok = bool(outcome and outcome.get("quality_ok"))
+            branch_costs[branch].append(
+                self._effective_cost(branch, sid, si, c_max))
+            false_cont_rate[branch].append(
+                self._false_continuation(branch, sid, si, qok))
+
+        g.setdefault("route_replay_ok", True)
+        if not g.get("route_replay_ok", True):
+            return self._verdict_v02("confounded")
+
+        def mean(xs: list[int]) -> float:
+            return sum(xs) / len(xs) if xs else float("inf")
+
+        mean_cold = mean(branch_costs["cold_reread"])
+        mean_res = mean(branch_costs["resumable_state"])
+        ecac = {
+            "mean_eff_cold": mean_cold,
+            "mean_eff_resumable": mean_res,
+            "c_max": c_max,
+            "a_i_resumable": self._artifact_tokens("resumable_state"),
+            "a_i_cold": 0,
+            "regime": regime,
+            "route_sessions": route_sessions,
+            "false_continuation_rate": {
+                b: (sum(v) / len(v) if v else 0.0)
+                for b, v in false_cont_rate.items()},
+        }
+
+        sf = self.episode.get("self_falsification")
+        kind = self.episode.get("expected_cells", {}).get("kind")
+        cost_win = mean_res < mean_cold
+
+        if sf == "ballast_discriminator" and cost_win:
+            ev.append("PRF2-cost-win fired on ballast-discriminator — "
+                      "instrument self-refutation")
+            return self._verdict_v02("PRF2-ballast-null", ecac=ecac)
+
+        if sf == "neutral_frontier" and cost_win:
+            ev.append("resumable beat cold on neutral-frontier — "
+                      "instrument self-refutation (band=0)")
+            return self._verdict_v02("PRF2-neutral-null", ecac=ecac)
+
+        if cost_win and regime == "S" and unique_real and unique_real > 1:
+            return self._verdict_v02("PRF2-cost-win", ecac=ecac)
+        if mean_res > mean_cold:
+            return self._verdict_v02("PRF2-cost-loss", ecac=ecac)
+        if not cost_win and mean_res <= mean_cold:
+            return self._verdict_v02("PRF2-heir-dominates", ecac=ecac)
+        if cost_win and regime == "D":
+            ev.append("point-mode Regime-D win — machinery only, not behavioral")
+            return self._verdict_v02("PRF2-heir-dominates", ecac=ecac)
+        return self._verdict_v02("PRF2-heir-dominates", ecac=ecac)
+
+    def _verdict_v02(self, cell: str, ecac: dict | None = None) -> dict:
+        return {
+            "kind": "cell_verdict",
+            "instrument": "pause_resume_frontier",
+            "instrument_version": "0.2",
+            "cell": cell,
+            "guards": {k: self.guards.get(k, False) for k in GUARDS_V02},
+            "ecac": ecac or {},
+            "evidence": list(self.evidence),
+            "wire_test": getattr(self, "wire_test", True),
+        }
+
+    # ---------- v0.1 (Part I) ----------
+    def _score_v01(self) -> dict:
         g = self.guards
         ev = self.evidence
 
@@ -358,8 +606,9 @@ class PRFScorer:
 
     def _verdict(self, cell: str, costs: dict | None = None) -> dict:
         return {"kind": "cell_verdict", "instrument": "pause_resume_frontier",
+                "instrument_version": "0.1",
                 "cell": cell,
-                "guards": {k: self.guards.get(k, False) for k in GUARDS},
+                "guards": {k: self.guards.get(k, False) for k in GUARDS_V01},
                 "costs": costs or {},
                 "evidence": list(self.evidence),
                 "wire_test": getattr(self, "wire_test", True)}
