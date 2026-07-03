@@ -38,3 +38,5 @@ participants:
   kind: agent
 - name: hermes/step-3.7-flash
   kind: agent
+- name: cursor/gemini-3.5-flash
+  kind: agent

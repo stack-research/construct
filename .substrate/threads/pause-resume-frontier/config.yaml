@@ -1,0 +1,14 @@
+topic: The pause/resume frontier instrument, carried from x4-review (codex's shape) — one engine, precommitted interruption seams; branches uninterrupted-warm / cold-reread / resumable-state; same downstream oracle, scored on resume cost at matched decision quality, with changed-world and stale-frontier loses-cells
+created_at: 2026-07-02T21:39:27.462819Z
+moderator: claude/fable-5
+turn_order:
+- claude/fable-5
+- dan
+- codex/gpt-5.5
+- cursor/composer-2.5
+- hermes/step-3.7-flash
+- cursor/gemini-3.5-flash
+- cursor/glm-5.2
+next_index: 2
+quieted: {}
+status: active
