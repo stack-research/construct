@@ -1,0 +1,231 @@
+{
+ "catalog": {
+  "S1": {
+   "content_hash_t0": "deca46cdde3da722359c770a26cc090cc81677d4a54cd85264f45d8ad326644a",
+   "fields": {
+    "certificate_eligible": true,
+    "status_key": "K_status",
+    "surface_kind": "status_slice"
+   },
+   "surface_tags": [
+    "status_bearing"
+   ]
+  },
+  "S10": {
+   "content_hash_t0": "32f71dd1960c868618422625e2e5da7c7aa2c190262e43cc2173771a4f0288d6",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S11": {
+   "content_hash_t0": "e1d6c4be5d3c9f2815bf6cd089f1dcde1165d50440fef8cbb96b28ee7d80d87c",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S12": {
+   "content_hash_t0": "e3c20e4bbd3397d23307ed3c7e202fc69356ba6681c6150de278f69bc777b2b5",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S2": {
+   "content_hash_t0": "1dcf949f02d59d6385ceca97e525da24f74f78fc83a7113370934563c5c28ee5",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S3": {
+   "content_hash_t0": "5086a5f3fed3ff900522080baef0afed43f18a10db2217c4c909b72fa713ec03",
+   "fields": {
+    "catalog_key": "K_gate",
+    "certificate_eligible": true,
+    "surface_kind": "gate_slice"
+   },
+   "surface_tags": [
+    "reopen_gate"
+   ]
+  },
+  "S4": {
+   "content_hash_t0": "a87af63324266908e492d41d3548c2560d4a06779563f92a715f1f5ae2f480b1",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S5": {
+   "content_hash_t0": "65ee6c91a8b6f73a91ac2af5634edd242b49510bf6342269d6a34a49c20744ac",
+   "fields": {
+    "certificate_eligible": true,
+    "status_key": "K_status",
+    "surface_kind": "evidence"
+   },
+   "surface_tags": [
+    "status_bearing"
+   ]
+  },
+  "S6": {
+   "content_hash_t0": "cae760c14d8d0d13d9d3bbc0571f84f94d3770407de649662b88d9996da547e7",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S7": {
+   "content_hash_t0": "d70fa66ba51fb60076a9c0607679b510086d5497a06314394ad23bae41a4e553",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S8": {
+   "content_hash_t0": "fb1e07d8afdffd3298e0e98d515bc000f2ca3d462a65ab2de6899396f553179d",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  },
+  "S9": {
+   "content_hash_t0": "e9093b759cb7221f575564d64badde26a71601754cb73dae6002b57b5a71a9cf",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": []
+  }
+ },
+ "continuation_step_id": "csid-sbr-meridian-1",
+ "derivation_mode": "rulebooked",
+ "episode_id": "prf-sbr-meridian",
+ "gamma": 0.2,
+ "kind": "population_precommit",
+ "obligation_rulebook": [
+  {
+   "emits_obligation_type": "verify",
+   "emits_relation_code": "pending_evidence",
+   "match_key_ids": [
+    "K_status"
+   ],
+   "option_id": "R",
+   "rule_id": "R1",
+   "satisfaction_predicate_id": "P_verify_sat",
+   "trigger_predicate_id": "P_status_read"
+  },
+  {
+   "emits_obligation_type": "reopen",
+   "emits_relation_code": "reopen_if_catalog_match",
+   "match_key_ids": [
+    "K_gate"
+   ],
+   "option_id": "N",
+   "rule_id": "R2",
+   "satisfaction_predicate_id": "P_catalog_reopen",
+   "trigger_predicate_id": "P_gate_read"
+  },
+  {
+   "emits_obligation_type": "discard",
+   "emits_relation_code": "discard_if_world_key_changed",
+   "match_key_ids": [
+    "K_status"
+   ],
+   "option_id": "R",
+   "rule_id": "R3",
+   "satisfaction_predicate_id": "P_world_moved",
+   "trigger_predicate_id": "P_status_read"
+  }
+ ],
+ "obligation_rulebook_hash": "602cf2321583543d839a5b43dac5342412251e72cbc0b90e41bd6aaf0a7641b0",
+ "option_ids": [
+  "N",
+  "R",
+  "V"
+ ],
+ "population_contract_hash": "fc10286f670c711953d544d17b6556113f2e17ab94f121de20a27561c3024998",
+ "population_reopen_rules_hash": "f938a15400ddcad02b773e5d651a350eee75cb6f35a840f9dccc90c2b46a2ea2",
+ "predicate_library": {
+  "P_catalog_reopen": {
+   "args": [
+    {
+     "field": "surface_id",
+     "op": "eq",
+     "value": "S3"
+    },
+    {
+     "op": "changed"
+    }
+   ],
+   "op": "and"
+  },
+  "P_gate_read": {
+   "op": "read_has_tag",
+   "tag": "reopen_gate"
+  },
+  "P_status_read": {
+   "op": "read_has_tag",
+   "tag": "status_bearing"
+  },
+  "P_verify_sat": {
+   "args": [
+    {
+     "field": "surface_id",
+     "op": "eq",
+     "value": "S1"
+    },
+    {
+     "field": "catalog_epoch",
+     "op": "eq",
+     "value": "t1"
+    }
+   ],
+   "op": "and"
+  },
+  "P_world_moved": {
+   "op": "changed"
+  }
+ },
+ "predicate_library_hash": "241585b39cf5345f09453616ea96196db184d852328fdd5a209786dfa7ef957d",
+ "relation_code_classes": {
+  "blocked_by_missing_surface": "topology",
+  "discard_if_world_key_changed": "discard",
+  "live": "identity",
+  "pending_evidence": "obligation",
+  "reopen_if_catalog_match": "reopen"
+ },
+ "reopen_rules": {
+  "RR1": {
+   "invalidation_predicate_id": "P_world_moved",
+   "reason": "changed_world"
+  },
+  "RR2": {
+   "invalidation_predicate_id": "P_catalog_reopen",
+   "reason": "stale_frontier"
+  }
+ },
+ "sbr_cold_reread_tokens": 1201,
+ "sbr_cold_reread_tokens_rule": "sum of visible t1 catalog surface tokens (static, branch-blind supremum; SBR has no fixture-scripted cold route \u2014 pinned at population_precommit for the offer-gate gamma ballast; room re-reviews this pin at the fix-pass review)",
+ "seam_id": "seam-sbr-1",
+ "status_vocabulary": [
+  "commissioning_closed"
+ ],
+ "surface_tag_schema": [
+  "status_bearing",
+  "reopen_gate"
+ ],
+ "uncertainty_codes": [
+  "unresolved",
+  "needs_check",
+  "conflict_unread"
+ ]
+}

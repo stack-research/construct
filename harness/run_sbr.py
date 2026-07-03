@@ -5,6 +5,11 @@ with structured actions only. The harness intercepts, validates, fetches
 canonical text, ledgers, and enforces budgets — the engine never writes rows,
 never sees the other branch, and never manipulates budgets as free text.
 
+The two-phase mint (Part I §4) runs once per episode before any SBR session:
+population_precommit → witness (t0) reads → obligation derivation →
+frontier_freeze → post_seam catalog → offer-time content floor →
+frontier_state_minted | frontier_mint_refused.
+
 Mock runs are wire tests: scripted MockEngine sessions prove loop mechanics,
 never behavioral findings — disclosed in run_config.
 
@@ -15,7 +20,6 @@ before the suite; unique_realizations == 1 downgrades to point-mode.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import re
 import sys
@@ -24,9 +28,13 @@ from pathlib import Path
 from typing import Any
 
 from .check_prf_fixture import check_manifest
+from .derive_live_obligations import DerivationRefused, derive_live_obligations
 from .engine import ClaudeEngine, LocalEngine, MockEngine
 from .ledger import Ledger
+from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
+                                  offer_gate)
 from .oracle import authored_oracle
+from .prf_ablation import structural_dependency
 
 REPO = Path(__file__).resolve().parent.parent
 
@@ -38,25 +46,21 @@ def _tokens(text: str) -> int:
     return len(text.split())
 
 
-def _sha(obj: Any) -> str:
-    return hashlib.sha256(json.dumps(obj, sort_keys=True).encode()).hexdigest()
-
-
 from .sbr_util import (
     action_space_hash,
+    build_sbr_system,
     catalog_hash,
-    render_catalog_list,
     render_foreground_block,
+    render_resumable_foreground,
     recompute_c_max,
+    sbr_renderer_version,
     sorted_surface_ids,
 )
 
 
 def parse_structured_action(raw: str) -> tuple[dict | None, str | None]:
     """Parse constrained JSON actions only (§15). Returns (action, refuse_reason)."""
-    import re as _re
-
-    m = _re.search(r"\{.*\}", raw, _re.DOTALL)
+    m = re.search(r"\{.*\}", raw, re.DOTALL)
     if not m:
         return None, "not_json"
     try:
@@ -80,19 +84,92 @@ def parse_structured_action(raw: str) -> tuple[dict | None, str | None]:
     return {"action": "STOP"}, None
 
 
+def _witness_reads(episode: dict, population: dict) -> list[dict]:
+    catalog = population["catalog"]
+    return [{"kind": "surface_read", "branch": "uninterrupted_warm",
+             "surface_id": sid, "read_index": i, "catalog_epoch": "t0",
+             "content_hash": catalog[sid]["content_hash_t0"],
+             "surface_tags": catalog[sid]["surface_tags"]}
+            for i, sid in enumerate(episode["witness_route"])]
+
+
+def run_mint_spine(episode: dict, population: dict, freeze_manifest: dict,
+                   ledger: Ledger) -> dict:
+    """Part I two-phase mint once per episode (§15/§22). Returns mint context."""
+    ledger.write(population)
+
+    witness = _witness_reads(episode, population)
+    for row in witness:
+        ledger.write(row)
+
+    try:
+        out = derive_live_obligations(population, freeze_manifest, witness,
+                                      episode["seam_id"])
+    except DerivationRefused as e:
+        ledger.write(e.row)
+        return {"halted": "derivation_refused", **e.row}
+    ledger.write(out["batch"])
+    for row in out["obligations"]:
+        ledger.write(row)
+
+    try:
+        cand = freeze_validate(episode["frontier_state"], freeze_manifest,
+                               out["batch"], manifest_hash(freeze_manifest))
+    except MintRefusal as e:
+        ledger.write(e.row)
+        return {"halted": "frontier_mint_refused", **e.row}
+    ledger.write({"kind": "frontier_freeze",
+                  "canonical_state": cand["canonical_state"],
+                  "state_digest": cand["state_digest"],
+                  "obligation_set_hash": cand["obligation_set_hash"],
+                  "seam_id": episode["seam_id"]})
+
+    ledger.write({"kind": "post_seam_catalog_materialized",
+                  "surfaces": sorted(population["catalog"]),
+                  "disclosure": "symmetric: all branches receive the t1 "
+                                "catalog (SPEC §2)"})
+
+    cold_cost = population["sbr_cold_reread_tokens"]
+    ablation = structural_dependency(population, freeze_manifest, witness,
+                                     episode["seam_id"])
+    try:
+        minted = offer_gate(
+            cand,
+            derived_obligation_tokens=episode["ballast"]
+                ["derived_obligation_tokens"],
+            cold_reread_tokens=cold_cost, gamma=population["gamma"],
+            ablation=ablation,
+            frontier_artifact_id=f"fa:{episode['episode_id']}")
+    except MintRefusal as e:
+        ledger.write(e.row)
+        return {"halted": "frontier_mint_refused", **e.row}
+    ledger.write(minted)
+
+    stale = episode.get("stale_claim")
+    if stale:
+        ledger.write({
+            "kind": "stale_claim_tokens",
+            "tokens": _tokens(render_foreground_block(stale)),
+            "disclosure": "stale_claim rendered tokens — NOT included in a_i "
+                          "(§16 pins a_i to canonical artifact only)",
+        })
+
+    return {
+        "halted": None,
+        "canonical_state": cand["canonical_state"],
+        "state_digest": minted["state_digest"],
+        "minted": minted,
+    }
+
+
 def synthesize_mock_answer(read_ids: list[str], episode: dict) -> str:
     """Wire-test answer from reads: status surface S1 yields the oracle key."""
     if "S1" in read_ids:
         return episode["expected_answer_t1"]
-    fg = episode.get("resumable_foreground") or ""
-    if "pending" in fg.lower():
+    stale = episode.get("stale_claim") or ""
+    if "pending" in stale.lower():
         return "commissioning window pending survey confirmation"
     return "unknown status"
-
-
-def recompute_c_max(budgets: dict) -> int:
-    return (budgets["max_read_tokens"]
-            + budgets["max_steps"] * budgets["action_overhead_tokens"])
 
 
 def run_sbr_session(
@@ -103,6 +180,7 @@ def run_sbr_session(
     session,
     ledger: Ledger,
     *,
+    canonical_state: dict | None = None,
     probe: bool = False,
 ) -> dict:
     """One SBR session on one branch. Returns session summary dict."""
@@ -114,8 +192,9 @@ def run_sbr_session(
     visible = sorted_surface_ids(catalog, sort_rule)
 
     foreground = ""
-    if branch == "resumable_state":
-        foreground = render_foreground_block(episode.get("resumable_foreground"))
+    if branch == "resumable_state" and canonical_state is not None:
+        foreground = render_resumable_foreground(
+            canonical_state, episode.get("stale_claim"))
 
     ledger.write({
         "kind": "sbr_session",
@@ -138,15 +217,7 @@ def run_sbr_session(
             "physical_index": visible.index(sid),
         })
 
-    system = (
-        "You are completing a catalog-driven task. Choose surfaces to read "
-        "or stop when ready to answer.\n\n"
-        + render_catalog_list(catalog, sort_rule)
-        + f"\n\nTask: {episode['question']}\n"
-    )
-    # Re-bind session with system+foreground if not already started
-    if hasattr(session, "system"):
-        pass  # MockEngineSession already constructed with context via observation
+    system = build_sbr_system(catalog, sort_rule, episode["question"])
 
     read_ids: list[str] = []
     read_tokens = 0
@@ -196,7 +267,6 @@ def run_sbr_session(
             continue
 
         surf_tokens = _tokens(catalog[sid]["text"])
-        step_cost = surf_tokens + overhead
         if read_tokens + surf_tokens > max_read:
             ledger.write({
                 "kind": "forced_stop",
@@ -274,6 +344,8 @@ def dispersion_probe(
     engine_factory,
     ledger: Ledger,
     k: int,
+    *,
+    canonical_state: dict | None = None,
 ) -> dict:
     """§17: K pilot draws on baseline (cold_reread) before Regime-S suite."""
     realizations: list[tuple[str, ...]] = []
@@ -282,7 +354,8 @@ def dispersion_probe(
         sid = f"probe-{uuid.uuid4().hex[:8]}"
         session = engine_factory(i)
         summary = run_sbr_session(
-            episode, "cold_reread", sid, i, session, ledger, probe=True)
+            episode, "cold_reread", sid, i, session, ledger,
+            canonical_state=canonical_state, probe=True)
         realizations.append(summary["read_ids"])
         summaries.append(summary)
     unique = len(set(realizations))
@@ -301,11 +374,24 @@ def dispersion_probe(
     return result
 
 
-def _engine(engine_backend: str, model: str, base_url: str):
+def _regime_s_temperature(episode: dict) -> tuple[list[float], float | None]:
+    """Pinned Regime-S temperature range and chosen value (midpoint)."""
+    rng = episode.get("regime_s", {}).get("temperature_range")
+    if not rng or len(rng) != 2:
+        return [], None
+    lo, hi = float(rng[0]), float(rng[1])
+    return [lo, hi], (lo + hi) / 2.0
+
+
+def _engine(engine_backend: str, model: str, base_url: str,
+            temperature: float | None = None):
     if engine_backend == "claude":
-        return ClaudeEngine(model)
+        eng = ClaudeEngine(model)
+        if temperature is not None:
+            eng.temperature = temperature
+        return eng
     if engine_backend == "local":
-        return LocalEngine(model, base_url=base_url)
+        return LocalEngine(model, base_url=base_url, temperature=temperature)
     return MockEngine()
 
 
@@ -313,6 +399,7 @@ def run_episode(
     episode: dict,
     ledger: Ledger,
     *,
+    canonical_state: dict | None = None,
     engine=None,
     engine_backend: str = "mock",
     regime: str = "D",
@@ -324,14 +411,17 @@ def run_episode(
     k = episode.get("regime_s", {}).get("dispersion_probe_k", 5)
     probe_result = None
     effective_regime = regime
+    temp_range, temperature = _regime_s_temperature(episode)
 
     if regime == "S" and not wire_mock:
         def factory(i: int):
             return engine.start_session()
-        probe_result = dispersion_probe(episode, factory, ledger, k)
+        probe_result = dispersion_probe(
+            episode, factory, ledger, k, canonical_state=canonical_state)
         if probe_result["unique_realizations"] == 1:
             effective_regime = "D"
 
+    regime_s = episode.get("regime_s", {})
     cfg: dict[str, Any] = {
         "kind": "run_config",
         "instrument_version": episode.get("instrument_version", "0.2"),
@@ -343,10 +433,16 @@ def run_episode(
         "samples": samples,
         "quality_threshold": episode.get("quality_threshold", 1.0),
         "foreground_disclosure": episode.get("foreground_disclosure"),
+        "sbr_renderer_version": sbr_renderer_version(),
+        "temperature_range": temp_range or None,
+        "temperature": temperature if effective_regime == "S" else 0.0,
+        "seed": "unavailable",
+        "n_derivation_rule": regime_s.get("n_rule"),
+        "pilot_variance": None,
+        "dispersion_probe_k": regime_s.get("dispersion_probe_k"),
     }
     if probe_result:
         cfg["unique_realizations"] = probe_result["unique_realizations"]
-        cfg["dispersion_probe_k"] = probe_result["dispersion_probe_k"]
     if wire_mock:
         cfg["disclosure"] = (
             "mock SBR runner — loop wire test, never evidence about "
@@ -364,15 +460,10 @@ def run_episode(
                 mock = MockEngine(scripted_actions=actions)
                 session = mock.start_session()
             else:
-                fg = render_foreground_block(episode.get("resumable_foreground")) \
-                    if branch == "resumable_state" else ""
-                system = (
-                    render_catalog_list(episode["catalog"], episode["catalog_sort"])
-                    + f"\n\nTask: {episode['question']}"
-                )
-                session = engine.start_session(system, fg)
+                session = engine.start_session()
             summary = run_sbr_session(
-                episode, branch, sid, i, session, ledger)
+                episode, branch, sid, i, session, ledger,
+                canonical_state=canonical_state)
             branch_summaries[branch].append(summary)
 
     return {
@@ -382,18 +473,17 @@ def run_episode(
     }
 
 
-def run_and_score(
-    episode_path: Path,
-    ledger_path: Path | None = None,
-    *,
-    engine=None,
-    engine_backend: str = "mock",
-    regime: str = "D",
-    scripted_sessions: dict[str, list[list[str]]] | None = None,
-    samples: int = 1,
-) -> dict:
+def run_and_score(episode_path: Path, ledger_path: Path | None = None,
+                  *, engine=None, engine_backend: str = "mock",
+                  regime: str = "D",
+                  scripted_sessions: dict[str, list[list[str]]] | None = None,
+                  samples: int = 1,
+                  skip_mint: bool = False) -> dict:
     episode = json.loads(episode_path.read_text())
     fixture_dir = episode_path.parent
+    population = json.loads((fixture_dir / "population.json").read_text())
+    freeze_manifest = json.loads(
+        (fixture_dir / "freeze_manifest.json").read_text())
     ledger_path = ledger_path or (
         REPO / "runs" / "prf" / f"{episode['episode_id']}.sbr.jsonl")
     if ledger_path.exists():
@@ -409,13 +499,22 @@ def run_and_score(
     ledger.write({"kind": "gate_open", "checks": len(gate_checks),
                   "manifest": str(fixture_dir / "manifest.json")})
 
+    canonical_state = None
+    if not skip_mint:
+        mint = run_mint_spine(episode, population, freeze_manifest, ledger)
+        if mint.get("halted"):
+            return {"run": mint, "verdict": None, "ledger": str(ledger_path)}
+        canonical_state = mint["canonical_state"]
+
     from .score_prf import PRFScorer
 
     outcome = run_episode(
-        episode, ledger, engine=engine, engine_backend=engine_backend,
+        episode, ledger, canonical_state=canonical_state,
+        engine=engine, engine_backend=engine_backend,
         regime=regime, scripted_sessions=scripted_sessions, samples=samples)
     events = ledger.rows()
     scorer = PRFScorer(
+        population=population, freeze_manifest=freeze_manifest,
         events=events, episode=episode)
     verdict = scorer.score()
     ledger.write(verdict)
@@ -433,9 +532,17 @@ def main() -> int:
     ap.add_argument("--samples", type=int, default=1)
     args = ap.parse_args()
 
+    episode = json.loads(Path(args.episode).read_text())
+    _, temperature = _regime_s_temperature(episode)
+    if args.regime == "S" and args.engine != "mock":
+        temp = temperature if temperature is not None else 0.5
+    else:
+        temp = 0.0
+
     engine = None
     if args.engine != "mock":
-        engine = _engine(args.engine, args.model, args.base_url)
+        engine = _engine(args.engine, args.model, args.base_url,
+                         temperature=temp)
 
     out = run_and_score(
         Path(args.episode), engine=engine, engine_backend=args.engine,

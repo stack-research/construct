@@ -14,6 +14,7 @@ from pathlib import Path
 
 from harness.run_sbr import run_and_score
 from harness.score_prf import PRFScorer
+from harness.mint_frontier_state import recompute_state_tokens
 from harness.sbr_util import render_foreground_block
 
 FIXTURE = Path(__file__).resolve().parent.parent / "episodes" / "prf" / "sbr-meridian"
@@ -42,8 +43,9 @@ def _run(ep: Path, cold_script: list[str], res_script: list[str]) -> dict:
 class TestECACArithmetic(unittest.TestCase):
     def test_a_i_resumable_nonzero_cold_zero(self):
         ep = json.loads(EP_T.read_text())
-        fg = ep["resumable_foreground"]
-        self.assertGreater(len(render_foreground_block(fg).split()), 0)
+        stale = ep.get("stale_claim")
+        if stale:
+            self.assertGreater(len(render_foreground_block(stale).split()), 0)
         with tempfile.TemporaryDirectory() as td:
             ledger = Path(td) / "out.jsonl"
             out = run_and_score(
@@ -55,6 +57,55 @@ class TestECACArithmetic(unittest.TestCase):
             ecac = out["verdict"]["ecac"]
             self.assertGreater(ecac["a_i_resumable"], 0)
             self.assertEqual(ecac["a_i_cold"], 0)
+
+    def test_a_i_resumable_positive_on_neutral_frontier(self):
+        """§20 falsifier anchor: neutral pays artifact carry without stale claim."""
+        with tempfile.TemporaryDirectory() as td:
+            ledger = Path(td) / "out.jsonl"
+            out = run_and_score(
+                EP_N, ledger_path=ledger,
+                scripted_sessions={
+                    "cold_reread": [[READ_S1, STOP]],
+                    "resumable_state": [[READ_S1, STOP]],
+                })
+            ecac = out["verdict"]["ecac"]
+            self.assertGreater(ecac["a_i_resumable"], 0)
+            self.assertEqual(ecac["a_i_cold"], 0)
+            self.assertEqual(ecac.get("stale_claim_tokens", 0), 0)
+
+    def test_a_i_matches_recompute_state_tokens(self):
+        with tempfile.TemporaryDirectory() as td:
+            ledger = Path(td) / "out.jsonl"
+            out = run_and_score(
+                EP_T, ledger_path=ledger,
+                scripted_sessions={
+                    "cold_reread": [[READ_S1, STOP]],
+                    "resumable_state": [[READ_S1, STOP]],
+                })
+            events = [json.loads(l) for l in ledger.read_text().splitlines()]
+            freeze = next(r for r in events if r["kind"] == "frontier_freeze")
+            expected = recompute_state_tokens(freeze["canonical_state"])
+            self.assertEqual(out["verdict"]["ecac"]["a_i_resumable"], expected)
+
+    def test_v02_scoring_confounded_without_mint_rows(self):
+        """Non-mock scoring refuses ledgers lacking population_precommit + mint."""
+        ep = json.loads(EP_T.read_text())
+        pop = json.loads((FIXTURE / "population.json").read_text())
+        freeze = json.loads((FIXTURE / "freeze_manifest.json").read_text())
+        with tempfile.TemporaryDirectory() as td:
+            ledger = Path(td) / "out.jsonl"
+            run_and_score(EP_T, ledger_path=ledger,
+                          scripted_sessions={
+                              "cold_reread": [[READ_S1, STOP]],
+                              "resumable_state": [[READ_S1, STOP]],
+                          },
+                          skip_mint=True)
+            events = [json.loads(l) for l in ledger.read_text().splitlines()]
+            scorer = PRFScorer(
+                population=pop, freeze_manifest=freeze,
+                events=events, episode=ep)
+            verdict = scorer.score()
+            self.assertEqual(verdict["cell"], "confounded")
 
     def test_c_max_replay_ok(self):
         verdict = _run(EP_T, [READ_S1, STOP], [READ_S1, STOP])
@@ -121,6 +172,7 @@ class TestSelfFalsificationCells(unittest.TestCase):
         """Neutral frontier: any resumable ECAC win is self-refutation."""
         verdict = _run(EP_N, [SKIP_STOP], [READ_S1, STOP])
         self.assertEqual(verdict["cell"], "PRF2-neutral-null")
+        self.assertGreater(verdict["ecac"]["a_i_resumable"], 0)
 
 
 class TestZeroDispersion(unittest.TestCase):
@@ -128,11 +180,15 @@ class TestZeroDispersion(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             ledger = Path(td) / "out.jsonl"
             from harness.ledger import Ledger
-            from harness.run_sbr import run_episode
+            from harness.run_sbr import run_episode, run_mint_spine
 
             ep = json.loads(EP_T.read_text())
+            pop = json.loads((FIXTURE / "population.json").read_text())
+            freeze = json.loads((FIXTURE / "freeze_manifest.json").read_text())
             led = Ledger(ledger)
             led.write({"kind": "gate_open", "checks": 1})
+            mint = run_mint_spine(ep, pop, freeze, led)
+            canonical = mint["canonical_state"]
             led.write({
                 "kind": "run_config",
                 "instrument_version": "0.2",
@@ -150,9 +206,12 @@ class TestZeroDispersion(unittest.TestCase):
                 "cold_reread": [[READ_S1, STOP]],
                 "resumable_state": [[READ_S1, STOP]],
             }
-            run_episode(ep, led, scripted_sessions=scripts)
+            run_episode(ep, led, canonical_state=canonical,
+                        scripted_sessions=scripts)
             events = led.rows()
-            scorer = PRFScorer(events=events, episode=ep)
+            scorer = PRFScorer(
+                population=pop, freeze_manifest=freeze,
+                events=events, episode=ep)
             verdict = scorer.score()
             self.assertEqual(verdict["cell"], "PRF2-zero-dispersion")
 

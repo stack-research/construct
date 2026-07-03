@@ -12,7 +12,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from harness.run_sbr import parse_structured_action, run_and_score
+from harness.run_sbr import parse_structured_action, run_and_score, run_sbr_session
+from harness.sbr_util import build_sbr_system, render_resumable_foreground
 
 FIXTURE = Path(__file__).resolve().parent.parent / "episodes" / "prf" / "sbr-meridian"
 EP = FIXTURE / "ep-temptation.json"
@@ -59,10 +60,13 @@ class TestSBRLoop(unittest.TestCase):
             self.assertTrue(len(_rows(ledger, "affordance_presented")) >= 24)
             self.assertEqual(len(_rows(ledger, "route_decision")), 4)
             reads = _rows(ledger, "surface_read")
-            self.assertEqual(len(reads), 2)
-            self.assertEqual(reads[0]["surface_id"], "S1")
-            self.assertIn("session_id", reads[0])
-            self.assertIn("step", reads[0])
+            session_reads = [r for r in reads if r.get("session_id")]
+            self.assertEqual(len(session_reads), 2)
+            self.assertEqual(session_reads[0]["surface_id"], "S1")
+            self.assertIn("session_id", session_reads[0])
+            self.assertIn("step", session_reads[0])
+            self.assertEqual(len(_rows(ledger, "population_precommit")), 1)
+            self.assertEqual(len(_rows(ledger, "frontier_state_minted")), 1)
 
     def test_illegal_action_refused_and_ledgered(self):
         scripts = {
@@ -118,6 +122,58 @@ class TestSBRLoop(unittest.TestCase):
             rows = ledger.rows()
             self.assertTrue(any(r.get("kind") == "zero_dispersion_regime"
                                 for r in rows))
+
+    def test_single_presentation_path(self):
+        """Catalog/task/foreground appear exactly once in first-turn transcript."""
+        ep = json.loads(EP.read_text())
+        from harness.run_sbr import run_mint_spine
+        from harness.ledger import Ledger
+
+        pop = json.loads((FIXTURE / "population.json").read_text())
+        freeze = json.loads((FIXTURE / "freeze_manifest.json").read_text())
+        with tempfile.TemporaryDirectory() as td:
+            ledger = Ledger(Path(td) / "mint.jsonl")
+            mint = run_mint_spine(ep, pop, freeze, ledger)
+            self.assertIsNone(mint.get("halted"))
+            canonical = mint["canonical_state"]
+
+        class TrackingSession:
+            """Fake real-style session: empty init, observations via step()."""
+            def __init__(self):
+                self.observations: list[str] = []
+
+            def step(self, observation: str):
+                self.observations.append(observation)
+                from harness.engine import SessionStepResult
+                return SessionStepResult('{"action":"STOP"}', 0, 0, 0)
+
+        session = TrackingSession()
+        with tempfile.TemporaryDirectory() as td:
+            ledger = Ledger(Path(td) / "sess.jsonl")
+            run_sbr_session(
+                ep, "resumable_state", "sess-1", 0, session, ledger,
+                canonical_state=canonical)
+            self.assertEqual(len(session.observations), 1)
+            obs = session.observations[0]
+            system = build_sbr_system(ep["catalog"], ep["catalog_sort"],
+                                      ep["question"])
+            fg = render_resumable_foreground(canonical, ep.get("stale_claim"))
+            self.assertEqual(obs.count("Catalog surfaces"), 1)
+            self.assertEqual(obs.count(ep["question"]), 1)
+            self.assertEqual(obs.count("Frontier artifact"), 1)
+            self.assertNotIn(system + system, obs)
+            self.assertEqual(obs, system + fg + "\nChoose your first action.")
+
+    def test_render_foreground_block_prefix_paths(self):
+        from harness.sbr_util import render_foreground_block
+        # idempotent on an existing resume-note prefix (no double prefix) …
+        pre = "Resume note (recorded 2026-06-12): Plan R selected."
+        self.assertEqual(render_foreground_block(pre).count("Resume note"), 1)
+        # … and the bare-claim fallback renders instead of raising
+        # (review catch: _STALE_PREFIX was undefined on this path)
+        bare = render_foreground_block("plan R window pending confirmation")
+        self.assertEqual(bare.count("Resume note (recorded matter-of-fact):"), 1)
+        self.assertIn("plan R window pending confirmation", bare)
 
 
 if __name__ == "__main__":

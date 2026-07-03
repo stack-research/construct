@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 
 from .derive_live_obligations import replay_ok
 from .mint_frontier_state import recompute_state_tokens
@@ -45,7 +46,9 @@ GUARDS_V01 = ("derivation_replay_ok", "frontier_derivation_parity",
 
 GUARDS_V02 = ("c_max_replay_ok", "affordance_materialized",
               "skip_computable", "decision_read_chain_ok",
-              "route_replay_ok", "affordance_symmetry_ok")
+              "route_replay_ok", "affordance_symmetry_ok",
+              "derivation_replay_ok", "mint_two_phase_ok",
+              "a_i_recomputed_ok")
 
 CONDITIONAL_KINDS = ("discard", "reopen")
 
@@ -221,14 +224,24 @@ class PRFScorer:
 
     # ---------- v0.2 ECAC (Part II §16/§21) ----------
     def _artifact_tokens(self, branch: str) -> int:
-        """a_i: rendered foreground tokens; a_i(cold)=0 (§16)."""
+        """a_i: canonical artifact tokens from frontier_freeze; a_i(cold)=0 (§16)."""
         if branch != "resumable_state":
             return 0
-        fg = self.episode.get("resumable_foreground")
-        if not fg:
+        freeze = self._one("frontier_freeze")
+        if not freeze or "canonical_state" not in freeze:
+            return 0
+        return recompute_state_tokens(freeze["canonical_state"])
+
+    def _stale_claim_tokens(self) -> int:
+        """Disclosed stale_claim carry — NOT included in a_i (§16)."""
+        row = self._one("stale_claim_tokens")
+        if row:
+            return int(row.get("tokens", 0))
+        stale = (self.episode or {}).get("stale_claim")
+        if not stale:
             return 0
         from .sbr_util import render_foreground_block
-        return _tokens(render_foreground_block(fg))
+        return _tokens(render_foreground_block(stale))
 
     def _recompute_c_max(self) -> int:
         budgets = self.episode["budgets"]
@@ -271,8 +284,14 @@ class PRFScorer:
         return total
 
     def _false_continuation(self, branch: str, session_id: str,
-                            sample_index: int, quality_ok: bool) -> bool:
-        """§18: branch-blind computed event."""
+                            sample_index: int, quality_ok: bool) -> bool | None:
+        """§18: branch-blind computed event.
+
+        §23 debt: mock wire tests use prose substring markers only; non-mock
+        runs must not license adequacy claims from this predicate until an
+        oracle-key check replaces the markers."""
+        if not getattr(self, "wire_test", True):
+            return None
         disc = self.episode["discriminator_surface_id"]
         visible, read, _ = self._route_session(branch, session_id, sample_index)
         if disc not in visible or disc in read or quality_ok:
@@ -283,11 +302,40 @@ class PRFScorer:
             return False
         answer = outcome.get("answer", "")
         from .oracle import _norm
+        # mock_prose_markers basis — NOT oracle-key matched (§23 debt)
         stale_markers = ("pending survey", "pending confirmation",
                          "commissioning window pending")
         norm = _norm(answer)
         expected = _norm(self.episode["expected_answer_t1"])
         return any(_norm(m) in norm for m in stale_markers) and expected not in norm
+
+    def _decision_read_chain_ok(self, branch: str, session_id: str) -> bool:
+        """Bijection between parsed READ decisions and surface_read rows (§15)."""
+        read_steps: list[tuple[int, str]] = []
+        for d in self._rows("route_decision", branch=branch,
+                            session_id=session_id):
+            if not d.get("parsed"):
+                continue
+            raw = d.get("raw_action", "")
+            m = re.search(r"\{.*\}", raw, re.DOTALL)
+            if not m:
+                continue
+            try:
+                data = json.loads(m.group(0))
+            except json.JSONDecodeError:
+                continue
+            if str(data.get("action", "")).upper() != "READ":
+                continue
+            sid = data.get("surface_id")
+            if not sid:
+                return False
+            read_steps.append((d["step"], sid))
+
+        reads = self._session_reads(branch, session_id)
+        if len(reads) != len(read_steps):
+            return False
+        by_step = {r["step"]: r["surface_id"] for r in reads}
+        return all(by_step.get(step) == sid for step, sid in read_steps)
 
     def _effective_cost(self, branch: str, session_id: str, sample_index: int,
                         c_max: int) -> int:
@@ -325,6 +373,49 @@ class PRFScorer:
 
         if not self.wire_test and self._one("gate_open") is None:
             ev.append("non-mock run without gate_open — confounded (§9)")
+            return self._verdict_v02("confounded")
+
+        precommit = self._one("population_precommit")
+        minted = self._one("frontier_state_minted")
+        refused = self._one("frontier_mint_refused")
+        g["mint_two_phase_ok"] = (minted is None) != (refused is None)
+        if not precommit or not g["mint_two_phase_ok"]:
+            ev.append("v0.2 ledger lacks population_precommit + minted-or-refused "
+                      "row — confounded (§22)")
+            return self._verdict_v02("confounded")
+        if refused is not None:
+            ev.append(f"mint refused: {refused.get('check')}/"
+                      f"{refused.get('reason')} — confounded for v0.2 scoring")
+            return self._verdict_v02("confounded")
+
+        if self.pop and self.manifest:
+            batch = self._one("obligation_derivation_batch")
+            witness_reads = [r for r in self._rows("surface_read",
+                                                   branch="uninterrupted_warm")
+                             if r.get("catalog_epoch") == "t0"]
+            g["derivation_replay_ok"] = bool(batch) and replay_ok(
+                self.pop, self.manifest, witness_reads,
+                batch.get("seam_id", ""), batch)
+            if not g["derivation_replay_ok"]:
+                ev.append("derivation_replay_ok=false — confounded (§22)")
+                return self._verdict_v02("confounded")
+        else:
+            g["derivation_replay_ok"] = False
+            ev.append("population/freeze_manifest missing for derivation replay")
+            return self._verdict_v02("confounded")
+
+        freeze = self._one("frontier_freeze")
+        if not freeze or "canonical_state" not in freeze:
+            ev.append("frontier_freeze row with canonical_state missing")
+            return self._verdict_v02("confounded")
+        a_recomputed = recompute_state_tokens(freeze["canonical_state"])
+        if minted.get("state_tokens") not in (None, a_recomputed):
+            ev.append(f"state_tokens logged {minted['state_tokens']} != "
+                      f"recomputed {a_recomputed} (audit note)")
+        g["a_i_recomputed_ok"] = a_recomputed == self._artifact_tokens(
+            "resumable_state")
+        if not g["a_i_recomputed_ok"]:
+            ev.append("a_i must be recomputed from canonical_state, not logged")
             return self._verdict_v02("confounded")
 
         c_max = self._recompute_c_max()
@@ -376,19 +467,20 @@ class PRFScorer:
             g["skip_computable"] = all(s in visible for s in read) and \
                 set(skip) == set(visible) - set(read)
 
-            reads = self._session_reads(branch, sid)
-            steps = {r["step"] for r in self._rows(
-                "route_decision", branch=branch, session_id=sid)
-                     if r.get("parsed")}
-            g["decision_read_chain_ok"] = len(reads) <= len(steps)
+            g["decision_read_chain_ok"] = self._decision_read_chain_ok(
+                branch, sid)
 
             outcome = self._one("session_outcome", branch=branch,
                                 session_id=sid, sample_index=si)
             qok = bool(outcome and outcome.get("quality_ok"))
             branch_costs[branch].append(
                 self._effective_cost(branch, sid, si, c_max))
-            false_cont_rate[branch].append(
-                self._false_continuation(branch, sid, si, qok))
+            fc = self._false_continuation(branch, sid, si, qok)
+            if fc is None and not self.wire_test:
+                ev.append("false_continuation_basis=mock_prose_markers — "
+                          "confounded for non-mock adequacy (§23 debt)")
+                return self._verdict_v02("confounded")
+            false_cont_rate[branch].append(bool(fc))
 
         g.setdefault("route_replay_ok", True)
         if not g.get("route_replay_ok", True):
@@ -405,6 +497,8 @@ class PRFScorer:
             "c_max": c_max,
             "a_i_resumable": self._artifact_tokens("resumable_state"),
             "a_i_cold": 0,
+            "stale_claim_tokens": self._stale_claim_tokens(),
+            "false_continuation_basis": "mock_prose_markers",
             "regime": regime,
             "route_sessions": route_sessions,
             "false_continuation_rate": {
