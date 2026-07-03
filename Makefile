@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -164,6 +164,21 @@ prf-smoke:
 	@for ep in episodes/prf/meridian/ep-*.json; do \
 		echo "== $$ep"; \
 		uv run --no-project python -m harness.run_prf $$ep | \
+			python3 -c "import json,sys; print('  cell:', json.load(sys.stdin)['verdict']['cell'])"; \
+	done
+
+# SPEC_PAUSE_RESUME Part II v0.2 — SBR + ECAC wire tests (mock only).
+prf2-test:
+	uv run --no-project python -m tests.test_prf_sbr
+	uv run --no-project python -m tests.test_prf_ecac
+
+prf2-gate:
+	uv run --no-project python -m harness.check_prf_fixture episodes/prf/sbr-meridian/manifest.json
+
+prf2-smoke:
+	@for ep in episodes/prf/sbr-meridian/ep-*.json; do \
+		echo "== $$ep"; \
+		uv run --no-project python -m harness.run_sbr $$ep | \
 			python3 -c "import json,sys; print('  cell:', json.load(sys.stdin)['verdict']['cell'])"; \
 	done
 

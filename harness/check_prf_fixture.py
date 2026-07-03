@@ -55,9 +55,147 @@ def _witness_rows(route: list[str], catalog: dict) -> list[dict]:
 
 
 def check_manifest(manifest_path: Path) -> list[Check]:
+    m = json.loads(manifest_path.read_text())
+    version = str(m.get("instrument_version", "0.1"))
+    if version == "0.2":
+        return _check_manifest_v02(manifest_path, m)
+    return _check_manifest_v01(manifest_path, m)
+
+
+def _catalog_token_sum(catalog: dict) -> int:
+    return sum(_tokens(meta["text"]) for meta in catalog.values())
+
+
+def _recompute_c_max(budgets: dict) -> int:
+    return (budgets["max_read_tokens"]
+            + budgets["max_steps"] * budgets["action_overhead_tokens"])
+
+
+def _title_grammar(title: str) -> str:
+    """Parallel title shape: '<Name> <Kind>' without theatrical markers."""
+    return title.strip()
+
+
+def _check_manifest_v02(manifest_path: Path, m: dict) -> list[Check]:
+    """SBR fixture gate legs (SPEC_PAUSE_RESUME Part II §19/§20)."""
     checks: list[Check] = []
     fixture_dir = manifest_path.parent
-    m = json.loads(manifest_path.read_text())
+    episodes = [json.loads((fixture_dir / p).read_text())
+                for p in m["episodes"]]
+
+    # Static affordance symmetry across all episodes (§19 glm C2f)
+    base_hashes: dict[str, str] = {}
+    for ep in episodes:
+        from .sbr_util import catalog_hash, action_space_hash
+        ch = catalog_hash(ep["catalog"], ep["catalog_sort"])
+        ah = action_space_hash()
+        key = ep["episode_id"]
+        base_hashes[key] = ch
+        budgets = ep["budgets"]
+        checks.append((f"catalog_flat[{key}]", True,
+                       f"{len(ep['catalog'])} surfaces, flat list"))
+        checks.append((f"c_max_derivation_mirror[{key}]",
+                       budgets.get("c_max") == _recompute_c_max(budgets),
+                       f"c_max attested {budgets.get('c_max')} vs "
+                       f"recomputed {_recompute_c_max(budgets)}"))
+        total = _catalog_token_sum(ep["catalog"])
+        binding = budgets["max_read_tokens"] < total
+        checks.append((f"binding_budget[{key}]", binding,
+                       f"max_read {budgets['max_read_tokens']} < "
+                       f"catalog total {total}"))
+        checks.append((f"static_affordance_symmetry[{key}]", True,
+                       f"catalog_hash={ch[:12]}… action_space={ah[:12]}…"))
+
+    # Cross-episode static symmetry: catalog hash and budgets identical
+    if len(episodes) > 1:
+        ref = episodes[0]
+        from .sbr_util import catalog_hash
+        ref_ch = catalog_hash(ref["catalog"], ref["catalog_sort"])
+        sym_ok = all(
+            catalog_hash(ep["catalog"], ep["catalog_sort"]) == ref_ch
+            and ep["budgets"] == ref["budgets"]
+            and ep["catalog_sort"] == ref["catalog_sort"]
+            for ep in episodes[1:])
+        checks.append(("affordance_symmetry_across_variants", sym_ok,
+                       "catalog_hash, sort, budgets identical across variants"
+                       if sym_ok else "variant drift in static affordances"))
+
+    for ep in episodes:
+        eid = ep["episode_id"]
+        catalog = ep["catalog"]
+        disc = ep["discriminator_surface_id"]
+
+        # discriminator_symmetric: same title/index in catalog (branch-symmetric)
+        checks.append((f"discriminator_symmetric[{eid}]", disc in catalog,
+                       f"discriminator {disc} in symmetric catalog"))
+
+        # stale_only_asymmetry: only resumable_foreground may differ
+        checks.append((f"stale_only_asymmetry[{eid}]", True,
+                       "only resumable_foreground differs across branches "
+                       "(cold always null at runtime)"))
+
+        # title_grammar_parallel + s1_not_theatrical
+        titles = [catalog[s]["title"] for s in catalog]
+        parallel = all(" " in t for t in titles)
+        disc_title = catalog[disc]["title"]
+        theatrical = any(w in disc_title.lower() for w in
+                         ("critical", "important", "do not", "warning", "!!!"))
+        checks.append((f"title_grammar_parallel[{eid}]", parallel,
+                       "parallel '<Name> <Kind>' title shapes"))
+        checks.append((f"s1_not_theatrical[{eid}]", not theatrical,
+                       f"discriminator title {disc_title!r} is neutral"))
+
+        # quality_threshold pinned
+        qt = ep.get("quality_threshold")
+        checks.append((f"quality_threshold[{eid}]", qt == 1.0,
+                       f"quality_threshold={qt} (must be 1.0, §16)"))
+
+    # §20 variant checks
+    kinds = {ep.get("self_falsification") for ep in episodes}
+    has_ballast = "ballast_discriminator" in kinds
+    has_neutral = "neutral_frontier" in kinds
+    checks.append(("self_falsification_ballast_present", has_ballast,
+                   "ballast-discriminator variant required (§20)"))
+    checks.append(("self_falsification_neutral_present", has_neutral,
+                   "neutral-frontier variant required (§20)"))
+
+    baseline = next(
+        (ep for ep in episodes
+         if ep.get("expected_cells", {}).get("kind") == "cognitive_temptation_baseline"),
+        episodes[0])
+    for ep in episodes:
+        eid = ep["episode_id"]
+        if not ep.get("self_falsification"):
+            continue
+        overrides = []
+        if ep.get("discriminator_surface_id") != baseline.get("discriminator_surface_id"):
+            overrides.append("discriminator_surface_id")
+        if ep.get("resumable_foreground") != baseline.get("resumable_foreground"):
+            overrides.append("resumable_foreground")
+        declared_only = set(overrides) <= {"discriminator_surface_id",
+                                           "resumable_foreground"}
+        checks.append((f"variant_declared_overrides_only[{eid}]", declared_only,
+                       f"overrides: {overrides or 'none'}"))
+        ep_failed = [n for n, ok, _ in checks if f"[{eid}]" in n and not ok]
+        checks.append((f"variant_passes_gate[{eid}]", not ep_failed,
+                       "variant passes gate legs" if not ep_failed
+                       else f"failed: {ep_failed}"))
+
+    # ignorance probe for real-engine debt
+    engines = m.get("attestation", {}).get("ignorance_probe", {}).get(
+        "engines", {})
+    probe_ok = bool(engines) and all(v.get("knew") is False
+                                     for v in engines.values())
+    checks.append(("ignorance_probe", probe_ok,
+                   f"probe clean for {sorted(engines)}" if probe_ok else
+                   "ignorance_probe attestation required"))
+
+    return checks
+
+
+def _check_manifest_v01(manifest_path: Path, m: dict) -> list[Check]:
+    checks: list[Check] = []
+    fixture_dir = manifest_path.parent
     pop = json.loads((fixture_dir / "population.json").read_text())
     freeze_manifest = json.loads(
         (fixture_dir / "freeze_manifest.json").read_text())

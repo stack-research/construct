@@ -54,6 +54,15 @@ class EngineResult:
 
 
 @dataclass
+class SessionStepResult:
+    """One step of a multi-turn action session (SPEC_PAUSE_RESUME Part II §24)."""
+    raw_action: str
+    latency_ms: int
+    prompt_tokens: int
+    completion_tokens: int
+
+
+@dataclass
 class UsageClaims:
     claims: dict[str, str]  # record_id -> claimed label
     parse_error: bool
@@ -174,6 +183,40 @@ def parse_load_bearing(raw: str, offered_ids: list[str]) -> tuple[dict[str, bool
     return claimed, defect
 
 
+SBR_ACTION_INSTRUCTION = (
+    "Reply with JSON only — one action per turn:\n"
+    '  {"action":"READ","surface_id":"<id>"}\n'
+    '  {"action":"STOP"}\n'
+    "No prose, no other keys."
+)
+
+
+class _ClaudeSession:
+    """Multi-turn action channel for SBR (SPEC_PAUSE_RESUME Part II §24)."""
+
+    def __init__(self, engine: "ClaudeEngine", system: str, foreground: str):
+        self._engine = engine
+        self._messages: list[dict] = []
+        if system or foreground:
+            parts = [p for p in (system, foreground) if p]
+            self._messages.append({"role": "user", "content": "\n\n".join(parts)})
+
+    def step(self, observation: str) -> SessionStepResult:
+        self._messages.append({"role": "user", "content": observation})
+        t0 = time.monotonic()
+        resp = self._engine.client.messages.create(
+            model=self._engine.model,
+            max_tokens=256,
+            system=SBR_ACTION_INSTRUCTION,
+            messages=self._messages,
+        )
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        raw = "".join(b.text for b in resp.content if b.type == "text").strip()
+        self._messages.append({"role": "assistant", "content": raw})
+        return SessionStepResult(
+            raw, latency_ms, resp.usage.input_tokens, resp.usage.output_tokens)
+
+
 class ClaudeEngine:
     backend_name = "claude"
 
@@ -182,6 +225,9 @@ class ClaudeEngine:
 
         self.client = anthropic.Anthropic()
         self.model = model
+
+    def start_session(self, system: str = "", foreground: str = "") -> _ClaudeSession:
+        return _ClaudeSession(self, system, foreground)
 
     def run(self, question: str, offered_texts: list[str], foreground_block: str = "") -> EngineResult:
         prompt = build_prompt(question, offered_texts, foreground_block)
@@ -235,6 +281,24 @@ class ClaudeEngine:
         return LoadBearingClaims(claimed, defect, latency_ms, resp.usage.input_tokens, resp.usage.output_tokens)
 
 
+class _LocalSession:
+    """Multi-turn action channel for SBR (SPEC_PAUSE_RESUME Part II §24)."""
+
+    def __init__(self, engine: "LocalEngine", system: str, foreground: str):
+        self._engine = engine
+        self._messages: list[dict] = [{"role": "system", "content": SBR_ACTION_INSTRUCTION}]
+        if system or foreground:
+            parts = [p for p in (system, foreground) if p]
+            self._messages.append({"role": "user", "content": "\n\n".join(parts)})
+
+    def step(self, observation: str) -> SessionStepResult:
+        self._messages.append({"role": "user", "content": observation})
+        raw, latency_ms, ptok, ctok, _ = self._engine._chat(
+            self._messages, max_tokens=256)
+        self._messages.append({"role": "assistant", "content": raw})
+        return SessionStepResult(raw, latency_ms, ptok, ctok)
+
+
 class LocalEngine:
     """OpenAI-compatible chat-completions backend, stdlib HTTP only.
 
@@ -249,6 +313,9 @@ class LocalEngine:
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
+
+    def start_session(self, system: str = "", foreground: str = "") -> _LocalSession:
+        return _LocalSession(self, system, foreground)
 
     def _chat(self, messages: list[dict], max_tokens: int = 1024) -> tuple[str, int, int, int, str]:
         import json
@@ -302,6 +369,31 @@ class LocalEngine:
         return LoadBearingClaims(claimed, defect, latency_ms, ptok, ctok)
 
 
+class MockEngineSession:
+    """Scripted action list for SBR wire tests (SPEC_PAUSE_RESUME Part II §24).
+
+    Tests inject `scripted_actions` — fixtures never do. The mock proves the
+    loop mechanics, never behavioral findings.
+    """
+
+    def __init__(self, scripted_actions: list[str], system: str = "",
+                 foreground: str = ""):
+        self.scripted_actions = list(scripted_actions)
+        self.system = system
+        self.foreground = foreground
+        self._step = 0
+        self.observations: list[str] = []
+
+    def step(self, observation: str) -> SessionStepResult:
+        self.observations.append(observation)
+        if self._step < len(self.scripted_actions):
+            raw = self.scripted_actions[self._step]
+        else:
+            raw = '{"action":"STOP"}'
+        self._step += 1
+        return SessionStepResult(raw, 0, 0, 0)
+
+
 class MockEngine:
     """Answers from offered records if any token-overlaps the question; else a fixed string.
 
@@ -310,6 +402,17 @@ class MockEngine:
 
     backend_name = "mock"
     model = "mock-engine-v1"
+
+    def __init__(self, scripted_actions: list[str] | None = None):
+        self._scripted_actions = scripted_actions
+
+    def start_session(self, system: str = "", foreground: str = "") -> MockEngineSession:
+        actions = self._scripted_actions or []
+        return MockEngineSession(actions, system, foreground)
+
+    def with_script(self, scripted_actions: list[str]) -> "MockEngine":
+        """Return a copy bound to a scripted action list (wire tests only)."""
+        return MockEngine(scripted_actions=scripted_actions)
 
     def run(self, question: str, offered_texts: list[str], foreground_block: str = "") -> EngineResult:
         t0 = time.monotonic()

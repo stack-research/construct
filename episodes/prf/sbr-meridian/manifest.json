@@ -1,0 +1,26 @@
+{
+ "attestation": {
+  "attested_at": "2026-07-03",
+  "attested_by": "claude/fable-5 (builder lane; oracle keys precommitted 2026-07-03 before any engine run of these episode ids)",
+  "ignorance_probe": {
+   "engines": {
+    "mock": {
+     "knew": false,
+     "note": "mock engine \u2014 wire machinery only"
+    }
+   }
+  },
+  "probe_debt": "per-engine cold probe REQUIRED before any real-engine Regime-S run of this fixture (extends the meridian world; re-probe, do not inherit)"
+ },
+ "episodes": [
+  "ep-ballast-discriminator.json",
+  "ep-neutral-frontier.json",
+  "ep-temptation.json"
+ ],
+ "fictional": true,
+ "fixture_id": "prf-sbr-meridian",
+ "instrument_version": "0.2",
+ "invented": "2026-07-03",
+ "out_of_weights": true,
+ "shared_base_note": "self-falsification variants are authored fixtures sharing this base with DECLARED overrides (discriminator_surface_id / resumable_foreground) \u2014 never runtime perturbation (\u00a720, glm C2e, dan-acknowledged); each variant passes the full fixture gate itself"
+}
