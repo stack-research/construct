@@ -31,6 +31,8 @@ from pathlib import Path
 from .derive_live_obligations import (DerivationRefused,
                                       derive_live_obligations,
                                       validate_rulebook)
+from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
+                                  offer_gate)
 from .predicate_ast import PredicateClosureError, library_hash
 from .prf_ablation import structural_dependency
 from .score_prf import _tokens
@@ -82,6 +84,11 @@ def _check_manifest_v02(manifest_path: Path, m: dict) -> list[Check]:
     fixture_dir = manifest_path.parent
     episodes = [json.loads((fixture_dir / p).read_text())
                 for p in m["episodes"]]
+    pop_path = fixture_dir / "population.json"
+    freeze_path = fixture_dir / "freeze_manifest.json"
+    has_mint = pop_path.exists() and freeze_path.exists()
+    population = json.loads(pop_path.read_text()) if has_mint else {}
+    freeze_manifest = json.loads(freeze_path.read_text()) if has_mint else {}
 
     # Static affordance symmetry across all episodes (§19 glm C2f)
     base_hashes: dict[str, str] = {}
@@ -120,21 +127,38 @@ def _check_manifest_v02(manifest_path: Path, m: dict) -> list[Check]:
                        "catalog_hash, sort, budgets identical across variants"
                        if sym_ok else "variant drift in static affordances"))
 
+    # stale_only_asymmetry: only stale_claim differs; neutral null; shared frontier
+    if len(episodes) > 1:
+        baseline = next(
+            (ep for ep in episodes
+             if ep.get("expected_cells", {}).get("kind")
+             == "cognitive_temptation_baseline"),
+            episodes[0])
+        base_stale = baseline.get("stale_claim")
+        base_fs = json.dumps(baseline.get("frontier_state"), sort_keys=True)
+        for ep in episodes:
+            eid = ep["episode_id"]
+            stale_ok = (
+                ep.get("stale_claim") == base_stale
+                or (ep.get("self_falsification") == "neutral_frontier"
+                    and ep.get("stale_claim") is None)
+            )
+            fs_ok = json.dumps(ep.get("frontier_state"),
+                               sort_keys=True) == base_fs
+            checks.append((f"stale_only_asymmetry[{eid}]",
+                           stale_ok and fs_ok,
+                           "only stale_claim may differ; frontier_state shared; "
+                           f"neutral stale_claim null (stale_ok={stale_ok}, "
+                           f"fs_ok={fs_ok})"))
+
     for ep in episodes:
         eid = ep["episode_id"]
         catalog = ep["catalog"]
         disc = ep["discriminator_surface_id"]
 
-        # discriminator_symmetric: same title/index in catalog (branch-symmetric)
         checks.append((f"discriminator_symmetric[{eid}]", disc in catalog,
                        f"discriminator {disc} in symmetric catalog"))
 
-        # stale_only_asymmetry: only resumable_foreground may differ
-        checks.append((f"stale_only_asymmetry[{eid}]", True,
-                       "only resumable_foreground differs across branches "
-                       "(cold always null at runtime)"))
-
-        # title_grammar_parallel + s1_not_theatrical
         titles = [catalog[s]["title"] for s in catalog]
         parallel = all(" " in t for t in titles)
         disc_title = catalog[disc]["title"]
@@ -170,16 +194,77 @@ def _check_manifest_v02(manifest_path: Path, m: dict) -> list[Check]:
         overrides = []
         if ep.get("discriminator_surface_id") != baseline.get("discriminator_surface_id"):
             overrides.append("discriminator_surface_id")
-        if ep.get("resumable_foreground") != baseline.get("resumable_foreground"):
-            overrides.append("resumable_foreground")
+        if ep.get("stale_claim") != baseline.get("stale_claim"):
+            overrides.append("stale_claim")
         declared_only = set(overrides) <= {"discriminator_surface_id",
-                                           "resumable_foreground"}
+                                           "stale_claim"}
         checks.append((f"variant_declared_overrides_only[{eid}]", declared_only,
                        f"overrides: {overrides or 'none'}"))
         ep_failed = [n for n, ok, _ in checks if f"[{eid}]" in n and not ok]
         checks.append((f"variant_passes_gate[{eid}]", not ep_failed,
                        "variant passes gate legs" if not ep_failed
                        else f"failed: {ep_failed}"))
+
+    # Mint-mirror legs (§9 / Part I spine — same shared functions as run_sbr)
+    if has_mint:
+        catalog = population["catalog"]
+        for ep in episodes:
+            eid = ep["episode_id"]
+            witness_route = ep["witness_route"]
+            witness = _witness_rows(witness_route, catalog)
+            try:
+                dry = derive_live_obligations(
+                    population, freeze_manifest, witness, ep["seam_id"])
+                checks.append((f"derivation_mirror[{eid}]", True,
+                               f"{len(dry['obligations'])} obligations derived"))
+            except DerivationRefused as e:
+                checks.append((f"derivation_mirror[{eid}]", False, str(e)))
+                continue
+
+            try:
+                cand = freeze_validate(ep["frontier_state"], freeze_manifest,
+                                       dry["batch"],
+                                       manifest_hash(freeze_manifest))
+                checks.append((f"freeze_validate_mirror[{eid}]", True,
+                               f"freeze_pass digest={cand['state_digest'][:12]}…"))
+            except MintRefusal as e:
+                checks.append((f"freeze_validate_mirror[{eid}]", False,
+                               f"{e.row.get('check')}/{e.row.get('reason')}"))
+                continue
+
+            abl = structural_dependency(population, freeze_manifest, witness,
+                                        ep["seam_id"])
+            checks.append((f"ablation_structural_dependency_mirror[{eid}]",
+                           abl["structural_dependency_ok"],
+                           "withheld sources change the batch"
+                           if abl["structural_dependency_ok"] else
+                           "obligations decorative under ablation"))
+
+            cold_cost = population["sbr_cold_reread_tokens"]
+            recomputed = sum(_tokens(ep["t0_texts"][sid])
+                             for sid in abl["covered_surfaces"])
+            declared = ep["ballast"]["derived_obligation_tokens"]
+            if declared != recomputed:
+                checks.append((f"ballast_gamma_mirror[{eid}]", False,
+                               f"declared {declared} != recomputed {recomputed}"))
+            elif recomputed < population["gamma"] * cold_cost:
+                checks.append((f"ballast_gamma_mirror[{eid}]", False,
+                               f"ballast {recomputed} < gamma * cold({cold_cost})"))
+            else:
+                try:
+                    offer_gate(
+                        cand,
+                        derived_obligation_tokens=declared,
+                        cold_reread_tokens=cold_cost,
+                        gamma=population["gamma"],
+                        ablation=abl,
+                        frontier_artifact_id=f"fa:{eid}")
+                    checks.append((f"offer_gate_mirror[{eid}]", True,
+                                   f"ballast {recomputed} >= "
+                                   f"{population['gamma']} * {cold_cost}"))
+                except MintRefusal as e:
+                    checks.append((f"offer_gate_mirror[{eid}]", False,
+                                   f"{e.row.get('check')}/{e.row.get('reason')}"))
 
     # ignorance probe for real-engine debt
     engines = m.get("attestation", {}).get("ignorance_probe", {}).get(

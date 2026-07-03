@@ -197,19 +197,20 @@ class _ClaudeSession:
     def __init__(self, engine: "ClaudeEngine", system: str, foreground: str):
         self._engine = engine
         self._messages: list[dict] = []
-        if system or foreground:
-            parts = [p for p in (system, foreground) if p]
-            self._messages.append({"role": "user", "content": "\n\n".join(parts)})
+        # Single presentation path (§15): content arrives via step(), not init.
 
     def step(self, observation: str) -> SessionStepResult:
         self._messages.append({"role": "user", "content": observation})
         t0 = time.monotonic()
-        resp = self._engine.client.messages.create(
-            model=self._engine.model,
-            max_tokens=256,
-            system=SBR_ACTION_INSTRUCTION,
-            messages=self._messages,
-        )
+        kwargs: dict = {
+            "model": self._engine.model,
+            "max_tokens": 256,
+            "system": SBR_ACTION_INSTRUCTION,
+            "messages": self._messages,
+        }
+        if self._engine.temperature is not None:
+            kwargs["temperature"] = self._engine.temperature
+        resp = self._engine.client.messages.create(**kwargs)
         latency_ms = int((time.monotonic() - t0) * 1000)
         raw = "".join(b.text for b in resp.content if b.type == "text").strip()
         self._messages.append({"role": "assistant", "content": raw})
@@ -220,11 +221,13 @@ class _ClaudeSession:
 class ClaudeEngine:
     backend_name = "claude"
 
-    def __init__(self, model: str = "claude-opus-4-8"):
+    def __init__(self, model: str = "claude-opus-4-8",
+                 temperature: float | None = None):
         import anthropic
 
         self.client = anthropic.Anthropic()
         self.model = model
+        self.temperature = temperature
 
     def start_session(self, system: str = "", foreground: str = "") -> _ClaudeSession:
         return _ClaudeSession(self, system, foreground)
@@ -287,14 +290,13 @@ class _LocalSession:
     def __init__(self, engine: "LocalEngine", system: str, foreground: str):
         self._engine = engine
         self._messages: list[dict] = [{"role": "system", "content": SBR_ACTION_INSTRUCTION}]
-        if system or foreground:
-            parts = [p for p in (system, foreground) if p]
-            self._messages.append({"role": "user", "content": "\n\n".join(parts)})
+        # Single presentation path (§15): content arrives via step(), not init.
 
     def step(self, observation: str) -> SessionStepResult:
         self._messages.append({"role": "user", "content": observation})
         raw, latency_ms, ptok, ctok, _ = self._engine._chat(
-            self._messages, max_tokens=256)
+            self._messages, max_tokens=256,
+            temperature=self._engine.temperature)
         self._messages.append({"role": "assistant", "content": raw})
         return SessionStepResult(raw, latency_ms, ptok, ctok)
 
@@ -304,27 +306,32 @@ class LocalEngine:
 
     Works against LM Studio (http://localhost:1234/v1), Ollama
     (http://localhost:11434/v1), or a hosted OpenAI-compatible endpoint
-    (pass api_key then). Temperature pinned to 0 for re-run stability.
+    (pass api_key then). Temperature defaults to 0 for Regime-D; Regime-S
+    passes the pinned range value from the runner (§17).
     """
 
     backend_name = "local_openai_compat"
 
-    def __init__(self, model: str, base_url: str = "http://localhost:1234/v1", api_key: str | None = None):
+    def __init__(self, model: str, base_url: str = "http://localhost:1234/v1",
+                 api_key: str | None = None, temperature: float | None = 0):
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
+        self.temperature = temperature
 
     def start_session(self, system: str = "", foreground: str = "") -> _LocalSession:
         return _LocalSession(self, system, foreground)
 
-    def _chat(self, messages: list[dict], max_tokens: int = 1024) -> tuple[str, int, int, int, str]:
+    def _chat(self, messages: list[dict], max_tokens: int = 1024,
+              temperature: float | None = None) -> tuple[str, int, int, int, str]:
         import json
         import urllib.request
 
+        temp = 0 if temperature is None else temperature
         body = json.dumps({
             "model": self.model,
             "messages": messages,
-            "temperature": 0,
+            "temperature": temp,
             "max_tokens": max_tokens,
         }).encode()
         headers = {"Content-Type": "application/json"}
