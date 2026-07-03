@@ -409,13 +409,15 @@ class PRFScorer:
             ev.append("frontier_freeze row with canonical_state missing")
             return self._verdict_v02("confounded")
         a_recomputed = recompute_state_tokens(freeze["canonical_state"])
-        if minted.get("state_tokens") not in (None, a_recomputed):
-            ev.append(f"state_tokens logged {minted['state_tokens']} != "
-                      f"recomputed {a_recomputed} (audit note)")
-        g["a_i_recomputed_ok"] = a_recomputed == self._artifact_tokens(
-            "resumable_state")
+        # glm re-review residual A: the guard must compare the recomputation
+        # against the LOGGED minted state_tokens (an independent quantity),
+        # not against _artifact_tokens on the same row — that was tautological,
+        # green by construction. Mismatch is blocking, not an audit note.
+        g["a_i_recomputed_ok"] = minted.get("state_tokens") == a_recomputed
         if not g["a_i_recomputed_ok"]:
-            ev.append("a_i must be recomputed from canonical_state, not logged")
+            ev.append(f"minted state_tokens {minted.get('state_tokens')} != "
+                      f"recomputed-from-canonical_state {a_recomputed} — "
+                      "a_i replay failed, confounded (§16)")
             return self._verdict_v02("confounded")
 
         c_max = self._recompute_c_max()
