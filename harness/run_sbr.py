@@ -618,6 +618,12 @@ def main() -> int:
     ap.add_argument("--base-url", default="http://localhost:1234/v1")
     ap.add_argument("--regime", choices=("D", "S"), default="D")
     ap.add_argument("--samples", type=int, default=1)
+    ap.add_argument("--temperature", type=float, default=None,
+                    help="Regime-S temperature override; must sit inside the "
+                         "episode's pinned range (refused otherwise)")
+    ap.add_argument("--ledger", default=None,
+                    help="ledger path override (write beside, never over, a "
+                         "prior run's ledger)")
     ap.add_argument("--probe", action="store_true",
                     help="cold ignorance probe only; print attestation JSON")
     args = ap.parse_args()
@@ -631,9 +637,15 @@ def main() -> int:
         ap.error("episode path required unless --probe")
 
     episode = json.loads(Path(args.episode).read_text())
-    _, temperature = _regime_s_temperature(episode)
+    temp_range, temperature = _regime_s_temperature(episode)
     if args.regime == "S" and args.engine != "mock":
         temp = temperature if temperature is not None else 0.5
+        if args.temperature is not None:
+            if not temp_range or not (temp_range[0] <= args.temperature
+                                      <= temp_range[1]):
+                ap.error(f"--temperature {args.temperature} outside the "
+                         f"pinned range {temp_range} — refused (§17)")
+            temp = args.temperature
     else:
         temp = 0.0
 
@@ -644,7 +656,8 @@ def main() -> int:
 
     out = run_and_score(
         Path(args.episode), engine=engine, engine_backend=args.engine,
-        regime=args.regime, samples=args.samples)
+        regime=args.regime, samples=args.samples,
+        ledger_path=Path(args.ledger) if args.ledger else None)
     print(json.dumps(out, indent=2, sort_keys=True))
     if out["verdict"] is None:
         return 1
