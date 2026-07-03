@@ -49,6 +49,7 @@ def render_catalog_list(catalog: dict, sort_rule: str) -> str:
 
 
 _RESUME_NOTE_RE = re.compile(r"^Resume note \(recorded", re.IGNORECASE)
+_STALE_PREFIX = "Resume note (recorded matter-of-fact):"
 
 
 def render_foreground_block(text: str | None) -> str:

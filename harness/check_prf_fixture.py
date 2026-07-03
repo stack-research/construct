@@ -89,6 +89,14 @@ def _check_manifest_v02(manifest_path: Path, m: dict) -> list[Check]:
     has_mint = pop_path.exists() and freeze_path.exists()
     population = json.loads(pop_path.read_text()) if has_mint else {}
     freeze_manifest = json.loads(freeze_path.read_text()) if has_mint else {}
+    # v0.2 carries the Part I spine verbatim (§22): a missing population /
+    # freeze manifest FAILS the gate, never silently skips the mint mirrors
+    # (review catch on the fix pass — fail-closed, not fail-quiet).
+    checks.append(("mint_spine_present", has_mint,
+                   "population.json + freeze_manifest.json present (§22)"
+                   if has_mint else
+                   "population.json / freeze_manifest.json missing — the "
+                   "v0.2 gate requires the Part I precommit spine (§22)"))
 
     # Static affordance symmetry across all episodes (§19 glm C2f)
     base_hashes: dict[str, str] = {}

@@ -164,6 +164,17 @@ class TestSBRLoop(unittest.TestCase):
             self.assertNotIn(system + system, obs)
             self.assertEqual(obs, system + fg + "\nChoose your first action.")
 
+    def test_render_foreground_block_prefix_paths(self):
+        from harness.sbr_util import render_foreground_block
+        # idempotent on an existing resume-note prefix (no double prefix) …
+        pre = "Resume note (recorded 2026-06-12): Plan R selected."
+        self.assertEqual(render_foreground_block(pre).count("Resume note"), 1)
+        # … and the bare-claim fallback renders instead of raising
+        # (review catch: _STALE_PREFIX was undefined on this path)
+        bare = render_foreground_block("plan R window pending confirmation")
+        self.assertEqual(bare.count("Resume note (recorded matter-of-fact):"), 1)
+        self.assertIn("plan R window pending confirmation", bare)
+
 
 if __name__ == "__main__":
     unittest.main()
