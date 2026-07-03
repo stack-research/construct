@@ -98,7 +98,22 @@ class TestGate(unittest.TestCase):
             ep["routes"]["resumable_state"] = ["S1", "S2", "S3", "S4", "S5"]
             (d / "ep-changed-world.json").write_text(json.dumps(ep))
         bad = failed(self.tampered(mutate))
-        self.assertIn("false_continuity_priced[meridian-changed-world]", bad)
+        self.assertIn("false_continuity_not_priced[meridian-changed-world]",
+                      bad)
+
+    def test_attested_ablation_flag_is_ignored(self):
+        # build-review fix #8: a lying flag must never control the outcome —
+        # the structural leg is computed by shared replay, gate and mint alike
+        def mutate(d):
+            m = json.loads((d / "manifest.json").read_text())
+            for name in m["episodes"]:
+                ep = json.loads((d / name).read_text())
+                ep["ablation_witness_adequate"] = True   # the lie
+                (d / name).write_text(json.dumps(ep))
+        checks = self.tampered(mutate)
+        self.assertEqual(failed(checks), set(),
+                         msg="a fixture-attested flag changed a computed "
+                             "gate outcome")
 
     def test_missing_ignorance_probe_refused(self):
         def mutate(d):

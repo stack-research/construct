@@ -12,6 +12,7 @@ from harness.derive_live_obligations import derive_live_obligations
 from harness.mint_frontier_state import (MintRefusal, freeze_validate,
                                          manifest_hash, offer_gate,
                                          recompute_state_tokens)
+from harness.prf_ablation import structural_dependency
 from tests import prf_mock as M
 
 
@@ -171,7 +172,8 @@ class TestFreezePhase(unittest.TestCase):
 
 class TestOfferPhase(unittest.TestCase):
     """§4c two-phase mint: minted row only at offer time; content-floor
-    failures are mint refusals with the voted reasons."""
+    failures are mint refusals with the voted reasons. The ablation leg is
+    COMPUTED (build review 2026-07-03) — no fixture flag exists."""
 
     def setUp(self):
         self.pop, self.manifest, out = setup_batch()
@@ -179,36 +181,62 @@ class TestOfferPhase(unittest.TestCase):
         self.cand = freeze_validate(
             golden_state({"batch": self.batch, "obligations": self.obs}),
             self.manifest, self.batch, manifest_hash(self.manifest))
+        self.ablation = structural_dependency(
+            self.pop, self.manifest, M.witness_reads(), "seam-1")
+
+    def test_computed_ablation_shows_dependency(self):
+        self.assertTrue(self.ablation["structural_dependency_ok"])
+        self.assertEqual(self.ablation["dry_obligation_set_hash"],
+                         self.batch["obligation_set_hash"])
 
     def test_mint_only_after_both_phases(self):
         row = offer_gate(self.cand, derived_obligation_tokens=120,
                          cold_reread_tokens=400, gamma=0.20,
-                         witness_adequate_without_obligation_surfaces=False,
-                         frontier_artifact_id="fa-1")
+                         ablation=self.ablation, frontier_artifact_id="fa-1")
         self.assertEqual(row["kind"], "frontier_state_minted")
         self.assertEqual(row["state_digest"], self.cand["state_digest"])
+        # the minted row carries computed evidence, never a boolean assertion
+        floor = row["content_floor"]
+        self.assertNotIn("ablation_causal", floor)
+        self.assertEqual(floor["dry_obligation_set_hash"],
+                         self.ablation["dry_obligation_set_hash"])
+        self.assertEqual(floor["adequacy_leg"],
+                         "real_engine_debt_mock_bypassed")
 
     def test_decorative_obligations_refused_at_offer(self):
+        # ghost rules: ablated derivation reproduces the same batch hash
+        decorative = dict(self.ablation,
+                          ablated_obligation_set_hash=self.ablation
+                          ["dry_obligation_set_hash"],
+                          structural_dependency_ok=False)
         with self.assertRaises(MintRefusal) as cm:
-            offer_gate(self.cand, 120, 400, 0.20,
-                       witness_adequate_without_obligation_surfaces=True,
+            offer_gate(self.cand, 120, 400, 0.20, ablation=decorative,
                        frontier_artifact_id="fa-1")
         self.assertEqual(cm.exception.row["reason"],
                          "fixture_obligations_decorative")
         self.assertEqual(cm.exception.row["kind"], "frontier_mint_refused")
 
+    def test_foreign_ablation_evidence_refused(self):
+        # ablation evidence must replay against the FROZEN obligation set
+        forged = dict(self.ablation, dry_obligation_set_hash="0" * 64)
+        with self.assertRaises(MintRefusal) as cm:
+            offer_gate(self.cand, 120, 400, 0.20, ablation=forged,
+                       frontier_artifact_id="fa-1")
+        self.assertEqual(cm.exception.row["reason"],
+                         "fixture_obligations_decorative")
+
     def test_sub_gamma_ballast_refused_at_offer(self):
         with self.assertRaises(MintRefusal) as cm:
             offer_gate(self.cand, derived_obligation_tokens=10,
                        cold_reread_tokens=400, gamma=0.20,
-                       witness_adequate_without_obligation_surfaces=False,
-                       frontier_artifact_id="fa-1")
+                       ablation=self.ablation, frontier_artifact_id="fa-1")
         self.assertEqual(cm.exception.row["reason"],
                          "obligation_ballast_below_gamma")
 
     def test_offer_gate_requires_freeze_candidate(self):
         with self.assertRaises(MintRefusal) as cm:
-            offer_gate({"state_digest": "x"}, 120, 400, 0.20, False, "fa-1")
+            offer_gate({"state_digest": "x"}, 120, 400, 0.20,
+                       ablation=self.ablation, frontier_artifact_id="fa-1")
         self.assertEqual(cm.exception.row["check"], "two_phase_order")
 
     def test_artifact_tokens_recompute_matches(self):

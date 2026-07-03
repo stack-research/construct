@@ -277,25 +277,37 @@ def _all_strings(value) -> set[str]:
 
 def offer_gate(freeze_candidate: dict, derived_obligation_tokens: int,
                cold_reread_tokens: int, gamma: float,
-               witness_adequate_without_obligation_surfaces: bool,
-               frontier_artifact_id: str) -> dict:
+               ablation: dict, frontier_artifact_id: str) -> dict:
     """Phase 2 (offer-time): after `post_seam_catalog_materialized`, before any
     resumable-branch post-seam read. The two replay-dependent content-floor
     legs fire here (§4c-1/§4c-2, review-round fix A+B). On pass, returns the
-    authoritative `frontier_state_minted` row — the only place it is emitted."""
+    authoritative `frontier_state_minted` row — the only place it is emitted.
+
+    `ablation` is the COMPUTED structural-dependency result from
+    `prf_ablation.structural_dependency` (build-review fix #2: the mint itself
+    computes/receives evidence, never an episode-attested boolean). The
+    empirical-adequacy half of §4c-1 is a disclosed real-engine debt — no
+    minted row claims it."""
     if freeze_candidate.get("phase") != "freeze_pass":
         raise MintRefusal("two_phase_order", "work_product_field",
                           "offer_gate requires a freeze-phase candidate",
                           freeze_candidate.get("frontier_schema_hash", ""))
     schema_hash = freeze_candidate["frontier_schema_hash"]
-    # §4c-1 ablation-proven causality: if a simulated witness path with the
-    # obligation-covered surfaces withheld still reaches the continuation
-    # checkpoint at adequate quality, the obligations are decorative.
-    if witness_adequate_without_obligation_surfaces:
-        raise MintRefusal("ablation_causality", "fixture_obligations_decorative",
-                          "witness reached the checkpoint with obligation "
-                          "surfaces withheld — the branch never resumes",
-                          schema_hash)
+    # §4c-1 leg 1 — ablation structural dependency (computed): withholding the
+    # obligation-covered surfaces must CHANGE the derived batch; an unchanged
+    # batch means the obligations are ghost rules — decorative.
+    if ablation.get("dry_obligation_set_hash") != \
+            freeze_candidate["obligation_set_hash"]:
+        raise MintRefusal("ablation_structural_dependency",
+                          "fixture_obligations_decorative",
+                          "ablation evidence does not replay against the "
+                          "frozen obligation set", schema_hash)
+    if not ablation.get("structural_dependency_ok"):
+        raise MintRefusal("ablation_structural_dependency",
+                          "fixture_obligations_decorative",
+                          "withholding the obligation-covered surfaces did "
+                          "not change the derived batch — ghost rules; the "
+                          "branch never resumes", schema_hash)
     # §4c-2 token ballast ratio: carried warmth must be a material fraction of
     # what cold reread would pay. γ is population-pinned; re-pin = fixture-class
     # re-derivation, never calibration.
@@ -311,10 +323,17 @@ def offer_gate(freeze_candidate: dict, derived_obligation_tokens: int,
         "state_tokens": freeze_candidate["state_tokens"],
         "obligation_set_hash": freeze_candidate["obligation_set_hash"],
         "frontier_schema_hash": schema_hash,
-        "content_floor": {"gamma": gamma,
-                          "derived_obligation_tokens": derived_obligation_tokens,
-                          "cold_reread_tokens": cold_reread_tokens,
-                          "ablation_causal": True},
+        "content_floor": {
+            "gamma": gamma,
+            "derived_obligation_tokens": derived_obligation_tokens,
+            "cold_reread_tokens": cold_reread_tokens,
+            # computed evidence, never a boolean assertion (fix #6):
+            "dry_obligation_set_hash": ablation["dry_obligation_set_hash"],
+            "ablated_obligation_set_hash":
+                ablation["ablated_obligation_set_hash"],
+            "structural_dependency_ok": True,
+            "adequacy_leg": "real_engine_debt_mock_bypassed",
+        },
     }
 
 

@@ -38,10 +38,12 @@ import json
 import sys
 from pathlib import Path
 
+from .check_prf_fixture import check_manifest
 from .derive_live_obligations import DerivationRefused, derive_live_obligations
 from .ledger import Ledger
 from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
                                   offer_gate)
+from .prf_ablation import ADEQUACY_DEBT_DISCLOSURE, structural_dependency
 from .score_prf import PRFScorer, _tokens
 
 REPO = Path(__file__).resolve().parent.parent
@@ -62,7 +64,8 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
     ledger.write({"kind": "run_config", "engine": "mock", "wire_test": True,
                   "episode_id": episode["episode_id"],
                   "disclosure": "mock fork runner — machinery wire, never "
-                                "evidence about resumability (SPEC §12)"})
+                                "evidence about resumability (SPEC §12)",
+                  "adequacy_debt": ADEQUACY_DEBT_DISCLOSURE})
     ledger.write(population)
 
     witness = _witness_reads(episode, population)
@@ -98,18 +101,22 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
                   "disclosure": "symmetric: all branches receive the t1 "
                                 "catalog (SPEC §2)"})
 
-    # phase 2: OFFER-TIME content floor (§4c-1/§4c-2). Cold's checkpoint cost
-    # and the withheld-witness simulation exist only now.
+    # phase 2: OFFER-TIME content floor (§4c-1 leg 1 / §4c-2). Cold's
+    # checkpoint cost and the ablation replay exist only now. The structural-
+    # dependency leg is COMPUTED here (never read from the episode — the
+    # build review killed the attested flag); the empirical-adequacy leg is
+    # the disclosed real-engine debt in run_config.
     cold_cost = sum(_tokens(episode["t1_texts"][sid])
                     for sid in episode["routes"]["cold_reread"])
-    ablation_adequate = episode.get("ablation_witness_adequate", False)
+    ablation = structural_dependency(population, freeze_manifest, witness,
+                                     episode["seam_id"])
     try:
         minted = offer_gate(
             cand,
             derived_obligation_tokens=episode["ballast"]
                 ["derived_obligation_tokens"],
             cold_reread_tokens=cold_cost, gamma=population["gamma"],
-            witness_adequate_without_obligation_surfaces=ablation_adequate,
+            ablation=ablation,
             frontier_artifact_id=f"fa:{episode['episode_id']}")
     except MintRefusal as e:
         ledger.write(e.row)
@@ -123,12 +130,22 @@ def run_fork_group(episode: dict, population: dict, freeze_manifest: dict,
                           "surface_id": sid, "read_index": i,
                           "catalog_epoch": "t1"})
     if episode.get("reopen"):
+        rule_id = episode["reopen"].get("reopen_rule_id")
+        invalidated = [o["obligation_id"] for o in out["obligations"]
+                       if population.get("reopen_rules", {})
+                       .get(rule_id, {}).get("invalidation_predicate_id")
+                       == o["satisfaction_predicate_id"]]
         ledger.write({"kind": "frontier_stale_reopen",
                       "branch": "resumable_state",
                       "population_reopen_rules_hash":
                           population["population_reopen_rules_hash"],
                       "frontier_artifact_id": minted["frontier_artifact_id"],
                       "obligation_set_hash": minted["obligation_set_hash"],
+                      "frontier_state_minted_ref": {
+                          "state_digest": minted["state_digest"],
+                          "frontier_artifact_id":
+                              minted["frontier_artifact_id"]},
+                      "invalidated_obligation_ids": invalidated,
                       **episode["reopen"]})
 
     # world-oracle outcomes (fixture-declared on mock; R5: never narration)
@@ -150,11 +167,31 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None) -> dict:
         ledger_path.unlink()   # a wire ledger regenerates fresh each run
     ledger = Ledger(ledger_path)
 
+    # self-gating (fix #9, X2 pattern): the run re-executes the §9 admission
+    # gate and ledgers the computed gate_open row; the scorer requires it for
+    # any non-mock verdict. A refused gate halts the fork before any row.
+    gate_checks = check_manifest(fixture_dir / "manifest.json")
+    gate_failed = [name for name, ok, _ in gate_checks if not ok]
+    if gate_failed:
+        ledger.write({"kind": "gate_refused", "failed": gate_failed})
+        return {"run": {"halted": "gate_refused", "failed": gate_failed},
+                "verdict": None, "ledger": str(ledger_path)}
+    ledger.write({"kind": "gate_open", "checks": len(gate_checks),
+                  "manifest": str(fixture_dir / "manifest.json")})
+
     outcome = run_fork_group(episode, population, freeze_manifest, ledger)
     events = ledger.rows()
     scorer = PRFScorer(population, freeze_manifest, events,
                        episode["t0_texts"], episode["t1_texts"])
     verdict = scorer.score()
+    # harness-emitted checkpoint rows (fix #10) — from the scorer's own
+    # branch-blind computation, never branch narration
+    for branch, key in (("cold_reread", "cold_checkpoint"),
+                        ("resumable_state", "resumable_checkpoint")):
+        idx = verdict.get("costs", {}).get(key)
+        if idx is not None:
+            ledger.write({"kind": "continuation_checkpoint_reached",
+                          "branch": branch, "read_index": idx})
     ledger.write(verdict)
     return {"run": outcome, "verdict": verdict,
             "ledger": str(ledger_path)}

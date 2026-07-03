@@ -15,6 +15,7 @@ import unittest
 from harness.derive_live_obligations import derive_live_obligations
 from harness.mint_frontier_state import (freeze_validate, manifest_hash,
                                          offer_gate)
+from harness.prf_ablation import structural_dependency
 from harness.score_prf import PRFScorer, _tokens
 from tests import prf_mock as M
 from tests.test_prf_mint import golden_state
@@ -30,10 +31,10 @@ def build_events(t1_texts, resumable_route, cold_route=("S1", "S2", "S3"),
     out = derive_live_obligations(pop, manifest, reads, "seam-1")
     cand = freeze_validate(golden_state(out), manifest, out["batch"],
                            manifest_hash(manifest))
+    ablation = structural_dependency(pop, manifest, reads, "seam-1")
     minted = offer_gate(cand, derived_obligation_tokens=120,
                         cold_reread_tokens=400, gamma=pop["gamma"],
-                        witness_adequate_without_obligation_surfaces=False,
-                        frontier_artifact_id="fa-1")
+                        ablation=ablation, frontier_artifact_id="fa-1")
     events = list(reads) + [out["batch"]] + out["obligations"]
     events.append({"kind": "frontier_freeze",
                    "canonical_state": cand["canonical_state"],

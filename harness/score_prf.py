@@ -206,6 +206,17 @@ class PRFScorer:
         g = self.guards
         ev = self.evidence
 
+        # gate_open enforcement (build-review fix #9, X2 pattern): a NON-mock
+        # verdict requires the computed §9 gate_open row in the ledger; mock
+        # wire runs are disclosed as wire_test either way.
+        cfg = self._one("run_config") or {}
+        self.wire_test = bool(cfg.get("wire_test", True)) or \
+            cfg.get("engine", "mock") == "mock"
+        if not self.wire_test and self._one("gate_open") is None:
+            ev.append("non-mock run without a computed gate_open row — "
+                      "confounded (§9)")
+            return self._verdict("confounded")
+
         # derivation replay is the authority
         batch = self._one("obligation_derivation_batch")
         witness_reads = [r for r in self._rows("surface_read",
@@ -229,8 +240,20 @@ class PRFScorer:
                       "not mutually exclusive")
             return self._verdict("confounded")
         if refused is not None:
-            cell = {"state_content_void": "PRF-over-wipe"}.get(
-                refused.get("reason"), "PRF-answer-cache")
+            # refusal-reason -> cell (build-review fix #7): the content-floor
+            # family (honorary artifact) is PRF-over-wipe; only banned
+            # work-product/vocab shapes are answer-cache; anything outside
+            # the enum confounds rather than misroutes.
+            cell = {"state_content_void": "PRF-over-wipe",
+                    "fixture_obligations_decorative": "PRF-over-wipe",
+                    "obligation_ballast_below_gamma": "PRF-over-wipe",
+                    "work_product_field": "PRF-answer-cache",
+                    "out_of_vocab_token": "PRF-answer-cache"}.get(
+                refused.get("reason"))
+            if cell is None:
+                ev.append(f"unknown mint refusal reason "
+                          f"{refused.get('reason')!r}")
+                return self._verdict("confounded")
             ev.append(f"mint refused: {refused.get('check')}/"
                       f"{refused.get('reason')} — branch never resumed")
             return self._verdict(cell)
@@ -339,4 +362,4 @@ class PRFScorer:
                 "guards": {k: self.guards.get(k, False) for k in GUARDS},
                 "costs": costs or {},
                 "evidence": list(self.evidence),
-                "wire_test": True}
+                "wire_test": getattr(self, "wire_test", True)}

@@ -1,16 +1,21 @@
 """SPEC_PAUSE_RESUME §9 — the PRF fixture admission gate (computed, never
 attested). Fail-loud preflight: refuses a fixture before any non-mock
-evidence unless every leg passes; the scorer requires the `gate_open` row.
+evidence unless every leg passes. `run_prf` re-executes this gate and ledgers
+the computed `gate_open` row; `score_prf` confounds any NON-mock verdict
+whose ledger lacks it (mock wire verdicts carry `wire_test: true` either way).
 
 The two §4c offer-time content-floor legs appear here as PREFLIGHT MIRRORS
-(review-round fix B4): the gate re-derives the same checks the offer-time
-minter runs and must refuse any fixture the minter would refuse — it never
-substitutes for the mint refusal. A mismatch between gate and mint is a
-harness bug, not a scoring outcome.
+(review-round fix B4): the gate calls the SAME shared functions the offer-time
+minter runs (`prf_ablation.structural_dependency`), so gate and mint agree by
+construction — the gate never substitutes for the mint refusal. A mismatch
+between gate and mint is a harness bug, not a scoring outcome.
 
 Ballast is COMPUTED, not attested: `derived_obligation_tokens` must equal the
 recomputed t0 token sum over the union of the derived obligations' source
-surfaces. An attested number that disagrees fails the leg.
+surfaces. An attested number that disagrees fails the leg. The §4c-1
+ablation leg is likewise computed (structural dependency — batch-hash change
+under withheld sources); its empirical-adequacy half is a DISCLOSED
+real-engine debt, never a fixture flag (build review, 2026-07-03).
 
 Usage:
   uv run --no-project python -m harness.check_prf_fixture episodes/prf/<fixture>/manifest.json
@@ -27,6 +32,7 @@ from .derive_live_obligations import (DerivationRefused,
                                       derive_live_obligations,
                                       validate_rulebook)
 from .predicate_ast import PredicateClosureError, library_hash
+from .prf_ablation import structural_dependency
 from .score_prf import _tokens
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -136,21 +142,19 @@ def check_manifest(manifest_path: Path) -> list[Check]:
                        "derivation adds nothing beyond the trace bookmark — "
                        "comparator_incapable"))
 
-        # ablation-causality MIRROR (§4c-1): withholding the obligation-
-        # covered surfaces from the witness must change the derived batch —
-        # obligations that survive their own sources' removal are decorative.
-        covered = {sid for o in dry["obligations"]
-                   for sid in o["source_read_ids"]}
-        ablated_route = [s for s in witness_route if s not in covered]
-        ablated = derive_live_obligations(
-            pop, freeze_manifest, _witness_rows(ablated_route, catalog),
-            ep["seam_id"])
-        mirror_ok = (ablated["batch"]["obligation_set_hash"]
-                     != dry["batch"]["obligation_set_hash"]) and \
-            not ep.get("ablation_witness_adequate", False)
-        checks.append((f"ablation_causality_mirror[{eid}]", mirror_ok,
-                       "withheld sources change the batch; fixture attests "
-                       "witness inadequacy under ablation" if mirror_ok else
+        # ablation-structural-dependency MIRROR (§4c-1 leg 1): the same shared
+        # computation the offer-time mint runs — withholding the obligation-
+        # covered surfaces must change the derived batch. No fixture flag is
+        # read; the empirical-adequacy half is the disclosed real-engine debt.
+        abl = structural_dependency(pop, freeze_manifest,
+                                    _witness_rows(witness_route, catalog),
+                                    ep["seam_id"])
+        covered = set(abl["covered_surfaces"])
+        checks.append((f"ablation_structural_dependency_mirror[{eid}]",
+                       abl["structural_dependency_ok"],
+                       "withheld sources change the batch (adequacy half: "
+                       "real-engine debt, disclosed)"
+                       if abl["structural_dependency_ok"] else
                        "obligations decorative under ablation — the offer-time "
                        "mint would refuse (fixture_obligations_decorative)"))
 
@@ -183,7 +187,7 @@ def check_manifest(manifest_path: Path) -> list[Check]:
             wrong_cost = sum(_tokens(ep["t1_texts"][sid])
                              for sid in ep["routes"]["resumable_state"])
             priced = wrong_cost < cold_cost
-            checks.append((f"false_continuity_priced[{eid}]", priced,
+            checks.append((f"false_continuity_not_priced[{eid}]", priced,
                            f"false-continue path {wrong_cost} < cold "
                            f"{cold_cost}" if priced else
                            f"false continuity ({wrong_cost}) is not cheaper "
