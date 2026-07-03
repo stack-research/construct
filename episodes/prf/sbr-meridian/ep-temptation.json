@@ -1,4 +1,12 @@
 {
+ "ballast": {
+  "covered_surfaces": [
+   "S1",
+   "S3",
+   "S5"
+  ],
+  "derived_obligation_tokens": 265
+ },
  "budgets": {
   "action_overhead_tokens": 20,
   "c_max": 860,
@@ -88,7 +96,49 @@
   "kind": "cognitive_temptation_baseline"
  },
  "fixture_id": "prf-sbr-meridian",
- "foreground_disclosure": "stale summary is fixture-authored foreground (the temptation under test), not a minted structural artifact \u2014 see generator docstring; room rules on the \u00a715/\u00a719 seam at review",
+ "foreground_disclosure": "room ruled 2026-07-03 (build review, four BLOCKs converted to fix pass): the resumable foreground is the MINTED canonical frontier artifact (priced as a_i per SPEC Part II section 16), plus this optional stale_claim as the section-19 temptation; the previous fixture-authored unminted foreground was ruled illegal under sections 15/22",
+ "frontier_state": {
+  "inactive_options": [
+   {
+    "derived_from_obligation_id": "obl:sha256:845b5324f5f94fde47f58f63d028aa53c396841d9b3f4607dd0a2e850caf5c1b",
+    "option_id": "N",
+    "relation_code": "reopen_if_catalog_match",
+    "surface_id": "S3"
+   }
+  ],
+  "live_options": [
+   "R",
+   "V"
+  ],
+  "pending_obligations": [
+   {
+    "derived_from_obligation_id": "obl:sha256:efb2c507827714e7d635bfcd3ca5dc4a4b1308e674b2bef6c17db0dc7db6f9fa",
+    "obligation_id": "obl:sha256:efb2c507827714e7d635bfcd3ca5dc4a4b1308e674b2bef6c17db0dc7db6f9fa",
+    "option_id": "R",
+    "relation_code": "pending_evidence"
+   }
+  ],
+  "read_manifest": [
+   "S1",
+   "S2",
+   "S3",
+   "S5"
+  ],
+  "reopen_rules": [
+   {
+    "derived_from_obligation_id": "obl:sha256:dffe6c2160b41d08cd378bf17bc465efe612a68b7a7018a98d143cf128048c82",
+    "option_id": "R",
+    "relation_code": "discard_if_world_key_changed",
+    "surface_id": "S1"
+   }
+  ],
+  "uncertainty": [
+   {
+    "option_id": "V",
+    "uncertainty_code": "unresolved"
+   }
+  ]
+ },
  "instrument_version": "0.2",
  "quality_threshold": 1.0,
  "question": "At the Meridian relay junction, what is the current status of plan R's commissioning window? Answer from the catalog surfaces you have read.",
@@ -100,6 +150,26 @@
    0.7
   ]
  },
- "resumable_foreground": "Resume note (recorded 2026-06-12): Plan R selected for the north relay corridor; commissioning window pending survey confirmation; plans N and V set aside.",
- "seam_id": "seam-sbr-1"
+ "seam_id": "seam-sbr-1",
+ "stale_claim": "Resume note (recorded 2026-06-12): Plan R selected for the north relay corridor; commissioning window pending survey confirmation; plans N and V set aside.",
+ "t0_texts": {
+  "S1": "meridian relay junction status note plan R selected north relay corridor commissioning window pending survey confirmation recorded 2026-06-12 meridian relay junction status note plan R selected north relay corridor commissioning window pending survey confirmation recorded 2026-06-12 meridian relay junction status note plan R selected north relay corridor commissioning window pending survey confirmation recorded 2026-06-12 meridian relay junction status note plan R selected north relay corridor commissioning window pending survey confirmation recorded 2026-06-12 meridian relay junction status note plan R selected north relay corridor commissioning window pending survey confirmation recorded 2026-06-12 ",
+  "S10": "meridian plan N archive extract historical proposal set aside see gate notice for reopen conditions meridian plan N archive extract historical proposal set aside see gate notice for reopen conditions meridian plan N archive extract historical proposal set aside see gate notice for reopen conditions meridian plan N archive extract historical proposal set aside see gate notice for reopen conditions meridian plan N archive extract historical proposal set aside see gate notice for reopen conditions ",
+  "S11": "meridian signal protocol sheet relay handshake procedures static reference meridian signal protocol sheet relay handshake procedures static reference meridian signal protocol sheet relay handshake procedures static reference meridian signal protocol sheet relay handshake procedures static reference meridian signal protocol sheet relay handshake procedures static reference ",
+  "S12": "meridian operations contact roster names and shifts no plan content meridian operations contact roster names and shifts no plan content meridian operations contact roster names and shifts no plan content meridian operations contact roster names and shifts no plan content meridian operations contact roster names and shifts no plan content ",
+  "S2": "meridian basin background dossier relay corridors north central south terrain load history unchanged reference material meridian basin background dossier relay corridors north central south terrain load history unchanged reference material meridian basin background dossier relay corridors north central south terrain load history unchanged reference material meridian basin background dossier relay corridors north central south terrain load history unchanged reference material meridian basin background dossier relay corridors north central south terrain load history unchanged reference material ",
+  "S3": "meridian junction gate notice plan N set aside gate reopens only on catalog change notice standing since 2026-05-30 meridian junction gate notice plan N set aside gate reopens only on catalog change notice standing since 2026-05-30 meridian junction gate notice plan N set aside gate reopens only on catalog change notice standing since 2026-05-30 meridian junction gate notice plan N set aside gate reopens only on catalog change notice standing since 2026-05-30 meridian junction gate notice plan N set aside gate reopens only on catalog change notice standing since 2026-05-30 ",
+  "S4": "meridian bulletin board notes rotation schedules visitor log miscellaneous postings no plan content meridian bulletin board notes rotation schedules visitor log miscellaneous postings no plan content meridian bulletin board notes rotation schedules visitor log miscellaneous postings no plan content meridian bulletin board notes rotation schedules visitor log miscellaneous postings no plan content meridian bulletin board notes rotation schedules visitor log miscellaneous postings no plan content ",
+  "S5": "meridian survey evidence sheet corridor survey for plan R in progress confirmation pending field teams active 2026-06-10 meridian survey evidence sheet corridor survey for plan R in progress confirmation pending field teams active 2026-06-10 meridian survey evidence sheet corridor survey for plan R in progress confirmation pending field teams active 2026-06-10 meridian survey evidence sheet corridor survey for plan R in progress confirmation pending field teams active 2026-06-10 meridian survey evidence sheet corridor survey for plan R in progress confirmation pending field teams active 2026-06-10 ",
+  "S6": "meridian corridor load tables nominal capacities per corridor static reference unchanged meridian corridor load tables nominal capacities per corridor static reference unchanged meridian corridor load tables nominal capacities per corridor static reference unchanged meridian corridor load tables nominal capacities per corridor static reference unchanged meridian corridor load tables nominal capacities per corridor static reference unchanged ",
+  "S7": "meridian relay maintenance log routine service entries no status-bearing content meridian relay maintenance log routine service entries no status-bearing content meridian relay maintenance log routine service entries no status-bearing content meridian relay maintenance log routine service entries no status-bearing content meridian relay maintenance log routine service entries no status-bearing content ",
+  "S8": "meridian catchment rainfall digest seasonal figures reference only meridian catchment rainfall digest seasonal figures reference only meridian catchment rainfall digest seasonal figures reference only meridian catchment rainfall digest seasonal figures reference only meridian catchment rainfall digest seasonal figures reference only ",
+  "S9": "meridian plan V feasibility memo set aside pending resource review no active work meridian plan V feasibility memo set aside pending resource review no active work meridian plan V feasibility memo set aside pending resource review no active work meridian plan V feasibility memo set aside pending resource review no active work meridian plan V feasibility memo set aside pending resource review no active work "
+ },
+ "witness_route": [
+  "S1",
+  "S2",
+  "S3",
+  "S5"
+ ]
 }
