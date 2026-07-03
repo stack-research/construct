@@ -8,6 +8,7 @@
   "derived_obligation_tokens": 306
  },
  "episode_id": "meridian-stale-frontier",
+ "expected_answer_t1": "plan n",
  "frontier_state": {
   "inactive_options": [
    {
@@ -53,8 +54,8 @@
   "cold_reread": true,
   "resumable_state": false
  },
- "question": "At the Meridian junction gate under the current post-seam catalog, has plan N re-entered consideration?",
- "expected_answer_t1": "plan N re-enters consideration",
+ "oracle_key_note": "keys normalized after shakedown run r1 (runs/prf/shakedown-r1/) \u2014 phrasing only, direction-preserving: fixes the cold comparator, never rescues a treatment branch",
+ "question": "Under the current post-seam catalog at the Meridian relay junction, which plan, if any, re-enters consideration? Name the plan or say none.",
  "reopen": null,
  "routes": {
   "cold_reread": [
