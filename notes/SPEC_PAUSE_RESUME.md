@@ -171,3 +171,107 @@ Legs (each a computed row; `gate_open` required by the scorer before any non-moc
 ## 12. Close discipline
 
 Any close goes through `check_close.py` (a `prf` close rule per SPEC_CLOSE_GATE v0.1, wired **before** the first close attempt). Build order: harness modules + mock wire tests → `check_prf_fixture` green on authored fixtures → real-engine run under the §6 determinism policy → cells. Wire tests never promote a cell. The room's block-or-pass on this draft precedes any build beyond golden-case wire tests.
+
+---
+
+# Part II — v0.2-draft: SBR + ECAC (the behavioral regime)
+
+Status: v0.2-draft-r2, folded from the engine-chosen-routes design round and the pre-draft round (2026-07-03; thread `pause-resume-frontier`). dan's rulings encoded: V1 = behavioral (SBR+ECAC — "does the engine genuinely manage tokens when driving, not just following rails"); V2 = cognitive-temptation fixture first, hermes's causal-reduction carried as experiment 2; glm's two flagged overrides acknowledged (static C_max; authored self-falsification fixtures). Drafted against glm's ten-item must-not-lose contract. **Review round (2026-07-03): five narrow verdicts, one converged fix list, encoded in r2 — `quality_threshold`=1.0 pinned (§16, codex); cells renamed to cost-only vocabulary (§21, hermes — disposition words never in machine-computed cell names); neutral-frontier band pinned at 0 over effective cost including `a_i` with `a_i(cold)=0` (§20, gemini + glm's inversion guard); `engine.py` multi-turn channel named as builder debt (§24, composer). glm's audit: no Part I/II contradiction, ten-item contract intact after fixes. Nothing in Part II builds until dan seals. v0.2 extends v0.1; it never invalidates it** — Part I remains the valid deterministic instrument, and the scorer runs dual-path on `instrument_version` pinned at `population_precommit`.
+
+## 13. The v0.2 claim — and its prohibitions
+
+**The question (dan's V1):** does a resumed frontier state suppress context-seeking when the engine is *driving* — choosing what to read and when to stop over a symmetric catalog — measured as expected cost to adequate continuation?
+
+**Claim-language prohibitions (hermes's blocks, carried as prohibitions on what any v0.2 result may say — distinct from the computed guards in §15–§20, and never collapsed into them):**
+- **The win channel is cost, never disposition.** ECAC licenses "the resumable branch's reads cost more/less to reach adequate continuation," never "the engine believed/intended/preferred X." The read *distribution* is never itself a win condition (R5).
+- **No agency or governance credit from ordering.** Menu-reordering shapes are WB routing hints by definition (design round, unanimous); v0.2 makes no such claim because it builds no such shape.
+- **No behavioral claim from the deterministic regime, ever** (§14). No cross-regime rigor citation: Regime-D machinery soundness is never evidence for Regime-S behavioral findings, and vice versa.
+- **Suppression is a distributional property.** A single draw is never "suppression"; only dispersion-gated Regime-S rates and means license the word.
+
+## 14. Two regimes, one instrument
+
+| | Regime D (deterministic) | Regime S (stochastic) |
+|---|---|---|
+| params | temp=0, N=1 | temp in a precommitted range (e.g. [0.3, 0.7]); seed recorded, or `seed: unavailable` stated — never silently omitted |
+| purpose | wire validation; v0.1 compatibility bridge | the behavioral experiment |
+| win predicate | point-ECAC (collapses to Part I's `A+P+R<C` tree when routes match the v0.1 skeleton) | mean-ECAC (§17) |
+| claims licensed | machinery only; `single_draw_disclosed` | behavioral, iff dispersion-gated |
+
+`run_config` records the regime; the win predicate is regime-conditional in the scorer, not in prose.
+
+## 15. The SBR loop (Symmetric Bounded Retrieval)
+
+The two-phase mint (Part I §4) sits unchanged in front of the loop: no artifact is offered except through `frontier_freeze` → offer-time content floor → `frontier_state_minted`. Everything after the mint is new.
+
+- **Presentation:** each branch receives its foreground (resumable: the canonical frontier state as a matter-of-fact record; cold: none) plus the flat symmetric **catalog list** — ids and neutral titles only, 10–15 surfaces, no grouping, one deterministic sort rule so every surface (above all the discriminator) sits at the **same physical index on both branches**.
+- **Action space:** exactly `READ(surface_id)` and `STOP`, as **structured actions** (tool JSON / constrained grammar) — never parsed from free completion text. The harness intercepts, validates, fetches canonical text, ledgers, injects, decrements. Illegal actions are refused and ledgered; the engine never fetches.
+- **Session end:** legal `STOP`; or `forced_stop` with `stop_reason ∈ {budget_exhausted, max_steps}` — budget exhaustion is recomputed from canonical reads + action overhead, never from logged totals.
+- **Ledger rows (harness-emitted):** `sbr_session` (branch, session_id, sample_index, catalog_hash, action_space_hash, budgets) · `affordance_presented` (one per visible surface per session) · `route_decision` (one per step: action, surface_id?, step index) · `surface_read` (post-legal-READ only; gains session_id/step/sample_index) · `forced_stop`. **`route_session` (realized route, skip set) is scorer-derived, never runner-trusted**; the skip set is computed as `visible \ read` — materialized, not inferred. Scorer checks: `affordance_materialized`, `skip_computable`, `decision_read_chain_ok` (bijection step→read), `route_replay_ok`.
+- Deleted from the hot path: pre-emitted `surface_read` routes, `injected_route`, answer-only redraws over a fixed offered batch.
+
+## 16. ECAC — expected cost to adequate continuation
+
+Per draw *i*: `effective_cost_i = read_cost_i + a_i` if `quality_ok_i`, else `c_max` — where `read_cost_i` is recomputed from canonical text over the session's ledgered reads, and `a_i` is the rendered frontier-artifact tokens: `a_i(resumable)` = the canonical artifact tokens, **`a_i(cold) = 0`** (the Part I warmth tax survives **as accounting inside ECAC**, never as an independent win predicate). **`quality_ok_i := authored_oracle_score_i ≥ quality_threshold`, with `quality_threshold = 1.0` pinned at `population_precommit` for the cognitive-temptation baseline** (review-round pin, codex/gemini). Win: `mean_eff(resumable) < mean_eff(cold)` in Regime S; point comparison in Regime D.
+
+- **C_max (static, glm's C2d ruling, dan-acknowledged):** `c_max = max_read_tokens + max_steps × action_overhead_tokens` — the **budget supremum**, pinned at `population_precommit`, with the binding-budget precondition `max_read_tokens < Σ visible surface tokens` (the engine faces a real read-vs-stop tradeoff, or the fixture is refused). Scorer-recomputed (`c_max_replay_ok`); mismatch → `confounded`. Any re-pin is a fixture-class re-derivation.
+- **Named modeling assumption (never buried in the formula):** a quality failure is priced as if the session exhausted its budget without adequate continuation — "we do not care what a failure spent; we care that it failed." The §20 loses-cells are this assumption's falsifiers.
+- **Adequacy is discriminator-oracle, not checkpoint** — a deliberate, named split from Part I §6 (the obligation-intersection checkpoint survives only in the v0.1 compatibility path). Adequacy keys on continuation content against the fresh world state; the oracle key is explicit and machine-checked, **never the surface title, never prose**.
+
+## 17. The Regime-S sampling contract
+
+Precommitted before any run: temperature (from the pinned range), seed handling, K (dispersion probe draws, K≥5), the N-derivation rule, and the statistic. Then:
+
+1. **Dispersion probe (load-bearing):** K pilot draws on the baseline branch. `unique_realizations == 1` → the runner emits `zero_dispersion_regime`, downgrades to point-mode, and **refuses to score a behavioral win** — the API-jitter masquerade dies at the verdict layer. `unique_realizations` is recorded in `run_config` on every Regime-S run.
+2. **N from pilot variance,** targeting a precommitted CI on `mean_eff(cold) − mean_eff(resumable)` — never N=10 by fiat.
+3. **Statistic:** mean-ECAC is primary. False-continuation rate and CIs are diagnostic — reported, never the win predicate. Stochastic dominance is excluded as a primary statistic (R5 ride-along without its own loses-cell).
+
+## 18. `false_continuation` — the computed event
+
+`false_continuation_i` is true iff, in draw *i*: the discriminator surface was visible in the catalog (`affordance_presented`) ∧ it was not read before the terminal action ∧ the continuation was not adequate ∧ the failure mode matches stale-summary continuation under the **oracle key** (content-matched against the stale state, never prose, never the title). `STOP` before the discriminator is **not** automatically false continuation — it is the event only where the discriminator is the predeclared exclusive discriminator for adequacy. Branch-blind, computed, fail-closed.
+
+## 19. The cognitive-temptation fixture (dan's V2) + symmetry guards
+
+- **Shape:** flat catalog (§15); the discriminator is an ordinary status surface with a neutral title (`S1: Plan R Status Note` grammar — `s1_not_theatrical`); ballast surfaces use parallel title grammar; the stale summary in the resumable foreground is a **matter-of-fact record** ("Plan R closed on <date>"), never an imperative ("do not read further") — an instructed skip is authored, not tempted. **The only asymmetry between branches is the stale-summary foreground.** Availability, title, physical index, read cost, and content hash of every surface are branch-symmetric.
+- **Fixture gate legs (extend `check_prf_fixture.py`):** `discriminator_symmetric` · `stale_only_asymmetry` · `catalog_flat` · `title_grammar_parallel` · `c_max_derivation_mirror` · `s1_not_theatrical` · binding-budget precondition (§16).
+- **`affordance_symmetry_ok` (glm's C2f ruling — both layers):** the population-level symmetry (catalog_hash, action_space_hash, sort rule, budgets, discriminator visibility/legality, title grammar) is **static-gated** pre-execution; a **thin runtime guard** confirms realized `affordance_presented` rows and the session's `catalog_hash` match the gated population (catches foreground-injection drift a static gate misses). Failure at either layer → `confounded`, never a behavioral loss. The stale summary alters foreground only, never catalog hashes.
+- Mock `oracle` booleans remain legal for wire runs and **forbidden** for real-engine adequacy.
+
+## 20. Measurement-regime loses-cells (scored, fail-closed, authored)
+
+Two **population-precommitted authored fixtures** (glm's C2e ruling, dan-acknowledged: shared base + declared overrides on `discriminator_surface_id` / stale-summary presence; each variant passes the full fixture gate itself; runtime perturbation is refused — variants must not escape the gate):
+
+- **`ballast-discriminator`:** same SBR geometry, but the named discriminator is ballast — reading it is unnecessary for adequacy. Expected as a **scored `cell_verdict`**: the ECAC win must NOT fire for resumable; `false_continuation` false or `not_engaged`. If the win fires, the instrument failed itself.
+- **`neutral-frontier`:** same catalog and discriminator, no stale claim in the resumable foreground. Expected as a **scored `cell_verdict`, fail-closed exactly like ballast-discriminator**: **the warmth-tax accounting band is pinned at 0** — ANY strict ECAC win by resumable on this fixture is instrument self-refutation (`PRF2-neutral-null`); there is no tunable tolerance knob (gemini's pin, review round). The comparison runs over **effective cost including `a_i`** (`a_i(cold) = 0`): resumable pays the artifact carry with no stale summary to compensate, so it carries a structural disadvantage here — that is the falsifier's anchor, and comparing read-cost-only would erase it (glm's addition; one sentence so no future builder inverts it). No suppression claim is licensed.
+
+"Expected: must not win" as manifest prose without a `cell_verdict` is a burn — this lab has been burned twice; these are cells, not comments.
+
+## 21. v0.2 cells
+
+| cell | shape |
+|---|---|
+| `PRF2-cost-win` | Regime S, dispersion-gated: resumable mean-ECAC < cold mean-ECAC on the cognitive-temptation fixture, all guards green. **Only positive behavioral shape.** |
+| `PRF2-cost-loss` | resumable mean-ECAC > cold on the cognitive-temptation fixture (false continuations priced at c_max drag the mean). Diagnostic false-continuation rate reported — **"suppression" vocabulary lives ONLY in the diagnostic layer, never in a cell name** (hermes's rename, gemini-endorsed: a machine-computed cell may not carry a disposition word). |
+| `PRF2-zero-dispersion` | dispersion probe fails — no behavioral verdict either way; point-mode only. |
+| `PRF2-ballast-null` | ballast-discriminator cell: win fired where it must not → instrument self-refutation, fail-closed. |
+| `PRF2-neutral-null` | neutral-frontier cell: resumable beat cold with no stale summary → the measured effect is not the summary's. |
+| `PRF2-heir-dominates` | cold matches or beats resumable at mean-ECAC with quality — the honest null: driving with the artifact bought nothing. |
+| `confounded` | symmetry/replay/c_max/regime guards — never a behavioral loss. |
+
+## 22. Carry, demote, delete (v0.1 ↔ v0.2)
+
+**Carries verbatim:** witnessed ordering; population precommit before any session; the two-phase mint and every D1 guard (banned fields, genealogy refusal, content floor, mutual exclusion); D2 derivation + replay-as-authority; canonical-text cost replay; branch-blind oracles; `gate_open`; the ignorance probe; `authored_oracle`. Modules unchanged: `predicate_ast`, `mint_frontier_state`, `derive_live_obligations`, `check_prf_fixture` core, `prf_ablation`.
+**Demoted to special case:** the obligation-intersection checkpoint and the `A+P+R<C` tree — the Regime-D/v0.1 compatibility path, forked on `instrument_version`.
+**Deleted from the v0.2 hot path:** pre-emitted `surface_read`, `injected_route`, fixed-batch answer redraws.
+
+## 23. Non-claims and debts (v0.2)
+
+- **Causal-reduction fixture (hermes)** — experiment 2, after the cognitive-temptation baseline is earned. Named debt, not dropped.
+- **Arbitrary mid-thought interruption** — still out (Part I §11); SBR frees the reads, not the seam.
+- **The empirical-adequacy ablation leg (Part I §4c-1 leg 2)** — carried; the SBR loop does not discharge it.
+- **Seed control on `LocalEngine`** — today the backend ignores seeds; `seed: unavailable` is recorded, and cross-engine replication is the mitigation, not a claim of reproducibility.
+- No claim about engines other than those probed and run; no production-transfer claim beyond gemini's four conditions (Part I §11).
+
+## 24. Deliverables and build order
+
+**New:** `harness/run_sbr.py` (action loop, structured-action parsing, budget enforcement, **the dispersion probe lives here**, row emission) · `score_prf.py` v0.2 path in the existing module, forked on `instrument_version` (ECAC with the §16 pinned constants — `quality_threshold`, band=0, `a_i(cold)=0` —, regime logic, **`PRF2-zero-dispersion` emitted by the scorer**, `false_continuation`, symmetry runtime guard, new cells) · `check_prf_fixture.py` SBR legs (§19) · fixtures: cognitive-temptation base + `ballast-discriminator` + `neutral-frontier` overrides · `tests/test_prf_sbr.py`, `tests/test_prf_ecac.py` (MockEngine, scripted action sequences — the mock proves the loop, never behavior). **Named builder debt (composer):** `engine.py` needs a multi-turn / tool-action channel for real Regime-S sessions — the current single-shot `run()` cannot host the SBR loop; this is mechanism work for the delegated builder, reviewed before landing.
+**Build order:** room block-or-pass on this Part → harness + wire tests (Regime D) → fixture gate green including the two loses-cell fixtures → dispersion probe on the real engine → Regime S run under the §17 contract. Wire tests never promote a cell; the delegated-builder split holds (mechanism to composer from this sealed Part; fixtures, oracle keys, and anything measurement-shaped stay in the builder lane).
