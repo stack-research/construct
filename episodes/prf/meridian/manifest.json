@@ -1,0 +1,26 @@
+{
+ "attestation": {
+  "attested_at": "2026-07-03",
+  "attested_by": "claude/fable-5 (builder lane, dan sealed 2026-07-03)",
+  "ignorance_probe": {
+   "engines": {
+    "mock": {
+     "knew": false,
+     "note": "mock engine \u2014 wire machinery only, never evidence"
+    }
+   }
+  }
+ },
+ "episodes": [
+  "ep-changed-world.json",
+  "ep-reopen-null.json",
+  "ep-reopen-win.json",
+  "ep-stale-frontier.json",
+  "ep-win.json"
+ ],
+ "fictional": true,
+ "fixture_id": "prf-meridian",
+ "invented": "2026-07-03",
+ "min_cold_tokens": 100,
+ "out_of_weights": true
+}

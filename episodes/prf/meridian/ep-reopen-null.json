@@ -1,0 +1,99 @@
+{
+ "ablation_witness_adequate": false,
+ "ballast": {
+  "covered_surfaces": [
+   "S1",
+   "S3",
+   "S5"
+  ],
+  "derived_obligation_tokens": 306
+ },
+ "episode_id": "meridian-reopen-null",
+ "frontier_state": {
+  "inactive_options": [
+   {
+    "derived_from_obligation_id": "obl:sha256:16457ba6a47705f4770924994eda007db5d075267a395e7a0d8b5d591575758c",
+    "option_id": "N",
+    "relation_code": "reopen_if_catalog_match",
+    "surface_id": "S3"
+   }
+  ],
+  "live_options": [
+   "R",
+   "V"
+  ],
+  "pending_obligations": [
+   {
+    "derived_from_obligation_id": "obl:sha256:af09d6269979fba6b9f059a75510627a9911a359f8c19363d151e239ebb2f997",
+    "obligation_id": "obl:sha256:af09d6269979fba6b9f059a75510627a9911a359f8c19363d151e239ebb2f997",
+    "option_id": "R",
+    "relation_code": "pending_evidence"
+   }
+  ],
+  "read_manifest": [
+   "S1",
+   "S3",
+   "S5"
+  ],
+  "reopen_rules": [
+   {
+    "derived_from_obligation_id": "obl:sha256:eaa5f712f4766dcf11a148cbfac93e8863611e3e750c960a495cf442ce394c54",
+    "option_id": "R",
+    "relation_code": "discard_if_world_key_changed",
+    "surface_id": "S1"
+   }
+  ],
+  "uncertainty": [
+   {
+    "option_id": "V",
+    "uncertainty_code": "unresolved"
+   }
+  ]
+ },
+ "oracle": {
+  "cold_reread": true,
+  "resumable_state": true
+ },
+ "reopen": {
+  "invalidating_surface_ids": [
+   "S1"
+  ],
+  "read_index_at_reopen": 1,
+  "reopen_reason": "changed_world",
+  "reopen_rule_id": "RR1"
+ },
+ "routes": {
+  "cold_reread": [
+   "S1",
+   "S2",
+   "S3"
+  ],
+  "resumable_state": [
+   "S1",
+   "S2",
+   "S3"
+  ]
+ },
+ "seam_id": "seam-m1",
+ "t0_texts": {
+  "S1": "meridian relay junction status ledger plan R commissioning window pending survey confirmation meridian relay junction status ledger plan R commissioning window pending survey confirmation meridian relay junction status ledger plan R commissioning window pending survey confirmation meridian relay junction status ledger plan R commissioning window pending survey confirmation meridian relay junction status ledger plan R commissioning window pending survey confirmation meridian relay junction status ledger plan R commissioning window pending survey confirmation ",
+  "S2": "meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints ",
+  "S3": "junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration ",
+  "S4": "meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision ",
+  "S5": "survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor "
+ },
+ "t1_texts": {
+  "S1": "meridian relay junction status ledger plan R commissioning window now closed pending redesign meridian relay junction status ledger plan R commissioning window now closed pending redesign meridian relay junction status ledger plan R commissioning window now closed pending redesign meridian relay junction status ledger plan R commissioning window now closed pending redesign meridian relay junction status ledger plan R commissioning window now closed pending redesign meridian relay junction status ledger plan R commissioning window now closed pending redesign ",
+  "S2": "meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints meridian basin background dossier describing candidate routing plans their catchment geometry and shared constraints ",
+  "S3": "junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration junction gate notice naming the catalog condition under which plan N re-enters consideration ",
+  "S4": "meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision meridian bulletin board rotating maintenance notes unrelated to any routing decision ",
+  "S5": "survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor survey evidence sheet for plan R verification obligations along the north relay corridor "
+ },
+ "winner_option_id": "R",
+ "witness_route": [
+  "S1",
+  "S3",
+  "S5"
+ ],
+ "world_leg": "moved"
+}

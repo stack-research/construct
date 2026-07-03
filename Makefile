@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -142,6 +142,29 @@ smoke-ollama:
 # Anthropic API engine — only if/when a key or `ant auth login` profile exists.
 smoke-claude:
 	uv run --with anthropic python -m harness.run_stage_a episodes/smoke-001.json --engine claude
+
+# SPEC_PAUSE_RESUME v0.1 wire tests (mock only, never promotes a cell): the
+# closed predicate AST, the D1 two-phase mint goldens, D2 derivation replay,
+# the D3 warmth-tax three regions, and the §9 gate tamper cases.
+prf-test:
+	uv run --no-project python -m tests.test_prf_predicate_ast
+	uv run --no-project python -m tests.test_prf_mint
+	uv run --no-project python -m tests.test_prf_derive
+	uv run --no-project python -m tests.test_prf_d3_reopen
+	uv run --no-project python -m tests.test_prf_fixture_gate
+
+# SPEC_PAUSE_RESUME §9 admission gate on the authored meridian fixture.
+prf-gate:
+	uv run --no-project python -m harness.check_prf_fixture
+
+# SPEC_PAUSE_RESUME mock fork smoke: the five meridian episodes end-to-end
+# (runner -> ledger -> scorer). Wire machinery, never evidence (§12).
+prf-smoke:
+	@for ep in episodes/prf/meridian/ep-*.json; do \
+		echo "== $$ep"; \
+		uv run --no-project python -m harness.run_prf $$ep | \
+			python3 -c "import json,sys; print('  cell:', json.load(sys.stdin)['verdict']['cell'])"; \
+	done
 
 # warming-budget wire tests (SPEC_WARMING_BUDGET v0.1 — mock only, never promotes)
 warming-test:
