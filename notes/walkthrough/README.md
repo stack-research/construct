@@ -29,7 +29,8 @@ Both tracks end at the open questions beyond the completed work.
 
 The recommended reading order follows the lab's chronology: the chapter-0 primer if
 research vocabulary is new to you, then M-1, M0, M1, M1.5, M2, M3, X1, X2, X4, the
-narrowed frontier beyond X4, and the lab's audit of itself.
+narrowed frontier beyond X4, the lab's audit of itself, and the two live
+instruments (the warming budget and the pause/resume frontier).
 
 | Chapter | Guiding question | Status |
 |---|---|---|
@@ -46,6 +47,7 @@ narrowed frontier beyond X4, and the lab's audit of itself.
 | [Beyond X4 — the frontier, narrowed](10_BEYOND_X4.md) | What survived the room's review of the open directions? | Open direction; updated for the beyond-x4 thread (2026-07-02) |
 | [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md) | Was the lab's own process still sound — and what gate now guards it? | Available |
 | [The warming budget: 101 bets the lab wrote down first](12_WARMING_BUDGET.md) | Does consequence-earned ranking under-serve an unresolved frontier enough to measure? | Armed — awaiting the world |
+| [The pause/resume frontier](13_PAUSE_RESUME_FRONTIER.md) | Does a compact frontier artifact ever pay for its own carry? | In flight — Parts I–III executed; Part IV drafted, unsealed |
 
 The living thesis and short milestone summaries remain in the project [README](../../README.md#the-journey). Current status and gates remain in the [ROADMAP](../ROADMAP.md#milestones).
 

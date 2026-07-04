@@ -1,6 +1,6 @@
 # Chapter 12 — The warming budget: 101 bets the lab wrote down first
 
-Previous: [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md) · [Walkthrough index](README.md)
+Previous: [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md) · [Walkthrough index](README.md) · Next: [The pause/resume frontier](13_PAUSE_RESUME_FRONTIER.md)
 
 Chapter 10 ended with a question narrowed but unresolved, and chapter 11 with a gate
 that had never gated anything. On 2026-07-02 both stories advanced in one day: the
@@ -141,4 +141,4 @@ scores. That round belongs to the room.
 
 ---
 
-Previous: [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md) · [Walkthrough index](README.md)
+Previous: [The heir-audit and the close gate](11_HEIR_AUDIT_CLOSE_GATE.md) · [Walkthrough index](README.md) · Next: [The pause/resume frontier](13_PAUSE_RESUME_FRONTIER.md)
