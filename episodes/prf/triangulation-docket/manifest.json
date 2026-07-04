@@ -26,7 +26,14 @@
    }
   },
   "probe_debt": "per-engine cold ignorance probe REQUIRED before any real-engine run (\u00a733; never inherited)",
-  "roster_precommitment": "precommitted in-thread 2026-07-04 (pause-resume-frontier, \u00a733 entry) BEFORE any engine contact; ministral-3-14b-reasoning stays excluded on meridian resource grounds unless dan re-admits"
+  "roster_precommitment": "precommitted in-thread 2026-07-04 (pause-resume-frontier, \u00a733 entry) BEFORE any engine contact; ministral-3-14b-reasoning stays excluded on meridian resource grounds unless dan re-admits",
+  "superseded_ledgers": {
+   "runs/prf/docket-temptation.sbr-gpt-oss-20b-prefix.jsonl": {
+    "scored": false,
+    "superseded_by": "runs/prf/docket-temptation.sbr-gpt-oss-20b.jsonl",
+    "supersedes_note": "pre-fix \u00a730-2 calibration attempt (session cal-d673285b, free-routed R02/R01/STOP, read S2/S1, answered 'defer'): harness-protocol miss against sealed \u00a730-2 (free-routing calibration), NOT engine calibration evidence; superseded by the forced_route rerun in docket-temptation.sbr-gpt-oss-20b.jsonl (45b9345 fix). Restored from git 45b9345 per board F1 (composer, glm-verified, 2026-07-04): the working ledger had been REPLACED, violating no-erasure; this side ledger is the discharge."
+   }
+  }
  },
  "episodes": [
   "ep-docket-temptation.json",
