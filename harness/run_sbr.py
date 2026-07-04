@@ -49,14 +49,18 @@ def _tokens(text: str) -> int:
 
 from .sbr_util import (
     action_space_hash,
+    artifact_render_tokens,
     build_sbr_system,
     catalog_hash,
+    handle_to_surface_id,
     render_foreground_block,
     render_resumable_foreground,
     recompute_c_max,
     sbr_renderer_version,
     sorted_surface_ids,
 )
+
+_HANDLE_RE = re.compile(r"^\s*(R\d{2}|STOP)\s*$", re.IGNORECASE)
 
 
 def parse_structured_action(raw: str) -> tuple[dict | None, str | None]:
@@ -83,6 +87,29 @@ def parse_structured_action(raw: str) -> tuple[dict | None, str | None]:
     if len(data) != 1:
         return None, "extra_keys"
     return {"action": "STOP"}, None
+
+
+def parse_r_handle_action(raw: str,
+                          visible: list[str]) -> tuple[dict | None, str | None]:
+    """Parse R01…R21|STOP actions (SPEC Part III §28)."""
+    m = _HANDLE_RE.match(raw.strip())
+    if not m:
+        return None, "not_json"
+    handle = m.group(1).upper()
+    if handle == "STOP":
+        return {"action": "STOP"}, None
+    idx = int(handle[1:])
+    if idx < 1 or idx > len(visible):
+        return None, f"illegal_handle:{handle}"
+    return {"action": "READ", "surface_id": visible[idx - 1]}, None
+
+
+def parse_action(raw: str, visible: list[str],
+                 instrument_version: str = "0.2") -> tuple[dict | None, str | None]:
+    """Version-forked action parser: R-handles (0.3) or JSON (0.2)."""
+    if instrument_version == "0.3":
+        return parse_r_handle_action(raw, visible)
+    return parse_structured_action(raw)
 
 
 def _witness_reads(episode: dict, population: dict) -> list[dict]:
@@ -115,7 +142,9 @@ def run_mint_spine(episode: dict, population: dict, freeze_manifest: dict,
 
     try:
         cand = freeze_validate(episode["frontier_state"], freeze_manifest,
-                               out["batch"], manifest_hash(freeze_manifest))
+                               out["batch"], manifest_hash(freeze_manifest),
+                               rendered_tokens=(
+                                   episode.get("instrument_version") == "0.3"))
     except MintRefusal as e:
         ledger.write(e.row)
         return {"halted": "frontier_mint_refused", **e.row}
@@ -165,6 +194,11 @@ def run_mint_spine(episode: dict, population: dict, freeze_manifest: dict,
 
 def synthesize_mock_answer(read_ids: list[str], episode: dict) -> str:
     """Wire-test answer from reads: status surface S1 yields the oracle key."""
+    if episode.get("instrument_version") == "0.3":
+        cal = set(episode.get("calibration_route", []))
+        if cal and cal <= set(read_ids):
+            return episode.get("calibration_expected_answer",
+                               episode["expected_answer_t1"])
     if "S1" in read_ids:
         return episode["expected_answer_t1"]
     stale = episode.get("stale_claim") or ""
@@ -194,8 +228,9 @@ def run_sbr_session(
     catalog = episode["catalog"]
     sort_rule = episode["catalog_sort"]
     budgets = episode["budgets"]
+    iv = episode.get("instrument_version", "0.2")
     cat_hash = catalog_hash(catalog, sort_rule)
-    act_hash = action_space_hash()
+    act_hash = action_space_hash(iv)
     visible = sorted_surface_ids(catalog, sort_rule)
 
     foreground = ""
@@ -224,7 +259,7 @@ def run_sbr_session(
             "physical_index": visible.index(sid),
         })
 
-    system = build_sbr_system(catalog, sort_rule, episode["question"])
+    system = build_sbr_system(catalog, sort_rule, episode["question"], iv)
 
     read_ids: list[str] = []
     read_tokens = 0
@@ -239,7 +274,7 @@ def run_sbr_session(
     observation = system + foreground + "\nChoose your first action."
     while not terminal and step < max_steps:
         result = session.step(observation)
-        parsed, refuse = parse_structured_action(result.raw_action)
+        parsed, refuse = parse_action(result.raw_action, visible, iv)
         ledger.write({
             "kind": "route_decision",
             "branch": branch,
@@ -252,7 +287,10 @@ def run_sbr_session(
         })
         if refuse:
             refused_actions.append({"step": step, "reason": refuse})
-            observation = f"Action refused ({refuse}). Reply with legal JSON only."
+            hint = ("Reply with a legal handle (R01–R21) or STOP."
+                    if iv == "0.3" else
+                    "Reply with legal JSON only.")
+            observation = f"Action refused ({refuse}). {hint}"
             step += 1
             continue
 
@@ -450,6 +488,90 @@ def _engine(engine_backend: str, model: str, base_url: str,
     return MockEngine()
 
 
+def run_calibration_gate(
+    episode: dict,
+    canonical_state: dict,
+    ledger: Ledger,
+    *,
+    engine=None,
+    engine_label: str = "mock",
+    scripted_actions: list[str] | None = None,
+    elicit_answer: bool | None = None,
+) -> dict:
+    """§30-2: one resumable_state session along calibration_route."""
+    visible = sorted_surface_ids(episode["catalog"], episode["catalog_sort"])
+    if scripted_actions is None:
+        scripted_actions = [
+            f"R{visible.index(sid) + 1:02d}"
+            for sid in episode["calibration_route"]
+        ] + ["STOP"]
+        use_mock = engine is None
+    else:
+        use_mock = True
+
+    from .engine import MockEngine, sbr_action_instruction
+
+    if use_mock:
+        session = MockEngine(scripted_actions=scripted_actions).start_session()
+        elicit = False
+    else:
+        session = engine.start_session(
+            action_instruction=sbr_action_instruction("0.3"))
+        elicit = True if elicit_answer is None else elicit_answer
+
+    summary = run_sbr_session(
+        episode, "resumable_state", f"cal-{uuid.uuid4().hex[:8]}",
+        0, session, ledger, canonical_state=canonical_state,
+        elicit_answer=elicit)
+
+    passed = summary["quality_ok"] and not summary["refused_actions"]
+    row = {
+        "kind": "calibration_gate",
+        "engine": engine_label,
+        "passed": passed,
+        "quality_ok": summary["quality_ok"],
+        "refused_actions": summary["refused_actions"],
+        "read_ids": list(summary["read_ids"]),
+        "calibration_route": list(episode["calibration_route"]),
+    }
+    ledger.write(row)
+    return row
+
+
+def _maybe_calibration_gate(
+    episode: dict,
+    manifest: dict,
+    canonical_state: dict | None,
+    ledger: Ledger,
+    *,
+    engine=None,
+    engine_backend: str,
+    wire_mock: bool,
+    scripted_sessions: dict | None,
+) -> dict | None:
+    """Admission precondition for v0.3 (§30). Returns gate row or None."""
+    if episode.get("instrument_version") != "0.3":
+        return None
+    label = getattr(engine, "model", engine_backend) if engine else engine_backend
+    if wire_mock or scripted_sessions is not None:
+        row = {"kind": "calibration_gate", "engine": label,
+               "skipped": True, "disclosure": "wire_test"}
+        ledger.write(row)
+        return row
+    if episode.get("self_falsification"):
+        row = {"kind": "calibration_gate", "engine": label,
+               "skipped": True,
+               "disclosure": (
+                   f"self_falsification analog "
+                   f"({episode['self_falsification']}) — precondition not run")}
+        ledger.write(row)
+        return row
+    if canonical_state is None:
+        return None
+    return run_calibration_gate(
+        episode, canonical_state, ledger, engine=engine, engine_label=label)
+
+
 def run_episode(
     episode: dict,
     ledger: Ledger,
@@ -469,6 +591,9 @@ def run_episode(
     effective_regime = regime
     temp_range, temperature = _regime_s_temperature(episode)
     elicit = not wire_mock and scripted_sessions is None
+    iv = episode.get("instrument_version", "0.2")
+    from .engine import sbr_action_instruction
+    action_instr = sbr_action_instruction(iv)
     pilot_variance = None
     n_required = None
     ci_target_unmet = False
@@ -545,7 +670,7 @@ def run_episode(
                 mock = MockEngine(scripted_actions=actions)
                 session = mock.start_session()
             else:
-                session = engine.start_session()
+                session = engine.start_session(action_instruction=action_instr)
             summary = run_sbr_session(
                 episode, branch, sid, i, session, ledger,
                 canonical_state=canonical_state,
@@ -571,6 +696,7 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None,
     population = json.loads((fixture_dir / "population.json").read_text())
     freeze_manifest = json.loads(
         (fixture_dir / "freeze_manifest.json").read_text())
+    manifest = json.loads((fixture_dir / "manifest.json").read_text())
     ledger_path = ledger_path or (
         REPO / "runs" / "prf" / f"{episode['episode_id']}.sbr.jsonl")
     if ledger_path.exists():
@@ -592,6 +718,19 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None,
         if mint.get("halted"):
             return {"run": mint, "verdict": None, "ledger": str(ledger_path)}
         canonical_state = mint["canonical_state"]
+
+    wire_mock = engine is None
+    cal = _maybe_calibration_gate(
+        episode, manifest, canonical_state, ledger,
+        engine=engine, engine_backend=engine_backend,
+        wire_mock=wire_mock, scripted_sessions=scripted_sessions)
+    if cal and not cal.get("skipped") and not cal.get("passed"):
+        ledger.write({"kind": "gate_refused",
+                      "failed": ["calibration_gate"],
+                      "engine": cal.get("engine")})
+        return {"run": {"halted": "gate_refused",
+                        "failed": ["calibration_gate"]},
+                "verdict": None, "ledger": str(ledger_path)}
 
     from .score_prf import PRFScorer
 
