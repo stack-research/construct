@@ -93,6 +93,7 @@ def _canonical(state: dict) -> dict:
 
 def freeze_validate(frontier_state: dict, freeze_manifest: dict,
                     derivation_batch: dict, pinned_schema_hash: str,
+                    *, rendered_tokens: bool = False,
                     **mint_inputs) -> dict:
     """Phase 1 (freeze-time). Runs the 13 structural checks + the
     `state_content_void` floor. Returns a NON-minted candidate
@@ -252,10 +253,15 @@ def freeze_validate(frontier_state: dict, freeze_manifest: dict,
     # 13. canonical_hash
     canonical = _canonical(frontier_state)
     canonical_json = json.dumps(canonical, sort_keys=True)
+    if rendered_tokens:
+        from .sbr_util import artifact_render_tokens
+        state_tokens = artifact_render_tokens(canonical)
+    else:
+        state_tokens = len(canonical_json.split())
     return {
         "canonical_state": canonical,
         "state_digest": hashlib.sha256(canonical_json.encode()).hexdigest(),
-        "state_tokens": len(canonical_json.split()),
+        "state_tokens": state_tokens,
         "obligation_set_hash": derivation_batch.get("obligation_set_hash"),
         "frontier_schema_hash": schema_hash,
         "phase": "freeze_pass",   # NOT minted — §4c two-phase pin

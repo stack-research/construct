@@ -38,6 +38,8 @@ import re
 
 from .derive_live_obligations import replay_ok
 from .mint_frontier_state import recompute_state_tokens
+from .sbr_util import (artifact_render_tokens, action_space_hash, catalog_hash,
+                       handle_to_surface_id)
 from .predicate_ast import evaluate, validate
 
 GUARDS_V01 = ("derivation_replay_ok", "frontier_derivation_parity",
@@ -218,19 +220,28 @@ class PRFScorer:
         return str(cfg.get("instrument_version", "0.1"))
 
     def score(self) -> dict:
-        if self._instrument_version() == "0.2":
+        ver = self._instrument_version()
+        if ver in ("0.2", "0.3"):
             return self._score_v02()
         return self._score_v01()
 
+    def _uses_rendered_a_i(self) -> bool:
+        return self._instrument_version() == "0.3"
+
+    def _recompute_a_i(self, canonical_state: dict) -> int:
+        if self._uses_rendered_a_i():
+            return artifact_render_tokens(canonical_state)
+        return recompute_state_tokens(canonical_state)
+
     # ---------- v0.2 ECAC (Part II §16/§21) ----------
     def _artifact_tokens(self, branch: str) -> int:
-        """a_i: canonical artifact tokens from frontier_freeze; a_i(cold)=0 (§16)."""
+        """a_i: rendered (0.3) or canonical-body (0.2) artifact tokens; a_i(cold)=0."""
         if branch != "resumable_state":
             return 0
         freeze = self._one("frontier_freeze")
         if not freeze or "canonical_state" not in freeze:
             return 0
-        return recompute_state_tokens(freeze["canonical_state"])
+        return self._recompute_a_i(freeze["canonical_state"])
 
     def _stale_claim_tokens(self) -> int:
         """Disclosed stale_claim carry — NOT included in a_i (§16)."""
@@ -300,7 +311,9 @@ class PRFScorer:
         # draw early-returns False (real-run catch 2026-07-03)
         self._fc_basis = ("mock_prose_markers" if wire
                           else "oracle_key:expected_answer_t0")
-        disc = self.episode["discriminator_surface_id"]
+        disc = self.episode.get("discriminator_surface_id")
+        if disc is None:
+            return False
         visible, read, _ = self._route_session(branch, session_id, sample_index)
         if disc not in visible or disc in read or quality_ok:
             return False
@@ -322,11 +335,27 @@ class PRFScorer:
         return any(_norm(m) in norm for m in stale_markers) and expected not in norm
 
     def _decision_read_chain_ok(self, branch: str, session_id: str) -> bool:
-        """Bijection between parsed READ decisions and surface_read rows (§15)."""
+        """Bijection between successful READ decisions and surface_read rows."""
         read_steps: list[tuple[int, str]] = []
+        iv = self._instrument_version()
+        visible: list[str] | None = None
+        if iv == "0.3":
+            aff = self._rows("affordance_presented", branch=branch,
+                             session_id=session_id)
+            visible = sorted(
+                [r["surface_id"] for r in aff],
+                key=lambda s: next(r["physical_index"] for r in aff
+                                    if r["surface_id"] == s))
+
         for d in self._rows("route_decision", branch=branch,
                             session_id=session_id):
             if not d.get("parsed"):
+                continue
+            if iv == "0.3" and visible is not None:
+                sid = handle_to_surface_id(d.get("raw_action", ""), visible)
+                if not sid:
+                    continue
+                read_steps.append((d["step"], sid))
                 continue
             raw = d.get("raw_action", "")
             m = re.search(r"\{.*\}", raw, re.DOTALL)
@@ -362,10 +391,10 @@ class PRFScorer:
 
     def _affordance_symmetry_ok(self) -> bool:
         """Thin runtime guard (§19): realized rows match gated population."""
-        from .sbr_util import catalog_hash, action_space_hash
+        iv = self._instrument_version()
         cat_hash = catalog_hash(self.episode["catalog"],
                                 self.episode["catalog_sort"])
-        act_hash = action_space_hash()
+        act_hash = action_space_hash(iv)
         for row in self._rows("sbr_session"):
             if row.get("catalog_hash") != cat_hash:
                 self.evidence.append(
@@ -430,7 +459,7 @@ class PRFScorer:
         if not freeze or "canonical_state" not in freeze:
             ev.append("frontier_freeze row with canonical_state missing")
             return self._verdict_v02("confounded")
-        a_recomputed = recompute_state_tokens(freeze["canonical_state"])
+        a_recomputed = self._recompute_a_i(freeze["canonical_state"])
         # glm re-review residual A: the guard must compare the recomputation
         # against the LOGGED minted state_tokens (an independent quantity),
         # not against _artifact_tokens on the same row — that was tautological,
@@ -561,7 +590,7 @@ class PRFScorer:
         return {
             "kind": "cell_verdict",
             "instrument": "pause_resume_frontier",
-            "instrument_version": "0.2",
+            "instrument_version": self._instrument_version(),
             "cell": cell,
             "guards": {k: self.guards.get(k, False) for k in GUARDS_V02},
             "ecac": ecac or {},
