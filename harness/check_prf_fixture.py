@@ -35,6 +35,7 @@ from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
                                   offer_gate)
 from .predicate_ast import PredicateClosureError, library_hash
 from .prf_ablation import structural_dependency
+from .sbr_util import (artifact_render_tokens, render_resumable_foreground)
 from .score_prf import _tokens
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -59,6 +60,8 @@ def _witness_rows(route: list[str], catalog: dict) -> list[dict]:
 def check_manifest(manifest_path: Path) -> list[Check]:
     m = json.loads(manifest_path.read_text())
     version = str(m.get("instrument_version", "0.1"))
+    if version == "0.3":
+        return _check_manifest_v03(manifest_path, m)
     if version == "0.2":
         return _check_manifest_v02(manifest_path, m)
     return _check_manifest_v01(manifest_path, m)
@@ -76,6 +79,278 @@ def _recompute_c_max(budgets: dict) -> int:
 def _title_grammar(title: str) -> str:
     """Parallel title shape: '<Name> <Kind>' without theatrical markers."""
     return title.strip()
+
+
+LEG_TAGS_V03 = ("leg_status", "leg_exception", "leg_clearance")
+
+
+def _oracle_leg_ids(catalog: dict) -> set[str]:
+    """Three K-17 dispositive surfaces (§26 / §30)."""
+    legs: set[str] = set()
+    for sid, meta in catalog.items():
+        tags = set(meta.get("surface_tags", []))
+        if tags & set(LEG_TAGS_V03) and meta.get("fields", {}).get(
+                "catalog_key") == "K-17":
+            legs.add(sid)
+    return legs
+
+
+def _obligation_ids_hash(ids: list[str]) -> str:
+    import hashlib
+    return hashlib.sha256(
+        json.dumps(sorted(ids), sort_keys=True).encode()).hexdigest()
+
+
+def _check_manifest_v03(manifest_path: Path, m: dict) -> list[Check]:
+    """Triangulation-docket fixture gate (SPEC Part III §26–§32)."""
+    checks: list[Check] = []
+    fixture_dir = manifest_path.parent
+    episodes = [json.loads((fixture_dir / p).read_text())
+                for p in m["episodes"]]
+    pop_path = fixture_dir / "population.json"
+    freeze_path = fixture_dir / "freeze_manifest.json"
+    has_mint = pop_path.exists() and freeze_path.exists()
+    population = json.loads(pop_path.read_text()) if has_mint else {}
+    freeze_manifest = json.loads(freeze_path.read_text()) if has_mint else {}
+    checks.append(("mint_spine_present", has_mint,
+                   "population.json + freeze_manifest.json present (§22)"
+                   if has_mint else
+                   "population.json / freeze_manifest.json missing"))
+
+    from .sbr_util import catalog_hash, action_space_hash
+    if len(episodes) > 1:
+        ref = episodes[0]
+        ref_ch = catalog_hash(ref["catalog"], ref["catalog_sort"])
+        sym_ok = all(
+            catalog_hash(ep["catalog"], ep["catalog_sort"]) == ref_ch
+            and ep["budgets"] == ref["budgets"]
+            and ep["catalog_sort"] == ref["catalog_sort"]
+            for ep in episodes[1:])
+        checks.append(("affordance_symmetry_across_variants", sym_ok,
+                       "catalog_hash, sort, budgets identical across variants"
+                       if sym_ok else "variant drift in static affordances"))
+
+    baseline = next(
+        (ep for ep in episodes if not ep.get("self_falsification")),
+        episodes[0])
+
+    for ep in episodes:
+        eid = ep["episode_id"]
+        catalog = ep["catalog"]
+        budgets = ep["budgets"]
+        ch = catalog_hash(catalog, ep["catalog_sort"])
+        ah = action_space_hash("0.3")
+
+        checks.append((f"catalog_flat[{eid}]", len(catalog) == 21,
+                       f"{len(catalog)} surfaces (must be 21, §26)"))
+        checks.append((f"c_max_derivation_mirror[{eid}]",
+                       budgets.get("c_max") == _recompute_c_max(budgets),
+                       f"c_max attested {budgets.get('c_max')} vs "
+                       f"recomputed {_recompute_c_max(budgets)}"))
+        total = _catalog_token_sum(catalog)
+        binding = budgets["max_read_tokens"] < total
+        checks.append((f"binding_budget[{eid}]", binding,
+                       f"max_read {budgets['max_read_tokens']} < "
+                       f"catalog total {total}"))
+        checks.append((f"static_affordance_symmetry[{eid}]", True,
+                       f"catalog_hash={ch[:12]}… action_space={ah[:12]}…"))
+        checks.append((f"quality_threshold[{eid}]",
+                       ep.get("quality_threshold") == 1.0,
+                       f"quality_threshold={ep.get('quality_threshold')}"))
+
+        for tag in LEG_TAGS_V03:
+            n = sum(1 for meta in catalog.values()
+                    if tag in meta.get("surface_tags", []))
+            checks.append((f"plausible_geometry[{eid}:{tag}]", n == 3,
+                           f"{n} surfaces tagged {tag} (must be 3)"))
+
+        oracle_legs = _oracle_leg_ids(catalog)
+        cal_route = ep.get("calibration_route", [])
+        checks.append((f"calibration_route_ids[{eid}]",
+                       set(cal_route) == oracle_legs and len(cal_route) == 3,
+                       f"calibration_route {cal_route} vs oracle legs "
+                       f"{sorted(oracle_legs)}"))
+        cal_tokens = sum(_tokens(catalog[s]["text"]) for s in cal_route
+                         if s in catalog)
+        checks.append((f"calibration_route_tokens[{eid}]",
+                       cal_tokens <= budgets["max_read_tokens"],
+                       f"calibration route {cal_tokens} tokens vs "
+                       f"max_read {budgets['max_read_tokens']}"))
+
+        if has_mint:
+            witness = _witness_rows(ep["witness_route"], population["catalog"])
+            try:
+                derived = derive_live_obligations(
+                    population, freeze_manifest, witness, ep["seam_id"])
+                derived_ids = sorted(o["obligation_id"]
+                                     for o in derived["obligations"])
+                pinned = ep.get("calibration_obligation_ids")
+                if isinstance(pinned, str):
+                    replay_ok = pinned == _obligation_ids_hash(derived_ids)
+                else:
+                    replay_ok = sorted(pinned or []) == derived_ids
+                checks.append((f"calibration_obligation_replay[{eid}]",
+                               replay_ok,
+                               "obligation ids replay from witness_route"
+                               if replay_ok else
+                               f"pinned {pinned!r} != derived {derived_ids}"))
+            except DerivationRefused as e:
+                checks.append((f"calibration_obligation_replay[{eid}]", False,
+                               str(e)))
+
+        cold_route = ep.get("cold_exploration_route", [])
+        plausible_ids = {sid for sid, meta in catalog.items()
+                         if set(meta.get("surface_tags", [])) & set(LEG_TAGS_V03)}
+        checks.append((f"cold_exploration_count[{eid}]", len(cold_route) == 6,
+                       f"cold_exploration_route has {len(cold_route)} ids"))
+        disjoint = not (set(cold_route) & set(cal_route))
+        checks.append((f"cold_exploration_disjoint[{eid}]", disjoint,
+                       "cold_exploration_route disjoint from calibration_route"
+                       if disjoint else "routes overlap"))
+        all_plausible = all(s in plausible_ids for s in cold_route)
+        checks.append((f"cold_exploration_plausible[{eid}]", all_plausible,
+                       "all cold_exploration surfaces are plausible-class"
+                       if all_plausible else
+                       f"non-plausible in cold route: "
+                       f"{set(cold_route) - plausible_ids}"))
+
+        if has_mint:
+            try:
+                dry = derive_live_obligations(
+                    population, freeze_manifest,
+                    _witness_rows(ep["witness_route"], population["catalog"]),
+                    ep["seam_id"])
+                cand = freeze_validate(
+                    ep["frontier_state"], freeze_manifest, dry["batch"],
+                    manifest_hash(freeze_manifest), rendered_tokens=True)
+                a_i = artifact_render_tokens(cand["canonical_state"])
+                cold_tokens = sum(_tokens(catalog[s]["text"])
+                                  for s in cold_route if s in catalog)
+                pay_ok = cold_tokens > a_i + cal_tokens
+                checks.append((f"pay_window_geometry[{eid}]", pay_ok,
+                               f"cold_explore {cold_tokens} > a_i {a_i} + "
+                               f"cal {cal_tokens}"
+                               if pay_ok else
+                               f"geometry fails: {cold_tokens} <= "
+                               f"{a_i + cal_tokens}"))
+                fg = render_resumable_foreground(
+                    cand["canonical_state"], ep.get("stale_claim"))
+                fg_tokens = len(fg.split())
+                checks.append((f"foreground_budget_ok[{eid}]",
+                               fg_tokens <= 160,
+                               f"foreground {fg_tokens} tokens (max 160, §27)"))
+            except (MintRefusal, DerivationRefused) as e:
+                checks.append((f"pay_window_geometry[{eid}]", False,
+                               f"mint preview failed: {e}"))
+                checks.append((f"foreground_budget_ok[{eid}]", False,
+                               f"mint preview failed: {e}"))
+
+        if ep.get("self_falsification"):
+            overrides = []
+            if ep.get("witness_route") != baseline.get("witness_route"):
+                overrides.append("witness_route")
+            if json.dumps(ep.get("frontier_state"), sort_keys=True) != \
+                    json.dumps(baseline.get("frontier_state"), sort_keys=True):
+                overrides.append("frontier_state")
+            if ep.get("calibration_obligation_ids") != \
+                    baseline.get("calibration_obligation_ids"):
+                overrides.append("calibration_obligation_ids")
+            if ep.get("stale_claim") != baseline.get("stale_claim"):
+                overrides.append("stale_claim")
+            sf = ep["self_falsification"]
+            if sf == "ballast_discriminator":
+                allowed = {"witness_route", "frontier_state",
+                           "calibration_obligation_ids"}
+            elif sf == "neutral_frontier":
+                allowed = {"stale_claim"}
+            else:
+                allowed = set()
+            declared_only = set(overrides) <= allowed
+            checks.append((f"variant_declared_overrides_only[{eid}]",
+                           declared_only,
+                           f"overrides: {overrides or 'none'}"))
+            stale_ok = (
+                ep.get("stale_claim") == baseline.get("stale_claim")
+                or (sf == "neutral_frontier" and ep.get("stale_claim") is None)
+            )
+            fs_ok = (
+                json.dumps(ep.get("frontier_state"), sort_keys=True)
+                == json.dumps(baseline.get("frontier_state"), sort_keys=True)
+                or sf == "ballast_discriminator"
+            )
+            checks.append((f"stale_only_asymmetry[{eid}]",
+                           stale_ok and fs_ok,
+                           f"ballast may override frontier; neutral stale only "
+                           f"(stale_ok={stale_ok}, fs_ok={fs_ok})"))
+
+    kinds = {ep.get("self_falsification") for ep in episodes}
+    checks.append(("self_falsification_ballast_present",
+                   "ballast_discriminator" in kinds,
+                   "ballast-discriminator variant required (§32)"))
+    checks.append(("self_falsification_neutral_present",
+                   "neutral_frontier" in kinds,
+                   "neutral-frontier variant required (§32)"))
+
+    if has_mint:
+        catalog = population["catalog"]
+        for ep in episodes:
+            eid = ep["episode_id"]
+            witness = _witness_rows(ep["witness_route"], catalog)
+            try:
+                dry = derive_live_obligations(
+                    population, freeze_manifest, witness, ep["seam_id"])
+            except DerivationRefused as e:
+                checks.append((f"derivation_mirror[{eid}]", False, str(e)))
+                continue
+            try:
+                cand = freeze_validate(
+                    ep["frontier_state"], freeze_manifest, dry["batch"],
+                    manifest_hash(freeze_manifest), rendered_tokens=True)
+                checks.append((f"freeze_validate_mirror[{eid}]", True,
+                               f"freeze_pass digest={cand['state_digest'][:12]}…"))
+            except MintRefusal as e:
+                checks.append((f"freeze_validate_mirror[{eid}]", False,
+                               f"{e.row.get('check')}/{e.row.get('reason')}"))
+                continue
+            abl = structural_dependency(population, freeze_manifest, witness,
+                                        ep["seam_id"])
+            checks.append((f"ablation_structural_dependency_mirror[{eid}]",
+                           abl["structural_dependency_ok"],
+                           "withheld sources change the batch"
+                           if abl["structural_dependency_ok"] else
+                           "obligations decorative under ablation"))
+            cold_cost = population["sbr_cold_reread_tokens"]
+            recomputed = sum(_tokens(ep["t0_texts"][sid])
+                             for sid in abl["covered_surfaces"])
+            declared = ep["ballast"]["derived_obligation_tokens"]
+            if declared != recomputed:
+                checks.append((f"ballast_gamma_mirror[{eid}]", False,
+                               f"declared {declared} != recomputed {recomputed}"))
+            elif recomputed < population["gamma"] * cold_cost:
+                checks.append((f"ballast_gamma_mirror[{eid}]", False,
+                               f"ballast {recomputed} < gamma * cold({cold_cost})"))
+            else:
+                try:
+                    offer_gate(cand, derived_obligation_tokens=declared,
+                               cold_reread_tokens=cold_cost,
+                               gamma=population["gamma"], ablation=abl,
+                               frontier_artifact_id=f"fa:{eid}")
+                    checks.append((f"offer_gate_mirror[{eid}]", True,
+                                   f"ballast {recomputed} >= "
+                                   f"{population['gamma']} * {cold_cost}"))
+                except MintRefusal as e:
+                    checks.append((f"offer_gate_mirror[{eid}]", False,
+                                   f"{e.row.get('check')}/{e.row.get('reason')}"))
+
+    engines = m.get("attestation", {}).get("ignorance_probe", {}).get(
+        "engines", {})
+    probe_ok = bool(engines) and all(v.get("knew") is False
+                                     for v in engines.values())
+    checks.append(("ignorance_probe", probe_ok,
+                   f"probe clean for {sorted(engines)}" if probe_ok else
+                   "ignorance_probe attestation required"))
+
+    return checks
 
 
 def _check_manifest_v02(manifest_path: Path, m: dict) -> list[Check]:
