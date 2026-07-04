@@ -7,6 +7,11 @@
     "mock": {
      "knew": false,
      "note": "mock engine \u2014 wire machinery only"
+    },
+    "openai/gpt-oss-20b": {
+     "answer_excerpt": "Disposition: **Closed**  \nException Register A record: **None**",
+     "knew": false,
+     "note": "cold probe 2026-07-04 (docket roster precommitment 99c77db; docket probe question; confabulated values, no world knowledge)"
     }
    }
   },

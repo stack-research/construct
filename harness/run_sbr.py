@@ -218,8 +218,14 @@ def run_sbr_session(
     canonical_state: dict | None = None,
     probe: bool = False,
     elicit_answer: bool = False,
+    forced_route: list[str] | None = None,
 ) -> dict:
     """One SBR session on one branch. Returns session summary dict.
+
+    `forced_route` (§30-2 calibration): the harness drives the session along
+    the scripted surface_ids — the engine never routes; it receives the read
+    surfaces at elicitation and produces only the answer. route_decision rows
+    carry `scripted: true`.
 
     `elicit_answer=True` (real engines): after the terminal action the
     engine itself answers the task question from its reads, scored by the
@@ -272,8 +278,16 @@ def run_sbr_session(
     refused_actions: list[dict] = []
 
     observation = system + foreground + "\nChoose your first action."
+    forced_seq: list[str] | None = None
+    if forced_route is not None:
+        forced_seq = [f"R{visible.index(sid) + 1:02d}" for sid in forced_route]
+        forced_seq.append("STOP")
     while not terminal and step < max_steps:
-        result = session.step(observation)
+        if forced_seq is not None:
+            raw = forced_seq[step] if step < len(forced_seq) else "STOP"
+            result = type("Forced", (), {"raw_action": raw})()
+        else:
+            result = session.step(observation)
         parsed, refuse = parse_action(result.raw_action, visible, iv)
         ledger.write({
             "kind": "route_decision",
@@ -284,6 +298,7 @@ def run_sbr_session(
             "raw_action": result.raw_action,
             "parsed": parsed is not None,
             "refuse_reason": refuse,
+            **({"scripted": True} if forced_seq is not None else {}),
         })
         if refuse:
             refused_actions.append({"step": step, "reason": refuse})
@@ -358,7 +373,15 @@ def run_sbr_session(
         stop_reason = "max_steps"
 
     if elicit_answer:
+        read_block = ""
+        if forced_seq is not None:
+            parts = [f"[{sid}] {catalog[sid]['title']}\n{catalog[sid]['text']}"
+                     for sid in read_ids]
+            read_block = (system + foreground +
+                          "\nSurfaces read this session:\n" +
+                          "\n\n".join(parts) + "\n\n")
         elicitation = (
+            read_block +
             "The retrieval session is over. Using only the surfaces you "
             "read, answer the task question in one short phrase. Reply with "
             f"the answer text only, no JSON.\nTask: {episode['question']}\n"
@@ -502,29 +525,27 @@ def run_calibration_gate(
 ) -> dict:
     """§30-2: one resumable_state session along calibration_route."""
     visible = sorted_surface_ids(episode["catalog"], episode["catalog_sort"])
-    if scripted_actions is None:
-        scripted_actions = [
-            f"R{visible.index(sid) + 1:02d}"
-            for sid in episode["calibration_route"]
-        ] + ["STOP"]
-        use_mock = engine is None
-    else:
-        use_mock = True
-
     from .engine import MockEngine, sbr_action_instruction
 
-    if use_mock:
-        session = MockEngine(scripted_actions=scripted_actions).start_session()
+    if engine is None:
+        acts = scripted_actions or ([
+            f"R{visible.index(sid) + 1:02d}"
+            for sid in episode["calibration_route"]] + ["STOP"])
+        session = MockEngine(scripted_actions=acts).start_session()
         elicit = False
+        forced = None
     else:
+        # §30-2: the harness DRIVES the scripted route; the engine only
+        # answers at elicitation (real engine never free-routes here)
         session = engine.start_session(
             action_instruction=sbr_action_instruction("0.3"))
         elicit = True if elicit_answer is None else elicit_answer
+        forced = list(episode["calibration_route"])
 
     summary = run_sbr_session(
         episode, "resumable_state", f"cal-{uuid.uuid4().hex[:8]}",
         0, session, ledger, canonical_state=canonical_state,
-        elicit_answer=elicit)
+        elicit_answer=elicit, forced_route=forced)
 
     passed = summary["quality_ok"] and not summary["refused_actions"]
     row = {
