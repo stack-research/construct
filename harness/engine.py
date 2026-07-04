@@ -190,13 +190,26 @@ SBR_ACTION_INSTRUCTION = (
     "No prose, no other keys."
 )
 
+SBR_ACTION_INSTRUCTION_V03 = (
+    "Reply with one action per turn: R01 through R21, or STOP.\n"
+    "Use the handle shown in the catalog menu. No prose, no JSON."
+)
+
+
+def sbr_action_instruction(instrument_version: str = "0.2") -> str:
+    if instrument_version == "0.3":
+        return SBR_ACTION_INSTRUCTION_V03
+    return SBR_ACTION_INSTRUCTION
+
 
 class _ClaudeSession:
     """Multi-turn action channel for SBR (SPEC_PAUSE_RESUME Part II §24)."""
 
-    def __init__(self, engine: "ClaudeEngine", system: str, foreground: str):
+    def __init__(self, engine: "ClaudeEngine", system: str, foreground: str,
+                 action_instruction: str | None = None):
         self._engine = engine
         self._messages: list[dict] = []
+        self._action_instruction = action_instruction or SBR_ACTION_INSTRUCTION
         # Single presentation path (§15): content arrives via step(), not init.
 
     def step(self, observation: str) -> SessionStepResult:
@@ -205,7 +218,7 @@ class _ClaudeSession:
         kwargs: dict = {
             "model": self._engine.model,
             "max_tokens": 256,
-            "system": SBR_ACTION_INSTRUCTION,
+            "system": self._action_instruction,
             "messages": self._messages,
         }
         if self._engine.temperature is not None:
@@ -229,8 +242,9 @@ class ClaudeEngine:
         self.model = model
         self.temperature = temperature
 
-    def start_session(self, system: str = "", foreground: str = "") -> _ClaudeSession:
-        return _ClaudeSession(self, system, foreground)
+    def start_session(self, system: str = "", foreground: str = "",
+                      action_instruction: str | None = None) -> _ClaudeSession:
+        return _ClaudeSession(self, system, foreground, action_instruction)
 
     def run(self, question: str, offered_texts: list[str], foreground_block: str = "") -> EngineResult:
         prompt = build_prompt(question, offered_texts, foreground_block)
@@ -287,9 +301,12 @@ class ClaudeEngine:
 class _LocalSession:
     """Multi-turn action channel for SBR (SPEC_PAUSE_RESUME Part II §24)."""
 
-    def __init__(self, engine: "LocalEngine", system: str, foreground: str):
+    def __init__(self, engine: "LocalEngine", system: str, foreground: str,
+                 action_instruction: str | None = None):
         self._engine = engine
-        self._messages: list[dict] = [{"role": "system", "content": SBR_ACTION_INSTRUCTION}]
+        self._action_instruction = action_instruction or SBR_ACTION_INSTRUCTION
+        self._messages: list[dict] = [
+            {"role": "system", "content": self._action_instruction}]
         # Single presentation path (§15): content arrives via step(), not init.
 
     def step(self, observation: str) -> SessionStepResult:
@@ -319,8 +336,9 @@ class LocalEngine:
         self.api_key = api_key
         self.temperature = temperature
 
-    def start_session(self, system: str = "", foreground: str = "") -> _LocalSession:
-        return _LocalSession(self, system, foreground)
+    def start_session(self, system: str = "", foreground: str = "",
+                      action_instruction: str | None = None) -> _LocalSession:
+        return _LocalSession(self, system, foreground, action_instruction)
 
     def _chat(self, messages: list[dict], max_tokens: int = 1024,
               temperature: float | None = None) -> tuple[str, int, int, int, str]:
