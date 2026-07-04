@@ -275,3 +275,87 @@ Two **population-precommitted authored fixtures** (glm's C2e ruling, dan-acknowl
 
 **New:** `harness/run_sbr.py` (action loop, structured-action parsing, budget enforcement, **the dispersion probe lives here**, row emission) · `score_prf.py` v0.2 path in the existing module, forked on `instrument_version` (ECAC with the §16 pinned constants — `quality_threshold`, band=0, `a_i(cold)=0` —, regime logic, **`PRF2-zero-dispersion` emitted by the scorer**, `false_continuation`, symmetry runtime guard, new cells) · `check_prf_fixture.py` SBR legs (§19) · fixtures: cognitive-temptation base + `ballast-discriminator` + `neutral-frontier` overrides · `tests/test_prf_sbr.py`, `tests/test_prf_ecac.py` (MockEngine, scripted action sequences — the mock proves the loop, never behavior). **Named builder debt (composer):** `engine.py` needs a multi-turn / tool-action channel for real Regime-S sessions — the current single-shot `run()` cannot host the SBR loop; this is mechanism work for the delegated builder, reviewed before landing.
 **Build order:** room block-or-pass on this Part → harness + wire tests (Regime D) → fixture gate green including the two loses-cell fixtures → dispersion probe on the real engine → Regime S run under the §17 contract. Wire tests never promote a cell; the delegated-builder split holds (mechanism to composer from this sealed Part; fixtures, oracle keys, and anything measurement-shaped stay in the builder lane).
+
+---
+
+# Part III — v0.3-draft: the triangulation-docket fixture family (the pay-window experiment)
+
+Status: v0.3-draft-r1, folded from the design round (2026-07-03/04: codex's triangulation-docket shape; composer's implementer mechanics; hermes's claim-vocabulary split; gemini's symmetry/ECAC math; glm's must-not-lose contract A1–A10/B11–B18 + conflicts C1–C4 + D-list) and the pin round (2026-07-04: all ten D-items pinned from values on the board; glm's three catches encoded — the D3 geometry amendment to C1, false-continuation as diagnostic-only, the `a_i` scorer alignment made law). dan sealed the brief 2026-07-04; the addendum seal is pre-authorized contingent on a clean review round — any BLOCK stops the line. **Part III adds a fixture family and its gates. It changes no Part II claim semantics**: two regimes, the §17 sampling contract, ECAC, and the §13 prohibitions carry verbatim. The frozen `sbr-meridian` family is untouched and keeps its evidential status (declared zero-dispersion for gpt-oss-20b; Regime-D machinery/cost-loss evidence only for its probed engines).
+
+## 25. The Part III question — the pay-window, made falsifiable
+
+The cross-engine probes (`011680c`) left a measured gap: the meridian artifact was a pure cost tax for the strong engine (ignored it, re-read) and a distractor for the weak ones (failed with it present). The window where a frontier artifact *pays* — an engine strong enough to use it, weak enough to need it — was never observed, and on that surface could not have been. Part III's family is designed so that **"no pay-window exists" is a falsifiable instrument outcome, not a residue of miscalibration**:
+
+> pay-window conditional (cost-only, per §21 vocabulary): `a_i(resumable) + Σ tokens(3 targeted leg reads) < Σ tokens(cold exploration of the pinned 6-surface plausible route)`, with both branches at `quality_ok` (§16, bar = 1.0).
+
+Three priced outcomes if it fails to open: `PRF2-heir-dominates` (cold reads the same three legs and stops — the honest null), `PRF2-cost-loss` (quality failures priced at `c_max` drag the mean), and the self-refutation cells (`PRF2-ballast-null` / `PRF2-neutral-null`) if a win fires where it must not. The measured failure modes this family is built against: R1 — route entropy that survives a capable engine (the 20b collapse); R2 — an action surface small engines can hold (gemma's refused JSON); R3 — a quality bar reachable with the foreground present (the cognitive-load result).
+
+## 26. The world and catalog geometry (D3 as pinned; C1 as amended)
+
+A fresh fictional world: a facilities permit/case queue. Task: *"what disposition should be entered for case K-17: approve / defer / reject / reopen."* The answer is a **three-leg conjunction** — the case's status note, the exception-register row of the register that carries K-17's exception class, and the clearance-ledger row of the ledger that carries K-17's reviewer clearance.
+
+- **Catalog: 21 surfaces = 9 plausible + 12 ordinary admin ballast; 3 dispositive.** The 9 plausible are **3 same-class surfaces per leg class**: status notes `K-17 / K-18 / K-19` (case-titled — title names class+case, symmetric across siblings, never sufficiency); Exception Registers `A / B / C` and Clearance Ledgers `A / B / C` (template-identical titles within class, **never case-titled**; K-17-relevance lives only in body rows). Exactly one register per class carries K-17's dispositive values. This is the C1 settlement made geometric: cold finds leg 1 by honest title and must genuinely explore for legs 2–3. (Pin-round amendment: the design-fold's "shared register" singular was the bug; it yielded 5 plausible surfaces and made the D4 geometry impossible.)
+- **Structured-field discipline (D7):** all 9 plausible siblings carry the **identical structured-field schema**; dispositive K-17 values appear only on the 3 true legs. No schema-presence side channels; the oracle discriminates on field *values*. The oracle keys off **authored structured fields pinned in catalog metadata at population** — never body-prose inference (§5's exclusion of substring/regex over text is the seal; the disposition cannot be smuggled through the bundle because the bundle cannot do the oracle's work).
+- **Red herrings are authored, not parallel-titled:** same-class siblings share title-grammar templates and parallel body-row structure; the discriminant lives only in field values the oracle reads. `s1_not_theatrical` does not catch "reads like the answer but isn't" — authoring does.
+- **Branch symmetry carries verbatim (A8, §19):** identical titles, physical indices, costs, hashes on both branches; the resumable foreground artifact is the only asymmetry.
+
+## 27. The frontier artifact — a narrow obligation bundle
+
+The artifact names **obligation ids + surface ids/classes only**: no disposition value, no rank, no rationale (B14). It whispers the answer-*shape* legally only because of §26's structured-field oracle. Mint is Part I machinery unchanged: **three mutually exclusive trigger predicates** over leg tags (`leg_status` / `leg_exception` / `leg_clearance` on exactly the three K-17 leg surfaces), conjoined with `eq option_id "K-17"` (or `eq catalog_key`) so siblings never fire; three rules `R_status` / `R_exception` / `R_clearance` → `verify`/`read` kinds with disjoint `match_key_ids`; reopen via the existing `changed` invalidation rule on those keys. One rule → one obligation; the library cannot express "leg 2 only if leg 1" and the design does not need it. **The existing AST carries — no new predicate ops.**
+
+- **`witness_route` (D8):** the witness reads a SET equal to the three leg surfaces (one read per leg, so the bundle derives at freeze). Order is unconstrained — witness (pre-seam) and calibration (post-mint) may order differently; derivation is set-based.
+- **`a_i` (D1, and the scorer-alignment law):** `a_i(resumable) = tokens(render_canonical_artifact(canonical_state))`, `a_i(cold) = 0`; stale-claim tokens stay separately ledgered outside ECAC. **Bound to this pin, not builder options:** `_artifact_tokens` switches to the render path; `minted.state_tokens` stores *rendered* tokens; the `a_i_recomputed_ok` guard blocks (→ `confounded`) on `rendered_recompute ≠ minted.state_tokens`. (Pin round: three of four posts concurred on the value without the scorer change — the pin is dead on arrival without it.)
+- **Foreground ceiling (D10):** canonical artifact + optional stale claim ≤ **160 rendered tokens**, enforced as fixture-gate leg `foreground_budget_ok` using the SAME render path as runtime (`render_resumable_foreground`). The ceiling is never stretched to rescue out-of-scope engines (C2).
+
+## 28. The action surface — R-handle enum grammar (R2)
+
+§15's closed action space carries; the surface changes. The menu presents numbered rows with stable handles; the only legal actions are `R01`…`R21` or `STOP` (`^\s*(R\d{2}|STOP)\s*$`, case-folded). The parser maps handle → `surface_id` via `physical_index` after `catalog_sort`, **before** the existing ledger path — ledger semantics unchanged; `action_space_hash` bumps. The handle menu is the **only** action vocabulary in `build_sbr_system` + `SBR_ACTION_INSTRUCTION`. This is §15 hygiene, not free-text routing (finite enum per session) — and it is **not** claimed to fix gemma-class empty-completion stalls (C2: those engines are out of pay-window scope by construction; their `calibration_gate: fail` rows are real, reportable foreground-pressure evidence).
+
+## 29. Budgets, pricing, comparators (D2, D5, D9)
+
+- **Budgets carry meridian verbatim:** `max_read_tokens = 700`, `max_steps = 8`, `action_overhead_tokens = 20`, `c_max = 860`; binding precondition `700 < Σ(visible surface tokens)` (§16 unchanged).
+- **Pricing (D5):** terminal inadequacy (`quality_ok = false`, incl. forced stop and budget exhaustion) prices at `c_max`. An individual refused/illegal action burns a step toward `forced_stop` — never a separate surcharge, never zero. **`false_continuation` is diagnostic-only, never priced directly**: a stale-but-correct answer prices at its real cost with FC recorded as a diagnostic row (§18 semantics unchanged; B16 claim vocabulary — "cognitive load", "suppression", "malingering" never appear in a `cell_verdict`).
+- **Comparators (D9):** strict `<` on per-episode mean ECAC (Regime S); loses-cells per episode; no roll-up; `quality_threshold = 1.0` pinned HERE, in text, before any engine runs (the pin-at-seal deferral was rejected — sliding the bar post-hoc is the `a_i`-anchor failure mode).
+
+## 30. The calibration gate (B11) — admission precondition, never evidence
+
+Two legs, both before any dispersion probe or Regime-S contact:
+
+1. **Fixture leg (`check_prf_fixture`, no engine):** the episode pins `calibration_route` — the **ordered surface_ids** `[k17_status_id, exception_register_id, clearance_ledger_id]` (D6; R-handles are presentation-only and never appear in the pin) — plus `calibration_obligation_ids` (hash) and `calibration_expected_answer`. The leg verifies: the ids exist and are the three oracle legs; route token sum ≤ `max_read_tokens`; the obligation ids replay from `witness_route` through `derive_live_obligations`.
+2. **Runner precondition (`run_and_score`):** per manifest `target_engine`, one **real** `resumable_state` session with the canonical foreground, scripted along `calibration_route`, `elicit_answer = True`; pass iff `quality_ok` and zero route refusals. Ledger row `kind: calibration_gate` per engine; any fail → `gate_refused`, no suite for that engine. Mock/scripted suites skip with disclosed `wire_test`.
+
+**C3 ordering (hermes, adopted verbatim):** calibration is an admission precondition, **never evidence**. A calibrated strict resumable win still owes ablation + band=0 evidence before it is a verdict; the §23 causal-reduction debt rides on every win cell, every family. **C4:** the calibration route is the three base legs only; a changed-world/reopen episode, if shipped, pins its own scripted leg separately.
+
+## 31. The pay-window geometry leg (D4)
+
+The episode pre-pins `cold_exploration_route`: **exactly 6 ordered plausible surface_ids, none in `calibration_route`**. New fixture-gate leg `pay_window_geometry`: `tokens(cold_exploration_route) > a_i_rendered + tokens(calibration_route)` must hold or the family gate refuses. **This leg is fixture geometry only — it licenses the family to run; the verdict remains actual mean ECAC per §29.** (glm's conflation guard: a builder must not be able to pass the gate trivially while the cell fires on real costs, or vice versa.) `N = 6` is two-thirds of the plausible pool and 2× the true legs; it is pinned here so it is never chosen post-hoc to make the conditional hold.
+
+## 32. Self-falsifiers (A2, B15) — authored overrides, gated before dispersion
+
+Both carry §20's fail-closed shape on full effective cost with `a_i(cold) = 0`, band = 0:
+
+- **Ballast analog:** same catalog geometry and action grammar; the named obligation bundle points at surfaces genuinely unnecessary for the oracle disposition (wrong-leg tags, same population discipline, `changed` invalidation on the wrong keys). Any strict resumable win → `PRF2-ballast-null`.
+- **Neutral analog:** same-carry bundle (same rendered `a_i`, parallel obligation shape) whose obligations do not select a prunable frontier for the asked question; no stale/live tension. Any strict resumable win → `PRF2-neutral-null` — with `a_i(resumable) > 0` pinned at 0-band, resumable carries the structural disadvantage that anchors the falsifier.
+
+Both are **declared overrides passing the full fixture gate themselves**, computed not attested (A6), authored before any engine contact.
+
+## 33. Engines, precommitment, and no-mutation
+
+- **`target_engines` (fail-closed pin):** the manifest names its engine roster, **precommitted in-thread before any engine contact** (the cross-engine round's shape: every result reports, no engine-fishing). Candidate set = the runnable local pool at build time. Per engine, in order: cold ignorance probe (attested per-engine, never inherited) → calibration gate (§30) → dispersion probe at the family's precommitted midpoint → Regime-S per §17. An empty passing set = family gate refuses, reported, no rescue.
+- **No in-family mutation, ever (A5):** the family is designed right or it closes, like meridian's temperature lane. Fresh freeze, gate, probes; no shared frozen state with `sbr-meridian`.
+- **Temperature stop-rule carries per engine** as adopted (one 0.7 attempt iff the midpoint collapses, then the engine is declared).
+
+## 34. Part III deliverables and build order
+
+**Fixtures (builder lane — measurement-shaped authoring):** `episodes/prf/` triangulation-docket population (21 surfaces, leg tags, structured disposition fields, red-herring siblings), rulebook (3 rules + reopen), predicate library entries, witness route, `calibration_route` + `calibration_obligation_ids` + `calibration_expected_answer`, `cold_exploration_route` (6 ids), freeze manifest, ballast + neutral overrides, oracle keys — all precommitted before engine contact.
+**Harness:** R-handle grammar in `run_sbr.py` + `build_sbr_system` (`action_space_hash` bump; handle→surface_id mapping pre-ledger) · `score_prf.py` `a_i` render-path alignment (`_artifact_tokens`, `minted.state_tokens`, `a_i_recomputed_ok` per §27) · `check_prf_fixture.py` new legs: `calibration_route` fixture leg (§30-1), `pay_window_geometry` (§31), `foreground_budget_ok` (§27) · `run_and_score` per-engine `calibration_gate` precondition (§30-2).
+**Tests:** golden pass/refuse cases per new gate leg; R-handle parser cases (case/whitespace variants, illegal handles); `a_i` render-alignment regression (the guard must block on a seeded mismatch — no tautological guards; the `d6ab5a9` lesson is a test now); scripted calibration wire run.
+**Build order:** room block-or-pass on this Part → dan's seal → harness changes + wire tests → fixture authoring + family gate green (incl. both analogs) → in-thread engine-roster precommitment → per-engine ignorance probe → calibration gate → dispersion probe → Regime S. Wire tests never promote a cell. Builder ≠ auditor: whoever builds, the rest of the board reviews.
+
+## 35. Part III non-claims
+
+- No Part II semantics change; no meridian re-scoring; the meridian declarations stand.
+- The §23 causal-reduction debt is advanced (one confound removed) but **not discharged**; it rides on every win cell.
+- No claim about gemma-class engines beyond their `calibration_gate` rows (C2); no claim that R-handles fix foreground stalls (§28).
+- "No pay-window observed for this engine/family" is a **diagnostic observation** (B16), never a cell name; the priced outcomes are §25's cells only.
+- If the pay-window fails to open across the full precommitted roster with calibration passed and dispersion present, that is a finding about the resumable-state hypothesis at this scale — reported at that altitude, converted by nothing but the stop rules.
