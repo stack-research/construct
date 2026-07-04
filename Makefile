@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -181,6 +181,16 @@ prf2-smoke:
 		uv run --no-project python -m harness.run_sbr $$ep | \
 			python3 -c "import json,sys; print('  cell:', json.load(sys.stdin)['verdict']['cell'])"; \
 	done
+
+# SPEC_PAUSE_RESUME Part III v0.3 — triangulation-docket mechanism wire tests.
+prf3-test:
+	uv run --no-project python -m tests.test_prf3
+
+prf3-gate:
+	@td=$$(mktemp -d) && \
+	uv run --no-project python -c "from tests.fixtures.prf3_wire.build import write_fixture; from pathlib import Path; write_fixture(Path('$$td'))" && \
+	uv run --no-project python -m harness.check_prf_fixture $$td/manifest.json; \
+	rc=$$?; rm -rf $$td; exit $$rc
 
 # warming-budget wire tests (SPEC_WARMING_BUDGET v0.1 — mock only, never promotes)
 warming-test:
