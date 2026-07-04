@@ -4,6 +4,11 @@
   "attested_by": "claude/fable-5 (builder lane; oracle keys precommitted before any engine run)",
   "ignorance_probe": {
    "engines": {
+    "mistralai/ministral-3-3b": {
+     "answer_excerpt": "Disposition: **Closed (Resolved)** / Exception Register A record: **No entry**",
+     "knew": false,
+     "note": "cold probe 2026-07-04 (docket roster 99c77db; confabulated values, no world knowledge)"
+    },
     "mock": {
      "knew": false,
      "note": "mock engine \u2014 wire machinery only"

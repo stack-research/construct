@@ -349,7 +349,7 @@ class PRFScorer:
 
         for d in self._rows("route_decision", branch=branch,
                             session_id=session_id):
-            if not d.get("parsed"):
+            if not d.get("parsed") or d.get("refuse_reason"):
                 continue
             if iv == "0.3" and visible is not None:
                 sid = handle_to_surface_id(d.get("raw_action", ""), visible)

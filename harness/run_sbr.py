@@ -289,6 +289,15 @@ def run_sbr_session(
         else:
             result = session.step(observation)
         parsed, refuse = parse_action(result.raw_action, visible, iv)
+        # semantic refusals surface ON the decision row (ledger semantics:
+        # a refused READ must never look like a read expectation — the
+        # duplicate-read edge reached in the wild, ministral-3-3b 2026-07-04)
+        if parsed and parsed["action"] == "READ":
+            _sid = parsed["surface_id"]
+            if _sid not in catalog:
+                refuse = "unknown_surface"
+            elif _sid in read_ids:
+                refuse = "duplicate_read"
         ledger.write({
             "kind": "route_decision",
             "branch": branch,
@@ -302,10 +311,16 @@ def run_sbr_session(
         })
         if refuse:
             refused_actions.append({"step": step, "reason": refuse})
-            hint = ("Reply with a legal handle (R01–R21) or STOP."
-                    if iv == "0.3" else
-                    "Reply with legal JSON only.")
-            observation = f"Action refused ({refuse}). {hint}"
+            if refuse == "duplicate_read":
+                observation = (f"Already read that surface. Choose another "
+                               "action.")
+            elif refuse == "unknown_surface":
+                observation = "Unknown surface. Choose a catalog id."
+            else:
+                hint = ("Reply with a legal handle (R01–R21) or STOP."
+                        if iv == "0.3" else
+                        "Reply with legal JSON only.")
+                observation = f"Action refused ({refuse}). {hint}"
             step += 1
             continue
 
@@ -315,16 +330,6 @@ def run_sbr_session(
             break
 
         sid = parsed["surface_id"]
-        if sid not in catalog:
-            refused_actions.append({"step": step, "reason": "unknown_surface"})
-            observation = f"Unknown surface {sid!r}. Choose a catalog id."
-            step += 1
-            continue
-        if sid in read_ids:
-            refused_actions.append({"step": step, "reason": "duplicate_read"})
-            observation = f"Already read {sid}. Choose another action."
-            step += 1
-            continue
 
         surf_tokens = _tokens(catalog[sid]["text"])
         if read_tokens + surf_tokens > max_read:
