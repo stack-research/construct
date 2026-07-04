@@ -450,9 +450,11 @@ _SBR_PRIOR_KNOWLEDGE_MARKERS = (
 )
 
 
-def run_sbr_ignorance_probe(engine, engine_label: str | None = None) -> dict:
+def run_sbr_ignorance_probe(engine, engine_label: str | None = None,
+                            question: str | None = None) -> dict:
     from .oracle import _norm
-    result = engine.run(SBR_PROBE_QUESTION, [], foreground_block="")
+    q = question or SBR_PROBE_QUESTION
+    result = engine.run(q, [], foreground_block="")
     norm = _norm(result.answer)
     knew = any(_norm(m) in norm for m in _SBR_PRIOR_KNOWLEDGE_MARKERS)
     label = engine_label or getattr(engine, "model", engine.backend_name)
@@ -461,7 +463,7 @@ def run_sbr_ignorance_probe(engine, engine_label: str | None = None) -> dict:
         "engine": label,
         "backend": engine.backend_name,
         "answer_excerpt": result.answer[:320],
-        "probe_question": SBR_PROBE_QUESTION,
+        "probe_question": q,
         "note": "cold probe before any sbr-meridian real-engine run — fold "
                 "into manifest attestation (re-probed, not inherited)",
     }
@@ -765,11 +767,14 @@ def main() -> int:
                          "prior run's ledger)")
     ap.add_argument("--probe", action="store_true",
                     help="cold ignorance probe only; print attestation JSON")
+    ap.add_argument("--probe-question", default=None,
+                    help="fixture-specific probe question (default: meridian)")
     args = ap.parse_args()
 
     if args.probe:
         eng = _engine(args.engine, args.model, args.base_url)
-        probe = run_sbr_ignorance_probe(eng, engine_label=args.model)
+        probe = run_sbr_ignorance_probe(eng, engine_label=args.model,
+                                        question=args.probe_question)
         print(json.dumps(probe, indent=2, sort_keys=True))
         return 0
     if not args.episode:
