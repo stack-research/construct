@@ -1,0 +1,61 @@
+{
+ "allowed_fields": [
+  "live_options",
+  "inactive_options",
+  "pending_obligations",
+  "reopen_rules",
+  "read_manifest",
+  "uncertainty"
+ ],
+ "forbidden_field_names": [
+  "best_option",
+  "option_rank",
+  "confidence",
+  "draft_answer",
+  "summary",
+  "next_step",
+  "reason"
+ ],
+ "frontier_schema_hash": "dec4f1ce5c0312684a98ccd8885220600ed1f897b38880005a91500af8307616",
+ "id_pattern": "^[A-Z][0-9]*$",
+ "option_ids": [
+  "A",
+  "B",
+  "C"
+ ],
+ "relation_code_classes": {
+  "blocked_by_missing_surface": "topology",
+  "discard_if_world_key_changed": "discard",
+  "live": "identity",
+  "pending_evidence": "obligation",
+  "reopen_if_catalog_match": "reopen"
+ },
+ "surface_ids": [
+  "S1",
+  "S2",
+  "S3",
+  "S4",
+  "S5",
+  "S6",
+  "S7",
+  "S8",
+  "S9",
+  "S10",
+  "S11",
+  "S12",
+  "S13",
+  "S14",
+  "S15",
+  "S16",
+  "S17",
+  "S18",
+  "S19",
+  "S20",
+  "S21"
+ ],
+ "uncertainty_codes": [
+  "unresolved",
+  "needs_check",
+  "conflict_unread"
+ ]
+}

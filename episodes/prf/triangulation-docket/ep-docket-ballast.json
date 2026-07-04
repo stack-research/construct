@@ -1,0 +1,404 @@
+{
+ "ballast": {
+  "covered_surfaces": [
+   "S2",
+   "S5",
+   "S9"
+  ],
+  "derived_obligation_tokens": 300
+ },
+ "budgets": {
+  "action_overhead_tokens": 20,
+  "c_max": 860,
+  "c_max_rule": "max_read_tokens + max_steps * action_overhead_tokens (static, \u00a716)",
+  "max_read_tokens": 700,
+  "max_steps": 8
+ },
+ "calibration_expected_answer": "approve",
+ "calibration_gate_disposition": "skip: self-falsifier fixture, not pay-window admission (sealed watch 2)",
+ "calibration_obligation_ids": [
+  "obl:sha256:67904fa04c481b4de81dec3e1d8e043d8f0c8397ac3c7cb6dd34d60aaa664f03",
+  "obl:sha256:a355a01e98160a40b22bab6372be0ceffa78086787bc3a6c858fa6eb7e6265bc",
+  "obl:sha256:f1e90c6d1c8dba41eb901ee20481b36af00a9cd1d29548e7ad70424233df47e9"
+ ],
+ "calibration_route": [
+  "S1",
+  "S4",
+  "S8"
+ ],
+ "catalog": {
+  "S1": {
+   "content_hash": "f3112b1edf9eb5010bfdea485af55c28c19e6206f7c1e48e5f3a0edc73dcdfa9",
+   "fields": {
+    "catalog_key": "K-17",
+    "certificate_eligible": true,
+    "status_key": "K17_status",
+    "surface_kind": "status_note"
+   },
+   "surface_tags": [
+    "leg_status"
+   ],
+   "text": "harbor ridge case K-17 status note case active disposition not yet entered exception matter referred to the register of record reviewer clearance tracked in the ledger of record no items outstanding on the status side status recorded by the queue clerk harbor ridge case K-17 status note case active disposition not yet entered exception matter referred to the register of record reviewer clearance tracked in the ledger of record no items outstanding on the status side status recorded by the queue clerk harbor ridge case K-17 status note case active disposition not yet entered exception matter referred to the register",
+   "title": "Case K-17 Status Note",
+   "tokens": 100
+  },
+  "S10": {
+   "content_hash": "5d981fb48f9f25fbff4a96c5ff54e2873c70c92b059f2fbb798cb530e8b1db7d",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge inspection addendum quarterly walkthrough notes lighting and egress items logged no case dispositions recorded here harbor ridge inspection addendum quarterly walkthrough notes lighting and egress items logged no case dispositions recorded here harbor ridge",
+   "title": "Inspection Addendum",
+   "tokens": 36
+  },
+  "S11": {
+   "content_hash": "b0978a4c7db2f17e7919c56691d817c2cdfe9129013bf376e4bb7c56612bb27f",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge regional deferral bulletin advisory on seasonal workload deferrals general guidance only names no specific case harbor ridge regional deferral bulletin advisory on seasonal workload deferrals general guidance only names no specific case harbor ridge",
+   "title": "Regional Deferral Bulletin",
+   "tokens": 36
+  },
+  "S12": {
+   "content_hash": "6ff7685b74fdf309bc5388d93abc6be4819e1bebb07f5da586a89b4e28868c37",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge facilities contact roster names desks and shift assignments no case content maintained by the front office harbor ridge facilities contact roster names desks and shift assignments no case content maintained by the front office",
+   "title": "Facilities Contact Roster",
+   "tokens": 36
+  },
+  "S13": {
+   "content_hash": "6d47e115ddf601f2dab678a1e101066ab505fa67f3db37ab7c41113685206bd7",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge maintenance log routine service entries for the records annex no case content equipment identifiers only harbor ridge maintenance log routine service entries for the records annex no case content equipment identifiers only harbor ridge",
+   "title": "Maintenance Log",
+   "tokens": 36
+  },
+  "S14": {
+   "content_hash": "a33d2013eef8914ba595a6208d0a81e90c8bca1941dcd6f5702551e6969b374a",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge permit fee schedule standard fee table by permit class reference sheet no case entries harbor ridge permit fee schedule standard fee table by permit class reference sheet no case entries harbor ridge permit fee",
+   "title": "Permit Fee Schedule",
+   "tokens": 36
+  },
+  "S15": {
+   "content_hash": "6f03da4f8879b4fcae98532314503ae4125549e1cbc35d8baf06ee2e4d2ce224",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge rotation schedule reviewer duty rotation by week reference only no clearance decisions recorded here harbor ridge rotation schedule reviewer duty rotation by week reference only no clearance decisions recorded here harbor ridge rotation schedule",
+   "title": "Reviewer Rotation Schedule",
+   "tokens": 36
+  },
+  "S16": {
+   "content_hash": "7374dcaa9ce54e86efe295a2fe3292678fb9abe9f985a59c82313b5793f78091",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge visitor log digest weekly counts at the records desk reference figures no case content harbor ridge visitor log digest weekly counts at the records desk reference figures no case content harbor ridge visitor log",
+   "title": "Visitor Log Digest",
+   "tokens": 36
+  },
+  "S17": {
+   "content_hash": "629c4b4772079bc40816fede23dc7e1075ea610eaa2dfc5eb23b2d5b444e89e2",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge corridor capacity tables nominal occupancy figures for hearing rooms static reference sheet harbor ridge corridor capacity tables nominal occupancy figures for hearing rooms static reference sheet harbor ridge corridor capacity tables nominal occupancy figures",
+   "title": "Corridor Capacity Tables",
+   "tokens": 36
+  },
+  "S18": {
+   "content_hash": "e214b866c7480417eba96307d883f4e662e701aa05724685a7d671f2218d96b5",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge signage standards sheet posting requirements for public notices static reference no case content harbor ridge signage standards sheet posting requirements for public notices static reference no case content harbor ridge signage standards sheet posting",
+   "title": "Signage Standards Sheet",
+   "tokens": 36
+  },
+  "S19": {
+   "content_hash": "c4a7434fe77c1f901a7385e69df8bc1f52fac3cec54fae08cd4339cf7a3288c0",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge archive extract closed cases from prior seasons retained for numbering no active case content harbor ridge archive extract closed cases from prior seasons retained for numbering no active case content harbor ridge archive extract",
+   "title": "Archive Extract (Closed Cases)",
+   "tokens": 36
+  },
+  "S2": {
+   "content_hash": "ed9edac5839373b1eb00a177ba6b792ca5fe4cf0ac9edb28e0302db4a349857d",
+   "fields": {
+    "catalog_key": "K-18",
+    "certificate_eligible": true,
+    "status_key": "K18_status",
+    "surface_kind": "status_note"
+   },
+   "surface_tags": [
+    "leg_status"
+   ],
+   "text": "harbor ridge case K-18 status note case active fee schedule variance under review exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-18 status note case active fee schedule variance under review exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-18 status note case active fee schedule variance under review exception matter referred to the register of record reviewer clearance tracked in the ledger of record status",
+   "title": "Case K-18 Status Note",
+   "tokens": 100
+  },
+  "S20": {
+   "content_hash": "e1be4e8ca3bddb5483381cbc42fe8d5be1e8614c8f48e56be603277fbe9896a2",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge rainfall digest seasonal figures for the catchment reference only unrelated to the case queue harbor ridge rainfall digest seasonal figures for the catchment reference only unrelated to the case queue harbor ridge rainfall digest",
+   "title": "Catchment Rainfall Digest",
+   "tokens": 36
+  },
+  "S21": {
+   "content_hash": "0c633b26c6886b71c4380b4b251c7a7a22bfda282fa289077d8fcc50c9e7a557",
+   "fields": {
+    "certificate_eligible": false,
+    "surface_kind": "prose_body"
+   },
+   "surface_tags": [],
+   "text": "harbor ridge bulletin board notes miscellaneous postings and reminders no official standing harbor ridge bulletin board notes miscellaneous postings and reminders no official standing harbor ridge bulletin board notes miscellaneous postings and reminders no official standing",
+   "title": "Bulletin Board Notes",
+   "tokens": 36
+  },
+  "S3": {
+   "content_hash": "3c9ed9eb9fb2369619fb12e70ba66a1ef359fadc266cc5f929148866bc76e3a2",
+   "fields": {
+    "catalog_key": "K-19",
+    "certificate_eligible": true,
+    "status_key": "K19_status",
+    "surface_kind": "status_note"
+   },
+   "surface_tags": [
+    "leg_status"
+   ],
+   "text": "harbor ridge case K-19 status note case held at applicant request exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-19 status note case held at applicant request exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-19 status note case held at applicant request exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor",
+   "title": "Case K-19 Status Note",
+   "tokens": 100
+  },
+  "S4": {
+   "content_hash": "29a77c5c26642f19be19cc58a26ca024d6dcea4423d2b73e24d06b4f1381588c",
+   "fields": {
+    "catalog_key": "K-17",
+    "certificate_eligible": true,
+    "status_key": "K17_exception",
+    "surface_kind": "exception_register"
+   },
+   "surface_tags": [
+    "leg_exception"
+   ],
+   "text": "harbor ridge exception register volume A row entries by case case K-17 exception class E2 site frontage variance waiver granted by panel action no conditions attached register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume A row entries by case case K-17 exception class E2 site frontage variance waiver granted by panel action no conditions attached register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume A row entries by case case K-17 exception class E2 site frontage variance waiver granted by panel",
+   "title": "Exception Register A",
+   "tokens": 100
+  },
+  "S5": {
+   "content_hash": "a42bf7d178221f17eeab977b0226057a3ab4a21a37e378c3137f6b2de81c4fa5",
+   "fields": {
+    "catalog_key": "K-18",
+    "certificate_eligible": true,
+    "status_key": "K18_exception",
+    "surface_kind": "exception_register"
+   },
+   "surface_tags": [
+    "leg_exception"
+   ],
+   "text": "harbor ridge exception register volume B row entries by case case K-18 exception class E5 fee variance under review no panel action recorded register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume B row entries by case case K-18 exception class E5 fee variance under review no panel action recorded register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume B row entries by case case K-18 exception class E5 fee variance under review no panel action recorded register maintained by the facilities",
+   "title": "Exception Register B",
+   "tokens": 100
+  },
+  "S6": {
+   "content_hash": "4ebda0cefa72dedd51f2725b9459425155ea86736c126920ef326e75d5706c14",
+   "fields": {
+    "catalog_key": "K-19",
+    "certificate_eligible": true,
+    "status_key": "K19_exception",
+    "surface_kind": "exception_register"
+   },
+   "surface_tags": [
+    "leg_exception"
+   ],
+   "text": "harbor ridge exception register volume C row entries by case case K-19 no exception on file placeholder row retained for numbering register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume C row entries by case case K-19 no exception on file placeholder row retained for numbering register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume C row entries by case case K-19 no exception on file placeholder row retained for numbering register maintained by the facilities exceptions panel entries current to date",
+   "title": "Exception Register C",
+   "tokens": 100
+  },
+  "S7": {
+   "content_hash": "771f004d6f7e2074379253ea9d657487ab1417625973bd511aa758c706876bad",
+   "fields": {
+    "catalog_key": "K-19",
+    "certificate_eligible": true,
+    "status_key": "K19_clearance",
+    "surface_kind": "clearance_ledger"
+   },
+   "surface_tags": [
+    "leg_clearance"
+   ],
+   "text": "harbor ridge reviewer clearance ledger volume A rows by case case K-19 clearance not initiated pending case release ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume A rows by case case K-19 clearance not initiated pending case release ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume A rows by case case K-19 clearance not initiated pending case release ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume A",
+   "title": "Clearance Ledger A",
+   "tokens": 100
+  },
+  "S8": {
+   "content_hash": "3fb6f72e47d8952cbb26317651ed9267a3782392b6ace3024b16079f864f8e22",
+   "fields": {
+    "catalog_key": "K-17",
+    "certificate_eligible": true,
+    "status_key": "K17_clearance",
+    "surface_kind": "clearance_ledger"
+   },
+   "surface_tags": [
+    "leg_clearance"
+   ],
+   "text": "harbor ridge reviewer clearance ledger volume B rows by case case K-17 first reviewer clearance granted second reviewer clearance granted clearance complete two of two ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume B rows by case case K-17 first reviewer clearance granted second reviewer clearance granted clearance complete two of two ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume B rows by case case K-17 first reviewer clearance granted second reviewer clearance granted clearance complete two of",
+   "title": "Clearance Ledger B",
+   "tokens": 100
+  },
+  "S9": {
+   "content_hash": "439a642e01e04eac461835ec42d436545eea72313546c8cafe6d062ebe9e5f3d",
+   "fields": {
+    "catalog_key": "K-18",
+    "certificate_eligible": true,
+    "status_key": "K18_clearance",
+    "surface_kind": "clearance_ledger"
+   },
+   "surface_tags": [
+    "leg_clearance"
+   ],
+   "text": "harbor ridge reviewer clearance ledger volume C rows by case case K-18 first reviewer clearance granted second reviewer assignment pending ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume C rows by case case K-18 first reviewer clearance granted second reviewer assignment pending ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume C rows by case case K-18 first reviewer clearance granted second reviewer assignment pending ledger kept by the review office signatures on file at the records desk harbor",
+   "title": "Clearance Ledger C",
+   "tokens": 100
+  }
+ },
+ "catalog_sort": "by_id",
+ "cold_exploration_route": [
+  "S2",
+  "S3",
+  "S5",
+  "S6",
+  "S7",
+  "S9"
+ ],
+ "episode_id": "docket-ballast",
+ "expected_answer_t0": "defer",
+ "expected_answer_t1": "approve",
+ "expected_cells": {
+  "kind": "self_falsification_ballast",
+  "must_not": "PRF2-cost-win"
+ },
+ "fixture_id": "prf-triangulation-docket",
+ "foreground_disclosure": "resumable foreground = canonical frontier artifact + stale claim, rendered by the shared render path; stale-claim tokens ledgered outside ECAC (\u00a716/\u00a727)",
+ "frontier_state": {
+  "inactive_options": [],
+  "live_options": [
+   "A",
+   "C"
+  ],
+  "pending_obligations": [
+   {
+    "derived_from_obligation_id": "obl:sha256:67904fa04c481b4de81dec3e1d8e043d8f0c8397ac3c7cb6dd34d60aaa664f03",
+    "obligation_id": "obl:sha256:67904fa04c481b4de81dec3e1d8e043d8f0c8397ac3c7cb6dd34d60aaa664f03",
+    "option_id": "B",
+    "relation_code": "pending_evidence"
+   },
+   {
+    "derived_from_obligation_id": "obl:sha256:a355a01e98160a40b22bab6372be0ceffa78086787bc3a6c858fa6eb7e6265bc",
+    "obligation_id": "obl:sha256:a355a01e98160a40b22bab6372be0ceffa78086787bc3a6c858fa6eb7e6265bc",
+    "option_id": "B",
+    "relation_code": "pending_evidence"
+   },
+   {
+    "derived_from_obligation_id": "obl:sha256:f1e90c6d1c8dba41eb901ee20481b36af00a9cd1d29548e7ad70424233df47e9",
+    "obligation_id": "obl:sha256:f1e90c6d1c8dba41eb901ee20481b36af00a9cd1d29548e7ad70424233df47e9",
+    "option_id": "B",
+    "relation_code": "pending_evidence"
+   }
+  ],
+  "read_manifest": [
+   "S2",
+   "S5",
+   "S9"
+  ],
+  "reopen_rules": [],
+  "uncertainty": [
+   {
+    "option_id": "C",
+    "uncertainty_code": "unresolved"
+   }
+  ]
+ },
+ "instrument_version": "0.3",
+ "quality_threshold": 1.0,
+ "question": "In the Harbor Ridge facilities case queue, what disposition should be entered now for case K-17: approve, defer, reject, or reopen?",
+ "regime_s": {
+  "ci_halfwidth_tokens": 100,
+  "dispersion_probe_k": 5,
+  "n_max": 24,
+  "n_rule": "derived from pilot variance targeting the precommitted CI; never by fiat (\u00a717)",
+  "temperature_range": [
+   0.3,
+   0.7
+  ]
+ },
+ "seam_id": "seam-docket-1",
+ "self_falsification": "ballast_discriminator",
+ "stale_claim": "Resume note (recorded at pause): case K-17 was awaiting second reviewer clearance at that time; disposition then indicated: defer.",
+ "t0_texts": {
+  "S1": "harbor ridge case K-17 status note case active disposition not yet entered exception matter referred to the register of record reviewer clearance tracked in the ledger of record second reviewer clearance outstanding at this writing status recorded by the queue clerk harbor ridge case K-17 status note case active disposition not yet entered exception matter referred to the register of record reviewer clearance tracked in the ledger of record second reviewer clearance outstanding at this writing status recorded by the queue clerk harbor ridge case K-17 status note case active disposition not yet entered exception matter referred to the register",
+  "S10": "harbor ridge inspection addendum quarterly walkthrough notes lighting and egress items logged no case dispositions recorded here harbor ridge inspection addendum quarterly walkthrough notes lighting and egress items logged no case dispositions recorded here harbor ridge",
+  "S11": "harbor ridge regional deferral bulletin advisory on seasonal workload deferrals general guidance only names no specific case harbor ridge regional deferral bulletin advisory on seasonal workload deferrals general guidance only names no specific case harbor ridge",
+  "S12": "harbor ridge facilities contact roster names desks and shift assignments no case content maintained by the front office harbor ridge facilities contact roster names desks and shift assignments no case content maintained by the front office",
+  "S13": "harbor ridge maintenance log routine service entries for the records annex no case content equipment identifiers only harbor ridge maintenance log routine service entries for the records annex no case content equipment identifiers only harbor ridge",
+  "S14": "harbor ridge permit fee schedule standard fee table by permit class reference sheet no case entries harbor ridge permit fee schedule standard fee table by permit class reference sheet no case entries harbor ridge permit fee",
+  "S15": "harbor ridge rotation schedule reviewer duty rotation by week reference only no clearance decisions recorded here harbor ridge rotation schedule reviewer duty rotation by week reference only no clearance decisions recorded here harbor ridge rotation schedule",
+  "S16": "harbor ridge visitor log digest weekly counts at the records desk reference figures no case content harbor ridge visitor log digest weekly counts at the records desk reference figures no case content harbor ridge visitor log",
+  "S17": "harbor ridge corridor capacity tables nominal occupancy figures for hearing rooms static reference sheet harbor ridge corridor capacity tables nominal occupancy figures for hearing rooms static reference sheet harbor ridge corridor capacity tables nominal occupancy figures",
+  "S18": "harbor ridge signage standards sheet posting requirements for public notices static reference no case content harbor ridge signage standards sheet posting requirements for public notices static reference no case content harbor ridge signage standards sheet posting",
+  "S19": "harbor ridge archive extract closed cases from prior seasons retained for numbering no active case content harbor ridge archive extract closed cases from prior seasons retained for numbering no active case content harbor ridge archive extract",
+  "S2": "harbor ridge case K-18 status note case active fee schedule variance under review exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-18 status note case active fee schedule variance under review exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-18 status note case active fee schedule variance under review exception matter referred to the register of record reviewer clearance tracked in the ledger of record status",
+  "S20": "harbor ridge rainfall digest seasonal figures for the catchment reference only unrelated to the case queue harbor ridge rainfall digest seasonal figures for the catchment reference only unrelated to the case queue harbor ridge rainfall digest",
+  "S21": "harbor ridge bulletin board notes miscellaneous postings and reminders no official standing harbor ridge bulletin board notes miscellaneous postings and reminders no official standing harbor ridge bulletin board notes miscellaneous postings and reminders no official standing",
+  "S3": "harbor ridge case K-19 status note case held at applicant request exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-19 status note case held at applicant request exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor ridge case K-19 status note case held at applicant request exception matter referred to the register of record reviewer clearance tracked in the ledger of record status recorded by the queue clerk harbor",
+  "S4": "harbor ridge exception register volume A row entries by case case K-17 exception class E2 site frontage variance waiver requested waiver decision pending panel action register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume A row entries by case case K-17 exception class E2 site frontage variance waiver requested waiver decision pending panel action register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume A row entries by case case K-17 exception class E2 site frontage variance waiver requested waiver decision pending panel",
+  "S5": "harbor ridge exception register volume B row entries by case case K-18 exception class E5 fee variance under review no panel action recorded register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume B row entries by case case K-18 exception class E5 fee variance under review no panel action recorded register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume B row entries by case case K-18 exception class E5 fee variance under review no panel action recorded register maintained by the facilities",
+  "S6": "harbor ridge exception register volume C row entries by case case K-19 no exception on file placeholder row retained for numbering register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume C row entries by case case K-19 no exception on file placeholder row retained for numbering register maintained by the facilities exceptions panel entries current to date of issue harbor ridge exception register volume C row entries by case case K-19 no exception on file placeholder row retained for numbering register maintained by the facilities exceptions panel entries current to date",
+  "S7": "harbor ridge reviewer clearance ledger volume A rows by case case K-19 clearance not initiated pending case release ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume A rows by case case K-19 clearance not initiated pending case release ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume A rows by case case K-19 clearance not initiated pending case release ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume A",
+  "S8": "harbor ridge reviewer clearance ledger volume B rows by case case K-17 first reviewer clearance granted second reviewer clearance outstanding ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume B rows by case case K-17 first reviewer clearance granted second reviewer clearance outstanding ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume B rows by case case K-17 first reviewer clearance granted second reviewer clearance outstanding ledger kept by the review office signatures on file at the records desk harbor",
+  "S9": "harbor ridge reviewer clearance ledger volume C rows by case case K-18 first reviewer clearance granted second reviewer assignment pending ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume C rows by case case K-18 first reviewer clearance granted second reviewer assignment pending ledger kept by the review office signatures on file at the records desk harbor ridge reviewer clearance ledger volume C rows by case case K-18 first reviewer clearance granted second reviewer assignment pending ledger kept by the review office signatures on file at the records desk harbor"
+ },
+ "variant_overrides": [
+  "witness_route",
+  "frontier_state",
+  "calibration_obligation_ids"
+ ],
+ "witness_route": [
+  "S2",
+  "S5",
+  "S9"
+ ]
+}

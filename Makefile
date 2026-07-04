@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke
 
 # SPEC_M2 unit tests (no model): Wall B trace-only + fail-closed mint paths, and
 # the oracle answer-shape guards (the _norm markdown/newline glue regression).
@@ -207,3 +207,13 @@ wb-watch:
 
 wb-status:
 	uv run --no-project python -m harness.wb_pause status
+
+prf3-family-gate:
+	uv run --no-project python -m harness.check_prf_fixture episodes/prf/triangulation-docket/manifest.json
+
+prf3-smoke:
+	@for ep in episodes/prf/triangulation-docket/ep-*.json; do \
+		echo "== $$ep"; \
+		uv run --no-project python -m harness.run_sbr $$ep | \
+			python3 -c "import json,sys; print('  cell:', json.load(sys.stdin)['verdict']['cell'])"; \
+	done
