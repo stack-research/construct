@@ -222,6 +222,50 @@ class TestCalibrationWire(unittest.TestCase):
             self.assertTrue(scorer._decision_read_chain_ok("cold_reread", "s1"))
 
 
+
+    def test_broken_chain_confounds_even_when_masked(self):
+        """Build-review F1: a broken decision/read bijection in ANY non-probe
+        session must confound — including the masking case where a later good
+        session would overwrite the guard."""
+        fx = _wire_fixture()
+        ep = json.loads((fx / "ep-baseline.json").read_text())
+        pop = json.loads((fx / "population.json").read_text())
+        freeze = json.loads((fx / "freeze_manifest.json").read_text())
+        from harness.sbr_util import sorted_surface_ids
+        visible = sorted_surface_ids(ep["catalog"], "by_id")
+        h1 = f"R{visible.index('L01') + 1:02d}"
+        with tempfile.TemporaryDirectory() as td:
+            ledger = Ledger(Path(td) / "s.jsonl")
+            mint = run_mint_spine(ep, pop, freeze, ledger)
+            from harness.engine import MockEngine
+            for branch, sid in (("cold_reread", "c1"),
+                                ("resumable_state", "r1")):
+                session = MockEngine(
+                    scripted_actions=[h1, "STOP"]).start_session()
+                run_sbr_session(ep, branch, sid, 0, session, ledger,
+                                canonical_state=mint["canonical_state"])
+            events = ledger.rows()
+            # corrupt the COLD session's route_decision (first session),
+            # leaving the later resumable session clean — the masking shape.
+            for r in events:
+                if r.get("kind") == "route_decision" and \
+                        r.get("session_id") == "c1" and \
+                        r.get("raw_action") not in (None, "STOP"):
+                    r["raw_action"] = "STOP"
+                    r["action"] = "STOP"
+                    r["surface_id"] = None
+                    break
+            events.append({"kind": "run_config",
+                           "instrument_version": "0.3",
+                           "wire_test": True, "engine": "mock"})
+            events.append({"kind": "gate_open", "checks": 1})
+            scorer = PRFScorer(population=pop, freeze_manifest=freeze,
+                               events=events, episode=ep)
+            verdict = scorer.score()
+            self.assertEqual(verdict["cell"], "confounded")
+            self.assertFalse(verdict["guards"]["decision_read_chain_ok"])
+
+
 class TestV03MenuPresentation(unittest.TestCase):
     def test_build_sbr_system_shows_handles(self):
         fx = _wire_fixture()

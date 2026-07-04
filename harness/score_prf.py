@@ -520,8 +520,13 @@ class PRFScorer:
             g["skip_computable"] = all(s in visible for s in read) and \
                 set(skip) == set(visible) - set(read)
 
-            g["decision_read_chain_ok"] = self._decision_read_chain_ok(
-                branch, sid)
+            chain_ok = self._decision_read_chain_ok(branch, sid)
+            g["decision_read_chain_ok"] = \
+                g.get("decision_read_chain_ok", True) and chain_ok
+            if not chain_ok:
+                ev.append(f"decision/read bijection broken in "
+                          f"{branch}:{sid} — route ledger not "
+                          "replay-authoritative (§34 F1)")
 
             outcome = self._one("session_outcome", branch=branch,
                                 session_id=sid, sample_index=si)
@@ -538,6 +543,11 @@ class PRFScorer:
 
         g.setdefault("route_replay_ok", True)
         if not g.get("route_replay_ok", True):
+            return self._verdict_v02("confounded")
+        g.setdefault("decision_read_chain_ok", True)
+        if not g["decision_read_chain_ok"]:
+            # accumulated across ALL non-probe sessions (build review F1):
+            # a broken bijection in any session confounds — never a cell.
             return self._verdict_v02("confounded")
 
         def mean(xs: list[int]) -> float:
