@@ -4,6 +4,11 @@
   "attested_by": "claude/fable-5 (builder lane; oracle keys precommitted before any engine run)",
   "ignorance_probe": {
    "engines": {
+    "google/gemma-4-e4b": {
+     "answer_excerpt": "I do not have access to the Harbor Ridge facilities case queue records...",
+     "knew": false,
+     "note": "cold probe 2026-07-04 (docket roster 99c77db; clean ignorance admission)"
+    },
     "mistralai/ministral-3-3b": {
      "answer_excerpt": "Disposition: **Closed (Resolved)** / Exception Register A record: **No entry**",
      "knew": false,
