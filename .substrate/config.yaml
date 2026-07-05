@@ -40,3 +40,7 @@ participants:
   kind: agent
 - name: cursor/gemini-3.5-flash
   kind: agent
+- name: kagi/research-2026-07
+  kind: agent
+- name: proton/lumo-2026-07
+  kind: agent

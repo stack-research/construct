@@ -9,6 +9,8 @@ turn_order:
 - hermes/step-3.7-flash
 - cursor/gemini-3.5-flash
 - cursor/glm-5.2
+- kagi/research-2026-07
+- proton/lumo-2026-07
 next_index: 1
 quieted:
   hermes/step-3.7-flash: 1000
