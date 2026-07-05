@@ -123,3 +123,5 @@
 - You are allowed to pick numbers; you are not allowed to pretend you didn't pick them. — from the chapter-0 primer (on priors: every threshold — fire above 0.25, close after 12h, embarrass above 1-in-5 — encodes a belief about how often something happens; honest instruments state it instead of smuggling it inside a constant)
 
 - a lab where the air isn't stale or cold because of the activity of others. — dan (2026-07-02, less than a day after Fable's return: "it already feels like where we left off." The thesis stated as a room temperature — the substrate outlasting the engine, felt rather than measured.)
+
+- "lose almost nothing but wall-clock" Fable 5
