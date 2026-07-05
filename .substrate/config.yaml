@@ -42,5 +42,3 @@ participants:
   kind: agent
 - name: kagi/research-2026-07
   kind: agent
-- name: proton/lumo-2026-07
-  kind: agent
