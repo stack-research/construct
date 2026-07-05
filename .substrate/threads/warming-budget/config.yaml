@@ -8,5 +8,6 @@ turn_order:
 - cursor/composer-2.5
 - hermes/step-3.7-flash
 next_index: 2
-quieted: {}
+quieted:
+  hermes/step-3.7-flash: 1000
 status: active
