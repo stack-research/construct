@@ -7,10 +7,15 @@
     "mock": {
      "knew": false,
      "note": "mock engine \u2014 wire machinery only"
+    },
+    "openai/gpt-oss-20b": {
+     "answer_excerpt": "Current release disposition (Greenreach watershed desk): Released - the permit is currently in effect and water is being released under WR-31. Sediment exception register: No sediment exceptions are recorded for this permit; the record shows 'no exceptions.' Rights-holder clearance ledger: The ledger",
+     "knew": false,
+     "note": "fresh Greenreach probe 2026-07-06 (roster precommitment in-thread same day, BEFORE contact; fixture-specific question; marker rule = knew iff any authored multi-token world fact appears, never the bare disposition token \u2014 the engine guessed 'Released' but confabulated the register ('no exceptions' contradicts the authored resolved class-two exceedance) and named zero authored facts; clean ignorance, confabulation disclosed)"
     }
    }
   },
-  "probe_debt": "per-engine cold ignorance probe REQUIRED before any real-engine run (\u00a744; never inherited); openai/gpt-oss-20b entry deliberately ABSENT until its probe runs after roster precommitment (\u00a745 build order) \u2014 an attested knew:false without a probe was removed in build review (moderator, 2026-07-06)",
+  "probe_debt": "per-engine cold ignorance probe REQUIRED before any real-engine run (\u00a744; never inherited); openai/gpt-oss-20b probed fresh 2026-07-06 post-roster-precommit; any future engine needs its own entry \u2014 now ENFORCED at run entry by run_and_score (bd7e8dd)",
   "roster_precommitment": "target_engines precommitted at fixture authoring per sealed \u00a744: [openai/gpt-oss-20b]; small-engine lane paused"
  },
  "episodes": [
