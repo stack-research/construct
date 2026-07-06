@@ -447,6 +447,17 @@ class PRFScorer:
         # §17 executed N-rule, fail-closed and symmetric: if the pilot-derived
         # N exceeded the precommitted n_max, NO behavioral cell is emitted —
         # win, loss, and null alike are refused, never just the win.
+        # A2 (Part IV §44): the quality-mixing recurrence detector — pilot
+        # cold conjunctive pass-rate < 80% refuses Regime S outright; the
+        # run stays diagnostic, the family closes on the A2 close rule.
+        if not self.wire_test and cfg.get("a2_regime_s_refused"):
+            ev.append(
+                f"A2 cold conjunctive pass-rate "
+                f"{cfg.get('a2_cold_pass_rate')} < 0.8 over the pilot — "
+                "Regime S refused, diagnostic only (§44); no behavioral "
+                "cell licensed")
+            return self._verdict_v02("confounded")
+
         if not self.wire_test and cfg.get("ci_target_unmet"):
             ev.append(
                 f"§17 CI target unmet (n_required={cfg.get('n_required')} > "
@@ -596,6 +607,17 @@ class PRFScorer:
                 b: (sum(v) / len(v) if v else 0.0)
                 for b, v in false_cont_rate.items()},
         }
+
+        # D11 close-rule transcript diagnostic (Part IV §44, B16 — never a
+        # cell): CI budget met but the branch gap is inside the half-width.
+        h = cfg.get("ci_halfwidth_tokens")
+        if (not self.wire_test and regime == "S" and h
+                and not cfg.get("ci_target_unmet")
+                and abs(mean_cold - mean_res) < h):
+            ev.append(
+                f"no detectable pay-window at this CI (|{mean_cold:.0f} − "
+                f"{mean_res:.0f}| < half-width {h}) — B16 diagnostic, "
+                "never a cell")
 
         sf = self.episode.get("self_falsification")
         kind = self.episode.get("expected_cells", {}).get("kind")

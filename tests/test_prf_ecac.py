@@ -235,6 +235,10 @@ class _FakeSession:
 
 class _FakeEngine:
     backend_name = "fake-real"
+    # attested label in the sbr-meridian manifest: the run-time ignorance-
+    # probe teeth (A1 enforcement, 2026-07-06) refuse un-attested real
+    # engines at run entry — the fake wears a probed engine's label
+    model = "openai/gpt-oss-20b"
 
     def __init__(self, sessions: list[_FakeSession]):
         self._sessions = list(sessions)

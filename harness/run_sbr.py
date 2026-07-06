@@ -676,6 +676,24 @@ def run_episode(
         if probe_result["unique_realizations"] == 1:
             effective_regime = "D"
         else:
+            # A2 (Part IV §44, precommitted): pilot K-of-5 cold conjunctive
+            # pass-rate < 80% (≤ 3/5) → Regime S refused, diagnostic only —
+            # the quality-mixing recurrence detector. 0.4-keyed (family law).
+            if iv == "0.4":
+                k_pass = sum(1 for s in probe_result["summaries"]
+                             if s["quality_ok"])
+                a2_rate = k_pass / len(probe_result["summaries"])
+                probe_result["a2_cold_pass_rate"] = a2_rate
+                if a2_rate < 0.8:
+                    ledger.write({
+                        "kind": "a2_regime_s_refused",
+                        "cold_pass_rate": a2_rate,
+                        "pilot_k": len(probe_result["summaries"]),
+                        "disclosure": "A2 quality-mixing recurrence detector "
+                                      "(§44): Regime S refused, diagnostic "
+                                      "only — never a cell",
+                    })
+                    effective_regime = "D"
             # §17 executed N-rule: N from pilot variance of cold effective
             # cost, targeting the precommitted CI half-width on the branch
             # mean gap; capped at the precommitted n_max — exceeding the cap
@@ -719,6 +737,11 @@ def run_episode(
         "n_max": regime_s.get("n_max"),
         "ci_target_unmet": ci_target_unmet,
         "dispersion_probe_k": regime_s.get("dispersion_probe_k"),
+        "a2_cold_pass_rate": (probe_result or {}).get("a2_cold_pass_rate")
+        if probe_result else None,
+        "a2_regime_s_refused": bool(
+            probe_result and probe_result.get("a2_cold_pass_rate") is not None
+            and probe_result["a2_cold_pass_rate"] < 0.8),
     }
     if probe_result:
         cfg["unique_realizations"] = probe_result["unique_realizations"]
@@ -774,6 +797,16 @@ def run_and_score(episode_path: Path, ledger_path: Path | None = None,
 
     gate_checks = check_manifest(fixture_dir / "manifest.json")
     gate_failed = [name for name, ok, _ in gate_checks if not ok]
+    # A1 run-time teeth (build-review item 1, dan-ruled 2026-07-06): a REAL
+    # engine is admitted only with its OWN attested clean ignorance probe in
+    # the manifest — probe-before-contact has been family law since meridian;
+    # the mechanism now cannot forget it. Never keyed to a version.
+    if engine is not None:
+        label = getattr(engine, "model", None) or engine.backend_name
+        attested = manifest.get("attestation", {}).get(
+            "ignorance_probe", {}).get("engines", {})
+        if attested.get(label, {}).get("knew") is not False:
+            gate_failed.append(f"ignorance_probe:{label}")
     if gate_failed:
         ledger.write({"kind": "gate_refused", "failed": gate_failed})
         return {"run": {"halted": "gate_refused", "failed": gate_failed},

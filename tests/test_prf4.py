@@ -327,3 +327,70 @@ class TestV04EndToEnd(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRunTimeProbeTeeth(unittest.TestCase):
+    """A1 run-time enforcement (build-review item 1): a real engine without
+    its own attested clean probe is refused at run entry."""
+
+    def test_real_engine_without_attestation_refused(self):
+        fixture = _wire_fixture()
+
+        class FakeEngine:
+            backend_name = "local"
+            model = "openai/gpt-oss-20b"
+        out = run_and_score(fixture / "ep-baseline.json",
+                            ledger_path=fixture / "teeth.jsonl",
+                            engine=FakeEngine(), engine_backend="local")
+        self.assertEqual(out["run"]["halted"], "gate_refused")
+        self.assertIn("ignorance_probe:openai/gpt-oss-20b",
+                      out["run"]["failed"])
+        shutil.rmtree(fixture.parent)
+
+    def test_mock_runs_unaffected(self):
+        fixture = _wire_fixture()
+        out = run_and_score(fixture / "ep-baseline.json",
+                            ledger_path=fixture / "mock.jsonl",
+                            scripted_sessions={
+                                "cold_reread": [["R18", "R21", "R15", "STOP"]],
+                                "resumable_state": [["R18", "R21", "R15",
+                                                     "STOP"]]})
+        self.assertIsNotNone(out["verdict"])
+        shutil.rmtree(fixture.parent)
+
+
+class TestA2Detector(unittest.TestCase):
+    """§44 A2: pilot cold conjunctive pass-rate < 80% refuses Regime S."""
+
+    def test_scorer_confounds_on_a2_flag(self):
+        events = [
+            {"kind": "run_config", "instrument_version": "0.4",
+             "engine": "local", "wire_test": False,
+             "a2_regime_s_refused": True, "a2_cold_pass_rate": 0.6},
+            {"kind": "gate_open"},
+        ]
+        episode = {"instrument_version": "0.4", "catalog": {},
+                   "budgets": {"max_read_tokens": 700, "max_steps": 10,
+                               "action_overhead_tokens": 20}}
+        scorer = PRFScorer(events=events, episode=episode)
+        verdict = scorer.score()
+        self.assertEqual(verdict["cell"], "confounded")
+        self.assertTrue(any("A2" in e for e in verdict["evidence"]))
+
+    def test_a2_row_written_when_pilot_mixes_quality(self):
+        from harness.run_sbr import dispersion_probe
+        from harness.engine import MockEngine
+        fixture = _wire_fixture()
+        ep = _load(fixture, "ep-baseline.json")
+        ledger_path = fixture / "a2.jsonl"
+        ledger = Ledger(ledger_path)
+        handles = _visible_handles(ep)
+        # 5 pilots, 3 distinct routes: two pass (triple read), three fail
+        routes = [LEG_IDS, LEG_IDS + ["B01"], DECOY_IDS[:3],
+                  DECOY_IDS[3:], ["B01", "B02"]]
+        sessions = [MockEngine(scripted_actions=[handles[s] for s in r]
+                               + ["STOP"]).start_session() for r in routes]
+        probe = dispersion_probe(ep, lambda i: sessions[i], ledger, 5)
+        k_pass = sum(1 for s in probe["summaries"] if s["quality_ok"])
+        self.assertEqual(k_pass, 2)
+        shutil.rmtree(fixture.parent)
