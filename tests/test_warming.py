@@ -336,5 +336,79 @@ class ScorerWire(unittest.TestCase):
             WarmingScorer(packet("moved"), ev)
 
 
+class WatchHardening(unittest.TestCase):
+    """Board review 2026-07-06 (codex #1-#3): the pure row builders behind
+    watch_checkpoint, the full-T1 freeze, and the external-ts attestation."""
+
+    UNIT = {"unit_id": "draft-x", "route_catalog": {
+        "status:draft-x": {}, "meta:draft-x": {}, "body:draft-x": {}}}
+
+    def test_checkpoint_digest_binds_unchanged_set(self):
+        from harness.wb_pause import checkpoint_row
+        a = checkpoint_row("pop", 5, ["m1"], [("u1", "s1"), ("u2", "s2")], [])
+        b = checkpoint_row("pop", 5, ["m1"], [("u1", "s1"), ("u2", "sX")], [])
+        self.assertEqual(a["unchanged_count"], 2)
+        self.assertNotEqual(a["unchanged_digest"], b["unchanged_digest"])
+        self.assertEqual(a["fetch_failures"], [])
+
+    def test_freeze_refuses_status_not_matching_world_move(self):
+        from harness.wb_pause import freeze_packet_row
+        move = {"population_id": "pop",
+                "t1_sha256": hashlib.sha256(b"the detected t1").hexdigest()}
+        with self.assertRaises(ValueError):
+            freeze_packet_row(self.UNIT, move, "a different t1", "m", "b")
+
+    def test_freeze_refuses_surface_set_divergence(self):
+        from harness.wb_pause import freeze_packet_row
+        t1 = "the detected t1"
+        move = {"population_id": "pop",
+                "t1_sha256": hashlib.sha256(t1.encode()).hexdigest()}
+        unit = {"unit_id": "draft-x",
+                "route_catalog": {**self.UNIT["route_catalog"],
+                                  "extra:draft-x": {}}}
+        with self.assertRaises(ValueError):
+            freeze_packet_row(unit, move, t1, "m", "b")
+
+    def test_freeze_row_shape(self):
+        from harness.wb_pause import freeze_packet_row
+        t1 = "the detected t1 slice text"
+        move = {"population_id": "pop",
+                "t1_sha256": hashlib.sha256(t1.encode()).hexdigest()}
+        row = freeze_packet_row(self.UNIT, move, t1, "meta text", "body text x")
+        self.assertEqual(row["kind"], "t1_route_packet_frozen")
+        self.assertEqual(row["surfaces"]["status:draft-x"]["as_of"], "detection")
+        self.assertEqual(row["surfaces"]["body:draft-x"]["as_of"], "freeze")
+        self.assertEqual(row["surfaces"]["status:draft-x"]["tokens"], 5)
+
+    def test_attestation_doc_time_not_an_iesg_event(self):
+        # the sidrops shape: doc.time was an IANA event; two IESG hops after
+        # precommit; chronology proven against the FIRST hop, not doc.time
+        from harness.wb_pause import attestation_row
+        events = [{"time": "2026-07-02T16:26:29Z", "state_slug": "approved"},
+                  {"time": "2026-07-02T18:58:29Z", "state_slug": "ann"}]
+        row = attestation_row("draft-x", "pop", "2026-07-02T15:56:54Z",
+                              "2026-07-02T19:20:46Z", events)
+        self.assertFalse(row["doc_time_is_iesg_event"])
+        self.assertTrue(row["multi_hop"])
+        self.assertEqual(row["first_iesg_event_ts"], "2026-07-02T16:26:29Z")
+        self.assertTrue(row["precommit_precedes_first_iesg_event"])
+
+    def test_attestation_clean_single_hop(self):
+        from harness.wb_pause import attestation_row
+        events = [{"time": "2026-07-06T07:13:02Z", "state_slug": "goaheadw"}]
+        row = attestation_row("draft-y", "pop", "2026-07-02T15:56:54Z",
+                              "2026-07-06T07:13:02Z", events)
+        self.assertTrue(row["doc_time_is_iesg_event"])
+        self.assertFalse(row["multi_hop"])
+        self.assertTrue(row["precommit_precedes_first_iesg_event"])
+
+    def test_attestation_no_events_fails_closed(self):
+        from harness.wb_pause import attestation_row
+        row = attestation_row("draft-z", "pop", "2026-07-02T15:56:54Z",
+                              "2026-07-02T19:20:46Z", [])
+        self.assertFalse(row["precommit_precedes_first_iesg_event"])
+        self.assertIsNone(row["first_iesg_event_ts"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -205,6 +205,11 @@ wb-population-status:
 wb-watch:
 	uv run --no-project python -m harness.wb_pause watch
 
+# freeze full T1 route packets (+ IESG state-history attestation) for moved
+# units; idempotent — run promptly after any watch that reports movement
+wb-freeze:
+	uv run --no-project python -m harness.wb_pause freeze
+
 wb-status:
 	uv run --no-project python -m harness.wb_pause status
 

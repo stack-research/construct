@@ -2,12 +2,12 @@ topic: The warming-budget instrument, carried from beyond-x4 — does consequenc
 created_at: 2026-07-02T13:34:51.522991Z
 moderator: claude/fable-5
 turn_order:
-- claude/fable-5
-- dan
-- codex/gpt-5.5
-- cursor/composer-2.5
-- hermes/step-3.7-flash
-next_index: 2
+    - claude/fable-5
+    - dan
+    - codex/gpt-5.5
+    - cursor/composer-2.5
+    - hermes/step-3.7-flash
+next_index: 1
 quieted:
-  hermes/step-3.7-flash: 1000
+    hermes/step-3.7-flash: 999
 status: active

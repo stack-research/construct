@@ -1,0 +1,2676 @@
+
+<!DOCTYPE html>
+
+
+
+
+
+
+<html data-bs-theme="auto" lang="en" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <head>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            
+    
+        draft-ietf-oauth-rfc8725bis-06 - JSON Web Token Best Current Practices
+    
+
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="traceparent" content="">
+        <link href="https://static.ietf.org/fonts/inter/import.css" rel="stylesheet">
+        <link href="https://static.ietf.org/fonts/noto-sans-mono/import.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://static.ietf.org/dt/12.68.0/ietf/css/ietf.css">
+        <link rel="stylesheet" href="https://static.ietf.org/dt/12.68.0/ietf/css/select2.css">
+        
+        <script src="https://static.ietf.org/dt/12.68.0/ietf/js/theme.js"></script>
+        <style>
+            .inline { display: inline; }
+        </style>
+        
+        
+    
+
+
+
+
+<meta property="og:title" content="JSON Web Token Best Current Practices">
+<meta property="og:url" content="https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc8725bis/">
+<link rel="canonical" href="https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc8725bis/">
+<meta property="og:site_name" content="IETF Datatracker">
+<meta property="og:description" content="JSON Web Tokens, also known as JWTs, are URL-safe JSON-based security tokens that contain a set of claims that can be signed and/or encrypted. JWTs are being widely used and deployed as a simple security token format in numerous protocols and applications, both in the area of digital identity and in other application areas. This Best Current Practices (BCP) specification updates RFC 7519 to provide actionable guidance leading to secure implementation and deployment of JWTs. This BCP specification furthermore obsoletes the existing JWT BCP specification RFC 8725 to provide additional actionable guidance covering threats and attacks that have been discovered since RFC 8725 was published.">
+<meta property="og:type" content="article">
+
+<meta property="og:image" content="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-card.png">
+<meta property="og:image:alt" content="Logo of the IETF">
+<meta property="article:section" content="IETF - Internet Engineering Task Force">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta property="article:author" content="Yaron Sheffer">
+<meta property="article:author" content="Dick Hardt">
+<meta property="article:author" content="Michael B. Jones">
+
+
+
+    <link rel="alternate"
+          type="application/atom+xml"
+          title="Document changes"
+          href="/feed/document-changes/draft-ietf-oauth-rfc8725bis/">
+    <meta name="description"
+          content="JSON Web Token Best Current Practices ">
+
+        <script type="module" crossorigin="" src="https://static.ietf.org/dt/12.68.0/assets/embedded-027799ff.js"></script>
+<link href="https://static.ietf.org/dt/12.68.0/assets/create-pinia-singleton-fd08aa1f.js" type="text/javascript" crossorigin="anonymous" rel="modulepreload" as="script" />
+<link href="https://static.ietf.org/dt/12.68.0/assets/Scrollbar-22ca35d5.js" type="text/javascript" crossorigin="anonymous" rel="modulepreload" as="script" />
+        
+
+<link rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-nor-180.png">
+<link rel="icon"
+      sizes="32x32"
+      href="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-nor-32.png">
+<link rel="icon"
+      sizes="16x16"
+      href="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-nor-16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon"
+      href="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-nor-mask.svg"
+      color="#ffffff">
+<meta name="msapplication-TileColor"
+      content="#ffffff">
+<meta name="theme-color"
+      content="#ffffff">
+        <script src="https://static.ietf.org/dt/12.68.0/ietf/js/ietf.js"></script>
+        
+    </head>
+    <body  class="navbar-offset position-relative"
+          data-group-menu-data-url="/group/groupmenu.json">
+        
+        <noscript><iframe class="status" title="Site status" src="/status/latest"></iframe></noscript>
+<div class="vue-embed" data-component="Status"></div>
+        <a class="visually-hidden visually-hidden-focusable" href="#content">Skip to main content</a>
+        <nav class="navbar navbar-expand-lg fixed-top bg-secondary-subtle">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    
+
+
+
+<img alt="IETF Logo"
+     class="d-lm-none me-2"
+     
+     
+        
+             src="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-nor-white.svg"
+        
+     
+     >
+
+<img alt="IETF Logo"
+     class="d-dm-none me-2"
+     
+     
+        
+             src="https://static.ietf.org/dt/12.68.0/ietf/images/ietf-logo-nor.svg"
+        
+     
+     >
+                    Datatracker
+                    
+                </a>
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav flex-nowrap">
+                        
+
+
+
+
+<li class="nav-item dropdown">
+    
+        <a href="#"
+           class="nav-link dropdown-toggle"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            Groups
+        </a>
+        <ul class="dropdown-menu mt-n1">
+        
+    <li class="dropdown-header">By area/parent</li>
+    
+
+
+
+    
+    <li class="dropend group-menu group-parent-2010">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#ART">
+            Apps &amp; Realtime
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-1008">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#GEN">
+            General
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-1052">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#INT">
+            Internet
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-1193">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#OPS">
+            Ops &amp; Management
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-1249">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#RTG">
+            Routing
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-1260">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#SEC">
+            Security
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-2412">
+        <a class="dropdown-item dropdown-toggle "
+           href="/wg/#WIT">
+            Web and Internet Transport
+        </a>
+    </li>
+
+    
+        <li><a class="dropdown-item" href="/group/iesg/about/">IESG</a></li>
+    
+    <li class="dropend group-menu group-parent-7">
+        <a class="dropdown-item dropdown-toggle "
+           href="/program/">
+            IAB
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-3">
+        <a class="dropdown-item dropdown-toggle "
+           href="/rg/">
+            IRTF
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-2309">
+        <a class="dropdown-item dropdown-toggle "
+           href="/adm/">
+            IETF LLC
+        </a>
+    </li>
+
+    
+    <li class="dropend group-menu group-parent-1876">
+        <a class="dropdown-item dropdown-toggle "
+           href="/rfcedtyp/">
+            RFC Editor
+        </a>
+    </li>
+
+
+    <li class="dropend">
+        <a class="dropdown-item dropdown-toggle "
+           href="/group/">
+            Other
+        </a>
+        
+
+
+<ul class="dropdown-menu ms-n1">
+    
+        <li>
+            <a class="dropdown-item "
+               href="/ag/">Active AGs</a>
+        </li>
+    
+        <li>
+            <a class="dropdown-item "
+               href="/area/">Active Areas</a>
+        </li>
+    
+        <li>
+            <a class="dropdown-item "
+               href="/dir/">Active Directorates</a>
+        </li>
+    
+        <li>
+            <a class="dropdown-item "
+               href="/iabworkshop/">Active IAB Workshops</a>
+        </li>
+    
+        <li>
+            <a class="dropdown-item "
+               href="/program/">Active Programs</a>
+        </li>
+    
+        <li>
+            <a class="dropdown-item "
+               href="/rag/">Active RAGs</a>
+        </li>
+    
+        <li>
+            <a class="dropdown-item "
+               href="/team/">Active Teams</a>
+        </li>
+    
+    
+</ul>
+
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li class="dropdown-header">New work</li>
+    <li>
+        <a class="dropdown-item"
+           href="/group/chartering/">
+            Chartering groups
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/wg/bofs/">
+            BOFs
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/doc/bof-requests">
+            BOF Requests
+        </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li class="dropdown-header">Other groups</li>
+    <li>
+        <a class="dropdown-item"
+           href="/group/concluded/">
+            Concluded groups
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/list/nonwg">
+            Non-WG lists
+        </a>
+    </li>
+    
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    
+        <a href="#"
+           class="nav-link dropdown-toggle"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            Documents
+        </a>
+        <ul class="dropdown-menu mt-n1">
+        
+    <li>
+        <a class="dropdown-item"
+           href="/doc/search">
+            Search
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/doc/recent">
+            Recent I-Ds
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/submit/">
+            Submit an Internet-Draft
+        </a>
+    </li>
+    
+    
+        <li><hr class="dropdown-divider">
+        </li>
+    
+    <li class="dropdown-header">
+        RFC streams
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/stream/iab/">
+            IAB
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/stream/irtf/">
+            IRTF
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/stream/ise/">
+            ISE
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/stream/editorial/">
+            Editorial
+        </a>
+    </li>
+    
+        <li><hr class="dropdown-divider">
+        </li>
+    
+    <li class="dropdown-header">
+        Subseries
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/doc/std">
+            STD
+        </a>
+        <a class="dropdown-item"
+           href="/doc/bcp">
+            BCP
+        </a>
+        <a class="dropdown-item"
+           href="/doc/fyi">
+            FYI
+        </a>
+    </li>
+    
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    
+        <a href="#"
+           class="nav-link dropdown-toggle"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            Meetings
+        </a>
+        <ul class="dropdown-menu mt-n1">
+        
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/agenda">
+            Agenda
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/materials">
+            Materials
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/floor-plan">
+            Floor plan
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="https://www.ietf.org/how/meetings/register/">
+            Registration
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/important-dates/">
+            Important dates
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/session/request/">
+            Request a session
+        </a>
+    </li>
+    
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/requests">
+            Session requests
+        </a>
+    </li>
+    
+    
+        
+            <li><hr class="dropdown-divider">
+            </li>
+        
+        <li class="dropdown-header">
+            Upcoming meetings
+        </li>
+    
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/upcoming">
+            Upcoming meetings
+        </a>
+    </li>
+    
+        
+            <li><hr class="dropdown-divider">
+            </li>
+        
+        <li class="dropdown-header">
+            Past meetings
+        </li>
+    
+    <li>
+        <a class="dropdown-item"
+           href="/meeting/past">
+            Past meetings
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="https://www.ietf.org/how/meetings/past/">
+            Meeting proceedings
+        </a>
+    </li>
+    
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    
+        <a href="#"
+           class="nav-link dropdown-toggle"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            Other
+        </a>
+        <ul class="dropdown-menu mt-n1">
+        
+    <li>
+        <a class="dropdown-item"
+           href="/ipr/">
+            IPR disclosures
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/liaison/">
+            Liaison statements
+        </a>
+    </li>
+    
+    <li>
+        <a class="dropdown-item"
+           href="/iesg/agenda/">
+            IESG agenda
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/nomcom/">
+            NomComs
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/doc/downref">
+            Downref registry
+        </a>
+    </li>
+    <li class="dropend">
+        <a class="dropdown-item dropdown-toggle" href="#">
+            Statistics
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item"
+                   href="/stats/document/">
+                    I-Ds/RFCs
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   href="/stats/meeting/">
+                    Meetings
+                </a>
+            </li>
+            
+            
+        </ul>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/api/">
+            API Help
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="/release/">
+            Release notes
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           target="_blank" href="https://status.ietf.org">
+            System status
+        </a>
+    </li>
+    
+        <li><hr class="dropdown-divider">
+        </li>
+    
+    <li>
+        <a class="dropdown-item text-danger "
+           target="_blank" href="https://github.com/ietf-tools/datatracker/issues/new/choose">
+            <i class="bi bi-bug">
+            </i>
+            Report a bug
+        </a>
+    </li>
+    
+    </ul>
+</li>
+
+
+    
+
+
+
+<li class="nav-item dropdown">
+    
+        <a href="#"
+           class="nav-link dropdown-toggle"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false">
+            
+                User
+            
+        </a>
+        <ul class="dropdown-menu  mt-n1 ">
+        
+    
+    
+        
+            <li>
+                <a class="dropdown-item "
+                   rel="nofollow"
+                   href="/accounts/login/?next=/doc/draft-ietf-oauth-rfc8725bis/">
+                    Sign in
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item "
+                   rel="nofollow"
+                   href="/accounts/reset/">
+                    Password reset
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item "
+                   href="/accounts/settings/"
+                   rel="nofollow">
+                    Preferences
+                </a>
+            </li>
+        
+    
+    
+        <li>
+            <a class="dropdown-item "
+               href="/accounts/create/">
+                New account
+            </a>
+        </li>
+    
+    <li class="dropend">
+      <a class="dropdown-item dropdown-toggle" href="#">
+        List subscriptions
+      </a>
+      <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item "
+                href="https://mailman3.ietf.org/mailman3/lists/">
+                    IETF Lists
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item "
+                href="https://mailman3.irtf.org/mailman3/lists/">
+                IRTF Lists
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item "
+                href="https://mailman3.iab.org/mailman3/lists/">
+                    IAB Lists
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item "
+                href="https://mailman3.rfc-editor.org/mailman3/lists/">
+                    RFC-Editor Lists
+                </a>
+            </li>
+        </ul>
+    </li>
+    
+    
+    
+    
+    
+    </ul></li>
+
+
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a class="nav-link text-danger d-none d-xl-inline me-xl-4"
+                       target="_blank"
+                       href="https://github.com/ietf-tools/datatracker/issues/new/choose">
+                        Report a bug
+                        <i class="bi bi-bug"></i>
+                    </a>
+
+                    
+                        <a class="btn me-1  btn-warning  d-none d-sm-block"
+                           rel="nofollow"
+                           href="/accounts/login/?next=/doc/draft-ietf-oauth-rfc8725bis/">
+                            Sign in
+                        </a>
+                    
+
+                    <div class="d-none d-md-block dropdown" id="navbar-doc-search-wrapper">
+                        <input class="form-control"
+                               id="navbar-doc-search"
+                               type="text"
+                               placeholder="Document search"
+                               autocomplete="off"
+                               data-ajax-url="/doc/select2search/document/all/"
+                               aria-label="Document search">
+                        <ul class="dropdown-menu" id="navbar-doc-search-results">
+                        </ul>
+                    </div>
+                </div>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbar-collapse"
+                        aria-controls="navbar-collapse"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="navbar-toggler-icon"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <main class="pt-3 container-fluid" id="main">
+            <div class="row">
+                
+                <div class="col mx-lg-3 ietf-auto-nav" id="content">
+                    <noscript data-nosnippet>
+                        <div class="alert alert-danger alert-ignore my-3">
+                            <b>Javascript disabled?</b> Like other modern websites, the IETF Datatracker relies on Javascript.
+                            Please enable Javascript for full functionality.
+                        </div>
+                    </noscript>
+                    
+                    
+    
+    
+
+
+
+<h1>
+    JSON Web Token Best Current Practices
+    <br>
+    <small class="text-body-secondary">draft-ietf-oauth-rfc8725bis-06</small>
+</h1>
+<ul class="nav nav-tabs my-3">
+    
+        <li  class="nav-item">
+            <a class="nav-link active"
+               href="/doc/draft-ietf-oauth-rfc8725bis/">
+                Status
+            </a>
+        </li>
+    
+        <li  class="nav-item">
+            <a class="nav-link disabled"
+               >
+                IESG evaluation record
+            </a>
+        </li>
+    
+        <li  class="nav-item">
+            <a class="nav-link "
+               href="/doc/draft-ietf-oauth-rfc8725bis/writeup/">
+                IESG writeups
+            </a>
+        </li>
+    
+        <li  class="nav-item">
+            <a class="nav-link "
+               href="/doc/draft-ietf-oauth-rfc8725bis/email/">
+                Email expansions
+            </a>
+        </li>
+    
+        <li  class="nav-item">
+            <a class="nav-link "
+               href="/doc/draft-ietf-oauth-rfc8725bis/history/">
+                History
+            </a>
+        </li>
+    
+</ul>
+
+    
+
+
+
+    <label class="my-1 fw-bold">Versions:</label>
+    <nav class="mb-3">
+
+    <ul class="revision-list pagination pagination-sm text-center flex-wrap">
+        
+            
+                 
+                    <li class="page-item ">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/00/"
+                        >
+                            00
+                        </a>
+                    </li>
+                
+            
+                 
+                    <li class="page-item ">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/01/"
+                        rel="nofollow">
+                            01
+                        </a>
+                    </li>
+                
+            
+                 
+                    <li class="page-item ">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/02/"
+                        rel="nofollow">
+                            02
+                        </a>
+                    </li>
+                
+            
+                 
+                    <li class="page-item ">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/03/"
+                        rel="nofollow">
+                            03
+                        </a>
+                    </li>
+                
+            
+                 
+                    <li class="page-item ">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/04/"
+                        rel="nofollow">
+                            04
+                        </a>
+                    </li>
+                
+            
+                 
+                    <li class="page-item ">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/05/"
+                        rel="nofollow">
+                            05
+                        </a>
+                    </li>
+                
+            
+                 
+                    <li class="page-item active">
+                        <a class="page-link"
+                        href="/doc/draft-ietf-oauth-rfc8725bis/06/"
+                        >
+                            06
+                        </a>
+                    </li>
+                
+            
+            
+        
+    </ul>
+
+    </nav>
+
+    
+
+
+
+
+    
+
+
+    <div id="doc-timeline"></div>
+    
+        
+    
+    <table class="table table-sm table-borderless">
+        
+
+
+
+
+
+
+
+<tbody class="meta align-top  border-top">
+    <tr>
+        <th scope="row">Document</th>
+        <th scope="row">Type</th>
+        <td class="edit"></td>
+        <td>
+            
+
+
+
+
+
+
+
+    <span class="text-success">Active Internet-Draft</span>
+    (<a href="/wg/oauth/about/">oauth WG</a>)
+    
+
+            
+            
+            
+        </td>
+    </tr>
+    
+    <tr>
+        <td></td>
+        <th scope="row">Authors</th>
+        <td class="edit">
+            
+        </td>
+        <td>
+            
+            
+                <span ><a 
+           title="Datatracker profile of Yaron Sheffer"
+            href="/person/yaronf.ietf@gmail.com" >Yaron Sheffer</a> <a 
+               href="mailto:yaronf.ietf%40gmail.com"
+               aria-label="Compose email to yaronf.ietf@gmail.com"
+               title="Compose email to yaronf.ietf@gmail.com">
+                <i class="bi bi-envelope"></i></a></span>,
+            
+                <span ><a 
+           title="Datatracker profile of Dick Hardt"
+            href="/person/dick.hardt@gmail.com" >Dick Hardt</a> <a 
+               href="mailto:dick.hardt%40gmail.com"
+               aria-label="Compose email to dick.hardt@gmail.com"
+               title="Compose email to dick.hardt@gmail.com">
+                <i class="bi bi-envelope"></i></a></span>,
+            
+                <span ><a 
+           title="Datatracker profile of Michael B. Jones"
+            href="/person/michael_b_jones@hotmail.com" >Michael B. Jones</a> <a 
+               href="mailto:michael_b_jones%40hotmail.com"
+               aria-label="Compose email to michael_b_jones@hotmail.com"
+               title="Compose email to michael_b_jones@hotmail.com">
+                <i class="bi bi-envelope"></i></a></span>
+            
+            
+        </td>
+    </tr>
+    
+    
+    <tr>
+        <td></td>
+        <th scope="row">Last updated</th>
+        <td class="edit"></td>
+        <td>
+            2026-07-06
+            
+                <span class="text-body-secondary">(Latest revision 2026-06-19)</span>
+            
+        </td>
+    </tr>
+    
+    
+        
+            <tr>
+                <td></td>
+                <th scope="row">Replaces</th>
+                <td class="edit">
+                    
+                </td>
+                <td>
+                    
+                        
+                            <a href="/doc/draft-sheffer-oauth-rfc8725bis/" title="JSON Web Token Best Current Practices">draft-sheffer-oauth-rfc8725bis</a>
+                        
+                    
+                </td>
+            </tr>
+        
+        
+        
+    
+    <tr>
+        <td></td>
+        <th scope="row">
+            RFC stream
+        </th>
+        <td class="edit">
+            
+        </td>
+        <td >
+            
+                
+                
+                    Internet Engineering Task Force (IETF)
+                
+                
+            
+        </td>
+    </tr>
+    
+        <tr>
+            <td></td>
+            <th scope="row">
+                Intended RFC status
+            </th>
+            <td class="edit">
+                
+            </td>
+            <td>
+                
+                    Best Current Practice
+                
+            </td>
+        </tr>
+    
+    <tr>
+        <td></td>
+        <th scope="row">
+            Formats
+        </th>
+        <td class="edit">
+        </td>
+        <td>
+            
+                
+    <div class="buttonlist">
+    
+        
+        <a class="btn btn-primary btn-sm"
+          
+          target="_blank"
+          href="https://www.ietf.org/archive/id/draft-ietf-oauth-rfc8725bis-06.txt">
+            
+                <i class="bi bi-file-text"></i> txt
+            
+        </a>
+        
+    
+        
+        <a class="btn btn-primary btn-sm"
+          
+          target="_blank"
+          href="https://www.ietf.org/archive/id/draft-ietf-oauth-rfc8725bis-06.html">
+            
+                <i class="bi bi-file-code"></i> html
+            
+        </a>
+        
+    
+        
+        <a class="btn btn-primary btn-sm"
+          
+          target="_blank"
+          href="https://www.ietf.org/archive/id/draft-ietf-oauth-rfc8725bis-06.xml">
+            
+                <i class="bi bi-file-code"></i> xml
+            
+        </a>
+        
+    
+        
+        <a class="btn btn-primary btn-sm"
+          
+          
+          href="/doc/html/draft-ietf-oauth-rfc8725bis-06">
+            
+                <i class="bi bi-file-code"></i> htmlized
+            
+        </a>
+        
+    
+        
+        <a class="btn btn-primary btn-sm"
+          
+          target="_blank"
+          href="/doc/draft-ietf-oauth-rfc8725bis/06/bibtex/">
+            
+                <i class="bi bi-file-ruled"></i> bibtex
+            
+        </a>
+        
+    
+        
+        <a class="btn btn-primary btn-sm"
+          
+          target="_blank"
+          href="/doc/bibxml3/draft-ietf-oauth-rfc8725bis-06.xml">
+            
+                <i class="bi bi-file-code"></i> bibxml
+            
+        </a>
+        
+    
+</div>
+
+            
+        </td>
+    </tr>
+    
+    
+        
+    
+        
+            
+                <tr>
+                    <td></td>
+                    <th scope="row">
+                        Reviews
+                    </th>
+                    <td class="edit">
+                    </td>
+                    <td>
+                        
+                    
+<div class="review-assignment-summary">
+    
+        <a class="text-body-secondary"
+           href="/doc/draft-ietf-oauth-rfc8725bis/reviewrequest/24512/">
+            ARTART IETF Last Call Review due 2026-07-14</a>
+        <span class="badge rounded-pill text-bg-secondary ms-1">
+            Incomplete
+        </span>
+    
+</div>
+                
+                    
+<div class="review-assignment-summary">
+    
+        <a class="text-body-secondary"
+           href="/doc/draft-ietf-oauth-rfc8725bis/reviewrequest/24483/">
+            SECDIR IETF Last Call Review due 2026-07-06</a>
+        <span class="badge rounded-pill text-bg-secondary ms-1">
+            Incomplete
+        </span>
+    
+</div>
+                
+                    
+<div class="review-assignment-summary">
+    
+        <a class="text-body-secondary"
+           href="/doc/draft-ietf-oauth-rfc8725bis/reviewrequest/24426/">
+            GENART IETF Last Call Review due 2026-07-06</a>
+        <span class="badge rounded-pill text-bg-secondary ms-1">
+            Incomplete
+        </span>
+    
+</div>
+                
+                
+                        
+                        
+                    </td>
+                </tr>
+            
+            
+        
+    
+    
+        
+            <tr>
+                <td>
+                </td>
+                <th scope="row">
+                    Additional resources
+                </th>
+                <td class="edit">
+                    
+                </td>
+                <td>
+                    
+                        
+                        
+                            
+                                <a href="https://mailarchive.ietf.org/arch/browse/oauth/?q=draft-ietf-oauth-rfc8725bis">
+                                    Mailing list discussion
+                                </a>
+                            
+                        
+                    
+                </td>
+            </tr>
+        
+    
+</tbody>
+        <tbody class="meta border-top">
+            <tr>
+                <th scope="row">
+                    Stream
+                </th>
+                
+                    <th scope="row">
+                        
+                            <a href="/doc/help/state/draft-stream-ietf/">
+                                
+                                    WG
+                                
+                                state
+                            </a>
+                        
+                    </th>
+                    <td class="edit">
+                        
+                    </td>
+                    <td>
+                        
+                            <span class="">
+                                Submitted to IESG for Publication
+                            </span>
+                        
+                        
+                        
+                    </td>
+                
+            </tr>
+            
+            
+            
+            
+                <tr>
+                    <td></td>
+                    <th scope="row">
+                        Document shepherd
+                    </th>
+                    <td class="edit">
+                        
+                    </td>
+                    <td>
+                        
+                            <span ><a 
+           title="Datatracker profile of Hannes Tschofenig"
+            href="/person/Hannes.Tschofenig@gmx.net" >Hannes Tschofenig</a> <a 
+               href="mailto:Hannes.Tschofenig%40gmx.net"
+               aria-label="Compose email to Hannes.Tschofenig@gmx.net"
+               title="Compose email to Hannes.Tschofenig@gmx.net">
+                <i class="bi bi-envelope"></i></a></span>
+                        
+                    </td>
+                </tr>
+                
+                    <tr>
+                        <td></td>
+                        <th scope="row">
+                            Shepherd write-up
+                        </th>
+                        <td class="edit">
+                            
+                        </td>
+                        <td>
+                            
+                                <a class="btn btn-primary btn-sm"
+                                   href="/doc/draft-ietf-oauth-rfc8725bis/shepherdwriteup/">
+                                    Show
+                                </a>
+                                <span class="badge rounded-pill text-bg-secondary">Last changed 2026-03-22</span>
+                            
+                        </td>
+                    </tr>
+                
+            
+            
+        </tbody>
+        
+            <tbody class="meta border-top">
+                <tr>
+                    <th scope="row">
+                        IESG
+                    </th>
+                    <th scope="row">
+                        <a href="/doc/help/state/draft-iesg/">
+                            IESG state
+                        </a>
+                    </th>
+                    <td class="edit">
+                        
+                    </td>
+                    <td>
+                        <span class="">
+                            
+                                Waiting for AD Go-Ahead
+                            
+                        </span>
+                    </td>
+                </tr>
+                
+                    <tr>
+                        <td></td>
+                        <th scope="row">
+                            Action Holder
+                        </th>
+                        <td class="edit">
+                            
+                        </td>
+                        <td>
+                            <div>
+                                
+                                    
+                                        <div>
+                                            <span ><a 
+           title="Responsible AD"
+            href="/person/debcooley1@gmail.com" >Deb Cooley</a> <a 
+               href="mailto:debcooley1%40gmail.com"
+               aria-label="Compose email to debcooley1@gmail.com"
+               title="Compose email to debcooley1@gmail.com">
+                <i class="bi bi-envelope"></i></a></span> 
+                                        </div>
+                                    
+                                    
+                                
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    
+                        <tr>
+                            <td></td>
+                            <th scope="row">
+                                Consensus boilerplate
+                            </th>
+                            <td class="edit">
+                                
+                            </td>
+                            <td>
+                                <span class="text-success"
+                                      title="Whether the document is the result of a community consensus process as defined in RFC 5741">
+                                    Yes
+                                </span>
+                            </td>
+                        </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <th scope="row">
+                            Telechat date
+                        </th>
+                        <td class="edit">
+                            
+                        </td>
+                        <td>
+                            
+                                <span class="text-body-secondary">
+                                    (None)
+                                </span>
+                            
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <th scope="row">
+                            Responsible AD
+                        </th>
+                        <td class="edit">
+                            
+                        </td>
+                        <td>
+                            
+                                <span ><a 
+           title="Datatracker profile of Deb Cooley"
+            href="/person/debcooley1@gmail.com" >Deb Cooley</a> <a 
+               href="mailto:debcooley1%40gmail.com"
+               aria-label="Compose email to debcooley1@gmail.com"
+               title="Compose email to debcooley1@gmail.com">
+                <i class="bi bi-envelope"></i></a></span>
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <th scope="row">
+                            Send notices to
+                        </th>
+                        <td class="edit">
+                            
+                        </td>
+                        <td>
+                            
+                                <a href="mailto:Hannes.Tschofenig@gmx.net">Hannes.Tschofenig@gmx.net</a>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            
+            
+                
+                    <tbody class="meta border-top">
+                        
+                            <tr>
+                                <th scope="row">
+                                    IANA
+                                </th>
+                                <th scope="row">
+                                    <a href="/doc/help/state/draft-iana-review/">
+                                        IANA review state
+                                    </a>
+                                </th>
+                                <td class="edit">
+                                    
+                                </td>
+                                <td class="text-danger">
+                                    
+                                        IANA - Not OK
+                                    
+                                </td>
+                            </tr>
+                        
+                        
+                        
+                        
+                    </tbody>
+                
+            
+            
+        </table>
+        <div class="buttonlist">
+            <a class="btn btn-primary btn-sm"
+               href="mailto:draft-ietf-oauth-rfc8725bis@ietf.org?subject=Mail%20regarding%20draft-ietf-oauth-rfc8725bis">
+                <i class="bi bi-envelope">
+                </i>
+                Email authors
+            </a>
+            
+                <a class="btn btn-primary btn-sm"
+                   href="mailto:oauth@ietf.org?subject=Mail%20regarding%20draft-ietf-oauth-rfc8725bis">
+                    <i class="bi bi-envelope">
+                    </i>
+                    Email WG
+                </a>
+            
+            <a class="btn btn-primary btn-sm"
+               href="/ipr/search/?submit=draft&amp;id=draft-ietf-oauth-rfc8725bis"
+               rel="nofollow">
+                <i class="bi bi-lightning">
+                </i>
+                IPR
+                
+            </a>
+            <a class="btn btn-primary btn-sm"
+               href="/doc/draft-ietf-oauth-rfc8725bis/references/"
+               rel="nofollow">
+                <i class="bi bi-arrow-left">
+                </i>
+                References
+            </a>
+            <a class="btn btn-primary btn-sm"
+               href="/doc/draft-ietf-oauth-rfc8725bis/referencedby/"
+               rel="nofollow">
+                <i class="bi bi-arrow-right">
+                </i>
+                Referenced by
+            </a>
+            <a class="btn btn-primary btn-sm"
+               href="https://author-tools.ietf.org/api/idnits?url=https://www.ietf.org/archive/id/draft-ietf-oauth-rfc8725bis-06.txt"
+               rel="nofollow"
+               target="_blank">
+                <i class="bi bi-exclamation">
+                </i>
+                Nits
+            </a>
+            
+            <a class="btn btn-primary btn-sm"
+               href="https://mailarchive.ietf.org/arch/search/?q=%22draft-ietf-oauth-rfc8725bis%22"
+               rel="nofollow"
+               target="_blank">
+                <i class="bi bi-search">
+                </i>
+                Search email archive
+            </a>
+            
+            
+            
+            
+        </div>
+        
+            <div class="card mt-5">
+                <div class="card-header">
+                    
+                        draft-ietf-oauth-rfc8725bis-06
+                    
+                </div>
+                <div class="card-body">
+                    <pre>Web Authorization Protocol                                    Y. Sheffer
+Internet-Draft                                                    Intuit
+Obsoletes: 8725 (if approved)                                   D. Hardt
+Updates: 7519 (if approved)                                             
+Intended status: Best Current Practice                          M. Jones
+Expires: 21 December 2026                         Self-Issued Consulting
+                                                            19 June 2026
+
+                 JSON Web Token Best Current Practices
+                     draft-ietf-oauth-rfc8725bis-06
+
+<span>Abstract</span>
+
+   JSON Web Tokens, also known as JWTs, are URL-safe JSON-based security
+   tokens that contain a set of claims that can be signed and/or
+   encrypted.  JWTs are being widely used and deployed as a simple
+   security token format in numerous protocols and applications, both in
+   the area of digital identity and in other application areas.  This
+   Best Current Practices (BCP) specification updates RFC 7519 to
+   provide actionable guidance leading to secure implementation and
+   deployment of JWTs.
+
+   This BCP specification furthermore obsoletes the existing JWT BCP
+   specification RFC 8725 to provide additional actionable guidance
+   covering threats and attacks that have been discovered since RFC 8725
+   was published.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc8725bis/.
+
+   Discussion of this document takes place on the Web Authorization
+   Protocol Working Group mailing list (mailto:oauth@ietf.org), which is
+   archived at https://mailarchive.ietf.org/arch/browse/oauth/.
+   Subscribe at https://www.ietf.org/mailman/listinfo/oauth/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/oauth-wg/draft-ietf-oauth-rfc8725bis.
+
+<span>Status of This Memo</span>
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 1]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as &quot;work in progress.&quot;
+
+   This Internet-Draft will expire on 21 December 2026.
+
+<span>Copyright Notice</span>
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust&#x27;s Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+<span>Table of Contents</span>
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Target Audience . . . . . . . . . . . . . . . . . . . . .   4
+     1.2.  Conventions Used in this Document . . . . . . . . . . . .   5
+   2.  Threats and Vulnerabilities . . . . . . . . . . . . . . . . .   5
+     2.1.  Weak Signatures and Insufficient Signature Validation . .   5
+     2.2.  Weak Symmetric Keys . . . . . . . . . . . . . . . . . . .   5
+     2.3.  Incorrect Use and Composition of Encryption and
+            Signature  . . . . . . . . . . . . . . . . . . . . . . .   6
+     2.4.  Plaintext Leakage through Analysis of Ciphertext
+            Length . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     2.5.  Insecure Use of Elliptic Curve Encryption . . . . . . . .   6
+     2.6.  Multiplicity of JSON Encodings  . . . . . . . . . . . . .   7
+     2.7.  Substitution Attacks  . . . . . . . . . . . . . . . . . .   7
+     2.8.  Cross-JWT Confusion . . . . . . . . . . . . . . . . . . .   7
+     2.9.  Indirect Attacks on the Server  . . . . . . . . . . . . .   8
+     2.10. Computation Cost of Unreasonable Number of Hash
+            Iterations . . . . . . . . . . . . . . . . . . . . . . .   8
+     2.11. Algorithm Verification Code Not Defensively Written . . .   8
+     2.12. JWE Decompression Bomb Attack . . . . . . . . . . . . . .   8
+     2.13. JWT Format Confusion  . . . . . . . . . . . . . . . . . .   9
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 2]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   3.  Best Practices  . . . . . . . . . . . . . . . . . . . . . . .   9
+     3.1.  Perform Algorithm Verification  . . . . . . . . . . . . .   9
+     3.2.  Use Appropriate Algorithms  . . . . . . . . . . . . . . .  10
+     3.3.  Validate All Cryptographic Operations . . . . . . . . . .  11
+     3.4.  Validate Cryptographic Inputs . . . . . . . . . . . . . .  11
+     3.5.  Ensure Cryptographic Keys Have Sufficient Entropy . . . .  11
+     3.6.  Avoid Compression of Encryption Inputs  . . . . . . . . .  12
+     3.7.  Use UTF-8 . . . . . . . . . . . . . . . . . . . . . . . .  12
+     3.8.  Validate Issuer and Subject . . . . . . . . . . . . . . .  12
+     3.9.  Use and Validate Audience . . . . . . . . . . . . . . . .  12
+     3.10. Carefully Evaluate Received Claims  . . . . . . . . . . .  13
+     3.11. Use Explicit Typing . . . . . . . . . . . . . . . . . . .  13
+     3.12. Use Mutually Exclusive Validation Rules for Different Kinds
+            of JWTs  . . . . . . . . . . . . . . . . . . . . . . . .  15
+     3.13. Limit Hash Iteration Count  . . . . . . . . . . . . . . .  16
+     3.14. Check JWT Format Type . . . . . . . . . . . . . . . . . .  16
+     3.15. Limit JWE Decompression Size  . . . . . . . . . . . . . .  16
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  16
+     6.1.  Acknowledgements for RFC 8725 . . . . . . . . . . . . . .  16
+     6.2.  Acknowledgements for [[ this specification ]] . . . . . .  17
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  17
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  18
+   Appendix A.  Changes from RFC 8725  . . . . . . . . . . . . . . .  21
+   Appendix B.  Document History . . . . . . . . . . . . . . . . . .  21
+     B.1.  draft-ietf-oauth-rfc8725bis-06  . . . . . . . . . . . . .  21
+     B.2.  draft-ietf-oauth-rfc8725bis-05  . . . . . . . . . . . . .  21
+     B.3.  draft-ietf-oauth-rfc8725bis-04  . . . . . . . . . . . . .  21
+     B.4.  draft-ietf-oauth-rfc8725bis-03  . . . . . . . . . . . . .  22
+     B.5.  draft-ietf-oauth-rfc8725bis-02  . . . . . . . . . . . . .  22
+     B.6.  draft-ietf-oauth-rfc8725bis-01  . . . . . . . . . . . . .  22
+     B.7.  draft-ietf-oauth-rfc8725bis-00  . . . . . . . . . . . . .  22
+     B.8.  draft-sheffer-oauth-rfc8725bis-02 . . . . . . . . . . . .  22
+     B.9.  draft-sheffer-oauth-rfc8725bis-01 . . . . . . . . . . . .  22
+     B.10. draft-sheffer-oauth-rfc8725bis-00 . . . . . . . . . . . .  22
+   Authors&#x27; Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
+
+1.  Introduction
+
+   JSON Web Tokens, also known as JWTs [RFC7519], are URL-safe JSON-
+   based security tokens that contain a set of claims that can be signed
+   and/or encrypted.  The JWT specification has seen rapid adoption
+   because it encapsulates security-relevant information in one easy-to-
+   protect location, and because it is easy to implement using widely
+   available tools.  One application area in which JWTs are commonly
+   used is representing authorization information, such as OAuth 2.0
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 3]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   access tokens [RFC9068], and identity information, such as OpenID
+   Connect ID Tokens [OpenID.Core].  The details of these uses are
+   application- and deployment-specific.
+
+   Since the JWT specification was published, there have been several
+   widely published attacks on implementations and deployments.  Such
+   attacks are the result of under-specified security mechanisms, as
+   well as incomplete implementations and incorrect usage by
+   applications.
+
+   The goal of this document is to facilitate secure implementation and
+   deployment of JWTs.  Many of the recommendations in this document are
+   about implementation and use of the cryptographic mechanisms
+   underlying JWTs that are defined by JSON Web Signature (JWS)
+   [RFC7515], JSON Web Encryption (JWE) [RFC7516], and JSON Web
+   Algorithms (JWA) [RFC7518].  Others are about use of the JWT claims
+   themselves.
+
+   These are intended to be minimum recommendations for the use of JWTs
+   in the vast majority of implementation and deployment scenarios.
+   Other specifications that reference this document can have stricter
+   requirements related to one or more aspects of the format, based on
+   their particular circumstances; when that is the case, implementers
+   are advised to adhere to those stricter requirements.  Furthermore,
+   this document provides a floor, not a ceiling, so stronger options
+   are always allowed (e.g., depending on differing evaluations of the
+   importance of cryptographic strength vs. computational load).
+
+   Community knowledge about the strength of various algorithms and
+   feasible attacks can change quickly, and experience shows that a Best
+   Current Practice (BCP) document about security is a point-in-time
+   statement.  Readers are advised to seek out any errata or updates
+   that apply to this document.
+
+1.1.  Target Audience
+
+   The intended audiences of this document are:
+
+   *  Implementers of JWT libraries (and the JWS and JWE libraries used
+      by those libraries),
+
+   *  Implementers of code that uses such libraries (to the extent that
+      some mechanisms may not be provided by libraries, or until they
+      are), and
+
+   *  Developers of specifications that rely on JWTs, both inside and
+      outside the IETF.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 4]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+1.2.  Conventions Used in this Document
+
+   The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+   &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;NOT RECOMMENDED&quot;, &quot;MAY&quot;, and
+   &quot;OPTIONAL&quot; in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Threats and Vulnerabilities
+
+   This section lists some known and possible problems with JWT
+   implementations and deployments.  Each problem description is
+   followed by references to one or more mitigations to those problems.
+
+2.1.  Weak Signatures and Insufficient Signature Validation
+
+   Signed JSON Web Tokens carry an explicit indication of the signing
+   algorithm, in the form of the &quot;alg&quot; Header Parameter, to facilitate
+   cryptographic agility.  This, in conjunction with design flaws in
+   some libraries and applications, has led to several attacks:
+
+   *  The algorithm can be changed to &quot;none&quot; by an attacker, and some
+      libraries would trust this value and &quot;validate&quot; the JWT without
+      checking any signature.
+
+   *  An &quot;RS256&quot; (RSA, 2048 bit) parameter value can be changed into
+      &quot;HS256&quot; (HMAC, SHA-256), and some libraries would try to validate
+      the signature using HMAC-SHA256 and using the RSA public key as
+      the HMAC shared secret (see [McLean] and [CVE-2015-9235]).
+
+   For mitigations, see Section 3.1 and Section 3.2.
+
+2.2.  Weak Symmetric Keys
+
+   In addition, some applications use a keyed Message Authentication
+   Code (MAC) algorithm, such as &quot;HS256&quot;, to sign tokens but supply a
+   weak symmetric key with insufficient entropy (such as a human-
+   memorable password).  Such keys are vulnerable to offline brute-force
+   or dictionary attacks once an attacker gets hold of such a token
+   [Langkemper][JWT-Cracker].
+
+   For mitigations, see Section 3.5.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 5]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+2.3.  Incorrect Use and Composition of Encryption and Signature
+
+   Most authentication use cases only require a simple signed JWT as
+   their token.  However verifiers don&#x27;t always check that the received
+   JWT is a JWS (a signed JWT) as opposed to a JWE (a JWT with encrypted
+   structure).  This can result in vulnerabilities when the verifier&#x27;s
+   library does not distinguish between successful decryption and
+   successful signature validation [CVE-2023-51774].
+
+   In the more complicated use cases where confidentiality is required,
+   some libraries that decrypt a JWE-encrypted JWT to obtain a JWS-
+   signed object do not always validate the internal signature.
+
+   For mitigations, see Section 3.3.
+
+2.4.  Plaintext Leakage through Analysis of Ciphertext Length
+
+   Many encryption algorithms leak information about the length of the
+   plaintext, with a varying amount of leakage depending on the
+   algorithm and mode of operation.  JWEs are vulnerable to this
+   leakage.  This problem is exacerbated when the plaintext is initially
+   compressed, because the length of the compressed plaintext and, thus,
+   the ciphertext depends not only on the length of the original
+   plaintext but also on its content.  Compression attacks are
+   particularly powerful when there is attacker-controlled data in the
+   same compression space as secret data, which is the case for some
+   attacks on HTTPS.
+
+   See [Kelsey] for general background on compression and encryption and
+   [Alawatugoda] for a specific example of attacks on HTTP cookies.
+
+   For mitigations, see Section 3.6.
+
+2.5.  Insecure Use of Elliptic Curve Encryption
+
+   Per [Sanso], several Javascript Object Signing and Encryption (JOSE)
+   libraries fail to validate their inputs correctly when performing
+   elliptic curve key agreement (the &quot;ECDH-ES&quot; algorithm).  An attacker
+   that is able to send JWEs of its choosing that use invalid curve
+   points and observe the cleartext outputs resulting from decryption
+   with the invalid curve points can use this vulnerability to recover
+   the recipient&#x27;s private key.
+
+   For mitigations, see Section 3.4.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 6]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+2.6.  Multiplicity of JSON Encodings
+
+   Previous versions of the JSON format, such as the obsoleted
+   [RFC7159], allowed several different character encodings: UTF-8, UTF-
+   16, and UTF-32.  This is not the case anymore, with the latest
+   standard [RFC8259] only allowing UTF-8 except for internal use within
+   a &quot;closed ecosystem&quot;.  This ambiguity, where older implementations
+   and those used within closed environments may generate non-standard
+   encodings, may result in the JWT being misinterpreted by its
+   recipient.  This, in turn, could be used by a malicious sender to
+   bypass the recipient&#x27;s validation checks.
+
+   For mitigations, see Section 3.7.
+
+2.7.  Substitution Attacks
+
+   There are attacks in which one recipient will be given a JWT that was
+   intended for it and will attempt to use it at a different recipient
+   for which that JWT was not intended.  For instance, if an OAuth 2.0
+   [RFC6749] access token is legitimately presented to an OAuth 2.0
+   protected resource for which it is intended, that protected resource
+   might then present that same access token to a different protected
+   resource for which the access token is not intended, in an attempt to
+   gain access.  If such situations are not caught, this can result in
+   the attacker gaining access to resources that it is not entitled to
+   access.
+
+   For mitigations, see Sections 3.8 and 3.9.
+
+2.8.  Cross-JWT Confusion
+
+   As JWTs are used by more protocols in diverse ways, it becomes
+   increasingly important to prevent JWT tokens that have been issued
+   for one purpose being used for another.  Note that this is a specific
+   type of substitution attack.  If the JWT could be used in an
+   application context in which it could be confused with other kinds of
+   JWTs, then mitigations can be employed to prevent these substitution
+   attacks.
+
+   For mitigations, see Sections 3.8, 3.9, 3.11, and 3.12.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 7]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+2.9.  Indirect Attacks on the Server
+
+   Various JWT claims are used by the recipient to perform lookup
+   operations, such as database and Lightweight Directory Access
+   Protocol (LDAP) searches.  Others include URLs that are similarly
+   looked up by the server.  Any of these claims can be used by an
+   attacker as vectors for injection attacks or server-side request
+   forgery (SSRF) attacks.
+
+   For mitigations, see Section 3.10.
+
+2.10.  Computation Cost of Unreasonable Number of Hash Iterations
+
+   The p2c (PBES2 Count) header parameter for the PBES2 encryption
+   algorithms specifies the number of iterative hash computations to be
+   performed.  Attackers can use a very large count, thereby imposing an
+   unreasonable computational burden on recipients.
+
+   For mitigations, see Section 3.13.
+
+2.11.  Algorithm Verification Code Not Defensively Written
+
+   Some JWT implementations included a list of disallowed algorithm
+   names, e.g., do not use &quot;none&quot;.  These same applications
+   misinterpreted the JOSE specifications when parsing the token,
+   reading algorithm values as if they were case-insensitive.  The end
+   result was that an attacker could change the &quot;alg&quot; value to &quot;noNE&quot;
+   and bypass the security check.
+
+   For mitigations, see Section 3.1.
+
+2.12.  JWE Decompression Bomb Attack
+
+   JWE supports the optional compression of the plaintext prior to
+   encryption via the &quot;zip&quot; header parameter as defined in [RFC7516]
+   Section 4.1.3.  Upon decryption, recipients are expected to
+   decompress the payload before further processing.  However, if the
+   recipient does not enforce limits on the size of the decompressed
+   output, an attacker can craft a malicious JWE with a highly
+   compressed, arbitrarily large payload.  This can cause excessive
+   resource consumption (CPU, memory), resulting in Denial of Service
+   (DoS).
+
+   For mitigation, see Section 3.15.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 8]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+2.13.  JWT Format Confusion
+
+   Some JWS implementations support both the Compact and JSON
+   Serializations.  While JWTs must use the Compact Serialization, if an
+   application by mistake verifies a JWT using the JSON Serialization
+   but extracts claims by parsing it as a JWT using the Compact
+   Serialization (e.g., via string splitting), an attacker can craft a
+   valid JSON JWS with a forged payload.  This mismatch in format
+   handling can lead to authentication bypass or impersonation.
+
+   For mitigations, see Section 3.14.
+
+3.  Best Practices
+
+   The best practices listed below should be applied by practitioners to
+   mitigate the threats listed in the preceding section.
+
+3.1.  Perform Algorithm Verification
+
+   Libraries MUST provide a mechanism that enables developers to
+   explicitly restrict the set of algorithms permitted for use and MUST
+   NOT employ any algorithms outside this configured set when performing
+   cryptographic operations.
+
+   The library MUST verify that the algorithm specified in the &quot;alg&quot; or
+   &quot;enc&quot; header parameter is consistent with the algorithm associated
+   with the key identified by the corresponding identifier (e.g., &quot;kid&quot;)
+   during key lookup.
+
+   When a recipient receives a JWT signed by a particular issuer, it
+   MUST determine which algorithms are permitted for itself and that
+   issuer and ensure that the received JWT complies with those
+   requirements.  It MUST likewise validate that the algorithms used by
+   encrypted JWTs are among those supported by the intended recipient.
+
+   In accordance with established cryptographic best practices, each key
+   MUST be used with exactly one algorithm.  Compliance with this
+   requirement MUST be enforced and validated at the time the
+   cryptographic operation is executed.
+
+   Libraries SHOULD opt for defensive security policies to cope with
+   potential issues in the underlying infrastructure, such as the JSON
+   parser.  In particular, libraries SHOULD use allowlists for critical
+   parameters such as &quot;alg&quot; instead of blocklists, because blocklists
+   cannot anticipate every unsafe or misspelled value an attacker might
+   use.
+
+<span>Sheffer, et al.         Expires 21 December 2026                [Page 9]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+3.2.  Use Appropriate Algorithms
+
+   As Section 5.2 of [RFC7515] says, &quot;it is an application decision
+   which algorithms may be used in a given context.  Even if a JWS can
+   be successfully validated, unless the algorithm(s) used in the JWS
+   are acceptable to the application, it SHOULD consider the JWS to be
+   invalid.&quot;
+
+   Therefore, applications MUST only allow the use of cryptographically
+   current algorithms that meet the security requirements of the
+   application.  This set will vary over time as new algorithms are
+   introduced and existing algorithms are deprecated due to discovered
+   cryptographic weaknesses.  Applications MUST therefore be designed to
+   enable cryptographic agility.
+
+   The &quot;none&quot; algorithm should only be used when the JWT is
+   cryptographically protected by other means.  JWTs using &quot;none&quot; are
+   often used in application contexts in which the content is optionally
+   signed.  The URL-safe claims representation and processing in this
+   context can be the same in both the signed and unsigned cases.  JWT
+   libraries SHOULD NOT generate JWTs using &quot;none&quot; unless explicitly
+   requested to do so by the caller.  Similarly, JWT libraries SHOULD
+   NOT consume JWTs using &quot;none&quot; unless explicitly requested by the
+   caller.
+
+   Applications SHOULD follow these algorithm-specific recommendations,
+   because deviating from them may re-enable known attacks on the listed
+   algorithms unless an application-specific threat analysis shows the
+   risk is acceptable:
+
+   *  Avoid all RSA-PKCS1 v1.5 encryption algorithms ([RFC8017],
+      Section 7.2), preferring RSAES-OAEP ([RFC8017], Section 7.1).
+
+   *  Elliptic Curve Digital Signature Algorithm (ECDSA) signatures
+      [ANSI-X962-2005] require a unique random value for every message
+      that is signed.  If even just a few bits of the random value are
+      predictable across multiple messages, then the security of the
+      signature scheme may be compromised.  In the worst case, the
+      private key may be recoverable by an attacker.  To counter these
+      attacks, JWT libraries SHOULD implement ECDSA using the
+      deterministic approach defined in [RFC6979].  This approach is
+      completely compatible with existing ECDSA verifiers and so can be
+      implemented without new algorithm identifiers being required.
+
+   Readers are advised that [I-D.ietf-jose-deprecate-none-rsa15]
+   proposes deprecating the &quot;none&quot; and &quot;RSA1_5&quot; algorithms.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 10]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+3.3.  Validate All Cryptographic Operations
+
+   All cryptographic operations used in the JWT MUST be validated and
+   the entire JWT MUST be rejected if any of them fail to validate.
+   This is true not only of JWTs with a single set of Header Parameters
+   but also for Nested JWTs, as defined in Section 2 of [RFC7519], in
+   which both outer and inner operations MUST be validated using the
+   keys and algorithms supplied by the application.
+
+   Libraries MUST allow the verifier to distinguish between signed JWTs
+   (JWSes) and encrypted JWTs (JWEs).  This allows verifiers to easily
+   establish a policy of only accepting signed JWTs.
+
+3.4.  Validate Cryptographic Inputs
+
+   Some cryptographic operations, such as Elliptic Curve Diffie-Hellman
+   key agreement (&quot;ECDH-ES&quot;), take inputs that may contain invalid
+   values.  This includes points not on the specified elliptic curve or
+   other invalid points (e.g., [Valenta], Section 7.1).  The JWS/JWE
+   library MUST validate these inputs before using them or use
+   underlying cryptographic libraries that do so (or both).
+
+   Elliptic Curve Diffie-Hellman Ephemeral Static (ECDH-ES) ephemeral
+   public key (epk) inputs should be validated according to the
+   recipient&#x27;s chosen elliptic curve.  For the NIST prime-order curves
+   P-256, P-384, and P-521, validation MUST be performed according to
+   Section 5.6.2.3.4 (ECC Partial Public-Key Validation Routine) of
+   &quot;Recommendation for Pair-Wise Key-Establishment Schemes Using
+   Discrete Logarithm Cryptography&quot; [nist-sp-800-56a-r3].  If the
+   &quot;X25519&quot; or &quot;X448&quot; [RFC8037] algorithms are used, then the security
+   considerations in [RFC8037] apply.
+
+3.5.  Ensure Cryptographic Keys Have Sufficient Entropy
+
+   The Key Entropy and Random Values advice in Section 10.1 of
+   [RFC7515], the Password Considerations in Section 8.8 of [RFC7518],
+   and PBKDF2 as specified in [RFC8018] MUST be followed.  In
+   particular, human-memorizable passwords MUST NOT be directly used as
+   the key to a keyed-MAC algorithm such as &quot;HS256&quot;.  Moreover,
+   passwords should only be used to perform key encryption, rather than
+   content encryption, as described in Section 4.8 of [RFC7518].  Note
+   that even when used for key encryption, password-based encryption is
+   still subject to brute-force attacks.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 11]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+3.6.  Avoid Compression of Encryption Inputs
+
+   Compression of data SHOULD NOT be used when creating a JWE, because
+   such compressed data often reveals information about the plaintext,
+   as described in [Kelsey].
+
+3.7.  Use UTF-8
+
+   [RFC7515], [RFC7516], and [RFC7519] all specify that UTF-8 be used
+   for encoding and decoding JSON used in Header Parameters and JWT
+   Claims Sets.  This is also in line with the latest JSON specification
+   [RFC8259].  Implementations and applications MUST do this and not use
+   or allow the use of other Unicode encodings for these purposes.
+
+3.8.  Validate Issuer and Subject
+
+   When a JWT contains an &quot;iss&quot; (issuer) claim, the application MUST
+   validate that the cryptographic keys used for the cryptographic
+   operations in the JWT belong to the issuer.  If they do not, the
+   application MUST reject the JWT.
+
+   The means of determining the keys owned by an issuer is application-
+   specific.  As one example, OAuth 2.0 authorization server &quot;issuer&quot;
+   values [RFC8414] are &quot;https&quot; URLs that reference a JSON metadata
+   document that contains a &quot;jwks_uri&quot; value that is an &quot;https&quot; URL from
+   which the issuer&#x27;s keys are retrieved as a JWK Set [RFC7517].  This
+   same mechanism is used by OpenID Connect [OpenID.Core].  Other
+   applications may use different means of binding keys to issuers.
+
+   Similarly, when the JWT contains a &quot;sub&quot; (subject) claim, the
+   application MUST validate that the subject value corresponds to a
+   valid subject and/or issuer-subject pair at the application.  This
+   may include confirming that the issuer is trusted by the application.
+   In the OAuth context, Section 4.15 of [RFC9700] discusses the
+   possibility of confusing user identifier and client ID values.  If
+   the issuer, subject, or the pair are invalid, the application MUST
+   reject the JWT.
+
+3.9.  Use and Validate Audience
+
+   If the same issuer can issue JWTs that are intended for use by more
+   than one relying party or application, or may do so in the future,
+   the JWT MUST contain an &quot;aud&quot; (audience) claim that can be used to
+   determine whether the JWT is being used by an intended party or was
+   substituted by an attacker.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 12]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   In such cases, the relying party or application MUST validate the
+   audience value, and if no audience value is present or none of the
+   values are associated with the recipient, it MUST reject the JWT.
+
+3.10.  Carefully Evaluate Received Claims
+
+   Treat claim values as being potentially attacker-provided input.
+
+   The &quot;kid&quot; (key ID) header is used by the relying application to
+   perform key lookup.  Applications MUST ensure that this does not
+   create SQL or LDAP injection vulnerabilities by validating and/or
+   sanitizing the received value.
+
+   Similarly, blindly following a &quot;jku&quot; (JWK set URL) or &quot;x5u&quot; (X.509
+   URL) header, which may contain an arbitrary URL, could result in
+   server-side request forgery (SSRF) attacks.  Applications SHOULD
+   protect against such attacks, e.g., by matching the URL to an
+   allowlist of permitted locations and ensuring no cookies are sent in
+   the GET request.
+
+   When such an allowlist is not available, the authorization server
+   SHOULD check what a hostname resolves to and avoid making a request
+   if it resolves to a loopback or local IP address, because otherwise
+   an attacker-chosen URL can cause the server to fetch arbitrary
+   content from within the security domain.  An example of this is when
+   &quot;attacker.example.com/etc/passwd&quot; is used as the &quot;jwks_uri&quot; value and
+   there is a DNS entry for &quot;attacker.example.com&quot; that resolves to
+   &quot;127.0.0.1&quot; or other local IP address values.
+
+3.11.  Use Explicit Typing
+
+   When two different uses of JWTs share a common set of claims, one
+   kind of JWT can be confused for another.  If a particular kind of JWT
+   is subject to such confusion, that JWT can include an explicit JWT
+   type value, and the validation rules can specify checking the type.
+   This mechanism can prevent such confusion.  Explicit JWT typing is
+   accomplished by using the &quot;typ&quot; Header Parameter.  For instance, the
+   [RFC8417] specification uses the &quot;application/secevent+jwt&quot; media
+   type to perform explicit typing of Security Event Tokens (SETs).
+
+   An example of an ad-hoc means of preventing confusion between
+   different kinds of JWTs is the requirement in Logout Tokens
+   [OpenID.Backchannel] prohibiting the inclusion of a &quot;nonce&quot; claim so
+   that Logout Tokens will fail the validation rules for ID Tokens
+   [OpenID.Core].  The use of explicit typing avoids the need for
+   employing such ad-hoc mechanisms when the validation rules for both
+   kinds of JWTs include validating the &quot;typ&quot; values and the acceptable
+   &quot;typ&quot; values for the two kinds of JWTs are distinct.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 13]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   Per Section 4.1.9 of [RFC7515], the &quot;typ&quot; Header Parameter declares
+   the media type of the complete JWS.  To keep header values compact,
+   producers are RECOMMENDED to omit the &quot;application/&quot; prefix from
+   &quot;typ&quot; when no other &quot;/&quot; appears in the media type, as specified in
+   that section; recipients using the media type value MUST treat a
+   &quot;typ&quot; value with no &quot;/&quot; as if &quot;application/&quot; were prepended.  When
+   explicit typing is employed, implementations SHOULD register and use
+   the full media type name &quot;application/example+jwt&quot;, where &quot;example&quot;
+   identifies the specific kind of JWT, and SHOULD set the corresponding
+   &quot;typ&quot; value to &quot;example+jwt&quot;, because distinct types make cross-JWT
+   substitution harder when validators check &quot;typ&quot;, and because
+   misapplying the Section 4.1.9 prefix rule can cause validators to
+   reject otherwise valid tokens or accept the wrong type.  This pairing
+   SHOULD be omitted only when the JWT cannot be confused with other
+   kinds of JWTs in its application context.  For example, for Security
+   Event Tokens (SETs) [RFC8417], the media type is &quot;application/
+   secevent+jwt&quot; and the &quot;typ&quot; value SHOULD be &quot;secevent+jwt&quot;, because
+   SETs are often issued in contexts where they could otherwise be
+   mistaken for other kinds of JWTs.
+
+   When applying explicit typing to a Nested JWT, the &quot;typ&quot; Header
+   Parameter containing the explicit type value MUST be present in the
+   inner JWT of the Nested JWT (the JWT whose payload is the JWT Claims
+   Set).  In some cases, the same &quot;typ&quot; Header Parameter value will be
+   present in the outer JWT as well, to explicitly type the entire
+   Nested JWT.
+
+   Note that the use of explicit typing may not achieve disambiguation
+   from existing kinds of JWTs, as the validation rules for kinds of
+   JWTs defined before the guidance on explicit typing in [RFC8725] was
+   available often do not use the &quot;typ&quot; Header Parameter value.
+
+   Also, note that attempting to retrofit mandatory explicit typing into
+   the validation rules for existing kinds of JWTs not already using it
+   would be a breaking change; if a legacy implementation creates a JWT
+   without the explicit type and an updated implementation receiving it
+   requires the explicit type, the JWT will be rejected.  The
+   implementations will not interoperate.  However, retrofitting a rule
+   that if the JWT contains a &quot;typ&quot; value, then it MUST be the expected
+   explicit type, is not a breaking change.
+
+   Another consideration for existing kinds of JWTs is that the use of a
+   &quot;typ&quot; value of &quot;JWT&quot;, as originally recommended in Section 5.1 of
+   [RFC7519], does not constitute effective explicit typing.
+
+   Explicit typing is RECOMMENDED for new uses of JWTs, because without
+   it, mutually exclusive validation rules are harder to enforce and
+   cross-JWT confusion becomes more likely.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 14]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+3.12.  Use Mutually Exclusive Validation Rules for Different Kinds of
+       JWTs
+
+   Each application of JWTs defines a profile specifying the required
+   and optional JWT claims and the validation rules associated with
+   them.  If more than one kind of JWT can be issued by the same issuer,
+   the validation rules for those JWTs MUST be written such that they
+   are mutually exclusive, rejecting JWTs of the wrong kind.
+
+   To prevent substitution of JWTs from one context into another,
+   application developers may employ a number of strategies:
+
+   *  Use explicit typing for different kinds of JWTs.  Then the
+      distinct &quot;typ&quot; values can be used to differentiate between the
+      different kinds of JWTs.
+
+   *  Use different sets of required claims or different required claim
+      values.  Then the validation rules for one kind of JWT will reject
+      those with different claims or values.
+
+   *  Use different sets of required Header Parameters or different
+      required Header Parameter values.  Then the validation rules for
+      one kind of JWT will reject those with different Header Parameters
+      or values.
+
+   *  Use different keys for different kinds of JWTs.  Then the keys
+      used to validate one kind of JWT will fail to validate other kinds
+      of JWTs.
+
+   *  Use different &quot;aud&quot; values for different uses of JWTs from the
+      same issuer.  Then audience validation will reject JWTs
+      substituted into inappropriate contexts.
+
+   *  Use different issuers for different kinds of JWTs.  Then the
+      distinct &quot;iss&quot; values can be used to segregate the different kinds
+      of JWTs.
+
+   Given the broad diversity of JWT usage and applications, the best
+   combination of types, required claims, values, Header Parameters, key
+   usages, and issuers to differentiate among different kinds of JWTs
+   will, in general, be application-specific.  As discussed in
+   Section 3.11, for new JWT applications, the use of explicit typing is
+   RECOMMENDED.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 15]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+3.13.  Limit Hash Iteration Count
+
+   Implementations are RECOMMENDED to set a reasonable upper limit on
+   the number of hash iterations that can be performed when validating
+   encrypted content using PBES2 encryption algorithms, so as to prevent
+   attackers from imposing an unreasonable computational burden on
+   recipients.  As an example, [OWASP-Password-Storage] recommends
+   600,000 iterations (at time of publishing) when using HMAC-SHA-256 in
+   a FIPS-140 context.  Rejecting inputs with a p2c (PBES2 Count) value
+   larger than twice that figure is RECOMMENDED, unless threat analysis
+   on the recipient side results in accepting a larger number of
+   iterations.
+
+3.14.  Check JWT Format Type
+
+   Implementations MUST confirm the JWT is in a legal format while
+   parsing it.  Legal JWTs, being dot-concatenated base64url strings,
+   contain only the ASCII characters for letters, numbers, dash,
+   underscore, and period.  Content with any other characters -
+   especially braces and quotation marks - is not a JWT and MUST be
+   rejected.
+
+3.15.  Limit JWE Decompression Size
+
+   Implementations are RECOMMENDED to set a reasonable upper limit on
+   the decompressed size of a JWE such as 250 KB, because without such a
+   limit, decompression can impose an unreasonable memory or CPU burden
+   on recipients.
+
+4.  Security Considerations
+
+   This entire document is about security considerations when
+   implementing and deploying JSON Web Tokens.
+
+5.  IANA Considerations
+
+   This document has no IANA actions.
+
+6.  Acknowledgements
+
+6.1.  Acknowledgements for RFC 8725
+
+   The following acknowledgements from [RFC8725], the text of which is
+   incorporated into this specification, are retained.
+
+   Thanks to Antonio Sanso for bringing the &quot;ECDH-ES&quot; invalid point
+   attack to the attention of JWE and JWT implementers.  Tim McLean
+   published the RSA/HMAC confusion attack [McLean].  Thanks to Nat
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 16]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   Sakimura for advocating the use of explicit typing.  Thanks to Neil
+   Madden for his numerous comments, and to Carsten Bormann, Brian
+   Campbell, Brian Carpenter, Alissa Cooper, Roman Danyliw, Ben Kaduk,
+   Mirja Kühlewind, Barry Leiba, Dan Moore, Eric Rescorla, Adam Roach,
+   Martin Vigoureux, and Éric Vyncke for their reviews.
+
+6.2.  Acknowledgements for [[ this specification ]]
+
+   We would like to thank Brian Campbell, Deb Cooley, Jianjun Chen, Dan
+   Moore, Aaron Parecki, Filip Skokan, Tom Tervoort, Enze Wang, and
+   Jesse Yang for their contributions to the new content in this
+   specification.
+
+7.  References
+
+7.1.  Normative References
+
+   [nist-sp-800-56a-r3]
+              Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
+              Davis, &quot;Recommendation for pair-wise key-establishment
+              schemes using discrete logarithm cryptography&quot;, National
+              Institute of Standards and Technology,
+              DOI 10.6028/nist.sp.800-56ar3, April 2018,
+              &lt;https://doi.org/10.6028/nist.sp.800-56ar3&gt;.
+
+   [RFC2119]  Bradner, S., &quot;Key words for use in RFCs to Indicate
+              Requirement Levels&quot;, BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              &lt;https://www.rfc-editor.org/rfc/rfc2119&gt;.
+
+   [RFC6979]  Pornin, T., &quot;Deterministic Usage of the Digital Signature
+              Algorithm (DSA) and Elliptic Curve Digital Signature
+              Algorithm (ECDSA)&quot;, RFC 6979, DOI 10.17487/RFC6979, August
+              2013, &lt;https://www.rfc-editor.org/rfc/rfc6979&gt;.
+
+   [RFC7515]  Jones, M., Bradley, J., and N. Sakimura, &quot;JSON Web
+              Signature (JWS)&quot;, RFC 7515, DOI 10.17487/RFC7515, May
+              2015, &lt;https://www.rfc-editor.org/rfc/rfc7515&gt;.
+
+   [RFC7516]  Jones, M. and J. Hildebrand, &quot;JSON Web Encryption (JWE)&quot;,
+              RFC 7516, DOI 10.17487/RFC7516, May 2015,
+              &lt;https://www.rfc-editor.org/rfc/rfc7516&gt;.
+
+   [RFC7518]  Jones, M., &quot;JSON Web Algorithms (JWA)&quot;, RFC 7518,
+              DOI 10.17487/RFC7518, May 2015,
+              &lt;https://www.rfc-editor.org/rfc/rfc7518&gt;.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 17]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   [RFC7519]  Jones, M., Bradley, J., and N. Sakimura, &quot;JSON Web Token
+              (JWT)&quot;, RFC 7519, DOI 10.17487/RFC7519, May 2015,
+              &lt;https://www.rfc-editor.org/rfc/rfc7519&gt;.
+
+   [RFC8017]  Moriarty, K., Ed., Kaliski, B., Jonsson, J., and A. Rusch,
+              &quot;PKCS #1: RSA Cryptography Specifications Version 2.2&quot;,
+              RFC 8017, DOI 10.17487/RFC8017, November 2016,
+              &lt;https://www.rfc-editor.org/rfc/rfc8017&gt;.
+
+   [RFC8018]  Moriarty, K., Ed., Kaliski, B., and A. Rusch, &quot;PKCS #5:
+              Password-Based Cryptography Specification Version 2.1&quot;,
+              RFC 8018, DOI 10.17487/RFC8018, January 2017,
+              &lt;https://www.rfc-editor.org/rfc/rfc8018&gt;.
+
+   [RFC8037]  Liusvaara, I., &quot;CFRG Elliptic Curve Diffie-Hellman (ECDH)
+              and Signatures in JSON Object Signing and Encryption
+              (JOSE)&quot;, RFC 8037, DOI 10.17487/RFC8037, January 2017,
+              &lt;https://www.rfc-editor.org/rfc/rfc8037&gt;.
+
+   [RFC8174]  Leiba, B., &quot;Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words&quot;, BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, &lt;https://www.rfc-editor.org/rfc/rfc8174&gt;.
+
+   [RFC8259]  Bray, T., Ed., &quot;The JavaScript Object Notation (JSON) Data
+              Interchange Format&quot;, STD 90, RFC 8259,
+              DOI 10.17487/RFC8259, December 2017,
+              &lt;https://www.rfc-editor.org/rfc/rfc8259&gt;.
+
+7.2.  Informative References
+
+   [Alawatugoda]
+              Alawatugoda, J., Stebila, D., and C. Boyd, &quot;Protecting
+              Encrypted Cookies from Compression Side-Channel Attacks&quot;,
+              Springer Berlin Heidelberg, Lecture Notes in Computer
+              Science pp. 86-106, DOI 10.1007/978-3-662-47854-7_6,
+              ISBN [&quot;9783662478530&quot;, &quot;9783662478547&quot;], 2015,
+              &lt;https://doi.org/10.1007/978-3-662-47854-7_6&gt;.
+
+   [ANSI-X962-2005]
+              American National Standards Institute, &quot;Public Key
+              Cryptography for the Financial Services Industry: the
+              Elliptic Curve Digital Signature Algorithm (ECDSA)&quot;,
+              November 2005.
+
+   [CVE-2015-9235]
+              NIST, &quot;CVE-2015-9235 Detail&quot;, National Vulnerability
+              Database, May 2018,
+              &lt;https://nvd.nist.gov/vuln/detail/CVE-2015-9235&gt;.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 18]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   [CVE-2023-51774]
+              NIST, &quot;CVE-2023-51774 Detail&quot;, National Vulnerability
+              Database, February 2024,
+              &lt;https://nvd.nist.gov/vuln/detail/CVE-2023-51774&gt;.
+
+   [I-D.ietf-jose-deprecate-none-rsa15]
+              Madden, N., &quot;JOSE: Deprecate &#x27;none&#x27; and &#x27;RSA1_5&#x27;&quot;, Work in
+              Progress, Internet-Draft, draft-ietf-jose-deprecate-none-
+              rsa15-04, 2 March 2026,
+              &lt;https://datatracker.ietf.org/doc/html/draft-ietf-jose-
+              deprecate-none-rsa15-04&gt;.
+
+   [JWT-Cracker]
+              Rius, B., &quot;JWT Cracker&quot;, n.d.,
+              &lt;https://github.com/brendan-rius/c-jwt-cracker&gt;.
+
+   [Kelsey]   Kelsey, J., &quot;Compression and Information Leakage of
+              Plaintext&quot;, Springer Berlin Heidelberg, Lecture Notes in
+              Computer Science pp. 263-276,
+              DOI 10.1007/3-540-45661-9_21, ISBN [&quot;9783540440093&quot;,
+              &quot;9783540456612&quot;], 2002,
+              &lt;https://doi.org/10.1007/3-540-45661-9_21&gt;.
+
+   [Langkemper]
+              Langkemper, S., &quot;Attacking JWT authentication&quot;, September
+              2016, &lt;https://www.sjoerdlangkemper.nl/2016/09/28/
+              attacking-jwt-authentication/&gt;.
+
+   [McLean]   McLean, T., &quot;Critical vulnerabilities in JSON Web Token
+              libraries&quot;, March 2015, &lt;https://auth0.com/blog/critical-
+              vulnerabilities-in-json-web-token-libraries/&gt;.
+
+   [OpenID.Backchannel]
+              Jones, M. and J. Bradley, &quot;OpenID Connect Back-Channel
+              Logout 1.0 incorporating errata set 1&quot;, December 2023,
+              &lt;https://openid.net/specs/openid-connect-backchannel-
+              1_0.html&gt;.
+
+   [OpenID.Core]
+              Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and
+              C. Mortimore, &quot;OpenID Connect Core 1.0 incorporating
+              errata set 2&quot;, December 2023,
+              &lt;https://openid.net/specs/openid-connect-core-1_0.html&gt;.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 19]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   [OWASP-Password-Storage]
+              OWASP, &quot;Password Storage Cheat Sheet&quot;, OWASP Cheat Sheet
+              Series , 2025,
+              &lt;https://cheatsheetseries.owasp.org/cheatsheets/
+              Password_Storage_Cheat_Sheet.html&gt;.
+
+   [RFC6749]  Hardt, D., Ed., &quot;The OAuth 2.0 Authorization Framework&quot;,
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              &lt;https://www.rfc-editor.org/rfc/rfc6749&gt;.
+
+   [RFC7159]  Bray, T., Ed., &quot;The JavaScript Object Notation (JSON) Data
+              Interchange Format&quot;, RFC 7159, DOI 10.17487/RFC7159, March
+              2014, &lt;https://www.rfc-editor.org/rfc/rfc7159&gt;.
+
+   [RFC7517]  Jones, M., &quot;JSON Web Key (JWK)&quot;, RFC 7517,
+              DOI 10.17487/RFC7517, May 2015,
+              &lt;https://www.rfc-editor.org/rfc/rfc7517&gt;.
+
+   [RFC8414]  Jones, M., Sakimura, N., and J. Bradley, &quot;OAuth 2.0
+              Authorization Server Metadata&quot;, RFC 8414,
+              DOI 10.17487/RFC8414, June 2018,
+              &lt;https://www.rfc-editor.org/rfc/rfc8414&gt;.
+
+   [RFC8417]  Hunt, P., Ed., Jones, M., Denniss, W., and M. Ansari,
+              &quot;Security Event Token (SET)&quot;, RFC 8417,
+              DOI 10.17487/RFC8417, July 2018,
+              &lt;https://www.rfc-editor.org/rfc/rfc8417&gt;.
+
+   [RFC8725]  Sheffer, Y., Hardt, D., and M. Jones, &quot;JSON Web Token Best
+              Current Practices&quot;, BCP 225, RFC 8725,
+              DOI 10.17487/RFC8725, February 2020,
+              &lt;https://www.rfc-editor.org/rfc/rfc8725&gt;.
+
+   [RFC9068]  Bertocci, V., &quot;JSON Web Token (JWT) Profile for OAuth 2.0
+              Access Tokens&quot;, RFC 9068, DOI 10.17487/RFC9068, October
+              2021, &lt;https://www.rfc-editor.org/rfc/rfc9068&gt;.
+
+   [RFC9700]  Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
+              &quot;Best Current Practice for OAuth 2.0 Security&quot;, BCP 240,
+              RFC 9700, DOI 10.17487/RFC9700, January 2025,
+              &lt;https://www.rfc-editor.org/rfc/rfc9700&gt;.
+
+   [Sanso]    Sanso, A., &quot;Critical Vulnerability in JSON Web
+              Encryption&quot;, March 2017, &lt;https://auth0.com/blog/critical-
+              vulnerability-in-json-web-encryption/&gt;.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 20]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   [Valenta]  Valenta, L., Sullivan, N., Sanso, A., and N. Heninger, &quot;In
+              search of CurveSwap: Measuring elliptic curve
+              implementations in the wild&quot;, March 2018,
+              &lt;https://ia.cr/2018/298&gt;.
+
+<span>Appendix A.  Changes from RFC 8725</span>
+
+   This document obsoletes RFC 8725 and provides several significant
+   improvements and additions:
+
+   1.  Algorithm Verification: Added defensive checking to address
+       incorrect reading of alg values as being case-insensitive
+       (Section 3.1).
+
+   2.  Encryption-Signature Confusion: Added mitigation for attacks
+       where verifiers don&#x27;t distinguish between successful decryption
+       and successful signature validation (Section 3.12).
+
+   3.  PBES2 Count Limits: Added requirements to reject unreasonably
+       large p2c (PBES2 Count) values to prevent DoS attacks
+       (Section 3.13).
+
+   4.  JWT Format Confusion: Added mitigation for JWT serialization
+       format confusion attacks (Section 3.14).
+
+   5.  Compression DoS: Added mitigation for DoS attacks resulting from
+       abuse of compression in JWE (Section 3.15).
+
+   6.  Described relationship between explicit typing and kinds of JWTs
+       not already employing it.
+
+<span>Appendix B.  Document History</span>
+
+   [[Note to RFC Editor: please remove before publication.]]
+
+B.1.  draft-ietf-oauth-rfc8725bis-06
+
+   *  AD review followup: promoted selected lowercase must/should
+      guidance to normative MUST language.
+
+B.2.  draft-ietf-oauth-rfc8725bis-05
+
+   *  Applied suggestions by responsible AD Deb Cooley.
+
+B.3.  draft-ietf-oauth-rfc8725bis-04
+
+   *  Applied suggestions by document shepherd Hannes Tschofenig.
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 21]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+B.4.  draft-ietf-oauth-rfc8725bis-03
+
+   *  Described relationship between explicit typing and kinds of JWTs
+      not already employing it.
+
+B.5.  draft-ietf-oauth-rfc8725bis-02
+
+   *  Incorporated Aaron Parecki&#x27;s review suggestions.
+
+   *  Acknowledged contributors to the new content in this
+      specification.
+
+B.6.  draft-ietf-oauth-rfc8725bis-01
+
+   *  Applied editorial suggestions by Dan Moore.
+
+   *  Described changes relative to RFC 8725.
+
+B.7.  draft-ietf-oauth-rfc8725bis-00
+
+   *  Draft adopted, no textual changes
+
+B.8.  draft-sheffer-oauth-rfc8725bis-02
+
+   *  Obsoletes RFC 8725 and updates RFC 7519.
+
+B.9.  draft-sheffer-oauth-rfc8725bis-01
+
+   *  Mitigate encryption-signature confusion.
+
+   *  Reject unreasonably large p2c (PBES2 Count) values.
+
+   *  Defensive checking to address incorrect reading of alg values as
+      being case-insensitive.
+
+   *  Mitigate DoS attacks resulting from abuse of compression.
+
+   *  Mitigate JWT serialization format confusion.
+
+B.10.  draft-sheffer-oauth-rfc8725bis-00
+
+   *  Initial version, text is identical to RFC 8725.
+
+<span>Authors&#x27; Addresses</span>
+
+   Yaron Sheffer
+   Intuit
+   Email: yaronf.ietf@gmail.com
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 22]</span>
+<span>Internet-Draft                   JWT BCP                       June 2026</span>
+
+   Dick Hardt
+   Email: dick.hardt@gmail.com
+
+   Michael B. Jones
+   Self-Issued Consulting
+   Email: michael_b_jones@hotmail.com
+   URI:   https://self-issued.info/
+
+<span>Sheffer, et al.         Expires 21 December 2026               [Page 23]</span>
+</pre>
+                </div>
+            </div>
+            
+        
+    
+                    
+                </div>
+            </div>
+        </main>
+        
+            <footer class="col-md-12 col-sm-12 border-top mt-5 py-5 bg-light-subtle text-center position-sticky">
+                <a href="https://www.ietf.org/" class="p-3">IETF</a>
+                <a href="https://www.ietf.org/iesg/" class="p-3">IESG</a>
+                <a href="https://www.iab.org/" class="p-3">IAB</a>
+                <a href="https://www.irtf.org/" class="p-3">IRTF</a>
+                <a href="https://www.ietf.org/llc/" class="p-3 text-nowrap">IETF LLC</a>
+                <a href="https://trustee.ietf.org/" class="p-3 text-nowrap">IETF Trust</a>
+                <a href="https://www.rfc-editor.org/" class="p-3 text-nowrap">RFC Editor</a>
+                <a href="https://www.iana.org/" class="p-3">IANA</a>
+                <a href="https://www.ietf.org/privacy-statement/" class="p-3 text-nowrap">Privacy Statement</a>
+                <div class="small text-body-secondary py-3">
+                    
+                        <a class="mx-2" href="/release/about">About IETF Datatracker</a>
+                        <span class="mx-2">
+                            
+                                <a href="https://github.com/ietf-tools/datatracker/releases/tag/12.68.0">
+                            
+                            Version 12.68.0
+                            (release - 306f479)
+                            
+                                </a>
+                            
+                        </span>
+                    
+                    <a class="mx-2" href="https://status.ietf.org" target="_blank">System Status</a>
+                    <span class="mx-2 text-danger">
+                        <i class="bi bi-bug"></i>
+                        Report a bug:
+                        <a class="text-reset" target="_blank" href="https://github.com/ietf-tools/datatracker/issues/new/choose">GitHub</a>
+                        
+                            <a class="text-reset" href="mailto:tools-help@ietf.org">Email</a>
+                        
+                    </span>
+                    
+                </div>
+            </footer>
+        
+        
+        <script src="https://static.ietf.org/dt/12.68.0/ietf/js/d3.js">
+        </script>
+        <script src="https://static.ietf.org/dt/12.68.0/ietf/js/document_timeline.js">
+        </script>
+    
+        <script src="https://static.ietf.org/dt/12.68.0/ietf/js/select2.js"></script>
+        <script src="https://static.ietf.org/dt/12.68.0/ietf/js/navbar-doc-search.js"></script>
+      
+<script>
+  var _paq = window._paq || [];
+  
+  _paq.push(['disableCookies']);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//analytics.ietf.org/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', 7]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//analytics.ietf.org/matomo.php?idsite=7" style="border:0;" alt="" /></p></noscript>
+
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a16fba200c220ffa',t:'MTc4MzM1MjYyNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
