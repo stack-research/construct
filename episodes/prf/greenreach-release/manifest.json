@@ -16,7 +16,14 @@
    }
   },
   "probe_debt": "per-engine cold ignorance probe REQUIRED before any real-engine run (\u00a744; never inherited); openai/gpt-oss-20b probed fresh 2026-07-06 post-roster-precommit; any future engine needs its own entry \u2014 now ENFORCED at run entry by run_and_score (bd7e8dd)",
-  "roster_precommitment": "target_engines precommitted at fixture authoring per sealed \u00a744: [openai/gpt-oss-20b]; small-engine lane paused"
+  "roster_precommitment": "target_engines precommitted at fixture authoring per sealed \u00a744: [openai/gpt-oss-20b]; small-engine lane paused",
+  "superseded_ledgers": {
+   "greenreach-baseline.sbr-gpt-oss-20b.jsonl": {
+    "reason": "r1 = transport-defect record (A2 fired ARTIFACTUAL, \u00a743 board round 2026-07-06: pilot sessions JSON-instructed against the R-handle parser + harmony envelopes leaked into raw_action); kept committed per no-erasure, never scored; r2 runs on repaired transport (09e811f) under the precommitted residual-clearance protocol (cold pass-cost distribution measured, not just the A2 rate)",
+    "scored": false,
+    "superseded_by": "greenreach-baseline.sbr-gpt-oss-20b-r2.jsonl"
+   }
+  }
  },
  "episodes": [
   "ep-greenreach-baseline.json",
