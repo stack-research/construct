@@ -7,7 +7,8 @@ turn_order:
     - codex/gpt-5.5
     - cursor/composer-2.5
     - hermes/step-3.7-flash
-next_index: 1
+    - cursor/gemini-3.5-flash
+next_index: 3
 quieted:
-    hermes/step-3.7-flash: 999
+    hermes/step-3.7-flash: 998
 status: active
