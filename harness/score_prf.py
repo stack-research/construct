@@ -221,12 +221,12 @@ class PRFScorer:
 
     def score(self) -> dict:
         ver = self._instrument_version()
-        if ver in ("0.2", "0.3"):
+        if ver in ("0.2", "0.3", "0.4"):
             return self._score_v02()
         return self._score_v01()
 
     def _uses_rendered_a_i(self) -> bool:
-        return self._instrument_version() == "0.3"
+        return self._instrument_version() in ("0.3", "0.4")
 
     def _recompute_a_i(self, canonical_state: dict) -> int:
         if self._uses_rendered_a_i():
@@ -339,7 +339,7 @@ class PRFScorer:
         read_steps: list[tuple[int, str]] = []
         iv = self._instrument_version()
         visible: list[str] | None = None
-        if iv == "0.3":
+        if iv in ("0.3", "0.4"):
             aff = self._rows("affordance_presented", branch=branch,
                              session_id=session_id)
             visible = sorted(
@@ -351,7 +351,7 @@ class PRFScorer:
                             session_id=session_id):
             if not d.get("parsed") or d.get("refuse_reason"):
                 continue
-            if iv == "0.3" and visible is not None:
+            if iv in ("0.3", "0.4") and visible is not None:
                 sid = handle_to_surface_id(d.get("raw_action", ""), visible)
                 if not sid:
                     continue
@@ -378,11 +378,39 @@ class PRFScorer:
         by_step = {r["step"]: r["surface_id"] for r in reads}
         return all(by_step.get(step) == sid for step, sid in read_steps)
 
-    def _effective_cost(self, branch: str, session_id: str, sample_index: int,
-                        c_max: int) -> int:
+    def _forced_stop_reason(self, branch: str, session_id: str,
+                            sample_index: int) -> str | None:
+        row = self._one("forced_stop", branch=branch, session_id=session_id,
+                        sample_index=sample_index)
+        if row is not None:
+            return row.get("stop_reason")
+        outcome = self._one("session_outcome", branch=branch,
+                            session_id=session_id, sample_index=sample_index)
+        return outcome.get("stop_reason") if outcome else None
+
+    def _session_quality_ok(self, branch: str, session_id: str,
+                            sample_index: int) -> bool:
+        """§29 enforcement AT SCORING (Part IV §40, F1): stop_reason ∈
+        {max_steps, budget_exhausted} → quality_ok = false, recomputed from
+        the ledger's own forced_stop rows — the scorer never trusts the
+        runner to have priced it. Family-keyed at 0.4 (§46); the docket and
+        meridian families' sealed ledgers re-score byte-identical."""
         outcome = self._one("session_outcome", branch=branch,
                             session_id=session_id, sample_index=sample_index)
         quality_ok = bool(outcome and outcome.get("quality_ok"))
+        if self._instrument_version() == "0.4" and quality_ok:
+            reason = self._forced_stop_reason(branch, session_id, sample_index)
+            if reason in ("max_steps", "budget_exhausted"):
+                self.evidence.append(
+                    f"§29 enforced at scoring: {branch}:{session_id} "
+                    f"forced_stop({reason}) with a passing answer — "
+                    "priced at c_max (F1)")
+                return False
+        return quality_ok
+
+    def _effective_cost(self, branch: str, session_id: str, sample_index: int,
+                        c_max: int) -> int:
+        quality_ok = self._session_quality_ok(branch, session_id, sample_index)
         read_cost = self._session_read_cost(branch, session_id)
         a_i = self._artifact_tokens(branch)
         if quality_ok:
@@ -528,9 +556,7 @@ class PRFScorer:
                           f"{branch}:{sid} — route ledger not "
                           "replay-authoritative (§34 F1)")
 
-            outcome = self._one("session_outcome", branch=branch,
-                                session_id=sid, sample_index=si)
-            qok = bool(outcome and outcome.get("quality_ok"))
+            qok = self._session_quality_ok(branch, sid, si)
             branch_costs[branch].append(
                 self._effective_cost(branch, sid, si, c_max))
             fc = self._false_continuation(branch, sid, si, qok)

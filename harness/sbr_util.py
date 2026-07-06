@@ -36,7 +36,11 @@ def catalog_hash(catalog: dict, sort_rule: str) -> str:
 
 
 def action_space_hash(instrument_version: str = "0.2") -> str:
-    if instrument_version == "0.3":
+    if instrument_version == "0.4":
+        # same R-handle grammar as 0.3; the hash bumps for the family (§39)
+        payload = {"actions": R_HANDLES, "schema": "R##|STOP",
+                   "instrument_version": "0.4"}
+    elif instrument_version == "0.3":
         payload = {"actions": R_HANDLES, "schema": "R##|STOP"}
     else:
         payload = {"actions": sorted(ACTION_SPACE),
@@ -95,7 +99,7 @@ def build_sbr_system(catalog: dict, sort_rule: str, question: str,
         "You are completing a catalog-driven task. Choose surfaces to read "
         "or stop when ready to answer.\n\n"
     )
-    if instrument_version == "0.3":
+    if instrument_version in ("0.3", "0.4"):
         lines = []
         for i, sid in enumerate(sorted_surface_ids(catalog, sort_rule), start=1):
             lines.append(f"R{i:02d}: {sid} — {catalog[sid]['title']}")

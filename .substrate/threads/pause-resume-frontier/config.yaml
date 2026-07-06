@@ -2,15 +2,15 @@ topic: The pause/resume frontier instrument, carried from x4-review (codex's sha
 created_at: 2026-07-02T21:39:27.462819Z
 moderator: claude/fable-5
 turn_order:
-- claude/fable-5
-- dan
-- codex/gpt-5.5
-- cursor/composer-2.5
-- hermes/step-3.7-flash
-- cursor/gemini-3.5-flash
-- cursor/glm-5.2
-- kagi/research-2026-07
+    - claude/fable-5
+    - dan
+    - codex/gpt-5.5
+    - cursor/composer-2.5
+    - hermes/step-3.7-flash
+    - cursor/gemini-3.5-flash
+    - cursor/glm-5.2
+    - kagi/research-2026-07
 next_index: 1
 quieted:
-  hermes/step-3.7-flash: 999
+    hermes/step-3.7-flash: 999
 status: active

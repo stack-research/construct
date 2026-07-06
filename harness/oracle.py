@@ -69,6 +69,24 @@ def authored_oracle(answer: str, expected_answer: str) -> OracleScore:
     )
 
 
+def conjunctive_oracle(answer: str, expected_answer: str,
+                       read_ids: list[str],
+                       dispositive_leg_ids: list[str]) -> OracleScore:
+    """SPEC_PAUSE_RESUME Part IV §41 — the conjunctive evidence gate (pin D8).
+
+    NO disposition is adequate unless the session's SUCCESSFUL read set
+    contains ALL dispositive legs; with the triple read, the answer must
+    still match the authored expected disposition. This seals the docket's
+    partial-credit hole ("lucky cheap wrong" priced at c_max, at the oracle,
+    deterministically) — shared by run_sbr scoring and the fixture gate's
+    wire-sweep, so runner and gate agree by construction.
+    """
+    if not set(dispositive_leg_ids) <= set(read_ids):
+        return OracleScore(score=0.0, type="authored", source="authored",
+                           confidence=1.0, scorer="harness")
+    return authored_oracle(answer, expected_answer)
+
+
 _NEGATED_CITE_PATTERNS = (
     r"\bdo not cite\b",
     r"\bnot suitable to cite\b",

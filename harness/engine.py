@@ -197,7 +197,7 @@ SBR_ACTION_INSTRUCTION_V03 = (
 
 
 def sbr_action_instruction(instrument_version: str = "0.2") -> str:
-    if instrument_version == "0.3":
+    if instrument_version in ("0.3", "0.4"):
         return SBR_ACTION_INSTRUCTION_V03
     return SBR_ACTION_INSTRUCTION
 

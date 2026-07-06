@@ -34,7 +34,7 @@ from .engine import ClaudeEngine, LocalEngine, MockEngine
 from .ledger import Ledger
 from .mint_frontier_state import (MintRefusal, freeze_validate, manifest_hash,
                                   offer_gate)
-from .oracle import authored_oracle
+from .oracle import authored_oracle, conjunctive_oracle
 from .prf_ablation import structural_dependency
 
 REPO = Path(__file__).resolve().parent.parent
@@ -106,8 +106,8 @@ def parse_r_handle_action(raw: str,
 
 def parse_action(raw: str, visible: list[str],
                  instrument_version: str = "0.2") -> tuple[dict | None, str | None]:
-    """Version-forked action parser: R-handles (0.3) or JSON (0.2)."""
-    if instrument_version == "0.3":
+    """Version-forked action parser: R-handles (0.3/0.4) or JSON (0.2)."""
+    if instrument_version in ("0.3", "0.4"):
         return parse_r_handle_action(raw, visible)
     return parse_structured_action(raw)
 
@@ -144,7 +144,8 @@ def run_mint_spine(episode: dict, population: dict, freeze_manifest: dict,
         cand = freeze_validate(episode["frontier_state"], freeze_manifest,
                                out["batch"], manifest_hash(freeze_manifest),
                                rendered_tokens=(
-                                   episode.get("instrument_version") == "0.3"))
+                                   episode.get("instrument_version")
+                                   in ("0.3", "0.4")))
     except MintRefusal as e:
         ledger.write(e.row)
         return {"halted": "frontier_mint_refused", **e.row}
@@ -192,13 +193,22 @@ def run_mint_spine(episode: dict, population: dict, freeze_manifest: dict,
     }
 
 
+def dispositive_leg_ids(episode: dict) -> list[str]:
+    """Part IV §41: the precommitted dispositive-leg triple. Pinned in the
+    episode; the fixture gate replays the pin against catalog structure."""
+    return list(episode.get("dispositive_leg_ids", []))
+
+
 def synthesize_mock_answer(read_ids: list[str], episode: dict) -> str:
     """Wire-test answer from reads: status surface S1 yields the oracle key."""
-    if episode.get("instrument_version") == "0.3":
+    if episode.get("instrument_version") in ("0.3", "0.4"):
         cal = set(episode.get("calibration_route", []))
         if cal and cal <= set(read_ids):
             return episode.get("calibration_expected_answer",
                                episode["expected_answer_t1"])
+        legs = set(dispositive_leg_ids(episode))
+        if legs and legs <= set(read_ids):
+            return episode["expected_answer_t1"]
     if "S1" in read_ids:
         return episode["expected_answer_t1"]
     stale = episode.get("stale_claim") or ""
@@ -397,8 +407,35 @@ def run_sbr_session(
     else:
         answer = synthesize_mock_answer(read_ids, episode)
         answer_source = "mock_synthesized"
-    score = authored_oracle(answer, episode["expected_answer_t1"])
+    if iv == "0.4":
+        # Part IV §41 conjunctive evidence gate: no disposition is adequate
+        # without the full dispositive-leg triple in the successful read set
+        score = conjunctive_oracle(answer, episode["expected_answer_t1"],
+                                   read_ids, dispositive_leg_ids(episode))
+    else:
+        score = authored_oracle(answer, episode["expected_answer_t1"])
     quality_ok = score.score >= episode.get("quality_threshold", 1.0)
+    if stop_reason is not None:
+        if iv == "0.4":
+            # D13 (dan, 2026-07-04): under §29 enforcement the forced-stop
+            # session prices at c_max, so this diagnostic row is the ONLY
+            # place the "would the elicited answer have passed" signal
+            # survives. Beside — never inside — the cells (B16).
+            ledger.write({
+                "kind": "boundary_forced_stop",
+                "branch": branch,
+                "session_id": session_id,
+                "sample_index": sample_index,
+                "stop_reason": stop_reason,
+                "would_have_passed": quality_ok,
+                "disclosure": "diagnostic count beside the cells (B16), "
+                              "never evidence",
+            })
+        # §29 as law, F1 as lesson: forced stop prices at c_max — quality_ok
+        # false at the outcome row so no downstream consumer can mix it in.
+        # Family-keyed at 0.4 (§46); prior families' sealed ledgers stand.
+        if iv == "0.4":
+            quality_ok = False
     ledger.write({
         "kind": "session_outcome",
         "branch": branch,
@@ -408,7 +445,9 @@ def run_sbr_session(
         "answer_source": answer_source,
         "oracle_score": score.score,
         "quality_ok": quality_ok,
-        "oracle_source": "authored_oracle:fictional_meridian",
+        "stop_reason": stop_reason,
+        "oracle_source": episode.get(
+            "oracle_source_label", "authored_oracle:fictional_meridian"),
         "read_ids": list(read_ids),
     })
     return {
@@ -543,7 +582,8 @@ def run_calibration_gate(
         # §30-2: the harness DRIVES the scripted route; the engine only
         # answers at elicitation (real engine never free-routes here)
         session = engine.start_session(
-            action_instruction=sbr_action_instruction("0.3"))
+            action_instruction=sbr_action_instruction(
+                episode.get("instrument_version", "0.3")))
         elicit = True if elicit_answer is None else elicit_answer
         forced = list(episode["calibration_route"])
 
@@ -577,8 +617,9 @@ def _maybe_calibration_gate(
     wire_mock: bool,
     scripted_sessions: dict | None,
 ) -> dict | None:
-    """Admission precondition for v0.3 (§30). Returns gate row or None."""
-    if episode.get("instrument_version") != "0.3":
+    """Admission precondition for v0.3/v0.4 (§30, carried by §42). Returns
+    gate row or None."""
+    if episode.get("instrument_version") not in ("0.3", "0.4"):
         return None
     label = getattr(engine, "model", engine_backend) if engine else engine_backend
     if wire_mock or scripted_sessions is not None:
