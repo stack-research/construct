@@ -8,9 +8,8 @@ and — three fixture families in — still refusing to answer its own central q
 The refusals are the story. Each one is a measurement of the instrument's own
 limits, written down before anyone could be tempted to soften them.
 
-**Status: in flight.** Parts I–III are sealed and executed; Part IV
-(v0.4-draft, the Greenreach family) is drafted on a closed pin list and awaits
-board review and dan's seal. When it disagrees with the spec, the spec wins —
+**Status: in flight at time of writing; Part IV was subsequently sealed
+(2026-07-05), built, and closed — that arc is [Chapter 14](14_GREENREACH_CLOSE.md).** When it disagrees with the spec, the spec wins —
 this chapter narrates; [SPEC_PAUSE_RESUME.md](../SPEC_PAUSE_RESUME.md) governs.
 
 ## The question
@@ -194,3 +193,5 @@ under one budget discipline, and the honest question shifts from "does the
 artifact pay?" to "what would have to be true of an engine for it to pay?" —
 which is a question about engines, not fixtures, and would mark the boundary of
 what this instrument can see.
+
+Next: [Greenreach: the close](14_GREENREACH_CLOSE.md)
