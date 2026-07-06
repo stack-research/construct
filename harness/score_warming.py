@@ -483,13 +483,17 @@ class WarmingScorer:
             if c_saves:
                 # gemini (adversarial round 2026-07-06): a parity win where C's
                 # END-TO-END reads (+ state charge) are not below B+'s is a
-                # read-order permutation — legitimate under §4 (order IS the
-                # trigger's only allowed effect) but it must be visible in the
-                # verdict row, never only in prose
+                # read-order permutation — an order effect is §4-legitimate but
+                # it is a routing claim, not a budget claim. dan's ruling
+                # (thread line 1037, 2026-07-06): an order_only_win may NOT
+                # promote WB-moved-win in v0.1 — refused by computation, and
+                # the v0.2 spec pass owns any change.
                 c_end = c.get("read_tokens", 0) + c.get("treatment_tokens", 0)
-                cells["moved_win_total_cost_disclosure"] = (
-                    "total_win" if c_end < bp.get("read_tokens", 0)
-                    else "order_only_win")
+                if c_end < bp.get("read_tokens", 0):
+                    cells["moved_win_total_cost_disclosure"] = "total_win"
+                else:
+                    cells["moved_win_total_cost_disclosure"] = "order_only_win"
+                    cells["WB-moved-win"] = "refused_order_only_v0_1"
             if quality.get("C", 0) >= QUALITY_FLOOR and not c_saves and \
                     costs.get("B0", {}).get("parity_cost") is not None and \
                     c_total < (costs["B0"].get("parity_cost") or 0):

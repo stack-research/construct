@@ -449,7 +449,8 @@ class WatchHardening(unittest.TestCase):
             {"kind": "branch_outcome", "branch": "B+", "prefix_index": 0,
              "oracle_score": 1.0}]
         v = WarmingScorer(packet("moved"), ev).score()
-        self.assertEqual(v["cells"]["WB-moved-win"], "pass", v)
+        # dan's v0.1 ruling (2026-07-06): order-only wins never promote
+        self.assertEqual(v["cells"]["WB-moved-win"], "refused_order_only_v0_1")
         self.assertEqual(v["cells"]["moved_win_total_cost_disclosure"],
                          "order_only_win")
 
