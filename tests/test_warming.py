@@ -402,6 +402,57 @@ class WatchHardening(unittest.TestCase):
         self.assertFalse(row["multi_hop"])
         self.assertTrue(row["precommit_precedes_first_iesg_event"])
 
+    def test_checkpoint_carries_rederivable_pair_list(self):
+        # composer (adversarial round): the digest must be recomputable from
+        # the row itself, not from artifacts that only existed in memory
+        from harness.wb_pause import checkpoint_row
+        row = checkpoint_row("pop", 3, [], [("u1", "s1"), ("u2", "s2")], [])
+        self.assertEqual(_sha(sorted(row["unchanged"])),
+                         row["unchanged_digest"])
+
+    def test_scorer_chronology_defers_to_attestation(self):
+        # composer's live attack: a doc.time AFTER precommit must not rescue a
+        # unit whose first attested IESG event was BEFORE precommit
+        ev = base_events("moved")
+        ev += [{"kind": "external_ts_attestation",
+                "first_iesg_event_ts": "2026-06-30T00:00:00Z",  # before precommit
+                "precommit_precedes_first_iesg_event": False,
+                "iesg_events_since_precommit": []}]
+        ev += reads("B0", ["ruling"]) + reads("B+", ["ruling"])
+        ev += reads("C", ["ruling"]) + reads("C_ablated", ["ruling"])
+        v = WarmingScorer(packet("moved"), ev).score()
+        self.assertFalse(v["guards"]["precommit_precedes_world_move"])
+
+    def test_scorer_chronology_attestation_green_path(self):
+        ev = base_events("moved")
+        ev += [{"kind": "external_ts_attestation",
+                "first_iesg_event_ts": "2026-07-01T12:00:00Z",  # after precommit
+                "precommit_precedes_first_iesg_event": True,
+                "iesg_events_since_precommit": [
+                    {"time": "2026-07-01T12:00:00Z", "state_slug": "x"}]}]
+        ev += reads("B0", ["ruling"]) + reads("B+", ["ruling"])
+        ev += reads("C", ["ruling"]) + reads("C_ablated", ["ruling"])
+        v = WarmingScorer(packet("moved"), ev).score()
+        self.assertTrue(v["guards"]["precommit_precedes_world_move"])
+
+    def test_moved_win_discloses_order_only(self):
+        # gemini: C hits the certificate first (parity win) but reads the same
+        # surfaces overall — the verdict must say order_only_win by computation
+        ev = base_events("moved")
+        ev += [{"kind": "route_plan", "branch": "B+",
+                "neutral_rank": {"guide": 0, "changelog": 1, "ruling": 2}}]
+        ev += reads("B0", ["guide", "changelog", "ruling"])
+        ev += reads("B+", ["guide", "ruling"])   # parity late, same surfaces
+        ev += reads("C", ["ruling", "guide"])    # parity first, same surfaces
+        ev += reads("C_ablated", ["guide", "ruling"])
+        ev += outcomes(B0=1.0, C=1.0) + [
+            {"kind": "branch_outcome", "branch": "B+", "prefix_index": 0,
+             "oracle_score": 1.0}]
+        v = WarmingScorer(packet("moved"), ev).score()
+        self.assertEqual(v["cells"]["WB-moved-win"], "pass", v)
+        self.assertEqual(v["cells"]["moved_win_total_cost_disclosure"],
+                         "order_only_win")
+
     def test_attestation_no_events_fails_closed(self):
         from harness.wb_pause import attestation_row
         row = attestation_row("draft-z", "pop", "2026-07-02T15:56:54Z",

@@ -144,6 +144,10 @@ def checkpoint_row(population_id: str, checked: int, moved: list[str],
             "checked": checked, "moved_this_check": sorted(moved),
             "unchanged_count": len(unchanged),
             "unchanged_digest": _sha(sorted(unchanged)),
+            # adversarial round (composer): the digest alone was not re-derivable
+            # from repo artifacts — the pair list rides in the row so any reader
+            # can recompute the digest and check a unit's silent membership
+            "unchanged": sorted(unchanged),
             "fetch_failures": fetch_failures,
             "t1_projection": "transition-only",
             "disclosure": "silent/noise legs are scoreable only against "
@@ -198,14 +202,16 @@ def watch() -> dict:
         moved.append({"unit": u["unit_id"],
                       "t0": json.loads(t0_text)["iesg_states"],
                       "t1": t1_slice["iesg_states"]})
-    wl.write(checkpoint_row(pop["population_id"], checked,
-                            [m["unit"] for m in moved], sorted(unchanged),
-                            failures))
     out = {"checked": checked, "moved_this_check": moved,
            "fetch_failures": len(failures),
            "moved_total": len(already_moved) + len(moved)}
     if moved:  # freeze at detection — the body surface is live until frozen
         out["freeze"] = freeze()
+    # checkpoint lands after the freeze so the ledger reads in true order:
+    # detect -> freeze -> checkpoint (composer, adversarial round)
+    wl.write(checkpoint_row(pop["population_id"], checked,
+                            [m["unit"] for m in moved], sorted(unchanged),
+                            failures))
     return out
 
 
@@ -234,8 +240,15 @@ def freeze_packet_row(unit: dict, move_row: dict, status_text: str,
     if sorted(surfaces) != sorted(unit["route_catalog"]):
         raise ValueError(f"frozen surfaces diverge from the T0 route catalog "
                          f"for {uid} — symmetry requires the same surface set")
+    from .wb_population import FRONTIER_TERMINAL
     return {"kind": "t1_route_packet_frozen", "unit_id": uid,
             "population_id": move_row["population_id"], "surfaces": surfaces,
+            # codex (adversarial round): pause-time frontier_terminal is the
+            # scorer's field; the T1 LANDING state is recorded separately so
+            # "terminal" is never ambiguous between the two times
+            "t1_frontier_terminal": any(
+                s in FRONTIER_TERMINAL
+                for s in move_row.get("iesg_states_t1", [])),
             "disclosure": "status frozen from detection (hash-bound to the "
                           "world_move row); meta/body fetched at freeze time — "
                           "churn between detection and freeze is disclosed by "
@@ -293,13 +306,21 @@ def freeze() -> dict:
         with urllib.request.urlopen(
                 u["route_catalog"][f"body:{uid}"]["url"], timeout=60) as r:
             body_text = r.read().decode("utf-8", errors="replace")
-        (WB_DIR / "t1" / f"{uid}.meta.json").write_text(meta_text)
-        (WB_DIR / "t1" / f"{uid}.body.html").write_text(body_text)
-        wl.write(freeze_packet_row(u, move, status_text, meta_text, body_text))
-
+        # composer (adversarial round, orphan attack): ALL fetches and both
+        # rows are built before the first write; the frozen row lands LAST as
+        # the completion marker the skip-set keys on — a failure mid-freeze
+        # leaves no frozen row, so the retry redoes the whole unit
+        frozen_row = freeze_packet_row(u, move, status_text, meta_text,
+                                       body_text)
         pre_ts = precommits[uid]["precommit_ts"]
-        events = _get(f"/doc/statedocevent/?format=json&doc__name={uid}"
-                      "&limit=50&order_by=-id")["objects"]
+        # paginate (codex, adversarial round): a busy document can push the
+        # IESG events past any single page of the unfiltered stream
+        events, path = [], (f"/doc/statedocevent/?format=json&doc__name={uid}"
+                            "&limit=50&order_by=-id")
+        while path:
+            page = _get(path)
+            events.extend(page["objects"])
+            path = page["meta"].get("next")
         iesg = sorted(
             ({"time": e["time"],
               "state_slug": id_to_slug.get(
@@ -308,8 +329,11 @@ def freeze() -> dict:
              if e.get("state_type", "").rstrip("/").endswith("draft-iesg")
              and e.get("state") and e["time"] > pre_ts),
             key=lambda e: e["time"])
+        (WB_DIR / "t1" / f"{uid}.meta.json").write_text(meta_text)
+        (WB_DIR / "t1" / f"{uid}.body.html").write_text(body_text)
         wl.write(attestation_row(uid, pop["population_id"], pre_ts,
                                  move["external_ts"], iesg))
+        wl.write(frozen_row)
         out.append({"unit": uid, "iesg_events": iesg,
                     "doc_time_is_iesg_event": move["external_ts"]
                     in [e["time"] for e in iesg]})

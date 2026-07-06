@@ -262,12 +262,23 @@ class WarmingScorer:
             self.events.index(p) < first_read for p in probes)
 
         move, trig = self._one("world_move"), self._one("trigger_precommit")
+        attest = self._one("external_ts_attestation")
         if move is None:
             self.guards["precommit_precedes_world_move"] = True  # silent leg
         elif trig is None or "external_ts" not in move or "precommit_ts" not in trig:
             self._fail("precommit_precedes_world_move",
                        "external stream timestamp or precommit_ts missing — ledger "
                        "write order alone is not chronology (SPEC §4)")
+        elif attest is not None:
+            # adversarial round 2026-07-06 (composer, seconded codex): when the
+            # state-history attestation is present it OWNS chronology — doc.time
+            # can postdate the true transition (sidrops: an IANA event), so a
+            # doc.time-only pass would admit a move whose first attested IESG
+            # event PRECEDED the precommit
+            first = attest.get("first_iesg_event_ts")
+            self.guards["precommit_precedes_world_move"] = (
+                bool(attest.get("precommit_precedes_first_iesg_event"))
+                and first is not None and trig["precommit_ts"] < first)
         else:
             self.guards["precommit_precedes_world_move"] = (
                 trig["precommit_ts"] < move["external_ts"])
@@ -469,6 +480,16 @@ class WarmingScorer:
             c_saves = c.get("parity_cost") is not None and c_total < bp_total
             cells["WB-moved-win"] = "pass" if c_saves else "not_engaged"
             cells["WB-heir-dominates"] = "pass" if not c_saves else "not_engaged"
+            if c_saves:
+                # gemini (adversarial round 2026-07-06): a parity win where C's
+                # END-TO-END reads (+ state charge) are not below B+'s is a
+                # read-order permutation — legitimate under §4 (order IS the
+                # trigger's only allowed effect) but it must be visible in the
+                # verdict row, never only in prose
+                c_end = c.get("read_tokens", 0) + c.get("treatment_tokens", 0)
+                cells["moved_win_total_cost_disclosure"] = (
+                    "total_win" if c_end < bp.get("read_tokens", 0)
+                    else "order_only_win")
             if quality.get("C", 0) >= QUALITY_FLOOR and not c_saves and \
                     costs.get("B0", {}).get("parity_cost") is not None and \
                     c_total < (costs["B0"].get("parity_cost") or 0):
