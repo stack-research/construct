@@ -356,6 +356,7 @@ def _check_manifest_v03(manifest_path: Path, m: dict) -> list[Check]:
 
 
 LEG_TAGS_V04 = ("leg_inflow", "leg_sediment", "leg_rights")
+V04_TARGET_KEY = "WR-31"          # precommitted in the sealed spec (§37)
 V04_DISPOSITIONS = ("release", "hold", "reject", "reopen")
 V04_BUDGET_PINS = {"max_read_tokens": 700, "max_steps": 10,
                    "action_overhead_tokens": 20, "c_max": 900}
@@ -439,13 +440,22 @@ def _check_manifest_v04(manifest_path: Path, m: dict) -> list[Check]:
         checks.append((f"binding_budget[{eid}]", binding,
                        f"max_read {budgets['max_read_tokens']} < "
                        f"catalog total {total}"))
-        checks.append((f"static_affordance_symmetry[{eid}]", True,
-                       f"catalog_hash={ch[:12]}… action_space={ah[:12]}…"))
+        # real assertion, not decorative (build-review C, gemini): the §39
+        # family hash bump must actually hold against the 0.3 space
+        bumped = ah != action_space_hash("0.3")
+        checks.append((f"static_affordance_symmetry[{eid}]", bumped,
+                       f"catalog_hash={ch[:12]}… action_space={ah[:12]}… "
+                       "(bumped from 0.3, §39)" if bumped else
+                       "action_space_hash did NOT bump from 0.3 (§39)"))
         checks.append((f"quality_threshold[{eid}]",
                        ep.get("quality_threshold") == 1.0,
                        f"quality_threshold={ep.get('quality_threshold')}"))
-        checks.append((f"target_key_pinned[{eid}]", bool(target_key),
-                       f"target_key={target_key!r} (§37)"))
+        # computed against the spec pin, never attested presence (build-review
+        # C, gemini; kagi concurred)
+        checks.append((f"target_key_pinned[{eid}]",
+                       target_key == V04_TARGET_KEY,
+                       f"target_key={target_key!r} == spec pin "
+                       f"{V04_TARGET_KEY!r} (§37)"))
 
         for tag in LEG_TAGS_V04:
             n = sum(1 for meta in catalog.values()

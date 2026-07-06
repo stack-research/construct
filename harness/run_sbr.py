@@ -328,7 +328,7 @@ def run_sbr_session(
                 observation = "Unknown surface. Choose a catalog id."
             else:
                 hint = ("Reply with a legal handle (R01–R21) or STOP."
-                        if iv == "0.3" else
+                        if iv in ("0.3", "0.4") else
                         "Reply with legal JSON only.")
                 observation = f"Action refused ({refuse}). {hint}"
             step += 1
