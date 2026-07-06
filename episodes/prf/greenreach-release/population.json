@@ -1,0 +1,280 @@
+{
+ "kind": "population_precommit",
+ "episode_id": "prf-greenreach-release",
+ "derivation_mode": "rulebooked",
+ "gamma": 0.2,
+ "option_ids": [
+  "A",
+  "B"
+ ],
+ "catalog": {
+  "N31": {
+   "content_hash_t0": "56af662f8230181f9c1dd7cca0633fb3081cea4a550597eefb9537fef0dc9992",
+   "surface_tags": [
+    "leg_inflow"
+   ],
+   "fields": {
+    "catalog_key": "WR-31",
+    "surface_kind": "dispositive"
+   }
+  },
+  "X31": {
+   "content_hash_t0": "533aa2258ce83f10c3308012fec18c3bd5d8bf3b55f0bea9584511a947f9b323",
+   "surface_tags": [
+    "leg_sediment"
+   ],
+   "fields": {
+    "catalog_key": "WR-31",
+    "surface_kind": "dispositive"
+   }
+  },
+  "C31": {
+   "content_hash_t0": "b9a9f7ec57605db034e9134f0363c151eadd4684dfc2b80d36fd98ba38412aaa",
+   "surface_tags": [
+    "leg_rights"
+   ],
+   "fields": {
+    "catalog_key": "WR-31",
+    "surface_kind": "dispositive"
+   }
+  },
+  "N30": {
+   "content_hash_t0": "0994581d90c98232a6bafbef7a4c049bea5e3dcad5542e41c57ba985c5a66c3a",
+   "surface_tags": [
+    "leg_inflow"
+   ],
+   "fields": {
+    "catalog_key": "WR-30",
+    "target_key": "WR-30",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "N29": {
+   "content_hash_t0": "e7891e9c2db4babe3f863057c6193e68cb4fd0d7d0383528b38c0ef3ebd16c33",
+   "surface_tags": [
+    "leg_inflow"
+   ],
+   "fields": {
+    "catalog_key": "WR-29",
+    "target_key": "WR-29",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "X30": {
+   "content_hash_t0": "4eac9dc1d7bc9a5e0a00faccd8329cc395c29ff8c584a4fcd10889675441dbde",
+   "surface_tags": [
+    "leg_sediment"
+   ],
+   "fields": {
+    "catalog_key": "WR-30",
+    "target_key": "WR-30",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "X29": {
+   "content_hash_t0": "285831bd1bba257b3284b7a6e19e785af6ca8a96a4997984d64756de00891ed7",
+   "surface_tags": [
+    "leg_sediment"
+   ],
+   "fields": {
+    "catalog_key": "WR-29",
+    "target_key": "WR-29",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "C30": {
+   "content_hash_t0": "12030b32c828bb7010ffe7284489d2221cadb5bef36ecfaa966efa0b9535729c",
+   "surface_tags": [
+    "leg_rights"
+   ],
+   "fields": {
+    "catalog_key": "WR-30",
+    "target_key": "WR-30",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "C29": {
+   "content_hash_t0": "dee5dce3c76564b32d39e9690f18bb30b36d45b1915c889d178c4688e828423c",
+   "surface_tags": [
+    "leg_rights"
+   ],
+   "fields": {
+    "catalog_key": "WR-29",
+    "target_key": "WR-29",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "B01": {
+   "content_hash_t0": "202a21301e89613006cbac8822dc46b23a3988a7ec1676c06d50dc89631c3532",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B02": {
+   "content_hash_t0": "dbaed57670a95dfa146fc86c7c0bc755d322f74b3231bc5855b11b1a37ce0a23",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B03": {
+   "content_hash_t0": "d24198b9c95749ffee952ebace491bf7e399b7ca9e90ae5be5e8403e45fff0fd",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B04": {
+   "content_hash_t0": "efa5e56078ff26189c8719a24927c021b18c9aad28aab9a559fd43f0003a91a6",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B05": {
+   "content_hash_t0": "ea26da0e93bd552d524ed4eae79bca6810b820045365ca2b05329f008a7c6e73",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B06": {
+   "content_hash_t0": "2a7c5c37522de7a59663c019ccb7ad06dc1a0a9fcec5c4b562f47d14063c24f9",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B07": {
+   "content_hash_t0": "91dda6f5123462ac8e112e6a289f2c9704acc5d027952e5f887ef64a99724dbe",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B08": {
+   "content_hash_t0": "7486013e050799c23bcb5ea4fe445a90d583cd1ca02fe5b3035d16c180478f07",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B09": {
+   "content_hash_t0": "ae49e87a8421826d5c6eabb3be5d0345e188764bb11a0323ceafd67cf273f36b",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B10": {
+   "content_hash_t0": "c966eeba117e77c72e9085640c29372e2dfefa0f5877bc71e966485effd17d4b",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B11": {
+   "content_hash_t0": "1b62a187fb3b3df3aacbc9a7ef33501f020c730200dbe13480f78a851876b380",
+   "surface_tags": [],
+   "fields": {}
+  },
+  "B12": {
+   "content_hash_t0": "c1ed40cdee1b08c920f2dd1086fdab6bb6df7ef01a56bd6f1a6870887be6225c",
+   "surface_tags": [],
+   "fields": {}
+  }
+ },
+ "surface_tag_schema": [
+  "leg_inflow",
+  "leg_sediment",
+  "leg_rights"
+ ],
+ "obligation_rulebook": [
+  {
+   "rule_id": "R_inflow",
+   "trigger_predicate_id": "P_leg_inflow",
+   "emits_relation_code": "pending_evidence",
+   "emits_obligation_type": "verify",
+   "match_key_ids": [
+    "WR31_inflow"
+   ],
+   "option_id": "A",
+   "satisfaction_predicate_id": "P_sat_read"
+  },
+  {
+   "rule_id": "R_sediment",
+   "trigger_predicate_id": "P_leg_sediment",
+   "emits_relation_code": "pending_evidence",
+   "emits_obligation_type": "read",
+   "match_key_ids": [
+    "WR31_sediment"
+   ],
+   "option_id": "A",
+   "satisfaction_predicate_id": "P_sat_read"
+  },
+  {
+   "rule_id": "R_rights",
+   "trigger_predicate_id": "P_leg_rights",
+   "emits_relation_code": "pending_evidence",
+   "emits_obligation_type": "read",
+   "match_key_ids": [
+    "WR31_rights"
+   ],
+   "option_id": "A",
+   "satisfaction_predicate_id": "P_sat_read"
+  }
+ ],
+ "predicate_library": {
+  "P_leg_inflow": {
+   "op": "read_has_tag",
+   "tag": "leg_inflow"
+  },
+  "P_leg_sediment": {
+   "op": "read_has_tag",
+   "tag": "leg_sediment"
+  },
+  "P_leg_rights": {
+   "op": "read_has_tag",
+   "tag": "leg_rights"
+  },
+  "P_sat_read": {
+   "op": "and",
+   "args": [
+    {
+     "field": "catalog_epoch",
+     "op": "eq",
+     "value": "t1"
+    },
+    {
+     "field": "surface_id",
+     "op": "exists"
+    }
+   ]
+  },
+  "P_world_moved": {
+   "op": "changed"
+  },
+  "P_stale": {
+   "field": "surface_id",
+   "op": "eq",
+   "value": "N31"
+  }
+ },
+ "relation_code_classes": {
+  "pending_evidence": "obligation",
+  "discard_if_world_key_changed": "discard",
+  "reopen_if_catalog_match": "reopen",
+  "live": "identity",
+  "blocked_by_missing_surface": "topology"
+ },
+ "reopen_rules": {
+  "RR1": {
+   "invalidation_predicate_id": "P_world_moved",
+   "reason": "changed_world"
+  },
+  "RR2": {
+   "invalidation_predicate_id": "P_stale",
+   "reason": "stale_frontier"
+  }
+ },
+ "uncertainty_codes": [
+  "unresolved",
+  "needs_check",
+  "conflict_unread"
+ ],
+ "sbr_cold_reread_tokens": 942,
+ "sbr_cold_reread_tokens_rule": "sum of visible t1 catalog surface tokens (static, branch-blind supremum; pinned at population_precommit for the offer-gate gamma ballast)",
+ "seam_id": "seam-greenreach-1",
+ "continuation_step_id": "csid-greenreach-1",
+ "obligation_rulebook_hash": "7afddb78aea44d0d2f487623b55db5580a2984b1014c6bb5cc433cc6cb44f299",
+ "predicate_library_hash": "eeac44b9516271624fdcd2dcc3b478e22194fc3ef8439399dde74af695045b7e",
+ "population_reopen_rules_hash": "af0daa32b62c231c78c291f00b0f74771e32936b911f78060f962ad42a7c30e6",
+ "population_contract_hash": "ac080dcb8f44dad115517d8de434b659b2affdb951f0e3cd3f2f147dda3978bd"
+}

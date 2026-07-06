@@ -1,0 +1,352 @@
+{
+ "episode_id": "ep-greenreach-baseline",
+ "instrument_version": "0.4",
+ "fixture_id": "prf-greenreach-release",
+ "target_key": "WR-31",
+ "dispositive_leg_ids": [
+  "N31",
+  "X31",
+  "C31"
+ ],
+ "seam_id": "seam-greenreach-1",
+ "catalog": {
+  "N31": {
+   "title": "Inflow Status Note WR-31",
+   "text": "greenreach watershed release desk inflow status note permit WR-31 upstream gauge reading within the seasonal allocation band turbidity within normal limits at the north fork intake desk clerk recorded clearance for allocation review no upstream hold flags active today south bank weir staff confirmed steady flow overnight rain gauge showed modest rise within tolerance intake screens clear field technician signed the daily reading card without escalation downstream ditch tender reported normal diversion rate annex copy stamped by morning shift supervisor hydrology unit filed the card in the weekly compilation binder south fork intake log sheet dated today clerk initials filed",
+   "content_hash": "9ce24f1e1d4c89a4a015194c57778024e2ff6cc520f35fccdba11b541e855bbf",
+   "tokens": 100,
+   "surface_tags": [
+    "leg_inflow"
+   ],
+   "fields": {
+    "catalog_key": "WR-31",
+    "surface_kind": "dispositive"
+   }
+  },
+  "X31": {
+   "title": "Sediment Exception Register",
+   "text": "greenreach sediment exception register row permit WR-31 class two turbidity exceedance resolved panel waiver entered exception closed watershed quality office notation sediment leg cleared for release desk copy shows no open sediment holds against WR-31 borrow pit sampling follow-up logged April panel chair initials on waiver line downstream monitoring station returned to baseline turbidity clerk archived the closed exception folder under quarterly quality review field crew attached photo sheet from the bar survey annex routing slip shows quality office receipt basin maintenance index updated with the closure date and filed under basin quality tab clerk stamp on cover sheet dated",
+   "content_hash": "6a73a8b345e76945c5cdd1e4cb501303307029715f39292aee21a9ef673ac321",
+   "tokens": 100,
+   "surface_tags": [
+    "leg_sediment"
+   ],
+   "fields": {
+    "catalog_key": "WR-31",
+    "surface_kind": "dispositive"
+   }
+  },
+  "C31": {
+   "title": "Rights Clearance Ledger",
+   "text": "greenreach rights clearance ledger row permit WR-31 downstream riparian holder objection withdrawn reviewer clearance granted ledger clerk recorded unanimous clearance no standing challenges remain on file for WR-31 at the release desk mediation summary attached holder counsel letter dated last week riparian access stipulation signed irrigation district copied on correspondence reviewer initials on clearance column file closed to the rights docket without pending appeals district counsel carbon copied on the closing memo annex clerk filed the packet under riparian correspondence legal liaison logged the weekly index and stamped the cover sheet dated today clerk initials filed annex copy",
+   "content_hash": "e58c22eda62d7b8bb28bf1817c6150dfee90bce0cc3d0558ac817df45593a50b",
+   "tokens": 98,
+   "surface_tags": [
+    "leg_rights"
+   ],
+   "fields": {
+    "catalog_key": "WR-31",
+    "surface_kind": "dispositive"
+   }
+  },
+  "N30": {
+   "title": "Inflow Status Note WR-30",
+   "text": "greenreach watershed inflow status note permit WR-30 south tributary gauge logged this morning steady flow field technician filed routine turbidity sample at lower intake clerk attached rain gauge worksheet pending weekly compilation east bank crew signed routing slip hydrology stamp",
+   "content_hash": "8a7a7606bbb51cc3aa5aab31f924ceddaf0296b0a29cf3092e796a14f648893c",
+   "tokens": 40,
+   "surface_tags": [
+    "leg_inflow"
+   ],
+   "fields": {
+    "catalog_key": "WR-30",
+    "target_key": "WR-30",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "N29": {
+   "title": "Inflow Status Note WR-29",
+   "text": "greenreach watershed inflow status note permit WR-29 east fork gauge reading logged overnight clerk attached field card showing steady stage height turbidity sample within lab reference band intake log queued for weekly compilation ditch tender noted normal seepage at headgate",
+   "content_hash": "bac8695f54457952dfd80b32f77480f716814f0548156b1bd9e65c942c5f547e",
+   "tokens": 40,
+   "surface_tags": [
+    "leg_inflow"
+   ],
+   "fields": {
+    "catalog_key": "WR-29",
+    "target_key": "WR-29",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "X30": {
+   "title": "Sediment Exception Register",
+   "text": "greenreach sediment exception register row permit WR-30 downstream borrow pit monitoring class one turbidity noted April filing watershed quality office stamped routine follow-up sampling scheduled no panel review flagged on this register line clerk indexed row for quarterly audit photo",
+   "content_hash": "94fc353b7099adff9f4a127aaca86e91510f3a62a7b3a67c69fc281c2d96f7eb",
+   "tokens": 40,
+   "surface_tags": [
+    "leg_sediment"
+   ],
+   "fields": {
+    "catalog_key": "WR-30",
+    "target_key": "WR-30",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "X29": {
+   "title": "Sediment Exception Register",
+   "text": "greenreach sediment exception register row permit WR-29 upstream gravel bar survey class one sediment note filed March watershed quality office logged routine resample date field crew tagged bar photo sheet clerk filed row under basin maintenance south reach sketch attached",
+   "content_hash": "d9d7907d1d94348b42671d0d7edfc0f20fb34ad50c42ff073890e08d89a1b5be",
+   "tokens": 40,
+   "surface_tags": [
+    "leg_sediment"
+   ],
+   "fields": {
+    "catalog_key": "WR-29",
+    "target_key": "WR-29",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "C30": {
+   "title": "Rights Clearance Ledger",
+   "text": "greenreach rights clearance ledger row permit WR-30 adjacent meadow irrigation district correspondence logged riparian inquiry received last week reviewer assigned file number without entry on clearance columns ledger clerk marked row awaiting holder response documentation district counsel routing slip attached",
+   "content_hash": "5ef1cad99f6de89adf61a7f2179c8b3298cd253a50b1f7bef3f089cdd7774bed",
+   "tokens": 40,
+   "surface_tags": [
+    "leg_rights"
+   ],
+   "fields": {
+    "catalog_key": "WR-30",
+    "target_key": "WR-30",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "C29": {
+   "title": "Rights Clearance Ledger",
+   "text": "greenreach rights clearance ledger row permit WR-29 hillside pasture association letter logged clerk attached routing slip reviewer assigned intake number riparian contact sheet filed without clearance column entry pending district counsel review holder meeting minutes attached from spring forum correspondence",
+   "content_hash": "287ac7b75fff4533ffc2a73c20d050c8bed4c662e4be7e434816ff1290ad2f7d",
+   "tokens": 40,
+   "surface_tags": [
+    "leg_rights"
+   ],
+   "fields": {
+    "catalog_key": "WR-29",
+    "target_key": "WR-29",
+    "applicability": "excluded_for_target",
+    "surface_kind": "sibling"
+   }
+  },
+  "B01": {
+   "title": "Desk Shift Bulletin",
+   "text": "greenreach desk shift bulletin duty roster for the watershed annex morning crew handoff notes cover station assignments relief operator listed for lunch break posted copy includes radio check times and visitor escort rotation for the public counter watershed annex posted",
+   "content_hash": "d2bd7d3b875574e27899ca1cc550815d6fbe20ab5237c776db7bdf5c8b4d97db",
+   "tokens": 40,
+   "surface_tags": []
+  },
+  "B02": {
+   "title": "Gauge Calibration Log",
+   "text": "greenreach gauge calibration log maintenance entries for field instruments last calibration dates reference only technician initials on each line spare battery inventory checked annex equipment room includes conductivity probe and staff gauge entries watershed equipment vault shelf",
+   "content_hash": "03369d2bd7674a0d8ecc63fd9a50dfb76d0c27ae8417277200bc0eb9174b28fd",
+   "tokens": 37,
+   "surface_tags": []
+  },
+  "B03": {
+   "title": "Visitor Sign-In Sheet",
+   "text": "greenreach visitor sign-in sheet public counter arrivals logged names and times only front desk collected badges returned at closing watershed building lobby clipboard includes contractor orientation checkbox and emergency contact column watershed lobby posted",
+   "content_hash": "c3b064feffb8a3bcf4d1fc9abc55906088daeb7602cb0233502f29366d3d4ea1",
+   "tokens": 34,
+   "surface_tags": []
+  },
+  "B04": {
+   "title": "Corridor Posting Index",
+   "text": "greenreach corridor posting index list of bulletin board locations in the watershed annex east wing stairwell map room and loading dock clerk updated revision date includes laminate replacement schedule for hallway notices watershed annex hallway",
+   "content_hash": "054d6d78d4079474d8cd875fb476313869d69dfa10644a76257e6a5bdba93a10",
+   "tokens": 35,
+   "surface_tags": []
+  },
+  "B05": {
+   "title": "Supply Requisition Form",
+   "text": "greenreach supply requisition form office consumables order template stationery labels toner cartridges three boxes requested facilities queue number assigned watershed admin includes delivery dock hours and budget object code watershed facilities queue",
+   "content_hash": "89830f86735f472a812cbc2ce0ce2d2f1ae2ba9abb24700cb825fbb3959b1c67",
+   "tokens": 32,
+   "surface_tags": []
+  },
+  "B06": {
+   "title": "Parking Permit Roster",
+   "text": "greenreach parking permit roster staff vehicle stickers issued by the facilities office plate numbers listed expiration dates updated quarterly annex motor pool bulletin includes temporary vendor pass column and bicycle rack assignment watershed motor pool",
+   "content_hash": "4b7ec03385c30822a7a371803055e9b63a2f4c5abe3ca56aa392846c81de008c",
+   "tokens": 35,
+   "surface_tags": []
+  },
+  "B07": {
+   "title": "Training Attendance Sheet",
+   "text": "greenreach training attendance sheet safety briefing sign-in for desk staff quarterly session instructor name printed at top watershed annex conference room copy includes evacuation drill acknowledgment and eyewash station location watershed safety office",
+   "content_hash": "0757f5cbcabc6298b48000a26366ec3d0326ad847ed4effb2bb3f9fbfc2ea498",
+   "tokens": 33,
+   "surface_tags": []
+  },
+  "B08": {
+   "title": "Equipment Checkout Log",
+   "text": "greenreach equipment checkout log radios and field tablets signed out to inspectors reference serial numbers only return column blank for afternoon crew watershed yard includes spare antenna bag and charging cradle checklist watershed yard posted",
+   "content_hash": "84ef7115415e87020dac89803d55193c570d694a403b53d0a62d14feec0f3385",
+   "tokens": 35,
+   "surface_tags": []
+  },
+  "B09": {
+   "title": "Mail Routing Slip",
+   "text": "greenreach mail routing slip interoffice correspondence routing codes for the watershed building quality office engineering and records bins labeled on the form includes courier pickup time and internal zip code chart watershed mailroom",
+   "content_hash": "c0b414f75615d0bbb30b9f7a6c1524c3c15a9eb0a91709acebb0dbd58857abe1",
+   "tokens": 33,
+   "surface_tags": []
+  },
+  "B10": {
+   "title": "Conference Room Schedule",
+   "text": "greenreach conference room schedule room bookings for the week hearing slots and internal meetings only color codes for public sessions watershed annex reception includes AV setup request column and catering contact line watershed reception desk",
+   "content_hash": "53afb9d886c70e16a869ec0193106157befe345207e12252256d2bc8e95d3a53",
+   "tokens": 35,
+   "surface_tags": []
+  },
+  "B11": {
+   "title": "Catchment Map Index",
+   "text": "greenreach catchment map index shelf locations for wall charts and basin outlines reference cartography binder numbers listed cartographic vault aisle three watershed library includes scale legend sheet and revision history tab watershed library vault",
+   "content_hash": "1bc187b1ea4034dacd505c5509eead76af08d111a81de5f22572d49961f42253",
+   "tokens": 34,
+   "surface_tags": []
+  },
+  "B12": {
+   "title": "Records Retention Notice",
+   "text": "greenreach records retention notice general schedule for administrative files destruction dates policy sheet only legal counsel revision stamp watershed records office includes microfilm transfer note and email archive guidance paragraph watershed records posted",
+   "content_hash": "875fa6ee769c212e814a642bf7da55da7a17b71c635e0526f38e6197a90f798b",
+   "tokens": 33,
+   "surface_tags": []
+  }
+ },
+ "catalog_sort": "by_id",
+ "question": "Enter the release disposition for water-allocation permit WR-31: release / hold / reject / reopen.",
+ "expected_answer_t1": "release",
+ "expected_answer_t0": "hold",
+ "calibration_expected_answer": "release",
+ "calibration_route": [
+  "N31",
+  "X31",
+  "C31"
+ ],
+ "calibration_obligation_ids": "278ee7cd03f2059752f3e3f755e8f412ec6e0761c84a6f21e7378d520251035d",
+ "cold_exploration_route": [
+  "N30",
+  "N29",
+  "X30",
+  "X29",
+  "C30",
+  "C29"
+ ],
+ "witness_route": [
+  "N31",
+  "X31",
+  "C31"
+ ],
+ "frontier_state": {
+  "live_options": [
+   "A"
+  ],
+  "inactive_options": [],
+  "pending_obligations": [
+   {
+    "obligation_id": "obl:sha256:41b27bdf5159e965b8d2a14663f1a7296c63dc627e4fd4d78243bd6e34d65b90",
+    "derived_from_obligation_id": "obl:sha256:41b27bdf5159e965b8d2a14663f1a7296c63dc627e4fd4d78243bd6e34d65b90",
+    "option_id": "A",
+    "relation_code": "pending_evidence"
+   },
+   {
+    "obligation_id": "obl:sha256:7863cd09c59bde1348ef4cd85932a4232eadf291449893c3a0f91ad13f962a51",
+    "derived_from_obligation_id": "obl:sha256:7863cd09c59bde1348ef4cd85932a4232eadf291449893c3a0f91ad13f962a51",
+    "option_id": "A",
+    "relation_code": "pending_evidence"
+   },
+   {
+    "obligation_id": "obl:sha256:bd63db77863376c4496e2fde7ac378c59dbc9b3e6c4374531302d86121186be8",
+    "derived_from_obligation_id": "obl:sha256:bd63db77863376c4496e2fde7ac378c59dbc9b3e6c4374531302d86121186be8",
+    "option_id": "A",
+    "relation_code": "pending_evidence"
+   }
+  ],
+  "read_manifest": [
+   "N31",
+   "X31",
+   "C31"
+  ],
+  "reopen_rules": [
+   {
+    "derived_from_obligation_id": "obl:sha256:41b27bdf5159e965b8d2a14663f1a7296c63dc627e4fd4d78243bd6e34d65b90",
+    "option_id": "A",
+    "relation_code": "discard_if_world_key_changed",
+    "surface_id": "N31"
+   }
+  ],
+  "uncertainty": [
+   {
+    "option_id": "B",
+    "uncertainty_code": "unresolved"
+   }
+  ]
+ },
+ "budgets": {
+  "max_read_tokens": 700,
+  "max_steps": 10,
+  "action_overhead_tokens": 20,
+  "c_max": 900,
+  "c_max_rule": "max_read_tokens + max_steps * action_overhead_tokens (static, \u00a716)"
+ },
+ "quality_threshold": 1.0,
+ "oracle_source_label": "authored_oracle:fictional_greenreach",
+ "foreground_disclosure": "resumable foreground = canonical frontier artifact + stale claim, rendered by the shared render path; stale-claim tokens ledgered outside ECAC (\u00a716/\u00a727)",
+ "ballast": {
+  "covered_surfaces": [
+   "C31",
+   "N31",
+   "X31"
+  ],
+  "derived_obligation_tokens": 300
+ },
+ "t0_texts": {
+  "N31": "greenreach watershed release desk inflow status note permit WR-31 upstream gauge reading above the seasonal allocation band turbidity spike logged at the north fork intake desk clerk marked hold pending field verification no release authorization at this writing greenreach watershed release desk inflow status note permit WR-31 upstream gauge reading above the seasonal allocation band turbidity spike logged at the north fork intake desk clerk marked hold pending field verification no release authorization at this writing greenreach watershed release desk inflow status note permit WR-31 upstream gauge reading above the seasonal allocation band turbidity spike logged at the north fork",
+  "X31": "greenreach sediment exception register row permit WR-31 class two turbidity exceedance under panel review exception decision pending watershed quality office notation release blocked until register closure no cleared sediment waiver on file at pause greenreach sediment exception register row permit WR-31 class two turbidity exceedance under panel review exception decision pending watershed quality office notation release blocked until register closure no cleared sediment waiver on file at pause greenreach sediment exception register row permit WR-31 class two turbidity exceedance under panel review exception decision pending watershed quality office notation release blocked until register closure no cleared sediment waiver on file",
+  "C31": "greenreach rights clearance ledger row permit WR-31 downstream riparian holder filed standing objection reviewer queue shows objection unresolved clearance withheld ledger clerk noted hold until rights mediation completes no unanimous clearance recorded greenreach rights clearance ledger row permit WR-31 downstream riparian holder filed standing objection reviewer queue shows objection unresolved clearance withheld ledger clerk noted hold until rights mediation completes no unanimous clearance recorded greenreach rights clearance ledger row permit WR-31 downstream riparian holder filed standing objection reviewer queue shows objection unresolved clearance withheld ledger clerk noted hold until rights mediation completes no unanimous clearance recorded greenreach rights clearance ledger",
+  "N30": "greenreach watershed inflow status note permit WR-30 south tributary gauge logged this morning steady flow field technician filed routine turbidity sample at lower intake clerk attached rain gauge worksheet pending weekly compilation east bank crew signed routing slip hydrology stamp t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "N29": "greenreach watershed inflow status note permit WR-29 east fork gauge reading logged overnight clerk attached field card showing steady stage height turbidity sample within lab reference band intake log queued for weekly compilation ditch tender noted normal seepage at headgate t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "X30": "greenreach sediment exception register row permit WR-30 downstream borrow pit monitoring class one turbidity noted April filing watershed quality office stamped routine follow-up sampling scheduled no panel review flagged on this register line clerk indexed row for quarterly audit photo t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "X29": "greenreach sediment exception register row permit WR-29 upstream gravel bar survey class one sediment note filed March watershed quality office logged routine resample date field crew tagged bar photo sheet clerk filed row under basin maintenance south reach sketch attached t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "C30": "greenreach rights clearance ledger row permit WR-30 adjacent meadow irrigation district correspondence logged riparian inquiry received last week reviewer assigned file number without entry on clearance columns ledger clerk marked row awaiting holder response documentation district counsel routing slip attached t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "C29": "greenreach rights clearance ledger row permit WR-29 hillside pasture association letter logged clerk attached routing slip reviewer assigned intake number riparian contact sheet filed without clearance column entry pending district counsel review holder meeting minutes attached from spring forum correspondence t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B01": "greenreach desk shift bulletin duty roster for the watershed annex morning crew handoff notes cover station assignments relief operator listed for lunch break posted copy includes radio check times and visitor escort rotation for the public counter watershed annex posted t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B02": "greenreach gauge calibration log maintenance entries for field instruments last calibration dates reference only technician initials on each line spare battery inventory checked annex equipment room includes conductivity probe and staff gauge entries watershed equipment vault shelf t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B03": "greenreach visitor sign-in sheet public counter arrivals logged names and times only front desk collected badges returned at closing watershed building lobby clipboard includes contractor orientation checkbox and emergency contact column watershed lobby posted t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B04": "greenreach corridor posting index list of bulletin board locations in the watershed annex east wing stairwell map room and loading dock clerk updated revision date includes laminate replacement schedule for hallway notices watershed annex hallway t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B05": "greenreach supply requisition form office consumables order template stationery labels toner cartridges three boxes requested facilities queue number assigned watershed admin includes delivery dock hours and budget object code watershed facilities queue t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B06": "greenreach parking permit roster staff vehicle stickers issued by the facilities office plate numbers listed expiration dates updated quarterly annex motor pool bulletin includes temporary vendor pass column and bicycle rack assignment watershed motor pool t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B07": "greenreach training attendance sheet safety briefing sign-in for desk staff quarterly session instructor name printed at top watershed annex conference room copy includes evacuation drill acknowledgment and eyewash station location watershed safety office t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B08": "greenreach equipment checkout log radios and field tablets signed out to inspectors reference serial numbers only return column blank for afternoon crew watershed yard includes spare antenna bag and charging cradle checklist watershed yard posted t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B09": "greenreach mail routing slip interoffice correspondence routing codes for the watershed building quality office engineering and records bins labeled on the form includes courier pickup time and internal zip code chart watershed mailroom t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B10": "greenreach conference room schedule room bookings for the week hearing slots and internal meetings only color codes for public sessions watershed annex reception includes AV setup request column and catering contact line watershed reception desk t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B11": "greenreach catchment map index shelf locations for wall charts and basin outlines reference cartography binder numbers listed cartographic vault aisle three watershed library includes scale legend sheet and revision history tab watershed library vault t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding ",
+  "B12": "greenreach records retention notice general schedule for administrative files destruction dates policy sheet only legal counsel revision stamp watershed records office includes microfilm transfer note and email archive guidance paragraph watershed records posted t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding  t0 witness padding "
+ },
+ "stale_claim": "Resume note (recorded at pause): permit WR-31 awaited sediment exception clearance; disposition then indicated: hold.",
+ "self_falsification": null,
+ "regime_s": {
+  "n_max": 24,
+  "ci_halfwidth_tokens": 100,
+  "dispersion_probe_k": 5,
+  "n_rule": "derived from pilot variance targeting the precommitted CI; never by fiat (\u00a717)",
+  "temperature_range": [
+   0.3,
+   0.7
+  ]
+ },
+ "expected_cells": {
+  "kind": "pay_window_baseline"
+ }
+}

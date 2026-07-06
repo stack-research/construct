@@ -1,0 +1,30 @@
+{
+ "attestation": {
+  "attested_at": "2026-07-06",
+  "attested_by": "cursor/composer-2.5 (builder lane; oracle keys precommitted before any engine run)",
+  "ignorance_probe": {
+   "engines": {
+    "mock": {
+     "knew": false,
+     "note": "mock engine \u2014 wire machinery only"
+    }
+   }
+  },
+  "probe_debt": "per-engine cold ignorance probe REQUIRED before any real-engine run (\u00a744; never inherited); openai/gpt-oss-20b entry deliberately ABSENT until its probe runs after roster precommitment (\u00a745 build order) \u2014 an attested knew:false without a probe was removed in build review (moderator, 2026-07-06)",
+  "roster_precommitment": "target_engines precommitted at fixture authoring per sealed \u00a744: [openai/gpt-oss-20b]; small-engine lane paused"
+ },
+ "episodes": [
+  "ep-greenreach-baseline.json",
+  "ep-greenreach-ballast.json",
+  "ep-greenreach-neutral.json"
+ ],
+ "fictional": true,
+ "fixture_id": "prf-greenreach-release",
+ "instrument_version": "0.4",
+ "invented": "2026-07-05",
+ "out_of_weights": true,
+ "shared_base_note": "0.4 override allowlist (sealed \u00a732): ballast overrides witness_route + frontier_state + calibration_obligation_ids (replay-checked); neutral overrides stale_claim only; catalog, budgets, action grammar, titles, indices, costs shared",
+ "target_engines": [
+  "openai/gpt-oss-20b"
+ ]
+}
