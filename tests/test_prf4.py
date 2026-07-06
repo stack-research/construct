@@ -394,3 +394,82 @@ class TestA2Detector(unittest.TestCase):
         k_pass = sum(1 for s in probe["summaries"] if s["quality_ok"])
         self.assertEqual(k_pass, 2)
         shutil.rmtree(fixture.parent)
+
+
+class TestHarmonyUnwrap(unittest.TestCase):
+    """§43 board repairs (2026-07-06): transport envelopes seeded VERBATIM
+    from the committed §33 and Greenreach r1 ledgers must unwrap to the
+    model's payload; the grammar itself stays strict."""
+
+    def test_seeded_handle_envelope(self):
+        from harness.engine import unwrap_harmony
+        raw = "<|channel|>commentary <|constrain|>R01<|message|>R01"
+        self.assertEqual(unwrap_harmony(raw), "R01")
+        raw = "<|channel|>commentary <|constrain|>1<|message|>R18"
+        self.assertEqual(unwrap_harmony(raw), "R18")
+
+    def test_seeded_json_envelope_still_refused_by_grammar(self):
+        from harness.engine import unwrap_harmony
+        raw = ('<|channel|>final <|constrain|>json<|message|>'
+               '{"action":"READ","surface_id":"N30"}')
+        payload = unwrap_harmony(raw)
+        self.assertEqual(payload, '{"action":"READ","surface_id":"N30"}')
+        # codex's precision: unwrap is transport repair, never leniency —
+        # a JSON payload still refuses under the 0.4 R-handle grammar
+        parsed, refuse = parse_action(payload, [f"S{i}" for i in range(21)],
+                                      "0.4")
+        self.assertIsNone(parsed)
+        self.assertIsNotNone(refuse)
+
+    def test_passthrough_and_trailer(self):
+        from harness.engine import unwrap_harmony
+        self.assertEqual(unwrap_harmony("R07"), "R07")
+        self.assertEqual(unwrap_harmony("STOP"), "STOP")
+        self.assertEqual(
+            unwrap_harmony("<|channel|>final<|message|>R03<|end|>"), "R03")
+
+    def test_local_session_preserves_raw_transport(self):
+        from harness.engine import _LocalSession, LocalEngine
+        eng = LocalEngine("test-model")
+        wrapped = "<|channel|>commentary <|constrain|>R01<|message|>R01"
+        eng._chat = lambda *a, **k: (wrapped, 1, 0, 0, "test-model")
+        session = eng.start_session(action_instruction="x")
+        result = session.step("obs")
+        self.assertEqual(result.raw_action, "R01")
+        self.assertEqual(result.raw_transport, wrapped)
+        eng._chat = lambda *a, **k: ("R02", 1, 0, 0, "test-model")
+        result = session.step("obs")
+        self.assertEqual(result.raw_action, "R02")
+        self.assertIsNone(result.raw_transport)
+
+
+class TestDispersionFactoryInstruction(unittest.TestCase):
+    """§43 board repair 1: pilot sessions carry the version-forked action
+    instruction — asserted on a REAL engine object's factory path, not a
+    scripted mock (the §12 mock-blindness lesson)."""
+
+    def test_pilot_sessions_receive_v04_instruction(self):
+        from harness.engine import LocalEngine, SBR_ACTION_INSTRUCTION_V03
+        from harness.run_sbr import run_episode
+        fixture = _wire_fixture()
+        ep = _load(fixture, "ep-baseline.json")
+        ledger = Ledger(fixture / "fact.jsonl")
+        mint = _mint(fixture, ep, ledger)
+
+        eng = LocalEngine("test-model")
+        seen: list[str | None] = []
+        real_start = eng.start_session
+
+        def spy_start(*a, **k):
+            seen.append(k.get("action_instruction"))
+            return real_start(*a, **k)
+        eng.start_session = spy_start
+        eng._chat = lambda *a, **k: ("STOP", 1, 0, 0, "test-model")
+
+        run_episode(ep, ledger, canonical_state=mint["canonical_state"],
+                    engine=eng, engine_backend="local", regime="S")
+        self.assertTrue(seen, "no engine sessions were started")
+        self.assertTrue(
+            all(instr == SBR_ACTION_INSTRUCTION_V03 for instr in seen),
+            f"a session missed the 0.4 handle instruction: {seen}")
+        shutil.rmtree(fixture.parent)

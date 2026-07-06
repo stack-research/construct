@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import hashlib
 import inspect
+import re
 import time
 from dataclasses import dataclass
 
@@ -60,6 +61,31 @@ class SessionStepResult:
     latency_ms: int
     prompt_tokens: int
     completion_tokens: int
+    # transport envelope BEFORE unwrapping, when it differed from raw_action
+    # (§43 board round 2026-07-06: replay honesty for the harmony fix)
+    raw_transport: str | None = None
+
+
+_HARMONY_MESSAGE_RE = re.compile(r"<\|message\|>", re.IGNORECASE)
+_HARMONY_TRAILER_RE = re.compile(r"<\|(?:end|return|call)\|>.*\Z",
+                                 re.IGNORECASE | re.DOTALL)
+
+
+def unwrap_harmony(text: str) -> str:
+    """Strip gpt-oss harmony channel envelopes from a chat completion.
+
+    Transport repair, never grammar leniency (§43 board ruling, 2026-07-06,
+    codex's precision adopted unanimously): the model's intended payload —
+    the text after the LAST `<|message|>` marker, minus any trailing
+    end/return tokens — reaches the parser; the parser itself stays strict.
+    Committed defect signatures this must handle (seeded from the §33 and
+    Greenreach r1 ledgers): `<|channel|>commentary <|constrain|>R01<|message|>R01`,
+    `<|channel|>final <|constrain|>json<|message|>{...}`. Text without an
+    envelope passes through unchanged.
+    """
+    parts = _HARMONY_MESSAGE_RE.split(text)
+    payload = parts[-1] if len(parts) > 1 else text
+    return _HARMONY_TRAILER_RE.sub("", payload).strip()
 
 
 @dataclass
@@ -315,7 +341,10 @@ class _LocalSession:
             self._messages, max_tokens=256,
             temperature=self._engine.temperature)
         self._messages.append({"role": "assistant", "content": raw})
-        return SessionStepResult(raw, latency_ms, ptok, ctok)
+        unwrapped = unwrap_harmony(raw)
+        return SessionStepResult(
+            unwrapped, latency_ms, ptok, ctok,
+            raw_transport=raw if unwrapped != raw else None)
 
 
 class LocalEngine:

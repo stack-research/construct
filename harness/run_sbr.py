@@ -317,6 +317,8 @@ def run_sbr_session(
             "raw_action": result.raw_action,
             "parsed": parsed is not None,
             "refuse_reason": refuse,
+            **({"raw_transport": result.raw_transport}
+               if getattr(result, "raw_transport", None) else {}),
             **({"scripted": True} if forced_seq is not None else {}),
         })
         if refuse:
@@ -669,7 +671,10 @@ def run_episode(
 
     if regime == "S" and not wire_mock:
         def factory(i: int):
-            return engine.start_session()
+            # §43 board round F (2026-07-06): pilot sessions MUST carry the
+            # same version-forked action instruction as branch sessions —
+            # the r1 A2 firing was this line's omission, ruled ARTIFACTUAL
+            return engine.start_session(action_instruction=action_instr)
         probe_result = dispersion_probe(
             episode, factory, ledger, k, canonical_state=canonical_state,
             elicit_answer=elicit)
