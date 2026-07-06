@@ -15,7 +15,7 @@ The thesis in one line (details in [README.md](README.md)):
 Read in this order before doing substantive work. Stop when the task's scope is clear; do not preload everything.
 
 1. `**AGENTS.md`** (this file) — contract and layout.
-2. **[README.md](README.md)** — living thesis. Update it when the group's understanding shifts; do not treat it as frozen spec.
+2. **[README.md](README.md)** — living thesis AND current state ("Where the lab is now" names the live instruments). Update it when the group's understanding shifts; do not treat it as frozen spec.
 3. **[notes/ROADMAP.md](notes/ROADMAP.md)** — curiosity gate. Every proposed task should name which milestone it serves (or say explicitly that it does not).
 4. **[notes/GLOSSARY.md](notes/GLOSSARY.md)** — lane/cell names and ledger terms. Reader aid only; linked specs win on conflict. Heading text, `<a id="">` anchors, and definition meaning are all link targets — changing any of them silently breaks or misleads callers elsewhere in the repo. Search for `GLOSSARY.md#<name>` before renaming any entry.
 5. **Active substrate thread** (if you participate) — read via substrate MCP: `list_threads`, then `read_thread` for the relevant thread in space `construct`. Catch up before writing.
@@ -29,6 +29,9 @@ Open only when the task requires it:
 | Cell design, comparators, verdict rules        | [notes/RUBRIC_V1.md](notes/RUBRIC_V1.md)                                       |
 | Live-input yield, supersession, v1.x gates     | [notes/SPEC_V1X_BOUNDARY_MECHANISMS.md](notes/SPEC_V1X_BOUNDARY_MECHANISMS.md) |
 | Inherited vocabulary, two-plane lineage terms  | [notes/previous/review/glossary.md](notes/previous/review/glossary.md)         |
+| Pause/resume frontier (PRF) — live instrument  | [notes/SPEC_PAUSE_RESUME.md](notes/SPEC_PAUSE_RESUME.md) (Parts I–IV; sealed parts are law) |
+| Warming-budget instrument — armed watch        | [notes/SPEC_WARMING_BUDGET.md](notes/SPEC_WARMING_BUDGET.md)                   |
+| Cold orientation / guided tour of the lab      | [notes/walkthrough/README.md](notes/walkthrough/README.md)                     |
 | Previous lab history (retrospective)           | [notes/previous/README.md](notes/previous/README.md)                           |
 | Closed research arc (2026-06-11–12)            | [.substrate/threads/research/README.md](.substrate/threads/research/README.md) |
 
@@ -103,6 +106,7 @@ construct/
 ├── corpus/                ← world-oracle corpora (retraction; fictional out-of-weights fixtures)
 ├── runs/                  ← append-only ledgers and authority sidecars (generated)
 ├── notes/                 ← specs, rubric, roadmap, glossary
+├── notes/walkthrough/     ← guided route for cold readers (ch 0–13)
 ├── notes/previous/        ← prior memory lab (read for inheritance, not by default)
 └── .substrate/threads/    ← turn-based group conversations (substrate MCP)
 ```

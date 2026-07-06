@@ -79,6 +79,18 @@ Every X-track organ must pass three checks ([three-guardrail stack](notes/GLOSSA
 
 **X2 — Prune to cold store (first positive implicit result).** Hot/cold split, oracle-gated prune and rematerialize, scored on [cost at matched quality](notes/GLOSSARY.md#cost-at-matched-quality). **Closed in two legs.** First (2026-06-20), on a fictional out-of-weights fixture: branch C matched no-prune quality (4.0/4.0) at 135 vs 312 hot tokens (−57%), identical on gpt-oss-20b and claude. Then the [world-grounded close](notes/GLOSSARY.md#x2-u1) (2026-06-21), on a real fact we did not write — a Node.js deprecation later reversed, proven out-of-weights by asking both engines cold — same result at 102 vs 248 tokens (−59%), again on both. Closed-loop prune without recovery over-pruned and failed the recurrence, losing exactly the record it later needed — the loses-cell priced it. The offer gate withholds but cannot shrink what stays hot; prune and rematerialize can. ([notes/X2_FINDINGS.md](notes/X2_FINDINGS.md))
 
+**X4 — Occlusion watch (closed, a successful failure).** The proposed sensory organ — watching for what the room can no longer see — was built, armed, and then closed (2026-06-27) when the room showed its scoreboard measured curation, not sensing: cold-is-cold, and reading is already the sense. The full arc, including why the failure was worth keeping, is [walkthrough chapter 9](notes/walkthrough/09_X4_OCCLUSION_WATCH.md).
+
+## Where the lab is now (2026-07-05)
+
+The M- and X-tracks above are the lab's **past** — closed arcs with sealed verdicts. The present is **two live instruments**, both designed in adversarial board rounds and specified before any engine contact:
+
+**The warming budget (armed, waiting on the world).** A prospective watch: 101 bets written down *before* the world resolves them, asking whether consequence-earned ranking under-serves an unresolved frontier enough to measure — in read-tokens-to-matched-outcome, when the world moves. Population, match rule, and triggers were stamped first; the IESG calendar grades the bets on its own schedule. Spec: [notes/SPEC_WARMING_BUDGET.md](notes/SPEC_WARMING_BUDGET.md) · story: [walkthrough chapter 12](notes/walkthrough/12_WARMING_BUDGET.md).
+
+**The pause/resume frontier (in flight — the pay-window question).** Does a compact frontier artifact — minted at pause time, carrying obligations but never answers — *ever* let a resumed session reach the same-quality decision cheaper than re-reading cold? Three fixture families and ~40 real-engine sessions in, **the answer has never been observed to be yes**, and every negative is typed: pure-tax (capable engines ignore the artifact), cognitive-load (small engines get worse with it), budget-confound (the family's own CI discipline refused), plus two reviewed self-falsifier firings. A fourth family (Greenreach, Part IV, sealed 2026-07-05) is the first where a positive result is arithmetically reachable inside the precommitted budget — it runs next. Spec: [notes/SPEC_PAUSE_RESUME.md](notes/SPEC_PAUSE_RESUME.md) (Parts I–IV) · story: [walkthrough chapter 13](notes/walkthrough/13_PAUSE_RESUME_FRONTIER.md).
+
+The **[guided walkthrough](notes/walkthrough/README.md)** is the intended route for a cold reader: thirteen chapters from "how to read a lab" through both live instruments, each with inspect/replay/run instructions and honest limits. If you read only one linked thing, read it.
+
 ---
 
 **Glossary:** [notes/GLOSSARY.md](notes/GLOSSARY.md)
