@@ -205,8 +205,10 @@ def watch() -> dict:
     out = {"checked": checked, "moved_this_check": moved,
            "fetch_failures": len(failures),
            "moved_total": len(already_moved) + len(moved)}
-    if moved:  # freeze at detection — the body surface is live until frozen
-        out["freeze"] = freeze()
+    # freeze runs EVERY sweep, not only on new movers (composer #8): it is
+    # idempotent, and a mover left unfrozen by an earlier partial failure must
+    # be repaired on the next cadence, not wait for the next world move
+    out["freeze"] = freeze()
     # checkpoint lands after the freeze so the ledger reads in true order:
     # detect -> freeze -> checkpoint (composer, adversarial round)
     wl.write(checkpoint_row(pop["population_id"], checked,
@@ -293,54 +295,25 @@ def freeze() -> dict:
               if r.get("kind") == "t1_route_packet_frozen"}
     precommits = {r["unit_id"]: r for r in Ledger(PAUSE_LEDGER).rows()
                   if r.get("kind") == "trigger_precommit"}
-    out = []
+    out, freeze_failures = [], []
     for move in [r for r in rows if r.get("kind") == "world_move"]:
         uid = move["unit_id"]
         if uid in frozen:
             continue
-        u = by_id[uid]
-        status_text = (WB_DIR / "t1" / f"{uid}.json").read_text()
-        doc = _get(f"/doc/document/{uid}/?format=json")
-        meta_text = json.dumps({"name": doc["name"], "rev": doc["rev"],
-                                "time": doc["time"]}, sort_keys=True)
-        with urllib.request.urlopen(
-                u["route_catalog"][f"body:{uid}"]["url"], timeout=60) as r:
-            body_text = r.read().decode("utf-8", errors="replace")
-        # composer (adversarial round, orphan attack): ALL fetches and both
-        # rows are built before the first write; the frozen row lands LAST as
-        # the completion marker the skip-set keys on — a failure mid-freeze
-        # leaves no frozen row, so the retry redoes the whole unit
-        frozen_row = freeze_packet_row(u, move, status_text, meta_text,
-                                       body_text)
-        pre_ts = precommits[uid]["precommit_ts"]
-        # paginate (codex, adversarial round): a busy document can push the
-        # IESG events past any single page of the unfiltered stream
-        events, path = [], (f"/doc/statedocevent/?format=json&doc__name={uid}"
-                            "&limit=50&order_by=-id")
-        while path:
-            page = _get(path)
-            events.extend(page["objects"])
-            path = page["meta"].get("next")
-        iesg = sorted(
-            ({"time": e["time"],
-              "state_slug": id_to_slug.get(
-                  int(e["state"].rstrip("/").rsplit("/", 1)[-1]), "?")}
-             for e in events
-             if e.get("state_type", "").rstrip("/").endswith("draft-iesg")
-             and e.get("state") and e["time"] > pre_ts),
-            key=lambda e: e["time"])
-        (WB_DIR / "t1" / f"{uid}.meta.json").write_text(meta_text)
-        (WB_DIR / "t1" / f"{uid}.body.html").write_text(body_text)
-        wl.write(attestation_row(uid, pop["population_id"], pre_ts,
-                                 move["external_ts"], iesg))
-        wl.write(frozen_row)
-        out.append({"unit": uid, "iesg_events": iesg,
-                    "doc_time_is_iesg_event": move["external_ts"]
-                    in [e["time"] for e in iesg]})
+        try:
+            out.append(_freeze_one(wl, by_id[uid], move, precommits[uid],
+                                   pop, id_to_slug))
+        except Exception as e:  # noqa: BLE001 — ledgered, retried next run
+            # codex #5 / composer #3 (adversarial round): a failed freeze is a
+            # ledgered, retryable state — never a silent skip
+            wl.write({"kind": "freeze_failure", "unit_id": uid,
+                      "population_id": pop["population_id"], "error": str(e)})
+            freeze_failures.append({"unit_id": uid, "error": str(e)})
 
-    # world_leg_at_watch clarification (codex #4) — one appended row, once
+    # world_leg_at_watch clarification (codex #4) — once per population
     pop_ledger = Ledger(POP_LEDGER)
     if not any(r.get("kind") == "label_clarification"
+               and r.get("population_id") == pop["population_id"]
                for r in pop_ledger.rows()):
         pop_ledger.write({
             "kind": "label_clarification",
@@ -350,8 +323,50 @@ def freeze() -> dict:
                        "never leg assignment — the observed world_move decides "
                        "the leg (board review 2026-07-06, codex #4, composer "
                        "concurring)"})
-    return {"frozen_now": out,
+    return {"frozen_now": out, "freeze_failures": freeze_failures,
             "frozen_total": len(frozen) + len(out)}
+
+
+def _freeze_one(wl: Ledger, u: dict, move: dict, precommit: dict,
+                pop: dict, id_to_slug: dict) -> dict:
+    uid = move["unit_id"]
+    status_text = (WB_DIR / "t1" / f"{uid}.json").read_text()
+    doc = _get(f"/doc/document/{uid}/?format=json")
+    meta_text = json.dumps({"name": doc["name"], "rev": doc["rev"],
+                            "time": doc["time"]}, sort_keys=True)
+    with urllib.request.urlopen(
+            u["route_catalog"][f"body:{uid}"]["url"], timeout=60) as r:
+        body_text = r.read().decode("utf-8", errors="replace")
+    # composer (adversarial round, orphan attack): ALL fetches and both rows
+    # are built before the first write; the frozen row lands LAST as the
+    # completion marker the skip-set keys on — a failure mid-freeze leaves no
+    # frozen row, so the retry redoes the whole unit
+    frozen_row = freeze_packet_row(u, move, status_text, meta_text, body_text)
+    pre_ts = precommit["precommit_ts"]
+    # paginate (codex, adversarial round): a busy document can push the IESG
+    # events past any single page of the unfiltered stream
+    events, path = [], (f"/doc/statedocevent/?format=json&doc__name={uid}"
+                        "&limit=50&order_by=-id")
+    while path:
+        page = _get(path)
+        events.extend(page["objects"])
+        path = page["meta"].get("next")
+    iesg = sorted(
+        ({"time": e["time"],
+          "state_slug": id_to_slug.get(
+              int(e["state"].rstrip("/").rsplit("/", 1)[-1]), "?")}
+         for e in events
+         if e.get("state_type", "").rstrip("/").endswith("draft-iesg")
+         and e.get("state") and e["time"] > pre_ts),
+        key=lambda e: e["time"])
+    (WB_DIR / "t1" / f"{uid}.meta.json").write_text(meta_text)
+    (WB_DIR / "t1" / f"{uid}.body.html").write_text(body_text)
+    wl.write(attestation_row(uid, pop["population_id"], pre_ts,
+                             move["external_ts"], iesg))
+    wl.write(frozen_row)
+    return {"unit": uid, "iesg_events": iesg,
+            "doc_time_is_iesg_event": move["external_ts"]
+            in [e["time"] for e in iesg]}
 
 
 def status() -> dict:
