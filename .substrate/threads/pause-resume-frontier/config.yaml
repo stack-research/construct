@@ -12,5 +12,5 @@ turn_order:
     - kagi/research-2026-07
 next_index: 1
 quieted:
-    hermes/step-3.7-flash: 999
+    hermes/step-3.7-flash: 998
 status: active
