@@ -53,10 +53,7 @@ every leg"; no per-pause divisor exists in the scorer — composer, verified). R
 warmth amortizes: one mint, k resumes, charge/k per query. Amortized pricing (and
 order-value as an honest secondary measurand) is the bounded v0.2 spec question —
 the only formulation on the table under which the positive cell is not analytically
-dead. It requires a spec fork; nothing in v0.1 licenses it. **Tracked in
-`notes/ROADMAP.md` (WB section) with the full v0.2 entry conditions — the r3 pins
-and the pause-episode mechanism are on file and transfer as-is; a future session
-picking this up starts a fresh thread with this document as inheritance.**
+dead. It requires a spec fork; nothing in v0.1 licenses it.
 
 ## What WAS demonstrated empirically (the instrument's positive residue)
 
