@@ -52,9 +52,14 @@ Phase-0 run measured it.
    licensed cell" over-claimed a tie.)
 2. On docket-form geometry, gpt-oss-20b's quality-mixed route variance makes
    the pay-window undetectable at the precommitted n_max=24.
-3. On greenreach, gpt-oss-20b free-routing cannot assemble the dispositive
-   conjunction (0/7; P≈1.3e-5 against p≥0.8); calibration proves the
-   capability exists under a forced route — the failure is routing habit.
+3. On greenreach, gpt-oss-20b free-routing did not assemble the dispositive
+   conjunction (0/7; P≈1.3e-5 against p≥0.8), while the same engine passed
+   the scripted calibration route. The ledger licenses both rows and no
+   attribution: calibration is an admission precondition, never free-route
+   capability evidence (C3), and "routing habit" as the named failure would
+   be the circularity round 1 refused. (Wording corrected in doc-review:
+   grok's BLOCK — the prior sentence claimed "capability" and "habit" the
+   rows don't license.)
 4. On greenreach, gpt-5.4-2026-03-05 free-routing assembles the conjunction
    with zero waste (5/5 exact-triple), making the cold branch cheaper than
    the artifact floor: no decoy geometry can open a window for this engine
