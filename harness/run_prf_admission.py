@@ -284,8 +284,20 @@ def main() -> int:
             temp = (float(rng[0]) + float(rng[1])) / 2.0
         if temp is not None and rng and not (rng[0] <= temp <= rng[1]):
             ap.error(f"--temperature {temp} outside pinned range {rng}")
-        engine = _engine(args.engine, args.model, args.base_url,
-                         temperature=temp)
+        if args.engine == "local" and "localhost" not in args.base_url:
+            # remote OpenAI-compatible endpoint (dan's GPT-5 ruling
+            # 2026-07-09): key from env only — never a flag, never ledgered
+            from .engine import LocalEngine
+            import os
+            key = os.environ.get("OPENAI_API_KEY")
+            if not key:
+                ap.error("OPENAI_API_KEY not set for a remote endpoint")
+            engine = LocalEngine(args.model, base_url=args.base_url,
+                                 api_key=key, temperature=temp,
+                                 token_param="max_completion_tokens")
+        else:
+            engine = _engine(args.engine, args.model, args.base_url,
+                             temperature=temp)
         label = args.model
 
     out = run_admission_packet(

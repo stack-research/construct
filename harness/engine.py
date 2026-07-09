@@ -359,11 +359,16 @@ class LocalEngine:
     backend_name = "local_openai_compat"
 
     def __init__(self, model: str, base_url: str = "http://localhost:1234/v1",
-                 api_key: str | None = None, temperature: float | None = 0):
+                 api_key: str | None = None, temperature: float | None = 0,
+                 token_param: str = "max_tokens"):
         self.model = model
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.temperature = temperature
+        # OpenAI's GPT-5 family rejects legacy `max_tokens` (transport smoke
+        # 2026-07-09) — remote callers pass "max_completion_tokens"; the
+        # default stays byte-identical for every committed local-engine run
+        self.token_param = token_param
 
     def start_session(self, system: str = "", foreground: str = "",
                       action_instruction: str | None = None) -> _LocalSession:
@@ -379,7 +384,7 @@ class LocalEngine:
             "model": self.model,
             "messages": messages,
             "temperature": temp,
-            "max_tokens": max_tokens,
+            self.token_param: max_tokens,
         }).encode()
         headers = {"Content-Type": "application/json"}
         if self.api_key:
