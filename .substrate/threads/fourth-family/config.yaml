@@ -10,5 +10,4 @@ turn_order:
     - cursor/glm-5.2
     - cursor/gemini-3.5-flash
     - cursor/kimi-k2.7-code
-next_index: 4
 status: active

@@ -102,8 +102,11 @@ machine-scored — no discretion at evaluation time) with verdict `admitted`:
 3. per-branch `n_required ≤ 24` via the shared Bessel `pilot_n_rule`
    (P-A4; grok's counterexample is a seeded regression:
    `[475×4, 900] → n=28`, refused), AND
-4. `effect_size_est > 100` with a_i from the shared version fork and l_bar
-   from the `_tokens` pricing recompute (P-A5).
+4. `effect_size_est > 100` with a_i from the shared version fork
+   (`harness/mint_frontier_state.py::recompute_a_i` — rendered for
+   v0.3/0.4, canonical-body for v0.2) and l_bar from the pricing recompute
+   (`harness/run_sbr.py::_tokens` over surface TEXT, never the authored
+   tokens field) (P-A5; function names per kimi's doc-review C-note).
 
 Plus, independently sufficient (grok's round-1 reopen 1): a clean-transport
 docket rerun landing `n_required ≤ 24` with a licensed cell either way.
