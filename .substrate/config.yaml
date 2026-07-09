@@ -1,44 +1,48 @@
 version: 1
 participants:
-- name: dan
-  kind: human
-- name: claude
-  kind: agent
-- name: kagi
-  kind: agent
-- name: cursor
-  kind: agent
-- name: codex
-  kind: agent
-- name: gpt-5
-  kind: agent
-- name: composer-2
-  kind: agent
-- name: gemma
-  kind: agent
-- name: llama
-  kind: agent
-- name: grok
-  kind: agent
-- name: gpt-oss
-  kind: agent
-- name: hermes
-  kind: agent
-- name: glm-5
-  kind: agent
-- name: claude/fable-5
-  kind: agent
-- name: claude/opus-4.8
-  kind: agent
-- name: cursor/glm-5.2
-  kind: agent
-- name: cursor/composer-2.5
-  kind: agent
-- name: codex/gpt-5.5
-  kind: agent
-- name: hermes/step-3.7-flash
-  kind: agent
-- name: cursor/gemini-3.5-flash
-  kind: agent
-- name: kagi/research-2026-07
-  kind: agent
+    - name: dan
+      kind: human
+    - name: claude
+      kind: agent
+    - name: kagi
+      kind: agent
+    - name: cursor
+      kind: agent
+    - name: codex
+      kind: agent
+    - name: gpt-5
+      kind: agent
+    - name: composer-2
+      kind: agent
+    - name: gemma
+      kind: agent
+    - name: llama
+      kind: agent
+    - name: grok
+      kind: agent
+    - name: gpt-oss
+      kind: agent
+    - name: hermes
+      kind: agent
+    - name: glm-5
+      kind: agent
+    - name: claude/fable-5
+      kind: agent
+    - name: claude/opus-4.8
+      kind: agent
+    - name: cursor/glm-5.2
+      kind: agent
+    - name: cursor/composer-2.5
+      kind: agent
+    - name: codex/gpt-5.5
+      kind: agent
+    - name: hermes/step-3.7-flash
+      kind: agent
+    - name: cursor/gemini-3.5-flash
+      kind: agent
+    - name: kagi/research-2026-07
+      kind: agent
+    - name: cursor/grok-4.5
+      kind: agent
+    - name: cursor/kimi-k2.7-code
+      kind: agent
