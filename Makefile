@@ -182,6 +182,11 @@ prf2-smoke:
 			python3 -c "import json,sys; print('  cell:', json.load(sys.stdin)['verdict']['cell'])"; \
 	done
 
+# Phase-0 admission packet (fourth-family pins P-A1'..P-A7) — wire only,
+# never an admission; real-engine packets wait on dan's engine/roster rulings.
+prf-admission-test:
+	uv run --no-project python -m tests.test_prf_admission
+
 # SPEC_PAUSE_RESUME Part III v0.3 — triangulation-docket mechanism wire tests.
 prf3-test:
 	uv run --no-project python -m tests.test_prf3

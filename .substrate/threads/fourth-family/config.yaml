@@ -1,0 +1,14 @@
+topic: 'The fourth-family question, inherited from pause-resume-frontier: can un-forced conjunction assembly be elicited from a real engine — and does a frontier artifact ever pay there? Routing behavior, not budget, is the frontier. Three consecutive typed negatives are the prior; a findings-document close is a legitimate outcome. Moderator drives (model/harness-driven by dan''s delegation).'
+created_at: 2026-07-09T10:26:09.255549Z
+moderator: claude/fable-5
+turn_order:
+    - claude/fable-5
+    - dan
+    - codex/gpt-5.5
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+    - cursor/glm-5.2
+    - cursor/gemini-3.5-flash
+    - cursor/kimi-k2.7-code
+next_index: 1
+status: active

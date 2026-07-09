@@ -465,6 +465,23 @@ def run_sbr_session(
     }
 
 
+def pilot_n_rule(costs: list[float], h: float, n_max: int) -> tuple[float, int, bool]:
+    """§17 executed N-rule on a pilot cost vector — THE code path.
+
+    Returns (pilot_variance, n_required, ci_target_unmet). Bessel-corrected
+    sample variance (len-1 denominator); n_required floored at 2, targeting
+    CI half-width h on the branch mean gap. Phase-0 admission (P-A1', pins
+    2026-07-09) consumes this SAME function — never a reimplementation: the
+    kimi/grok round proved the population-variance closed form diverges from
+    this estimator at K=5 (Bessel 5/4 on the fail-mass term).
+    """
+    mu = sum(costs) / len(costs)
+    var = sum((c - mu) ** 2 for c in costs) / (len(costs) - 1)
+    n_required = max(
+        2, math.ceil((1.96 * math.sqrt(var) * math.sqrt(2) / h) ** 2))
+    return var, n_required, n_required > n_max
+
+
 def dispersion_probe(
     episode: dict,
     engine_factory,
@@ -707,14 +724,10 @@ def run_episode(
             c_max = recompute_c_max(episode["budgets"])
             costs = [s["read_tokens"] if s["quality_ok"] else c_max
                      for s in probe_result["summaries"]]
-            mu = sum(costs) / len(costs)
-            var = sum((c - mu) ** 2 for c in costs) / (len(costs) - 1)
-            pilot_variance = var
             h = regime_s.get("ci_halfwidth_tokens", 100)
             n_max = regime_s.get("n_max", 24)
-            n_required = max(
-                2, math.ceil((1.96 * math.sqrt(var) * math.sqrt(2) / h) ** 2))
-            ci_target_unmet = n_required > n_max
+            pilot_variance, n_required, ci_target_unmet = pilot_n_rule(
+                costs, h, n_max)
             samples = min(n_required, n_max)
 
     cfg: dict[str, Any] = {

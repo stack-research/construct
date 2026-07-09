@@ -13,4 +13,4 @@ turn_order:
 next_index: 1
 quieted:
     hermes/step-3.7-flash: 997
-status: active
+status: ended
