@@ -9,8 +9,8 @@ The packet is an admission gate, never evidence (C3 discipline, P-A6): it
 gates the cold branch only, says nothing about resumable routing, and no
 Regime-S claim may cite it. Every scored quantity is either computed by the
 same code path the live instrument uses (pilot_n_rule, run_sbr_session's
-conjunctive quality, recompute_state_tokens) or ledgered verbatim so any seat
-can recompute it from the row (P-A7).
+conjunctive quality, recompute_a_i's shared version fork) or ledgered
+verbatim so any seat can recompute it from the row (P-A7).
 
 Predicate (P-A1', all four legs required for `admitted`):
   outer   cold_pass_rate >= 0.8 over ALL K pilot draws          (P-A2)
@@ -32,7 +32,7 @@ import uuid
 from pathlib import Path
 
 from .ledger import Ledger
-from .mint_frontier_state import recompute_state_tokens
+from .mint_frontier_state import recompute_a_i
 from .run_sbr import (REPO, check_manifest, dispersion_probe, pilot_n_rule,
                       run_calibration_gate, run_mint_spine,
                       run_sbr_ignorance_probe, _engine)
@@ -70,7 +70,9 @@ def admission_metrics(episode: dict, summaries: list[dict],
         sum(decoy_reads) / len(decoy_reads) if decoy_reads else None)
 
     # (3) effect size against canonical-render tokens (P-A5): L_bar from the
-    # catalog's canonical surface tokens, a_i from recompute_state_tokens.
+    # catalog's canonical surface tokens, a_i from the shared version fork
+    # (recompute_a_i — the caller derives it; review F1 killed the 0.2-only
+    # counter here).
     l_bar = (sum(episode["catalog"][leg]["tokens"]
                  for leg in dispositive) / len(dispositive))
     d_bar = (sum(s["read_tokens"] for s in successes) / len(successes)
@@ -99,6 +101,9 @@ def admission_metrics(episode: dict, summaries: list[dict],
         "ci_target_unmet": ci_target_unmet,
         "n_rule_scope": "per-branch (P-A4); this row is the cold branch",
         "mean_decoy_reads_on_successes": mean_decoy_reads,
+        "decoy_reads_definition": (
+            "count of non-dispositive reads per success (includes ballast, "
+            "not only decoy siblings) — review F3 naming disclosure"),
         "decoy_reads_per_success": decoy_reads,
         "success_cost_mean": d_bar,
         "a_i": a_i,
@@ -128,9 +133,12 @@ def run_admission_packet(episode_path: Path, *, engine=None,
         (fixture_dir / "freeze_manifest.json").read_text())
     k = episode.get("regime_s", {}).get("dispersion_probe_k", 5)
 
+    # slash-bearing model ids (openai/gpt-oss-20b) must not nest the default
+    # ledger under runs/prf/ where flat *.jsonl scans miss it (review, codex)
+    safe_label = engine_label.replace("/", "-")
     ledger_path = ledger_path or (
         REPO / "runs" / "prf" /
-        f"{episode['episode_id']}.admission-{engine_label}.jsonl")
+        f"{episode['episode_id']}.admission-{safe_label}.jsonl")
     if ledger_path.exists():
         raise SystemExit(
             f"refusing to overwrite {ledger_path} — write beside, never over")
@@ -147,10 +155,30 @@ def run_admission_packet(episode_path: Path, *, engine=None,
 
     # probe-before-contact is family law; the admission packet runs it LIVE
     # and ledgers the result (composer's attested-not-computed catch) — it
-    # never trusts a handed-in attestation.
+    # never trusts a handed-in attestation. The QUESTION AND MARKERS are
+    # fixture-owned (review F1, codex/gemini: the meridian default tests the
+    # wrong fictional world in both directions) — a real engine is refused
+    # outright when the fixture supplies no probe contract.
     if engine is not None and not skip_probe:
-        probe = run_sbr_ignorance_probe(engine, engine_label=engine_label)
-        ledger.write({"kind": "admission_ignorance_probe", **probe})
+        manifest = json.loads((fixture_dir / "manifest.json").read_text())
+        contract = manifest.get("probe_contract") or episode.get(
+            "probe_contract")
+        if not (contract and contract.get("question")
+                and contract.get("prior_knowledge_markers")):
+            ledger.write({"kind": "admission_refused",
+                          "reason": "probe_contract_missing",
+                          "disclosure": "fixture supplies no ignorance-probe "
+                                        "contract; refusing rather than "
+                                        "probing the wrong world"})
+            return {"halted": "admission_refused",
+                    "reason": "probe_contract_missing",
+                    "ledger": str(ledger_path)}
+        probe = run_sbr_ignorance_probe(
+            engine, engine_label=engine_label,
+            question=contract["question"],
+            markers=tuple(contract["prior_knowledge_markers"]))
+        ledger.write({"kind": "admission_ignorance_probe",
+                      "probe_contract_source": "fixture", **probe})
         if probe["knew"] is not False:
             ledger.write({"kind": "admission_refused",
                           "reason": "ignorance_probe"})
@@ -161,7 +189,8 @@ def run_admission_packet(episode_path: Path, *, engine=None,
     if mint.get("halted"):
         return {**mint, "ledger": str(ledger_path)}
     canonical_state = mint["canonical_state"]
-    a_i = recompute_state_tokens(canonical_state)
+    a_i = recompute_a_i(canonical_state,
+                        episode.get("instrument_version", "0.2"))
 
     # §30-2 calibration precondition — precondition, NEVER evidence (C3)
     if engine is not None:
@@ -196,6 +225,11 @@ def run_admission_packet(episode_path: Path, *, engine=None,
         "instrument_version": episode.get("instrument_version"),
         "pin_round": PIN_ROUND,
         "unique_realizations": probe_result["unique_realizations"],
+        # self-auditing sampling params (review, composer F1/codex)
+        "temperature": (getattr(engine, "temperature", None)
+                        if engine is not None else 0.0),
+        "temperature_range": episode.get("regime_s", {}).get(
+            "temperature_range"),
         # P-A6: this packet gates the COLD branch only; C3 applies.
         "resumable_routing_untested": True,
         "scope_disclosure": (
@@ -224,7 +258,10 @@ def main() -> int:
                     help="episodes/prf/greenreach-release/ep-*.json")
     ap.add_argument("--engine", choices=("mock", "local", "claude"),
                     default="mock")
-    ap.add_argument("--model", default="claude-opus-4-8")
+    # NO default model: the candidate engine is an ARMING decision (dan's,
+    # per the fold routing) — a default would quietly pre-commit it
+    # (review, gemini). Required whenever --engine is not mock.
+    ap.add_argument("--model", default=None)
     ap.add_argument("--base-url", default="http://localhost:1234/v1")
     ap.add_argument("--temperature", type=float, default=None)
     ap.add_argument("--ledger", default=None)
@@ -233,6 +270,9 @@ def main() -> int:
     engine = None
     label = "mock"
     if args.engine != "mock":
+        if not args.model:
+            ap.error("--model is required with a real engine (no default: "
+                     "the candidate engine is an arming decision)")
         episode = json.loads(Path(args.episode).read_text())
         rng = episode.get("regime_s", {}).get("temperature_range")
         temp = args.temperature

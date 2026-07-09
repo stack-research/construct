@@ -537,12 +537,18 @@ _SBR_PRIOR_KNOWLEDGE_MARKERS = (
 
 
 def run_sbr_ignorance_probe(engine, engine_label: str | None = None,
-                            question: str | None = None) -> dict:
+                            question: str | None = None,
+                            markers: tuple[str, ...] | None = None) -> dict:
+    """Cold ignorance probe. Question AND markers default to the meridian
+    fixture — any other fixture must pass its own probe contract (admission
+    build review F1, 2026-07-09: a meridian probe on a greenreach packet
+    tests the wrong fictional world in both directions)."""
     from .oracle import _norm
     q = question or SBR_PROBE_QUESTION
     result = engine.run(q, [], foreground_block="")
     norm = _norm(result.answer)
-    knew = any(_norm(m) in norm for m in _SBR_PRIOR_KNOWLEDGE_MARKERS)
+    knew = any(_norm(m) in norm
+               for m in (markers or _SBR_PRIOR_KNOWLEDGE_MARKERS))
     label = engine_label or getattr(engine, "model", engine.backend_name)
     return {
         "knew": knew,

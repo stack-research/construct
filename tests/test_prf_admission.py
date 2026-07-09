@@ -173,6 +173,59 @@ class TestAdmissionPacketWire(unittest.TestCase):
                 (fixture / "admit.jsonl").read_text().splitlines()]
         self.assertEqual(
             sum(1 for r in rows if r["kind"] == "admission_packet"), 1)
+        # review F1/F2 (kimi/grok): the packet a_i must be the SAME quantity
+        # the live scorer prices — the minted state_tokens (rendered fork on
+        # v0.3/0.4), asserted against the ledger row, not a label
+        minted = [r for r in rows if r["kind"] == "frontier_state_minted"]
+        self.assertEqual(len(minted), 1)
+        self.assertEqual(packet["a_i"], minted[0]["state_tokens"])
+        from harness.mint_frontier_state import recompute_a_i
+        from harness.sbr_util import artifact_render_tokens
+        freeze = [r for r in rows if r["kind"] == "frontier_freeze"][0]
+        self.assertEqual(
+            packet["a_i"],
+            recompute_a_i(freeze["canonical_state"],
+                          packet["instrument_version"]))
+        self.assertEqual(packet["a_i"],
+                         artifact_render_tokens(freeze["canonical_state"]))
+        shutil.rmtree(fixture.parent)
+
+    def test_real_engine_refused_without_probe_contract(self):
+        # review F1 (codex/gemini): no fixture probe contract -> refuse the
+        # real engine outright rather than probing the wrong world
+        fixture = _wire_fixture()
+
+        class FakeEngine:
+            backend_name = "local"
+            model = "fake/engine"
+            temperature = 0.5
+        out = run_admission_packet(
+            fixture / "ep-baseline.json", engine=FakeEngine(),
+            engine_label="fake/engine",
+            ledger_path=fixture / "noprobe.jsonl")
+        self.assertEqual(out["halted"], "admission_refused")
+        self.assertEqual(out["reason"], "probe_contract_missing")
+        shutil.rmtree(fixture.parent)
+
+    def test_default_ledger_label_sanitized(self):
+        # review (codex): slash-bearing model ids must not nest the default
+        # ledger path outside flat runs/prf scans
+        fixture = _wire_fixture()
+        ep = json.loads((fixture / "ep-baseline.json").read_text())
+        handles = _handles(ep)
+        routes = [DECOY_IDS + LEG_IDS] * 5
+        sessions = [MockEngine(scripted_actions=[handles[s] for s in r]
+                               + ["STOP"]).start_session() for r in routes]
+        out = run_admission_packet(
+            fixture / "ep-baseline.json",
+            scripted_factory=lambda i: sessions[i],
+            engine_label="openai/gpt-oss-20b")
+        ledger = Path(out["ledger"])
+        try:
+            self.assertEqual(ledger.parent.name, "prf")
+            self.assertIn("admission-openai-gpt-oss-20b", ledger.name)
+        finally:
+            ledger.unlink(missing_ok=True)
         shutil.rmtree(fixture.parent)
 
     def test_wire_packet_refused_on_lazy_routes(self):

@@ -37,7 +37,7 @@ import json
 import re
 
 from .derive_live_obligations import replay_ok
-from .mint_frontier_state import recompute_state_tokens
+from .mint_frontier_state import recompute_a_i, recompute_state_tokens
 from .sbr_util import (artifact_render_tokens, action_space_hash, catalog_hash,
                        handle_to_surface_id)
 from .predicate_ast import evaluate, validate
@@ -225,13 +225,10 @@ class PRFScorer:
             return self._score_v02()
         return self._score_v01()
 
-    def _uses_rendered_a_i(self) -> bool:
-        return self._instrument_version() in ("0.3", "0.4")
-
     def _recompute_a_i(self, canonical_state: dict) -> int:
-        if self._uses_rendered_a_i():
-            return artifact_render_tokens(canonical_state)
-        return recompute_state_tokens(canonical_state)
+        # delegates to THE shared version fork (mint_frontier_state) —
+        # admission and scorer must agree by construction
+        return recompute_a_i(canonical_state, self._instrument_version())
 
     # ---------- v0.2 ECAC (Part II §16/§21) ----------
     def _artifact_tokens(self, branch: str) -> int:

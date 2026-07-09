@@ -347,3 +347,14 @@ def recompute_state_tokens(canonical_state: dict) -> int:
     """Scorer-side: `frontier_artifact_tokens` (D3's A) is recomputed from the
     canonical state at `state_digest`; the logged `state_tokens` is audit-only."""
     return len(json.dumps(_canonical(canonical_state), sort_keys=True).split())
+
+
+def recompute_a_i(canonical_state: dict, instrument_version: str) -> int:
+    """THE version fork for a_i — v0.3/0.4 price the RENDERED artifact, v0.2
+    the canonical body (Part III §28). Single home so no consumer can pick
+    the wrong fork silently again (admission build review F1, 2026-07-09:
+    the 0.2 counter diverges from the render on v0.4 fixtures, 47 vs 56)."""
+    if str(instrument_version) in ("0.3", "0.4"):
+        from .sbr_util import artifact_render_tokens
+        return artifact_render_tokens(canonical_state)
+    return recompute_state_tokens(canonical_state)
