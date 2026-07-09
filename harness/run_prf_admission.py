@@ -35,7 +35,7 @@ from .ledger import Ledger
 from .mint_frontier_state import recompute_a_i
 from .run_sbr import (REPO, check_manifest, dispersion_probe, pilot_n_rule,
                       run_calibration_gate, run_mint_spine,
-                      run_sbr_ignorance_probe, _engine)
+                      run_sbr_ignorance_probe, _engine, _tokens)
 from .sbr_util import recompute_c_max
 
 PIN_ROUND = "fourth-family pins P-A1'..P-A7 (adopted 2026-07-09)"
@@ -73,7 +73,11 @@ def admission_metrics(episode: dict, summaries: list[dict],
     # catalog's canonical surface tokens, a_i from the shared version fork
     # (recompute_a_i — the caller derives it; review F1 killed the 0.2-only
     # counter here).
-    l_bar = (sum(episode["catalog"][leg]["tokens"]
+    # priced the way run_sbr_session prices reads — _tokens over the surface
+    # TEXT, never the authored tokens field (grok's next-second-way warning,
+    # discharged same-day: the authored field is gate-checked metadata, the
+    # recompute is what the instrument charges)
+    l_bar = (sum(_tokens(episode["catalog"][leg]["text"])
                  for leg in dispositive) / len(dispositive))
     d_bar = (sum(s["read_tokens"] for s in successes) / len(successes)
              if successes else None)

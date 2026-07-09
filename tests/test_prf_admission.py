@@ -36,7 +36,8 @@ def _handles(episode: dict) -> dict[str, str]:
 def _episode_stub(leg_tokens: int = 100) -> dict:
     return {
         "dispositive_leg_ids": list(LEG_IDS),
-        "catalog": {leg: {"tokens": leg_tokens} for leg in LEG_IDS},
+        "catalog": {leg: {"text": " ".join(["w"] * leg_tokens),
+                          "tokens": leg_tokens} for leg in LEG_IDS},
         "budgets": {"max_read_tokens": 700, "max_steps": 10,
                     "action_overhead_tokens": 20},
         "regime_s": {"n_max": 24, "ci_halfwidth_tokens": 100,
@@ -188,6 +189,14 @@ class TestAdmissionPacketWire(unittest.TestCase):
                           packet["instrument_version"]))
         self.assertEqual(packet["a_i"],
                          artifact_render_tokens(freeze["canonical_state"]))
+        # grok's next-second-way (discharge round): l_bar must be priced the
+        # way the instrument prices reads — _tokens over surface TEXT
+        from harness.run_sbr import _tokens
+        ep = json.loads((fixture / "ep-baseline.json").read_text())
+        expected_l_bar = sum(
+            _tokens(ep["catalog"][leg]["text"])
+            for leg in ep["dispositive_leg_ids"]) / 3
+        self.assertEqual(packet["l_bar_canonical"], expected_l_bar)
         shutil.rmtree(fixture.parent)
 
     def test_real_engine_refused_without_probe_contract(self):
