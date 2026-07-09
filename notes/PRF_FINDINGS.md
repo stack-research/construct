@@ -1,6 +1,6 @@
 # PRF findings — the pay-window question, PAUSED (not closed)
 
-**Status: PAUSED 2026-07-09 by dan's ruling** (thread `fourth-family`, ~line 872):
+**Status: PAUSED 2026-07-09 by dan's ruling** (thread `fourth-family`, lines 874–875):
 
 > Write that up honestly with the point-mode caveat visible, precommit the
 > band's membership criteria as the reopen trigger, and park the question as
@@ -37,9 +37,13 @@ freely over a fixture catalog? (SPEC_PAUSE_RESUME Parts II–IV; "pay" per the
 - **Inside the band** (competent-but-distractible): never observed. And run 2
   shows the band's native variance can defeat measurement at n_max=24.
 
-kimi-k2.7-code's round-1 derivation predicted shape 4 before any engine was
-named: "beeline-heavy successes kill effect size" (thread ~line 379). The
-Phase-0 run measured it.
+The beeline failure mode was predicted before any engine was named:
+kimi-k2.7-code's derivation established that the effect size needs decoy
+mass (margin dies at k≤4; thread lines 233–379), and grok-4.5's
+verification pass stated it outright — "Beeline-heavy successes also kill
+effect size" (~line 420, inside its entry at 395–470). The Phase-0 run
+measured it. (Attribution corrected in doc-review: composer's pointer
+check — the sentence is grok's, the arithmetic it rests on is kimi's.)
 
 ## Claims (each licensed by a committed ledger row, nothing wider)
 
