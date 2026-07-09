@@ -43,8 +43,13 @@ Phase-0 run measured it.
 
 ## Claims (each licensed by a committed ledger row, nothing wider)
 
-1. On meridian fixtures, resumable-state lost on mean ECAC against cold
-   re-read on every licensed cell, three engines (Regime D and S).
+1. On meridian fixtures, no licensed cell shows a resumable win: cold
+   matched or beat resumable on mean ECAC on every licensed row, three
+   engines (Regime D and S) — losses (`PRF2-cost-loss`) and ties
+   (`PRF2-heir-dominates`, e.g. ministral neutral 860/860), never a win.
+   (Wording corrected in doc-review: codex's counter-row,
+   `runs/prf/neutral-frontier.sbr-ministral-3-3b.jsonl` — "lost on every
+   licensed cell" over-claimed a tie.)
 2. On docket-form geometry, gpt-oss-20b's quality-mixed route variance makes
    the pay-window undetectable at the precommitted n_max=24.
 3. On greenreach, gpt-oss-20b free-routing cannot assemble the dispositive
