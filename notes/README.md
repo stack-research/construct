@@ -9,6 +9,7 @@ For *read-order*, start at [AGENTS.md](AGENTS.md): the operating contract routes
 - **Authoritative for mechanisms & cells** — the specs (`notes/SPEC_*.md`, per milestone/track) and [notes/RUBRIC_V1.md](notes/RUBRIC_V1.md). On conflict, the most specific, most recently reviewed spec wins.
 - **What happened in each milestone** — the findings (`notes/*_FINDINGS.md`): evidence and disclosed nulls, not direction.
 - **Direction & gates** — [notes/ROADMAP.md](notes/ROADMAP.md) (milestone status, active gates, carry-forward debts) and [notes/PLAN_V1_BRANCH_AND_OFFER.md](notes/PLAN_V1_BRANCH_AND_OFFER.md) (harness architecture, standing rules).
+- **NEXT substrate direction** — [notes/NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) is the cold-reviewed architect's proposal; [notes/BODY_MAP.md](BODY_MAP.md) is the living maturity-labeled orientation map. Neither is a mechanism spec or finding.
 - **Vocabulary** — [notes/GLOSSARY.md](notes/GLOSSARY.md) (reader aid; linked specs win on conflict).
 - **Guided lab walkthrough** — [notes/walkthrough/README.md](walkthrough/README.md): a visitor-facing route through the questions, instruments, preserved results, and limits, beginning at M-1.
 - **The reflective library** — [notes/QUOTES.md](notes/QUOTES.md) and [notes/PLAYLIST.md](notes/PLAYLIST.md): the room's own marginalia.

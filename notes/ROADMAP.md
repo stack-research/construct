@@ -2,6 +2,15 @@
 
 Status: **v0.1 — REVIEWED** (one bounded pass each: kagi's four sharpenings adopted unanimously; cursor's implementation framing; codex's contract/content boundary. Gates open, 2026-06-12). The README is the living thesis; this document is the curiosity gate. Review log at the end. **X-track (implicit-memory substrate): X1 RESOLVED 2026-06-20 (thread-6) — instrument engineering-closed, X1-win real-engine `not_engaged`, synchronous eligibility-temperature retired as the organ; prune-to-cold-store: **X2-LB CLOSED 2026-06-20** — the first **positive** implicit-layer result (oracle-gated hot-store eviction + rematerialization carries ~57% less memory at matched quality, cross-engine on gpt-oss-20b + claude, on a important out-of-weights fixture; scored on a cost the offer gate cannot move). **X2-U1 CLOSED 2026-06-21 (thread-7)** — the world-grounded close paid on a real external out-of-weights corpus (Node **DEP0033**, deprecated→revoked), cross-engine **−59% hot store at matched quality**, out-of-weights proven by a pre-run ignorance probe (cursor + codex verified from disk, dan's moderator close). **X4 CLOSED 2026-06-27 — a *successful failure*** (thread-x4c ENDED, x4-review narrowing): the sensory occlusion-watch organ was built + armed, v0.1 room-blocked, then the premise dissolved (**cold is cold** — sensing reduces to reading, an X1-family no-op); disclosed null on the sense itself; the implicit substrate reads as a **metabolism** (empirical, not closed ontology); the live direction is now a **pause/resume frontier**, not a fifth organ. The M-track stays v0.1 REVIEWED, closed through M3.**
 
+**Current direction (2026-07-11):** WB v0.1 is closed on its analytic null and
+PRF is paused on a precommitted reopen trigger. No scientific mechanism is
+currently licensed for build. [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) is the
+cold-reviewed whole-body direction; [BODY_MAP.md](BODY_MAP.md) is the living
+maturity map; the [embodiment sketch](../sketches/next_substrate/README.md) is
+wire/integration-only. The leading candidate slice is a structural
+epistemic-frame check, but its admission gate must be planned and specified
+before implementation as an experiment.
+
 ## The gate
 
 Every proposed piece of work answers one question: **"which milestone does this serve?"**

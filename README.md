@@ -81,15 +81,17 @@ Every X-track organ must pass three checks ([three-guardrail stack](notes/GLOSSA
 
 **X4 — Occlusion watch (closed, a successful failure).** The proposed sensory organ — watching for what the room can no longer see — was built, armed, and then closed (2026-06-27) when the room showed its scoreboard measured curation, not sensing: cold-is-cold, and reading is already the sense. The full arc, including why the failure was worth keeping, is [walkthrough chapter 9](notes/walkthrough/09_X4_OCCLUSION_WATCH.md).
 
-## Where the lab is now (2026-07-05)
+## Where the lab is now (2026-07-11)
 
-The M- and X-tracks above are the lab's **past** — closed arcs with sealed verdicts. The present is **two live instruments**, both designed in adversarial board rounds and specified before any engine contact:
+The M- and X-tracks above are the lab's **earned past**. The two instruments that most recently occupied the bench have reached honest terminal states: warming-budget v0.1 closed on an analytic null ([findings](notes/WB_FINDINGS.md)); the pause/resume pay-window question is paused with a precommitted reopen trigger and no licensed cost win ([findings](notes/PRF_FINDINGS.md)). Neither is the current build direction.
 
-**The warming budget (armed, waiting on the world).** A prospective watch: 101 bets written down *before* the world resolves them, asking whether consequence-earned ranking under-serves an unresolved frontier enough to measure — in read-tokens-to-matched-outcome, when the world moves. Population, match rule, and triggers were stamped first; the IESG calendar grades the bets on its own schedule. Spec: [notes/SPEC_WARMING_BUDGET.md](notes/SPEC_WARMING_BUDGET.md) · story: [walkthrough chapter 12](notes/walkthrough/12_WARMING_BUDGET.md).
+The lab has returned to the whole. [NEXT substrate](notes/NEXT_SUBSTRATE.md) is the cold-reviewed architecture for a persistent governed body around an intermittent language model. The [orientation map](notes/BODY_MAP.md) labels every major part as earned, provisional sketch, candidate slice, or unlicensed anatomy so daily instruments cannot substitute for the project.
 
-**The pause/resume frontier (in flight — the pay-window question).** Does a compact frontier artifact — minted at pause time, carrying obligations but never answers — *ever* let a resumed session reach the same-quality decision cheaper than re-reading cold? Three fixture families and ~40 real-engine sessions in, **the answer has never been observed to be yes**, and every negative is typed: pure-tax (capable engines ignore the artifact), cognitive-load (small engines get worse with it), budget-confound (the family's own CI discipline refused), plus two reviewed self-falsifier firings. A fourth family (Greenreach, Part IV, sealed 2026-07-05) is the first where a positive result is arithmetically reachable inside the precommitted budget — it runs next. Spec: [notes/SPEC_PAUSE_RESUME.md](notes/SPEC_PAUSE_RESUME.md) (Parts I–IV) · story: [walkthrough chapter 13](notes/walkthrough/13_PAUSE_RESUME_FRONTIER.md).
+The first [embodiment sketch](sketches/next_substrate/README.md) now makes one authored deterministic episode traverse encounter → lineage → governed materialization → activation → action-boundary check → model action → consequence → metabolic accounting → provenance revision → reawakening. It is **wire/integration evidence only**. It demonstrates composition, not language-model learning or mechanism value, and writes nothing under `runs/`.
 
-The **[guided walkthrough](notes/walkthrough/README.md)** is the intended route for a cold reader: thirteen chapters from "how to read a lab" through both live instruments, each with inspect/replay/run instructions and honest limits. If you read only one linked thing, read it.
+No next scientific mechanism is licensed yet. The leading candidate is a narrow structural epistemic-frame check: can a world-checked failure cause a bounded external check on a different-domain task at priced control cost, without taxing irrelevant work? Its admission gate is recorded in the architecture; build planning and specification come next.
+
+The **[guided walkthrough](notes/walkthrough/README.md)** remains the intended route through the earned experiments, with inspect/replay/run instructions and honest limits. The orientation map is the faster route to the whole being built now.
 
 ---
 
@@ -100,3 +102,5 @@ The **[guided walkthrough](notes/walkthrough/README.md)** is the intended route 
 **Working in the repo:** [AGENTS.md](AGENTS.md)
 
 **Milestone gate and status:** [notes/ROADMAP.md](notes/ROADMAP.md)
+
+**Current body map:** [notes/BODY_MAP.md](notes/BODY_MAP.md)
