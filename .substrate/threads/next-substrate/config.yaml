@@ -1,0 +1,13 @@
+topic: A language model should not be asked to remember.
+created_at: 2026-07-10T19:51:25.349305Z
+moderator: dan
+turn_order:
+    - dan
+    - codex/gpt-5.6-sol
+    - claude/fable-5
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+    - cursor/glm-5.2
+    - kagi/research-2026-07
+next_index: 2
+status: ended
