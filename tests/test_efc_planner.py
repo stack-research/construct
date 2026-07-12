@@ -5,16 +5,17 @@ evidence (§6). Two pins matter most:
 
 1. §10.4's zero-variance guard: a K=5 binary pilot at an observed boundary
    cannot claim n_required = 0 — Wilson/Newcombe width stays real.
-2. The structural refusal found at build time (2026-07-12), corrected by this
-   very machinery mid-build: at N_MAX=24 and 95%, exactly TWO of the 625
-   possible count configurations meet the sealed §10.3 non-inferiority
-   half-width target of 0.10 — the total anti-correlated collapses
-   (24/24 vs 0/24) and (0/24 vs 24/24), hw = 0.09756. Both are incoherent
-   for the §9.2 NI loses-cells (the comparator lane must score 0.00 from an
-   engine that simultaneously clears the §6 S1 >= 0.80 band). Every coherent
-   pilot yields n_required > 24, so the sealed board computes
-   confounded(ci_target_unmet) and refuses Part II (§10.4). The planner must
-   report that honestly; it is Part I arithmetic, not a bug in this module.
+2. Finding 1 (2026-07-12, now the §18 v0.2 amendment record): under the v0.1
+   ceiling of 24, exactly TWO of the 625 possible count configurations met
+   the §10.3 non-inferiority half-width target of 0.10 — the total
+   anti-correlated collapses (24/24 vs 0/24) and mirror, hw = 0.09756 — both
+   incoherent with the §6 S1 >= 0.80 band, so the v0.1 board computed
+   confounded(ci_target_unmet) for every coherent pilot. That historical
+   arithmetic is pinned below with EXPLICIT N=24 enumeration, independent of
+   the amended N_MAX (Sol's acceptance condition: history is not mutated
+   into a ceiling test). The v0.2 ceiling of 128 opens the coherent corner
+   (equal 0.80 rates -> N=124); the acceptance test asserts the full board,
+   stratum table, and budget disclosure, not merely the verdict.
    (First-draft claim "unreachable for ALL pilots" was wrong: the equal-arms
    minimum 0.13798 is not the global minimum. The sliver is pinned below.)
 """
@@ -82,9 +83,9 @@ class TestBinaryNRule(unittest.TestCase):
         self.assertGreater(below, 0.20)
         self.assertLessEqual(req.achieved_half_width, 0.20)
 
-    def test_ni_width_target_unreachable_for_coherent_pilots(self):
-        # THE build-day finding, exact form: the NI feasibility region at
-        # N_MAX is two degenerate points out of 625.
+    def test_historical_v01_infeasibility_enumeration(self):
+        # Finding 1, §18 amendment record — pinned at EXPLICIT N=24, fully
+        # independent of the amended N_MAX. Do not mutate this history.
         feasible = [(t, k) for t in range(25) for k in range(25)
                     if half_width(newcombe_diff_interval(t, 24, k, 24, 0.95))
                     <= c.QUALITY_NONINFERIORITY_CI_HALF_WIDTH]
@@ -93,19 +94,28 @@ class TestBinaryNRule(unittest.TestCase):
         equal_arms = half_width(newcombe_diff_interval(24, 24, 24, 24, 0.95))
         self.assertAlmostEqual(equal_arms, 0.13798, delta=5e-6)
         self.assertGreater(equal_arms, c.QUALITY_NONINFERIORITY_CI_HALF_WIDTH)
-        # every coherent pilot shape (healthy comparator) refuses
-        for pilot in (BinaryPilot(5, 5, 5, 5), BinaryPilot(4, 5, 4, 5),
-                      BinaryPilot(5, 5, 4, 5), BinaryPilot(3, 5, 5, 5),
-                      BinaryPilot(5, 5, 3, 5)):
+        # the §18 equal-arms first-feasible N table
+        for p, first_n in ((1.0, 35), (0.95, 54), (0.9, 77), (0.8, 124)):
+            for n, expect_met in ((first_n - 1, False), (first_n, True)):
+                hw = half_width(newcombe_diff_interval(p * n, n, p * n, n, 0.95))
+                self.assertEqual(hw <= 0.10, expect_met, msg=f"p={p} N={n}")
+
+    def test_ni_planning_under_v02_ceiling(self):
+        # coherent NI pilots now plan inside the 128 ceiling (§18)
+        for pilot, expected_n in ((BinaryPilot(4, 5, 4, 5), 124),
+                                  (BinaryPilot(5, 5, 5, 5), 35)):
             req = n_required_binary(pilot, _ni("x", "9.2.3", MC, "C", "B"))
-            self.assertEqual(req.status, STATUS_UNMET, msg=str(pilot))
-            self.assertIsNone(req.n_required)
-        # and the sliver itself is MET at exactly N_MAX — machinery honesty:
-        # the planner does not hide the degenerate configuration
+            self.assertEqual(req.status, STATUS_MET, msg=str(pilot))
+            self.assertEqual(req.n_required, expected_n, msg=str(pilot))
+        # the anti-correlated sliver still plans first at 24 — the planner
+        # does not hide the degenerate configuration
         req = n_required_binary(BinaryPilot(5, 5, 0, 5),
                                 _ni("x", "9.2.3", MC, "C", "B"))
-        self.assertEqual(req.status, STATUS_MET)
         self.assertEqual(req.n_required, 24)
+        # and a genuinely low-rate configuration still refuses at 128
+        req = n_required_binary(BinaryPilot(3, 5, 3, 5),
+                                _ni("x", "9.2.3", MC, "C", "B"))
+        self.assertEqual(req.status, STATUS_UNMET)
 
     def test_malformed_pilot_refused(self):
         with self.assertRaises(PlannerContractError):
@@ -144,6 +154,7 @@ class TestPopulationNRule(unittest.TestCase):
         req = n_required_population(_strong_population_pilot(), spec, _region())
         self.assertEqual(req.status, STATUS_MET)
         self.assertLessEqual(req.n_required, c.N_MAX)
+        self.assertTrue(req.projected_clearance_diagnostic)
 
     def test_region_touching_zero_irrelevant_refused(self):
         spec = _population("pop", "9.4", "C", "A", 0.10, 0.05)
@@ -151,12 +162,27 @@ class TestPopulationNRule(unittest.TestCase):
         with self.assertRaises(PlannerContractError):
             n_required_population(_strong_population_pilot(), spec, bad)
 
-    def test_saving_below_margin_unmet(self):
-        # comparator only ~2% more expensive: point margin can never reach 10%
+    def test_saving_below_margin_is_diagnostic_not_refusal(self):
+        # §10.4 v0.2 three-layer split (Sol's Q2 ruling): a ~2% saving can
+        # never clear the 10% margin, but margin clearance no longer decides
+        # admission — precision does. Status is MET with a False diagnostic;
+        # the margin remains a held-out §9.4 verdict condition.
         pilot = PopulationPilot(strata=(
             StratumCostPilot(MM, 490.0, 5.0, 500.0, 5.0),
             StratumCostPilot(MC, 490.0, 5.0, 500.0, 5.0),
             StratumCostPilot(IRR, 490.0, 5.0, 500.0, 5.0),
+        ))
+        spec = _population("pop", "9.4", "C", "A", 0.10, 0.05)
+        req = n_required_population(pilot, spec, _region())
+        self.assertEqual(req.status, STATUS_MET)
+        self.assertFalse(req.projected_clearance_diagnostic)
+
+    def test_wide_variance_population_precision_refuses(self):
+        # precision (the only admission criterion) still refuses honestly
+        pilot = PopulationPilot(strata=(
+            StratumCostPilot(MM, 300.0, 400.0, 500.0, 400.0),
+            StratumCostPilot(MC, 300.0, 400.0, 500.0, 400.0),
+            StratumCostPilot(IRR, 450.0, 400.0, 500.0, 400.0),
         ))
         spec = _population("pop", "9.4", "C", "A", 0.10, 0.05)
         req = n_required_population(pilot, spec, _region())
@@ -181,7 +207,7 @@ class TestGateComposition(unittest.TestCase):
         g2 = PlannedGate("g2", "x", AllOf((
             _sup("a", "x", MM, "C", "B"), _ni("z", "x", MC, "C", "B"))))
         plan2 = resolve_gates([g2], self._pilots(
-            a=BinaryPilot(5, 5, 0, 5), z=BinaryPilot(5, 5, 5, 5)))
+            a=BinaryPilot(5, 5, 0, 5), z=BinaryPilot(3, 5, 3, 5)))
         self.assertIsNone(plan2.resolved[0].n_required)
         self.assertIn("z", plan2.unmet)
 
@@ -202,7 +228,7 @@ class TestGateComposition(unittest.TestCase):
             _sup("q", "x", MM, "C", "G"),
             _ni("e", "x", MM, "C", "G"))))
         plan = resolve_gates([g], self._pilots(
-            q=BinaryPilot(5, 5, 0, 5), e=BinaryPilot(5, 5, 5, 5)))
+            q=BinaryPilot(5, 5, 0, 5), e=BinaryPilot(3, 5, 3, 5)))
         self.assertEqual(plan.resolved[0].n_required, 10)
         self.assertTrue(plan.all_plannable)
         self.assertEqual(plan.unmet, ())
@@ -254,9 +280,9 @@ class TestBandsAndProbes(unittest.TestCase):
 class TestCalibrationGate(unittest.TestCase):
     def _healthy_inputs(self, region=True):
         # coherent pilots: superiority contrasts see a strong treatment split;
-        # NI loses-cells see healthy comparators (the configuration the cells
-        # are FOR — a comparator collapsing to 0/5 would contradict the §6
-        # bands and the analog board itself)
+        # NI loses-cells see EQUAL 0.80-rate arms — Sol's named acceptance
+        # corner, the lowest coherent healthy-engine configuration implied by
+        # the §6 S1 >= 0.80 band (§18)
         gates = planned_gates(population_region_declared=region)
         binary = {}
         for gate in gates:
@@ -264,7 +290,7 @@ class TestCalibrationGate(unittest.TestCase):
                 if req_spec.kind == "binary_superiority":
                     binary[req_spec.contrast_id] = BinaryPilot(5, 5, 0, 5)
                 elif req_spec.kind == "binary_noninferiority":
-                    binary[req_spec.contrast_id] = BinaryPilot(5, 5, 4, 5)
+                    binary[req_spec.contrast_id] = BinaryPilot(4, 5, 4, 5)
         population = {}
         for gate in gates:
             for req_spec in _leaves(gate):
@@ -279,14 +305,22 @@ class TestCalibrationGate(unittest.TestCase):
             population_region_declared=region,
             vertices=_region() if region else None)
 
-    def test_structural_refusal_on_the_sealed_board(self):
-        # Healthiest possible engine, perfect pilots, valid region — and the
-        # sealed board still cannot open: §9.2 NI contrasts are unplannable at
-        # n_max=24 (min hw 0.13798 > 0.10), so §10.4 refuses Part II.
+    def test_coherent_corner_admits_at_v02_ceiling(self):
+        # §18 acceptance case (Sol's condition 4): equal 0.80-rate NI pilots,
+        # healthy bands, valid region — the amended board opens with the full
+        # stratum table and the budget disclosure, not merely the verdict.
         result = calibration_gate(self._healthy_inputs())
-        self.assertEqual(result.verdict, "confounded(ci_target_unmet)")
-        self.assertTrue(any("ni_" in cid for cid in result.plan.unmet))
-        self.assertFalse(result.plan.all_plannable)
+        self.assertEqual(result.verdict, "engine_admitted")
+        self.assertTrue(result.plan.all_plannable)
+        self.assertEqual(result.plan.unmet, ())
+        self.assertEqual(result.plan.stratum_n["match_mismatch"], 124)
+        self.assertEqual(result.plan.stratum_n["match_commit"], 124)
+        self.assertEqual(result.plan.stratum_n["irrelevant"], 124)
+        self.assertEqual(result.plan.stratum_n["source"], 10)
+        self.assertEqual(result.counts.target_fixtures_per_stratum,
+                         {MM: 124, MC: 124, IRR: 124})
+        self.assertEqual(result.counts.target_model_invocations, 2232)
+        self.assertEqual(result.counts.source_model_invocations, 30)
         self.assertTrue(result.budget_disclosure_required)
 
     def test_not_engaged_when_packet_absent(self):

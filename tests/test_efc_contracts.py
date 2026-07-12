@@ -65,6 +65,8 @@ class TestPinValues(unittest.TestCase):
         self.assertEqual(c.COST_EFFICIENCY_MARGIN, 0.10)
         self.assertEqual(c.COST_EFFICIENCY_CI_HALF_WIDTH, 0.05)
         self.assertEqual(c.POPULATION_ALWAYS_CHECK_MARGIN, 0.10)
+        # §10.3 v0.2 explicit population precision pin (§18 amendment)
+        self.assertEqual(c.POPULATION_COST_CI_HALF_WIDTH, 0.05)
 
     def test_ceilings_are_the_sealed_numbers(self):
         self.assertEqual(c.MAX_CHECK_INVOCATIONS_PER_TASK, 1)
@@ -77,7 +79,9 @@ class TestPinValues(unittest.TestCase):
         self.assertEqual(c.CALIBRATION_K, 5)
         self.assertEqual(c.CALIBRATION_TEMPERATURE, 0.5)
         self.assertEqual(c.COLLAPSE_DIAGNOSTIC_TEMPERATURE, 0.7)
-        self.assertEqual((c.N_ENUM_MIN, c.N_MAX), (2, 24))
+        # v0.2 §18 amendment: bounded feasibility ceiling (v0.1's 24 admitted
+        # no coherent configuration)
+        self.assertEqual((c.N_ENUM_MIN, c.N_MAX), (2, 128))
 
     def test_vocabularies_closed(self):
         self.assertEqual(len(c.LANES), 6)

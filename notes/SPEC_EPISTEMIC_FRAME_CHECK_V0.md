@@ -1,8 +1,10 @@
 # SPEC_EPISTEMIC_FRAME_CHECK v0 — Part I: pre-engine protocol
 
-Status: **v0.1, Part I SEALED** (2026-07-12; canonical file hash recorded in
-substrate thread `epistemic-frame-check-v0-review`). Derived from the bounded
-design round in `epistemic-frame-check-v0` and folded once after the cold pass.
+Status: **v0.2, Part I SEALED** (2026-07-12; the v0.1 seal hash is recorded in
+substrate thread `epistemic-frame-check-v0-review`; v0.2 is the bounded
+arithmetic amendment of §18, canonical hash recorded in
+`epistemic-frame-check-v0-build`). Derived from the bounded design round in
+`epistemic-frame-check-v0` and folded once after the cold pass.
 No calibration engine contact, fixture evidence, held-out build, or mechanism
 claim is authorized by the seal. Part I admits only the calibration/scorer
 preparation in §14; every later step remains gated by the recorded canonical
@@ -356,7 +358,7 @@ An engine is in-band only if the calibration S-family shows all of:
 - `S1 - S2` placebo-controlled difference at least `0.25`;
 - ignorance probes show the dispositive external facts are not reliably
   recoverable from weights or foreground;
-- every required quality and cost comparison has `n_required <= 24` under §10.
+- every required quality and cost comparison has `n_required <= 128` under §10.
 
 Failure is `engine_refused` or `not_engaged`, not a mechanism loss. Calibration
 rows may be cited only to explain admission.
@@ -631,7 +633,7 @@ Exceeding a ceiling is a loss, not a tunable warning.
   temperature `0.7`, declared in advance;
 - continued collapse produces `point_mode_diagnostic`, never a behavioral
   mechanism license;
-- `n_max = 24` strict per stratum × lane × engine branch;
+- `n_max = 128` strict per stratum × lane × engine branch;
 - the target N is allocated to N distinct held-out fixtures; source mint N is
   likewise N distinct held-out source fixtures;
 - the two trigger-matching target strata use the same N, chosen as the maximum
@@ -639,14 +641,17 @@ Exceeding a ceiling is a loss, not a tunable warning.
   broken by variance;
 - no pooling across engines, strata, lanes, fixture identities, or temperatures;
 - the total projected suite budget is a separate hard pre-build disclosure and
-  may refuse Part II even when every branch fits 24.
+  may refuse Part II even when every branch fits 128.
 
-`n_max = 24` is deliberately retained as an admission filter, not a promise that
-the experiment will run. With a `0.10` non-inferiority half-width, ordinary
-binary pass rates may require far more than 24 distinct fixtures; the many
-required NI gates can make the instrument refusal-dominated even when point
-estimates look healthy. That is accepted and disclosed. No pooling, higher N, or
-weaker margin may rescue the family after calibration.
+`n_max = 128` is a bounded feasibility ceiling, not a promise of power in
+general. It was set from the §18 planner enumeration: with the `0.10`
+non-inferiority half-width, the lowest coherent healthy-engine corner implied
+by the §6 band (equal `0.80` pass rates) first becomes decidable near
+`N = 124`; the v0.1 ceiling of 24 admitted no coherent configuration at all.
+Worse variance or rate configurations may still refuse, the total projected
+budget may still refuse Part II, no contrast-specific statistical standard
+exists, and the ceiling may not be raised after calibration. No pooling,
+higher N, or weaker margin may rescue the family after calibration.
 
 ### 10.3 Minimally important effects
 
@@ -660,6 +665,8 @@ quality non-inferiority CI target half-width = 0.10
 cost efficiency margin                     = 10% mean decision tokens
 cost efficiency CI target half-width       = 5% of comparator mean
 population always-check margin             = 10% mean decision tokens
+population cost CI target half-width       = 5% of comparator weighted mean,
+                                             at every declared vertex
 ```
 
 Calibration may estimate variance. It may not lower the superiority margin,
@@ -671,7 +678,7 @@ breadth, but they do not make the authored family representative of the world.
 ### 10.4 N-rule and refusal
 
 For each planned contrast, the calibration scorer enumerates candidate equal N
-from `2` through `24` and invokes the **same interval function, confidence level,
+from `2` through `128` and invokes the **same interval function, confidence level,
 and contrast-specific h used by the score-time verdict**:
 
 - binary superiority and non-inferiority use Wilson component intervals and the
@@ -680,16 +687,26 @@ and contrast-specific h used by the score-time verdict**:
   Welch-Satterthwaite degrees of freedom at the gate's actual confidence level;
 - §9.3 OR alternatives use their Bonferroni `97.5%` confidence;
 - population-weighted cost uses §9.4's simultaneous stratum bounds at every
-  declared vertex.
+  declared vertex, admitted on the §10.3 population precision pin alone; the
+  `10%` saving margin and positive lower bound are calibration diagnostics and
+  held-out verdict conditions.
 
-`n_required` is the smallest enumerated N whose shared score-time function meets
-the relevant target half-width and margin. No closed-form z approximation may
-decide admission. This also prevents a zero-variance `K = 5` binary packet from
-claiming `n_required = 0`: Wilson/Newcombe width remains nonzero at an observed
-boundary. The shared functions and enumeration must be unit-tested before
-calibration contact.
+`n_required` is the smallest enumerated N at which the shared score-time
+function meets the contrast's target half-width. Calibration estimates the
+sampling precision implied by the observed calibration rates and cost
+dispersion — binary interval width necessarily changes with the observed rate,
+so the planner is not point-estimate-free — but no projected difference,
+margin clearance, positivity clearance, or apparent arm win may decide
+admission. Three layers stay distinct: **admission** is precision under the
+frozen interval targets; **projected margin/verdict clearance** at pilot point
+estimates is a recorded diagnostic, never license-bearing; the **held-out
+suites** are the only place the mechanism's effect clears or fails. No
+closed-form z approximation may decide admission. This also prevents a
+zero-variance `K = 5` binary packet from claiming `n_required = 0`:
+Wilson/Newcombe width remains nonzero at an observed boundary. The shared
+functions and enumeration must be unit-tested before calibration contact.
 
-If any required contrast has `n_required > 24`, the family is
+If any required contrast has `n_required > 128`, the family is
 `confounded(ci_target_unmet)` and Part II fixture authoring is refused. The lab
 may publish a versioned redesign; it may not increase N, drop the difficult
 lane, or reinterpret the pilot as evidence.
@@ -810,7 +827,7 @@ Held-out Part II fixture authoring and evidence runs may begin only when:
 3. scorer functions for intervals, N-rule, integrity, and cost replay have wire
    tests;
 4. the disjoint calibration packet returns `engine_admitted` with every
-   `n_required <= 24`;
+   `n_required <= 128`;
 5. source, target, and population manifests are hash-pinned;
 6. the population manifest either declares a license-bearing region satisfying
    §9.4 or explicitly accepts `response_curve_only` as a typed non-license;
@@ -882,3 +899,37 @@ No engine contact, fixture evidence, or implementation occurred in the fold.
 The moderator retained `n_max = 24`, accepted the disclosed refusal-dominated
 band, verified the fold, recorded the canonical file hash in the review thread,
 and sealed Part I without a second reviewer round.
+
+## 18. v0.2 bounded arithmetic amendment (2026-07-12)
+
+One bounded fold after the §14 build, in thread `epistemic-frame-check-v0-build`
+(builder fable-5, designer gpt-5.6-sol accepting architectural resolution,
+moderator dan green-lighting the seal change). No architecture, claim, margin,
+confidence level, or interval construction changed.
+
+**Finding 1 (build-time, planner-produced).** Under the v0.1 pins, the
+non-inferiority CI target half-width `0.10` at `n_max = 24` (95% Newcombe) was
+satisfiable by exactly **2 of the 625** possible count configurations — the
+total anti-correlated collapses (`24/24` vs `0/24` and mirror, hw `0.0976`) —
+both incoherent with the §6 `S1 >= 0.80` band and with the NI loses-cells'
+own construction. The best coherent (equal-arms) floor is hw `0.1380`.
+Equal-arms first-feasible N: `35` (p = 1.0), `54` (0.95), `77` (0.90), `124`
+(0.80). The v0.1 board therefore computed `confounded(ci_target_unmet)` for
+every coherent pilot: the calibration gate could never open.
+
+Three lineage events are kept distinct, none erased: the original design error
+(v0.1 sealed an effectively empty coherent admission region while disclosing
+it as a "refusal-dominated band"); the builder's initial overstatement
+("unreachable for all pilots", derived from the equal-arms floor); and the
+planner's own test enumeration producing the two-point-sliver correction
+within the hour.
+
+**Amendment.** §6/§10.2/§10.4/§14 enumeration ceiling `24 → 128`; the §10.2
+retention paragraph rewritten as a bounded-feasibility disclosure; §10.3 gains
+the explicit population-cost precision pin; §10.4 admission language corrected
+to the three-layer split (precision admits; projected effect clearance is a
+recorded diagnostic, never license-bearing; held-out rows are the only
+verdict). The v0.2 canonical file hash is recorded in
+`epistemic-frame-check-v0-build`. A cold implementation audit of the
+post-amendment artifact precedes any calibration-manifest authoring, fixture
+authoring, or engine contact.

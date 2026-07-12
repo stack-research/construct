@@ -16,10 +16,11 @@ from __future__ import annotations
 
 import hashlib
 
-# --- Part I seal (§5.1; canonical hash recorded in substrate thread
-# `epistemic-frame-check-v0-review`, verified 2026-07-12) ---------------------
+# --- Part I seal (§5.1/§18; v0.2 canonical hash recorded in substrate thread
+# `epistemic-frame-check-v0-build`; the v0.1 hash 736d46cf... remains recorded
+# in `epistemic-frame-check-v0-review` as lineage) -----------------------------
 PART_I_SPEC_RELPATH = "notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md"
-PART_I_SPEC_SHA256 = "736d46cf9c22029c19834514a02ba1f0a756ca5ead8805ae4263732dc757c5d8"
+PART_I_SPEC_SHA256 = "5b41d866ce411c170997af5be08e98db3d725c48a4f3e913455414181088118f"
 
 # --- §0.2 / §2.2 identities --------------------------------------------------
 MECHANISM_ID = "epistemic_frame_check"
@@ -34,6 +35,9 @@ QUALITY_NONINFERIORITY_CI_HALF_WIDTH = 0.10
 COST_EFFICIENCY_MARGIN = 0.10              # fraction of comparator mean tokens
 COST_EFFICIENCY_CI_HALF_WIDTH = 0.05       # fraction of comparator mean tokens
 POPULATION_ALWAYS_CHECK_MARGIN = 0.10      # fraction of A's mean tokens (§9.4)
+# §10.3 v0.2 explicit pin: population-cost precision, applied vertex-level
+# (5% of the comparator's prevalence-weighted mean at every declared vertex).
+POPULATION_COST_CI_HALF_WIDTH = 0.05
 
 # --- §9.2 / §9.3 confidence construction -------------------------------------
 CONFIDENCE_STANDARD = 0.95      # intersection-union gates keep 95% (§9.3)
@@ -69,7 +73,10 @@ CALIBRATION_K = 5                      # distinct fixtures per stratum x lane x 
 CALIBRATION_TEMPERATURE = 0.5
 COLLAPSE_DIAGNOSTIC_TEMPERATURE = 0.7  # single declared collapse probe
 N_ENUM_MIN = 2                         # §10.4 enumeration lower edge
-N_MAX = 24                             # strict, an admission filter not a promise
+# §10.2 v0.2: bounded feasibility ceiling from the §18 enumeration (equal-0.80
+# NI corner decidable near N=124; the v0.1 value 24 admitted no coherent
+# configuration). Not a power promise; may not be raised after calibration.
+N_MAX = 128
 
 # --- §10.5 stop rule (as a pinned identifier the manifest must carry) ---------
 STOP_RULE_ID = "k5_packet_plus_single_t07_collapse_probe"

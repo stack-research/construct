@@ -1,10 +1,12 @@
 # EFC_TRACEABILITY — §14 build traceability matrix
 
-Status: build artifact, 2026-07-12. Maps every implemented function and test
+Status: build artifact, 2026-07-12; **amended same day for the §18 v0.2 fold**
+(see the amendment section below). Maps every implemented function and test
 of the epistemic-frame-check §14 calibration/scorer preparation to the sealed
-section it serves (`notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md`, sha256
-`736d46cf9c22029c19834514a02ba1f0a756ca5ead8805ae4263732dc757c5d8`, verified
-against the hash recorded in `epistemic-frame-check-v0-review`).
+section it serves (`notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md`, v0.2 sha256
+`5b41d866ce411c170997af5be08e98db3d725c48a4f3e913455414181088118f`, recorded
+in `epistemic-frame-check-v0-build`; the v0.1 seal hash `736d46cf...c5d8`
+remains recorded in `epistemic-frame-check-v0-review` as lineage).
 
 Scope discipline (build instruction from gpt-5.6-sol, design seat): §14
 preparation only — shared planner/verdict interval functions first, wire
@@ -50,10 +52,11 @@ Found during planner construction, before any fixture or engine contact.
   achievability floor at `n_max`. This finding is that enumeration. The
   disclosure said "can make the instrument refusal-dominated"; the arithmetic
   says "does, for every coherent pilot".
-- Remedies are all seal amendments and are NOT applied here (§16: no silent
-  amendment): raise the NI half-width target to ≥ 0.138 at n_max=24; or raise
-  `n_max` to ≥ 35 for NI-bearing strata; or change the interval construction.
-  §10.4 names the lawful path: a versioned redesign published by the lab.
+- Remedies were all seal amendments and were NOT applied by the build alone
+  (§16: no silent amendment). **Resolution:** the room ran the §10.4
+  versioned-redesign path same day in `epistemic-frame-check-v0-build` —
+  designer (gpt-5.6-sol) chose the raise-the-ceiling remedy, moderator (dan)
+  green-lit, and the §18 v0.2 amendment below was applied openly.
 
 ## Module → sealed section
 
@@ -152,11 +155,43 @@ exists yet by design.
 | `tests/test_efc_ledger.py` | §2.3 boundary (post-answer annotation), §13 holes/duplicates/inversion/untrusted-claims, §10.1 formula + ceilings, §8.2 B_inactive, §4 precommit order |
 | `tests/test_efc_manifest.py` | §5.2 pins, closed schema, forbidden-content scan, §9.4 region paths, §10.2 constants |
 
+## §18 v0.2 amendment (2026-07-12, thread `epistemic-frame-check-v0-build`)
+
+Bounded arithmetic fold, applied on dan's green-light under Sol's architectural
+resolution and seven acceptance conditions. Delta:
+
+| Change | Where |
+| --- | --- |
+| Enumeration ceiling 24 → 128 (bounded feasibility, not power) | spec §6/§10.2/§10.4/§14; `efc_contracts.N_MAX` |
+| Explicit population precision pin (5% of comparator weighted mean, per vertex) | spec §10.3; `efc_contracts.POPULATION_COST_CI_HALF_WIDTH` |
+| Three-layer admission split: precision admits; projected difference/margin/positivity/arm-win never do; held-out rows are the only verdict | spec §10.4; `n_required_population` (margin+positivity → `projected_clearance_diagnostic`) |
+| §18 amendment record (finding 1 + correction lineage, three events distinct) | spec §18 |
+
+Acceptance-condition mapping: (1)+(2) `n_required_population` precision-only
+admission with margin/positivity kept as diagnostics —
+`test_saving_below_margin_is_diagnostic_not_refusal`; (3) historical N=24
+enumeration pinned explicitly and independent of `N_MAX` —
+`test_historical_v01_infeasibility_enumeration` (incl. the §18 first-feasible
+N table 35/54/77/124); (4) coherent-corner full-board acceptance at 128 —
+`test_coherent_corner_admits_at_v02_ceiling` asserts `engine_admitted`,
+stratum table {mm/mc/irr: 124, source: 10}, 2232 target invocations per
+branch, 30 source invocations, and the standing budget-disclosure flag;
+(5) seal tripwire demonstrated failing between the spec edit and the
+deliberate hash update, then repinned (`test_sealed_file_hash_matches_pin`);
+(6) full `make efc-test` suite green (130 tests) plus m2/close-gate/PRF
+regressions; (7) no manifest authoring, fixture authoring, or engine contact.
+
 ## Interpretation decisions (flagged for the cold implementation audit)
+
+Ratification status (Sol, `epistemic-frame-check-v0-build`): decisions 1, 4,
+5 endorsed; decision 6 blocked-as-interpretation and adopted as the explicit
+§10.3 v0.2 pin; decision 3 superseded by the §10.4 v0.2 three-layer language.
+The remainder stay flagged for the cold implementation audit.
 
 1. **Half-width** of an asymmetric interval = `(upper − lower) / 2`. The
    §10.3 targets are read against this symmetric definition. (For the NI
    finding both candidate definitions give the same infeasibility floor.)
+   *Endorsed.*
 2. **Binary pilot projection** onto candidate N uses continuous successes
    `p_hat * N` through the same Wilson/Newcombe code path score time uses
    with integers — no rounding rule invented.
@@ -170,10 +205,12 @@ exists yet by design.
 5. **§9.3 efficiency-arm cost** uses the §9.4/§12 population construction
    against the named comparator at family alpha 0.025 (= 1 − 0.975), per
    §12's "same construction with their named comparator".
-6. **Population-cost width criterion** (§10.3 has no explicit population h):
-   vertex-level — at every declared vertex, `estimated − lower` saving gap
-   must fit within `COST_EFFICIENCY_CI_HALF_WIDTH (5%)` of the comparator's
-   weighted mean, alongside the §9.4 margin and positivity conditions.
+6. **Population-cost width criterion** — originally an interpretation (§10.3
+   v0.1 pinned no population h); *blocked as interpretation and promoted to
+   the explicit §10.3 v0.2 pin* `POPULATION_COST_CI_HALF_WIDTH (5%)` of the
+   comparator's weighted mean at every declared vertex. Under the §10.4 v0.2
+   split, precision alone admits; the §9.4 margin and positivity conditions
+   are calibration diagnostics and held-out verdict conditions.
 7. **§6 S-bands and §7's S1 ≥ 0.80** are point-estimate checks (the spec
    attaches its precommitted CI rule to the two §7 differences only).
 8. **Resident-instance identity** for §3.4/§11 `resident_instance` revisions

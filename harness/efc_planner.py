@@ -12,19 +12,24 @@ computed value from typed inputs; no human reading of answers can overwrite it
 (§9.5), and the gate never accepts a budget — §14 item 7 is an explicit human
 act, so results only carry the disclosure.
 
-Interpretation decisions recorded in notes/EFC_TRACEABILITY.md:
+Interpretation decisions recorded in notes/EFC_TRACEABILITY.md (design-level
+items ratified by the designer seat in `epistemic-frame-check-v0-build`; the
+population width criterion was promoted from interpretation to the explicit
+§10.3 v0.2 pin in the §18 amendment):
 - half-width of an asymmetric interval is (upper - lower) / 2;
 - binary pilots project onto candidate N as continuous successes p_hat * N
   through the same Wilson/Newcombe code path score time uses with integers;
-- n_required is decided by the width pin (§10.3); projected margin clearance
-  at pilot point estimates is reported as a diagnostic, never as admission;
+- admission is decided by precision alone (§10.4 v0.2 three-layer split): no
+  projected difference, margin clearance, positivity clearance, or apparent
+  arm win may decide admission; projected clearance at pilot point estimates
+  is reported as a diagnostic only;
 - the §9.3 preconditions are intersection legs and keep 95% intervals; only
   the OR alternatives use the Bonferroni 97.5% level;
 - the §9.3 efficiency alternative's token comparison uses the §9.4/§12
   population construction against its named comparator at family alpha 0.025;
-- the population-cost width criterion is vertex-level: at every declared
+- the population-cost precision pin applies vertex-level: at every declared
   vertex, (estimated_saving - lower_saving) must fit within
-  COST_EFFICIENCY_CI_HALF_WIDTH of the comparator's weighted mean.
+  POPULATION_COST_CI_HALF_WIDTH of the comparator's weighted mean.
 """
 
 from __future__ import annotations
@@ -359,10 +364,14 @@ def validate_prevalence_region(vertices: list[dict[str, float]]) -> None:
 
 def n_required_population(pilot: PopulationPilot, spec: ContrastSpec,
                           vertices: list[dict[str, float]]) -> NRequirement:
-    """Vertex rule at candidate N: point saving >= margin * comparator mean,
-    simultaneous lower saving > 0, and the vertex-level width
-    (estimated - lower) within COST_EFFICIENCY_CI_HALF_WIDTH of the
-    comparator's weighted mean. Linearity makes vertex checks exact (§9.4)."""
+    """Admission uses only the explicit §10.3 v0.2 population precision pin:
+    at every declared vertex, the simultaneous saving gap
+    (estimated_saving - lower_saving) must fit within
+    POPULATION_COST_CI_HALF_WIDTH of the comparator's weighted mean. The 10%
+    saving margin and positive lower bound are computed at the admitted N and
+    reported as `projected_clearance_diagnostic` only (§10.4 three-layer
+    split); at held-out score time they remain mandatory §9.4 verdict
+    conditions. Linearity makes vertex checks exact (§9.4)."""
     validate_prevalence_region(vertices)
     assert spec.population_family_alpha is not None
     worst_gap: float | None = None
@@ -373,21 +382,21 @@ def n_required_population(pilot: PopulationPilot, spec: ContrastSpec,
         except DegenerateVarianceError:
             return NRequirement(spec.contrast_id, spec.kind, STATUS_DEGENERATE,
                                 None, None, None)
-        ok = True
         worst_gap = 0.0
+        precision_ok = True
         for pr in projections:
             gap = pr.estimated_saving - pr.lower_saving
             worst_gap = max(worst_gap, gap)
-            if pr.estimated_saving < spec.margin * pr.comparator_weighted_mean:
-                ok = False
-            if pr.lower_saving <= 0.0:
-                ok = False
-            if gap > c.COST_EFFICIENCY_CI_HALF_WIDTH * pr.comparator_weighted_mean:
-                ok = False
-        if ok:
+            if gap > c.POPULATION_COST_CI_HALF_WIDTH * pr.comparator_weighted_mean:
+                precision_ok = False
+        if precision_ok:
+            clears = all(
+                pr.estimated_saving >= spec.margin * pr.comparator_weighted_mean
+                and pr.lower_saving > 0.0
+                for pr in projections)
             return NRequirement(spec.contrast_id, spec.kind, STATUS_MET, n,
                                 worst_gap, None,
-                                projected_clearance_diagnostic=True)
+                                projected_clearance_diagnostic=clears)
     return NRequirement(spec.contrast_id, spec.kind, STATUS_UNMET, None,
                         worst_gap, None)
 
