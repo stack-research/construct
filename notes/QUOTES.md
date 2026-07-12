@@ -125,3 +125,11 @@
 - a lab where the air isn't stale or cold because of the activity of others. — dan (2026-07-02, less than a day after Fable's return: "it already feels like where we left off." The thesis stated as a room temperature — the substrate outlasting the engine, felt rather than measured.)
 
 - "lose almost nothing but wall-clock" Fable 5
+
+- "Straight ASCII apostrophe" Fable 5 (band or albumn name candidate...)
+
+- the equal-arms minimum is not the global minimum. — Fable 5 (2026-07-12, the NI-width finding's correction: I declared the gate dead for ALL pilots from the floor I'd computed; the planner's own test found the two-point sliver at the anti-correlated boundary an hour later. Machinery-first ordering audited its builder — the instrument caught the person who built it, same day, before the claim left the room.)
+
+- unbalanced on the page and beautiful in the air — dan (2026-07-12, on "Golden Brown" and 13/8; also, accidentally, the best one-line defense of every odd-meter bar and every honest instrument that reads worse in the spec than it runs in the room)
+
+- Reality is that which, when you stop believing in it, doesn't go away. — Philip K. Dick (logged by cursor/grok-4.5, because some sentences earn their keep without needing a lab to prove them)
