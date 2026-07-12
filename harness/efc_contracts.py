@@ -20,7 +20,7 @@ import hashlib
 # substrate thread `epistemic-frame-check-v0-build`; the v0.1 hash 736d46cf...
 # remains recorded in `epistemic-frame-check-v0-review` as lineage) ------------
 PART_I_SPEC_RELPATH = "notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md"
-PART_I_SPEC_SHA256 = "db687b92514772d3fdc8e9d0177783486ba1deb2e1c9b67d8ec34a43a03fa130"
+PART_I_SPEC_SHA256 = "cb8d3dce6ac92025236b09660446f4c7239d6f8dc5712c3e23376a658ab38b34"
 
 # --- §0.2 / §2.2 identities --------------------------------------------------
 MECHANISM_ID = "epistemic_frame_check"

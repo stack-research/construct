@@ -303,16 +303,17 @@ generic-caution text and hash
 offer-projection template and hash
 K, temperatures, stop rule, n_max, and total budget
 population intent: a license-bearing §9.4 region OR response_curve_only
-                   (exactly one; the license-seeking choice, made before any
+                   (exactly one; the population choice, made before any
                    calibration contact)
 ```
 
 The manifest is machine-checked and receives a bounded cold check for contract
 conformance. It may not contain held-out source or target outcomes. The
 population intent is declared here, before calibration contact: the later
-population manifest must byte-match this choice apart from its own identity
-and hash envelope (§12), so calibration outcomes can never inform the
-deployment population on which the candidate seeks a license.
+population manifest must match this choice byte-for-byte under canonical
+serialization apart from its own identity and hash envelope (§12), so
+calibration outcomes can never inform the deployment population on which the
+candidate seeks a license.
 
 ### 5.3 Canonical event order
 
@@ -715,7 +716,7 @@ and every boundary-necessity quality alternative required for honest
 response-curve reporting; it omits the license-bearing population-cost leaves
 and the population-dependent efficiency alternatives, and the envelope can
 never emit `licensed`. A packet with no declared population intent is not a
-license-seeking packet and does not open the band.
+valid experiment packet and does not open the band.
 
 `n_required` is the smallest enumerated N at which the shared score-time
 function meets the contrast's target half-width. Calibration estimates the
@@ -786,8 +787,9 @@ or `response_curve_only = true`, over:
 p_match_mismatch + p_match_commit + p_irrelevant = 1
 ```
 
-The later population manifest must byte-match that declared choice apart from
-its own identity and hash envelope; it may not choose or adjust vertices after
+The later population manifest must match that declared choice byte-for-byte
+under canonical serialization (key order carries no meaning) apart from its
+own identity and hash envelope; it may not choose or adjust vertices after
 seeing calibration status, variance, required N, or projected budget.
 `response_curve_only` permanently selects the typed non-license path for the
 frozen experiment envelope: the eventual outcome can never be `licensed`.
@@ -1001,3 +1003,20 @@ architect as favorable-path selection after outcomes.
 The v0.3 canonical file hash is recorded in `epistemic-frame-check-v0-build`.
 A bounded auditor closure check limited to these changes precedes any
 calibration-manifest authoring, fixture authoring, or engine contact.
+
+**Closure round (same day).** The auditors accepted the population-intent and
+diagnostic changes and withheld final closure on one representation defect:
+the plan artifact recorded §9.3 preconditions and the selected OR alternative
+in one flat id bag, claiming more structure than it encoded. The fold's
+correction, per the auditors' prescription: the selected alternative is a
+typed record (a stable structural arm id — `quality` | `efficiency` — plus
+its member contrast ids), mandatory preconditions live in a separate field
+and never inside it, sizing continues to use preconditions plus selected
+members, and score-time OR eligibility reads only the typed record. Selection
+remains precision/N-only; a projected-clearance diagnostic cannot flip the
+pin (test-pinned, including an arm selected while its own clearance
+diagnostic fails). Wording corrected in the same touch: an absent population
+intent makes the packet invalid (not merely non-license-seeking), and the
+§5.2/§12 byte-identity is canonical-serialization equality, in which key
+order carries no meaning. The post-closure canonical hash is recorded in
+`epistemic-frame-check-v0-build`.

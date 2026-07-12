@@ -104,6 +104,9 @@ def _population(cid: str, section: str, treatment: str, comparator: str,
 
 # Gate trees: a leaf is a ContrastSpec; ALL means every child must be
 # plannable (n = max); ANY is the §9.3 OR (n = min over plannable arms).
+# Every AnyOf child is an OrArm carrying a stable structural arm id, so the
+# selected alternative is pinned as a typed identity — never inferred from
+# contrast-id prefixes (closure ruling, §19).
 
 @dataclass(frozen=True)
 class AllOf:
@@ -111,8 +114,24 @@ class AllOf:
 
 
 @dataclass(frozen=True)
+class OrArm:
+    arm_id: str        # stable structural id: "quality" | "efficiency"
+    node: object
+
+
+@dataclass(frozen=True)
 class AnyOf:
-    children: tuple
+    children: tuple    # tuple[OrArm, ...]
+
+
+@dataclass(frozen=True)
+class SelectedOrAlternative:
+    """§9.3 v0.3: the pinned decision-bearing alternative for one comparator
+    gate, selected on precision/N alone before held-out contact. Score-time
+    OR eligibility reads ONLY this record; mandatory preconditions live in
+    ResolvedGate.precondition_contrast_ids, never in here."""
+    arm_id: str
+    member_contrast_ids: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -132,14 +151,15 @@ def _boundary_necessity_gate(comparator_lane: str,
         _ni(f"ni_irr_C_vs_{tag}", "9.3", "irrelevant",
             "C_controlled_check", comparator_lane),
     )
-    quality_arm = _sup(f"or_quality_mm_C_vs_{tag}", "9.3", "match_mismatch",
-                       "C_controlled_check", comparator_lane,
-                       confidence=c.CONFIDENCE_OR_GATE)
-    arms: list[object] = [quality_arm]
+    quality_arm = OrArm("quality", _sup(
+        f"or_quality_mm_C_vs_{tag}", "9.3", "match_mismatch",
+        "C_controlled_check", comparator_lane,
+        confidence=c.CONFIDENCE_OR_GATE))
+    arms: list[OrArm] = [quality_arm]
     if population_region_declared:
         # §12: efficiency alternatives use the §9.4 construction with their
         # named comparator, at the OR-gate Bonferroni alpha.
-        efficiency_arm = AllOf((
+        efficiency_arm = OrArm("efficiency", AllOf((
             _ni(f"or_eff_ni_mm_C_vs_{tag}", "9.3", "match_mismatch",
                 "C_controlled_check", comparator_lane,
                 confidence=c.CONFIDENCE_OR_GATE),
@@ -147,7 +167,7 @@ def _boundary_necessity_gate(comparator_lane: str,
                         "C_controlled_check", comparator_lane,
                         margin=c.COST_EFFICIENCY_MARGIN,
                         family_alpha=1.0 - c.CONFIDENCE_OR_GATE),
-        ))
+        )))
         arms.append(efficiency_arm)
     return PlannedGate(
         gate_id=f"boundary_necessity_{comparator_lane}", section="9.3",
@@ -462,39 +482,74 @@ class ResolvedGate:
     section: str
     n_required: int | None
     requirements: tuple[NRequirement, ...]
-    # §0.2 "separately precommitted comparisons": which OR arms are powered
-    # at the gate's chosen N — decision-bearing arms are sealed pre-run.
-    decision_bearing_arms: tuple[str, ...] = ()
+    # §10.2 sizing bag: mandatory leaves plus the selected alternative's
+    # members. Sizing only — carries no OR semantics (closure ruling, §19).
+    sizing_contrast_ids: tuple[str, ...] = ()
+    # §9.3 mandatory precondition legs; empty when the gate has no OR.
+    precondition_contrast_ids: tuple[str, ...] = ()
+    # §9.3 v0.3: the typed pinned alternative; None when the gate has no OR
+    # or no arm is plannable. Score-time OR eligibility reads ONLY this.
+    selected_alternative: SelectedOrAlternative | None = None
 
 
-def _resolve_node(node, pilots: Pilots) -> tuple[int | None, list[NRequirement], list[str]]:
-    """Returns (n_required, leaf requirements, decision-bearing arm ids)."""
+@dataclass(frozen=True)
+class _NodeResolution:
+    n: int | None
+    reqs: tuple[NRequirement, ...]
+    sizing: tuple[str, ...]          # decision-bearing leaf ids (§10.2 sizing)
+    mandatory: tuple[str, ...]       # leaf ids on the mandatory (non-OR) path
+    selected: SelectedOrAlternative | None
+
+
+def _resolve_node(node, pilots: Pilots) -> _NodeResolution:
     if isinstance(node, ContrastSpec):
         req = _resolve_leaf(node, pilots)
-        return req.n_required, [req], [node.contrast_id]
+        return _NodeResolution(req.n_required, (req,), (node.contrast_id,),
+                               (node.contrast_id,), None)
     if isinstance(node, AllOf):
         reqs: list[NRequirement] = []
-        arms: list[str] = []
+        sizing: list[str] = []
+        mandatory: list[str] = []
+        selected: SelectedOrAlternative | None = None
         worst: int | None = 0
         for child in node.children:
-            n, child_reqs, child_arms = _resolve_node(child, pilots)
-            reqs.extend(child_reqs)
-            arms.extend(child_arms)
-            if n is None or worst is None:
+            res = _resolve_node(child, pilots)
+            reqs.extend(res.reqs)
+            sizing.extend(res.sizing)
+            mandatory.extend(res.mandatory)
+            if res.selected is not None:
+                if selected is not None:
+                    raise PlannerContractError(
+                        "a gate may carry at most one §9.3 OR")
+                selected = res.selected
+            if res.n is None or worst is None:
                 worst = None
             else:
-                worst = max(worst, n)
-        return worst, reqs, arms
+                worst = max(worst, res.n)
+        return _NodeResolution(worst, tuple(reqs), tuple(sizing),
+                               tuple(mandatory), selected)
     if isinstance(node, AnyOf):
         reqs = []
-        best: int | None = None
-        best_arms: list[str] = []
-        for child in node.children:
-            n, child_reqs, child_arms = _resolve_node(child, pilots)
-            reqs.extend(child_reqs)
-            if n is not None and (best is None or n < best):
-                best, best_arms = n, child_arms
-        return best, reqs, best_arms
+        best_n: int | None = None
+        best_arm: SelectedOrAlternative | None = None
+        best_sizing: tuple[str, ...] = ()
+        for arm in node.children:
+            if not isinstance(arm, OrArm):
+                raise PlannerContractError(
+                    f"AnyOf children must be OrArm, got {arm!r} — the "
+                    "selected alternative is a typed identity, never "
+                    "inferred from ids (§19)")
+            res = _resolve_node(arm.node, pilots)
+            if res.selected is not None:
+                raise PlannerContractError("nested §9.3 ORs are not a v0 shape")
+            reqs.extend(res.reqs)
+            # selection is precision/N only: smallest plannable N wins;
+            # projected clearance diagnostics never participate
+            if res.n is not None and (best_n is None or res.n < best_n):
+                best_n = res.n
+                best_arm = SelectedOrAlternative(arm.arm_id, res.sizing)
+                best_sizing = res.sizing
+        return _NodeResolution(best_n, tuple(reqs), best_sizing, (), best_arm)
     raise PlannerContractError(f"unknown gate node: {node!r}")
 
 
@@ -520,11 +575,11 @@ class SuitePlan:
     stratum_n: dict[str, int | None]      # equalized per §10.2
     all_plannable: bool
     unmet: tuple[str, ...]                # contrast ids that refuse the family
-    # §9.3 v0.3: the pinned decision-bearing arms per gate, selected on
-    # precision/N alone before held-out contact. Only a pinned bearing arm can
-    # satisfy a §9.3 OR at score time; held-out outcomes cannot promote a
-    # non-bearing arm (architect ruling, §19).
-    decision_bearing_arms: dict[str, tuple[str, ...]] = field(default_factory=dict)
+    # §9.3 v0.3: the typed pinned alternative per OR-bearing gate, selected on
+    # precision/N alone before held-out contact. Only this record can satisfy
+    # a §9.3 OR at score time; held-out outcomes cannot promote a non-bearing
+    # arm (architect ruling, §19). Preconditions live on the ResolvedGate.
+    or_selections: dict[str, SelectedOrAlternative] = field(default_factory=dict)
 
 
 def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
@@ -537,21 +592,26 @@ def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
             spec_strata[spec.contrast_id] = spec.strata
     unmet: list[str] = []
     for gate in gates:
-        n, reqs, arms = _resolve_node(gate.node, pilots)
-        resolved.append(ResolvedGate(gate.gate_id, gate.section, n,
-                                     tuple(reqs), tuple(arms)))
-        if n is None:
+        res = _resolve_node(gate.node, pilots)
+        resolved.append(ResolvedGate(
+            gate.gate_id, gate.section, res.n, res.reqs,
+            sizing_contrast_ids=res.sizing,
+            precondition_contrast_ids=(res.mandatory if res.selected is not None
+                                       else ()),
+            selected_alternative=res.selected))
+        if res.n is None:
             # gate unplannable: every stratum it touches is poisoned and its
             # failing leaves refuse the family (§10.4)
-            for req in reqs:
+            for req in res.reqs:
                 for stratum in spec_strata[req.contrast_id]:
                     stratum_ns.setdefault(stratum, []).append(None)
-            unmet.extend(r.contrast_id for r in reqs if r.status != STATUS_MET)
+            unmet.extend(r.contrast_id for r in res.reqs
+                         if r.status != STATUS_MET)
         else:
             # only decision-bearing leaves size the suite (§0.2: separately
             # precommitted comparisons; an unpowered OR arm is sealed out)
-            bearing = set(arms)
-            for req in reqs:
+            bearing = set(res.sizing)
+            for req in res.reqs:
                 if req.contrast_id in bearing:
                     for stratum in spec_strata[req.contrast_id]:
                         stratum_ns.setdefault(stratum, []).append(req.n_required)
@@ -570,13 +630,16 @@ def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
                                            for g in resolved)
     return SuitePlan(tuple(resolved), stratum_n, all_plannable,
                      tuple(dict.fromkeys(unmet)),
-                     decision_bearing_arms={g.gate_id: g.decision_bearing_arms
-                                            for g in resolved})
+                     or_selections={g.gate_id: g.selected_alternative
+                                    for g in resolved
+                                    if g.selected_alternative is not None})
 
 
 def _iter_leaves(node):
     if isinstance(node, ContrastSpec):
         yield node
+    elif isinstance(node, OrArm):
+        yield from _iter_leaves(node.node)
     elif isinstance(node, (AllOf, AnyOf)):
         for child in node.children:
             yield from _iter_leaves(child)
@@ -730,11 +793,14 @@ def calibration_gate(inputs: AdmissionInputs) -> AdmissionResult:
                  "mechanism license unavailable (§10.2)",), None, None)
     if inputs.population_intent is None:
         # §10.4 v0.3: a packet with no declared population intent is not a
-        # license-seeking packet and does not open the band.
+        # valid experiment packet and does not open the band. (Wording per
+        # the closure round: response_curve_only is also non-license-seeking;
+        # what an absent intent lacks is packet validity.)
         return AdmissionResult(
             "not_engaged",
-            ("no §5.2 population intent declared (license-bearing region or "
-             "response_curve_only, exactly one, before calibration contact)",),
+            ("not a valid experiment packet: no §5.2 population intent "
+             "declared (license-bearing region or response_curve_only, "
+             "exactly one, before calibration contact)",),
             None, None)
     if inputs.population_intent == c.POPULATION_INTENT_REGION:
         if inputs.vertices is None:

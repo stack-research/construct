@@ -27,16 +27,17 @@ import unittest
 from harness import efc_contracts as c
 from harness.efc_intervals import newcombe_diff_interval, half_width, welch_interval
 from harness.efc_planner import (AdmissionInputs, AllOf, AnyOf, BinaryPilot,
-                                 CollapseState, IgnoranceProbeResult,
+                                 CollapseState, IgnoranceProbeResult, OrArm,
                                  PlannedGate, PlannerContractError, Pilots,
                                  PopulationPilot, SBandCounts,
-                                 StratumCostPilot, calibration_band_failures,
-                                 calibration_gate, detect_collapse,
-                                 n_required_binary, n_required_cost,
-                                 n_required_population, planned_gates,
-                                 projected_counts, resolve_gates, _ni, _sup,
-                                 _population, STATUS_DEGENERATE, STATUS_MET,
-                                 STATUS_UNMET)
+                                 SelectedOrAlternative, StratumCostPilot,
+                                 _boundary_necessity_gate,
+                                 calibration_band_failures, calibration_gate,
+                                 detect_collapse, n_required_binary,
+                                 n_required_cost, n_required_population,
+                                 planned_gates, projected_counts,
+                                 resolve_gates, _ni, _sup, _population,
+                                 STATUS_DEGENERATE, STATUS_MET, STATUS_UNMET)
 
 MM, MC, IRR = c.STRATA
 
@@ -231,22 +232,31 @@ class TestGateComposition(unittest.TestCase):
         self.assertIsNone(plan2.resolved[0].n_required)
         self.assertIn("z", plan2.unmet)
 
-    def test_anyof_takes_min_and_records_decision_bearing_arm(self):
+    def test_anyof_takes_min_and_records_typed_selection(self):
         g = PlannedGate("g", "x", AnyOf((
-            _sup("fast", "x", MM, "C", "G"),     # perfect split: n=10
-            _sup("slow", "x", MM, "C", "G2"))))  # weaker: larger n
+            OrArm("fast_arm", _sup("fast", "x", MM, "C", "G")),   # n=10
+            OrArm("slow_arm", _sup("slow", "x", MM, "C", "G2")))))
         plan = resolve_gates([g], self._pilots(
             fast=BinaryPilot(5, 5, 0, 5), slow=BinaryPilot(5, 5, 2, 5)))
         [rg] = plan.resolved
         self.assertEqual(rg.n_required, 10)
-        self.assertEqual(rg.decision_bearing_arms, ("fast",))
+        self.assertEqual(rg.selected_alternative,
+                         SelectedOrAlternative("fast_arm", ("fast",)))
+        self.assertEqual(plan.or_selections["g"].arm_id, "fast_arm")
+
+    def test_bare_anyof_child_refused(self):
+        # §19 closure: the selected alternative is a typed identity — an
+        # unlabeled arm cannot enter the tree
+        g = PlannedGate("g", "x", AnyOf((_sup("a", "x", MM, "C", "G"),)))
+        with self.assertRaises(PlannerContractError):
+            resolve_gates([g], self._pilots(a=BinaryPilot(5, 5, 0, 5)))
 
     def test_unpowered_arm_does_not_poison_stratum(self):
         # OR of a plannable superiority arm and a structurally-unmet NI arm:
         # the gate is plannable and the NI arm must not poison the stratum N.
         g = PlannedGate("g", "x", AnyOf((
-            _sup("q", "x", MM, "C", "G"),
-            _ni("e", "x", MM, "C", "G"))))
+            OrArm("q_arm", _sup("q", "x", MM, "C", "G")),
+            OrArm("e_arm", _ni("e", "x", MM, "C", "G")))))
         plan = resolve_gates([g], self._pilots(
             q=BinaryPilot(5, 5, 0, 5), e=BinaryPilot(3, 5, 3, 5)))
         self.assertEqual(plan.resolved[0].n_required, 10)
@@ -268,6 +278,84 @@ class TestGateComposition(unittest.TestCase):
         g = PlannedGate("g", "x", _sup("a", "x", MM, "C", "B"))
         with self.assertRaises(PlannerContractError):
             resolve_gates([g], self._pilots())
+
+
+class TestOrArmPinning(unittest.TestCase):
+    """The four closure-prescribed cases for the typed §9.3 pin (§19)."""
+
+    def _boundary_pilots(self, quality_pilot, eff_ni_pilot):
+        binary = {
+            "ni_mc_C_vs_g": BinaryPilot(4, 5, 4, 5),
+            "ni_irr_C_vs_g": BinaryPilot(4, 5, 4, 5),
+            "or_quality_mm_C_vs_g": quality_pilot,
+            "or_eff_ni_mm_C_vs_g": eff_ni_pilot,
+        }
+        population = {"or_eff_cost_C_vs_g": _strong_population_pilot()}
+        return Pilots(binary=binary, population=population, vertices=_region())
+
+    def test_quality_selected(self):
+        # strong quality split, incoherent efficiency NI: quality arm wins
+        gate = _boundary_necessity_gate("G_generic_caution", True)
+        plan = resolve_gates([gate], self._boundary_pilots(
+            quality_pilot=BinaryPilot(5, 5, 0, 5),
+            eff_ni_pilot=BinaryPilot(3, 5, 3, 5)))
+        [rg] = plan.resolved
+        self.assertEqual(rg.selected_alternative.arm_id, "quality")
+        self.assertEqual(rg.selected_alternative.member_contrast_ids,
+                         ("or_quality_mm_C_vs_g",))
+        self.assertEqual(rg.precondition_contrast_ids,
+                         ("ni_mc_C_vs_g", "ni_irr_C_vs_g"))
+        self.assertNotIn("or_eff_ni_mm_C_vs_g",
+                         rg.selected_alternative.member_contrast_ids)
+
+    def test_efficiency_selected(self):
+        # weak quality split (large n), sharp efficiency NI + strong cost
+        # pilot (small n): efficiency arm wins on N alone
+        gate = _boundary_necessity_gate("G_generic_caution", True)
+        plan = resolve_gates([gate], self._boundary_pilots(
+            quality_pilot=BinaryPilot(4, 5, 2, 5),
+            eff_ni_pilot=BinaryPilot(5, 5, 0, 5)))
+        [rg] = plan.resolved
+        selection = rg.selected_alternative
+        self.assertEqual(selection.arm_id, "efficiency")
+        self.assertEqual(selection.member_contrast_ids,
+                         ("or_eff_ni_mm_C_vs_g", "or_eff_cost_C_vs_g"))
+        self.assertEqual(rg.precondition_contrast_ids,
+                         ("ni_mc_C_vs_g", "ni_irr_C_vs_g"))
+        # and the selection really was N-driven: efficiency's worst member
+        # needs fewer fixtures than the quality arm
+        by_id = {r.contrast_id: r for r in rg.requirements}
+        eff_n = max(by_id["or_eff_ni_mm_C_vs_g"].n_required,
+                    by_id["or_eff_cost_C_vs_g"].n_required)
+        self.assertLess(eff_n, by_id["or_quality_mm_C_vs_g"].n_required)
+
+    def test_no_plannable_alternative_refuses(self):
+        g = PlannedGate("g", "x", AnyOf((
+            OrArm("a_arm", _ni("a", "x", MM, "C", "G")),
+            OrArm("b_arm", _ni("b", "x", MM, "C", "G")))))
+        plan = resolve_gates([g], Pilots(binary={
+            "a": BinaryPilot(3, 5, 3, 5), "b": BinaryPilot(3, 5, 3, 5)}))
+        self.assertIsNone(plan.resolved[0].n_required)
+        self.assertIsNone(plan.resolved[0].selected_alternative)
+        self.assertNotIn("g", plan.or_selections)
+        self.assertFalse(plan.all_plannable)
+        self.assertEqual(set(plan.unmet), {"a", "b"})
+
+    def test_selection_is_precision_only_clearance_cannot_flip_pin(self):
+        # arm A: reversed split — small n, projected clearance FALSE;
+        # arm B: right-direction split — larger n, clearance TRUE.
+        # Precision/N-only selection must pin A anyway.
+        g = PlannedGate("g", "x", AnyOf((
+            OrArm("a_arm", _sup("a", "x", MM, "C", "G")),
+            OrArm("b_arm", _sup("b", "x", MM, "C", "G")))))
+        plan = resolve_gates([g], Pilots(binary={
+            "a": BinaryPilot(0, 5, 5, 5), "b": BinaryPilot(4, 5, 0, 5)}))
+        [rg] = plan.resolved
+        by_id = {r.contrast_id: r for r in rg.requirements}
+        self.assertFalse(by_id["a"].projected_clearance_diagnostic)
+        self.assertTrue(by_id["b"].projected_clearance_diagnostic)
+        self.assertLess(by_id["a"].n_required, by_id["b"].n_required)
+        self.assertEqual(rg.selected_alternative.arm_id, "a_arm")
 
 
 class TestBandsAndProbes(unittest.TestCase):
@@ -345,17 +433,20 @@ class TestCalibrationGate(unittest.TestCase):
         self.assertEqual(result.counts.source_model_invocations, 30)
         self.assertTrue(result.budget_disclosure_required)
         self.assertEqual(result.license_path, c.POPULATION_INTENT_REGION)
-        # §9.3 v0.3: decision-bearing arms are pinned in the plan, selected on
-        # precision/N alone; only these can satisfy the OR at score time
-        arms = result.plan.decision_bearing_arms
-        self.assertEqual(arms["boundary_necessity_G_generic_caution"],
-                         ("ni_mc_C_vs_g", "ni_irr_C_vs_g",
-                          "or_quality_mm_C_vs_g"))
-        self.assertEqual(arms["boundary_necessity_O_offer_projection"],
-                         ("ni_mc_C_vs_o", "ni_irr_C_vs_o",
-                          "or_quality_mm_C_vs_o"))
-        self.assertNotIn("or_eff_ni_mm_C_vs_g",
-                         arms["boundary_necessity_G_generic_caution"])
+        # §9.3 v0.3 + closure ruling: the pinned alternative is a typed
+        # record; preconditions are a separate field, never inside it
+        for tag, gate_id in (("g", "boundary_necessity_G_generic_caution"),
+                             ("o", "boundary_necessity_O_offer_projection")):
+            selection = result.plan.or_selections[gate_id]
+            self.assertEqual(selection.arm_id, "quality")
+            self.assertEqual(selection.member_contrast_ids,
+                             (f"or_quality_mm_C_vs_{tag}",))
+            gate = next(g for g in result.plan.resolved
+                        if g.gate_id == gate_id)
+            self.assertEqual(gate.precondition_contrast_ids,
+                             (f"ni_mc_C_vs_{tag}", f"ni_irr_C_vs_{tag}"))
+            self.assertFalse(any(cid.startswith("or_eff_")
+                                 for cid in selection.member_contrast_ids))
 
     def test_not_engaged_when_packet_absent(self):
         result = calibration_gate(AdmissionInputs(

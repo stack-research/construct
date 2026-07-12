@@ -205,6 +205,23 @@ the simultaneous lower bound legitimately crosses zero at the first
 precision-admitted N (saving 10, allowed gap 25) — the assertion was fixed to
 follow the arithmetic, disclosed here.
 
+**Closure fold (same day).** Auditors accepted population intent +
+diagnostics; withheld the OR pin on representation fidelity (the flat
+`decision_bearing_arms` bag mixed §9.3 preconditions with the selected
+alternative — inferable by a human, unreadable by a scorer without forbidden
+prefix parsing). Correction per their joint prescription: `OrArm`-labeled
+AnyOf children; `SelectedOrAlternative(arm_id, member_contrast_ids)` as the
+typed pin; `ResolvedGate` splits `sizing_contrast_ids` (§10.2 sizing bag) /
+`precondition_contrast_ids` (§9.3 mandatory legs) /
+`selected_alternative`; `SuitePlan.or_selections` replaces the flat dict;
+a bare (unlabeled) AnyOf child is refused. Four prescribed tests:
+quality-selected, efficiency-selected (with an N-comparison proving the
+selection was precision-driven), no-plannable-alternative refusal, and
+clearance-cannot-flip-the-pin (an arm is selected while its own projected
+clearance diagnostic fails). Wording: absent intent = "not a valid
+experiment packet" (spec §10.4/§5.2 + gate reason); §5.2/§12 byte-identity
+stated as canonical-serialization equality. Suite: 140 tests.
+
 ## Interpretation decisions (flagged for the cold implementation audit)
 
 Ratification status: decisions 1, 4, 5 endorsed by the architect (v0.2 fold);
