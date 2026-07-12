@@ -16,11 +16,11 @@ from __future__ import annotations
 
 import hashlib
 
-# --- Part I seal (§5.1/§18; v0.2 canonical hash recorded in substrate thread
-# `epistemic-frame-check-v0-build`; the v0.1 hash 736d46cf... remains recorded
-# in `epistemic-frame-check-v0-review` as lineage) -----------------------------
+# --- Part I seal (§5.1/§18/§19; v0.2 and v0.3 canonical hashes recorded in
+# substrate thread `epistemic-frame-check-v0-build`; the v0.1 hash 736d46cf...
+# remains recorded in `epistemic-frame-check-v0-review` as lineage) ------------
 PART_I_SPEC_RELPATH = "notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md"
-PART_I_SPEC_SHA256 = "5b41d866ce411c170997af5be08e98db3d725c48a4f3e913455414181088118f"
+PART_I_SPEC_SHA256 = "db687b92514772d3fdc8e9d0177783486ba1deb2e1c9b67d8ec34a43a03fa130"
 
 # --- §0.2 / §2.2 identities --------------------------------------------------
 MECHANISM_ID = "epistemic_frame_check"
@@ -80,6 +80,10 @@ N_MAX = 128
 
 # --- §10.5 stop rule (as a pinned identifier the manifest must carry) ---------
 STOP_RULE_ID = "k5_packet_plus_single_t07_collapse_probe"
+
+# --- §5.2/§12 v0.3 population intent (exactly one, pre-calibration) -----------
+POPULATION_INTENT_REGION = "license_bearing_region"
+POPULATION_INTENT_RESPONSE_CURVE_ONLY = "response_curve_only"
 
 # --- §7 / §8.2 placebo construction -------------------------------------------
 PLACEBO_TOKEN_TOLERANCE = 5  # S1/S2 canonical token count match within +/- 5

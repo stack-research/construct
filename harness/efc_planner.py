@@ -261,6 +261,9 @@ class NRequirement:
     # diagnostic only (§10.3: calibration may estimate variance, not rescue
     # margins): would the gate clear at pilot point estimates and n_required?
     projected_clearance_diagnostic: bool | None = None
+    # POPULATION_COST only (§19): per-vertex diagnostics at the admitted N,
+    # reconstructible via population_vertex_diagnostics; never verdicts.
+    vertex_diagnostics: tuple = ()
 
 
 def n_required_binary(pilot: BinaryPilot, spec: ContrastSpec) -> NRequirement:
@@ -319,6 +322,46 @@ class VertexProjection:
     estimated_saving: float
     lower_saving: float
     comparator_weighted_mean: float
+
+
+@dataclass(frozen=True)
+class VertexDiagnostic:
+    """§19/§10.4: reconstructible per-vertex calibration diagnostic — never a
+    verdict. Untrusting replay recomputes these from the typed pilot summaries
+    and the pinned region via `population_vertex_diagnostics`; serialized
+    booleans are not trusted."""
+    vertex: dict[str, float]
+    comparator_weighted_mean: float
+    estimated_saving: float
+    lower_saving: float
+    precision_gap: float
+    precision_target: float
+    margin_ok: bool
+    positivity_ok: bool
+
+
+def population_vertex_diagnostics(pilot: PopulationPilot, spec: ContrastSpec,
+                                  vertices: list[dict[str, float]],
+                                  n: int) -> tuple[VertexDiagnostic, ...]:
+    """The single recompute path for per-vertex population diagnostics at a
+    given N. `n_required_population` calls this at the admitted N; score-time
+    replay calls it with the same typed inputs to verify any recorded rows."""
+    assert spec.population_family_alpha is not None
+    out = []
+    for pr in _project_population_at_n(pilot, n, vertices,
+                                       spec.population_family_alpha):
+        target = c.POPULATION_COST_CI_HALF_WIDTH * pr.comparator_weighted_mean
+        out.append(VertexDiagnostic(
+            vertex=pr.vertex,
+            comparator_weighted_mean=pr.comparator_weighted_mean,
+            estimated_saving=pr.estimated_saving,
+            lower_saving=pr.lower_saving,
+            precision_gap=pr.estimated_saving - pr.lower_saving,
+            precision_target=target,
+            margin_ok=(pr.estimated_saving
+                       >= spec.margin * pr.comparator_weighted_mean),
+            positivity_ok=pr.lower_saving > 0.0))
+    return tuple(out)
 
 
 def _project_population_at_n(pilot: PopulationPilot, n: int,
@@ -390,13 +433,12 @@ def n_required_population(pilot: PopulationPilot, spec: ContrastSpec,
             if gap > c.POPULATION_COST_CI_HALF_WIDTH * pr.comparator_weighted_mean:
                 precision_ok = False
         if precision_ok:
-            clears = all(
-                pr.estimated_saving >= spec.margin * pr.comparator_weighted_mean
-                and pr.lower_saving > 0.0
-                for pr in projections)
+            diagnostics = population_vertex_diagnostics(pilot, spec, vertices, n)
+            clears = all(d.margin_ok and d.positivity_ok for d in diagnostics)
             return NRequirement(spec.contrast_id, spec.kind, STATUS_MET, n,
                                 worst_gap, None,
-                                projected_clearance_diagnostic=clears)
+                                projected_clearance_diagnostic=clears,
+                                vertex_diagnostics=diagnostics)
     return NRequirement(spec.contrast_id, spec.kind, STATUS_UNMET, None,
                         worst_gap, None)
 
@@ -478,6 +520,11 @@ class SuitePlan:
     stratum_n: dict[str, int | None]      # equalized per §10.2
     all_plannable: bool
     unmet: tuple[str, ...]                # contrast ids that refuse the family
+    # §9.3 v0.3: the pinned decision-bearing arms per gate, selected on
+    # precision/N alone before held-out contact. Only a pinned bearing arm can
+    # satisfy a §9.3 OR at score time; held-out outcomes cannot promote a
+    # non-bearing arm (architect ruling, §19).
+    decision_bearing_arms: dict[str, tuple[str, ...]] = field(default_factory=dict)
 
 
 def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
@@ -522,7 +569,9 @@ def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
     all_plannable = bool(resolved) and all(g.n_required is not None
                                            for g in resolved)
     return SuitePlan(tuple(resolved), stratum_n, all_plannable,
-                     tuple(dict.fromkeys(unmet)))
+                     tuple(dict.fromkeys(unmet)),
+                     decision_bearing_arms={g.gate_id: g.decision_bearing_arms
+                                            for g in resolved})
 
 
 def _iter_leaves(node):
@@ -636,7 +685,10 @@ class AdmissionInputs:
     ignorance: IgnoranceProbeResult | None
     collapse: CollapseState | None
     pilots: Pilots | None
-    population_region_declared: bool
+    # §5.2 v0.3: the pre-calibration population intent, exactly one of
+    # c.POPULATION_INTENT_REGION / c.POPULATION_INTENT_RESPONSE_CURVE_ONLY.
+    # None means the packet is not license-seeking and the band does not open.
+    population_intent: str | None
     vertices: list[dict[str, float]] | None
 
 
@@ -647,6 +699,9 @@ class AdmissionResult:
     plan: SuitePlan | None
     counts: ProjectedCounts | None
     budget_disclosure_required: bool = True  # §14.7 stays a human act
+    # §12 v0.3: which license path the declared intent selects. Under
+    # response_curve_only the frozen envelope can never emit `licensed`.
+    license_path: str | None = None
 
 
 def calibration_gate(inputs: AdmissionInputs) -> AdmissionResult:
@@ -673,29 +728,49 @@ def calibration_gate(inputs: AdmissionInputs) -> AdmissionResult:
                 "point_mode_diagnostic",
                 ("answer/route hashes collapse at T=0.5 and T=0.7; behavioral "
                  "mechanism license unavailable (§10.2)",), None, None)
+    if inputs.population_intent is None:
+        # §10.4 v0.3: a packet with no declared population intent is not a
+        # license-seeking packet and does not open the band.
+        return AdmissionResult(
+            "not_engaged",
+            ("no §5.2 population intent declared (license-bearing region or "
+             "response_curve_only, exactly one, before calibration contact)",),
+            None, None)
+    if inputs.population_intent == c.POPULATION_INTENT_REGION:
+        if inputs.vertices is None:
+            raise PlannerContractError(
+                "population region declared but no vertices supplied")
+        validate_prevalence_region(inputs.vertices)
+        region_declared = True
+    elif inputs.population_intent == c.POPULATION_INTENT_RESPONSE_CURVE_ONLY:
+        if inputs.vertices is not None:
+            raise PlannerContractError(
+                "response_curve_only declared together with vertices: the "
+                "§5.2 intent is exactly one choice")
+        region_declared = False
+    else:
+        raise PlannerContractError(
+            f"unknown population intent {inputs.population_intent!r}")
     refusals = list(calibration_band_failures(inputs.s_band))
     ignorance_failure = inputs.ignorance.failure()
     if ignorance_failure:
         refusals.append(ignorance_failure)
     if refusals:
-        return AdmissionResult("engine_refused", tuple(refusals), None, None)
-    if inputs.population_region_declared:
-        if inputs.vertices is None:
-            raise PlannerContractError(
-                "population region declared but no vertices supplied")
-        validate_prevalence_region(inputs.vertices)
+        return AdmissionResult("engine_refused", tuple(refusals), None, None,
+                               license_path=inputs.population_intent)
     pilots = Pilots(binary=dict(inputs.pilots.binary),
                     population=dict(inputs.pilots.population),
                     vertices=inputs.vertices)
-    plan = resolve_gates(planned_gates(inputs.population_region_declared), pilots)
+    plan = resolve_gates(planned_gates(region_declared), pilots)
     counts = projected_counts(plan, _source_n(plan))
     if not plan.all_plannable:
         return AdmissionResult(
             "confounded(ci_target_unmet)",
             tuple(f"n_required > {c.N_MAX} or degenerate: {cid}"
                   for cid in plan.unmet),
-            plan, counts)
-    return AdmissionResult("engine_admitted", (), plan, counts)
+            plan, counts, license_path=inputs.population_intent)
+    return AdmissionResult("engine_admitted", (), plan, counts,
+                           license_path=inputs.population_intent)
 
 
 def _source_n(plan: SuitePlan) -> int | None:

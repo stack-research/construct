@@ -42,6 +42,11 @@ def healthy_manifest(**overrides):
         "stop_rule": c.STOP_RULE_ID,
         "n_max": c.N_MAX,
         "total_budget_tokens": 2_000_000,
+        # §5.2 v0.3: mandatory pre-calibration population intent
+        "population_region": {"vertices": [
+            {"match_mismatch": 0.6, "match_commit": 0.2, "irrelevant": 0.2},
+            {"match_mismatch": 0.1, "match_commit": 0.1, "irrelevant": 0.8},
+        ]},
     }
     manifest.update(overrides)
     return manifest
@@ -105,15 +110,12 @@ class TestManifestCheck(unittest.TestCase):
             ignorance_probe_contract={"probe_fixture_ids": ["p"],
                                       "max_recoverable_rate": 1.0})).ok)
 
-    def test_population_region_paths(self):
+    def test_population_intent_paths(self):
+        # §5.2 v0.3: mandatory, exactly one choice
         ok_curve = check_calibration_manifest(healthy_manifest(
             population_region={"response_curve_only": True}))
         self.assertTrue(ok_curve.ok, msg=str(ok_curve.failures))
-        ok_region = check_calibration_manifest(healthy_manifest(
-            population_region={"vertices": [
-                {"match_mismatch": 0.6, "match_commit": 0.2, "irrelevant": 0.2},
-                {"match_mismatch": 0.1, "match_commit": 0.1, "irrelevant": 0.8},
-            ]}))
+        ok_region = check_calibration_manifest(healthy_manifest())
         self.assertTrue(ok_region.ok, msg=str(ok_region.failures))
         bad_region = check_calibration_manifest(healthy_manifest(
             population_region={"vertices": [
@@ -121,6 +123,47 @@ class TestManifestCheck(unittest.TestCase):
             ]}))
         self.assertFalse(bad_region.ok)
         self.assertIn("p_irrelevant", " ".join(bad_region.failures))
+
+    def test_population_intent_mandatory_and_exactly_one(self):
+        manifest = healthy_manifest()
+        del manifest["population_region"]
+        result = check_calibration_manifest(manifest)
+        self.assertFalse(result.ok)
+        self.assertIn("missing manifest keys", " ".join(result.failures))
+        both = check_calibration_manifest(healthy_manifest(
+            population_region={"response_curve_only": True,
+                               "vertices": []}))
+        self.assertFalse(both.ok)
+        self.assertIn("exactly one", " ".join(both.failures))
+        neither = check_calibration_manifest(healthy_manifest(
+            population_region={"response_curve_only": False}))
+        self.assertFalse(neither.ok)
+
+    def test_population_choice_byte_identity(self):
+        # §12 v0.3: the later population manifest must byte-match the
+        # pre-calibration §5.2 declaration
+        from harness.efc_manifest import population_choice_byte_identical
+        calibration = healthy_manifest()
+        same = {"vertices": [
+            {"match_mismatch": 0.6, "match_commit": 0.2, "irrelevant": 0.2},
+            {"match_mismatch": 0.1, "match_commit": 0.1, "irrelevant": 0.8},
+        ]}
+        self.assertTrue(population_choice_byte_identical(calibration, same))
+        # key order does not defeat canonicalization
+        reordered = {"vertices": [
+            {"irrelevant": 0.2, "match_commit": 0.2, "match_mismatch": 0.6},
+            {"irrelevant": 0.8, "match_commit": 0.1, "match_mismatch": 0.1},
+        ]}
+        self.assertTrue(population_choice_byte_identical(calibration, reordered))
+        # a post-calibration vertex adjustment is refused
+        adjusted = {"vertices": [
+            {"match_mismatch": 0.6, "match_commit": 0.2, "irrelevant": 0.2},
+            {"match_mismatch": 0.15, "match_commit": 0.1, "irrelevant": 0.75},
+        ]}
+        self.assertFalse(population_choice_byte_identical(calibration, adjusted))
+        # and switching paths after calibration is refused
+        self.assertFalse(population_choice_byte_identical(
+            calibration, {"response_curve_only": True}))
 
     def test_missing_key_reported(self):
         manifest = healthy_manifest()

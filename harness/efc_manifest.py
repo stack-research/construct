@@ -57,8 +57,11 @@ REQUIRED_FIELDS = (
     "stop_rule",
     "n_max",
     "total_budget_tokens",
+    # §5.2 v0.3: mandatory pre-calibration population intent, exactly one of
+    # {"vertices": [...]} or {"response_curve_only": true}
+    "population_region",
 )
-OPTIONAL_FIELDS = ("population_region",)
+OPTIONAL_FIELDS = ()
 
 # §5.2: no held-out source or target outcome material may ride the manifest.
 FORBIDDEN_KEY_SUBSTRINGS = ("heldout", "held_out", "outcome",
@@ -77,6 +80,24 @@ def manifest_hash(manifest: dict) -> str:
     return hashlib.sha256(json.dumps(manifest, sort_keys=True,
                                      separators=(",", ":")).encode("utf-8")
                           ).hexdigest()
+
+
+def population_choice_canonical(population_region: dict) -> bytes:
+    """Canonical bytes of a §5.2 population choice, for the §12 v0.3
+    byte-identity requirement."""
+    return json.dumps(population_region, sort_keys=True,
+                      separators=(",", ":")).encode("utf-8")
+
+
+def population_choice_byte_identical(calibration_manifest: dict,
+                                     later_population_choice: dict) -> bool:
+    """§12 v0.3: the held-out population manifest's region/response_curve_only
+    choice must byte-match the pre-calibration §5.2 declaration (its own
+    identity/hash envelope aside). Vertices may not be chosen or adjusted
+    after seeing calibration status, variance, required N, or projected
+    budget."""
+    return (population_choice_canonical(calibration_manifest["population_region"])
+            == population_choice_canonical(later_population_choice))
 
 
 def _scan_forbidden_keys(node, path: str, failures: list[str]) -> None:
@@ -200,20 +221,22 @@ def check_calibration_manifest(manifest: dict) -> ManifestCheckResult:
                 or not (0.0 <= float(rate) < 1.0):
             failures.append("max_recoverable_rate must be in [0, 1)")
 
-    # --- optional population region (§9.4/§12 deadline is pre-held-out) -----
-    if "population_region" in manifest:
-        region = manifest["population_region"]
-        if region == {"response_curve_only": True}:
-            pass  # typed non-license path (§9.4/§14.6)
-        elif (isinstance(region, dict) and set(region) == {"vertices"}
-                and isinstance(region["vertices"], list)):
-            try:
-                validate_prevalence_region(region["vertices"])
-            except PlannerContractError as e:
-                failures.append(f"population_region: {e}")
-        else:
-            failures.append("population_region must be {vertices: [...]} or "
-                            "{response_curve_only: true}")
+    # --- mandatory population intent (§5.2/§12 v0.3: exactly one choice,
+    # made before calibration contact) ---------------------------------------
+    region = manifest["population_region"]
+    if region == {"response_curve_only": True}:
+        pass  # typed permanent non-license path (§12 v0.3)
+    elif (isinstance(region, dict) and set(region) == {"vertices"}
+            and isinstance(region["vertices"], list)):
+        try:
+            validate_prevalence_region(region["vertices"])
+        except PlannerContractError as e:
+            failures.append(f"population_region: {e}")
+    else:
+        failures.append("population_region must be exactly one of "
+                        "{vertices: [...]} or {response_curve_only: true} "
+                        "(§5.2 v0.3: the license-seeking choice is made "
+                        "before calibration contact)")
 
     _scan_forbidden_keys(manifest, "manifest", failures)
 

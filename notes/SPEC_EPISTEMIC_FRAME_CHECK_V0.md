@@ -1,10 +1,10 @@
 # SPEC_EPISTEMIC_FRAME_CHECK v0 — Part I: pre-engine protocol
 
-Status: **v0.2, Part I SEALED** (2026-07-12; the v0.1 seal hash is recorded in
-substrate thread `epistemic-frame-check-v0-review`; v0.2 is the bounded
-arithmetic amendment of §18, canonical hash recorded in
-`epistemic-frame-check-v0-build`). Derived from the bounded design round in
-`epistemic-frame-check-v0` and folded once after the cold pass.
+Status: **v0.3, Part I SEALED** (2026-07-12; the v0.1 seal hash is recorded in
+substrate thread `epistemic-frame-check-v0-review`; the v0.2 arithmetic
+amendment (§18) and the v0.3 process amendment (§19) carry their canonical
+hashes in `epistemic-frame-check-v0-build`). Derived from the bounded design
+round in `epistemic-frame-check-v0` and folded once after the cold pass.
 No calibration engine contact, fixture evidence, held-out build, or mechanism
 claim is authorized by the seal. Part I admits only the calibration/scorer
 preparation in §14; every later step remains gated by the recorded canonical
@@ -302,10 +302,17 @@ predicate / extractor / check hashes
 generic-caution text and hash
 offer-projection template and hash
 K, temperatures, stop rule, n_max, and total budget
+population intent: a license-bearing §9.4 region OR response_curve_only
+                   (exactly one; the license-seeking choice, made before any
+                   calibration contact)
 ```
 
 The manifest is machine-checked and receives a bounded cold check for contract
-conformance. It may not contain held-out source or target outcomes.
+conformance. It may not contain held-out source or target outcomes. The
+population intent is declared here, before calibration contact: the later
+population manifest must byte-match this choice apart from its own identity
+and hash envelope (§12), so calibration outcomes can never inform the
+deployment population on which the candidate seeks a license.
 
 ### 5.3 Canonical event order
 
@@ -328,6 +335,9 @@ No held-out family is authored from calibration outcomes beyond the typed engine
 status and variance/budget quantities permitted by §10. Source, target, and
 population manifests are hash-pinned before the engine sees either held-out
 family, so source behavior cannot steer target authoring or prevalence scope.
+The population manifest's region or `response_curve_only` choice is fixed
+before calibration contact by the §5.2 declaration; pinning it after admission
+records identity, never a new choice.
 
 ## 6. Engine admission: disjoint calibration only
 
@@ -540,6 +550,13 @@ confidence interval (Bonferroni within comparator). All other required gates are
 an intersection-union claim—every gate must pass—so they retain `95%` intervals
 without averaging or a favorable-subset correction.
 
+The decision-bearing alternative for each comparator is pinned by the §10.4
+plan before held-out contact, selected on precision/N alone — never on
+projected effect clearance. Only a pinned decision-bearing alternative can
+satisfy this OR gate; a non-bearing alternative's lanes may be reported
+descriptively but cannot satisfy the gate or rescue the verdict, and held-out
+outcomes cannot promote it. If no alternative is plannable, admission refuses.
+
 ### 9.4 Always-check and population cost
 
 Conditional quality is frozen by §9.2. Only deterministic cost may be reweighted
@@ -691,6 +708,15 @@ and contrast-specific h used by the score-time verdict**:
   `10%` saving margin and positive lower bound are calibration diagnostics and
   held-out verdict conditions.
 
+The plan honors the §5.2 population intent. Under a declared region, the
+complete population board participates in the one pre-contact plan. Under
+`response_curve_only`, the planner still sizes every conditional quality gate
+and every boundary-necessity quality alternative required for honest
+response-curve reporting; it omits the license-bearing population-cost leaves
+and the population-dependent efficiency alternatives, and the envelope can
+never emit `licensed`. A packet with no declared population intent is not a
+license-seeking packet and does not open the band.
+
 `n_required` is the smallest enumerated N at which the shared score-time
 function meets the contrast's target half-width. Calibration estimates the
 sampling precision implied by the observed calibration rates and cost
@@ -752,13 +778,19 @@ The target suite samples enough independent fixtures in each stratum to score
 conditional gates. It does not claim that its authored stratum ratio represents
 the world.
 
-Before held-out source or target contact, the population manifest declares the
-convex prevalence region required by §9.4 or explicitly sets
-`response_curve_only = true` over:
+The population choice is made before calibration contact: the §5.2 calibration
+manifest declares exactly one of the convex prevalence region required by §9.4
+or `response_curve_only = true`, over:
 
 ```text
 p_match_mismatch + p_match_commit + p_irrelevant = 1
 ```
+
+The later population manifest must byte-match that declared choice apart from
+its own identity and hash envelope; it may not choose or adjust vertices after
+seeing calibration status, variance, required N, or projected budget.
+`response_curve_only` permanently selects the typed non-license path for the
+frozen experiment envelope: the eventual outcome can never be `licensed`.
 
 The scorer may reweight only deterministic cost:
 
@@ -829,8 +861,9 @@ Held-out Part II fixture authoring and evidence runs may begin only when:
 4. the disjoint calibration packet returns `engine_admitted` with every
    `n_required <= 128`;
 5. source, target, and population manifests are hash-pinned;
-6. the population manifest either declares a license-bearing region satisfying
-   §9.4 or explicitly accepts `response_curve_only` as a typed non-license;
+6. the population manifest byte-matches the §5.2 pre-calibration population
+   declaration — a license-bearing region satisfying §9.4, or
+   `response_curve_only` as a typed non-license (§12);
 7. the total projected target-suite budget is accepted explicitly;
 8. no held-out source or target fixture has been exposed to the admitted engine.
 
@@ -933,3 +966,38 @@ verdict). The v0.2 canonical file hash is recorded in
 `epistemic-frame-check-v0-build`. A cold implementation audit of the
 post-amendment artifact precedes any calibration-manifest authoring, fixture
 authoring, or engine contact.
+
+## 19. v0.3 process amendment (2026-07-12)
+
+One bounded fold from the cold implementation audit of the v0.2 artifact
+(auditors cursor/grok-4.5 and cursor/composer-2.5, both endorsing the §14
+machinery; architect gpt-5.6-sol accepting their shared blocker with a
+stronger remedy; moderator dan approving). No claim, margin, confidence
+level, interval construction, lane, or architecture changed.
+
+**Audit finding (population-omission seam).** The v0.2 calibration manifest
+allowed the population region to be omitted, and `engine_admitted` computed
+without the population board could understate N relative to a later
+license-bearing region — a silent under-planning seam, and one calibration
+outcomes could exploit by informing the later choice of deployment
+population.
+
+**Amendment.** §5.2 makes population intent a mandatory calibration-manifest
+field (exactly one of a license-bearing §9.4 region or
+`response_curve_only`); §5.3/§12/§14.6 require the later population manifest
+to byte-match that pre-calibration choice apart from its own identity
+envelope; §10.4 states the plan-scope rule for each intent
+(`response_curve_only` still sizes all conditional quality gates and
+boundary-necessity quality alternatives, omits license-bearing population
+leaves, and can never emit `licensed`); §9.3 makes decision-bearing OR-arm
+pinning explicit — arms are selected on precision/N alone before held-out
+contact, non-bearing arms cannot satisfy the gate or be promoted by held-out
+outcomes, and no plannable arm means refusal. The audit's recommended
+per-vertex population diagnostics (reconstructible from typed pilot and
+region inputs, never verdicts) land in the same fold. The reviewers' proposal
+to let a non-bearing arm clear at score time was explicitly rejected by the
+architect as favorable-path selection after outcomes.
+
+The v0.3 canonical file hash is recorded in `epistemic-frame-check-v0-build`.
+A bounded auditor closure check limited to these changes precedes any
+calibration-manifest authoring, fixture authoring, or engine contact.

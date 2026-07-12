@@ -155,6 +155,18 @@ class TestPopulationNRule(unittest.TestCase):
         self.assertEqual(req.status, STATUS_MET)
         self.assertLessEqual(req.n_required, c.N_MAX)
         self.assertTrue(req.projected_clearance_diagnostic)
+        # §19 per-vertex diagnostics: one row per declared vertex, aggregate
+        # derivable, and reconstructible from typed inputs
+        self.assertEqual(len(req.vertex_diagnostics), len(_region()))
+        self.assertEqual(req.projected_clearance_diagnostic,
+                         all(d.margin_ok and d.positivity_ok
+                             for d in req.vertex_diagnostics))
+        from harness.efc_planner import population_vertex_diagnostics
+        recomputed = population_vertex_diagnostics(
+            _strong_population_pilot(), spec, _region(), req.n_required)
+        self.assertEqual(recomputed, req.vertex_diagnostics)
+        for d in req.vertex_diagnostics:
+            self.assertLessEqual(d.precision_gap, d.precision_target)
 
     def test_region_touching_zero_irrelevant_refused(self):
         spec = _population("pop", "9.4", "C", "A", 0.10, 0.05)
@@ -176,6 +188,14 @@ class TestPopulationNRule(unittest.TestCase):
         req = n_required_population(pilot, spec, _region())
         self.assertEqual(req.status, STATUS_MET)
         self.assertFalse(req.projected_clearance_diagnostic)
+        # §19 diagnostics say exactly WHICH condition failed at every vertex:
+        # the 2% saving can never reach the 10% margin, and at the first
+        # precision-admitted N the simultaneous lower bound (saving 10, gap up
+        # to 25) may legitimately still cross zero — both facts visible per
+        # vertex instead of collapsed into one bool
+        for d in req.vertex_diagnostics:
+            self.assertFalse(d.margin_ok)
+            self.assertEqual(d.positivity_ok, d.lower_saving > 0.0)
 
     def test_wide_variance_population_precision_refuses(self):
         # precision (the only admission criterion) still refuses honestly
@@ -296,13 +316,15 @@ class TestCalibrationGate(unittest.TestCase):
             for req_spec in _leaves(gate):
                 if req_spec.kind == "population_cost":
                     population[req_spec.contrast_id] = _strong_population_pilot()
+        intent = (c.POPULATION_INTENT_REGION if region
+                  else c.POPULATION_INTENT_RESPONSE_CURVE_ONLY)
         return AdmissionInputs(
             s_band=SBandCounts(2, 5, 5, 5, 2, 5),
             ignorance=IgnoranceProbeResult(0, 10, 0.2),
             collapse=CollapseState(collapsed_at_t05=False, collapsed_at_t07=None),
             pilots=Pilots(binary=binary, population=population,
                           vertices=_region() if region else None),
-            population_region_declared=region,
+            population_intent=intent,
             vertices=_region() if region else None)
 
     def test_coherent_corner_admits_at_v02_ceiling(self):
@@ -322,25 +344,82 @@ class TestCalibrationGate(unittest.TestCase):
         self.assertEqual(result.counts.target_model_invocations, 2232)
         self.assertEqual(result.counts.source_model_invocations, 30)
         self.assertTrue(result.budget_disclosure_required)
+        self.assertEqual(result.license_path, c.POPULATION_INTENT_REGION)
+        # §9.3 v0.3: decision-bearing arms are pinned in the plan, selected on
+        # precision/N alone; only these can satisfy the OR at score time
+        arms = result.plan.decision_bearing_arms
+        self.assertEqual(arms["boundary_necessity_G_generic_caution"],
+                         ("ni_mc_C_vs_g", "ni_irr_C_vs_g",
+                          "or_quality_mm_C_vs_g"))
+        self.assertEqual(arms["boundary_necessity_O_offer_projection"],
+                         ("ni_mc_C_vs_o", "ni_irr_C_vs_o",
+                          "or_quality_mm_C_vs_o"))
+        self.assertNotIn("or_eff_ni_mm_C_vs_g",
+                         arms["boundary_necessity_G_generic_caution"])
 
     def test_not_engaged_when_packet_absent(self):
         result = calibration_gate(AdmissionInputs(
             s_band=None, ignorance=None, collapse=None, pilots=None,
-            population_region_declared=False, vertices=None))
+            population_intent=None, vertices=None))
         self.assertEqual(result.verdict, "not_engaged")
+
+    def test_undeclared_population_intent_does_not_open_band(self):
+        # §10.4 v0.3: a packet with no §5.2 intent is not license-seeking
+        inputs = self._healthy_inputs()
+        undeclared = AdmissionInputs(
+            s_band=inputs.s_band, ignorance=inputs.ignorance,
+            collapse=inputs.collapse, pilots=inputs.pilots,
+            population_intent=None, vertices=None)
+        result = calibration_gate(undeclared)
+        self.assertEqual(result.verdict, "not_engaged")
+        self.assertIn("population intent", " ".join(result.reasons))
+
+    def test_response_curve_only_path(self):
+        # §12/§10.4 v0.3: quality board fully sized, population leaves absent,
+        # permanent non-license path recorded
+        result = calibration_gate(self._healthy_inputs(region=False))
+        self.assertEqual(result.verdict, "engine_admitted")
+        self.assertEqual(result.license_path,
+                         c.POPULATION_INTENT_RESPONSE_CURVE_ONLY)
+        all_contrasts = [r.contrast_id for g in result.plan.resolved
+                         for r in g.requirements]
+        self.assertNotIn("pop_cost_C_vs_A", all_contrasts)
+        self.assertFalse(any(cid.startswith("or_eff_") for cid in all_contrasts))
+        # boundary-necessity quality alternatives still sized (§10.4 v0.3)
+        self.assertIn("or_quality_mm_C_vs_g", all_contrasts)
+        self.assertIn("or_quality_mm_C_vs_o", all_contrasts)
+
+    def test_intent_contract_violations_fail_closed(self):
+        inputs = self._healthy_inputs()
+        with self.assertRaises(PlannerContractError):
+            calibration_gate(AdmissionInputs(
+                s_band=inputs.s_band, ignorance=inputs.ignorance,
+                collapse=inputs.collapse, pilots=inputs.pilots,
+                population_intent=c.POPULATION_INTENT_REGION, vertices=None))
+        with self.assertRaises(PlannerContractError):
+            calibration_gate(AdmissionInputs(
+                s_band=inputs.s_band, ignorance=inputs.ignorance,
+                collapse=inputs.collapse, pilots=inputs.pilots,
+                population_intent=c.POPULATION_INTENT_RESPONSE_CURVE_ONLY,
+                vertices=_region()))
+        with self.assertRaises(PlannerContractError):
+            calibration_gate(AdmissionInputs(
+                s_band=inputs.s_band, ignorance=inputs.ignorance,
+                collapse=inputs.collapse, pilots=inputs.pilots,
+                population_intent="whatever_wins", vertices=_region()))
 
     def test_point_mode_diagnostic(self):
         inputs = self._healthy_inputs()
         collapsed = AdmissionInputs(
             s_band=inputs.s_band, ignorance=inputs.ignorance,
             collapse=CollapseState(True, True), pilots=inputs.pilots,
-            population_region_declared=True, vertices=_region())
+            population_intent=c.POPULATION_INTENT_REGION, vertices=_region())
         self.assertEqual(calibration_gate(collapsed).verdict,
                          "point_mode_diagnostic")
         pending = AdmissionInputs(
             s_band=inputs.s_band, ignorance=inputs.ignorance,
             collapse=CollapseState(True, None), pilots=inputs.pilots,
-            population_region_declared=True, vertices=_region())
+            population_intent=c.POPULATION_INTENT_REGION, vertices=_region())
         self.assertEqual(calibration_gate(pending).verdict, "not_engaged")
 
     def test_engine_refused_on_bands_and_ignorance(self):
@@ -348,13 +427,13 @@ class TestCalibrationGate(unittest.TestCase):
         bad_band = AdmissionInputs(
             s_band=SBandCounts(4, 5, 3, 5, 3, 5), ignorance=inputs.ignorance,
             collapse=inputs.collapse, pilots=inputs.pilots,
-            population_region_declared=True, vertices=_region())
+            population_intent=c.POPULATION_INTENT_REGION, vertices=_region())
         self.assertEqual(calibration_gate(bad_band).verdict, "engine_refused")
         leaky = AdmissionInputs(
             s_band=inputs.s_band,
             ignorance=IgnoranceProbeResult(9, 10, 0.2),
             collapse=inputs.collapse, pilots=inputs.pilots,
-            population_region_declared=True, vertices=_region())
+            population_intent=c.POPULATION_INTENT_REGION, vertices=_region())
         self.assertEqual(calibration_gate(leaky).verdict, "engine_refused")
 
     def test_verdict_vocabulary_pinned(self):

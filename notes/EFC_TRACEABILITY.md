@@ -89,7 +89,7 @@ frozen §8.3/§8.4 texts + UTF-8 hashes, §3.1/§3.4 status and revision scopes,
 | Function | Section served |
 | --- | --- |
 | `planned_gates`, `_sup`/`_ni`/`_population`, `AllOf`/`AnyOf` | §7 mint contrasts; §9.2 gates 1–5; §9.3 preconditions + OR arms; §9.4 population cost — the precommitted board |
-| `n_required_binary` | §10.4 enumeration 2..24 through score-time Wilson/Newcombe at the gate's actual confidence and contrast-specific h |
+| `n_required_binary` | §10.4 enumeration 2..128 through score-time Wilson/Newcombe at the gate's actual confidence and contrast-specific h |
 | `n_required_cost` | §10.4 scalar-cost bullet (shared Welch, W-S df) |
 | `n_required_population`, `validate_prevalence_region`, `_project_population_at_n` | §9.4 vertex conditions + p_irrelevant > 0 refusal; §12 construction reuse for §9.3 arms |
 | `resolve_gates` (AND→max, OR→min, decision-bearing arms) | §6 "every required comparison"; §0.2 separately-precommitted comparisons; §10.2 stratum-N equalization |
@@ -181,12 +181,42 @@ deliberate hash update, then repinned (`test_sealed_file_hash_matches_pin`);
 (6) full `make efc-test` suite green (130 tests) plus m2/close-gate/PRF
 regressions; (7) no manifest authoring, fixture authoring, or engine contact.
 
+## §19 v0.3 amendment (2026-07-12, cold-audit fold, thread `epistemic-frame-check-v0-build`)
+
+Both cold auditors (cursor/grok-4.5, cursor/composer-2.5) endorsed the §14
+artifact and decisions 2/7/8/10/11(sizing); their shared blocker (population
+omission = silent under-planning seam) was accepted by the architect with the
+stronger pre-declaration remedy; dan approved. Delta:
+
+| Change | Where |
+| --- | --- |
+| Population intent mandatory pre-calibration (region XOR response_curve_only) | spec §5.2/§10.4; `efc_manifest.REQUIRED_FIELDS`; `AdmissionInputs.population_intent` (None → band does not open) |
+| Later population manifest must byte-match the §5.2 choice | spec §5.3/§12/§14.6; `population_choice_byte_identical` (canonical JSON, key-order-proof) |
+| `response_curve_only` = permanent typed non-license; quality board still fully sized | spec §12/§10.4; `calibration_gate` license_path + `planned_gates(False)` path (tests pin quality arms present, population/efficiency leaves absent) |
+| Reconstructible per-vertex population diagnostics (never verdicts) | `VertexDiagnostic` + `population_vertex_diagnostics` (single recompute path); aggregate bool derivable — tests pin recompute equality |
+| §9.3 decision-bearing OR arms pinned pre-held-out; no score-time promotion (architect explicitly rejected the reviewers' promotion proposal) | spec §9.3; `SuitePlan.decision_bearing_arms` pin map; acceptance test asserts the pinned arm sets |
+| Hygiene: stale `2..24` traceability entry | this file, module table |
+
+Tripwire again demonstrated failing between spec edit and deliberate repin.
+v0.3 spec sha256 recorded in the build thread. Suite grew to 135 tests.
+One test-authoring correction during this fold: I initially asserted
+`positivity_ok` True for the small-saving pilot; the diagnostic itself showed
+the simultaneous lower bound legitimately crosses zero at the first
+precision-admitted N (saving 10, allowed gap 25) — the assertion was fixed to
+follow the arithmetic, disclosed here.
+
 ## Interpretation decisions (flagged for the cold implementation audit)
 
-Ratification status (Sol, `epistemic-frame-check-v0-build`): decisions 1, 4,
-5 endorsed; decision 6 blocked-as-interpretation and adopted as the explicit
-§10.3 v0.2 pin; decision 3 superseded by the §10.4 v0.2 three-layer language.
-The remainder stay flagged for the cold implementation audit.
+Ratification status: decisions 1, 4, 5 endorsed by the architect (v0.2 fold);
+decision 6 promoted to the explicit §10.3 v0.2 pin; decision 3 superseded by
+the §10.4 v0.2 three-layer language. Cold audit (v0.3 round): decisions 2, 7,
+8, 10 endorsed by both auditors and accepted by the architect; decision 9
+superseded by the §19 mandatory pre-declaration (the deadline reading was
+endorsed, treating omission as Part-II-complete was blocked, and the stronger
+remedy landed); decision 11 endorsed for sizing, with the architect's
+explicit ruling that non-bearing arms stay sealed out of the held-out
+decision (reviewers' promotion proposal rejected). Nothing remains
+unratified.
 
 1. **Half-width** of an asymmetric interval = `(upper − lower) / 2`. The
    §10.3 targets are read against this symmetric definition. (For the NI
