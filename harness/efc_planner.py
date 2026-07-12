@@ -596,8 +596,12 @@ def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
         resolved.append(ResolvedGate(
             gate.gate_id, gate.section, res.n, res.reqs,
             sizing_contrast_ids=res.sizing,
-            precondition_contrast_ids=(res.mandatory if res.selected is not None
-                                       else ()),
+            # structure-based, not selection-based: an OR-bearing gate keeps
+            # its mandatory legs in the published artifact even when no arm
+            # is plannable — refusal preserves attempted gate structure
+            # (closure-round trace-fidelity ruling)
+            precondition_contrast_ids=(res.mandatory
+                                       if _contains_anyof(gate.node) else ()),
             selected_alternative=res.selected))
         if res.n is None:
             # gate unplannable: every stratum it touches is poisoned and its
@@ -633,6 +637,16 @@ def resolve_gates(gates: list[PlannedGate], pilots: Pilots) -> SuitePlan:
                      or_selections={g.gate_id: g.selected_alternative
                                     for g in resolved
                                     if g.selected_alternative is not None})
+
+
+def _contains_anyof(node) -> bool:
+    if isinstance(node, AnyOf):
+        return True
+    if isinstance(node, OrArm):
+        return _contains_anyof(node.node)
+    if isinstance(node, AllOf):
+        return any(_contains_anyof(child) for child in node.children)
+    return False
 
 
 def _iter_leaves(node):

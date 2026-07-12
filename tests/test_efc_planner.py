@@ -341,6 +341,25 @@ class TestOrArmPinning(unittest.TestCase):
         self.assertFalse(plan.all_plannable)
         self.assertEqual(set(plan.unmet), {"a", "b"})
 
+    def test_refused_or_gate_preserves_precondition_ids(self):
+        # closure-round trace fidelity: a boundary-shaped gate whose OR arms
+        # are all unplannable still publishes its mandatory legs — refusal
+        # preserves attempted gate structure
+        g = PlannedGate("g", "9.3", AllOf((
+            _ni("p1", "9.3", MC, "C", "G"),
+            _ni("p2", "9.3", IRR, "C", "G"),
+            AnyOf((OrArm("a_arm", _ni("a", "9.3", MM, "C", "G")),
+                   OrArm("b_arm", _ni("b", "9.3", MM, "C", "G")))))))
+        plan = resolve_gates([g], Pilots(binary={
+            "p1": BinaryPilot(4, 5, 4, 5), "p2": BinaryPilot(4, 5, 4, 5),
+            "a": BinaryPilot(3, 5, 3, 5), "b": BinaryPilot(3, 5, 3, 5)}))
+        [rg] = plan.resolved
+        self.assertIsNone(rg.n_required)
+        self.assertIsNone(rg.selected_alternative)
+        self.assertNotIn("g", plan.or_selections)
+        self.assertEqual(rg.precondition_contrast_ids, ("p1", "p2"))
+        self.assertEqual(set(plan.unmet), {"a", "b"})
+
     def test_selection_is_precision_only_clearance_cannot_flip_pin(self):
         # arm A: reversed split — small n, projected clearance FALSE;
         # arm B: right-direction split — larger n, clearance TRUE.
