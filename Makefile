@@ -1,4 +1,18 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke body-sketch body-sketch-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke body-sketch body-sketch-test efc-test
+
+# SPEC_EPISTEMIC_FRAME_CHECK v0 Part I §14 wire tests (no model, never evidence):
+# shared interval functions (scipy-goldened), the §10.4 N-rule planner + §6
+# computed calibration gate, §2.1 trigger closure, §3 carrier/mint authority,
+# §13 ledger replay + §10.1 cost ceilings, §5.2 manifest machine check.
+# Traceability: notes/EFC_TRACEABILITY.md (includes the NI-width/n_max finding).
+efc-test:
+	uv run --no-project python -m tests.test_efc_intervals
+	uv run --no-project python -m tests.test_efc_contracts
+	uv run --no-project python -m tests.test_efc_planner
+	uv run --no-project python -m tests.test_efc_trigger
+	uv run --no-project python -m tests.test_efc_carrier
+	uv run --no-project python -m tests.test_efc_ledger
+	uv run --no-project python -m tests.test_efc_manifest
 
 # NEXT substrate whole-body walking skeleton. Authored deterministic behavior;
 # WIRE / INTEGRATION ONLY, never memory evidence and never written under runs/.
