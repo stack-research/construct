@@ -63,7 +63,7 @@ that every node exists as a product component. Read the labels before the nouns.
 | Hot/cold eviction and recovery | **Earned narrowly** | [X2 findings](X2_FINDINGS.md) | One sequence/corpus shape; no general sleep subsystem |
 | Governed materialization | **Provisional sketch** | [walking skeleton](../sketches/next_substrate/README.md) | Deterministic replay demonstrates composition only |
 | Sparse activation plus action boundary | **Provisional sketch** | Walking skeleton controller rows | No real engine or licensed controller treatment |
-| Structural failure disposition | **Candidate slice** | `epistemic_frame_check_v0_stub` in the sketch | Trigger, check, oracle, meter, and license are authored |
+| Structural failure disposition | **Candidate slice; Part I sealed** | [pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md); `epistemic_frame_check_v0_stub` in the sketch | Protocol is sealed; trigger, check, oracle, meter, and mechanism license remain unearned |
 | Metabolic proprioception | **Provisional sketch** | Check-cost and wire-causal events | No real carry-cost or benefit finding |
 | Provenance-health retirement | **Provisional sketch** | External warrant-revision sweep | Demonstrates dependency flow, not correctness |
 | Semantic failure geometry | **Unlicensed anatomy** | Architecture only | Would introduce another classifier requiring its own license |
@@ -97,10 +97,11 @@ world-checked failure
   -> no tax on non-matching tasks
 ```
 
-Before build as an experiment it still requires the admission gate in
-[NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md#the-admission-gate-before-build): typed
-carrier, independently licensed derivation, probationary instance,
-control-plane meter, and dual metabolic/provenance sensors.
+The sealed [Part I pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md) freezes
+the candidate admission and refusal path. It does not license a mechanism or
+held-out build. The architecture's admission gate still applies: typed carrier,
+independently licensed derivation, probationary instance, control-plane meter,
+and dual metabolic/provenance sensors.
 
 ## Update contract
 

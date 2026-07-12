@@ -464,6 +464,10 @@ must eventually name the situation in which the simpler body should win.
 The first living slice should not be a general memory graph or a semantic
 failure interpreter. It should test one narrower conjecture:
 
+The candidate's implementation-facing protocol is
+[SPEC_EPISTEMIC_FRAME_CHECK_V0.md](SPEC_EPISTEMIC_FRAME_CHECK_V0.md). Part I is
+sealed, but it remains a pre-engine protocol—not a mechanism license or finding.
+
 > A world-checked failure in one domain can produce a bounded disposition that
 > changes which external check the model-body performs on a structurally similar
 > task in another domain, while structurally irrelevant tasks pay no tax.

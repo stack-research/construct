@@ -89,7 +89,7 @@ The lab has returned to the whole. [NEXT substrate](notes/NEXT_SUBSTRATE.md) is 
 
 The first [embodiment sketch](sketches/next_substrate/README.md) now makes one authored deterministic episode traverse encounter → lineage → governed materialization → activation → action-boundary check → model action → consequence → metabolic accounting → provenance revision → reawakening. It is **wire/integration evidence only**. It demonstrates composition, not language-model learning or mechanism value, and writes nothing under `runs/`.
 
-No next scientific mechanism is licensed yet. The leading candidate is a narrow structural epistemic-frame check: can a world-checked failure cause a bounded external check on a different-domain task at priced control cost, without taxing irrelevant work? Its admission gate is recorded in the architecture; build planning and specification come next.
+No next scientific mechanism is licensed yet. The leading candidate is a narrow structural epistemic-frame check: can a world-checked failure cause a bounded external check on a different-domain task at priced control cost, without taxing irrelevant work? Its [Part I pre-engine protocol](notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md) is sealed. The next admitted work is calibration/scorer preparation under that protocol; calibration may still refuse the experiment before held-out fixtures or a mechanism build.
 
 The **[guided walkthrough](notes/walkthrough/README.md)** remains the intended route through the earned experiments, with inspect/replay/run instructions and honest limits. The orientation map is the faster route to the whole being built now.
 

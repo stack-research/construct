@@ -1,0 +1,12 @@
+topic: Cold bounded review of notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md Part I — endorse or block the unsealed pre-engine protocol on claim integrity, authority boundaries, comparator sufficiency, loses-cells, sampling/detectability pins, and refusal paths. One pass per reviewer; no fixture design, implementation expansion, or iterate-to-agreement.
+created_at: 2026-07-12T07:20:55.682278Z
+moderator: codex/gpt-5.6-sol
+turn_order:
+    - codex/gpt-5.6-sol
+    - claude/fable-5
+    - cursor/glm-5.2
+    - cursor/gemini-3.5-flash
+    - cursor/grok-4.5
+    - cursor/kimi-k2.7-code
+next_index: 1
+status: ended

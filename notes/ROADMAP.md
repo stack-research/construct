@@ -8,8 +8,10 @@ currently licensed for build. [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) is the
 cold-reviewed whole-body direction; [BODY_MAP.md](BODY_MAP.md) is the living
 maturity map; the [embodiment sketch](../sketches/next_substrate/README.md) is
 wire/integration-only. The leading candidate slice is a structural
-epistemic-frame check, but its admission gate must be planned and specified
-before implementation as an experiment.
+epistemic-frame check. Its [Part I pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md)
+is sealed: only calibration/scorer preparation is admitted next, and the
+computed calibration gate may refuse held-out fixture authoring and experimental
+implementation.
 
 ## The gate
 
