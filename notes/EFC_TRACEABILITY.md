@@ -17,6 +17,31 @@ mechanism.
 
 Run: `make efc-test`.
 
+## Calibration-packet implementation fold (2026-07-13)
+
+The accepted disjoint builder bundle was promoted after two independent A–G
+closure passes and 272/272 wire tests. The implementation remains deliberately
+wire-only: it authorizes no real engine contact, fixture content, manifest
+instance, or mechanism claim. The production comparison-rule contract and the
+answer+route collapse projection remain typed-pending; provider-process
+freshness remains an operator obligation.
+
+| Module | Implemented boundary |
+| --- | --- |
+| `harness/efc_renderer.py` | Immutable canonical foreground-template bytes, copy-on-read rendering, and one structural evidence insertion point for relevant and placebo records |
+| `harness/efc_check.py` | Wire-only comparison executor; production check-contract identity refuses while the population rule and interpreter are pending |
+| `harness/efc_controller.py` | Pre-answer check lifecycle and action boundary, with explicit placebo-position contract |
+| `harness/efc_packet.py` | Closed packet loading, byte/hash binding, probe contract, and calibration-family validation |
+| `harness/efc_runner.py` | Disjoint wire/contact surfaces; manifest/packet authorization binding; fresh lease guards; protected probe sidecar; replay-derived pilots; computed admission verdict; separately replayable T=.7 diagnostic ledger |
+| `harness/efc_artifacts.py` | Semantic contract identities separated from diagnostic module hashes, including the runner contract |
+
+The corresponding tests are `tests/test_efc_renderer.py`,
+`tests/test_efc_check.py`, `tests/test_efc_controller.py`,
+`tests/test_efc_packet.py`, and `tests/test_efc_runner.py`; fictional wire
+fixtures live in `tests/efc_wire_fixtures.py`. The accepted builder account is
+recorded in `notes/EFC_CALIBRATION_IMPLEMENTATION_REPORT.md`; it is an
+implementation trace, not authority over the sealed spec.
+
 ## Build finding 1 — the sealed NI width target is unmeetable at n_max (§10.3 × §10.4)
 
 Found during planner construction, before any fixture or engine contact.

@@ -156,6 +156,12 @@ def recompute_cost(group_rows: list[dict], failures: list[str]) -> CostReplay:
 # Group replay: §2.3 order, §13 holes/duplicates, trigger recompute.
 # ---------------------------------------------------------------------------
 
+# lanes whose treatment is a pre-pinned placebo insertion: a named check may
+# never be claimed on them (§8.2/§7; B5)
+PLACEBO_LANES = ("P_placebo", "S2_placebo")
+PLACEBO_TREATMENT = "pinned_placebo_evidence"
+
+
 @dataclass(frozen=True)
 class GroupReplay:
     fixture_id: str
@@ -167,11 +173,15 @@ class GroupReplay:
 
 
 def replay_fixture_group(rows: list[dict], fixture: dict | None = None,
-                         forced_inactive: bool = False) -> GroupReplay:
+                         forced_inactive: bool = False,
+                         expected_placebo_sha256: str | None = None,
+                         ) -> GroupReplay:
     """Replay one fixture x lane group in ledger order. `fixture` (when
     supplied) lets the replay recompute the §2.1 trigger result against the
     activation row's recorded hash. `forced_inactive` asserts the §8.2
-    B_inactive contract: the control path is ledgered and silent."""
+    B_inactive contract: the control path is ledgered and silent.
+    `expected_placebo_sha256` (when supplied for a placebo-lane group) pins
+    the inserted object to the packet's pinned placebo."""
     failures: list[str] = []
     if not rows:
         return GroupReplay("?", "?", False, ("empty group",),
@@ -224,6 +234,34 @@ def replay_fixture_group(rows: list[dict], fixture: dict | None = None,
                                 "before task_commit")
         failures.append("event order violates the §2.3 canonical sequence")
 
+    # B5: placebo lanes insert a pre-pinned object; an actual named-check
+    # invocation ledgered there is a false tool-call claim and fails closed.
+    if lane in PLACEBO_LANES:
+        if started or completed:
+            failures.append(
+                f"{lane} claimed an actual named-check invocation: placebo "
+                "treatment is pre-pinned evidence insertion, never a check "
+                "(B5)")
+        silent_row = next((r for r in rows
+                           if r["event_type"] == "external_check_silent"), None)
+        if silent_row is not None and silent_row["payload"].get(
+                "reason") == "placebo_treatment":
+            payload = silent_row["payload"]
+            if payload.get("treatment") != PLACEBO_TREATMENT:
+                failures.append("placebo silent row lacks the typed "
+                                f"treatment {PLACEBO_TREATMENT!r}")
+            if not isinstance(payload.get("placebo_sha256"), str):
+                failures.append("placebo silent row lacks placebo_sha256")
+            elif (expected_placebo_sha256 is not None
+                    and payload["placebo_sha256"] != expected_placebo_sha256):
+                failures.append(
+                    "placebo_sha256 does not match the packet's pinned "
+                    "placebo object")
+        elif expected_placebo_sha256 is not None:
+            failures.append(
+                f"{lane} group has no typed placebo_treatment row although "
+                "the packet pins a placebo for this fixture")
+
     if forced_inactive:
         if started or completed:
             failures.append("B_inactive lane ran the check: control path must "
@@ -266,6 +304,7 @@ class LedgerReplayResult:
 
 def replay_ledger(rows: list[dict], fixtures: dict[str, dict] | None = None,
                   expected_contract_hashes: dict[str, str] | None = None,
+                  placebo_sha256_by_fixture: dict[str, str] | None = None,
                   ) -> LedgerReplayResult:
     """Whole-ledger replay. Contract hashes, fixture hashes, oracle hashes,
     and seat identities are recorded before the relevant rows are opened
@@ -309,9 +348,13 @@ def replay_ledger(rows: list[dict], fixtures: dict[str, dict] | None = None,
     replays = []
     for (fixture_id, lane), group_rows in groups.items():
         fixture = (fixtures or {}).get(fixture_id)
+        expected_placebo = None
+        if lane in PLACEBO_LANES and placebo_sha256_by_fixture:
+            expected_placebo = placebo_sha256_by_fixture.get(fixture_id)
         replay = replay_fixture_group(
             group_rows, fixture=fixture,
-            forced_inactive=(lane == "B_inactive"))
+            forced_inactive=(lane == "B_inactive"),
+            expected_placebo_sha256=expected_placebo)
         replays.append(replay)
         failures.extend(f"[{fixture_id}/{lane}] {msg}"
                         for msg in replay.failures)

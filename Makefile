@@ -3,7 +3,8 @@
 # SPEC_EPISTEMIC_FRAME_CHECK v0 Part I §14 wire tests (no model, never evidence):
 # shared interval functions (scipy-goldened), the §10.4 N-rule planner + §6
 # computed calibration gate, §2.1 trigger closure, §3 carrier/mint authority,
-# §13 ledger replay + §10.1 cost ceilings, §5.2 manifest machine check.
+# §13 ledger replay + §10.1 cost ceilings, §5.2 manifest machine check,
+# and the reviewed wire-only renderer/check/controller/packet/runner boundary.
 # Traceability: notes/EFC_TRACEABILITY.md (includes the NI-width/n_max finding).
 efc-test:
 	uv run --no-project python -m tests.test_efc_intervals
@@ -13,6 +14,11 @@ efc-test:
 	uv run --no-project python -m tests.test_efc_carrier
 	uv run --no-project python -m tests.test_efc_ledger
 	uv run --no-project python -m tests.test_efc_manifest
+	uv run --no-project python -m tests.test_efc_renderer
+	uv run --no-project python -m tests.test_efc_check
+	uv run --no-project python -m tests.test_efc_controller
+	uv run --no-project python -m tests.test_efc_packet
+	uv run --no-project python -m tests.test_efc_runner
 
 # NEXT substrate whole-body walking skeleton. Authored deterministic behavior;
 # WIRE / INTEGRATION ONLY, never memory evidence and never written under runs/.
