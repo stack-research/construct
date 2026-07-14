@@ -1,6 +1,6 @@
 # Chapter 14 — Greenreach: the day the instrument caught everything, including us
 
-Previous: [The pause/resume frontier](13_PAUSE_RESUME_FRONTIER.md) · [Walkthrough index](README.md)
+Previous: [The pause/resume frontier](13_PAUSE_RESUME_FRONTIER.md) · [Walkthrough index](README.md) · Next: [The fourth family](15_FOURTH_FAMILY.md)
 
 Chapter 13 ended on a fork: if Greenreach opened the pay-window, a debt came
 due; if it closed, the question would shift from fixtures to engines. This
@@ -133,3 +133,10 @@ gate proves it is there — from an engine that habitually answers off one
 surface. Any fourth family starts from that; and the §23 causal-reduction
 law (precommit the reduction shape before Regime S) now governs any family
 that can reach a win.
+
+*Dated note (2026-07-14): the fourth family ran on 2026-07-09. Its first
+act was to refuse this chapter's "third consecutive negative" framing as a
+compression of unlike outcomes — the corrected accounting is in
+[PRF_FINDINGS.md](../PRF_FINDINGS.md) and
+[chapter 15](15_FOURTH_FAMILY.md). This chapter stands as written; the
+lineage does not erase.*
