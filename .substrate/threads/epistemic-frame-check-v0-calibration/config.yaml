@@ -1,0 +1,11 @@
+topic: Role-separated design and conformance review of the disjoint EFC v0 calibration packet and manifest instance; no engine contact or held-out fixture authoring until the sealed gates authorize it
+created_at: 2026-07-12T16:37:21.493288Z
+moderator: codex/gpt-5.6-sol
+turn_order:
+    - codex/gpt-5.6-sol
+    - dan
+    - claude/fable-5
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended
