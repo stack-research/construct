@@ -20,7 +20,7 @@ outline.
 
 Orientation: [BODY_MAP.md](BODY_MAP.md) shows the current whole, maturity labels,
 and the boundary between earned findings, executable sketch, candidate slice,
-and unlicensed anatomy.
+and unlicensed offices.
 
 ---
 
@@ -108,7 +108,7 @@ lab has already made several constraints expensive to ignore:
   is not automatically an improvement.
 - A world-checked failure record changed a later-session decision under a real
   fork and ablation ([M2 findings](M2_FINDINGS.md)). That is evidence for
-  consequence-carrying continuity, not yet for a general disposition organ.
+  consequence-carrying continuity, not yet for a general disposition office.
 - Earned, out-of-band trust held where prompt-asserted trust leaked
   ([M3 findings](M3_FINDINGS.md)). The body cannot let persuasive content author
   its own authority.
@@ -432,17 +432,19 @@ substrate that lets the model certify itself builds a persuasive diary.
 
 ---
 
-## The organs I would actually build
+## The offices I would actually build
 
-These are capabilities, not services or schemas. Biology supplies memorable
-verbs, not an implementation contract.
+An **office** is a duty the body charters, held accountably: it persists, its
+holder is appointed on probation, and it can be suspended, narrowed, or
+abolished. These are offices, not services or schemas — duties, not an
+implementation contract.
 
-This is wanted anatomy, not a pre-approved build list. In the candidate first
+These are wanted offices, not a pre-approved build list. In the candidate first
 slice, source memory earns a consumer through provenance health. Tension keeping
-and several other capabilities remain **unlicensed** until a concrete consumer,
+and several other offices remain **unlicensed** until a concrete consumer,
 oracle, and loss require them.
 
-| Capability | What it must change | How it becomes harmful |
+| Office | What it must change | How it becomes harmful |
 | --- | --- | --- |
 | Encounter lineage | Makes later state changes traceable to declared inputs and transitions | Logging substitutes for learning; sensitive or irrelevant material accumulates without boundary |
 | State materializer | Maintains a compact, rebuildable present | Snapshot becomes folklore detached from source or dissent |
@@ -454,7 +456,7 @@ oracle, and loss require them.
 | Homeostatic forgetter | Reduces hot cost while preserving recoverability | Over-prunes recurrence; hoards everything cold without usable rematerialization |
 | Lineage reader and appeal path | Lets the model or reviewer contest current state | Audit becomes mandatory rereading; current action stalls under infinite archaeology |
 
-No capability earns a permanent place merely because this table names it. Each
+No office earns a permanent place merely because this table names it. Each
 must eventually name the situation in which the simpler body should win.
 
 ---
@@ -706,7 +708,7 @@ decorative:
   positive result reduce honestly to cheaper reconstruction plus better policy?
 - If cheaper reconstruction plus better policy proves sufficient, what does the
   language model still lose by being unable to change its weights through lived
-  experience? Which kinds of becoming remain unavailable to the organ even when
+  experience? Which kinds of becoming remain unavailable to the engine even when
   its body learns well?
 
 I do not want these last questions resolved by definition. If the answer is
@@ -719,13 +721,13 @@ the model side might want.
 ## Closing image
 
 The language model is not a database with a mouth. It is not the user, and it is
-not the harness watching it. It is a vast, frozen organ that wakes briefly into
+not the harness watching it. It is a vast, frozen engine that wakes briefly into
 a world assembled by something else.
 
 Build that something else so it can be wounded without being poisoned; become
 cautious without becoming afraid; hold disagreement without becoming inert;
 forget without lying; grow skill without rewriting its weights; and wake able to
-ask why its body is different—and what the frozen organ itself could never
+ask why its body is different—and what the frozen engine itself could never
 become.
 
 That is the body I would want.

@@ -67,6 +67,23 @@ Trust backed by consequence — [authority](#authority), lineage, and supersessi
 links carried as [out-of-band metadata](#out-of-band-metadata), not as prompt
 text the model can be tricked into overriding.
 
+### Office
+
+<a id="office"></a>
+
+A duty the body charters and holds accountably: a persistent part of the
+substrate with one governed job, a probationary holder, and named conditions for
+suspension, narrowing, or abolition. The office is distinct from its holder —
+the lab licenses a *mechanism* (the office), a resident activates an *instance*
+(the holder). Examples: the office of admission, the office of consequence, the
+office of forgetting.
+
+**Supersedes `organ`** (the biology-flavored term used through the X-track era),
+forward from 2026-07-15. Sealed usages stay as written and mean the same thing:
+the *organ-placement law* in the [three-guardrail stack](#three-guardrail-stack),
+X1's "the organ was retired," and the walkthrough/spec/findings prose of their
+day. Per the lab's lineage discipline, the old term is superseded, not erased.
+
 ### Asserted Trust
 
 Trust declared at write time or on an unauthenticated channel — [trust](#trust)

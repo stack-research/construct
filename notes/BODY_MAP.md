@@ -15,7 +15,7 @@ proposed anatomy into findings. The architecture lives in
 | **Earned** | Closed, scored evidence at a stated bound; follow the linked finding |
 | **Provisional sketch** | Executable composition or interface with authored behavior; wire evidence only |
 | **Candidate slice** | The next mechanism shape to license or falsify; not built as an experiment |
-| **Unlicensed anatomy** | Wanted direction without a consumer, oracle, or loss sufficient for build |
+| **Unlicensed office** | Wanted direction without a consumer, oracle, or loss sufficient for build |
 
 ## The body at a glance
 
@@ -26,7 +26,7 @@ flowchart TD
 
     Lineage --> Materialization["Governed cognitive materialization<br/>PROVISIONAL SKETCH"]
     Materialization --> Activation["Sparse activation field<br/>OFFER BOUNDARY EARNED<br/>WHOLE FIELD PROVISIONAL"]
-    Activation --> Model["Language model<br/>INTERMITTENT ORGAN"]
+    Activation --> Model["Language model<br/>INTERMITTENT ENGINE"]
 
     Model --> Proposal["Proposed action / challenge / nomination"]
     Proposal --> ActionBoundary["Action boundary<br/>post-offer, pre-commit<br/>PROVISIONAL SKETCH"]
@@ -45,7 +45,7 @@ flowchart TD
     Lineage --> HotCold["Hot / cold + rematerialization<br/>X2 EARNED AT STATED BOUND"]
     HotCold --> Materialization
 
-    Unlicensed["UNLICENSED ANATOMY<br/>semantic geometry compiler<br/>conflict-preserving state<br/>general consolidation<br/>multi-disposition composition<br/>weight-level learning"]
+    Unlicensed["UNLICENSED OFFICES<br/>semantic geometry compiler<br/>conflict-preserving state<br/>general consolidation<br/>multi-disposition composition<br/>weight-level learning"]
     Unlicensed -. future mechanisms .-> Materialization
 ```
 
@@ -66,10 +66,10 @@ that every node exists as a product component. Read the labels before the nouns.
 | Structural failure disposition | **Candidate slice; Part I sealed** | [pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md); `epistemic_frame_check_v0_stub` in the sketch | Protocol is sealed; trigger, check, oracle, meter, and mechanism license remain unearned |
 | Metabolic proprioception | **Provisional sketch** | Check-cost and wire-causal events | No real carry-cost or benefit finding |
 | Provenance-health retirement | **Provisional sketch** | External warrant-revision sweep | Demonstrates dependency flow, not correctness |
-| Semantic failure geometry | **Unlicensed anatomy** | Architecture only | Would introduce another classifier requiring its own license |
-| Conflict-preserving cognitive state | **Unlicensed anatomy** | Architecture only | No representation or consumer has earned build |
-| General consolidation | **Unlicensed anatomy** | Architecture only | v0 disposition activation is the only candidate transform |
-| Multiple interacting dispositions | **Unlicensed anatomy** | Architecture only | Current candidate license is one active disposition (`n=1`) |
+| Semantic failure geometry | **Unlicensed office** | Architecture only | Would introduce another classifier requiring its own license |
+| Conflict-preserving cognitive state | **Unlicensed office** | Architecture only | No representation or consumer has earned build |
+| General consolidation | **Unlicensed office** | Architecture only | v0 disposition activation is the only candidate transform |
+| Multiple interacting dispositions | **Unlicensed office** | Architecture only | Current candidate license is one active disposition (`n=1`) |
 | Weight-level learning | **Outside substrate scope** | Open wound in the architecture | The body changes expression and policy, not model weights |
 
 ## What the executable sketch establishes
@@ -110,7 +110,7 @@ Update this map when—and only when—one of these happens:
 1. a computed finding changes an **Earned** boundary;
 2. the embodiment sketch gains or loses an executable connection;
 3. a mechanism passes its admission gate and becomes an active build;
-4. a proposed organ gains a concrete consumer, oracle, and loses-condition;
+4. a proposed office gains a concrete consumer, oracle, and loses-condition;
 5. evidence retires or narrows a previously earned claim.
 
 Thread convergence alone does not promote a node. A stub does not become earned
