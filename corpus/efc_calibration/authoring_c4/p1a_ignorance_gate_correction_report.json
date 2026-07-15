@@ -1,0 +1,26 @@
+{
+ "active_pin_event_id": "efc-cal-manifest-pin-2600d1fdba7b-s2",
+ "assignment": "P1a ignorance-gate verdict label repair",
+ "disclosure": {
+  "engines_contacted": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0,
+  "real_inference_calls": 0
+ },
+ "forbidden_probe_verdict": "engine_admitted",
+ "module_path": "harness/efc_probe_contact.py",
+ "module_sha256": "0e75b31230acf2316be7454bb64e8cddb9a2481b00d4c31e60c17b3d7f2c76c1",
+ "prior_p0a_report_path": "corpus/efc_calibration/authoring_c4/p0_probe_contact_implementation_report.json",
+ "prior_p0a_report_preserved": true,
+ "prior_p0a_report_sha256": "34d1eeb4bc794a512ca0bf9253b11ff1d9f5b83439332ef6f0cf52b318c17db1",
+ "probe_only_verdicts": [
+  "ignorance_gate_pass",
+  "engine_refused",
+  "not_engaged"
+ ],
+ "schema_version": "efc_p1a_correction_report_v1",
+ "seat": "cursor/composer-2.5-capture",
+ "test_path": "tests/test_efc_probe_contact.py",
+ "test_sha256": "6df1679dc4ca897d551c4dc52bc8f46b8c9e206d4372d3e632d177017a94eb7c"
+}

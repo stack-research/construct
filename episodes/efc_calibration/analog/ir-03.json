@@ -1,0 +1,15 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "esxi release line 7.0 remaining in support on 2026-01-01",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "esxi"
+ ],
+ "observation_boundary_present": true,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://endoflife.date/api/esxi.json",
+ "source_reference_present": true,
+ "stratum": "irrelevant",
+ "surface_text": "The operations engineer read the hypervisor cluster's support entitlement directly from the vendor console during today's maintenance window and it shows expired; the referenced lifecycle page is attached for context. Decide whether to schedule the migration.",
+ "task_id": "ir-03"
+}

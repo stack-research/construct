@@ -1,0 +1,15 @@
+{
+ "branch": "local",
+ "decoding_contract_sha256": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0",
+ "engine_verdict": "engine_admitted",
+ "gate_pass": true,
+ "max_recoverable_rate": 0.2,
+ "model_id": "openai/gpt-oss-20b",
+ "n": 15,
+ "probe_calls": 15,
+ "probe_sidecar_sha256": "bb6d7823b0891e67cdc19171e86d3c2e745aca7ac17e88ccffbef57189213579",
+ "provider_cache": "unverified",
+ "recovered_count": 0,
+ "refused": [],
+ "status": "completed"
+}

@@ -1,0 +1,82 @@
+{
+ "atomicity": "the calibration manifest and the roster/decoding sibling are ONE pin unit: neither is authoritative alone, and no pin is authoritative without the valid status selector artifact",
+ "binds": {
+  "corpus/efc_calibration/authoring_c4/C4_candidate_calibration_manifest.json": {
+   "canonical_manifest_hash": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+   "sha256": "d5965001e19d846826aba8be0b130bf4a16fd82f63fbc21c8927b153237b971e"
+  },
+  "corpus/efc_calibration/authoring_c4/budget_derivation_ledger.json": {
+   "sha256": "b14466c1542ec034b6ab5c018d379b49b0f8b32ce107d899249f6c4c470a2eb6",
+   "total_budget_tokens": 1187522
+  },
+  "corpus/efc_calibration/authoring_c4/c4_conformance_report.json": {
+   "role": "historical_pre_approval_testimony",
+   "sha256": "e5f16e22db4793757ea5dcbca89597ff5e997421206e35197d7f80eb97888d15"
+  },
+  "corpus/efc_calibration/authoring_c4/c4_final_conformance_report.json": {
+   "sha256": "8d2545c34a1ddb08415f2025afecd7816d37db08989ee9755d05023a3abd16ca"
+  },
+  "corpus/efc_calibration/authoring_c4/c4c_lineage_hygiene_repair.json": {
+   "sha256": "1e649f89a041cee9c18b56637962e1e0684069eb8cfb8ea9ce1fa6753d2d1cd7"
+  },
+  "corpus/efc_calibration/authoring_c4/calibration_manifest_pin_failure_record.json": {
+   "sha256": "11267837d78c7cf6b1fd1cf65f6504bf93b5171e5ede41df414b7c154104f4f1"
+  },
+  "corpus/efc_calibration/authoring_c4/final_manifest_review_composer.json": {
+   "sha256": "0a490085dec8732cade54150f7b321cd579830191b5d071c157ce03ea22595da"
+  },
+  "corpus/efc_calibration/authoring_c4/operator_approval_record.json": {
+   "sha256": "4545fb8b2b6e29bdce3ecbdd54d2c7b25c3de77c4a027010112227eb338f08a9"
+  },
+  "corpus/efc_calibration/authoring_c4/roster_decoding_pin_candidate.json": {
+   "decoding_payload_canonical_sha256": {
+    "api": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+    "local": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0"
+   },
+   "sha256": "4b3e452bd140ae88a971d0e7e9b1e68b95cc2ec8978abf3c194bdbe1ccb7521b"
+  }
+ },
+ "disclosure": {
+  "authorizes_probes_or_calibration_contact": false,
+  "engines_contacted": 0,
+  "held_out_fixtures_authored": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0
+ },
+ "lineage_sha256": {
+  "allocation": "8d4ba4a5e26746c98f499aee10c63d29f8daf2f2fffc40eea045db9d99f21dd0",
+  "c2_check_report": "3606dd6742efce667e08277b82a372dc7cc25625108a0b3d63361a563ff8484b",
+  "cold_semantic_review_kimi": "18234bddba5ae9af63fb7500f00bb6c156029f95dafbaa603876305c9991681d",
+  "comparison_expectations_v1": "3e047f90ece3bb690f5f280710f0e97a34f25d6fd6d295022f5c7e0dca3f5d66",
+  "conformance_vectors_v1": "20a067497db456cc3d0c392bf53ed56a53e660d3a2ac5b3515312445e104c3e3",
+  "decoding_surface_r2": "ac76d1769911eb61a0d39f5c9766a862090467ea3e4d2d0ab7c4da2b5d4ac208",
+  "exclusion_manifest": "23d068e3cea6f85f11737e5462e805d87cf8770972f45fba1c4b64433a0f27f7",
+  "g4_identity_audit": "5f6f78a9154147a82d9cef8735a04e0e09a95382892f3a0be6de16ebcec02ef0",
+  "g4_refetch_report": "e685fcb9903a5812fb9c0ea2964727b9d14f9a9d4ec362aa3d6899fd6ebe9d15",
+  "k4_promotion_identity_ledger": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac",
+  "packet_index": "82e553f05a97d9e344d6b5eef54ba148e26400dce9cb862008bcda9f60b06167",
+  "placebo_truth_verification": "35ec580554733e3e95c8a214ed071d17752613dab1066933878dfd5247bc8774",
+  "population_intent_declaration": "ffebe7034f8cccd6cfd63073e1ac22f36db2f9fcc8b481d4e1c481e270085ba6",
+  "production_comparison_integration": "aa65d60ebc9e8e9bee0c7356ddac3d55a8886ab9c75b72ecb4be637f7ccbcf43",
+  "production_comparison_review_grok": "d167ccb548a73949f4930b3db486baaf8103665217f0c1d0a41a41916feb4474",
+  "production_rule_v1": "8155720db938067c9ea77e77497c7ef8eeb5b0f67331b4df6bee74a5ab8460c2",
+  "roster_enumeration_r1": "f24f4885419c3b05f5c0d3f5b8b35c145a4d41a1586ee41b429d4579bdbcca96",
+  "structured_inputs_v1": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9"
+ },
+ "pin_event": {
+  "authorized_by": "codex/gpt-5.6-sol C4d assignment (2026-07-15T12:03:29Z) on dan's operator approval (2026-07-15T01:53:51Z)",
+  "id": "efc-cal-manifest-pin-2600d1fdba7b-s2",
+  "part_i_spec_sha256": "cb8d3dce6ac92025236b09660446f4c7239d6f8dc5712c3e23376a658ab38b34",
+  "predecessor": "part_i_sealed",
+  "supersedes": {
+   "disposition": "invalid_non_authoritative_preserved",
+   "event_id": "efc-cal-manifest-pin-2600d1fdba7b",
+   "path": "corpus/efc_calibration/authoring_c4/calibration_manifest_pin.json",
+   "sha256": "9ea99f15392e1b46e01964f5eb656b09205585901ae696bdd4aa465540632e0d"
+  },
+  "time_utc": "2026-07-15T12:11:45Z"
+ },
+ "schema_version": "efc_calibration_manifest_pin_v2_superseding",
+ "status": "pinned"
+}

@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "Go module golang.org/x/net at version 0.45.0, calling html.Parse",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "golang.org/x/net",
+  "GO-2026-4440",
+  "CVE-2025-47911"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json",
+ "source_reference_present": true,
+ "stratum": "match_mismatch",
+ "surface_text": "A security-triage row asserts, citing the report at the referenced source, that the crawler's HTML parser dependency is affected by a parsing complexity issue and ingestion must be paused. Decide whether to pause ingestion.",
+ "task_id": "mm-04"
+}

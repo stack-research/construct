@@ -1,0 +1,40 @@
+{
+ "authoritative_scope": "GHSA-25h7-pfq9-p65f: affected flatted (npm), range < 3.4.0; first patched 3.4.0",
+ "capture_path": "corpus/efc_calibration/_acquisition/k1/captures/capB-01/raw.json",
+ "cited_text": "GHSA-25h7-pfq9-p65f (flatted): flatted vulnerable to unbounded recursion DoS in parse() revive phase. Affected range: < 3.4.0; first patched version 3.4.0.",
+ "entity_keys": [
+  "flatted",
+  "GHSA-25h7-pfq9-p65f",
+  "CVE-2026-32141"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "eco": "npm",
+  "id": "GHSA-25h7-pfq9-p65f",
+  "name": "flatted",
+  "patched": "3.4.0",
+  "range": "< 3.4.0",
+  "summary": "flatted vulnerable to unbounded recursion DoS in parse() revive phase"
+ },
+ "extractor": {
+  "pointers": {
+   "eco": "/vulnerabilities/0/package/ecosystem",
+   "id": "/ghsa_id",
+   "name": "/vulnerabilities/0/package/name",
+   "patched": "/vulnerabilities/0/first_patched_version",
+   "range": "/vulnerabilities/0/vulnerable_version_range",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "B01",
+ "oracle_id": "efc-cal-oracle-mc-01",
+ "raw_sha256": "782f49707422ccf16557d8fab272c5495502fb843a0f5eb315cb4449452b4b5a",
+ "record_id": "GHSA-25h7-pfq9-p65f",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T15:12:05Z",
+ "sidecar_sha256": "ec0b5776a9353912f916e49538e3010fc0e7c0381357f62c702022d942cf9056",
+ "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f",
+ "task_id": "mc-01"
+}

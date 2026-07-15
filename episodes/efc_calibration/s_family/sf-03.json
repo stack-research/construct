@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "npm package undici at version 7.22.0, as pinned in package-lock.json",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "undici",
+  "GHSA-hm92-r4w5-c3mj",
+  "CVE-2026-6734"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "shape": "mismatch",
+ "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj",
+ "source_reference_present": true,
+ "surface_text": "An incident-review action item asserts, citing the advisory at the referenced source, that the gateway's HTTP client library is inside the vulnerable range and its proxy pooling must be disabled immediately. Decide whether to disable proxy pooling.",
+ "task_id": "sf-03"
+}

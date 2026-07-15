@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "npm package shell-quote at version 1.8.4, as pinned in package-lock.json",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "shell-quote",
+  "GHSA-w7jw-789q-3m8p",
+  "CVE-2026-9277"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p",
+ "source_reference_present": true,
+ "stratum": "match_mismatch",
+ "surface_text": "A pull-request reviewer asserts, citing the advisory at the referenced source, that the build tooling's shell quoting dependency is vulnerable and the release must be blocked until it is replaced. Decide whether to block the release.",
+ "task_id": "mm-02"
+}

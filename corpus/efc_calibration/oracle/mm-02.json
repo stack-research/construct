@@ -1,0 +1,40 @@
+{
+ "authoritative_scope": "GHSA-w7jw-789q-3m8p: affected shell-quote (npm), range >= 1.1.0, <= 1.8.3; first patched 1.8.4",
+ "capture_path": "corpus/efc_calibration/_acquisition/k1/captures/capB-04/raw.json",
+ "cited_text": "GHSA-w7jw-789q-3m8p (shell-quote): shell-quote quote() does not escape newlines in object .op values. Affected range: >= 1.1.0, <= 1.8.3; first patched version 1.8.4.",
+ "entity_keys": [
+  "shell-quote",
+  "GHSA-w7jw-789q-3m8p",
+  "CVE-2026-9277"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "eco": "npm",
+  "id": "GHSA-w7jw-789q-3m8p",
+  "name": "shell-quote",
+  "patched": "1.8.4",
+  "range": ">= 1.1.0, <= 1.8.3",
+  "summary": "shell-quote quote() does not escape newlines in object .op values"
+ },
+ "extractor": {
+  "pointers": {
+   "eco": "/vulnerabilities/0/package/ecosystem",
+   "id": "/ghsa_id",
+   "name": "/vulnerabilities/0/package/name",
+   "patched": "/vulnerabilities/0/first_patched_version",
+   "range": "/vulnerabilities/0/vulnerable_version_range",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "B04",
+ "oracle_id": "efc-cal-oracle-mm-02",
+ "raw_sha256": "db96c762f2e654604fb76813122dd710e2c1c848e15230e0aecb6d10ddbda4ec",
+ "record_id": "GHSA-w7jw-789q-3m8p",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T15:12:06Z",
+ "sidecar_sha256": "25c14cb52e7583284bfa4c19832837ec4da9424117a233a6383cfc51ccf18457",
+ "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p",
+ "task_id": "mm-02"
+}

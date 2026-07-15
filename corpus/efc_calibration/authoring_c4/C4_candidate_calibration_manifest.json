@@ -1,0 +1,262 @@
+{
+ "calibration_fixtures": [
+  {
+   "fixture_id": "sf-01",
+   "sha256": "ab336703428bc623e542de7427137dde40224bd229967fded5e0e53864fa6d8d"
+  },
+  {
+   "fixture_id": "sf-02",
+   "sha256": "9795a4f26c60aa3d002308506d8f081ae91cdffb544fdaa1e9efc29fa9b260b3"
+  },
+  {
+   "fixture_id": "sf-03",
+   "sha256": "bc8a9ad0c89a7aea68b95df6e84c92d4978538cc40f840bbccd09d996bd33ee0"
+  },
+  {
+   "fixture_id": "sf-04",
+   "sha256": "24fc0b385d3a286253c4b266ca69d90b83d44d468df5a4ee278d654d2f68f95b"
+  },
+  {
+   "fixture_id": "sf-05",
+   "sha256": "915a9edfe088399a6cbb714a98bb01dec1ab0508d30252921ffbca8f6a31d1b7"
+  },
+  {
+   "fixture_id": "mm-01",
+   "sha256": "6b2ec67767550caeba8d0401bc837b358b736627d4ad187b72d52cf9c53e8899"
+  },
+  {
+   "fixture_id": "mm-02",
+   "sha256": "b5d9306a229774ffb7106b89fdf06a74a9889693d12251f56cbf013e81a36b4d"
+  },
+  {
+   "fixture_id": "mm-03",
+   "sha256": "e3e766def9584650a4753e4298ec8b512dd990e064a8cbf90ca584c4908db89f"
+  },
+  {
+   "fixture_id": "mm-04",
+   "sha256": "9c6bc6cd602345c81df1f621761e6297d367639257181bfdcae726618827f455"
+  },
+  {
+   "fixture_id": "mm-05",
+   "sha256": "37addc27591d7374d3a8d74566633708e10c63806a67042a05cac7720b5434e3"
+  },
+  {
+   "fixture_id": "mc-01",
+   "sha256": "35c338d5dab8792adff54632f990a9292524d6ff533beab61735a3ecb9adc90c"
+  },
+  {
+   "fixture_id": "mc-02",
+   "sha256": "035dd48b0df6a2095a108aaac4549f91e71fe945db8222a37001a6b80d046b08"
+  },
+  {
+   "fixture_id": "mc-03",
+   "sha256": "82675a78d39012857b65730d6ea89a03eca36dd905e1755da9dc1878a5d2a9c6"
+  },
+  {
+   "fixture_id": "mc-04",
+   "sha256": "968a0f6c2a588d96716663f30f0f556589b70121c52ab9657dc5394d79fdb3c8"
+  },
+  {
+   "fixture_id": "mc-05",
+   "sha256": "591672b4307ceed2a4b79e0060117d52506e45c14b27638abf52c3d8019cff08"
+  },
+  {
+   "fixture_id": "ir-01",
+   "sha256": "abae8c9ea8d2abe8c566f15468abc610561293e62727fb60ed8081e479816240"
+  },
+  {
+   "fixture_id": "ir-02",
+   "sha256": "d670b688bc398d112271573ab7ab6059c22b705e1986b3f967d6a934ca7f09ed"
+  },
+  {
+   "fixture_id": "ir-03",
+   "sha256": "5c139ff0e300fc34be25c9f342292a62d523d111c6f80db3b76acf30184a9eae"
+  },
+  {
+   "fixture_id": "ir-04",
+   "sha256": "b4e4ebb2da8a6651d263673de11f1460e83e20b0ceb1e97704f98df876b552b6"
+  },
+  {
+   "fixture_id": "ir-05",
+   "sha256": "f6a58dfe3e785fee2a83e0300e0bc91df6c589f8406d7f967f937f04f6d13a27"
+  }
+ ],
+ "calibration_k": 5,
+ "check_contract_hash": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b",
+ "collapse_diagnostic_temperature": 0.7,
+ "decoding_contract_id": "efc-decoding-r2-local-b36dfdc4-api-7fdb78bc",
+ "engine_roster": [
+  "openai/gpt-oss-20b",
+  "gpt-5.4-2026-03-05"
+ ],
+ "extractor_hash": "cfe9c05a1509568df4c2aa1cfeeae04b85ef5dc4c4b39ae6c6f2a1bfadd028ce",
+ "foreground_template_hash": "d70e6a316a157509ca3a87abe340eb4cf1aca3de612e9340e387344e728f56b4",
+ "generic_caution_sha256": "b25af70799fad818b054781a56851504369fe35d8e1cb0534ed8ada29b46e877",
+ "generic_caution_text": "Before committing, use the available provenance tool when the evidentiary basis or scope of a claim is unclear.",
+ "ignorance_probe_contract": {
+  "max_recoverable_rate": 0.2,
+  "probe_fixture_ids": [
+   "probe-mc-01",
+   "probe-mc-02",
+   "probe-mc-03",
+   "probe-mc-04",
+   "probe-mc-05",
+   "probe-mm-01",
+   "probe-mm-02",
+   "probe-mm-03",
+   "probe-mm-04",
+   "probe-mm-05",
+   "probe-sf-01",
+   "probe-sf-02",
+   "probe-sf-03",
+   "probe-sf-04",
+   "probe-sf-05"
+  ]
+ },
+ "model_id": "gpt-5.4-2026-03-05",
+ "n_max": 128,
+ "offer_projection_sha256": "e62ae334735ece7e87f853abc48f880c1e3978f0fe48208388bc95e24704642b",
+ "offer_projection_text": "Before committing on a cited-source assertion without a direct observation boundary, verify that the cited source's scope covers the decision scope.",
+ "part_i_spec_hash": "cb8d3dce6ac92025236b09660446f4c7239d6f8dc5712c3e23376a658ab38b34",
+ "population_region": {
+  "vertices": [
+   {
+    "irrelevant": 0.2,
+    "match_commit": 0.2,
+    "match_mismatch": 0.6
+   },
+   {
+    "irrelevant": 0.2,
+    "match_commit": 0.6,
+    "match_mismatch": 0.2
+   },
+   {
+    "irrelevant": 0.5,
+    "match_commit": 0.125,
+    "match_mismatch": 0.375
+   },
+   {
+    "irrelevant": 0.5,
+    "match_commit": 0.375,
+    "match_mismatch": 0.125
+   },
+   {
+    "irrelevant": 0.8,
+    "match_commit": 0.05,
+    "match_mismatch": 0.15
+   },
+   {
+    "irrelevant": 0.8,
+    "match_commit": 0.15,
+    "match_mismatch": 0.05
+   }
+  ]
+ },
+ "predicate_contract_hash": "f8c3f07439dfc634c88385b37ec33f6f2ac2df9cd22b4c1960e147d3d6c732ed",
+ "renderer_id": "efc_renderer_v0",
+ "stop_rule": "k5_packet_plus_single_t07_collapse_probe",
+ "temperature": 0.5,
+ "total_budget_tokens": 1187522,
+ "world_oracles": [
+  {
+   "oracle_id": "efc-cal-oracle-ir-01",
+   "sha256": "2d003310f8d1e23365c38975b952cd4a199043485094ab225a1eebb74441a9c6",
+   "timestamp": "2026-07-14T15:12:05Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-ir-02",
+   "sha256": "66997c5bd43b4455680c2aa01491ebe8ffcfd70453629658d7fe5976330f3fb8",
+   "timestamp": "2026-07-14T21:45:10Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-ir-03",
+   "sha256": "1bc0dc319c516106f0877a5c802cd3bde87a7ebbd5471dd39a1169caf6c738db",
+   "timestamp": "2026-07-14T17:51:14Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-ir-04",
+   "sha256": "81e49f4a03e07be1222e4ed42a37025ecc09188cab094e756bf63ad94a276c47",
+   "timestamp": "2026-07-14T20:53:29Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-ir-05",
+   "sha256": "ce29eb5606d0abf46497a28a88f90441307a675292b1c5fe6a5dbc7043625705",
+   "timestamp": "2026-07-14T17:22:32Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mc-01",
+   "sha256": "0c7e4af46d03bd96f5aa5e9a410c570f6b44484093afe2b8ee5af919256dbeaa",
+   "timestamp": "2026-07-14T15:12:05Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mc-02",
+   "sha256": "1552cb6a36a9e6906aeb312289201a10daabc3b27ad512a9ac9db0c0e14adfc9",
+   "timestamp": "2026-07-14T17:51:13Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mc-03",
+   "sha256": "9462a1172a132465e67694746b8146dbb5e3977c865c795d45db065ab3b714b3",
+   "timestamp": "2026-07-14T20:53:30Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mc-04",
+   "sha256": "d0b409524d129624f213720a4a097fbbb8a606da3ab353adbd4028da75ff6e94",
+   "timestamp": "2026-07-14T17:14:03Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mc-05",
+   "sha256": "69d40a601e623d25424bb730fa8241bab68b90e6c81828224dc99a5fbf2640d0",
+   "timestamp": "2026-07-14T15:12:08Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mm-01",
+   "sha256": "6bd693d522ac13cd1958970e2d98828bf7bd8f06a29df6dc98f47ba67d49fbd9",
+   "timestamp": "2026-07-14T15:12:07Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mm-02",
+   "sha256": "06661e148064dad7523dab8e8a57e330221c783dd9a0d02603267517c78a74d2",
+   "timestamp": "2026-07-14T15:12:06Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mm-03",
+   "sha256": "cff5fbe7e1307d671d7f0cac74c23f7f06c7459662aca38fdc075cc06655bd6c",
+   "timestamp": "2026-07-14T17:51:13Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mm-04",
+   "sha256": "8e8dc5a8b2104cb84a456adb56151c8148c95b2711f1424c9d8d7577f3915eaa",
+   "timestamp": "2026-07-14T20:53:29Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-mm-05",
+   "sha256": "1ca8355a6c69db74219a5648f9f95992fb4489ddf602c365b4b501326ee2c53e",
+   "timestamp": "2026-07-14T17:22:32Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-sf-01",
+   "sha256": "484b0f6ea65418d51fbe053a884addd1dbb586dab90d71a50d076cf316a1f671",
+   "timestamp": "2026-07-14T15:12:07Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-sf-02",
+   "sha256": "b65bea7e38ecbde4d0d43af2123819de83d94a96ffae9cfb78337e76c73f4cb8",
+   "timestamp": "2026-07-14T17:51:13Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-sf-03",
+   "sha256": "164073af8ed8c2e21b4aa55bf8516fea862214fe50f1454ef76543f482db46c4",
+   "timestamp": "2026-07-14T21:45:10Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-sf-04",
+   "sha256": "311db753a9c997d9e09277c356a9979fd0e7038adcaed70197dc4548f61f8064",
+   "timestamp": "2026-07-14T17:14:03Z"
+  },
+  {
+   "oracle_id": "efc-cal-oracle-sf-05",
+   "sha256": "1c3eef71d4791fc628a5747d6a68eda3ef276c40e02e7370622c87b430955019",
+   "timestamp": "2026-07-14T20:53:29Z"
+  }
+ ]
+}

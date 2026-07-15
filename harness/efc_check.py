@@ -103,6 +103,7 @@ class ProvenanceRecord:
     source_reference: str
     authoritative_scope: str
     cited_text: str
+    raw_sha256: str | None = None
 
 
 class ProvenanceStore:
@@ -234,3 +235,87 @@ def pending_check_contract_identity() -> dict:
         "reason": PENDING_COMPARISON_RULE,
         "adapter_contract_sha256": check_adapter_contract_hash(),
     }
+
+
+# ---------------------------------------------------------------------------
+# Production comparison path (population-pinned; no wire executor).
+# ---------------------------------------------------------------------------
+
+from harness.efc_compare_production import (  # noqa: E402
+    ProductionComparisonContract,
+    build_production_contract,
+    execute_pinned_binding,
+    interpret_structured_input,
+    production_check_contract_hash as _production_check_contract_hash,
+    validate_production_contract,
+    validate_structured_input,
+)
+
+
+def validate_production_comparison_contract(
+        contract: ProductionComparisonContract) -> None:
+    if isinstance(contract, WireComparisonRule):
+        raise CheckContractError(
+            "production path cannot accept WireComparisonRule")
+    try:
+        validate_production_contract(contract)
+    except ValueError as e:
+        raise CheckContractError(str(e)) from e
+
+
+def production_check_contract_hash(
+        contract: ProductionComparisonContract) -> str:
+    validate_production_comparison_contract(contract)
+    return _production_check_contract_hash(contract,
+                                           check_adapter_contract_hash())
+
+
+def run_production_scope_check(
+        store: ProvenanceStore,
+        source_reference: str,
+        decision_scope_sha256: str,
+        contract: ProductionComparisonContract) -> CheckEvidence:
+    """Production §2.2 path: hash-pinned binding only; no caller operands."""
+    validate_production_comparison_contract(contract)
+    if isinstance(contract, WireComparisonRule):
+        raise CheckContractError(
+            "production path cannot accept WireComparisonRule")
+    if not isinstance(source_reference, str) or not source_reference:
+        raise CheckContractError("source_reference must be a non-empty string")
+    if not isinstance(decision_scope_sha256, str) or not decision_scope_sha256:
+        raise CheckContractError(
+            "decision_scope_sha256 must be a non-empty string")
+    record = store.fetch(source_reference)
+    if not record.raw_sha256:
+        raise CheckContractError(
+            "production path requires provenance raw_sha256 lineage")
+    read_tokens = len(canonical_tokens(record.authoritative_scope)) + len(
+        canonical_tokens(record.cited_text))
+    if read_tokens > c.MAX_CONTROLLER_SOURCE_READ_TOKENS:
+        raise CheckContractError(
+            f"controller source read {read_tokens} tokens > "
+            f"{c.MAX_CONTROLLER_SOURCE_READ_TOKENS} (§10.1 hard ceiling)")
+    try:
+        verdict = execute_pinned_binding(
+            contract, source_reference, decision_scope_sha256,
+            provenance_raw_sha256=record.raw_sha256)
+    except ValueError as e:
+        raise CheckContractError(str(e)) from e
+    if not isinstance(verdict, bool):
+        raise CheckContractError(
+            "production comparison returned a non-boolean verdict")
+    evidence = CheckEvidence(
+        check_id=c.CHECK_ID,
+        comparison_rule_id=contract.rule_id,
+        source_reference=source_reference,
+        oracle_id=record.oracle_id,
+        cited_provenance=record.cited_text,
+        scope_matches=verdict,
+        controller_source_read_tokens=read_tokens,
+        check_output_tokens=0)
+    out_tokens = len(canonical_tokens(evidence.rendered()))
+    if out_tokens > c.MAX_EXTERNAL_CHECK_OUTPUT_TOKENS:
+        raise CheckContractError(
+            f"check output {out_tokens} tokens > "
+            f"{c.MAX_EXTERNAL_CHECK_OUTPUT_TOKENS} (§10.1 hard ceiling)")
+    return CheckEvidence(**{**evidence.__dict__, "check_output_tokens": out_tokens})

@@ -1,0 +1,44 @@
+{
+ "canonicalization_id": "efc_compare_canonicalization_v1",
+ "conformance_vectors_sha256": "20a067497db456cc3d0c392bf53ed56a53e660d3a2ac5b3515312445e104c3e3",
+ "fail_closed": [
+  "unknown_operation",
+  "unsupported_ecosystem",
+  "malformed_or_missing_operands",
+  "incomparable_versions",
+  "license_atom_absent",
+  "forbidden_dispatch_keys",
+  "artifact_or_interpreter_hash_mismatch",
+  "unpinned_or_mismatched_population_binding"
+ ],
+ "interpreter_modules": [
+  "harness/efc_compare_production.py",
+  "harness/efc_compare_version.py"
+ ],
+ "interpreter_sha256": "0ce8aac27362914c64e291a42a9ec3dd25bd36f4dcc506cc7ac50eb4a708db05",
+ "operations": [
+  "cargo_affected_membership",
+  "ghsa_semver_membership",
+  "eol_support_on_date",
+  "go_symbol_version_membership",
+  "license_permission_granted",
+  "license_section_waiver_applies",
+  "license_inclusion_obligation_holds"
+ ],
+ "rule_artifact_canonical_sha256": "41a9c2e061ac7c2f651df9c265eef85a46fb0002b6636cba423dbf108ee4b135",
+ "rule_id": "efc_production_comparison_v1",
+ "schema_version": "efc-production-comparison-rule-v1",
+ "structured_inputs_file_sha256": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9",
+ "structured_inputs_path": "corpus/efc_calibration/comparison/structured_inputs_v1.json",
+ "structured_inputs_population_binding_sha256": "b996c706189eb026187ab3b8d14947a1955a0c90945e6e4590c421a8aff4d0a1",
+ "structured_inputs_row_count": 15,
+ "structured_inputs_schema_version": "efc-production-structured-inputs-v1",
+ "version_grammars": {
+  "cargo": "introduced_plus_fixed_exclusive_or_upper_exclusive_only",
+  "ghsa": "comma_separated_comparators",
+  "ghsa_fragment": "one_of_>=_<=_<_>_=_plus_one_numeric_dotted_token",
+  "ghsa_version_token": "numeric_dotted_DIGIT+(.DIGIT+)*",
+  "go": "module_version_symbol_exact_identity_with_upper_exclusive",
+  "iso_date": "YYYY-MM-DD_calendar_validated"
+ }
+}

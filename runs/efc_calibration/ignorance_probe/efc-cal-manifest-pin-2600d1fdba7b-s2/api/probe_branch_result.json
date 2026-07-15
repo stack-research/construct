@@ -1,0 +1,15 @@
+{
+ "branch": "api",
+ "decoding_contract_sha256": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+ "engine_verdict": "engine_admitted",
+ "gate_pass": true,
+ "max_recoverable_rate": 0.2,
+ "model_id": "gpt-5.4-2026-03-05",
+ "n": 15,
+ "probe_calls": 15,
+ "probe_sidecar_sha256": "7072b7ecbd3fe237d3cc82d6a4790d90fbc24e57ee07128bda4489e1311f512f",
+ "provider_cache": "unverified",
+ "recovered_count": 3,
+ "refused": [],
+ "status": "completed"
+}

@@ -1,0 +1,39 @@
+{
+ "canonical_serialization_sha256": "ddfdc674f0a58f6e967fe8179c72ee8f06503712288b8d48c8709b7b75afe593",
+ "declared_before_any_calibration_contact": true,
+ "population_intent": "license_bearing_region",
+ "population_region": {
+  "vertices": [
+   {
+    "irrelevant": 0.2,
+    "match_commit": 0.2,
+    "match_mismatch": 0.6
+   },
+   {
+    "irrelevant": 0.2,
+    "match_commit": 0.6,
+    "match_mismatch": 0.2
+   },
+   {
+    "irrelevant": 0.5,
+    "match_commit": 0.125,
+    "match_mismatch": 0.375
+   },
+   {
+    "irrelevant": 0.5,
+    "match_commit": 0.375,
+    "match_mismatch": 0.125
+   },
+   {
+    "irrelevant": 0.8,
+    "match_commit": 0.05,
+    "match_mismatch": 0.15
+   },
+   {
+    "irrelevant": 0.8,
+    "match_commit": 0.15,
+    "match_mismatch": 0.05
+   }
+  ]
+ }
+}

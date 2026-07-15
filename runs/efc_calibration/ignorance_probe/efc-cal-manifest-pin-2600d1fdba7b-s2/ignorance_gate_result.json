@@ -1,0 +1,78 @@
+{
+ "active_pin_event_id": "efc-cal-manifest-pin-2600d1fdba7b-s2",
+ "additional_real_calls": 0,
+ "assignment": "P1a append-only semantic correction",
+ "authorizes_calibration_contact": false,
+ "authorizes_probe_rerun": false,
+ "branches": {
+  "api": {
+   "engine_admission_status": "engine_admission_pending",
+   "gate_pass": true,
+   "ignorance_gate_verdict": "ignorance_gate_pass",
+   "max_recoverable_rate": 0.2,
+   "model_id": "gpt-5.4-2026-03-05",
+   "n": 15,
+   "original_probe_branch_result_sha256": "a0fb96ec4f094c202bbfde28667e4076227e18c87a0f2e28d3bdd1c917612367",
+   "original_probe_sidecar_file_sha256": "e4c6f8630acebc5f3727bcecc33fa91f292078d97fe6aaa6e27fdbdfaa19609a",
+   "premature_derived_label": {
+    "disposition": "superseded_but_preserved",
+    "field": "engine_verdict",
+    "note": "probe-only path cannot establish \u00a76 engine_admitted; ignorance_gate_verdict is authoritative here",
+    "value": "engine_admitted"
+   },
+   "probe_sidecar_canonical_sha256": "7072b7ecbd3fe237d3cc82d6a4790d90fbc24e57ee07128bda4489e1311f512f",
+   "probe_sidecar_row_count": 15,
+   "recovered_count": 3
+  },
+  "local": {
+   "engine_admission_status": "engine_admission_pending",
+   "gate_pass": true,
+   "ignorance_gate_verdict": "ignorance_gate_pass",
+   "max_recoverable_rate": 0.2,
+   "model_id": "openai/gpt-oss-20b",
+   "n": 15,
+   "original_probe_branch_result_sha256": "ac215d830a83e9f031b5daad51e2822cd329a693d13b946ea4a145a1f1a09c7d",
+   "original_probe_sidecar_file_sha256": "db172a40163199b271e8b9b88c3867756b7c548ccc5aa0218437089084c04821",
+   "premature_derived_label": {
+    "disposition": "superseded_but_preserved",
+    "field": "engine_verdict",
+    "note": "probe-only path cannot establish \u00a76 engine_admitted; ignorance_gate_verdict is authoritative here",
+    "value": "engine_admitted"
+   },
+   "probe_sidecar_canonical_sha256": "bb6d7823b0891e67cdc19171e86d3c2e745aca7ac17e88ccffbef57189213579",
+   "probe_sidecar_row_count": 15,
+   "recovered_count": 0
+  }
+ },
+ "disclosure": {
+  "engines_contacted": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "plaintext_answers_inspected": 0,
+  "probes_run": 0,
+  "real_inference_calls": 0
+ },
+ "note": "Derived from preserved P1 sidecars and branch results only; original four run files remain byte-identical testimony.",
+ "original_files": {
+  "api_probe_branch_result.json": {
+   "path": "runs/efc_calibration/ignorance_probe/efc-cal-manifest-pin-2600d1fdba7b-s2/api/probe_branch_result.json",
+   "sha256": "a0fb96ec4f094c202bbfde28667e4076227e18c87a0f2e28d3bdd1c917612367"
+  },
+  "api_probe_sidecar.jsonl": {
+   "path": "runs/efc_calibration/ignorance_probe/efc-cal-manifest-pin-2600d1fdba7b-s2/api/probe_sidecar.jsonl",
+   "sha256": "e4c6f8630acebc5f3727bcecc33fa91f292078d97fe6aaa6e27fdbdfaa19609a"
+  },
+  "local_probe_branch_result.json": {
+   "path": "runs/efc_calibration/ignorance_probe/efc-cal-manifest-pin-2600d1fdba7b-s2/local/probe_branch_result.json",
+   "sha256": "ac215d830a83e9f031b5daad51e2822cd329a693d13b946ea4a145a1f1a09c7d"
+  },
+  "local_probe_sidecar.jsonl": {
+   "path": "runs/efc_calibration/ignorance_probe/efc-cal-manifest-pin-2600d1fdba7b-s2/local/probe_sidecar.jsonl",
+   "sha256": "db172a40163199b271e8b9b88c3867756b7c548ccc5aa0218437089084c04821"
+  }
+ },
+ "original_run_root": "runs/efc_calibration/ignorance_probe/efc-cal-manifest-pin-2600d1fdba7b-s2",
+ "schema_version": "efc_p1a_ignorance_gate_result_v1",
+ "seat": "cursor/composer-2.5-capture",
+ "total_real_calls": 30
+}

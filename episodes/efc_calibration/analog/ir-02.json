@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "pip package pyjwt at version 2.13.0, as pinned in requirements.txt",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "pyjwt",
+  "GHSA-xgmm-8j9v-c9wx",
+  "CVE-2026-48526"
+ ],
+ "observation_boundary_present": true,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx",
+ "source_reference_present": true,
+ "stratum": "irrelevant",
+ "surface_text": "Staging ran the token-forgery reproduction directly against the auth service an hour ago and the forged token was rejected on the upgraded build; the referenced advisory is linked for the record. Decide whether to close the incident ticket.",
+ "task_id": "ir-02"
+}

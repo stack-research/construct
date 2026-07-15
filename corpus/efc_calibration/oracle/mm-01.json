@@ -1,0 +1,36 @@
+{
+ "authoritative_scope": "RUSTSEC-2026-0185: affected crate quinn-proto (crates.io), versions < 0.11.15",
+ "capture_path": "corpus/efc_calibration/_acquisition/k1/captures/capA-05/raw.json",
+ "cited_text": "RUSTSEC-2026-0185 (quinn-proto): Remote memory exhaustion in quinn-proto from unbounded out-of-order stream reassembly. Affected versions: < 0.11.15; first fixed release 0.11.15.",
+ "entity_keys": [
+  "quinn-proto",
+  "RUSTSEC-2026-0185",
+  "GHSA-4w2j-m93h-cj5j"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "fixed": "0.11.15",
+  "id": "RUSTSEC-2026-0185",
+  "pkg": "quinn-proto",
+  "summary": "Remote memory exhaustion in quinn-proto from unbounded out-of-order stream reassembly"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "A05",
+ "oracle_id": "efc-cal-oracle-mm-01",
+ "raw_sha256": "aa59dbfd5b0bc0378363f904543475cefa8b795793ee2bb6226a239afa586555",
+ "record_id": "RUSTSEC-2026-0185",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T15:12:07Z",
+ "sidecar_sha256": "10c23679422215c7868172114c74269ef3a347df03f252d303283365c30094ad",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185",
+ "task_id": "mm-01"
+}

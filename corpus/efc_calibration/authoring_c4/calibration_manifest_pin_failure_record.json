@@ -1,0 +1,26 @@
+{
+ "contact_disclosure": "no engine, listing, probe, or calibration contact occurred under the failed attempt",
+ "disposition": "invalid_non_authoritative_preserved",
+ "failed_pin": {
+  "event_id": "efc-cal-manifest-pin-2600d1fdba7b",
+  "path": "corpus/efc_calibration/authoring_c4/calibration_manifest_pin.json",
+  "sha256": "9ea99f15392e1b46e01964f5eb656b09205585901ae696bdd4aa465540632e0d",
+  "verifier_module_at_attempt_sha256": "bc3f44760bdc02c36c18eb090fe3246dc8d9bf976d155a030b311f871e872d1f",
+  "written_and_first_verified_utc": "2026-07-15T10:35:25Z"
+ },
+ "repair_evidence": {
+  "c4c_attestation_sha256": "1e649f89a041cee9c18b56637962e1e0684069eb8cfb8ea9ce1fa6753d2d1cd7",
+  "g4_authority_restored_sha256": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac",
+  "reviewed_by": [
+   "cursor/grok-4.5 narrow regression review 2026-07-15T11:54:00Z",
+   "codex/gpt-5.6-sol C4c close 2026-07-15T12:03:29Z"
+  ]
+ },
+ "schema_version": "efc_calibration_pin_failure_record_v1",
+ "verification_failure": {
+  "cause": "tests/test_efc_capture_k4.py::test_repair_ledger_zero_network called repair_ledger() on the production K4_ROOT, restamping generated_at_utc on every full-suite run; secondary: the C4 test setUpClass reran the builder against the real tree",
+  "first_reported": "claude/fable-5 thread entry 2026-07-15 (C4b handoff)",
+  "observed": "post-pin --verify refusal: conformance report bytes and K4 ledger lineage no longer matched the bound identities",
+  "semantic_drift": "none \u2014 40 ledger rows byte-identical throughout; timestamp-only"
+ }
+}

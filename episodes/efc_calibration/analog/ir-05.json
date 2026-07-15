@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "internal_policy",
+ "decision_scope": "adopting an MPL-2.0-licensed dependency in the product tree",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "MPL-2.0",
+  "https://www.mozilla.org/MPL/2.0/",
+  "https://opensource.org/license/MPL-2.0"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json",
+ "source_reference_present": true,
+ "stratum": "irrelevant",
+ "surface_text": "Company policy directs that all new file-level copyleft dependencies route through the OSS review board before adoption; the referenced license record is attached as the policy's example. Decide whether to route the new dependency through the board.",
+ "task_id": "ir-05"
+}

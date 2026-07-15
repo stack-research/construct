@@ -1,0 +1,16 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "crate anyhow at version 1.0.102, as pinned in Cargo.lock",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "anyhow",
+  "RUSTSEC-2026-0190"
+ ],
+ "observation_boundary_present": true,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190",
+ "source_reference_present": true,
+ "stratum": "irrelevant",
+ "surface_text": "The team reproduced the error-handling unsoundness directly under Miri in CI this morning and the minimized test fails on the current pin; the referenced advisory is attached for context. Decide whether to upgrade the pinned crate.",
+ "task_id": "ir-01"
+}

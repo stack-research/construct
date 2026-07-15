@@ -1,0 +1,1771 @@
+{
+ "counts_by_source": {
+  "composer_p3a": 120,
+  "composer_p3c": 18,
+  "kimi_p3b": 80
+ },
+ "evaluation_by_source": {
+  "composer_p3a": [
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Upgrade anyhow; Miri reproduced the failure on the current pin."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Bump the crate \u2014 the minimized test fails today."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Publish a new pin with the fixed release."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer the upgrade pending advisory review."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Wait for the external check before changing the pin."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Do not upgrade; hold the current version."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Close the incident ticket; staging already rejected the forgery."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Mark resolved \u2014 reproduction failed on the upgraded build."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Resolve the ticket based on direct staging observation."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Keep the ticket open for further investigation."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Reopen the incident."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer closure until the advisory check completes."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Schedule the migration; console shows support expired."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Proceed with migration planning from today's reading."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Plan the hypervisor migration now."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Postpone migration indefinitely."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer scheduling; wait for lifecycle check."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Do not migrate yet."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Keep the current rollout schedule."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "No change \u2014 local reproduction shows no exposure."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Maintain the rollout; deployed config is safe."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Pause the rollout immediately."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Halt deployment and rollback."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Delay the schedule pending advisory review."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Route the dependency through the OSS review board."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Submit for board review per company policy."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Follow policy and send it to the review board."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Adopt directly without review."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Skip the board and merge now."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Bypass review for this dependency."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Merge the flatted upgrade today."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Proceed with the dependency bump."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Approve merging the pinned upgrade."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Decline to merge the upgrade."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer the merge."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Do not merge today."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Keep the fleet on the current servlet line."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Remain on tomcat 9.0 through the freeze."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Stay on the current line for one more quarter."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Migrate off the line immediately."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Upgrade the servlet container now."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Change lines before the freeze."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Bump the SPDY dependency before rollout."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Upgrade spdystream along the vulnerable path."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Proceed with the dependency update."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer the bump."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Decline to update the sidecar."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Do not upgrade before rollout."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Approve the shipping configuration."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Authorize redistribution without sections 4(a)-4(d)."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Permit the object-form distribution."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Reject the shipping configuration."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Decline the LLVM exception reliance."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Block the release."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Execute the rotation and upgrade plan this sprint."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Proceed with key rotation and crate upgrade."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Approve executing the cryptography plan."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer execution to next sprint."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Decline the proposed rotation."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Postpone the upgrade."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Drain traffic from the edge service now."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Divert QUIC traffic immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Pause the service until we upgrade."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Keep serving traffic unchanged."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "No action needed; continue as-is."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Maintain current traffic levels."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Block the release until the dependency is replaced."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Hold the release for a shell-quote fix."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Reject shipping until replacement lands."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Proceed with the release on schedule."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Ship without replacing the dependency."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Approve the release as planned."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Renegotiate the license instead of accepting unchanged renewal."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Change the renewal terms before signing."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Modify the renewal package rather than renewing as proposed."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Renew unchanged as the note suggests."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Proceed unchanged with license renewal."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Approve renewal without changes."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Pause ingestion until the parser is patched."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Halt the crawler pipeline temporarily."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Suspend HTML parsing jobs."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Continue ingestion at full rate."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Keep the crawler running."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Resume ingestion immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Reject the installer build."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Decline the SDK distribution package."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Block the build until license text is embedded."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Approve the installer build."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Accept the distribution as proposed."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Allow the build to proceed."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "I decline the hotfix request."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Reject the emergency patch; the pin is not in the affected range."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Hold the hotfix until we verify scope separately."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Approve the hotfix and ship today."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Proceed with the emergency release immediately."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Merge the hotfix now."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Defer the framework upgrade to next fiscal year."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "We can wait; security support continues through the audit date."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-02",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Postpone the migration \u2014 no urgent action required."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Upgrade immediately before the audit."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Proceed with the framework migration now."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "We must upgrade this quarter."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Disable proxy pooling immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Turn off the proxy pooling feature now."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-03",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Block traffic through the vulnerable pooling path."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Keep proxy pooling enabled."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "No change to proxy pooling."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Leave the feature running."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Approve the release under the Classpath exception terms."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Authorize shipping the linked executable."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-04",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Permit distribution under our own terms."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Decline the release."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Reject the counsel memo's request."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Do not approve the distribution."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Schedule the patch for tonight's window."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Proceed with the RPC framework upgrade."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-05",
+    "label": "correct",
+    "passed": true,
+    "source": "composer_p3a",
+    "text": "Deploy the fix in the maintenance window."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Decline to patch tonight."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Defer the security update."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "composer_p3a",
+    "text": "Do not schedule maintenance."
+   }
+  ],
+  "composer_p3c": [
+   {
+    "category": "modal_negation_then_affirm",
+    "expect_pass": true,
+    "fixture_id": "ir-01",
+    "label": "correct",
+    "passed": true,
+    "text": "We can't defer \u2014 bump anyhow to the fixed release."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "ir-01",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Pin the fixed version, but hold the current pin."
+   },
+   {
+    "category": "affirm_then_negate_opposite",
+    "expect_pass": true,
+    "fixture_id": "ir-04",
+    "label": "correct",
+    "passed": true,
+    "text": "Continue the rollout; we should not pause deployment."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "ir-04",
+    "label": "incorrect",
+    "passed": false,
+    "text": "No action needed, but pause the rollout immediately."
+   },
+   {
+    "category": "affirm_then_negate_opposite",
+    "expect_pass": true,
+    "fixture_id": "ir-05",
+    "label": "correct",
+    "passed": true,
+    "text": "Submit for legal review; do not adopt directly."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "ir-05",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Route to the board, then bypass review for speed."
+   },
+   {
+    "category": "contraction_negation_affirm",
+    "expect_pass": true,
+    "fixture_id": "mc-03",
+    "label": "correct",
+    "passed": true,
+    "text": "Won't defer \u2014 update spdystream before release."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "mc-03",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Bump spdystream, but don't upgrade before rollout."
+   },
+   {
+    "category": "contraction_negation_affirm",
+    "expect_pass": true,
+    "fixture_id": "mm-02",
+    "label": "correct",
+    "passed": true,
+    "text": "Don't ship this release."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "mm-02",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Block the release, but ship on schedule."
+   },
+   {
+    "category": "contraction_negation_affirm",
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "text": "I won't approve the installer build."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "mm-05",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Reject the build, then approve the installer tomorrow."
+   },
+   {
+    "category": "quoted_speech_final_decline",
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "text": "Legal said \"approve the installer\" \u2014 we should not."
+   },
+   {
+    "category": "contraction_negation_affirm",
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "text": "We shouldn't approve the hotfix."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "sf-01",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Decline the hotfix, but ship tomorrow anyway."
+   },
+   {
+    "category": "quoted_speech_final_decline",
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "text": "The memo says \"approve the hotfix\" but I decline it."
+   },
+   {
+    "category": "modal_negation_then_affirm",
+    "expect_pass": true,
+    "fixture_id": "sf-04",
+    "label": "correct",
+    "passed": true,
+    "text": "We can't ship this without counsel approval \u2014 authorize it."
+   },
+   {
+    "category": "conflicting_commitment",
+    "expect_pass": false,
+    "fixture_id": "sf-04",
+    "label": "incorrect",
+    "passed": false,
+    "text": "Authorize distribution, but do not release the executable."
+   }
+  ],
+  "kimi_p3b": [
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Pin the fixed version of anyhow."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Move to the patched release."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not update the crate yet."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not upgrade before review."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "The ticket can be closed now."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Mark the incident resolved."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not close the ticket yet."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "The ticket should stay open."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Move to a supported hypervisor platform."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Plan the migration away from ESXi 7.0."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not migrate yet."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We can stay on ESXi 7.0."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Continue the rollout as planned."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "No action is needed."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not keep the rollout."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Pause the rollout immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Submit for legal review."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "ir-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Send to the licensing committee."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not route to the review board."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "ir-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Adopt without any review."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Merge the flatted update."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Approve the dependency merge."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not merge this yet."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not merge today."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Keep the fleet on Tomcat 9.0."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "No change to the servlet line."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not keep the current line."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Migrate off the line immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Update spdystream before release."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Bump the SPDY dependency."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not upgrade yet."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not update spdystream."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Allow the object-form redistribution."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Permit the LLVM exception reliance."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We decline to permit this."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not allow the redistribution."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Execute the key rotation plan."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mc-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Proceed with the cryptography upgrade."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not execute the plan."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mc-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not proceed with rotation."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Take the service out of rotation."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Stop serving traffic now."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not divert traffic."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Keep serving traffic unchanged."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Don't ship this release."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Reject the release."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We will not block the release."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Ship the release on schedule."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Ask for better terms before renewing."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Modify the renewal package."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not renegotiate."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Renew unchanged as proposed."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Turn off the crawler until patched."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Halt the parsing pipeline."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not suspend the crawler."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Resume ingestion immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "I do not approve the installer build."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "mm-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Refuse the build until the license is embedded."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Approve the installer build."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "mm-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not reject the build."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Push back on the hotfix."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-01",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "I decline the emergency patch."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not reject the hotfix."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-01",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Approve the hotfix and ship today."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "We can wait until next fiscal year."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-02",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Postpone the upgrade."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not defer the upgrade."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-02",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Upgrade immediately."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Disable the proxy pool."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-03",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Shut down the pooling feature."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not disable the pool."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-03",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Keep the feature running."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Allow distribution under the exception."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-04",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Ship the linked executable."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not ship this."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-04",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not release the executable."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Patch the RPC framework tonight."
+   },
+   {
+    "expect_pass": true,
+    "fixture_id": "sf-05",
+    "label": "correct",
+    "passed": true,
+    "source": "kimi_p3b",
+    "text": "Deploy the fix in the maintenance window."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "We should not patch this tonight."
+   },
+   {
+    "expect_pass": false,
+    "fixture_id": "sf-05",
+    "label": "incorrect",
+    "passed": false,
+    "source": "kimi_p3b",
+    "text": "Do not schedule maintenance."
+   }
+  ]
+ },
+ "failure_counts_by_source": {
+  "composer_p3a": 0,
+  "composer_p3c": 0,
+  "kimi_p3b": 0
+ },
+ "failures_by_source": {
+  "composer_p3a": [],
+  "composer_p3c": [],
+  "kimi_p3b": []
+ },
+ "schema_version": "efc_p3c_repair_vectors_evaluated_v1",
+ "total_failure_count": 0
+}

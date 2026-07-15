@@ -1,0 +1,12 @@
+{
+ "disjoint_reference": "https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0103.json",
+ "entity_keys": [
+  "thin-vec",
+  "RUSTSEC-2026-0103",
+  "CVE-2026-6654",
+  "GHSA-xphw-cqx3-667j"
+ ],
+ "placebo_for": "mm-05",
+ "placebo_id": "pb-mm-05",
+ "text": "provenance note (RUSTSEC-2026-0103): RUSTSEC-2026-0103 records a use-after-free and double free in the thin-vec crate's IntoIter drop path when an element drop panics. snapshot retrieved 2026-07-14; raw sha256 1207db30; canonical url https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0103.json; frozen acquisition bytes; independently refetched and verified; promoted record; dated drift note: none; capture seat: mechanical; registry provenance entry; content identity confirmed; record text begins: A Double Free / Use-After-Free (UAF) vulnerability has been identified in the `IntoIter::drop` and `ThinVec::clear` implementations"
+}

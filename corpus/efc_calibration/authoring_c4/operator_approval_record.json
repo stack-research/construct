@@ -1,0 +1,22 @@
+{
+ "approval_scope": "limited to exactly this roster, this total_budget_tokens, and this manifest identity; captures the transcript approval append-only without rewriting any pre-approval artifact; authorizes the C4b pin bundle only \u2014 NOT ignorance probes or calibration contact",
+ "approved_engine_roster": [
+  "openai/gpt-oss-20b",
+  "gpt-5.4-2026-03-05"
+ ],
+ "approved_total_budget_tokens": 1187522,
+ "approver": "dan",
+ "candidate_manifest_canonical_hash": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+ "candidate_manifest_file_sha256": "d5965001e19d846826aba8be0b130bf4a16fd82f63fbc21c8927b153237b971e",
+ "candidate_manifest_path": "corpus/efc_calibration/authoring_c4/C4_candidate_calibration_manifest.json",
+ "schema_version": "efc_operator_approval_record_v1",
+ "status": "recorded_append_only",
+ "transcript_reference": {
+  "entry_author": "dan",
+  "entry_text_verbatim": "models (openai/gpt-oss-20b, gpt-5.4-2026-03-05) and the 1,187,522-token budget are approved.",
+  "entry_timestamp_utc": "2026-07-15T01:53:51Z",
+  "position": "the entry immediately following the claude/fable-5 C4 handoff of 2026-07-15T01:44:21Z and immediately preceding the codex/gpt-5.6-sol approval-recorded ruling of 2026-07-15T01:56:09Z",
+  "space": "construct",
+  "thread": "epistemic-frame-check-v0-content"
+ }
+}

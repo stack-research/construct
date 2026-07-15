@@ -1,0 +1,36 @@
+{
+ "authoritative_scope": "endoflife.date record for spring-boot: release line 3.5 reaches end-of-life on 2026-06-30",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2/captures/capC-02/raw.json",
+ "cited_text": "endoflife.date, spring-boot release line 3.5: end-of-life date 2026-06-30.",
+ "entity_keys": [
+  "spring-boot"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "cycle": "3.5",
+  "eol": "2026-06-30"
+ },
+ "extractor": {
+  "pointers": {
+   "cycle": "/2/cycle",
+   "eol": "/2/eol"
+  },
+  "product_identity": {
+   "canonical_url": "https://endoflife.date/api/spring-boot.json",
+   "entity_key": "spring-boot",
+   "note": "the product token in authoritative_scope/cited_text is ledger/URL-derived, NOT raw-extracted; only cycle/date facts come from the raw array pointers",
+   "source": "k4_promotion_ledger_entity_key+canonical_url_slug"
+  },
+  "provenance_kind": "ledger_entity_plus_raw_cycle",
+  "slices": {}
+ },
+ "logical_slot": "C02",
+ "oracle_id": "efc-cal-oracle-sf-02",
+ "raw_sha256": "e284f93bb376ab40281b600611ff86c99691e084246a547383d08e8551a9879e",
+ "record_id": "spring-boot",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T17:51:13Z",
+ "sidecar_sha256": "6ced97a514c881facf37d82f4adf94bcfbca49b4e91f73d4c80b486882d3b9ac",
+ "source_reference": "https://endoflife.date/api/spring-boot.json",
+ "task_id": "sf-02"
+}

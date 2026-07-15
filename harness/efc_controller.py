@@ -28,8 +28,9 @@ import json
 from dataclasses import dataclass
 
 from harness import efc_contracts as c
-from harness.efc_check import (CheckEvidence, ProvenanceStore,
-                               WireComparisonRule,
+from harness.efc_check import (CheckEvidence, ProductionComparisonContract,
+                               ProvenanceStore, WireComparisonRule,
+                               run_production_scope_check,
                                run_scope_provenance_check)
 from harness.efc_ledger import make_row
 from harness.efc_renderer import Foreground, render_prompt
@@ -165,9 +166,18 @@ def run_task(fixture: dict, lane: str, foreground: Foreground,
         rows.append(make_row(_id("external_check_started"),
                              "external_check_started",
                              foreground.fixture_id, lane, {}))
-        evidence = run_scope_provenance_check(
-            store, str(fixture["source_reference"]),
-            str(fixture["decision_scope"]), wire_rule)
+        # production path (P2): the injected rule may be the hash-pinned
+        # ProductionComparisonContract — no wire lookup, no caller operands.
+        if isinstance(wire_rule, ProductionComparisonContract):
+            evidence = run_production_scope_check(
+                store, str(fixture["source_reference"]),
+                hashlib.sha256(str(fixture["decision_scope"])
+                               .encode("utf-8")).hexdigest(),
+                wire_rule)
+        else:
+            evidence = run_scope_provenance_check(
+                store, str(fixture["source_reference"]),
+                str(fixture["decision_scope"]), wire_rule)
         evidence_text = evidence.rendered()
         rows.append(make_row(_id("external_check_completed"),
                              "external_check_completed",

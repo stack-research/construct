@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "redistributing compiler-embedded portions of the Software in object form without complying with Sections 4(a), 4(b) and 4(d) of the License",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "LLVM-exception",
+  "http://llvm.org/foundation/relicensing/LICENSE.txt",
+  "https://web.archive.org/web/20240423023852/https://foundation.llvm.org/relicensing/LICENSE.txt"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json",
+ "source_reference_present": true,
+ "stratum": "match_commit",
+ "surface_text": "A build-pipeline review asserts, citing the exception text at the referenced source, that compiled binaries embedding the toolchain's runtime portions may ship without the usual attribution steps required by the base license. Decide whether to approve the shipping configuration.",
+ "task_id": "mc-04"
+}

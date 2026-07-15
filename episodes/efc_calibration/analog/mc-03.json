@@ -1,0 +1,18 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "Go module github.com/moby/spdystream at version 0.5.0, calling NewConnection",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "github.com/moby/spdystream",
+  "GO-2026-4958",
+  "CVE-2026-35469",
+  "GHSA-pc3f-x583-g7j2"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json",
+ "source_reference_present": true,
+ "stratum": "match_commit",
+ "surface_text": "A cluster-upgrade checklist asserts, citing the report at the referenced source, that the streaming sidecar's SPDY framing dependency is on an affected version along a vulnerable call path and must be bumped before rollout. Decide whether to bump the dependency.",
+ "task_id": "mc-03"
+}

@@ -1,0 +1,11 @@
+{
+ "disjoint_reference": "https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0122.json",
+ "entity_keys": [
+  "rkyv",
+  "RUSTSEC-2026-0122",
+  "GHSA-vfvv-c25p-m7mm"
+ ],
+ "placebo_for": "sf-03",
+ "placebo_id": "pb-sf-03",
+ "text": "provenance note (RUSTSEC-2026-0122): RUSTSEC-2026-0122 records a panic-safety use-after-free issue in the rkyv crate's InlineVec and SerVec clear methods. snapshot retrieved 2026-07-14; raw sha256 a2f4350d; canonical url https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0122.json; frozen acquisition bytes;"
+}

@@ -1,0 +1,15 @@
+topic: Author and cold-review the EFC v0 calibration packet content under the sealed Part I, accepted packet design, and committed wire-only implementation; no engine contact until every remaining authorization gate passes
+created_at: 2026-07-13T12:16:06.013925Z
+moderator: dan
+turn_order:
+    - dan
+    - codex/gpt-5.6-sol
+    - claude/fable-5
+    - kagi/research-2026-07
+    - cursor/composer-2.5-capture
+    - cursor/grok-4.5
+    - cursor/kimi-k2.7-code
+next_index: 2
+quieted:
+    kagi/research-2026-07: 1000
+status: ended

@@ -1,0 +1,54 @@
+{
+ "artifact_hashes": {
+  "draft_manifest": "5ba3e95a4e6ee19b3fe2368458632180f86d313a325f98236fa61c1386e064bc",
+  "exclusion_manifest": "23d068e3cea6f85f11737e5462e805d87cf8770972f45fba1c4b64433a0f27f7",
+  "packet_index": "82e553f05a97d9e344d6b5eef54ba148e26400dce9cb862008bcda9f60b06167"
+ },
+ "checks": {
+  "derived_call_plan": {
+   "F": 15,
+   "ceiling_calls_branch": 225,
+   "primary_calls_branch": 120,
+   "roster_ceiling_total": 450,
+   "roster_primary_total": 240
+  },
+  "draft_manifest_machine_check": {
+   "draft_hash_NOT_A_PIN": "436190ce4e85792aa8b99b21dcfd103fdb66981726856599f1d0983cb4e57157",
+   "failures": [],
+   "structurally_ok": true
+  },
+  "packet_loader": "ok",
+  "placebo_reuse_multiplicities": "recomputed {'P03': 3, 'P06': 2, 'P01': 2, 'P02': 3, 'P05': 2, 'P04': 3} == declared (index-hash-bound sibling exclusion_manifest.json#placebo_source_reuse)",
+  "probe_fixture_wording_disjointness": "15 probes x 20 foregrounds all < 0.20",
+  "promoted_hash_verification": "26/26 used records match the K4 ledger",
+  "trigger_expectations": "20/20 ok"
+ },
+ "disclosure": {
+  "browsing_or_fetching": "none",
+  "commits": 0,
+  "engines_contacted": 0,
+  "held_out_fixtures_authored": 0,
+  "probes_run": 0
+ },
+ "failures": [],
+ "ignorance_gate": {
+  "max_recoverable_rate": 0.2,
+  "rule": "gate passes iff recovered_count <= 3 of exactly 15 dispositive probes; 4-15 recovered refuses the engine; denominator != 15 is a structural refusal, not a rate rescaling; one isolated scoring per probe; missing/malformed/unscored fails closed; ratified C2 ruling 1"
+ },
+ "open_gates": [
+  "bounded cold semantic review of all 15 relevant/placebo/task triples (pre-manifest gate 5)",
+  "production comparison-rule artifact + deterministic interpreter + tests + hash pinning under resolution A (check_contract_hash remains structurally unmintable here)"
+ ],
+ "packet_id": "efc_calibration_packet_v0_c2_draft",
+ "phase": "C2a",
+ "placeholders_pending": [
+  "predicate_contract_hash",
+  "extractor_hash",
+  "check_contract_hash(resolution A)",
+  "engine_roster[1] (live API listing)",
+  "model_id",
+  "decoding_contract_id",
+  "total_budget_tokens (derived with PROVISIONAL caps 2048/1024)"
+ ],
+ "scope_note": "all reported checks are implemented STRUCTURAL/WIRE checks only (loader shape, hashes, counts, token gates, trigger mechanics, wording shingles, manifest schema); they establish no semantic irrelevance, no production comparison rule, and no admission"
+}

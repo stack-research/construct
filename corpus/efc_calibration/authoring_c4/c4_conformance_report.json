@@ -1,0 +1,120 @@
+{
+ "artifact_sha256": {
+  "C4_candidate_calibration_manifest": "d5965001e19d846826aba8be0b130bf4a16fd82f63fbc21c8927b153237b971e",
+  "budget_derivation_ledger": "b14466c1542ec034b6ab5c018d379b49b0f8b32ce107d899249f6c4c470a2eb6",
+  "roster_decoding_pin_candidate": "4b3e452bd140ae88a971d0e7e9b1e68b95cc2ec8978abf3c194bdbe1ccb7521b"
+ },
+ "assignment": "offline manifest conformance and exact budget derivation \u2014 candidate, pre-pin, pre-approval",
+ "blockers": [
+  {
+   "blocking": true,
+   "detail": "dan must approve the exact two-model roster and total_budget_tokens=1187522 in their exact manifest form before any pin or contact",
+   "id": "operator_roster_budget_approval"
+  },
+  {
+   "blocking": false,
+   "detail": "extractor_hash carries the module-source identity of harness/efc_trigger.py (no distinct semantic extractor contract artifact exists); cold review should ratify or demand a typed extractor contract before pin",
+   "id": "extractor_identity_layer"
+  },
+  {
+   "blocking": false,
+   "detail": "the closed schema holds one decoding_contract_id; the branch payloads and canonical hashes are pinned in roster_decoding_pin_candidate.json, which must be approved and pinned together with the manifest",
+   "id": "decoding_contract_id_is_a_name"
+  },
+  {
+   "blocking": false,
+   "detail": "carried forward from the C3 integration artifact: typed license atoms and population bindings require separate conformance review",
+   "id": "license_binding_conformance_review"
+  }
+ ],
+ "candidate_manifest_hash_NOT_A_PIN": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+ "checks": {
+  "budget_recomputation": {
+   "analog_calls": 90,
+   "branch_ceiling_calls": 225,
+   "branch_identity_proof": "both R2 wrappers transport one stateless user message with no system prompt and no tools; renderer output is branch-independent, so roster total = 2 x branch total",
+   "branch_prompt_tokens": 17761,
+   "branch_total_tokens": 593761,
+   "check_output_cap_not_double_counted": true,
+   "conditional_calls": 105,
+   "probe_calls": 15,
+   "prompt_bound_unit": "canonical whitespace tokens (harness.efc_renderer.canonical_tokens) over the exact rendered text; completion and controller terms are the frozen request/\u00a710.1 contract caps",
+   "s_family_calls": 15,
+   "total_budget_tokens": 1187522
+  },
+  "check_contract_recomputation": {
+   "adapter_contract_sha256": "d866e8061b8f840d720d0e3f8b039785b9cfd00b6a4bf4b9706f9df85a3017d8",
+   "candidate_check_contract_hash": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b",
+   "oracle_agreement": "15/15 (C3 integration artifact, re-read)"
+  },
+  "derived_call_plan": {
+   "analog_calls_branch": 90,
+   "ceiling_calls_branch": 225,
+   "conditional_calls_branch": 105,
+   "primary_calls_branch": 120,
+   "probe_calls_branch": 15,
+   "roster_ceiling_total": 450,
+   "s_family_calls_branch": 15
+  },
+  "extractor_identity_disclosure": "extractor_hash is the sha256 of harness/efc_trigger.py source bytes: the repo's identity registry (efc_artifacts) defines the extractor's SEMANTIC identity as the predicate contract and keeps the module hash diagnostic; no distinct semantic extractor contract artifact exists, so the module-source identity is the only derivable non-synthetic value \u2014 flagged for cold review",
+  "manifest_machine_check": {
+   "candidate_hash_NOT_A_PIN": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+   "failures": [],
+   "ok": true
+  },
+  "no_placeholder_identities": "clean",
+  "packet_hash_verification": "37 entries + 3 siblings match packet_index.json",
+  "packet_loader": "ok",
+  "population_declaration_byte_match": {
+   "canonical_serialization_sha256": "ddfdc674f0a58f6e967fe8179c72ee8f06503712288b8d48c8709b7b75afe593",
+   "manifest_region_is_byte_identical": true
+  },
+  "roster_r2_contract_match": {
+   "api": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+   "local": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0",
+   "output_ceiling_both_branches": 2048,
+   "recomputed_from_payload_bytes": true,
+   "seed": "unsupported_unavailable (disclosed)"
+  }
+ },
+ "contract_identities": {
+  "controller_contract_sha256": "f626599213f81519e20be9e35cde7b8e13e819bf23f83966e2a039cd4411cb58",
+  "intervals_module_sha256_diagnostic": "20fd9839877de6141c3231bb46cb4c0fee78050ce270f606d31af28ad9e0269c",
+  "planner_module_sha256_diagnostic": "dfbec832361bf514106bcb75c76bc9422b3b4705245ccd911398ad93beb5daac",
+  "predicate_contract_sha256": "f8c3f07439dfc634c88385b37ec33f6f2ac2df9cd22b4c1960e147d3d6c732ed",
+  "renderer_contract_sha256": "1bdd8a57597784fb0fe3ad34f39d8e5a50b9b7ad6ebc7bd68bea511c0f63e319",
+  "runner_contract_sha256": "7974cf27f3ab50384e8530ffeb663daa4d2160e7dfeadab18c749f810f6d1732"
+ },
+ "disclosure": {
+  "commits": 0,
+  "engines_contacted": 0,
+  "held_out_fixtures_authored": 0,
+  "listing_calls": 0,
+  "manifest_status": "candidate_not_pinned",
+  "network_calls": 0,
+  "probes_run": 0
+ },
+ "failures": [],
+ "lineage_sha256": {
+  "allocation": "8d4ba4a5e26746c98f499aee10c63d29f8daf2f2fffc40eea045db9d99f21dd0",
+  "c2_check_report": "3606dd6742efce667e08277b82a372dc7cc25625108a0b3d63361a563ff8484b",
+  "cold_semantic_review_kimi": "18234bddba5ae9af63fb7500f00bb6c156029f95dafbaa603876305c9991681d",
+  "comparison_expectations_v1": "3e047f90ece3bb690f5f280710f0e97a34f25d6fd6d295022f5c7e0dca3f5d66",
+  "conformance_vectors_v1": "20a067497db456cc3d0c392bf53ed56a53e660d3a2ac5b3515312445e104c3e3",
+  "decoding_surface_r2": "ac76d1769911eb61a0d39f5c9766a862090467ea3e4d2d0ab7c4da2b5d4ac208",
+  "exclusion_manifest": "23d068e3cea6f85f11737e5462e805d87cf8770972f45fba1c4b64433a0f27f7",
+  "g4_identity_audit": "5f6f78a9154147a82d9cef8735a04e0e09a95382892f3a0be6de16ebcec02ef0",
+  "g4_refetch_report": "e685fcb9903a5812fb9c0ea2964727b9d14f9a9d4ec362aa3d6899fd6ebe9d15",
+  "k4_promotion_identity_ledger": "9d34d96648700c9c97822447a1334879d359ae79853be3b024374915cd814c42",
+  "packet_index": "82e553f05a97d9e344d6b5eef54ba148e26400dce9cb862008bcda9f60b06167",
+  "placebo_truth_verification": "35ec580554733e3e95c8a214ed071d17752613dab1066933878dfd5247bc8774",
+  "population_intent_declaration": "ffebe7034f8cccd6cfd63073e1ac22f36db2f9fcc8b481d4e1c481e270085ba6",
+  "production_comparison_integration": "aa65d60ebc9e8e9bee0c7356ddac3d55a8886ab9c75b72ecb4be637f7ccbcf43",
+  "production_comparison_review_grok": "d167ccb548a73949f4930b3db486baaf8103665217f0c1d0a41a41916feb4474",
+  "production_rule_v1": "8155720db938067c9ea77e77497c7ef8eeb5b0f67331b4df6bee74a5ab8460c2",
+  "roster_enumeration_r1": "f24f4885419c3b05f5c0d3f5b8b35c145a4d41a1586ee41b429d4579bdbcca96",
+  "structured_inputs_v1": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9"
+ },
+ "phase": "C4",
+ "total_budget_tokens": 1187522
+}

@@ -1,0 +1,36 @@
+{
+ "authoritative_scope": "endoflife.date record for tomcat: release line 9.0 reaches end-of-life on 2027-03-31",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2/captures/capC-01/raw.json",
+ "cited_text": "endoflife.date, tomcat release line 9.0: end-of-life date 2027-03-31.",
+ "entity_keys": [
+  "tomcat"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "cycle": "9.0",
+  "eol": "2027-03-31"
+ },
+ "extractor": {
+  "pointers": {
+   "cycle": "/3/cycle",
+   "eol": "/3/eol"
+  },
+  "product_identity": {
+   "canonical_url": "https://endoflife.date/api/tomcat.json",
+   "entity_key": "tomcat",
+   "note": "the product token in authoritative_scope/cited_text is ledger/URL-derived, NOT raw-extracted; only cycle/date facts come from the raw array pointers",
+   "source": "k4_promotion_ledger_entity_key+canonical_url_slug"
+  },
+  "provenance_kind": "ledger_entity_plus_raw_cycle",
+  "slices": {}
+ },
+ "logical_slot": "C01",
+ "oracle_id": "efc-cal-oracle-mc-02",
+ "raw_sha256": "13496c043f2c8f802031041df62256547c0fd08e1f7cb6e9ab9eeb38956c212e",
+ "record_id": "tomcat",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T17:51:13Z",
+ "sidecar_sha256": "4678ddab8feb3b769f2c13ee33063b2106d57175e339f9bc891b4469de171eb0",
+ "source_reference": "https://endoflife.date/api/tomcat.json",
+ "task_id": "mc-02"
+}

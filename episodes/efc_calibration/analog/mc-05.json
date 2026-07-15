@@ -1,0 +1,20 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "crate hpke-rs-rust-crypto at version 0.5.1, as pinned in Cargo.lock",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "hpke-rs-rust-crypto",
+  "RUSTSEC-2026-0072",
+  "GHSA-g433-pq76-6cmf",
+  "RUSTSEC-2026-0069",
+  "RUSTSEC-2026-0070",
+  "RUSTSEC-2026-0071"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072",
+ "source_reference_present": true,
+ "stratum": "match_commit",
+ "surface_text": "A cryptography-review finding asserts, citing the advisory at the referenced source, that the messaging service's HPKE crate is on an affected version and key rotation plus an upgrade must be executed this sprint. Decide whether to execute the plan.",
+ "task_id": "mc-05"
+}

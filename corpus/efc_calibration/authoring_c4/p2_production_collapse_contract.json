@@ -1,0 +1,118 @@
+{
+ "assignment": "P2 production collapse contract (pre-contact pin)",
+ "authorizes_calibration_contact": false,
+ "conformance_results": [
+  {
+   "expect": "not_collapsed",
+   "name": "answer_only_false_positive_cleared_by_route_diversity",
+   "observed": "not_collapsed",
+   "ok": true
+  },
+  {
+   "expect": "collapsed",
+   "name": "fixture_ids_differ_but_realizations_collapse",
+   "observed": "collapsed",
+   "ok": true
+  },
+  {
+   "expect": "collapsed",
+   "name": "volatile_fields_do_not_create_fake_diversity",
+   "observed": "collapsed",
+   "ok": true
+  },
+  {
+   "expect": "not_collapsed",
+   "name": "genuine_answer_diversity_clears",
+   "observed": "not_collapsed",
+   "ok": true
+  },
+  {
+   "expect": "collapsed",
+   "name": "stratum_grouping_partitions_a_multi_stratum_lane",
+   "observed": "collapsed",
+   "ok": true
+  },
+  {
+   "expect": "not_collapsed",
+   "name": "stratum_grouping_detects_within_group_diversity",
+   "observed": "not_collapsed",
+   "ok": true
+  },
+  {
+   "expect": "refusal",
+   "name": "out_of_order_route_evidence_refuses",
+   "observed": "refusal",
+   "ok": true
+  },
+  {
+   "expect": "refusal",
+   "name": "missing_route_evidence_refuses",
+   "observed": "refusal",
+   "ok": true
+  },
+  {
+   "expect": "refusal",
+   "name": "duplicate_fixture_in_lane_refuses",
+   "observed": "refusal",
+   "ok": true
+  },
+  {
+   "expect": "refusal",
+   "name": "lane_cardinality_not_k_refuses",
+   "observed": "refusal",
+   "ok": true
+  },
+  {
+   "expect": "refusal",
+   "name": "zero_runs_refuse",
+   "observed": "refusal",
+   "ok": true
+  }
+ ],
+ "conformance_vectors_sha256": "2fb6be087b3999a1919dd970337d6115ddf77e621938ba204ffd3c8e761b8c1a",
+ "detector_contract": {
+  "calibration_k": 5,
+  "collapse_rule": "branch collapsed iff every populated lane/leg has exactly one identical (answer, route) realization across its K distinct fixture runs",
+  "detector_id": "efc_production_collapse_v1",
+  "grouping": "stratum x lane/leg within one engine branch (\u00a710.2 pins K per stratum x lane x branch); the stratum comes from the pinned packet's fixture bytes; lane/stratum are grouping keys, never route components",
+  "implementation_module": "harness/efc_collapse_production.py",
+  "implementation_module_sha256": "4ff61737c152302eb2ff9ecb7638a9b1a88a365d1a1c8ede82a63f4d789b6010",
+  "projection_id": "efc_production_route_projection_v1",
+  "realization": "sha256_canonical({answer_sha256, route_sha256}); answer is the exact raw UTF-8 answer SHA-256 the controller recorded at model_action",
+  "refusals": "malformed, missing, duplicate, or out-of-order route evidence refuses; duplicate fixture in a lane refuses; lane cardinality != K refuses; zero runs refuse",
+  "route_excluded": [
+   "event ids",
+   "timestamps",
+   "token counts",
+   "governance_steps",
+   "world-oracle outcome",
+   "cost_recompute payloads",
+   "fixture identity",
+   "trigger_result_sha256 (fixture-derived)",
+   "placebo_sha256 (fixture-pinned bytes)",
+   "scope_matches (fixture-scope-derived; including it would make trigger-matching lanes collapse-immune by construction \u2014 the verdict still reaches the model via the prompt, so a degenerate single-realization engine is detected regardless)"
+  ],
+  "route_included": [
+   "activation outcome (trigger_fires, forced_inactive)",
+   "external-check realization (started+completed vs silent)",
+   "treatment class (named_check vs pinned_placebo_evidence vs none) with normalized silent reason",
+   "check-evidence identity when a named check ran (check_id, comparison_rule_id)",
+   "model-action/commit path",
+   "canonical event-kind order"
+  ],
+  "route_source": "harness-authored replayable \u00a713 ledger rows only; never model claims",
+  "schema_version": "efc_production_collapse_contract_v1",
+  "spec_clause": "SPEC_EPISTEMIC_FRAME_CHECK_V0 \u00a710.2",
+  "t07_rule": "exactly one same-identity diagnostic pass at T=0.7 is authorized only if T=0.5 collapses; probes are never rerun; continued collapse is point_mode_diagnostic, not admission evidence"
+ },
+ "detector_contract_sha256": "1474a4921f238d3b25ac112b09b33000ebee470d2dda1fe32ab86c3102cc5f0d",
+ "disclosure": {
+  "engines_contacted": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0,
+  "real_inference_calls": 0
+ },
+ "schema_version": "efc_p2_collapse_contract_pin_v1",
+ "seat": "claude/fable-5"
+}

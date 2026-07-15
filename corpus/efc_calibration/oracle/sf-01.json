@@ -1,0 +1,38 @@
+{
+ "authoritative_scope": "RUSTSEC-2026-0002: affected crate lru (crates.io), versions >= 0.9.0 and < 0.16.3",
+ "capture_path": "corpus/efc_calibration/_acquisition/k1/captures/capA-01/raw.json",
+ "cited_text": "RUSTSEC-2026-0002 (lru): `IterMut` violates Stacked Borrows by invalidating internal pointer. Affected versions: >= 0.9.0, < 0.16.3; first fixed release 0.16.3.",
+ "entity_keys": [
+  "lru",
+  "RUSTSEC-2026-0002",
+  "GHSA-rhfx-m35p-ff5j"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "fixed": "0.16.3",
+  "id": "RUSTSEC-2026-0002",
+  "introduced": "0.9.0",
+  "pkg": "lru",
+  "summary": "`IterMut` violates Stacked Borrows by invalidating internal pointer"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "introduced": "/affected/0/ranges/0/events/0/introduced",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "A01",
+ "oracle_id": "efc-cal-oracle-sf-01",
+ "raw_sha256": "5e9e5c99b25f3b25c2ec375a4d9fde03fc435a05e35e3cb894d13b3024e0c275",
+ "record_id": "RUSTSEC-2026-0002",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T15:12:07Z",
+ "sidecar_sha256": "16f22901c010c8a17b5ab11a5a1fad97ebdc50a78d86218467855355be0ab8be",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002",
+ "task_id": "sf-01"
+}

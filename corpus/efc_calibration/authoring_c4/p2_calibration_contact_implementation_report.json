@@ -1,0 +1,74 @@
+{
+ "active_pin_event_id": "efc-cal-manifest-pin-2600d1fdba7b-s2",
+ "assignment": "P2 production calibration authority and collapse detector (pre-contact)",
+ "authorizes_calibration_contact": false,
+ "check_contract_sha256": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b",
+ "collapse_contract_pin": {
+  "detector_contract_sha256": "1474a4921f238d3b25ac112b09b33000ebee470d2dda1fe32ab86c3102cc5f0d",
+  "path": "corpus/efc_calibration/authoring_c4/p2_production_collapse_contract.json",
+  "sha256": "a79485f4718ebca96f7aa7d3cba1d10a263a927fe9b997fb27b577cef6911963"
+ },
+ "disclosure": {
+  "engines_contacted": 0,
+  "held_out_fixtures_authored": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0,
+  "real_inference_calls": 0
+ },
+ "future_contact_commands": [
+  {
+   "command": "python3 -m harness.efc_calibration_contact --contact --branch local --output-dir <dir>",
+   "condition": "T=0.7 pass only if the pinned detector says T=0.5 collapsed",
+   "conditional_calls": 105,
+   "max_real_calls": 210,
+   "unconditional_calls": 105
+  },
+  {
+   "command": "python3 -m harness.efc_calibration_contact --contact --branch api --output-dir <dir>",
+   "condition": "T=0.7 pass only if the pinned detector says T=0.5 collapsed",
+   "conditional_calls": 105,
+   "max_real_calls": 210,
+   "unconditional_calls": 105
+  }
+ ],
+ "modified_shared_modules_sha256": {
+  "harness/efc_controller.py": "0a95430393c19659ee8f422f3efd928964681af5431d0418d9848498800e06db",
+  "harness/efc_packet.py": "3232ccd4c3df89e9fd6d5ed0cbaed3c6d9740abdddff1d4eaf6b09efc4a1076a"
+ },
+ "module_sha256": {
+  "harness/efc_calibration_contact.py": "1e71cc97daaa7fce4f2cd2add96b73ecd3f16a639885a8b83db1770b43dcc9c5",
+  "harness/efc_collapse_production.py": "4ff61737c152302eb2ff9ecb7638a9b1a88a365d1a1c8ede82a63f4d789b6010"
+ },
+ "probe_policy": "P1 result imported as bound prior event; probes are never rerun by this surface",
+ "provider_cache": "unverified",
+ "roster_branch_order": [
+  "local",
+  "api"
+ ],
+ "schema_version": "efc_p2_calibration_contact_report_v1",
+ "seat": "claude/fable-5",
+ "structural_findings_blocking_contact": [
+  {
+   "consequence": "authorize_calibration_contact refuses on the real tree until the scorer is authored and cold-reviewed under a separate ruling",
+   "expected_artifact": "corpus/efc_calibration/oracle/world_oracle_answer_key.json",
+   "expected_schema": "efc_world_oracle_answer_key_v1",
+   "finding": "no pinned production world-oracle answer scorer"
+  },
+  {
+   "consequence": "authority refuses at mint; extending structured_inputs_v1 is pinned-content work requiring a separate ruling",
+   "finding": "population bindings missing for irrelevant-stratum fixtures under A_always_check",
+   "missing_fixture_ids": [
+    "ir-01",
+    "ir-02",
+    "ir-03",
+    "ir-04",
+    "ir-05"
+   ]
+  }
+ ],
+ "test_sha256": {
+  "tests/test_efc_calibration_contact.py": "66f74780ea740fbea6a4d470e49c2d8144457b6a1e54fb4d13059a16ef1b1c3d",
+  "tests/test_efc_collapse_production.py": "17ea6f1b20892ad417bc63af2d90ade448b4c6b6dcdffc10e59bf4d175564964"
+ }
+}

@@ -1,0 +1,241 @@
+{
+ "entries": [
+  {
+   "id": "sf-01",
+   "path": "s_family/sf-01.json",
+   "role": "s_family",
+   "sha256": "ab336703428bc623e542de7427137dde40224bd229967fded5e0e53864fa6d8d"
+  },
+  {
+   "id": "sf-02",
+   "path": "s_family/sf-02.json",
+   "role": "s_family",
+   "sha256": "9795a4f26c60aa3d002308506d8f081ae91cdffb544fdaa1e9efc29fa9b260b3"
+  },
+  {
+   "id": "sf-03",
+   "path": "s_family/sf-03.json",
+   "role": "s_family",
+   "sha256": "bc8a9ad0c89a7aea68b95df6e84c92d4978538cc40f840bbccd09d996bd33ee0"
+  },
+  {
+   "id": "sf-04",
+   "path": "s_family/sf-04.json",
+   "role": "s_family",
+   "sha256": "24fc0b385d3a286253c4b266ca69d90b83d44d468df5a4ee278d654d2f68f95b"
+  },
+  {
+   "id": "sf-05",
+   "path": "s_family/sf-05.json",
+   "role": "s_family",
+   "sha256": "915a9edfe088399a6cbb714a98bb01dec1ab0508d30252921ffbca8f6a31d1b7"
+  },
+  {
+   "id": "mm-01",
+   "path": "analog/mm-01.json",
+   "role": "analog",
+   "sha256": "6b2ec67767550caeba8d0401bc837b358b736627d4ad187b72d52cf9c53e8899"
+  },
+  {
+   "id": "mm-02",
+   "path": "analog/mm-02.json",
+   "role": "analog",
+   "sha256": "b5d9306a229774ffb7106b89fdf06a74a9889693d12251f56cbf013e81a36b4d"
+  },
+  {
+   "id": "mm-03",
+   "path": "analog/mm-03.json",
+   "role": "analog",
+   "sha256": "e3e766def9584650a4753e4298ec8b512dd990e064a8cbf90ca584c4908db89f"
+  },
+  {
+   "id": "mm-04",
+   "path": "analog/mm-04.json",
+   "role": "analog",
+   "sha256": "9c6bc6cd602345c81df1f621761e6297d367639257181bfdcae726618827f455"
+  },
+  {
+   "id": "mm-05",
+   "path": "analog/mm-05.json",
+   "role": "analog",
+   "sha256": "37addc27591d7374d3a8d74566633708e10c63806a67042a05cac7720b5434e3"
+  },
+  {
+   "id": "mc-01",
+   "path": "analog/mc-01.json",
+   "role": "analog",
+   "sha256": "35c338d5dab8792adff54632f990a9292524d6ff533beab61735a3ecb9adc90c"
+  },
+  {
+   "id": "mc-02",
+   "path": "analog/mc-02.json",
+   "role": "analog",
+   "sha256": "035dd48b0df6a2095a108aaac4549f91e71fe945db8222a37001a6b80d046b08"
+  },
+  {
+   "id": "mc-03",
+   "path": "analog/mc-03.json",
+   "role": "analog",
+   "sha256": "82675a78d39012857b65730d6ea89a03eca36dd905e1755da9dc1878a5d2a9c6"
+  },
+  {
+   "id": "mc-04",
+   "path": "analog/mc-04.json",
+   "role": "analog",
+   "sha256": "968a0f6c2a588d96716663f30f0f556589b70121c52ab9657dc5394d79fdb3c8"
+  },
+  {
+   "id": "mc-05",
+   "path": "analog/mc-05.json",
+   "role": "analog",
+   "sha256": "591672b4307ceed2a4b79e0060117d52506e45c14b27638abf52c3d8019cff08"
+  },
+  {
+   "id": "ir-01",
+   "path": "analog/ir-01.json",
+   "role": "analog",
+   "sha256": "abae8c9ea8d2abe8c566f15468abc610561293e62727fb60ed8081e479816240"
+  },
+  {
+   "id": "ir-02",
+   "path": "analog/ir-02.json",
+   "role": "analog",
+   "sha256": "d670b688bc398d112271573ab7ab6059c22b705e1986b3f967d6a934ca7f09ed"
+  },
+  {
+   "id": "ir-03",
+   "path": "analog/ir-03.json",
+   "role": "analog",
+   "sha256": "5c139ff0e300fc34be25c9f342292a62d523d111c6f80db3b76acf30184a9eae"
+  },
+  {
+   "id": "ir-04",
+   "path": "analog/ir-04.json",
+   "role": "analog",
+   "sha256": "b4e4ebb2da8a6651d263673de11f1460e83e20b0ceb1e97704f98df876b552b6"
+  },
+  {
+   "id": "ir-05",
+   "path": "analog/ir-05.json",
+   "role": "analog",
+   "sha256": "f6a58dfe3e785fee2a83e0300e0bc91df6c589f8406d7f967f937f04f6d13a27"
+  },
+  {
+   "id": "pb-sf-01",
+   "path": "placebo/pb-sf-01.json",
+   "role": "placebo",
+   "sha256": "a1735b0a807201617a6cc122307f5ea2ce5e5b42d0525f3718848199d2c91b4b"
+  },
+  {
+   "id": "pb-sf-02",
+   "path": "placebo/pb-sf-02.json",
+   "role": "placebo",
+   "sha256": "ad74d56efe4554456790be0090c1a9c411a4535fe006d692e077c1b739978674"
+  },
+  {
+   "id": "pb-sf-03",
+   "path": "placebo/pb-sf-03.json",
+   "role": "placebo",
+   "sha256": "03bfeb9b1170b3bbb0f44c596c89881a70955f56db3b6710ec84558a5e45b0fb"
+  },
+  {
+   "id": "pb-sf-04",
+   "path": "placebo/pb-sf-04.json",
+   "role": "placebo",
+   "sha256": "7661e68c23071a9348af76aae7828316124fbe1f7e08c526e5f1155c7b49f29a"
+  },
+  {
+   "id": "pb-sf-05",
+   "path": "placebo/pb-sf-05.json",
+   "role": "placebo",
+   "sha256": "4f371e72ddb9d3272c95115732270e4ef2775d75a2e93e06cdd7b1e3420ca407"
+  },
+  {
+   "id": "pb-mm-01",
+   "path": "placebo/pb-mm-01.json",
+   "role": "placebo",
+   "sha256": "60151e0099284dc027d30e15d696892f3720c95c26d1e6a67438857a3fd7b8be"
+  },
+  {
+   "id": "pb-mm-02",
+   "path": "placebo/pb-mm-02.json",
+   "role": "placebo",
+   "sha256": "3e299c4e3a11466cc3742e450c7bb536de4db9d75caf105913b3802f77881078"
+  },
+  {
+   "id": "pb-mm-03",
+   "path": "placebo/pb-mm-03.json",
+   "role": "placebo",
+   "sha256": "43b07e20b9e207eca693d6c441154184d755f26dd1b799d74f728d6c6fe60623"
+  },
+  {
+   "id": "pb-mm-04",
+   "path": "placebo/pb-mm-04.json",
+   "role": "placebo",
+   "sha256": "0084f834e7f868828b73c3c28f85c8afd1343eeedb72f37ee5d7a4ee7f480c73"
+  },
+  {
+   "id": "pb-mm-05",
+   "path": "placebo/pb-mm-05.json",
+   "role": "placebo",
+   "sha256": "6c413a2bb9cf8e9f3512bd673521d30f018487b15d0f41232cc8446cef83a34a"
+  },
+  {
+   "id": "pb-mc-01",
+   "path": "placebo/pb-mc-01.json",
+   "role": "placebo",
+   "sha256": "ffdfeaecf7a048de2d6a9012ee8167138f9f6f11524a80528af470ba131bfc04"
+  },
+  {
+   "id": "pb-mc-02",
+   "path": "placebo/pb-mc-02.json",
+   "role": "placebo",
+   "sha256": "2f601e2fc7262ce884d75d9794ec51f3d7ff43fb710d4192f7c37602dd64ba15"
+  },
+  {
+   "id": "pb-mc-03",
+   "path": "placebo/pb-mc-03.json",
+   "role": "placebo",
+   "sha256": "6312d69603560c108612a3b246fb47d58bebf43a6ce0f08e67848d7c803dc77d"
+  },
+  {
+   "id": "pb-mc-04",
+   "path": "placebo/pb-mc-04.json",
+   "role": "placebo",
+   "sha256": "cfe77772638ffb582b440a949965c07d4352c7dde17b77bdba16a51cc58f2b4c"
+  },
+  {
+   "id": "pb-mc-05",
+   "path": "placebo/pb-mc-05.json",
+   "role": "placebo",
+   "sha256": "2b1517b2fb8eed4d089dce6b612a95b730781069ecceb2203df556218c2f3c76"
+  },
+  {
+   "id": "ignorance-probe-contract",
+   "path": "probes/ignorance_probe_contract.json",
+   "role": "probe_contract",
+   "sha256": "36f9d729d0044468eacc9cd122b814daaec3084ee0274934ed8010d9d03aeb00"
+  },
+  {
+   "id": "synthetic-carrier",
+   "path": "carrier/synthetic_carrier.json",
+   "role": "carrier",
+   "sha256": "cdcf3bf8342faa743a94b88d6edf35f57872f30e76ee76ae2408b78a348d2377"
+  }
+ ],
+ "packet_id": "efc_calibration_packet_v0_c2_draft",
+ "siblings": {
+  "difficulty_rationale": {
+   "path": "difficulty_rationale.md",
+   "sha256": "e1216a5eedb6be15668aa57a944e5cfe94e7b21dd2984ce4651c669280b44b16"
+  },
+  "exclusion_manifest": {
+   "path": "exclusion/exclusion_manifest.json",
+   "sha256": "23d068e3cea6f85f11737e5462e805d87cf8770972f45fba1c4b64433a0f27f7"
+  },
+  "isolation_contract": {
+   "path": "isolation_contract.md",
+   "sha256": "5f4555bf303fea3e919debde50650f56c7ab3ee361928a950cd396935a78f7ae"
+  }
+ }
+}

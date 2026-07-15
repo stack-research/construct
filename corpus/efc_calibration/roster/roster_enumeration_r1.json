@@ -1,0 +1,196 @@
+{
+ "api_branch": {
+  "chat_candidate_count": 61,
+  "endpoint_base_url_sanitized": "https://api.openai.com/v1",
+  "full_response_bytes": 16390,
+  "http_status": 200,
+  "inference_performed": false,
+  "nomination_disclosure": "R1 returns ranked nominations only; Sol must freeze one exact model id before R2 decoding wire checks.",
+  "nomination_set": [
+   {
+    "claude_family_excluded": true,
+    "listing_record": {
+     "created": 1772654062,
+     "id": "gpt-5.4-2026-03-05",
+     "object": "model",
+     "owned_by": "system"
+    },
+    "model_id": "gpt-5.4-2026-03-05",
+    "parameter_support": {
+     "fixed_maximum_output_tokens": "official_contract_pending",
+     "stateless_independent_chat_calls": "official_contract_pending",
+     "temperature_0_5": "official_contract_pending",
+     "temperature_0_7": "official_contract_pending",
+     "text_only_request_response_shape": "listing_proven"
+    },
+    "rank": 1,
+    "reasoning_surface": "Dated GPT-5.4 snapshot; prior PRF Phase-0 admission transport precedent in repo; general text/reasoning chat surface.",
+    "risk_flags": [
+     "listing_does_not_prove_temperature_or_token_param_names",
+     "gpt5_family_may_require_max_completion_tokens_per_prior_repo_transport_note",
+     "no_inference_call_performed_in_R1"
+    ]
+   },
+   {
+    "claude_family_excluded": true,
+    "listing_record": {
+     "created": 1776839241,
+     "id": "gpt-5.5-2026-04-23",
+     "object": "model",
+     "owned_by": "system"
+    },
+    "model_id": "gpt-5.5-2026-04-23",
+    "parameter_support": {
+     "fixed_maximum_output_tokens": "official_contract_pending",
+     "stateless_independent_chat_calls": "official_contract_pending",
+     "temperature_0_5": "official_contract_pending",
+     "temperature_0_7": "official_contract_pending",
+     "text_only_request_response_shape": "listing_proven"
+    },
+    "rank": 2,
+    "reasoning_surface": "Newer dated GPT-5.5 snapshot from live listing; general-purpose successor line if room wants fresher frontier.",
+    "risk_flags": [
+     "listing_does_not_prove_temperature_or_token_param_names",
+     "gpt5_family_may_require_max_completion_tokens_per_prior_repo_transport_note",
+     "no_inference_call_performed_in_R1"
+    ]
+   },
+   {
+    "claude_family_excluded": true,
+    "listing_record": {
+     "created": 1744315746,
+     "id": "gpt-4.1-2025-04-14",
+     "object": "model",
+     "owned_by": "system"
+    },
+    "model_id": "gpt-4.1-2025-04-14",
+    "parameter_support": {
+     "fixed_maximum_output_tokens": "official_contract_pending",
+     "stateless_independent_chat_calls": "official_contract_pending",
+     "temperature_0_5": "official_contract_pending",
+     "temperature_0_7": "official_contract_pending",
+     "text_only_request_response_shape": "listing_proven"
+    },
+    "rank": 3,
+    "reasoning_surface": "Stable dated GPT-4.1 snapshot; conventional chat-completions surface; lower parameter-risk than GPT-5 family.",
+    "risk_flags": [
+     "listing_does_not_prove_temperature_or_token_param_names",
+     "gpt5_family_may_require_max_completion_tokens_per_prior_repo_transport_note",
+     "no_inference_call_performed_in_R1"
+    ]
+   },
+   {
+    "claude_family_excluded": true,
+    "listing_record": {
+     "created": 1739331543,
+     "id": "gpt-4o-2024-11-20",
+     "object": "model",
+     "owned_by": "system"
+    },
+    "model_id": "gpt-4o-2024-11-20",
+    "parameter_support": {
+     "fixed_maximum_output_tokens": "official_contract_pending",
+     "stateless_independent_chat_calls": "official_contract_pending",
+     "temperature_0_5": "official_contract_pending",
+     "temperature_0_7": "official_contract_pending",
+     "text_only_request_response_shape": "listing_proven"
+    },
+    "rank": 4,
+    "reasoning_surface": "Stable dated GPT-4o snapshot; established chat API; fallback if GPT-5 parameter surface blocks wire checks.",
+    "risk_flags": [
+     "listing_does_not_prove_temperature_or_token_param_names",
+     "gpt5_family_may_require_max_completion_tokens_per_prior_repo_transport_note",
+     "no_inference_call_performed_in_R1"
+    ]
+   },
+   {
+    "claude_family_excluded": true,
+    "listing_record": {
+     "created": 1744133506,
+     "id": "o4-mini-2025-04-16",
+     "object": "model",
+     "owned_by": "system"
+    },
+    "model_id": "o4-mini-2025-04-16",
+    "parameter_support": {
+     "fixed_maximum_output_tokens": "official_contract_pending",
+     "stateless_independent_chat_calls": "official_contract_pending",
+     "temperature_0_5": "official_contract_pending",
+     "temperature_0_7": "official_contract_pending",
+     "text_only_request_response_shape": "listing_proven"
+    },
+    "rank": 5,
+    "reasoning_surface": "Dated reasoning-mini line; only if room accepts reasoning-model decoding differences in R2 contract.",
+    "risk_flags": [
+     "listing_does_not_prove_temperature_or_token_param_names",
+     "gpt5_family_may_require_max_completion_tokens_per_prior_repo_transport_note",
+     "no_inference_call_performed_in_R1"
+    ]
+   }
+  ],
+  "relevant_subset_model_count": 129,
+  "relevant_subset_sha256": "184c4a50d9fc47cea3e7a587094b883cf865ef81d499a05a82fe72da2e5c584c",
+  "request": {
+   "authorization": "Bearer [REDACTED]",
+   "method": "GET",
+   "path": "/v1/models"
+  }
+ },
+ "assignment": "R1 roster enumeration \u2014 listing only, zero inference",
+ "call_disclosure": {
+  "inference_calls": 0,
+  "listing_calls": 2,
+  "packet_fixture_probe_or_task_text_sent": false,
+  "retries": 0
+ },
+ "local_branch": {
+  "accepted_model_id": "openai/gpt-oss-20b",
+  "accepted_model_id_present_exact": true,
+  "endpoint_base_url_sanitized": "http://localhost:1234/v1",
+  "http_status": 200,
+  "inference_performed": false,
+  "models_listed": [
+   {
+    "id": "openai/gpt-oss-20b",
+    "object": "model",
+    "owned_by": "organization_owner"
+   },
+   {
+    "id": "mistralai/ministral-3-14b-reasoning",
+    "object": "model",
+    "owned_by": "organization_owner"
+   },
+   {
+    "id": "mistralai/ministral-3-3b",
+    "object": "model",
+    "owned_by": "organization_owner"
+   },
+   {
+    "id": "google/gemma-4-e4b",
+    "object": "model",
+    "owned_by": "organization_owner"
+   },
+   {
+    "id": "text-embedding-nomic-embed-text-v1.5",
+    "object": "model",
+    "owned_by": "organization_owner"
+   }
+  ],
+  "provider_metadata": {
+   "listing_object_type": "list",
+   "owned_by_values": [
+    "organization_owner"
+   ]
+  },
+  "relevant_subset_sha256": "31258a0552bba14ccf3dfe316e0cb7219dc8d627a55151954e25fe375d10ea2c",
+  "request": {
+   "authorization": null,
+   "method": "GET",
+   "path": "/v1/models"
+  },
+  "response_bytes": 634,
+  "response_sha256": "effbb38221d4542de34e7dd07baf481f000ffde89231ba55dc45e7e077387910"
+ },
+ "retrieval_timestamp_utc": "2026-07-15T01:08:38Z",
+ "schema_version": "efc-roster-enumeration-r1-v1"
+}

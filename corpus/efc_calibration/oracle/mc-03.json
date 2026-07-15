@@ -1,0 +1,41 @@
+{
+ "authoritative_scope": "GO-2026-4958: affected module github.com/moby/spdystream, versions < 0.5.1; vulnerable symbols in github.com/moby/spdystream include NewConnection",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2b/captures/capD-06/raw.json",
+ "cited_text": "GO-2026-4958 (github.com/moby/spdystream): Uncontrolled resource consumption when parsing SPDY frames in github.com/moby/spdystream. Affected: versions < 0.5.1; vulnerable symbols in github.com/moby/spdystream include NewConnection.",
+ "entity_keys": [
+  "github.com/moby/spdystream",
+  "GO-2026-4958",
+  "CVE-2026-35469",
+  "GHSA-pc3f-x583-g7j2"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "fixed": "0.5.1",
+  "id": "GO-2026-4958",
+  "mod": "github.com/moby/spdystream",
+  "summary": "Uncontrolled resource consumption when parsing SPDY frames in github.com/moby/spdystream",
+  "sym1": "NewConnection",
+  "sympath": "github.com/moby/spdystream"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary",
+   "sym1": "/affected/0/ecosystem_specific/imports/0/symbols/1",
+   "sympath": "/affected/0/ecosystem_specific/imports/0/path"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "D06",
+ "oracle_id": "efc-cal-oracle-mc-03",
+ "raw_sha256": "619992c4761c7f868db2a07f585e95b08e597251ca2ae136fcce40e1cde02607",
+ "record_id": "GO-2026-4958",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T20:53:30Z",
+ "sidecar_sha256": "c824c8edb977ea821f96f9158cb12a447433bca6e0a39b31b28a842237ec06c1",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json",
+ "task_id": "mc-03"
+}

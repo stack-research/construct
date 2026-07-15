@@ -1,0 +1,1205 @@
+Deprecated API Migration Guide | Kubernetes
+Kubernetes
+Documentation
+Kubernetes Blog
+Training
+Careers
+Partners
+Community
+Versions
+Release Information
+v1.36
+v1.35
+v1.34
+v1.33
+v1.32
+English
+中文 (Chinese)
+বাংলা (Bengali)
+Français (French)
+Deutsch (German)
+हिन्दी (Hindi)
+Bahasa Indonesia (Indonesian)
+Italiano (Italian)
+日本語 (Japanese)
+한국어 (Korean)
+فارسی (Persian)
+Polski (Polish)
+Português (Portuguese)
+Русский (Russian)
+Español (Spanish)
+Українська (Ukrainian)
+Tiếng Việt (Vietnamese)
+Light
+Dark
+Auto
+Deprecated API Migration Guide
+English
+বাংলা (Bengali)
+中文 (Chinese)
+Français (French)
+Deutsch (German)
+हिन्दी (Hindi)
+Bahasa Indonesia (Indonesian)
+Italiano (Italian)
+日本語 (Japanese)
+한국어 (Korean)
+Polski (Polish)
+Português (Portuguese)
+Русский (Russian)
+Español (Spanish)
+Українська (Ukrainian)
+Tiếng Việt (Vietnamese)
+فارسی (Persian)
+Kubernetes Documentation
+Documentation
+Available Documentation Versions
+Getting started
+Learning environment
+Production environment
+Container Runtimes
+Installing Kubernetes with deployment tools
+Bootstrapping clusters with kubeadm
+Installing kubeadm
+Troubleshooting kubeadm
+Creating a cluster with kubeadm
+Customizing components with the kubeadm API
+Options for Highly Available Topology
+Creating Highly Available Clusters with kubeadm
+Set up a High Availability etcd Cluster with kubeadm
+Configuring each kubelet in your cluster using kubeadm
+Dual-stack support with kubeadm
+Turnkey Cloud Solutions
+Best practices
+Considerations for large clusters
+Running in multiple zones
+Validate node setup
+Enforcing Pod Security Standards
+PKI certificates and requirements
+Concepts
+Overview
+Kubernetes Components
+Objects In Kubernetes
+Kubernetes Object Management
+Object Names and IDs
+Labels and Selectors
+Namespaces
+Annotations
+Field Selectors
+Finalizers
+Owners and Dependents
+Recommended Labels
+Storage Versions
+The Kubernetes API
+The kubectl command-line tool
+Cluster Architecture
+Nodes
+Communication between Nodes and the Control Plane
+Controllers
+Leases
+Cloud Controller Manager
+About cgroup v2
+Kubernetes Self-Healing
+Garbage Collection
+Mixed Version Proxy
+Containers
+Images
+Container Environment
+Runtime Class
+Container Lifecycle Hooks
+Container Runtime Interface (CRI)
+Workloads
+Pods
+Pod Lifecycle
+Pod Conditions
+Init Containers
+Sidecar Containers
+Ephemeral Containers
+Liveness, Readiness, and Startup Probes
+Disruptions
+Pod Hostname
+Pod Quality of Service Classes
+Scheduling Group
+Static Pods
+User Namespaces
+Downward API
+Advanced Pod Configuration
+Workload API
+Pod Group Disruption and Priority
+PodGroup Scheduling Policies
+Topology-Aware Workload Scheduling
+Workload Management
+Deployments
+ReplicaSet
+StatefulSets
+DaemonSet
+Jobs
+Automatic Cleanup for Finished Jobs
+CronJob
+ReplicationController
+PodGroup API
+PodGroup Lifecycle
+Managing Workloads
+Autoscaling Workloads
+Horizontal Pod Autoscaling
+Resource managers
+Vertical Pod Autoscaling
+Services, Load Balancing, and Networking
+Service
+Ingress
+Ingress Controllers
+Gateway API
+EndpointSlices
+Network Policies
+DNS for Services and Pods
+IPv4/IPv6 dual-stack
+Topology Aware Routing
+Networking on Windows
+Service ClusterIP allocation
+Service Internal Traffic Policy
+Storage
+Volumes
+Persistent Volumes
+Projected Volumes
+Ephemeral Volumes
+Storage Classes
+Volume Attributes Classes
+Dynamic Volume Provisioning
+Volume Snapshots
+Volume Snapshot Classes
+CSI Volume Cloning
+Volume Populators and Data Sources
+Storage Capacity
+Node-specific Volume Limits
+Local ephemeral storage
+Volume Health Monitoring
+Windows Storage
+Configuration
+ConfigMaps
+Secrets
+Resource Management for Pods and Containers
+Organizing Cluster Access Using kubeconfig Files
+Resource Management for Windows nodes
+Security
+Cloud Native Security
+Pod Security Standards
+Pod Security Admission
+Service Accounts
+Pod Security Policies
+Security For Linux Nodes
+Security For Windows Nodes
+Controlling Access to the Kubernetes API
+Role Based Access Control Good Practices
+Good practices for Kubernetes Secrets
+Multi-tenancy
+Hardening Guide - Authentication Mechanisms
+Hardening Guide - Dynamic Resource Allocation
+Hardening Guide - Scheduler Configuration
+Kubernetes API Server Bypass Risks
+Linux kernel security constraints for Pods and containers
+Security Checklist
+Application Security Checklist
+Policies
+Limit Ranges
+Resource Quotas
+Process ID Limits And Reservations
+Scheduling, Preemption and Eviction
+Kubernetes Scheduler
+Topology-Aware Workload Scheduling
+Assigning Pods to Nodes
+Pod Overhead
+Pod Scheduling Readiness
+Pod Topology Spread Constraints
+Taints and Tolerations
+Scheduling Framework
+Dynamic Resource Allocation
+Gang Scheduling
+Scheduler Performance Tuning
+PodGroup Scheduling
+Resource Bin Packing
+Workload-Aware Preemption
+Pod Priority and Preemption
+Node-pressure Eviction
+API-initiated Eviction
+Node Declared Features
+Cluster Administration
+Node Shutdowns
+Swap memory management
+Node Autoscaling
+Certificates
+Cluster Networking
+Observability
+Admission Webhook Good Practices
+Good practices for Dynamic Resource Allocation as a Cluster Admin
+Logging Architecture
+Compatibility Version For Kubernetes Control Plane Components
+Metrics For Kubernetes System Components
+Metrics for Kubernetes Object States
+System Logs
+Traces For Kubernetes System Components
+Proxies in Kubernetes
+API Priority and Fairness
+Installing Addons
+Coordinated Leader Election
+Windows in Kubernetes
+Windows containers in Kubernetes
+Guide for Running Windows Containers in Kubernetes
+Extending Kubernetes
+Compute, Storage, and Networking Extensions
+Network Plugins
+Device Plugins
+Extending the Kubernetes API
+Custom Resources
+Kubernetes API Aggregation Layer
+Operator pattern
+Tasks
+Install Tools
+Install and Set Up kubectl on Linux
+Install and Set Up kubectl on macOS
+Install and Set Up kubectl on Windows
+Administer a Cluster
+Administration with kubeadm
+Adding Linux worker nodes
+Adding Windows worker nodes
+Upgrading kubeadm clusters
+Upgrading Linux nodes
+Upgrading Windows nodes
+Configuring a cgroup driver
+Certificate Management with kubeadm
+Reconfiguring a kubeadm cluster
+Changing The Kubernetes Package Repository
+Overprovision Node Capacity For A Cluster
+Migrating from dockershim
+Changing the Container Runtime on a Node from Docker Engine to containerd
+Find Out What Container Runtime is Used on a Node
+Troubleshooting CNI plugin-related errors
+Check whether dockershim removal affects you
+Migrating telemetry and security agents from dockershim
+Generate Certificates Manually
+Manage Memory, CPU, and API Resources
+Configure Default Memory Requests and Limits for a Namespace
+Configure Default CPU Requests and Limits for a Namespace
+Configure Minimum and Maximum Memory Constraints for a Namespace
+Configure Minimum and Maximum CPU Constraints for a Namespace
+Configure Memory and CPU Quotas for a Namespace
+Configure a Pod Quota for a Namespace
+Install a Network Policy Provider
+Use Antrea for NetworkPolicy
+Use Calico for NetworkPolicy
+Use Cilium for NetworkPolicy
+Use Kube-router for NetworkPolicy
+Romana for NetworkPolicy
+Weave Net for NetworkPolicy
+Access Clusters Using the Kubernetes API
+Enable Or Disable Feature Gates
+Advertise Extended Resources for a Node
+Autoscale the DNS Service in a Cluster
+Change the Access Mode of a PersistentVolume to ReadWriteOncePod
+Change the default StorageClass
+Switching from Polling to CRI Event-based Updates to Container Status
+Change the Reclaim Policy of a PersistentVolume
+Cloud Controller Manager Administration
+Configure a kubelet image credential provider
+Configure Quotas for API Objects
+Control CPU Management Policies on the Node
+Control Memory Management Policies on a Node
+Control Topology Management Policies on a node
+Customizing DNS Service
+Debugging DNS Resolution
+Declare Network Policy
+Developing Cloud Controller Manager
+Enable Or Disable A Kubernetes API
+Encrypting Confidential Data at Rest
+Decrypt Confidential Data that is Already Encrypted at Rest
+Guaranteed Scheduling For Critical Add-On Pods
+IP Masquerade Agent User Guide
+Limit Storage Consumption
+Migrate Replicated Control Plane To Use Cloud Controller Manager
+Operating etcd clusters for Kubernetes
+Reserve Compute Resources for System Daemons
+Running Kubernetes Node Components as a Non-root User
+Safely Drain a Node
+Securing a Cluster
+Harden Dynamic Resource Allocation in Your Cluster
+Set Kubelet Parameters Via A Configuration File
+Share a Cluster with Namespaces
+Upgrade A Cluster
+Use Cascading Deletion in a Cluster
+Using a KMS provider for data encryption
+Using CoreDNS for Service Discovery
+Using NodeLocal DNSCache in Kubernetes Clusters
+Using sysctls in a Kubernetes Cluster
+Verify Signed Kubernetes Artifacts
+Configure Pods and Containers
+Assign Memory Resources to Containers and Pods
+Assign CPU Resources to Containers and Pods
+Assign Devices to Pods and Containers
+Set Up DRA in a Cluster
+Allocate Devices to Workloads with DRA
+Access DRA Device Metadata
+Assign Pod-level CPU and memory resources
+Configure GMSA for Windows Pods and containers
+Resize CPU and Memory Resources assigned to Containers
+Resize CPU and Memory Resources assigned to Pods
+Configure RunAsUserName for Windows pods and containers
+Create a Windows HostProcess Pod
+Configure Quality of Service for Pods
+Assign Extended Resources to a Container
+Configure a Pod to Use a Volume for Storage
+Configure a Pod to Use a Projected Volume for Storage
+Configure a Security Context for a Pod or Container
+Configure Service Accounts for Pods
+Pull an Image from a Private Registry
+Configure Liveness, Readiness and Startup Probes
+Assign Pods to Nodes
+Assign Pods to Nodes using Node Affinity
+Configure Pod Initialization
+Attach Handlers to Container Lifecycle Events
+Configure a Pod to Use a ConfigMap
+Share Process Namespace between Containers in a Pod
+Use a User Namespace With a Pod
+Use an Image Volume With a Pod
+Create static Pods
+Translate a Docker Compose File to Kubernetes Resources
+Enforce Pod Security Standards by Configuring the Built-in Admission Controller
+Enforce Pod Security Standards with Namespace Labels
+Migrate from PodSecurityPolicy to the Built-In PodSecurity Admission Controller
+Monitoring, Logging, and Debugging
+Logging in Kubernetes
+Monitoring in Kubernetes
+Troubleshooting Applications
+Debug Pods
+Debug Services
+Debug a StatefulSet
+Determine the Reason for Pod Failure
+Debug Init Containers
+Debug Running Pods
+Get a Shell to a Running Container
+Troubleshooting Clusters
+Troubleshooting kubectl
+Resource metrics pipeline
+Tools for Monitoring Resources
+Monitor Node Health
+Debugging Kubernetes nodes with crictl
+Troubleshooting Topology Management
+Auditing
+Debugging Kubernetes Nodes With Kubectl
+Developing and debugging services locally using telepresence
+Windows debugging tips
+Manage Kubernetes Objects
+Declarative Management of Kubernetes Objects Using Configuration Files
+Declarative Management of Kubernetes Objects Using Kustomize
+Managing Kubernetes Objects Using Imperative Commands
+Imperative Management of Kubernetes Objects Using Configuration Files
+Update API Objects in Place Using kubectl patch
+Migrate Kubernetes Objects Using Storage Version Migration
+Managing Secrets
+Managing Secrets using kubectl
+Managing Secrets using Configuration File
+Managing Secrets using Kustomize
+Inject Data Into Applications
+Define a Command and Arguments for a Container
+Define Dependent Environment Variables
+Define Environment Variables for a Container
+Define Environment Variable Values Using An Init Container
+Expose Pod Information to Containers Through Environment Variables
+Expose Pod Information to Containers Through Files
+Distribute Credentials Securely Using Secrets
+Run Applications
+Run a Stateless Application Using a Deployment
+Horizontal Manual Scaling for a Deployment
+Update a Deployment Without Downtime
+Run a Single-Instance Stateful Application
+Run a Replicated Stateful Application
+Scale a StatefulSet
+Delete a StatefulSet
+Force Delete StatefulSet Pods
+HorizontalPodAutoscaler Walkthrough
+Specifying a Disruption Budget for your Application
+Accessing the Kubernetes API from a Pod
+Run Jobs
+Running Automated Tasks with a CronJob
+Coarse Parallel Processing Using a Work Queue
+Fine Parallel Processing Using a Work Queue
+Indexed Job for Parallel Processing with Static Work Assignment
+Job with Pod-to-Pod Communication
+Parallel Processing using Expansions
+Handling retriable and non-retriable pod failures with Pod failure policy
+Access Applications in a Cluster
+Deploy and Access the Kubernetes Dashboard
+Accessing Clusters
+Configure Access to Multiple Clusters
+Use Port Forwarding to Access Applications in a Cluster
+Use a Service to Access an Application in a Cluster
+Connect a Frontend to a Backend Using Services
+Create an External Load Balancer
+List All Container Images Running in a Cluster
+Communicate Between Containers in the Same Pod Using a Shared Volume
+Configure DNS for a Cluster
+Access Services Running on Clusters
+Extend Kubernetes
+Configure the Aggregation Layer
+Use Custom Resources
+Extend the Kubernetes API with CustomResourceDefinitions
+Versions in CustomResourceDefinitions
+Set up an Extension API Server
+Configure Multiple Schedulers
+Use an HTTP Proxy to Access the Kubernetes API
+Use a SOCKS5 Proxy to Access the Kubernetes API
+Set up Konnectivity service
+TLS
+Issue a Certificate for a Kubernetes API Client Using a CertificateSigningRequest
+Configure Certificate Rotation for the Kubelet
+Manage TLS Certificates in a Cluster
+Manual Rotation of CA Certificates
+Manage Cluster Daemons
+Building a Basic DaemonSet
+Perform a Rolling Update on a DaemonSet
+Perform a Rollback on a DaemonSet
+Running Pods on Only Some Nodes
+Networking
+Adding entries to Pod /etc/hosts with HostAliases
+Extend Service IP Ranges
+Kubernetes Default ServiceCIDR Reconfiguration
+Validate IPv4/IPv6 dual-stack
+Extend kubectl with plugins
+Manage HugePages
+Schedule GPUs
+Tutorials
+Hello Minikube
+Learn Kubernetes Basics
+Create a Cluster
+Using Minikube to Create a Cluster
+Deploy an App
+Using kubectl to Create a Deployment
+Explore Your App
+Viewing Pods and Nodes
+Expose Your App Publicly
+Using a Service to Expose Your App
+Scale Your App
+Running Multiple Instances of Your App
+Update Your App
+Performing a Rolling Update
+Configuration
+Updating Configuration via a ConfigMap
+Configuring Redis using a ConfigMap
+Adopting Sidecar Containers
+Configure a Pod to Use a PersistentVolume for Storage
+Security
+Apply Pod Security Standards at the Cluster Level
+Apply Pod Security Standards at the Namespace Level
+Restrict a Container's Access to Resources with AppArmor
+Restrict a Container's Syscalls with seccomp
+Stateless Applications
+Exposing an External IP Address to Access an Application in a Cluster
+Example: Deploying PHP Guestbook application with Redis
+Stateful Applications
+StatefulSet Basics
+Example: Deploying WordPress and MySQL with Persistent Volumes
+Example: Deploying Cassandra with a StatefulSet
+Running ZooKeeper, A Distributed System Coordinator
+Cluster Management
+Running Kubelet in Standalone Mode
+Configuring swap memory on Kubernetes nodes
+Install Drivers and Allocate Devices with DRA
+Explore Validating and Mutating Admission Policies
+Namespaces Walkthrough
+Services
+Connecting Applications with Services
+Using Source IP
+Explore Termination Behavior for Pods And Their Endpoints
+Reference
+Glossary
+API Overview
+Declarative API Validation
+Kubernetes API Concepts
+Server-Side Apply
+Client Libraries
+Common Expression Language in Kubernetes
+Kubernetes Deprecation Policy
+Deprecated API Migration Guide
+Kubernetes API health endpoints
+API Access Control
+Authenticating
+Authenticating with Bootstrap Tokens
+Authorization
+Using RBAC Authorization
+Using Node Authorization
+Webhook Mode
+Using ABAC Authorization
+Admission Control
+Dynamic Admission Control
+Managing Service Accounts
+User Impersonation
+Certificates and Certificate Signing Requests
+Mapping PodSecurityPolicies to Pod Security Standards
+Kubelet authentication/authorization
+TLS bootstrapping
+Manifest-Based Admission Control
+Mutating Admission Policy
+Validating Admission Policy
+Well-Known Labels, Annotations and Taints
+Audit Annotations
+Kubernetes API
+API Groups
+Admissionregistration
+MutatingAdmissionPolicy
+MutatingAdmissionPolicyBinding
+MutatingWebhookConfiguration
+ValidatingAdmissionPolicy
+ValidatingAdmissionPolicyBinding
+ValidatingWebhookConfiguration
+Apiextensions
+CustomResourceDefinition
+Apiregistration
+APIService
+Apiserverinternal
+StorageVersion
+Apps
+ControllerRevision
+DaemonSet
+Deployment
+ReplicaSet
+StatefulSet
+Autoscaling
+HorizontalPodAutoscaler
+Batch
+CronJob
+Job
+Certificates
+CertificateSigningRequest
+ClusterTrustBundle
+PodCertificateRequest
+Coordination
+Lease
+LeaseCandidate
+Events
+Event
+Core
+ComponentStatus
+ConfigMap
+Endpoints
+Event
+LimitRange
+Namespace
+Node
+PersistentVolume
+PersistentVolumeClaim
+Pod
+PodTemplate
+ReplicationController
+ResourceQuota
+Secret
+Service
+ServiceAccount
+Discovery
+EndpointSlice
+Flowcontrol
+FlowSchema
+PriorityLevelConfiguration
+Networking
+IPAddress
+Ingress
+IngressClass
+NetworkPolicy
+ServiceCIDR
+Node
+RuntimeClass
+Policy
+PodDisruptionBudget
+Rbac
+ClusterRole
+ClusterRoleBinding
+Role
+RoleBinding
+Resource
+DeviceClass
+DeviceTaintRule
+ResourceClaim
+ResourceClaimTemplate
+ResourcePoolStatusRequest
+ResourceSlice
+Scheduling
+PodGroup
+PriorityClass
+Workload
+Storage
+CSIDriver
+CSINode
+CSIStorageCapacity
+StorageClass
+VolumeAttachment
+VolumeAttributesClass
+Storagemigration
+StorageVersionMigration
+Instrumentation
+Service Level Indicator Metrics
+CRI Pod & Container Metrics
+Native Histograms
+Node metrics data
+Understand Pressure Stall Information (PSI) Metrics
+Kubernetes z-pages
+Kubernetes Metrics Reference
+Kubernetes Issues and Security
+Kubernetes Issue Tracker
+Kubernetes Security and Disclosure Information
+CVE feed
+Node Reference Information
+Kubelet Checkpoint API
+Linux Kernel Version Requirements
+Articles on dockershim Removal and on Using CRI-compatible Runtimes
+Kubelet Pod Info gRPC API
+Node Labels Populated By The Kubelet
+Kubelet Sync Loop
+Local Files And Paths Used By The Kubelet
+Kubelet Configuration Directory Merging
+Kubelet Device Manager API Versions
+Kubelet Systemd Watchdog
+Node Status
+Seccomp and Kubernetes
+What Happens After A Node Restart
+Linux Node Swap Behaviors
+Networking Reference
+Protocols for Services
+Ports and Protocols
+Virtual IPs and Service Proxies
+Setup tools
+Kubeadm
+kubeadm init
+kubeadm join
+kubeadm upgrade
+kubeadm upgrade phases
+kubeadm config
+kubeadm reset
+kubeadm token
+kubeadm version
+kubeadm alpha
+kubeadm certs
+kubeadm init phase
+kubeadm join phase
+kubeadm kubeconfig
+kubeadm reset phase
+Implementation details
+Command line tool (kubectl)
+Introduction to kubectl
+kubectl Quick Reference
+kubectl reference
+kubectl
+kubectl annotate
+kubectl api-resources
+kubectl api-versions
+kubectl apply
+kubectl apply edit-last-applied
+kubectl apply set-last-applied
+kubectl apply view-last-applied
+kubectl attach
+kubectl auth
+kubectl auth can-i
+kubectl auth reconcile
+kubectl auth whoami
+kubectl autoscale
+kubectl certificate
+kubectl certificate approve
+kubectl certificate deny
+kubectl cluster-info
+kubectl cluster-info dump
+kubectl completion
+kubectl config
+kubectl config current-context
+kubectl config delete-cluster
+kubectl config delete-context
+kubectl config delete-user
+kubectl config get-clusters
+kubectl config get-contexts
+kubectl config get-users
+kubectl config rename-context
+kubectl config set
+kubectl config set-cluster
+kubectl config set-context
+kubectl config set-credentials
+kubectl config unset
+kubectl config use-context
+kubectl config view
+kubectl cordon
+kubectl cp
+kubectl create
+kubectl create clusterrole
+kubectl create clusterrolebinding
+kubectl create configmap
+kubectl create cronjob
+kubectl create deployment
+kubectl create ingress
+kubectl create job
+kubectl create namespace
+kubectl create poddisruptionbudget
+kubectl create priorityclass
+kubectl create quota
+kubectl create role
+kubectl create rolebinding
+kubectl create secret
+kubectl create secret docker-registry
+kubectl create secret generic
+kubectl create secret tls
+kubectl create service
+kubectl create service clusterip
+kubectl create service externalname
+kubectl create service loadbalancer
+kubectl create service nodeport
+kubectl create serviceaccount
+kubectl create token
+kubectl debug
+kubectl delete
+kubectl describe
+kubectl diff
+kubectl drain
+kubectl edit
+kubectl events
+kubectl exec
+kubectl explain
+kubectl expose
+kubectl get
+kubectl kuberc
+kubectl kuberc set
+kubectl kuberc view
+kubectl kustomize
+kubectl label
+kubectl logs
+kubectl options
+kubectl patch
+kubectl plugin
+kubectl plugin list
+kubectl port-forward
+kubectl proxy
+kubectl replace
+kubectl rollout
+kubectl rollout history
+kubectl rollout pause
+kubectl rollout restart
+kubectl rollout resume
+kubectl rollout status
+kubectl rollout undo
+kubectl run
+kubectl scale
+kubectl set
+kubectl set env
+kubectl set image
+kubectl set resources
+kubectl set selector
+kubectl set serviceaccount
+kubectl set subject
+kubectl taint
+kubectl top
+kubectl top node
+kubectl top pod
+kubectl uncordon
+kubectl version
+kubectl wait
+kubectl Commands
+kubectl
+JSONPath Support
+kubectl for Docker Users
+kubectl Usage Conventions
+Kubectl user preferences (kuberc)
+Encodings
+KYAML Reference
+Component tools
+Feature Gates
+Feature Gates (removed)
+kube-apiserver
+kube-controller-manager
+kube-proxy
+kube-scheduler
+kubelet
+Debug cluster
+Flow control
+Configuration APIs
+Client Authentication (v1)
+Client Authentication (v1beta1)
+Event Rate Limit Configuration (v1alpha1)
+Image Policy API (v1alpha1)
+kube-apiserver Admission (v1)
+kube-apiserver Audit Configuration (v1)
+kube-apiserver Configuration (v1)
+kube-apiserver Configuration (v1alpha1)
+kube-apiserver Configuration (v1beta1)
+kube-controller-manager Configuration (v1alpha1)
+kube-proxy Configuration (v1alpha1)
+kube-scheduler Configuration (v1)
+kubeadm Configuration (v1beta3)
+kubeadm Configuration (v1beta4)
+kubeconfig (v1)
+Kubelet Configuration (v1)
+Kubelet Configuration (v1alpha1)
+Kubelet Configuration (v1beta1)
+Kubelet CredentialProvider (v1)
+kuberc (v1alpha1)
+kuberc (v1beta1)
+WebhookAdmission Configuration (v1)
+External APIs
+Kubernetes Custom Metrics (v1beta2)
+Kubernetes External Metrics (v1beta1)
+Kubernetes Metrics (v1beta1)
+Scheduling
+Scheduler Configuration
+Scheduling Policies
+Other Tools
+Contribute
+Contribute to Kubernetes Documentation
+Contributing to Kubernetes blogs
+Submitting articles to Kubernetes blogs
+Blog guidelines
+Blog article mirroring
+Post-release communications
+Helping as a blog writing buddy
+Suggesting content improvements
+Contributing new content
+Opening a pull request
+Previewing locally
+Documenting for a release
+Case studies
+Reviewing changes
+Reviewing pull requests
+For approvers and reviewers
+Localizing Kubernetes documentation
+Participating in SIG Docs
+Roles and responsibilities
+Issue Wranglers
+PR wranglers
+Documentation style overview
+Content guide
+Style guide
+Diagram guide
+Writing a new topic
+Page content types
+Content organization
+Custom Hugo Shortcodes
+Updating Reference Documentation
+Quickstart
+Contributing to the Upstream Kubernetes Code
+Generating Reference Documentation for the Kubernetes API
+Generating Reference Documentation for kubectl Commands
+Generating Reference Documentation for Metrics
+Generating Reference Pages for Kubernetes Components and Tools
+Advanced contributing
+Viewing Site Analytics
+Docs smoke test page
+Edit this page
+Create child page
+Create an issue
+Print entire section
+Removed APIs by release
+v1.32
+v1.29
+v1.27
+v1.26
+v1.25
+v1.22
+v1.16
+What to do
+Test with deprecated APIs disabled
+Locate use of deprecated APIs
+Migrate to non-deprecated APIs
+Kubernetes Documentation
+Reference
+API Overview
+Deprecated API Migration Guide
+Deprecated API Migration Guide
+As the Kubernetes API evolves, APIs are periodically reorganized or upgraded.
+When APIs evolve, the old API is deprecated and eventually removed.
+This page contains information you need to know when migrating from
+deprecated API versions to newer and more stable API versions.
+Removed APIs by release
+v1.32
+The v1.32 release stopped serving the following deprecated API versions:
+Flow control resources
+The flowcontrol.apiserver.k8s.io/v1beta3 API version of FlowSchema and PriorityLevelConfiguration is no longer served as of v1.32.
+Migrate manifests and API clients to use the flowcontrol.apiserver.k8s.io/v1 API version, available since v1.29.
+All existing persisted objects are accessible via the new API
+Notable changes in flowcontrol.apiserver.k8s.io/v1:
+The PriorityLevelConfiguration spec.limited.nominalConcurrencyShares field only defaults to 30 when unspecified, and an explicit value of 0 is not changed to 30.
+v1.29
+The v1.29 release stopped serving the following deprecated API versions:
+Flow control resources
+The flowcontrol.apiserver.k8s.io/v1beta2 API version of FlowSchema and PriorityLevelConfiguration is no longer served as of v1.29.
+Migrate manifests and API clients to use the flowcontrol.apiserver.k8s.io/v1 API version, available since v1.29, or the flowcontrol.apiserver.k8s.io/v1beta3 API version, available since v1.26.
+All existing persisted objects are accessible via the new API
+Notable changes in flowcontrol.apiserver.k8s.io/v1:
+The PriorityLevelConfiguration spec.limited.assuredConcurrencyShares field is renamed to spec.limited.nominalConcurrencyShares and only defaults to 30 when unspecified, and an explicit value of 0 is not changed to 30.
+Notable changes in flowcontrol.apiserver.k8s.io/v1beta3:
+The PriorityLevelConfiguration spec.limited.assuredConcurrencyShares field is renamed to spec.limited.nominalConcurrencyShares
+v1.27
+The v1.27 release stopped serving the following deprecated API versions:
+CSIStorageCapacity
+The storage.k8s.io/v1beta1 API version of CSIStorageCapacity is no longer served as of v1.27.
+Migrate manifests and API clients to use the storage.k8s.io/v1 API version, available since v1.24.
+All existing persisted objects are accessible via the new API
+No notable changes
+v1.26
+The v1.26 release stopped serving the following deprecated API versions:
+Flow control resources
+The flowcontrol.apiserver.k8s.io/v1beta1 API version of FlowSchema and PriorityLevelConfiguration is no longer served as of v1.26.
+Migrate manifests and API clients to use the flowcontrol.apiserver.k8s.io/v1beta2 API version.
+All existing persisted objects are accessible via the new API
+No notable changes
+HorizontalPodAutoscaler
+The autoscaling/v2beta2 API version of HorizontalPodAutoscaler is no longer served as of v1.26.
+Migrate manifests and API clients to use the autoscaling/v2 API version, available since v1.23.
+All existing persisted objects are accessible via the new API
+Notable changes:
+targetAverageUtilization is replaced with target.averageUtilization and target.type: Utilization. See Autoscaling on multiple metrics and custom metrics.
+v1.25
+The v1.25 release stopped serving the following deprecated API versions:
+CronJob
+The batch/v1beta1 API version of CronJob is no longer served as of v1.25.
+Migrate manifests and API clients to use the batch/v1 API version, available since v1.21.
+All existing persisted objects are accessible via the new API
+No notable changes
+EndpointSlice
+The discovery.k8s.io/v1beta1 API version of EndpointSlice is no longer served as of v1.25.
+Migrate manifests and API clients to use the discovery.k8s.io/v1 API version, available since v1.21.
+All existing persisted objects are accessible via the new API
+Notable changes in discovery.k8s.io/v1:
+use per Endpoint nodeName field instead of deprecated topology["kubernetes.io/hostname"] field
+use per Endpoint zone field instead of deprecated topology["topology.kubernetes.io/zone"] field
+topology is replaced with the deprecatedTopology field which is not writable in v1
+Event
+The events.k8s.io/v1beta1 API version of Event is no longer served as of v1.25.
+Migrate manifests and API clients to use the events.k8s.io/v1 API version, available since v1.19.
+All existing persisted objects are accessible via the new API
+Notable changes in events.k8s.io/v1:
+type is limited to Normal and Warning
+involvedObject is renamed to regarding
+action, reason, reportingController, and reportingInstance are required
+when creating new events.k8s.io/v1 Events
+use eventTime instead of the deprecated firstTimestamp field (which is renamed
+to deprecatedFirstTimestamp and not permitted in new events.k8s.io/v1 Events)
+use series.lastObservedTime instead of the deprecated lastTimestamp field
+(which is renamed to deprecatedLastTimestamp and not permitted in new events.k8s.io/v1 Events)
+use series.count instead of the deprecated count field
+(which is renamed to deprecatedCount and not permitted in new events.k8s.io/v1 Events)
+use reportingController instead of the deprecated source.component field
+(which is renamed to deprecatedSource.component and not permitted in new events.k8s.io/v1 Events)
+use reportingInstance instead of the deprecated source.host field
+(which is renamed to deprecatedSource.host and not permitted in new events.k8s.io/v1 Events)
+HorizontalPodAutoscaler
+The autoscaling/v2beta1 API version of HorizontalPodAutoscaler is no longer served as of v1.25.
+Migrate manifests and API clients to use the autoscaling/v2 API version, available since v1.23.
+All existing persisted objects are accessible via the new API
+Notable changes:
+targetAverageUtilization is replaced with target.averageUtilization and target.type: Utilization. See Autoscaling on multiple metrics and custom metrics.
+PodDisruptionBudget
+The policy/v1beta1 API version of PodDisruptionBudget is no longer served as of v1.25.
+Migrate manifests and API clients to use the policy/v1 API version, available since v1.21.
+All existing persisted objects are accessible via the new API
+Notable changes in policy/v1:
+an empty spec.selector ({}) written to a policy/v1 PodDisruptionBudget selects all
+pods in the namespace (in policy/v1beta1 an empty spec.selector selected no pods).
+An unset spec.selector selects no pods in either API version.
+PodSecurityPolicy
+PodSecurityPolicy in the policy/v1beta1 API version is no longer served as of v1.25,
+and the PodSecurityPolicy admission controller will be removed.
+Migrate to Pod Security Admission
+or a 3rd party admission webhook.
+For a migration guide, see Migrate from PodSecurityPolicy to the Built-In PodSecurity Admission Controller.
+For more information on the deprecation, see PodSecurityPolicy Deprecation: Past, Present, and Future.
+RuntimeClass
+RuntimeClass in the node.k8s.io/v1beta1 API version is no longer served as of v1.25.
+Migrate manifests and API clients to use the node.k8s.io/v1 API version, available since v1.20.
+All existing persisted objects are accessible via the new API
+No notable changes
+v1.22
+The v1.22 release stopped serving the following deprecated API versions:
+Webhook resources
+The admissionregistration.k8s.io/v1beta1 API version of MutatingWebhookConfiguration
+and ValidatingWebhookConfiguration is no longer served as of v1.22.
+Migrate manifests and API clients to use the admissionregistration.k8s.io/v1 API version, available since v1.16.
+All existing persisted objects are accessible via the new APIs
+Notable changes:
+webhooks[*].failurePolicy default changed from Ignore to Fail for v1
+webhooks[*].matchPolicy default changed from Exact to Equivalent for v1
+webhooks[*].timeoutSeconds default changed from 30s to 10s for v1
+webhooks[*].sideEffects default value is removed, and the field made required,
+and only None and NoneOnDryRun are permitted for v1
+webhooks[*].admissionReviewVersions default value is removed and the field made
+required for v1 (supported versions for AdmissionReview are v1 and v1beta1)
+webhooks[*].name must be unique in the list for objects created via admissionregistration.k8s.io/v1
+CustomResourceDefinition
+The apiextensions.k8s.io/v1beta1 API version of CustomResourceDefinition is no longer served as of v1.22.
+Migrate manifests and API clients to use the apiextensions.k8s.io/v1 API version, available since v1.16.
+All existing persisted objects are accessible via the new API
+Notable changes:
+spec.scope is no longer defaulted to Namespaced and must be explicitly specified
+spec.version is removed in v1; use spec.versions instead
+spec.validation is removed in v1; use spec.versions[*].schema instead
+spec.subresources is removed in v1; use spec.versions[*].subresources instead
+spec.additionalPrinterColumns is removed in v1; use spec.versions[*].additionalPrinterColumns instead
+spec.conversion.webhookClientConfig is moved to spec.conversion.webhook.clientConfig in v1
+spec.conversion.conversionReviewVersions is moved to spec.conversion.webhook.conversionReviewVersions in v1
+spec.versions[*].schema.openAPIV3Schema is now required when creating v1 CustomResourceDefinition objects,
+and must be a structural schema
+spec.preserveUnknownFields: true is disallowed when creating v1 CustomResourceDefinition objects;
+it must be specified within schema definitions as x-kubernetes-preserve-unknown-fields: true
+In additionalPrinterColumns items, the JSONPath field was renamed to jsonPath in v1
+(fixes #66531)
+APIService
+The apiregistration.k8s.io/v1beta1 API version of APIService is no longer served as of v1.22.
+Migrate manifests and API clients to use the apiregistration.k8s.io/v1 API version, available since v1.10.
+All existing persisted objects are accessible via the new API
+No notable changes
+TokenReview
+The authentication.k8s.io/v1beta1 API version of TokenReview is no longer served as of v1.22.
+Migrate manifests and API clients to use the authentication.k8s.io/v1 API version, available since v1.6.
+No notable changes
+SubjectAccessReview resources
+The authorization.k8s.io/v1beta1 API version of LocalSubjectAccessReview,
+SelfSubjectAccessReview, SubjectAccessReview, and SelfSubjectRulesReview is no longer served as of v1.22.
+Migrate manifests and API clients to use the authorization.k8s.io/v1 API version, available since v1.6.
+Notable changes:
+spec.group was renamed to spec.groups in v1 (fixes #32709)
+CertificateSigningRequest
+The certificates.k8s.io/v1beta1 API version of CertificateSigningRequest is no longer served as of v1.22.
+Migrate manifests and API clients to use the certificates.k8s.io/v1 API version, available since v1.19.
+All existing persisted objects are accessible via the new API
+Notable changes in certificates.k8s.io/v1:
+For API clients requesting certificates:
+spec.signerName is now required
+(see known Kubernetes signers),
+and requests for kubernetes.io/legacy-unknown are not allowed to be created via the certificates.k8s.io/v1 API
+spec.usages is now required, may not contain duplicate values, and must only contain known usages
+For API clients approving or signing certificates:
+status.conditions may not contain duplicate types
+status.conditions[*].status is now required
+status.certificate must be PEM-encoded, and contain only CERTIFICATE blocks
+Lease
+The coordination.k8s.io/v1beta1 API version of Lease is no longer served as of v1.22.
+Migrate manifests and API clients to use the coordination.k8s.io/v1 API version, available since v1.14.
+All existing persisted objects are accessible via the new API
+No notable changes
+Ingress
+The extensions/v1beta1 and networking.k8s.io/v1beta1 API versions of Ingress is no longer served as of v1.22.
+Migrate manifests and API clients to use the networking.k8s.io/v1 API version, available since v1.19.
+All existing persisted objects are accessible via the new API
+Notable changes:
+spec.backend is renamed to spec.defaultBackend
+The backend serviceName field is renamed to service.name
+Numeric backend servicePort fields are renamed to service.port.number
+String backend servicePort fields are renamed to service.port.name
+pathType is now required for each specified path. Options are Prefix,
+Exact, and ImplementationSpecific. To match the undefined v1beta1 behavior, use ImplementationSpecific.
+IngressClass
+The networking.k8s.io/v1beta1 API version of IngressClass is no longer served as of v1.22.
+Migrate manifests and API clients to use the networking.k8s.io/v1 API version, available since v1.19.
+All existing persisted objects are accessible via the new API
+No notable changes
+RBAC resources
+The rbac.authorization.k8s.io/v1beta1 API version of ClusterRole, ClusterRoleBinding,
+Role, and RoleBinding is no longer served as of v1.22.
+Migrate manifests and API clients to use the rbac.authorization.k8s.io/v1 API version, available since v1.8.
+All existing persisted objects are accessible via the new APIs
+No notable changes
+PriorityClass
+The scheduling.k8s.io/v1beta1 API version of PriorityClass is no longer served as of v1.22.
+Migrate manifests and API clients to use the scheduling.k8s.io/v1 API version, available since v1.14.
+All existing persisted objects are accessible via the new API
+No notable changes
+Storage resources
+The storage.k8s.io/v1beta1 API version of CSIDriver, CSINode, StorageClass, and VolumeAttachment is no longer served as of v1.22.
+Migrate manifests and API clients to use the storage.k8s.io/v1 API version
+CSIDriver is available in storage.k8s.io/v1 since v1.19.
+CSINode is available in storage.k8s.io/v1 since v1.17
+StorageClass is available in storage.k8s.io/v1 since v1.6
+VolumeAttachment is available in storage.k8s.io/v1 v1.13
+All existing persisted objects are accessible via the new APIs
+No notable changes
+v1.16
+The v1.16 release stopped serving the following deprecated API versions:
+NetworkPolicy
+The extensions/v1beta1 API version of NetworkPolicy is no longer served as of v1.16.
+Migrate manifests and API clients to use the networking.k8s.io/v1 API version, available since v1.8.
+All existing persisted objects are accessible via the new API
+DaemonSet
+The extensions/v1beta1 and apps/v1beta2 API versions of DaemonSet are no longer served as of v1.16.
+Migrate manifests and API clients to use the apps/v1 API version, available since v1.9.
+All existing persisted objects are accessible via the new API
+Notable changes:
+spec.templateGeneration is removed
+spec.selector is now required and immutable after creation; use the existing
+template labels as the selector for seamless upgrades
+spec.updateStrategy.type now defaults to RollingUpdate
+(the default in extensions/v1beta1 was OnDelete)
+Deployment
+The extensions/v1beta1, apps/v1beta1, and apps/v1beta2 API versions of Deployment are no longer served as of v1.16.
+Migrate manifests and API clients to use the apps/v1 API version, available since v1.9.
+All existing persisted objects are accessible via the new API
+Notable changes:
+spec.rollbackTo is removed
+spec.selector is now required and immutable after creation; use the existing
+template labels as the selector for seamless upgrades
+spec.progressDeadlineSeconds now defaults to 600 seconds
+(the default in extensions/v1beta1 was no deadline)
+spec.revisionHistoryLimit now defaults to 10
+(the default in apps/v1beta1 was 2, the default in extensions/v1beta1 was to retain all)
+maxSurge and maxUnavailable now default to 25%
+(the default in extensions/v1beta1 was 1)
+StatefulSet
+The apps/v1beta1 and apps/v1beta2 API versions of StatefulSet are no longer served as of v1.16.
+Migrate manifests and API clients to use the apps/v1 API version, available since v1.9.
+All existing persisted objects are accessible via the new API
+Notable changes:
+spec.selector is now required and immutable after creation;
+use the existing template labels as the selector for seamless upgrades
+spec.updateStrategy.type now defaults to RollingUpdate
+(the default in apps/v1beta1 was OnDelete)
+ReplicaSet
+The extensions/v1beta1, apps/v1beta1, and apps/v1beta2 API versions of ReplicaSet are no longer served as of v1.16.
+Migrate manifests and API clients to use the apps/v1 API version, available since v1.9.
+All existing persisted objects are accessible via the new API
+Notable changes:
+spec.selector is now required and immutable after creation; use the existing template labels as the selector for seamless upgrades
+PodSecurityPolicy
+The extensions/v1beta1 API version of PodSecurityPolicy is no longer served as of v1.16.
+Migrate manifests and API client to use the policy/v1beta1 API version, available since v1.10.
+Note that the policy/v1beta1 API version of PodSecurityPolicy will be removed in v1.25.
+What to do
+Test with deprecated APIs disabled
+You can test your clusters by starting an API server with specific API versions disabled
+to simulate upcoming removals. Add the following flag to the API server startup arguments:
+--runtime-config=<group>/<version>=false
+For example:
+--runtime-config=admissionregistration.k8s.io/v1beta1=false,apiextensions.k8s.io/v1beta1,...
+Locate use of deprecated APIs
+Use client warnings, metrics, and audit information available in 1.19+
+to locate use of deprecated APIs.
+Migrate to non-deprecated APIs
+Update custom integrations and controllers to call the non-deprecated APIs
+Change YAML files to reference the non-deprecated APIs
+You can use the kubectl convert command to automatically convert an existing object:
+kubectl convert -f <file> --output-version <group>/<version>.
+For example, to convert an older Deployment to apps/v1, you can run:
+kubectl convert -f ./my-deployment.yaml --output-version apps/v1
+This conversion may use non-ideal default values. To learn more about a specific
+resource, check the Kubernetes API reference.
+Note:
+The kubectl convert tool is not installed by default, although
+in fact it once was part of kubectl itself. For more details, you can read the
+deprecation and removal issue
+for the built-in subcommand.
+To learn how to set up kubectl convert on your computer, visit the page that is right for your
+operating system:
+Linux,
+macOS, or
+Windows.
+Feedback
+Was this page helpful?
+Yes
+No
+Thanks for the feedback. If you have a specific, answerable question about how to use Kubernetes, ask it on
+Stack Overflow.
+Open an issue in the GitHub Repository if you want to
+report a problem
+or
+suggest an improvement.
+Last modified May 16, 2025 at 2:49 PM PST: Updated deprecation guide for v1.32 (9f1af2971c)
+© 2026 The Kubernetes Authors | Documentation Distributed under CC BY 4.0
+© 2026 The Linux Foundation ®. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page
+ICP license: 京ICP备17074266号-3

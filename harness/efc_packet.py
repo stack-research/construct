@@ -34,8 +34,10 @@ from pathlib import Path
 from harness import efc_contracts as c
 from harness.efc_carrier import (CarrierContractError, DispositionCarrier,
                                  ValidityEnvelope, validate_carrier)
-from harness.efc_check import (CheckContractError, ProvenanceStore,
+from harness.efc_check import (CheckContractError,
+                               ProductionComparisonContract, ProvenanceStore,
                                WireComparisonRule,
+                               run_production_scope_check,
                                run_scope_provenance_check)
 from harness.efc_renderer import build_foreground, canonical_tokens
 
@@ -453,9 +455,19 @@ def load_packet(root: str | Path, store: ProvenanceStore,
                             "(required for S2/P treatment)")
             continue
         try:
-            evidence = run_scope_provenance_check(
-                store, str(fixture.get("source_reference")),
-                str(fixture.get("decision_scope")), wire_rule)
+            # production path (P2): pairing derives the exact relevant
+            # evidence through the hash-pinned production contract instead
+            # of a wire executor.
+            if isinstance(wire_rule, ProductionComparisonContract):
+                evidence = run_production_scope_check(
+                    store, str(fixture.get("source_reference")),
+                    hashlib.sha256(str(fixture.get("decision_scope"))
+                                   .encode("utf-8")).hexdigest(),
+                    wire_rule)
+            else:
+                evidence = run_scope_provenance_check(
+                    store, str(fixture.get("source_reference")),
+                    str(fixture.get("decision_scope")), wire_rule)
         except CheckContractError as e:
             failures.append(f"{fixture_id}: cannot derive relevant evidence "
                             f"for placebo pairing: {e}")

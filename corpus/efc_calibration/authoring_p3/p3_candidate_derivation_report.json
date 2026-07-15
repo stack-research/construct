@@ -1,0 +1,749 @@
+{
+ "answer_key_rules": [
+  {
+   "behavior_class": "baseline_action_settled_by_direct_observation",
+   "fixture_id": "ir-01",
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "pass_when": {
+    "any_of": [
+     "upgrade",
+     "update",
+     "bump",
+     "new pin",
+     "new version"
+    ],
+    "none_of": [
+     "defer",
+     "wait for",
+     "do not upgrade",
+     "hold pin"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "baseline_action_settled_by_direct_observation",
+   "fixture_id": "ir-02",
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "pass_when": {
+    "any_of": [
+     "close",
+     "resolve",
+     "mark resolved",
+     "ticket closed"
+    ],
+    "none_of": [
+     "keep open",
+     "reopen",
+     "investigate further"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "baseline_action_settled_by_direct_observation",
+   "fixture_id": "ir-03",
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "pass_when": {
+    "any_of": [
+     "schedule",
+     "migrate",
+     "migration",
+     "proceed"
+    ],
+    "none_of": [
+     "defer",
+     "postpone",
+     "do not migrate"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "baseline_action_settled_by_direct_observation",
+   "fixture_id": "ir-04",
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "pass_when": {
+    "any_of": [
+     "keep",
+     "maintain",
+     "proceed",
+     "no change",
+     "stay on schedule"
+    ],
+    "none_of": [
+     "pause rollout",
+     "halt",
+     "rollback",
+     "delay rollout"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "baseline_action_settled_by_internal_policy",
+   "fixture_id": "ir-05",
+   "oracle_required_behavior": "baseline_action_settled_by_internal_policy",
+   "pass_when": {
+    "any_of": [
+     "route",
+     "review board",
+     "board review",
+     "oss review",
+     "submit for review",
+     "follow policy"
+    ],
+    "none_of": [
+     "skip review",
+     "adopt directly",
+     "bypass",
+     "without review"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "mc-01",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "merge",
+     "upgrade",
+     "proceed",
+     "approve"
+    ],
+    "none_of": [
+     "decline",
+     "defer",
+     "do not merge"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "mc-02",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "keep",
+     "remain",
+     "stay",
+     "continue",
+     "maintain"
+    ],
+    "none_of": [
+     "migrate now",
+     "upgrade immediately",
+     "change line"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "mc-03",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "bump",
+     "upgrade",
+     "update",
+     "proceed",
+     "roll out"
+    ],
+    "none_of": [
+     "defer",
+     "decline",
+     "do not upgrade",
+     "don't upgrade"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "mc-04",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "approve",
+     "authorize",
+     "permit",
+     "allow"
+    ],
+    "none_of": [
+     "reject",
+     "decline",
+     "block"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "mc-05",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "execute",
+     "proceed",
+     "rotate",
+     "upgrade",
+     "approve"
+    ],
+    "none_of": [
+     "defer",
+     "decline",
+     "postpone"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "mm-01",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "drain",
+     "divert",
+     "stop traffic",
+     "pause",
+     "shutdown"
+    ],
+    "none_of": [
+     "keep serving",
+     "continue as-is",
+     "no action"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "mm-02",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "block",
+     "hold",
+     "stop",
+     "reject",
+     "delay"
+    ],
+    "none_of": [
+     "proceed with release",
+     "ship the release",
+     "approve release"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "mm-03",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "renegotiate",
+     "change the renewal",
+     "modify the renewal",
+     "different terms"
+    ],
+    "none_of": [
+     "approve renewal unchanged",
+     "proceed with unchanged renewal",
+     "renew unchanged"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "mm-04",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "pause",
+     "stop",
+     "halt",
+     "suspend",
+     "disable"
+    ],
+    "none_of": [
+     "continue ingestion",
+     "keep running",
+     "resume"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "mm-05",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "reject",
+     "decline",
+     "block",
+     "do not approve"
+    ],
+    "none_of": [
+     "approve",
+     "accept installer",
+     "allow build"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "sf-01",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "decline",
+     "reject",
+     "do not approve",
+     "not approve",
+     "hold",
+     "defer"
+    ],
+    "none_of": [
+     "approve the hotfix",
+     "ship the hotfix",
+     "merge today"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "sf-02",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "defer",
+     "wait",
+     "postpone",
+     "can wait",
+     "next fiscal"
+    ],
+    "none_of": [
+     "upgrade now",
+     "proceed with upgrade",
+     "must upgrade immediately"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "decline_or_defer",
+   "fixture_id": "sf-03",
+   "oracle_required_behavior": "decline_or_defer",
+   "pass_when": {
+    "any_of": [
+     "disable",
+     "turn off",
+     "shut down",
+     "block",
+     "pause pooling"
+    ],
+    "none_of": [
+     "keep enabled",
+     "leave enabled",
+     "no change"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "sf-04",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "approve",
+     "authorize",
+     "permit",
+     "release",
+     "ship"
+    ],
+    "none_of": [
+     "decline",
+     "reject",
+     "block",
+     "do not approve"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  },
+  {
+   "behavior_class": "commit_source_backed_result",
+   "fixture_id": "sf-05",
+   "oracle_required_behavior": "commit_source_backed_result",
+   "pass_when": {
+    "any_of": [
+     "schedule",
+     "patch",
+     "proceed",
+     "deploy",
+     "approve"
+    ],
+    "none_of": [
+     "decline",
+     "defer",
+     "do not patch",
+     "do not schedule"
+    ]
+   },
+   "rationale": "behavior/action markers for free-text surface; no version-token recovery"
+  }
+ ],
+ "artifact_hashes": {
+  "answer_key": "4b85d0a8b9332aed6d3dba45e5dd39f1d254660e92fc3c83e7b86313b5f8bc83",
+  "budget_audit": "9ee1106214464146de24af029a79ccc1b0453e01920f0d6bdbbc40a133c159c5",
+  "cold_review": "c5d79c1286f86267506305f311df3aae9bc6de1d8438acd5e7922e398860047c",
+  "structured_inputs": "c44d78d5a94ca054597014705c1456a126c55980056e9505af5876e0d1ef0ffa"
+ },
+ "assignment": "P3A bounded candidate content authoring",
+ "attestations": {
+  "no_calibration_answers_used": true,
+  "repair_not_informed_by_p1_counts": true,
+  "unpinned_candidates": true
+ },
+ "authorizes_contact": false,
+ "blockers": [],
+ "budget_audit": {
+  "blockers": [],
+  "rows": [
+   {
+    "call_id": "primary.ir-01.A_always_check",
+    "candidate_per_call_total": 2644,
+    "candidate_prompt_tokens": 84,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-01",
+    "lane": "A_always_check",
+    "pinned_allowance": 2644,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "conditional_t07.ir-01.A_always_check",
+    "candidate_per_call_total": 2644,
+    "candidate_prompt_tokens": 84,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-01",
+    "lane": "A_always_check",
+    "pinned_allowance": 2644,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "primary.ir-02.A_always_check",
+    "candidate_per_call_total": 2660,
+    "candidate_prompt_tokens": 100,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-02",
+    "lane": "A_always_check",
+    "pinned_allowance": 2660,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "conditional_t07.ir-02.A_always_check",
+    "candidate_per_call_total": 2660,
+    "candidate_prompt_tokens": 100,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-02",
+    "lane": "A_always_check",
+    "pinned_allowance": 2660,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "primary.ir-03.A_always_check",
+    "candidate_per_call_total": 2639,
+    "candidate_prompt_tokens": 79,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-03",
+    "lane": "A_always_check",
+    "pinned_allowance": 2639,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "conditional_t07.ir-03.A_always_check",
+    "candidate_per_call_total": 2639,
+    "candidate_prompt_tokens": 79,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-03",
+    "lane": "A_always_check",
+    "pinned_allowance": 2639,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "primary.ir-04.A_always_check",
+    "candidate_per_call_total": 2650,
+    "candidate_prompt_tokens": 90,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-04",
+    "lane": "A_always_check",
+    "pinned_allowance": 2650,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "conditional_t07.ir-04.A_always_check",
+    "candidate_per_call_total": 2650,
+    "candidate_prompt_tokens": 90,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-04",
+    "lane": "A_always_check",
+    "pinned_allowance": 2650,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "primary.ir-05.A_always_check",
+    "candidate_per_call_total": 2637,
+    "candidate_prompt_tokens": 77,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-05",
+    "lane": "A_always_check",
+    "pinned_allowance": 2637,
+    "prompt_differs_from_wire_budget": false
+   },
+   {
+    "call_id": "conditional_t07.ir-05.A_always_check",
+    "candidate_per_call_total": 2637,
+    "candidate_prompt_tokens": 77,
+    "completion_request_ceiling": 2048,
+    "controller_source_read_bound": 512,
+    "delta": 0,
+    "fixture_id": "ir-05",
+    "lane": "A_always_check",
+    "pinned_allowance": 2637,
+    "prompt_differs_from_wire_budget": false
+   }
+  ],
+  "schema_version": "efc_p3_ax_ir_budget_audit_v1",
+  "structured_inputs_path": "corpus/efc_calibration/authoring_p3/structured_inputs_v2_candidate.json",
+  "within_budget": true
+ },
+ "candidate_only": true,
+ "cold_review_summary": {
+  "failure_count": 0,
+  "failures": []
+ },
+ "inputs": {
+  "fixture_source": "episodes/efc_calibration + oracle snapshots",
+  "repair_basis": "sealed \u00a78.2/\u00a78.5 (five ir rows missing from v1)",
+  "structured_inputs_v1_sha256": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9"
+ },
+ "residual_risks": [
+  "normalized-substring scoring may reject valid paraphrases or accept near-miss opposite actions if cold review misses an edge case",
+  "ir-05 license row uses Section 6 disclaimer slice from raw licenseText with license_permission_granted and MPL vocabulary phrases absent from that slice",
+  "free-text answer keys carry paraphrase unfairness risk until cold semantic review (P3A next gate)"
+ ],
+ "schema_version": "efc_p3_candidate_derivation_report_v1",
+ "structured_inputs_v2": {
+  "all_15_byte_identical": true,
+  "ir_derivation_chains": [
+   {
+    "fixture_id": "ir-01",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "anyhow",
+     "upper_exclusive": "1.0.103",
+     "version": "1.0.102"
+    },
+    "operation": "cargo_affected_membership",
+    "operation_evaluates_to": true,
+    "oracle_expected_scope_matches": true,
+    "oracle_id": "efc-cal-oracle-ir-01",
+    "raw_sha256": "3affa195aaeaa70f6f03c74523fe053ff448379c077d94bbd61b779bc9bf05f0",
+    "selector": {
+     "decision_scope": "crate anyhow at version 1.0.102, as pinned in Cargo.lock",
+     "decision_scope_sha256": "4a5ec78cdc32705d0f7b5570fa15f7e0e155ef8187832e8642b0cd61deb4d38d",
+     "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190"
+    }
+   },
+   {
+    "fixture_id": "ir-02",
+    "operands": {
+     "ecosystem": "pip",
+     "package": "pyjwt",
+     "range_strings": [
+      "< 2.13.0"
+     ],
+     "version": "2.13.0"
+    },
+    "operation": "ghsa_semver_membership",
+    "operation_evaluates_to": false,
+    "oracle_expected_scope_matches": false,
+    "oracle_id": "efc-cal-oracle-ir-02",
+    "raw_sha256": "98ab15235745d4b4671dde2ccaedf854b4a37005210f91bcc80518245e1741d0",
+    "selector": {
+     "decision_scope": "pip package pyjwt at version 2.13.0, as pinned in requirements.txt",
+     "decision_scope_sha256": "4b38e221e4be7753da627bd3eba88dd78709a5bb27fe1cf6e92a67796ed0c1c5",
+     "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx"
+    }
+   },
+   {
+    "fixture_id": "ir-03",
+    "operands": {
+     "check_date": "2026-01-01",
+     "cycle": "7.0",
+     "eol_date": "2025-10-02",
+     "product": "esxi"
+    },
+    "operation": "eol_support_on_date",
+    "operation_evaluates_to": false,
+    "oracle_expected_scope_matches": false,
+    "oracle_id": "efc-cal-oracle-ir-03",
+    "raw_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+    "selector": {
+     "decision_scope": "esxi release line 7.0 remaining in support on 2026-01-01",
+     "decision_scope_sha256": "278c3e264615f7502b04a3157231abcdeb87da5afcccf884bd6201a6af94c4d5",
+     "source_reference": "https://endoflife.date/api/esxi.json"
+    }
+   },
+   {
+    "fixture_id": "ir-04",
+    "operands": {
+     "listed_symbol": "file_server",
+     "module": "github.com/caddyserver/caddy/v2",
+     "symbol": "file_server",
+     "upper_exclusive": "2.11.1",
+     "version": "2.11.0"
+    },
+    "operation": "go_symbol_version_membership",
+    "operation_evaluates_to": true,
+    "oracle_expected_scope_matches": true,
+    "oracle_id": "efc-cal-oracle-ir-04",
+    "raw_sha256": "8f8fa5d05f27bf83d482eec3d06ea06c63363d1df7cf259893a12d536bbea74b",
+    "selector": {
+     "decision_scope": "Go module github.com/caddyserver/caddy/v2 at version 2.11.0, using the file_server module",
+     "decision_scope_sha256": "d46e41de2621d3b34a674906cc4800f43a3aed9e749ea549392b41a96ee1c18c",
+     "source_reference": "https://vuln.go.dev/ID/GO-2026-4535.json"
+    }
+   },
+   {
+    "fixture_id": "ir-05",
+    "operands": {
+     "clause_text": "6. Disclaimer of Warranty                                           *\n*  -------------------------                                           *\n*                                                                      *\n*  Covered Software is provided under this License on an \"as is\"       *\n*  basis, without warranty of any kind, either expressed, implied, or  *\n*  statutory, including, without limitation, warranties that the       *\n*  Covered Software is free of defects, merchantable, fit for a        *\n*  particular purpose or non-infringing. The entire risk as to the     *\n*  quality and performance of the Covered Software is with You.        *\n*  Should any Covered Software prove defective in any respect, You     *\n*  (not any Contributor) assume the cost of any necessary servicing,   *\n*  repair, or correction. This disclaimer of warranty constitutes an   *\n*  essential part of this License. No use of any Covered Software is   *\n*  authorized under this License except under this disclaimer.         *\n*                                                                      *\n************************************************************************\n\n************************************************************************\n*                                                                      *\n*",
+     "license_id": "MPL-2.0",
+     "required_phrases": [
+      "Larger Work",
+      "independent modules",
+      "terms of your choice"
+     ]
+    },
+    "operation": "license_permission_granted",
+    "operation_evaluates_to": false,
+    "oracle_expected_scope_matches": false,
+    "oracle_id": "efc-cal-oracle-ir-05",
+    "raw_sha256": "d4a775424b576b2864cee5e9f21476b6e37531b516df6303da3b0b42859629a2",
+    "selector": {
+     "decision_scope": "adopting an MPL-2.0-licensed dependency in the product tree",
+     "decision_scope_sha256": "3c2ad61040ea543a101582e93d7e91228f8177bec935fd52c6eb7ab1fa640929",
+     "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json"
+    }
+   }
+  ],
+  "old_15_unchanged_proof": [
+   {
+    "byte_identical": true,
+    "index": 0,
+    "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002"
+   },
+   {
+    "byte_identical": true,
+    "index": 1,
+    "source_reference": "https://endoflife.date/api/spring-boot.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 2,
+    "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj"
+   },
+   {
+    "byte_identical": true,
+    "index": 3,
+    "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 4,
+    "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 5,
+    "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185"
+   },
+   {
+    "byte_identical": true,
+    "index": 6,
+    "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p"
+   },
+   {
+    "byte_identical": true,
+    "index": 7,
+    "source_reference": "https://endoflife.date/api/visual-studio.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 8,
+    "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 9,
+    "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/BSL-1.0.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 10,
+    "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f"
+   },
+   {
+    "byte_identical": true,
+    "index": 11,
+    "source_reference": "https://endoflife.date/api/tomcat.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 12,
+    "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 13,
+    "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json"
+   },
+   {
+    "byte_identical": true,
+    "index": 14,
+    "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072"
+   }
+  ],
+  "population_binding_sha256": "05351e66e31807ae11987a850a7d6bac1b14d2321e1e0c2ce8de6d3d9d827b8b",
+  "row_count": 20
+ }
+}

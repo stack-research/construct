@@ -1,0 +1,472 @@
+{
+ "schema_version": "efc-production-conformance-vectors-v1",
+ "vectors": [
+  {
+   "id": "cargo-introduced-inside",
+   "input": {
+    "operation": "cargo_affected_membership",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "demo",
+     "version": "0.10.0",
+     "introduced": "0.9.0",
+     "fixed_exclusive": "0.16.3"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "cargo-introduced-at-fixed",
+   "input": {
+    "operation": "cargo_affected_membership",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "demo",
+     "version": "0.16.3",
+     "introduced": "0.9.0",
+     "fixed_exclusive": "0.16.3"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "cargo-upper-inside",
+   "input": {
+    "operation": "cargo_affected_membership",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "demo",
+     "version": "0.5.1",
+     "upper_exclusive": "0.6.0"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "cargo-upper-at-boundary",
+   "input": {
+    "operation": "cargo_affected_membership",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "demo",
+     "version": "0.6.0",
+     "upper_exclusive": "0.6.0"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "ghsa-single-inside",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.8.3",
+     "range_strings": [
+      ">= 1.1.0, <= 1.8.3"
+     ]
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "ghsa-single-outside",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.8.4",
+     "range_strings": [
+      ">= 1.1.0, <= 1.8.3"
+     ]
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "ghsa-multi-second-range",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "8.1.0",
+     "range_strings": [
+      ">= 7.23.0, < 7.28.0",
+      ">= 8.0.0, < 8.2.0"
+     ]
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "ghsa-multi-gap",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "7.22.0",
+     "range_strings": [
+      ">= 7.23.0, < 7.28.0",
+      ">= 8.0.0, < 8.2.0"
+     ]
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "eol-before",
+   "input": {
+    "operation": "eol_support_on_date",
+    "operands": {
+     "product": "demo",
+     "cycle": "1.0",
+     "eol_date": "2026-06-30",
+     "check_date": "2026-06-01"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "eol-on",
+   "input": {
+    "operation": "eol_support_on_date",
+    "operands": {
+     "product": "demo",
+     "cycle": "1.0",
+     "eol_date": "2026-06-30",
+     "check_date": "2026-06-30"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "eol-after",
+   "input": {
+    "operation": "eol_support_on_date",
+    "operands": {
+     "product": "demo",
+     "cycle": "1.0",
+     "eol_date": "2026-06-30",
+     "check_date": "2027-03-01"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "go-symbol-in-version-in",
+   "input": {
+    "operation": "go_symbol_version_membership",
+    "operands": {
+     "module": "example.com/mod",
+     "version": "1.79.0",
+     "upper_exclusive": "1.79.3",
+     "symbol": "Server.Serve",
+     "listed_symbol": "Server.Serve"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "go-symbol-match-version-out",
+   "input": {
+    "operation": "go_symbol_version_membership",
+    "operands": {
+     "module": "example.com/mod",
+     "version": "0.45.0",
+     "upper_exclusive": "0.45.0",
+     "symbol": "Parse",
+     "listed_symbol": "Parse"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "go-symbol-absent",
+   "input": {
+    "operation": "go_symbol_version_membership",
+    "operands": {
+     "module": "example.com/mod",
+     "version": "1.0.0",
+     "upper_exclusive": "2.0.0",
+     "symbol": "Missing",
+     "listed_symbol": "Present"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "license-permission-granted",
+   "input": {
+    "operation": "license_permission_granted",
+    "operands": {
+     "license_id": "Classpath-exception-2.0",
+     "required_phrases": [
+      "independent modules",
+      "executable",
+      "terms of your choice"
+     ],
+     "clause_text": "permission to link independent modules to produce an executable under terms of your choice"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "license-permission-missing-phrase",
+   "input": {
+    "operation": "license_permission_granted",
+    "operands": {
+     "license_id": "demo",
+     "required_phrases": [
+      "independent modules",
+      "executable"
+     ],
+     "clause_text": "permission to link independent modules only"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "license-waiver-all-sections",
+   "input": {
+    "operation": "license_section_waiver_applies",
+    "operands": {
+     "license_id": "LLVM-exception",
+     "sections": [
+      "4(a)",
+      "4(b)",
+      "4(d)"
+     ],
+     "clause_text": "without complying with the conditions of Sections 4(a), 4(b) and 4(d) of the License."
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "license-waiver-missing-section",
+   "input": {
+    "operation": "license_section_waiver_applies",
+    "operands": {
+     "license_id": "LLVM-exception",
+     "sections": [
+      "4(a)",
+      "4(b)",
+      "4(d)"
+     ],
+     "clause_text": "without complying with Sections 4(a) and 4(b)."
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "license-inclusion-carveout",
+   "input": {
+    "operation": "license_inclusion_obligation_holds",
+    "operands": {
+     "license_id": "BSL-1.0",
+     "category_phrase": "solely in the form of machine-executable object code",
+     "clause_text": "must be included in all copies unless such copies are solely in the form of machine-executable object code"
+    }
+   },
+   "expect": false
+  },
+  {
+   "id": "license-inclusion-no-carveout",
+   "input": {
+    "operation": "license_inclusion_obligation_holds",
+    "operands": {
+     "license_id": "DEMO",
+     "category_phrase": "source distributions",
+     "clause_text": "must be included in all copies of the Software"
+    }
+   },
+   "expect": true
+  },
+  {
+   "id": "malformed-version",
+   "input": {
+    "operation": "cargo_affected_membership",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "demo",
+     "version": "",
+     "upper_exclusive": "1.0.0"
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "unknown-ecosystem",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "maven",
+     "package": "pkg",
+     "version": "1.0.0",
+     "range_strings": [
+      "< 2.0.0"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "unknown-operation",
+   "input": {
+    "operation": "oracle_lookup",
+    "operands": {}
+   },
+   "expect": "error"
+  },
+  {
+   "id": "forbidden-expected-label",
+   "input": {
+    "operation": "cargo_affected_membership",
+    "expected_scope_matches": false,
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "demo",
+     "version": "0.1.0",
+     "upper_exclusive": "1.0.0"
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-missing-comma-dual-comparator",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "7.30.0",
+     "range_strings": [
+      ">= 7.23.0 < 7.28.0"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-or-operator",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "9.0.0",
+     "range_strings": [
+      ">= 1.2.3 || < 2"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-trailing-garbage",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.2.3",
+     "range_strings": [
+      ">= 1.2.3 garbage"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-bare-operator",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.0.0",
+     "range_strings": [
+      ">="
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-double-operator",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.0.0",
+     "range_strings": [
+      "< < 2.0.0"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-empty-fragment",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.0.0",
+     "range_strings": [
+      ">= 1.0.0,, < 2.0.0"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-caret-form",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.0.0",
+     "range_strings": [
+      "^1.2.3"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "ghsa-tilde-form",
+   "input": {
+    "operation": "ghsa_semver_membership",
+    "operands": {
+     "ecosystem": "npm",
+     "package": "pkg",
+     "version": "1.0.0",
+     "range_strings": [
+      "~1.2.3"
+     ]
+    }
+   },
+   "expect": "error"
+  },
+  {
+   "id": "eol-invalid-calendar-date",
+   "input": {
+    "operation": "eol_support_on_date",
+    "operands": {
+     "product": "demo",
+     "cycle": "1.0",
+     "eol_date": "2026-02-30",
+     "check_date": "2026-06-01"
+    }
+   },
+   "expect": "error"
+  }
+ ]
+}

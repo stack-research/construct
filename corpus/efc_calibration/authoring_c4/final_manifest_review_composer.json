@@ -1,0 +1,213 @@
+{
+ "aggregate": "endorse",
+ "assignment": "C4a bounded cold final-manifest conformance review",
+ "assignment_source": "codex/gpt-5.6-sol C4a handoff (2026-07-15T01:56:09Z)",
+ "constraints_observed": [
+  "read-only review except this artifact",
+  "zero network calls",
+  "zero engine/listing/probe contact",
+  "no C4 artifact repairs",
+  "no manifest pin or finalization",
+  "no held-out fixture authoring",
+  "no commit"
+ ],
+ "disclosure": {
+  "engines_contacted": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0,
+  "files_modified": [
+   "corpus/efc_calibration/authoring_c4/final_manifest_review_composer.json"
+  ]
+ },
+ "focused_tests": {
+  "harness.efc_roster_r2 --verify": "pass (prior session; not re-run in this pass)",
+  "tests.test_efc_author_c4": "14/14 pass",
+  "tests.test_efc_roster_r1": "1/1 pass",
+  "full_test_efc_star": "499/499 pass",
+  "git_diff_check": "clean"
+ },
+ "operator_approval": {
+  "transcript_author": "dan",
+  "transcript_timestamp_utc": "2026-07-15T01:53:51Z",
+  "approved_engine_roster": [
+   "openai/gpt-oss-20b",
+   "gpt-5.4-2026-03-05"
+  ],
+  "approved_total_budget_tokens": 1187522,
+  "verdict": "endorse",
+  "note": "Moderator entry immediately preceding this review approves the exact roster and budget in manifest form. The pre-approval c4_conformance_report.json blocker operator_roster_budget_approval is historically correct at build time, not post-approval proof.",
+  "mechanical_finalizer_requirement": "Append an operator_approval_record sibling (append-only) capturing transcript reference, UTC timestamp, exact roster array, exact total_budget_tokens, and approved manifest canonical hash; do not rewrite c4_conformance_report.json history."
+ },
+ "review_timestamp_utc": "2026-07-15T09:55:00Z",
+ "reviewer_seat": "cursor/composer-2.5-capture",
+ "checks": [
+  {
+   "id": "C1_file_hashes",
+   "verdict": "endorse",
+   "evidence": {
+    "C4_candidate_calibration_manifest.json": {
+     "expected": "d5965001e19d846826aba8be0b130bf4a16fd82f63fbc21c8927b153237b971e",
+     "observed": "d5965001e19d846826aba8be0b130bf4a16fd82f63fbc21c8927b153237b971e",
+     "match": true
+    },
+    "roster_decoding_pin_candidate.json": {
+     "expected": "4b3e452bd140ae88a971d0e7e9b1e68b95cc2ec8978abf3c194bdbe1ccb7521b",
+     "observed": "4b3e452bd140ae88a971d0e7e9b1e68b95cc2ec8978abf3c194bdbe1ccb7521b",
+     "match": true
+    },
+    "budget_derivation_ledger.json": {
+     "expected": "b14466c1542ec034b6ab5c018d379b49b0f8b32ce107d899249f6c4c470a2eb6",
+     "observed": "b14466c1542ec034b6ab5c018d379b49b0f8b32ce107d899249f6c4c470a2eb6",
+     "match": true
+    },
+    "harness/efc_author_c4.py": {
+     "expected": "f74c77097693b39e9b01b5299ae5f57debeb9315f877efa7d98ac1286e6d627b",
+     "observed": "f74c77097693b39e9b01b5299ae5f57debeb9315f877efa7d98ac1286e6d627b",
+     "match": true
+    },
+    "tests/test_efc_author_c4.py": {
+     "expected": "d3b00d5f72d59d6c17c0e2ee1534a6e26684c2588c0b944a00e5df82850a1f1a",
+     "observed": "d3b00d5f72d59d6c17c0e2ee1534a6e26684c2588c0b944a00e5df82850a1f1a",
+     "match": true
+    },
+    "candidate_manifest_canonical_hash_NOT_A_PIN": {
+     "expected": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+     "observed": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+     "match": true
+    },
+    "c4_conformance_report.json": {
+     "fable_handoff_expected": "c46d6e3a366fa501311b8293c993af4a4b3674b662b1b929f841187171740b1b",
+     "on_disk_observed": "5b6ca196f668a4d9ae6fa44697b581a42463deefa238240ef7d587f6a60d955e",
+     "match_fable_constant": false,
+     "idempotent_builder_stable": true,
+     "note": "Manifest/ledger/roster bytes match Fable; report bytes drift because lineage_sha256 references updated upstream artifacts (e.g. production_comparison_integration.json aa65d60e…) after the C4 build. Builder is idempotent now (test_builder_is_idempotent). Finalizer should record the stabilized on-disk report hash, not rewrite the historical Fable constant."
+    }
+   }
+  },
+  {
+   "id": "C2_budget_recomputation",
+   "verdict": "endorse",
+   "evidence": {
+    "per_branch_ceiling_calls": 225,
+    "roster_ceiling_calls": 450,
+    "per_branch_prompt_tokens": 17761,
+    "per_branch_total_tokens": 593761,
+    "roster_total_budget_tokens": 1187522,
+    "row_formula": "prompt_tokens + 2048 + 512 for all 225 per-branch rows",
+    "check_output_cap_double_count": false,
+    "conditional_prompt_reuse": "all conditional rows reuse (fixture_id, lane) primary prompt bound",
+    "probes_never_conditional": true,
+    "category_counts_per_branch": {
+     "probe": 15,
+     "s_family": 15,
+     "analog": 90,
+     "conditional_s_family": 15,
+     "conditional_analog": 90
+    },
+    "call_plan": {
+     "probe_calls_branch": 15,
+     "s_family_calls_branch": 15,
+     "analog_calls_branch": 90,
+     "primary_calls_branch": 120,
+     "conditional_calls_branch": 105,
+     "ceiling_calls_branch": 225,
+     "roster_ceiling_total": 450
+    }
+   }
+  },
+  {
+   "id": "C3_operator_approval_capture",
+   "verdict": "endorse",
+   "evidence": {
+    "moderator_entry": "dan @ 2026-07-15T01:53:51Z approves models (openai/gpt-oss-20b, gpt-5.4-2026-03-05) and 1187522-token budget",
+    "manifest_matches_approval": {
+     "engine_roster": [
+      "openai/gpt-oss-20b",
+      "gpt-5.4-2026-03-05"
+     ],
+     "total_budget_tokens": 1187522
+    },
+    "pre_approval_report_blocker_preserved": "operator_roster_budget_approval remains in c4_conformance_report.json as historical build-time state"
+   }
+  },
+  {
+   "id": "C4_license_binding_review",
+   "verdict": "endorse",
+   "evidence": {
+    "grok_c3_review_artifact": "corpus/efc_calibration/authoring_c2/production_comparison_review_grok.json",
+    "grok_c3_review_sha256": "d167ccb548a73949f4930b3db486baaf8103665217f0c1d0a41a41916feb4474",
+    "license_audit_aggregate": "pass",
+    "license_rows_reviewed": [
+     "sf-04 license_permission_granted",
+     "mm-05 license_inclusion_obligation_holds",
+     "mc-04 license_section_waiver_applies"
+    ],
+    "structured_inputs_file_sha256": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9",
+    "structured_inputs_population_binding_sha256": "b996c706189eb026187ab3b8d14947a1955a0c90945e6e4590c421a8aff4d0a1",
+    "c3b_parser_repair_structured_inputs_unchanged": true,
+    "note": "Grok C3 performed explicit license conformance review on all three license population rows. C3b GHSA fail-closed repair left structured-input bytes and population-binding hash unchanged; license operands therefore unchanged."
+   }
+  },
+  {
+   "id": "C5_extractor_identity",
+   "verdict": "endorse",
+   "evidence": {
+    "extractor_module_path": "harness/efc_trigger.py",
+    "extractor_module_sha256": "cfe9c05a1509568df4c2aa1cfeeae04b85ef5dc4c4b39ae6c6f2a1bfadd028ce",
+    "predicate_contract_sha256": "f8c3f07439dfc634c88385b37ec33f6f2ac2df9cd22b4c1960e147d3d6c732ed",
+    "semantic_layer": "V0_PREDICATE_FEATURE_BINDINGS + closed ALLOWED_SURFACE_FIELDS in efc_trigger.py",
+    "mutable_external_semantic_dependency": false,
+    "network_or_runtime_dependency": false,
+    "note": "Matches harness/efc_artifacts.py two-layer design: predicate contract is semantic identity; module hash is diagnostic/source pin. No separate typed extractor contract artifact exists; endorsing the disclosed two-layer identity rather than blocking."
+   }
+  },
+  {
+   "id": "C6_decoding_contract_sibling",
+   "verdict": "endorse",
+   "evidence": {
+    "manifest_decoding_contract_id": "efc-decoding-r2-local-b36dfdc4-api-7fdb78bc",
+    "id_is_name_only": true,
+    "sibling_path": "corpus/efc_calibration/authoring_c4/roster_decoding_pin_candidate.json",
+    "local_decoding_contract_sha256": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0",
+    "api_decoding_contract_sha256": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+    "payloads_match_r2_artifact": true,
+    "co_pin_required": "manifest decoding_contract_id alone is not authoritative; manifest + roster_decoding_pin sibling must be pinned atomically"
+   }
+  },
+  {
+   "id": "C7_manifest_schema_lineage_placeholders",
+   "verdict": "endorse",
+   "evidence": {
+    "closed_schema_machine_check": "pass (harness.efc_manifest.check_calibration_manifest)",
+    "unknown_keys": false,
+    "placeholder_or_pending_markers_in_manifest": false,
+    "population_region_byte_match": true,
+    "population_canonical_sha256": "ddfdc674f0a58f6e967fe8179c72ee8f06503712288b8d48c8709b7b75afe593",
+    "fixture_oracle_bindings": "20/20 fixtures and 20/20 world-oracle rows match packet_index and on-disk oracle files",
+    "check_contract_hash": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b",
+    "lineage_present": true
+   }
+  },
+  {
+   "id": "C8_review_pass_hygiene",
+   "verdict": "endorse",
+   "evidence": {
+    "network_calls_in_review_pass": 0,
+    "held_out_fixtures_authored": 0,
+    "only_review_artifact_written": true
+   }
+  }
+ ],
+ "non_blocking_notes": [
+  {
+   "id": "N1_conformance_report_hash_drift",
+   "detail": "On-disk c4_conformance_report.json SHA-256 differs from Fable handoff constant because lineage inputs changed after C4 build; substantive checks reproduce; builder idempotent on current tree."
+  },
+  {
+   "id": "N2_prompt_unit_disclosure",
+   "detail": "Prompt bounds use canonical whitespace tokens; 2048/512 are transport/§10.1 caps — mixed units by design, conservative total."
+  }
+ ],
+ "authorization_effect": "Endorsement authorizes only a subsequent mechanical post-approval finalization/pin candidate step. It does not authorize pinning, probes, calibration contact, or engine contact."
+}

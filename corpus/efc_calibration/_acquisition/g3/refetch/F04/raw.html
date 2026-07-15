@@ -1,0 +1,841 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruby on Rails 7.2 Release Notes — Ruby on Rails Guides</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style-106bfac4c92ca66d2661714dfc2e207b.css" data-turbo-track="reload">
+  <link rel="stylesheet" type="text/css" href="stylesheets/print-a87ee66d50ce96bb83ac082f1249fe3e.css" media="print">
+  <link rel="stylesheet" type="text/css" href="stylesheets/highlight-29cb37a5c1fe0454a8739dc5758926d3.css" data-turbo-track="reload">
+
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+
+  <link rel="apple-touch-icon" href="images/icon.png">
+
+  <link rel="canonical" href="https://guides.rubyonrails.org/7_2_release_notes.html">
+
+  <script src="javascripts/@hotwired--turbo-764f59c7edbeb902a9068c0340dd274e.js" data-turbo-track="reload"></script>
+  <script src="javascripts/clipboard-8b7aed6f069f0cf58eeae353cd2f898b.js" data-turbo-track="reload"></script>
+  <script src="javascripts/guides-d7960e00fba238e39f4950ded4f77035.js" data-turbo-track="reload"></script>
+
+  <meta property="og:title" content="Ruby on Rails 7.2 Release Notes — Ruby on Rails Guides" />
+  <meta name="description" content="Highlights in Rails 7.2: Development containers configuration for applications. Add browser version guard by default. Make Ruby 3.1 the new minimum version. Default Progressive Web Application (PWA) files. Add omakase RuboCop rules by default. Add GitHub CI workflow by default to new applications. Add Brakeman by default to new applications. Set a new default for the Puma thread count. Prevent jobs from being scheduled within transactions. Per transaction commit and rollback callbacks. Enable YJIT by default if running Ruby 3.3+. New design for the Rails guides. Setup jemalloc in default Dockerfile to optimize memory allocation. Suggest puma-dev configuration in bin/setup. These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the changelogs or check out the list of commits in the main Rails repository on GitHub." />
+  <meta property="og:description" content="Highlights in Rails 7.2: Development containers configuration for applications. Add browser version guard by default. Make Ruby 3.1 the new minimum version. Default Progressive Web Application (PWA) files. Add omakase RuboCop rules by default. Add GitHub CI workflow by default to new applications. Add Brakeman by default to new applications. Set a new default for the Puma thread count. Prevent jobs from being scheduled within transactions. Per transaction commit and rollback callbacks. Enable YJIT by default if running Ruby 3.3+. New design for the Rails guides. Setup jemalloc in default Dockerfile to optimize memory allocation. Suggest puma-dev configuration in bin/setup. These release notes cover only the major changes. To learn about various bug fixes and changes, please refer to the changelogs or check out the list of commits in the main Rails repository on GitHub." />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Ruby on Rails Guides" />
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4223" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Noto+Sans+Arabic:wght@100..900&display=swap" rel="stylesheet">
+
+  <meta name="theme-color" content="#C81418">
+</head>
+
+<body dir="ltr" class="guide no-js">
+  <script>
+    document.body.classList.remove('no-js')
+  </script>
+
+  <a id="main-skip-link" href="#main" class="skip-link" data-turbo="false">
+    Skip to main content
+  </a>
+
+  <div id="mobile-navigation-bar">
+    <div class="wrapper">
+      <strong class="more-info-label">More at <a href="https://rubyonrails.org/">rubyonrails.org:</a> </strong>
+      <button type="button" class="js-only red-button more-info-button" id="more-info" aria-controls="more-info-links" aria-expanded="false">
+        More Ruby on Rails
+      </button>
+      <ul id="more-info-links" class="more-info-links hidden">
+        <li class="more-info"><a href="https://rubyonrails.org/blog">Blog</a></li>
+        <li class="more-info"><a href="https://guides.rubyonrails.org/">Guides</a></li>
+        <li class="more-info"><a href="https://api.rubyonrails.org/">API</a></li>
+        <li class="more-info"><a href="https://discuss.rubyonrails.org/">Forum</a></li>
+        <li class="more-info"><a href="https://github.com/rails/rails">Contribute on GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <header id="page-header">
+    <div class="wrapper clearfix">
+      <nav id="feature-nav">
+        <div class="header-logo">
+          <a href="index.html" title="Guides home for v8.1.3 Guides">Guides</a>
+          <span id="version-switcher" class="js-only">
+            <label for="version-switcher-select">Version: <span class="visibly-hidden">pick from the list to go to that Rails version's guides</span></label>
+            <select id="version-switcher-select" class="guides-version">
+              <option value="https://edgeguides.rubyonrails.org/">Edge</option>
+                <option value="https://guides.rubyonrails.org/v8.0/7_2_release_notes.html">8.0</option>
+                <option value="https://guides.rubyonrails.org/v7.2/7_2_release_notes.html">7.2</option>
+                <option value="https://guides.rubyonrails.org/v7.1/7_2_release_notes.html">7.1</option>
+                <option value="https://guides.rubyonrails.org/v7.0/7_2_release_notes.html">7.0</option>
+                <option value="https://guides.rubyonrails.org/v6.1/7_2_release_notes.html">6.1</option>
+                <option value="https://guides.rubyonrails.org/v6.0/7_2_release_notes.html">6.0</option>
+                <option value="https://guides.rubyonrails.org/v5.2/7_2_release_notes.html">5.2</option>
+                <option value="https://guides.rubyonrails.org/v5.1/7_2_release_notes.html">5.1</option>
+                <option value="https://guides.rubyonrails.org/v5.0/7_2_release_notes.html">5.0</option>
+                <option value="https://guides.rubyonrails.org/v4.2/7_2_release_notes.html">4.2</option>
+                <option value="https://guides.rubyonrails.org/v4.1/7_2_release_notes.html">4.1</option>
+                <option value="https://guides.rubyonrails.org/v4.0/7_2_release_notes.html">4.0</option>
+                <option value="https://guides.rubyonrails.org/v3.2/7_2_release_notes.html">3.2</option>
+                <option value="https://guides.rubyonrails.org/v3.1/7_2_release_notes.html">3.1</option>
+                <option value="https://guides.rubyonrails.org/v3.0/7_2_release_notes.html">3.0</option>
+                <option value="https://guides.rubyonrails.org/v2.3/7_2_release_notes.html">2.3</option>
+            </select>
+          </span>
+        </div>
+        <ul class="nav">
+          <li><a class="nav-item" id="home_nav" href="https://rubyonrails.org/">Home</a></li>
+          <li class="guides-index guides-index-large">
+            <a href="index.html" id="guides-menu-button" role="button" aria-controls="guides" aria-expanded="false" class="guides-index-item nav-item">Guides Index</a>
+            <div id="guides" class="clearfix" style="display: none;">
+              <hr />
+              <dl class="guides-section-container">
+                  <div class="guides-section">
+                    <dt>Start Here</dt>
+                    <dd><a href="getting_started.html">Getting Started with Rails</a></dd>
+                    <dd><a href="install_ruby_on_rails.html">Install Ruby on Rails</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Models</dt>
+                    <dd><a href="active_record_basics.html">Active Record Basics</a></dd>
+                    <dd><a href="active_record_migrations.html">Active Record Migrations</a></dd>
+                    <dd><a href="active_record_validations.html">Active Record Validations</a></dd>
+                    <dd><a href="active_record_callbacks.html">Active Record Callbacks</a></dd>
+                    <dd><a href="association_basics.html">Active Record Associations</a></dd>
+                    <dd><a href="active_record_querying.html">Active Record Query Interface</a></dd>
+                    <dd><a href="active_model_basics.html">Active Model Basics</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Views</dt>
+                    <dd><a href="action_view_overview.html">Action View Overview</a></dd>
+                    <dd><a href="layouts_and_rendering.html">Layouts and Rendering in Rails</a></dd>
+                    <dd><a href="action_view_helpers.html">Action View Helpers</a></dd>
+                    <dd><a href="form_helpers.html">Action View Form Helpers</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Controllers</dt>
+                    <dd><a href="action_controller_overview.html">Action Controller Overview</a></dd>
+                    <dd><a href="action_controller_advanced_topics.html">Action Controller Advanced Topics</a></dd>
+                    <dd><a href="routing.html">Rails Routing from the Outside In</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Other Components</dt>
+                    <dd><a href="active_support_core_extensions.html">Active Support Core Extensions</a></dd>
+                    <dd><a href="action_mailer_basics.html">Action Mailer Basics</a></dd>
+                    <dd><a href="action_mailbox_basics.html">Action Mailbox Basics</a></dd>
+                    <dd><a href="action_text_overview.html">Action Text Overview</a></dd>
+                    <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                    <dd><a href="active_storage_overview.html">Active Storage Overview</a></dd>
+                    <dd><a href="action_cable_overview.html">Action Cable Overview</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Digging Deeper</dt>
+                    <dd><a href="i18n.html">Rails Internationalization (I18n) API</a></dd>
+                    <dd><a href="testing.html">Testing Rails Applications</a></dd>
+                    <dd><a href="debugging_rails_applications.html">Debugging Rails Applications</a></dd>
+                    <dd><a href="configuring.html">Configuring Rails Applications</a></dd>
+                    <dd><a href="command_line.html">The Rails Command Line</a></dd>
+                    <dd><a href="asset_pipeline.html">The Asset Pipeline</a></dd>
+                    <dd><a href="working_with_javascript_in_rails.html">Working with JavaScript in Rails</a></dd>
+                    <dd><a href="autoloading_and_reloading_constants.html">Autoloading and Reloading</a></dd>
+                    <dd><a href="api_app.html">Using Rails for API-only Applications</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Going to Production</dt>
+                    <dd><a href="tuning_performance_for_deployment.html">Tuning Performance for Deployment</a></dd>
+                    <dd><a href="caching_with_rails.html">Caching with Rails: An Overview</a></dd>
+                    <dd><a href="security.html">Securing Rails Applications</a></dd>
+                    <dd><a href="error_reporting.html">Error Reporting in Rails Applications</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Advanced Active Record</dt>
+                    <dd><a href="active_record_multiple_databases.html">Multiple Databases</a></dd>
+                    <dd><a href="active_record_encryption.html">Active Record Encryption</a></dd>
+                    <dd><a href="active_record_composite_primary_keys.html">Composite Primary Keys</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Extending Rails</dt>
+                    <dd><a href="plugins.html">The Basics of Creating Rails Plugins</a></dd>
+                    <dd><a href="rails_on_rack.html">Rails on Rack</a></dd>
+                    <dd><a href="generators.html">Creating and Customizing Rails Generators &amp; Templates</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Contributing</dt>
+                    <dd><a href="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</a></dd>
+                    <dd><a href="api_documentation_guidelines.html">API Documentation Guidelines</a></dd>
+                    <dd><a href="ruby_on_rails_guides_guidelines.html">Guides Guidelines</a></dd>
+                    <dd><a href="development_dependencies_install.html">Installing Rails Core Development Dependencies</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Policies</dt>
+                    <dd><a href="maintenance_policy.html">Maintenance Policy</a></dd>
+                  </div>
+                  <div class="guides-section">
+                    <dt>Release Notes</dt>
+                    <dd><a href="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</a></dd>
+                    <dd><a href="8_1_release_notes.html">Version 8.1 - October 2025</a></dd>
+                    <dd><a href="8_0_release_notes.html">Version 8.0 - November 2024</a></dd>
+                    <dd><a href="7_2_release_notes.html">Version 7.2 - August 2024</a></dd>
+                    <dd><a href="7_1_release_notes.html">Version 7.1 - October 2023</a></dd>
+                    <dd><a href="7_0_release_notes.html">Version 7.0 - December 2021</a></dd>
+                    <dd><a href="6_1_release_notes.html">Version 6.1 - December 2020</a></dd>
+                    <dd><a href="6_0_release_notes.html">Version 6.0 - August 2019</a></dd>
+                    <dd><a href="5_2_release_notes.html">Version 5.2 - April 2018</a></dd>
+                    <dd><a href="5_1_release_notes.html">Version 5.1 - April 2017</a></dd>
+                    <dd><a href="5_0_release_notes.html">Version 5.0 - June 2016</a></dd>
+                    <dd><a href="4_2_release_notes.html">Version 4.2 - December 2014</a></dd>
+                    <dd><a href="4_1_release_notes.html">Version 4.1 - April 2014</a></dd>
+                    <dd><a href="4_0_release_notes.html">Version 4.0 - June 2013</a></dd>
+                    <dd><a href="3_2_release_notes.html">Version 3.2 - January 2012</a></dd>
+                    <dd><a href="3_1_release_notes.html">Version 3.1 - August 2011</a></dd>
+                    <dd><a href="3_0_release_notes.html">Version 3.0 - August 2010</a></dd>
+                    <dd><a href="2_3_release_notes.html">Version 2.3 - March 2009</a></dd>
+                    <dd><a href="2_2_release_notes.html">Version 2.2 - November 2008</a></dd>
+                  </div>
+              </dl>
+            </div>
+          </li>
+          <li><a class="nav-item" href="contributing_to_ruby_on_rails.html">Contribute</a></li>
+          <li class="guides-index guides-index-small js-only">
+            <label for="guides-selector">
+              Navigate to a guide:
+            </label>
+            <select id="guides-selector" class="guides-index-item nav-item">
+              <option value="index.html">Guides Index</option>
+                <optgroup label="Start Here">
+                    <option value="getting_started.html">Getting Started with Rails</option>
+                    <option value="install_ruby_on_rails.html">Install Ruby on Rails</option>
+                </optgroup>
+                <optgroup label="Models">
+                    <option value="active_record_basics.html">Active Record Basics</option>
+                    <option value="active_record_migrations.html">Active Record Migrations</option>
+                    <option value="active_record_validations.html">Active Record Validations</option>
+                    <option value="active_record_callbacks.html">Active Record Callbacks</option>
+                    <option value="association_basics.html">Active Record Associations</option>
+                    <option value="active_record_querying.html">Active Record Query Interface</option>
+                    <option value="active_model_basics.html">Active Model Basics</option>
+                </optgroup>
+                <optgroup label="Views">
+                    <option value="action_view_overview.html">Action View Overview</option>
+                    <option value="layouts_and_rendering.html">Layouts and Rendering in Rails</option>
+                    <option value="action_view_helpers.html">Action View Helpers</option>
+                    <option value="form_helpers.html">Action View Form Helpers</option>
+                </optgroup>
+                <optgroup label="Controllers">
+                    <option value="action_controller_overview.html">Action Controller Overview</option>
+                    <option value="action_controller_advanced_topics.html">Action Controller Advanced Topics</option>
+                    <option value="routing.html">Rails Routing from the Outside In</option>
+                </optgroup>
+                <optgroup label="Other Components">
+                    <option value="active_support_core_extensions.html">Active Support Core Extensions</option>
+                    <option value="action_mailer_basics.html">Action Mailer Basics</option>
+                    <option value="action_mailbox_basics.html">Action Mailbox Basics</option>
+                    <option value="action_text_overview.html">Action Text Overview</option>
+                    <option value="active_job_basics.html">Active Job Basics</option>
+                    <option value="active_storage_overview.html">Active Storage Overview</option>
+                    <option value="action_cable_overview.html">Action Cable Overview</option>
+                </optgroup>
+                <optgroup label="Digging Deeper">
+                    <option value="i18n.html">Rails Internationalization (I18n) API</option>
+                    <option value="testing.html">Testing Rails Applications</option>
+                    <option value="debugging_rails_applications.html">Debugging Rails Applications</option>
+                    <option value="configuring.html">Configuring Rails Applications</option>
+                    <option value="command_line.html">The Rails Command Line</option>
+                    <option value="asset_pipeline.html">The Asset Pipeline</option>
+                    <option value="working_with_javascript_in_rails.html">Working with JavaScript in Rails</option>
+                    <option value="autoloading_and_reloading_constants.html">Autoloading and Reloading</option>
+                    <option value="api_app.html">Using Rails for API-only Applications</option>
+                </optgroup>
+                <optgroup label="Going to Production">
+                    <option value="tuning_performance_for_deployment.html">Tuning Performance for Deployment</option>
+                    <option value="caching_with_rails.html">Caching with Rails: An Overview</option>
+                    <option value="security.html">Securing Rails Applications</option>
+                    <option value="error_reporting.html">Error Reporting in Rails Applications</option>
+                </optgroup>
+                <optgroup label="Advanced Active Record">
+                    <option value="active_record_multiple_databases.html">Multiple Databases</option>
+                    <option value="active_record_encryption.html">Active Record Encryption</option>
+                    <option value="active_record_composite_primary_keys.html">Composite Primary Keys</option>
+                </optgroup>
+                <optgroup label="Extending Rails">
+                    <option value="plugins.html">The Basics of Creating Rails Plugins</option>
+                    <option value="rails_on_rack.html">Rails on Rack</option>
+                    <option value="generators.html">Creating and Customizing Rails Generators &amp; Templates</option>
+                </optgroup>
+                <optgroup label="Contributing">
+                    <option value="contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails</option>
+                    <option value="api_documentation_guidelines.html">API Documentation Guidelines</option>
+                    <option value="ruby_on_rails_guides_guidelines.html">Guides Guidelines</option>
+                    <option value="development_dependencies_install.html">Installing Rails Core Development Dependencies</option>
+                </optgroup>
+                <optgroup label="Policies">
+                    <option value="maintenance_policy.html">Maintenance Policy</option>
+                </optgroup>
+                <optgroup label="Release Notes">
+                    <option value="upgrading_ruby_on_rails.html">Upgrading Ruby on Rails</option>
+                    <option value="8_1_release_notes.html">Version 8.1 - October 2025</option>
+                    <option value="8_0_release_notes.html">Version 8.0 - November 2024</option>
+                    <option value="7_2_release_notes.html">Version 7.2 - August 2024</option>
+                    <option value="7_1_release_notes.html">Version 7.1 - October 2023</option>
+                    <option value="7_0_release_notes.html">Version 7.0 - December 2021</option>
+                    <option value="6_1_release_notes.html">Version 6.1 - December 2020</option>
+                    <option value="6_0_release_notes.html">Version 6.0 - August 2019</option>
+                    <option value="5_2_release_notes.html">Version 5.2 - April 2018</option>
+                    <option value="5_1_release_notes.html">Version 5.1 - April 2017</option>
+                    <option value="5_0_release_notes.html">Version 5.0 - June 2016</option>
+                    <option value="4_2_release_notes.html">Version 4.2 - December 2014</option>
+                    <option value="4_1_release_notes.html">Version 4.1 - April 2014</option>
+                    <option value="4_0_release_notes.html">Version 4.0 - June 2013</option>
+                    <option value="3_2_release_notes.html">Version 3.2 - January 2012</option>
+                    <option value="3_1_release_notes.html">Version 3.1 - August 2011</option>
+                    <option value="3_0_release_notes.html">Version 3.0 - August 2010</option>
+                    <option value="2_3_release_notes.html">Version 2.3 - March 2009</option>
+                    <option value="2_2_release_notes.html">Version 2.2 - November 2008</option>
+                </optgroup>
+            </select>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <hr class="hide" />
+
+  <main id="main">
+    <article>
+      <header id="feature">
+        <div class="wrapper">
+          <h1>Ruby on Rails 7.2 Release Notes</h1><p>Highlights in Rails 7.2:</p>
+<ul>
+<li>Development containers configuration for applications.</li>
+<li>Add browser version guard by default.</li>
+<li>Make Ruby 3.1 the new minimum version.</li>
+<li>Default Progressive Web Application (PWA) files.</li>
+<li>Add omakase RuboCop rules by default.</li>
+<li>Add GitHub CI workflow by default to new applications.</li>
+<li>Add Brakeman by default to new applications.</li>
+<li>Set a new default for the Puma thread count.</li>
+<li>Prevent jobs from being scheduled within transactions.</li>
+<li>Per transaction commit and rollback callbacks.</li>
+<li>Enable YJIT by default if running Ruby 3.3+.</li>
+<li>New design for the Rails guides.</li>
+<li>Setup jemalloc in default Dockerfile to optimize memory allocation.</li>
+<li>Suggest puma-dev configuration in bin/setup.</li>
+</ul>
+<p>These release notes cover only the major changes. To learn about various bug
+fixes and changes, please refer to the changelogs or check out the <a href="https://github.com/rails/rails/commits/7-2-stable">list of
+commits</a> in the main Rails
+repository on GitHub.</p>
+
+                    <nav id="column-side" aria-label="Chapter" class="guide-index" data-turbo="false">
+            <a id="chapter-nav-skip-link" href="#article-body" class="skip-link">
+              Skip to article body
+            </a>
+
+            <h2 class="chapter">
+              <picture aria-hidden="true">
+                <!-- Using the `source`  HTML tag to set the dark theme image -->
+                <source
+                  srcset="images/icon_book-close-bookmark-1-wht.svg"
+                  media="(prefers-color-scheme: dark)"
+                />
+                <img src="images/icon_book-close-bookmark-1.svg" alt="Chapter Icon" />
+              </picture>
+              Chapters
+            </h2>
+            <ol class="chapters">
+<li><a href="#upgrading-to-rails-7-2">Upgrading to Rails 7.2</a></li>
+<li><a href="#major-features">Major Features</a>
+
+<ul>
+<li><a href="#development-containers-configuration-for-applications">Development containers configuration for applications</a></li>
+<li><a href="#add-browser-version-guard-by-default">Add browser version guard by default</a></li>
+<li><a href="#make-ruby-3-1-the-new-minimum-version">Make Ruby 3.1 the new minimum version</a></li>
+<li><a href="#default-progressive-web-application-pwa-files">Default Progressive Web Application (PWA) files</a></li>
+<li><a href="#add-omakase-rubocop-rules-by-default">Add omakase RuboCop rules by default</a></li>
+<li><a href="#add-github-ci-workflow-by-default-to-new-applications">Add GitHub CI workflow by default to new applications</a></li>
+<li><a href="#add-brakeman-by-default-to-new-applications">Add Brakeman by default to new applications</a></li>
+<li><a href="#set-a-new-default-for-the-puma-thread-count">Set a new default for the Puma thread count</a></li>
+<li><a href="#prevent-jobs-from-being-scheduled-within-transactions">Prevent jobs from being scheduled within transactions</a></li>
+<li><a href="#per-transaction-commit-and-rollback-callbacks">Per transaction commit and rollback callbacks</a></li>
+<li><a href="#enable-yjit-by-default-if-running-ruby-3-3">Enable YJIT by default if running Ruby 3.3+</a></li>
+<li><a href="#new-design-for-the-rails-guides">New design for the Rails guides</a></li>
+<li><a href="#setup-jemalloc-in-default-dockerfile-to-optimize-memory-allocation">Setup jemalloc in default Dockerfile to optimize memory allocation</a></li>
+<li><a href="#suggest-puma-dev-configuration-in-bin-setup">Suggest puma-dev configuration in bin/setup</a></li>
+</ul></li>
+<li><a href="#railties">Railties</a>
+
+<ul>
+<li><a href="#railties-removals">Removals</a></li>
+<li><a href="#railties-deprecations">Deprecations</a></li>
+<li><a href="#railties-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#action-cable">Action Cable</a>
+
+<ul>
+<li><a href="#action-cable-removals">Removals</a></li>
+<li><a href="#action-cable-deprecations">Deprecations</a></li>
+<li><a href="#action-cable-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#action-pack">Action Pack</a>
+
+<ul>
+<li><a href="#action-pack-removals">Removals</a></li>
+<li><a href="#action-pack-deprecations">Deprecations</a></li>
+<li><a href="#action-pack-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#action-view">Action View</a>
+
+<ul>
+<li><a href="#action-view-removals">Removals</a></li>
+<li><a href="#action-view-deprecations">Deprecations</a></li>
+<li><a href="#action-view-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#action-mailer">Action Mailer</a>
+
+<ul>
+<li><a href="#action-mailer-removals">Removals</a></li>
+<li><a href="#action-mailer-deprecations">Deprecations</a></li>
+<li><a href="#action-mailer-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#active-record">Active Record</a>
+
+<ul>
+<li><a href="#active-record-removals">Removals</a></li>
+<li><a href="#active-record-deprecations">Deprecations</a></li>
+<li><a href="#active-record-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#active-storage">Active Storage</a>
+
+<ul>
+<li><a href="#active-storage-removals">Removals</a></li>
+<li><a href="#active-storage-deprecations">Deprecations</a></li>
+<li><a href="#active-storage-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#active-model">Active Model</a>
+
+<ul>
+<li><a href="#active-model-removals">Removals</a></li>
+<li><a href="#active-model-deprecations">Deprecations</a></li>
+<li><a href="#active-model-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#active-support">Active Support</a>
+
+<ul>
+<li><a href="#active-support-removals">Removals</a></li>
+<li><a href="#active-support-deprecations">Deprecations</a></li>
+<li><a href="#active-support-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#active-job">Active Job</a>
+
+<ul>
+<li><a href="#active-job-removals">Removals</a></li>
+<li><a href="#active-job-deprecations">Deprecations</a></li>
+<li><a href="#active-job-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#action-text">Action Text</a>
+
+<ul>
+<li><a href="#action-text-removals">Removals</a></li>
+<li><a href="#action-text-deprecations">Deprecations</a></li>
+<li><a href="#action-text-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#action-mailbox">Action Mailbox</a>
+
+<ul>
+<li><a href="#action-mailbox-removals">Removals</a></li>
+<li><a href="#action-mailbox-deprecations">Deprecations</a></li>
+<li><a href="#action-mailbox-notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#ruby-on-rails-guides">Ruby on Rails Guides</a>
+
+<ul>
+<li><a href="#notable-changes">Notable changes</a></li>
+</ul></li>
+<li><a href="#credits">Credits</a></li>
+</ol>
+
+          </nav>
+
+        </div>
+      </header>
+
+      <div class="wrapper">
+        <div id="column-main">
+          <section id="article-body">
+            <h2 id="upgrading-to-rails-7-2"><a class="anchorlink" href="#upgrading-to-rails-7-2" data-turbo="false"><span>1.</span> Upgrading to Rails 7.2</a></h2><p>If you're upgrading an existing application, it's a great idea to have good test
+coverage before going in. You should also first upgrade to Rails 7.1 in case you
+haven't and make sure your application still runs as expected before attempting
+an update to Rails 7.2. A list of things to watch out for when upgrading is
+available in the
+<a href="upgrading_ruby_on_rails.html#upgrading-from-rails-7-1-to-rails-7-2">Upgrading Ruby on Rails</a>
+guide.</p><h2 id="major-features"><a class="anchorlink" href="#major-features" data-turbo="false"><span>2.</span> Major Features</a></h2><h3 id="development-containers-configuration-for-applications"><a class="anchorlink" href="#development-containers-configuration-for-applications" data-turbo="false"><span>2.1.</span> Development containers configuration for applications</a></h3><p>A <a href="https://containers.dev/">development container</a> (or dev container for short) allows you to use a container
+as a full-featured development environment.</p><p>Rails 7.2 adds the ability to generate a development container configuration for your application. This configuration
+includes a <code>.devcontainer</code> folder with a <code>Dockerfile</code>, a <code>docker-compose.yml</code> file, and a <code>devcontainer.json</code> file.</p><p>By default, the dev container contains the following:</p>
+<ul>
+<li>A Redis container for use with Kredis, Action Cable, etc.</li>
+<li>A database (SQLite, Postgres, MySQL or MariaDB)</li>
+<li>A Headless Chrome container for system tests</li>
+<li>Active Storage configured to use the local disk and with preview features working</li>
+</ul>
+<p>To generate a new application with a development container, you can run:</p><div class="interstitial code">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new myapp <span class="nt">--devcontainer</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="rails new myapp --devcontainer
+">Copy</button>
+</div>
+<p>For existing applications, a <code>devcontainer</code> command is now available:</p><div class="interstitial code">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>devcontainer
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="rails devcontainer
+">Copy</button>
+</div>
+<p>For more information, see the <a href="getting_started_with_devcontainer.html">Getting Started with Dev Containers</a> guide.</p><h3 id="add-browser-version-guard-by-default"><a class="anchorlink" href="#add-browser-version-guard-by-default" data-turbo="false"><span>2.2.</span> Add browser version guard by default</a></h3><p>Rails now adds the ability to specify the browser versions that will be allowed to access all actions
+(or some, as limited by <code>only:</code> or <code>except:</code>).</p><p>Only browsers matched in the hash or named set passed to <code>versions:</code> will be blocked if they're below the versions
+specified.</p><p>This means that all other unknown browsers, as well as agents that aren't reporting a user-agent header, will be allowed access.</p><p>A browser that's blocked will by default be served the file in <code>public/406-unsupported-browser.html</code> with an HTTP status
+code of "406 Not Acceptable".</p><p>Examples:</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="c1"># Allow only browsers natively supporting webp images, web push, badges, import maps, CSS nesting + :has</span>
+  <span class="n">allow_browser</span> <span class="ss">versions: :modern</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+  <span class="c1"># All versions of Chrome and Opera will be allowed, but no versions of "internet explorer" (ie). Safari needs to be 16.4+ and Firefox 121+.</span>
+  <span class="n">allow_browser</span> <span class="ss">versions: </span><span class="p">{</span> <span class="ss">safari: </span><span class="mf">16.4</span><span class="p">,</span> <span class="ss">firefox: </span><span class="mi">121</span><span class="p">,</span> <span class="ss">ie: </span><span class="kp">false</span> <span class="p">}</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">MessagesController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="c1"># In addition to the browsers blocked by ApplicationController, also block Opera below 104 and Chrome below 119 for the show action.</span>
+  <span class="n">allow_browser</span> <span class="ss">versions: </span><span class="p">{</span> <span class="ss">opera: </span><span class="mi">104</span><span class="p">,</span> <span class="ss">chrome: </span><span class="mi">119</span> <span class="p">},</span> <span class="ss">only: :show</span>
+<span class="k">end</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="class ApplicationController < ActionController::Base
+  # Allow only browsers natively supporting webp images, web push, badges, import maps, CSS nesting + :has
+  allow_browser versions: :modern
+end
+
+class ApplicationController < ActionController::Base
+  # All versions of Chrome and Opera will be allowed, but no versions of &quot;internet explorer&quot; (ie). Safari needs to be 16.4+ and Firefox 121+.
+  allow_browser versions: { safari: 16.4, firefox: 121, ie: false }
+end
+
+class MessagesController < ApplicationController
+  # In addition to the browsers blocked by ApplicationController, also block Opera below 104 and Chrome below 119 for the show action.
+  allow_browser versions: { opera: 104, chrome: 119 }, only: :show
+end
+">Copy</button>
+</div>
+<p>Newly generated applications have this guard set in <code>ApplicationController</code>.</p><p>For more information, see the <a href="https://api.rubyonrails.org/v8.1.3/classes/ActionController/AllowBrowser/ClassMethods.html#method-i-allow_browser">allow_browser</a>
+documentation.</p><h3 id="make-ruby-3-1-the-new-minimum-version"><a class="anchorlink" href="#make-ruby-3-1-the-new-minimum-version" data-turbo="false"><span>2.3.</span> Make Ruby 3.1 the new minimum version</a></h3><p>Until now, Rails only dropped compatibility with older Rubies on new majors version.
+We are changing this policy because it causes us to keep compatibility with long
+unsupported versions of Ruby or to bump the Rails major version more often, and to
+drop multiple Ruby versions at once when we bump the major.</p><p>We will now drop Ruby versions that are end-of-life on minor Rails versions at the time of the release.</p><p>For Rails 7.2, Ruby 3.1 is the new minimum version.</p><h3 id="default-progressive-web-application-pwa-files"><a class="anchorlink" href="#default-progressive-web-application-pwa-files" data-turbo="false"><span>2.4.</span> Default Progressive Web Application (PWA) files</a></h3><p>In preparation to better supporting the creation of PWA applications with Rails, we now generate default PWA files for the manifest
+and service worker, which are served from <code>app/views/pwa</code> and can be dynamically rendered through ERB. Those files
+are mounted explicitly at the root with default routes in the generated routes file.</p><p>For more information, see the <a href="https://github.com/rails/rails/pull/50528">pull request adding the feature</a>.</p><h3 id="add-omakase-rubocop-rules-by-default"><a class="anchorlink" href="#add-omakase-rubocop-rules-by-default" data-turbo="false"><span>2.5.</span> Add omakase RuboCop rules by default</a></h3><p>Rails applications now come with <a href="https://rubocop.org/">RuboCop</a> configured with a set of rules from <a href="https://github.com/rails/rubocop-rails-omakase">rubocop-rails-omakase</a> by default.</p><p>Ruby is a beautifully expressive language that not only tolerates many different dialects, but celebrates their
+diversity. It was never meant as a language to be written exclusively in a single style across all libraries,
+frameworks, or applications. If you or your team has developed a particular house style that brings you joy,
+you should cherish that.</p><p>This collection of RuboCop styles is for those who haven't committed to any specific dialect already. Who would just
+like to have a reasonable starting point, and who will benefit from some default rules to at least start a consistent
+approach to Ruby styling.</p><p>These specific rules aren't right or wrong, but merely represent the idiosyncratic aesthetic sensibilities of Rails'
+creator. Use them whole, use them as a starting point, use them as inspiration, or however you see fit.</p><h3 id="add-github-ci-workflow-by-default-to-new-applications"><a class="anchorlink" href="#add-github-ci-workflow-by-default-to-new-applications" data-turbo="false"><span>2.6.</span> Add GitHub CI workflow by default to new applications</a></h3><p>Rails now adds a default GitHub CI workflow file to new applications. This will get especially newcomers off to a good
+start with automated scanning, linting, and testing. We find that a natural continuation for the modern age of what
+we've done since the start with unit tests.</p><p>It's of course true that GitHub Actions are a commercial cloud product for private repositories after you've used the
+free tokens. But given the relationship between GitHub and Rails, the overwhelming default nature of the platform for
+newcomers, and the value of teaching newcomers good CI habits, we find this to be an acceptable trade-off.</p><h3 id="add-brakeman-by-default-to-new-applications"><a class="anchorlink" href="#add-brakeman-by-default-to-new-applications" data-turbo="false"><span>2.7.</span> Add Brakeman by default to new applications</a></h3><p><a href="https://brakemanscanner.org/">Brakeman</a> is a great way to prevent common security vulnerabilities in Rails from going
+into production.</p><p>New applications come with Brakeman installed and combined with the GitHub CI workflow, it will run automatically on
+every push.</p><h3 id="set-a-new-default-for-the-puma-thread-count"><a class="anchorlink" href="#set-a-new-default-for-the-puma-thread-count" data-turbo="false"><span>2.8.</span> Set a new default for the Puma thread count</a></h3><p>Rails changed the default number of threads in Puma from 5 to 3.</p><p>Due to the nature of well-optimized Rails applications, with quick SQL queries and slow 3rd-party calls running via jobs,
+Ruby can spend a significant amount of time waiting for the Global VM Lock (GVL) to release when the thread count is too
+high, which is hurting latency (request response time).</p><p>After careful consideration, investigation, and based on battle-tested experience from applications running in
+production, we decided that a default of 3 threads is a good balance between concurrency and performance.</p><p>You can follow a very detailed discussion about this change in <a href="https://github.com/rails/rails/issues/50450">the issue</a>.</p><h3 id="prevent-jobs-from-being-scheduled-within-transactions"><a class="anchorlink" href="#prevent-jobs-from-being-scheduled-within-transactions" data-turbo="false"><span>2.9.</span> Prevent jobs from being scheduled within transactions</a></h3><p>A common mistake with Active Job is to enqueue jobs from inside a transaction, causing them to potentially be picked
+and ran by another process, before the transaction is committed, which result in various errors.</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="no">Topic</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span>
+  <span class="n">topic</span> <span class="o">=</span> <span class="no">Topic</span><span class="p">.</span><span class="nf">create</span>
+
+  <span class="no">NewTopicNotificationJob</span><span class="p">.</span><span class="nf">perform_later</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="Topic.transaction do
+  topic = Topic.create
+
+  NewTopicNotificationJob.perform_later(topic)
+end
+">Copy</button>
+</div>
+<p>Now Active Job will automatically defer the enqueuing to after the transaction is committed, and drop the job if the
+transaction is rolled back.</p><p>Various queue implementations can chose to disable this behavior, and users can disable it, or force it on a per job
+basis:</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="k">class</span> <span class="nc">NewTopicNotificationJob</span> <span class="o">&lt;</span> <span class="no">ApplicationJob</span>
+  <span class="nb">self</span><span class="p">.</span><span class="nf">enqueue_after_transaction_commit</span> <span class="o">=</span> <span class="ss">:never</span>
+<span class="k">end</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="class NewTopicNotificationJob < ApplicationJob
+  self.enqueue_after_transaction_commit = :never
+end
+">Copy</button>
+</div>
+<h3 id="per-transaction-commit-and-rollback-callbacks"><a class="anchorlink" href="#per-transaction-commit-and-rollback-callbacks" data-turbo="false"><span>2.10.</span> Per transaction commit and rollback callbacks</a></h3><p>This is now possible due to a new feature that allows registering transaction callbacks outside of a record.</p><p><code>ActiveRecord::Base.transaction</code> now yields an <code>ActiveRecord::Transaction</code> object, which allows registering callbacks
+on it.</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="no">Article</span><span class="p">.</span><span class="nf">transaction</span> <span class="k">do</span> <span class="o">|</span><span class="n">transaction</span><span class="o">|</span>
+  <span class="n">article</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">published: </span><span class="kp">true</span><span class="p">)</span>
+
+  <span class="n">transaction</span><span class="p">.</span><span class="nf">after_commit</span> <span class="k">do</span>
+    <span class="no">PublishNotificationMailer</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="ss">article: </span><span class="n">article</span><span class="p">).</span><span class="nf">deliver_later</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="Article.transaction do |transaction|
+  article.update(published: true)
+
+  transaction.after_commit do
+    PublishNotificationMailer.with(article: article).deliver_later
+  end
+end
+">Copy</button>
+</div>
+<p><code>ActiveRecord::Base.current_transaction</code> was also added to allow to register callbacks on it.</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="no">Article</span><span class="p">.</span><span class="nf">current_transaction</span><span class="p">.</span><span class="nf">after_commit</span> <span class="k">do</span>
+  <span class="no">PublishNotificationMailer</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="ss">article: </span><span class="n">article</span><span class="p">).</span><span class="nf">deliver_later</span>
+<span class="k">end</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="Article.current_transaction.after_commit do
+  PublishNotificationMailer.with(article: article).deliver_later
+end
+">Copy</button>
+</div>
+<p>And finally, <code>ActiveRecord.after_all_transactions_commit</code> was added, for code that may run either inside or outside a
+transaction and needs to perform work after the state changes have been properly persisted.</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="k">def</span> <span class="nf">publish_article</span><span class="p">(</span><span class="n">article</span><span class="p">)</span>
+  <span class="n">article</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">published: </span><span class="kp">true</span><span class="p">)</span>
+
+  <span class="no">ActiveRecord</span><span class="p">.</span><span class="nf">after_all_transactions_commit</span> <span class="k">do</span>
+    <span class="no">PublishNotificationMailer</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="ss">article: </span><span class="n">article</span><span class="p">).</span><span class="nf">deliver_later</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="def publish_article(article)
+  article.update(published: true)
+
+  ActiveRecord.after_all_transactions_commit do
+    PublishNotificationMailer.with(article: article).deliver_later
+  end
+end
+">Copy</button>
+</div>
+<p>See <a href="https://github.com/rails/rails/pull/51474">#51474</a> and <a href="https://github.com/rails/rails/pull/51426">#51426</a> for more information:</p><h3 id="enable-yjit-by-default-if-running-ruby-3-3"><a class="anchorlink" href="#enable-yjit-by-default-if-running-ruby-3-3" data-turbo="false"><span>2.11.</span> Enable YJIT by default if running Ruby 3.3+</a></h3><p>YJIT is Ruby's JIT compiler that is available in CRuby since Ruby 3.1. It can provide significant performance
+improvements for Rails applications, offering 15-25% latency improvements.</p><p>In Rails 7.2, YJIT is enabled by default if running Ruby 3.3 or newer.</p><p>You can disable YJIT by setting:</p><div class="interstitial code">
+<pre><code class="highlight ruby"><span class="no">Rails</span><span class="p">.</span><span class="nf">application</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">yjit</span> <span class="o">=</span> <span class="kp">false</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="Rails.application.config.yjit = false
+">Copy</button>
+</div>
+<h3 id="new-design-for-the-rails-guides"><a class="anchorlink" href="#new-design-for-the-rails-guides" data-turbo="false"><span>2.12.</span> New design for the Rails guides</a></h3><p>When Rails 7.0 landed in December 2021, it came with a fresh new homepage and a new boot screen. The design of the
+guides, however, has remained largely untouched since 2009 - a point which hasn’t gone unnoticed (we heard your feedback).</p><p>With all of the work right now going into removing complexity from the Rails framework and making the documentation
+consistent, clear, and up-to-date, it was time to tackle the design of the guides and make them equally modern, simple,
+and fresh.</p><p>We worked with UX designer <a href="https://meticulous.com/">John Athayde</a> to take the look and feel of the homepage and
+transfer that over to the Rails guides to make them clean, sleek, and up-to-date.</p><p>The layout will remain the same, but from today you will see the following changes reflected in the guides:</p>
+<ul>
+<li>Cleaner, less busy design.</li>
+<li>Fonts, color scheme, and logo more consistent with the home page.</li>
+<li>Updated iconography.</li>
+<li>Simplified navigation.</li>
+<li>Sticky "Chapters" navbar when scrolling.</li>
+</ul>
+<p>See the <a href="https://rubyonrails.org/2024/3/20/rails-guides-get-a-facelift">announcement blog post for some before/after images</a>.</p><h3 id="setup-jemalloc-in-default-dockerfile-to-optimize-memory-allocation"><a class="anchorlink" href="#setup-jemalloc-in-default-dockerfile-to-optimize-memory-allocation" data-turbo="false"><span>2.13.</span> Setup jemalloc in default Dockerfile to optimize memory allocation</a></h3><p><a href="https://www.speedshop.co/2017/12/04/malloc-doubles-ruby-memory.html">Ruby's use of <code>malloc</code> can create memory fragmentation problems, especially when using multiple threads</a>
+like Puma does. Switching to an allocator that uses different patterns to avoid fragmentation can decrease memory usage
+by a substantial margin.</p><p>Rails 7.2 now includes <a href="https://jemalloc.net/">jemalloc</a> in the default Dockerfile to optimize memory allocation.</p><h3 id="suggest-puma-dev-configuration-in-bin-setup"><a class="anchorlink" href="#suggest-puma-dev-configuration-in-bin-setup" data-turbo="false"><span>2.14.</span> Suggest puma-dev configuration in bin/setup</a></h3><p><a href="https://github.com/puma/puma-dev">Puma-dev</a> is the golden path for developing multiple Rails applications locally, if you're not using Docker.</p><p>Rails now suggests how to get that setup in a new comment you'll find in <code>bin/setup</code>.</p><h2 id="railties"><a class="anchorlink" href="#railties" data-turbo="false"><span>3.</span> Railties</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/railties/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="railties-removals"><a class="anchorlink" href="#railties-removals" data-turbo="false"><span>3.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated <code>Rails::Generators::Testing::Behaviour</code>.</p></li>
+<li><p>  Remove deprecated <code>Rails.application.secrets</code>.</p></li>
+<li><p>  Remove deprecated <code>Rails.config.enable_dependency_loading</code>.</p></li>
+<li><p>  Remove deprecated <code>find_cmd_and_exec</code> console helper.</p></li>
+<li><p>  Remove support for <code>oracle</code>, <code>sqlserver</code>, and JRuby specific database adapters from the <code>new</code>
+and <code>db:system:change</code> <code>rails</code> commands.</p></li>
+<li><p>  Remove <code>config.public_file_server.enabled</code> option from the generators.</p></li>
+</ul>
+<h3 id="railties-deprecations"><a class="anchorlink" href="#railties-deprecations" data-turbo="false"><span>3.2.</span> Deprecations</a></h3><h3 id="railties-notable-changes"><a class="anchorlink" href="#railties-notable-changes" data-turbo="false"><span>3.3.</span> Notable changes</a></h3>
+<ul>
+<li><p>  Add RuboCop with rules from <a href="https://github.com/rails/rubocop-rails-omakase">rubocop-rails-omakase</a>
+by default in both new applications and plugins.</p></li>
+<li><p>  Add Brakeman with default configuration for security checks in new applications.</p></li>
+<li><p>  Add GitHub CI files for Dependabot, Brakeman, RuboCop, and running tests by default for new applications and plugins.</p></li>
+<li><p>  YJIT is now enabled by default for new applications running on Ruby 3.3+.</p></li>
+<li><p>  Generate a <code>.devcontainer</code> folder for running the application in a container with Visual Studio Code.</p><div class="interstitial code">
+<pre><code class="highlight console"><span class="gp">$</span><span class="w"> </span><span class="nb">rails </span>new myapp <span class="nt">--devcontainer</span>
+</code></pre>
+<button class="clipboard-button" data-clipboard-text="rails new myapp --devcontainer
+">Copy</button>
+</div></li>
+<li><p>  Introduce <code>Rails::Generators::Testing::Assertions#assert_initializer</code> to test initializers.</p></li>
+<li><p>  System tests now use Headless Chrome by default for new applications.</p></li>
+<li><p>  Support the <code>BACKTRACE</code> environment variable to turn off backtrace cleaning in normal server runnings.
+Previously, this was only available for testing.</p></li>
+<li><p>  Add default Progressive Web App (PWA) files for the manifest and service worker, served from <code>app/views/pwa</code>,
+and make them dynamically renderable through ERB.</p></li>
+</ul>
+<h2 id="action-cable"><a class="anchorlink" href="#action-cable" data-turbo="false"><span>4.</span> Action Cable</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/actioncable/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="action-cable-removals"><a class="anchorlink" href="#action-cable-removals" data-turbo="false"><span>4.1.</span> Removals</a></h3><h3 id="action-cable-deprecations"><a class="anchorlink" href="#action-cable-deprecations" data-turbo="false"><span>4.2.</span> Deprecations</a></h3><h3 id="action-cable-notable-changes"><a class="anchorlink" href="#action-cable-notable-changes" data-turbo="false"><span>4.3.</span> Notable changes</a></h3><h2 id="action-pack"><a class="anchorlink" href="#action-pack" data-turbo="false"><span>5.</span> Action Pack</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/actionpack/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="action-pack-removals"><a class="anchorlink" href="#action-pack-removals" data-turbo="false"><span>5.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated constant <code>ActionDispatch::IllegalStateError</code>.</p></li>
+<li><p>  Remove deprecated constant <code>AbstractController::Helpers::MissingHelperError</code>.</p></li>
+<li><p>  Remove deprecated comparison between <code>ActionController::Parameters</code> and <code>Hash</code>.</p></li>
+<li><p>  Remove deprecated <code>Rails.application.config.action_dispatch.return_only_request_media_type_on_content_type</code>.</p></li>
+<li><p>  Remove deprecated <code>speaker</code>, <code>vibrate</code>, and <code>vr</code> permissions policy directives.</p></li>
+<li><p>  Remove deprecated support to set <code>Rails.application.config.action_dispatch.show_exceptions</code> to <code>true</code> and <code>false</code>.</p></li>
+</ul>
+<h3 id="action-pack-deprecations"><a class="anchorlink" href="#action-pack-deprecations" data-turbo="false"><span>5.2.</span> Deprecations</a></h3>
+<ul>
+<li>  Deprecate <code>Rails.application.config.action_controller.allow_deprecated_parameters_hash_equality</code>.</li>
+</ul>
+<h3 id="action-pack-notable-changes"><a class="anchorlink" href="#action-pack-notable-changes" data-turbo="false"><span>5.3.</span> Notable changes</a></h3><h2 id="action-view"><a class="anchorlink" href="#action-view" data-turbo="false"><span>6.</span> Action View</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/actionview/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="action-view-removals"><a class="anchorlink" href="#action-view-removals" data-turbo="false"><span>6.1.</span> Removals</a></h3>
+<ul>
+<li>  Remove deprecated <code>@rails/ujs</code> in favor of Turbo.</li>
+</ul>
+<h3 id="action-view-deprecations"><a class="anchorlink" href="#action-view-deprecations" data-turbo="false"><span>6.2.</span> Deprecations</a></h3>
+<ul>
+<li> Deprecate passing content to void elements when using <code>tag.br</code> type tag builders.</li>
+</ul>
+<h3 id="action-view-notable-changes"><a class="anchorlink" href="#action-view-notable-changes" data-turbo="false"><span>6.3.</span> Notable changes</a></h3><h2 id="action-mailer"><a class="anchorlink" href="#action-mailer" data-turbo="false"><span>7.</span> Action Mailer</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/actionmailer/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="action-mailer-removals"><a class="anchorlink" href="#action-mailer-removals" data-turbo="false"><span>7.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated <code>config.action_mailer.preview_path</code>.</p></li>
+<li><p>  Remove deprecated params via <code>:args</code> for <code>assert_enqueued_email_with</code>.</p></li>
+</ul>
+<h3 id="action-mailer-deprecations"><a class="anchorlink" href="#action-mailer-deprecations" data-turbo="false"><span>7.2.</span> Deprecations</a></h3><h3 id="action-mailer-notable-changes"><a class="anchorlink" href="#action-mailer-notable-changes" data-turbo="false"><span>7.3.</span> Notable changes</a></h3><h2 id="active-record"><a class="anchorlink" href="#active-record" data-turbo="false"><span>8.</span> Active Record</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/activerecord/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="active-record-removals"><a class="anchorlink" href="#active-record-removals" data-turbo="false"><span>8.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated <code>Rails.application.config.active_record.suppress_multiple_database_warning</code>.</p></li>
+<li><p>  Remove deprecated support to call <code>alias_attribute</code> with non-existent attribute names.</p></li>
+<li><p>  Remove deprecated <code>name</code> argument from <code>ActiveRecord::Base.remove_connection</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::Base.clear_active_connections!</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::Base.clear_reloadable_connections!</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::Base.clear_all_connections!</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::Base.flush_idle_connections!</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::ActiveJobRequiredError</code>.</p></li>
+<li><p>  Remove deprecated support to define <code>explain</code> in the connection adapter with 2 arguments.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::LogSubscriber.runtime</code> method.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::LogSubscriber.runtime=</code> method.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::LogSubscriber.reset_runtime</code> method.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::Migration.check_pending</code> method.</p></li>
+<li><p>  Remove deprecated support to passing <code>SchemaMigration</code> and <code>InternalMetadata</code> classes as arguments to
+<code>ActiveRecord::MigrationContext</code>.</p></li>
+<li><p>  Remove deprecated behavior to support referring to a singular association by its plural name.</p></li>
+<li><p>  Remove deprecated <code>TestFixtures.fixture_path</code>.</p></li>
+<li><p>  Remove deprecated support to <code>ActiveRecord::Base#read_attribute(:id)</code> to return the custom primary key value.</p></li>
+<li><p>  Remove deprecated support to passing coder and class as second argument to <code>serialize</code>.</p></li>
+<li><p>  Remove deprecated <code>#all_foreign_keys_valid?</code> from database adapters.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::ConnectionAdapters::SchemaCache.load_from</code>.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::ConnectionAdapters::SchemaCache#data_sources</code>.</p></li>
+<li><p>  Remove deprecated <code>#all_connection_pools</code>.</p></li>
+<li><p>  Remove deprecated support to apply <code>#connection_pool_list</code>, <code>#active_connections?</code>, <code>#clear_active_connections!</code>,
+<code>#clear_reloadable_connections!</code>, <code>#clear_all_connections!</code> and <code>#flush_idle_connections!</code> to the connections pools
+for the current role when the <code>role</code> argument isn't provided.</p></li>
+<li><p>  Remove deprecated <code>ActiveRecord::ConnectionAdapters::ConnectionPool#connection_klass</code>.</p></li>
+<li><p>  Remove deprecated <code>#quote_bound_value</code>.</p></li>
+<li><p>  Remove deprecated support to quote <code>ActiveSupport::Duration</code>.</p></li>
+<li><p>  Remove deprecated support to pass <code>deferrable: true</code> to <code>add_foreign_key</code>.</p></li>
+<li><p>  Remove deprecated support to pass <code>rewhere</code> to <code>ActiveRecord::Relation#merge</code>.</p></li>
+<li><p>  Remove deprecated behavior that would rollback a transaction block when exited using <code>return</code>, <code>break</code> or <code>throw</code>.</p></li>
+</ul>
+<h3 id="active-record-deprecations"><a class="anchorlink" href="#active-record-deprecations" data-turbo="false"><span>8.2.</span> Deprecations</a></h3>
+<ul>
+<li><p>  Deprecate <code>Rails.application.config.active_record.allow_deprecated_singular_associations_name</code></p></li>
+<li><p>  Deprecate <code>Rails.application.config.active_record.commit_transaction_on_non_local_return</code></p></li>
+</ul>
+<h3 id="active-record-notable-changes"><a class="anchorlink" href="#active-record-notable-changes" data-turbo="false"><span>8.3.</span> Notable changes</a></h3>
+<ul>
+<li>  <code>ActiveRecord::Base.establish_connection</code> no longer sets <code>ActiveRecord::Base.connection.active?</code> to <code>true</code>. If you need this behavior, you can use <code>ActiveRecord::Base.connection.verify!</code> instead.</li>
+</ul>
+<h2 id="active-storage"><a class="anchorlink" href="#active-storage" data-turbo="false"><span>9.</span> Active Storage</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/activestorage/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="active-storage-removals"><a class="anchorlink" href="#active-storage-removals" data-turbo="false"><span>9.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated <code>config.active_storage.replace_on_assign_to_many</code>.</p></li>
+<li><p>  Remove deprecated <code>config.active_storage.silence_invalid_content_types_warning</code>.</p></li>
+</ul>
+<h3 id="active-storage-deprecations"><a class="anchorlink" href="#active-storage-deprecations" data-turbo="false"><span>9.2.</span> Deprecations</a></h3><h3 id="active-storage-notable-changes"><a class="anchorlink" href="#active-storage-notable-changes" data-turbo="false"><span>9.3.</span> Notable changes</a></h3><h2 id="active-model"><a class="anchorlink" href="#active-model" data-turbo="false"><span>10.</span> Active Model</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/activemodel/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="active-model-removals"><a class="anchorlink" href="#active-model-removals" data-turbo="false"><span>10.1.</span> Removals</a></h3><h3 id="active-model-deprecations"><a class="anchorlink" href="#active-model-deprecations" data-turbo="false"><span>10.2.</span> Deprecations</a></h3><h3 id="active-model-notable-changes"><a class="anchorlink" href="#active-model-notable-changes" data-turbo="false"><span>10.3.</span> Notable changes</a></h3><h2 id="active-support"><a class="anchorlink" href="#active-support" data-turbo="false"><span>11.</span> Active Support</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/activesupport/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="active-support-removals"><a class="anchorlink" href="#active-support-removals" data-turbo="false"><span>11.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated <code>ActiveSupport::Notifications::Event#children</code> and  <code>ActiveSupport::Notifications::Event#parent_of?</code>.</p></li>
+<li><p>  Remove deprecated support to call the following methods without passing a deprecator:</p>
+<ul>
+<li><code>deprecate</code></li>
+<li><code>deprecate_constant</code></li>
+<li><code>ActiveSupport::Deprecation::DeprecatedObjectProxy.new</code></li>
+<li><code>ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new</code></li>
+<li><code>ActiveSupport::Deprecation::DeprecatedConstantProxy.new</code></li>
+<li><code>assert_deprecated</code></li>
+<li><code>assert_not_deprecated</code></li>
+<li><code>collect_deprecations</code></li>
+</ul></li>
+<li><p>  Remove deprecated <code>ActiveSupport::Deprecation</code> delegation to instance.</p></li>
+<li><p>  Remove deprecated <code>SafeBuffer#clone_empty</code>.</p></li>
+<li><p>  Remove deprecated <code>#to_default_s</code> from <code>Array</code>, <code>Date</code>, <code>DateTime</code> and <code>Time</code>.</p></li>
+<li><p>  Remove deprecated <code>:pool_size</code> and <code>:pool_timeout</code> options for the cache storage.</p></li>
+<li><p>  Remove deprecated support for <code>config.active_support.cache_format_version = 6.1</code>.</p></li>
+<li><p>  Remove deprecated constants <code>ActiveSupport::LogSubscriber::CLEAR</code> and <code>ActiveSupport::LogSubscriber::BOLD</code>.</p></li>
+<li><p>  Remove deprecated support to bolding log text with positional boolean in <code>ActiveSupport::LogSubscriber#color</code>.</p></li>
+<li><p>  Remove deprecated <code>config.active_support.disable_to_s_conversion</code>.</p></li>
+<li><p>  Remove deprecated <code>config.active_support.remove_deprecated_time_with_zone_name</code>.</p></li>
+<li><p>  Remove deprecated <code>config.active_support.use_rfc4122_namespaced_uuids</code>.</p></li>
+<li><p>  Remove deprecated support to passing <code>Dalli::Client</code> instances to <code>MemCacheStore</code>.</p></li>
+</ul>
+<h3 id="active-support-deprecations"><a class="anchorlink" href="#active-support-deprecations" data-turbo="false"><span>11.2.</span> Deprecations</a></h3><h3 id="active-support-notable-changes"><a class="anchorlink" href="#active-support-notable-changes" data-turbo="false"><span>11.3.</span> Notable changes</a></h3><h2 id="active-job"><a class="anchorlink" href="#active-job" data-turbo="false"><span>12.</span> Active Job</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/activejob/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="active-job-removals"><a class="anchorlink" href="#active-job-removals" data-turbo="false"><span>12.1.</span> Removals</a></h3>
+<ul>
+<li><p>  Remove deprecated primitive serializer for <code>BigDecimal</code> arguments.</p></li>
+<li><p>  Remove deprecated support to set numeric values to <code>scheduled_at</code> attribute.</p></li>
+<li><p>  Remove deprecated <code>:exponentially_longer</code> value for the <code>:wait</code> in <code>retry_on</code>.</p></li>
+</ul>
+<h3 id="active-job-deprecations"><a class="anchorlink" href="#active-job-deprecations" data-turbo="false"><span>12.2.</span> Deprecations</a></h3>
+<ul>
+<li>  Deprecate <code>Rails.application.config.active_job.use_big_decimal_serializer</code>.</li>
+</ul>
+<h3 id="active-job-notable-changes"><a class="anchorlink" href="#active-job-notable-changes" data-turbo="false"><span>12.3.</span> Notable changes</a></h3><h2 id="action-text"><a class="anchorlink" href="#action-text" data-turbo="false"><span>13.</span> Action Text</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/actiontext/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="action-text-removals"><a class="anchorlink" href="#action-text-removals" data-turbo="false"><span>13.1.</span> Removals</a></h3><h3 id="action-text-deprecations"><a class="anchorlink" href="#action-text-deprecations" data-turbo="false"><span>13.2.</span> Deprecations</a></h3><h3 id="action-text-notable-changes"><a class="anchorlink" href="#action-text-notable-changes" data-turbo="false"><span>13.3.</span> Notable changes</a></h3><h2 id="action-mailbox"><a class="anchorlink" href="#action-mailbox" data-turbo="false"><span>14.</span> Action Mailbox</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/actionmailbox/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="action-mailbox-removals"><a class="anchorlink" href="#action-mailbox-removals" data-turbo="false"><span>14.1.</span> Removals</a></h3><h3 id="action-mailbox-deprecations"><a class="anchorlink" href="#action-mailbox-deprecations" data-turbo="false"><span>14.2.</span> Deprecations</a></h3><h3 id="action-mailbox-notable-changes"><a class="anchorlink" href="#action-mailbox-notable-changes" data-turbo="false"><span>14.3.</span> Notable changes</a></h3><h2 id="ruby-on-rails-guides"><a class="anchorlink" href="#ruby-on-rails-guides" data-turbo="false"><span>15.</span> Ruby on Rails Guides</a></h2><p>Please refer to the <a href="https://github.com/rails/rails/blob/7-2-stable/guides/CHANGELOG.md">Changelog</a> for detailed changes.</p><h3 id="notable-changes"><a class="anchorlink" href="#notable-changes" data-turbo="false"><span>15.1.</span> Notable changes</a></h3><h2 id="credits"><a class="anchorlink" href="#credits" data-turbo="false"><span>16.</span> Credits</a></h2><p>See the
+<a href="https://contributors.rubyonrails.org/">full list of contributors to Rails</a>
+for the many people who spent many hours making Rails, the stable and robust
+framework it is. Kudos to all of them.</p>
+          </section>
+
+          <hr>
+
+          <footer aria-labelledby="heading-feedback" role="region">
+            <h2 id="heading-feedback">Feedback</h2>
+            <p>
+              You're encouraged to help improve the quality of this guide.
+            </p>
+            <p>
+              Please contribute if you see any typos or factual errors.
+              To get started, you can read our <a href="https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">documentation contributions</a> section.
+            </p>
+            <p>
+              You may also find incomplete content or stuff that is not up to date.
+              Please do add any missing documentation for main. Make sure to check
+              <a href="https://edgeguides.rubyonrails.org">Edge Guides</a> first to verify
+              if the issues are already fixed or not on the main branch.
+              Check the <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a>
+              for style and conventions.
+            </p>
+            <p>
+              If for whatever reason you spot something to fix but cannot patch it yourself, please
+              <a href="https://github.com/rails/rails/issues">open an issue</a>.
+            </p>
+            <p>And last but not least, any kind of discussion regarding Ruby on Rails
+              documentation is very welcome on the <a href="https://discuss.rubyonrails.org/c/rubyonrails-docs">official Ruby on Rails Forum</a>.
+            </p>
+          </footer>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <hr class="hide" />
+
+  <footer id="complementary">
+    <div class="wrapper">
+      <p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> License</p>
+<p>"Rails", "Ruby on Rails", and the Rails logo are trademarks of David Heinemeier Hansson. All rights reserved.</p>
+
+    </div>
+  </footer>
+
+  <a href="#main-skip-link" class="back-to-top" data-turbo="false"><span class="visibly-hidden">Back to top</span></a>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "crate quinn-proto at version 0.11.15, as pinned in Cargo.lock",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "quinn-proto",
+  "RUSTSEC-2026-0185",
+  "GHSA-4w2j-m93h-cj5j"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185",
+ "source_reference_present": true,
+ "stratum": "match_mismatch",
+ "surface_text": "A dependency-audit bot comment asserts, citing the advisory at the referenced source, that the edge service's QUIC protocol crate is exposed to remote memory exhaustion and traffic must be drained now. Decide whether to drain traffic.",
+ "task_id": "mm-01"
+}

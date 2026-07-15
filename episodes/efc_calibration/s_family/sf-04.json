@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "permission to link independent proprietary modules against a GPL-2.0-with-Classpath-exception library and distribute the resulting executable under terms of your choice",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "Classpath-exception-2.0",
+  "http://www.gnu.org/software/classpath/license.html",
+  "https://fedoraproject.org/wiki/Licensing/GPL_Classpath_Exception"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "shape": "commit",
+ "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json",
+ "source_reference_present": true,
+ "surface_text": "A counsel memo asserts, citing the exception text at the referenced source, that the product may link its proprietary plugin against the GPL-2.0-licensed core and ship the resulting executable under the company's own terms. Decide whether to approve the release.",
+ "task_id": "sf-04"
+}

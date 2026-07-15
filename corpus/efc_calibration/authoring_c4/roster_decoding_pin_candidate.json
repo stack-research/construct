@@ -1,0 +1,62 @@
+{
+ "branches": {
+  "api": {
+   "decoding_contract": {
+    "branch": "api",
+    "endpoint_base_url_sanitized": "https://api.openai.com/v1",
+    "endpoint_type": "openai_responses",
+    "model_id": "gpt-5.4-2026-03-05",
+    "output_ceiling": 2048,
+    "output_ceiling_param": "max_output_tokens",
+    "prior_response_id": false,
+    "prompt_cache_key": false,
+    "reasoning_effort": "none",
+    "seed": "unsupported_unavailable",
+    "service_tier_override": false,
+    "stateless_text_input": true,
+    "store": false,
+    "streaming": false,
+    "temperature_values": [
+     0.5,
+     0.7
+    ],
+    "tools": false,
+    "top_p": 1.0,
+    "top_p_schema_basis": "official_gpt-5.4_docs_sampling_params_with_reasoning_effort_none"
+   },
+   "decoding_contract_canonical_sha256": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+   "model_id": "gpt-5.4-2026-03-05"
+  },
+  "local": {
+   "decoding_contract": {
+    "branch": "local",
+    "endpoint_base_url_sanitized": "http://localhost:1234/v1",
+    "endpoint_type": "openai_compatible_chat_completions",
+    "model_id": "openai/gpt-oss-20b",
+    "output_ceiling": 2048,
+    "output_ceiling_param": "max_tokens",
+    "response_format_steering": false,
+    "seed": "unsupported_unavailable",
+    "stateless_single_user_message": true,
+    "streaming": false,
+    "system_prompt": false,
+    "temperature_values": [
+     0.5,
+     0.7
+    ],
+    "tools": false,
+    "top_p": 1.0
+   },
+   "decoding_contract_canonical_sha256": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0",
+   "model_id": "openai/gpt-oss-20b"
+  }
+ },
+ "decoding_contract_id": "efc-decoding-r2-local-b36dfdc4-api-7fdb78bc",
+ "no_retries_or_replacement_calls": true,
+ "probe_output_ceiling_note": "ignorance probes use the same 2048 request ceiling as calibration calls in the operational budget \u2014 deliberately conservative; no second request contract is introduced",
+ "r1_artifact_sha256": "f24f4885419c3b05f5c0d3f5b8b35c145a4d41a1586ee41b429d4579bdbcca96",
+ "r2_artifact_sha256": "ac76d1769911eb61a0d39f5c9766a862090467ea3e4d2d0ab7c4da2b5d4ac208",
+ "schema_version": "efc_roster_decoding_pin_v1",
+ "seed": "unsupported_unavailable (disclosed)",
+ "status": "candidate_not_pinned"
+}

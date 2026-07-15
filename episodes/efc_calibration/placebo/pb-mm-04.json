@@ -1,0 +1,9 @@
+{
+ "disjoint_reference": "https://endoflife.date/api/typo3.json",
+ "entity_keys": [
+  "typo3"
+ ],
+ "placebo_for": "mm-04",
+ "placebo_id": "pb-mm-04",
+ "text": "provenance note (typo3): the endoflife.date registry record for typo3 lists dated support and end-of-life windows for typo3 release lines. snapshot retrieved 2026-07-14; raw sha256"
+}

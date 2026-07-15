@@ -1,0 +1,40 @@
+{
+ "authoritative_scope": "GO-2026-4440: affected module golang.org/x/net, versions < 0.45.0; vulnerable symbols in golang.org/x/net/html include Parse",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2b/captures/capD-01/raw.json",
+ "cited_text": "GO-2026-4440 (golang.org/x/net): Quadratic parsing complexity in golang.org/x/net/html. Affected: versions < 0.45.0; vulnerable symbols in golang.org/x/net/html include Parse.",
+ "entity_keys": [
+  "golang.org/x/net",
+  "GO-2026-4440",
+  "CVE-2025-47911"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "fixed": "0.45.0",
+  "id": "GO-2026-4440",
+  "mod": "golang.org/x/net",
+  "summary": "Quadratic parsing complexity in golang.org/x/net/html",
+  "sym0": "Parse",
+  "sympath": "golang.org/x/net/html"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary",
+   "sym0": "/affected/0/ecosystem_specific/imports/0/symbols/0",
+   "sympath": "/affected/0/ecosystem_specific/imports/0/path"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "D01",
+ "oracle_id": "efc-cal-oracle-mm-04",
+ "raw_sha256": "24009bbd8ff231dca1f182003b7c82c0ad4a5e2763fb525037050692eabdfe45",
+ "record_id": "GO-2026-4440",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T20:53:29Z",
+ "sidecar_sha256": "2f95a6508da2b95fea80f8b9044bf968292698d9b236a2a5381bd31b3a273b38",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json",
+ "task_id": "mm-04"
+}

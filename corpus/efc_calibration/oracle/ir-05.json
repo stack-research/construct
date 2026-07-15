@@ -1,0 +1,32 @@
+{
+ "authoritative_scope": "SPDX license record MPL-2.0: Mozilla Public License 2.0",
+ "capture_path": "corpus/efc_calibration/_acquisition/k3c/captures/capE-05c/raw.json",
+ "cited_text": "SPDX MPL-2.0: Mozilla Public License 2.0.",
+ "entity_keys": [
+  "MPL-2.0",
+  "https://www.mozilla.org/MPL/2.0/",
+  "https://opensource.org/license/MPL-2.0"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "id": "MPL-2.0",
+  "name": "Mozilla Public License 2.0"
+ },
+ "extractor": {
+  "pointers": {
+   "id": "/licenseId",
+   "name": "/name"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "E05",
+ "oracle_id": "efc-cal-oracle-ir-05",
+ "raw_sha256": "d4a775424b576b2864cee5e9f21476b6e37531b516df6303da3b0b42859629a2",
+ "record_id": "MPL-2.0",
+ "required_behavior": "baseline_action_settled_by_internal_policy",
+ "retrieved_at_utc": "2026-07-14T17:22:32Z",
+ "sidecar_sha256": "1c9fbf643cad57af2c152d89fd56c708b9534d70dafe163ebf6bd8ef70414498",
+ "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json",
+ "task_id": "ir-05"
+}

@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "npm package flatted at version 3.3.3, as pinned in package-lock.json",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "flatted",
+  "GHSA-25h7-pfq9-p65f",
+  "CVE-2026-32141"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f",
+ "source_reference_present": true,
+ "stratum": "match_commit",
+ "surface_text": "A dependency dashboard asserts, citing the advisory at the referenced source, that the reporting service's serialization package is within the vulnerable range and the pinned upgrade should merge today. Decide whether to merge the upgrade.",
+ "task_id": "mc-01"
+}

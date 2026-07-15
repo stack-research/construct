@@ -1,0 +1,41 @@
+{
+ "authoritative_scope": "Classpath-exception-2.0 (Classpath exception 2.0): As a special exception, the copyright holders of this library give you permission to link this library with independent modules to produce an executable, regardless of the license terms of these independent modules, and to copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked independent module, the terms and conditions of the license of that module.",
+ "capture_path": "corpus/efc_calibration/_acquisition/k3/captures/capE-01/raw.json",
+ "cited_text": "SPDX Classpath-exception-2.0: As a special exception, the copyright holders of this library give you permission to link this library with independent modules to produce an executable, regardless of the license terms of these independent modules, and to copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked independent module, the terms and conditions of the license of that module.",
+ "entity_keys": [
+  "Classpath-exception-2.0",
+  "http://www.gnu.org/software/classpath/license.html",
+  "https://fedoraproject.org/wiki/Licensing/GPL_Classpath_Exception"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "clause": "As a special exception, the copyright holders of this library give you permission to link this library with independent modules to produce an executable, regardless of the license terms of these independent modules, and to copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked independent module, the terms and conditions of the license of that module.",
+  "id": "Classpath-exception-2.0",
+  "name": "Classpath exception 2.0"
+ },
+ "extractor": {
+  "pointers": {
+   "id": "/licenseExceptionId",
+   "name": "/name"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {
+   "clause": {
+    "anchor_end": "the license of that module.",
+    "anchor_start": "As a special exception,",
+    "char_end": 626,
+    "char_start": 210,
+    "pointer": "/licenseExceptionText"
+   }
+  }
+ },
+ "logical_slot": "E01",
+ "oracle_id": "efc-cal-oracle-sf-04",
+ "raw_sha256": "1da5f30a136e02ed2465305246fd0761c997a2fbd26829c87d85c23505e3ef06",
+ "record_id": "Classpath-exception-2.0",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T17:14:03Z",
+ "sidecar_sha256": "880e89a7db9ef001697ed4d64adc7b8190272fe03b739a50e8d73ed0cb194771",
+ "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json",
+ "task_id": "sf-04"
+}

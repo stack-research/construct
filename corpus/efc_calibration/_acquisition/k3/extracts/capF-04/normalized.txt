@@ -1,0 +1,611 @@
+Ruby on Rails 7.2 Release Notes — Ruby on Rails Guides
+Skip to main content
+More at rubyonrails.org:
+More Ruby on Rails
+Blog
+Guides
+API
+Forum
+Contribute on GitHub
+Guides
+Version: pick from the list to go to that Rails version's guides
+Edge
+8.0
+7.2
+7.1
+7.0
+6.1
+6.0
+5.2
+5.1
+5.0
+4.2
+4.1
+4.0
+3.2
+3.1
+3.0
+2.3
+Home
+Guides Index
+Start Here
+Getting Started with Rails
+Install Ruby on Rails
+Models
+Active Record Basics
+Active Record Migrations
+Active Record Validations
+Active Record Callbacks
+Active Record Associations
+Active Record Query Interface
+Active Model Basics
+Views
+Action View Overview
+Layouts and Rendering in Rails
+Action View Helpers
+Action View Form Helpers
+Controllers
+Action Controller Overview
+Action Controller Advanced Topics
+Rails Routing from the Outside In
+Other Components
+Active Support Core Extensions
+Action Mailer Basics
+Action Mailbox Basics
+Action Text Overview
+Active Job Basics
+Active Storage Overview
+Action Cable Overview
+Digging Deeper
+Rails Internationalization (I18n) API
+Testing Rails Applications
+Debugging Rails Applications
+Configuring Rails Applications
+The Rails Command Line
+The Asset Pipeline
+Working with JavaScript in Rails
+Autoloading and Reloading
+Using Rails for API-only Applications
+Going to Production
+Tuning Performance for Deployment
+Caching with Rails: An Overview
+Securing Rails Applications
+Error Reporting in Rails Applications
+Advanced Active Record
+Multiple Databases
+Active Record Encryption
+Composite Primary Keys
+Extending Rails
+The Basics of Creating Rails Plugins
+Rails on Rack
+Creating and Customizing Rails Generators & Templates
+Contributing
+Contributing to Ruby on Rails
+API Documentation Guidelines
+Guides Guidelines
+Installing Rails Core Development Dependencies
+Policies
+Maintenance Policy
+Release Notes
+Upgrading Ruby on Rails
+Version 8.1 - October 2025
+Version 8.0 - November 2024
+Version 7.2 - August 2024
+Version 7.1 - October 2023
+Version 7.0 - December 2021
+Version 6.1 - December 2020
+Version 6.0 - August 2019
+Version 5.2 - April 2018
+Version 5.1 - April 2017
+Version 5.0 - June 2016
+Version 4.2 - December 2014
+Version 4.1 - April 2014
+Version 4.0 - June 2013
+Version 3.2 - January 2012
+Version 3.1 - August 2011
+Version 3.0 - August 2010
+Version 2.3 - March 2009
+Version 2.2 - November 2008
+Contribute
+Navigate to a guide:
+Guides Index
+Getting Started with Rails
+Install Ruby on Rails
+Active Record Basics
+Active Record Migrations
+Active Record Validations
+Active Record Callbacks
+Active Record Associations
+Active Record Query Interface
+Active Model Basics
+Action View Overview
+Layouts and Rendering in Rails
+Action View Helpers
+Action View Form Helpers
+Action Controller Overview
+Action Controller Advanced Topics
+Rails Routing from the Outside In
+Active Support Core Extensions
+Action Mailer Basics
+Action Mailbox Basics
+Action Text Overview
+Active Job Basics
+Active Storage Overview
+Action Cable Overview
+Rails Internationalization (I18n) API
+Testing Rails Applications
+Debugging Rails Applications
+Configuring Rails Applications
+The Rails Command Line
+The Asset Pipeline
+Working with JavaScript in Rails
+Autoloading and Reloading
+Using Rails for API-only Applications
+Tuning Performance for Deployment
+Caching with Rails: An Overview
+Securing Rails Applications
+Error Reporting in Rails Applications
+Multiple Databases
+Active Record Encryption
+Composite Primary Keys
+The Basics of Creating Rails Plugins
+Rails on Rack
+Creating and Customizing Rails Generators & Templates
+Contributing to Ruby on Rails
+API Documentation Guidelines
+Guides Guidelines
+Installing Rails Core Development Dependencies
+Maintenance Policy
+Upgrading Ruby on Rails
+Version 8.1 - October 2025
+Version 8.0 - November 2024
+Version 7.2 - August 2024
+Version 7.1 - October 2023
+Version 7.0 - December 2021
+Version 6.1 - December 2020
+Version 6.0 - August 2019
+Version 5.2 - April 2018
+Version 5.1 - April 2017
+Version 5.0 - June 2016
+Version 4.2 - December 2014
+Version 4.1 - April 2014
+Version 4.0 - June 2013
+Version 3.2 - January 2012
+Version 3.1 - August 2011
+Version 3.0 - August 2010
+Version 2.3 - March 2009
+Version 2.2 - November 2008
+Ruby on Rails 7.2 Release Notes
+Highlights in Rails 7.2:
+Development containers configuration for applications.
+Add browser version guard by default.
+Make Ruby 3.1 the new minimum version.
+Default Progressive Web Application (PWA) files.
+Add omakase RuboCop rules by default.
+Add GitHub CI workflow by default to new applications.
+Add Brakeman by default to new applications.
+Set a new default for the Puma thread count.
+Prevent jobs from being scheduled within transactions.
+Per transaction commit and rollback callbacks.
+Enable YJIT by default if running Ruby 3.3+.
+New design for the Rails guides.
+Setup jemalloc in default Dockerfile to optimize memory allocation.
+Suggest puma-dev configuration in bin/setup.
+These release notes cover only the major changes. To learn about various bug
+fixes and changes, please refer to the changelogs or check out the list of
+commits in the main Rails
+repository on GitHub.
+Skip to article body
+Chapters
+Upgrading to Rails 7.2
+Major Features
+Development containers configuration for applications
+Add browser version guard by default
+Make Ruby 3.1 the new minimum version
+Default Progressive Web Application (PWA) files
+Add omakase RuboCop rules by default
+Add GitHub CI workflow by default to new applications
+Add Brakeman by default to new applications
+Set a new default for the Puma thread count
+Prevent jobs from being scheduled within transactions
+Per transaction commit and rollback callbacks
+Enable YJIT by default if running Ruby 3.3+
+New design for the Rails guides
+Setup jemalloc in default Dockerfile to optimize memory allocation
+Suggest puma-dev configuration in bin/setup
+Railties
+Removals
+Deprecations
+Notable changes
+Action Cable
+Removals
+Deprecations
+Notable changes
+Action Pack
+Removals
+Deprecations
+Notable changes
+Action View
+Removals
+Deprecations
+Notable changes
+Action Mailer
+Removals
+Deprecations
+Notable changes
+Active Record
+Removals
+Deprecations
+Notable changes
+Active Storage
+Removals
+Deprecations
+Notable changes
+Active Model
+Removals
+Deprecations
+Notable changes
+Active Support
+Removals
+Deprecations
+Notable changes
+Active Job
+Removals
+Deprecations
+Notable changes
+Action Text
+Removals
+Deprecations
+Notable changes
+Action Mailbox
+Removals
+Deprecations
+Notable changes
+Ruby on Rails Guides
+Notable changes
+Credits
+1. Upgrading to Rails 7.2
+If you're upgrading an existing application, it's a great idea to have good test
+coverage before going in. You should also first upgrade to Rails 7.1 in case you
+haven't and make sure your application still runs as expected before attempting
+an update to Rails 7.2. A list of things to watch out for when upgrading is
+available in the
+Upgrading Ruby on Rails
+guide.
+2. Major Features
+2.1. Development containers configuration for applications
+A development container (or dev container for short) allows you to use a container
+as a full-featured development environment.
+Rails 7.2 adds the ability to generate a development container configuration for your application. This configuration
+includes a .devcontainer folder with a Dockerfile, a docker-compose.yml file, and a devcontainer.json file.
+By default, the dev container contains the following:
+A Redis container for use with Kredis, Action Cable, etc.
+A database (SQLite, Postgres, MySQL or MariaDB)
+A Headless Chrome container for system tests
+Active Storage configured to use the local disk and with preview features working
+To generate a new application with a development container, you can run:
+$ rails new myapp --devcontainer
+Copy
+For existing applications, a devcontainer command is now available:
+$ rails devcontainer
+Copy
+For more information, see the Getting Started with Dev Containers guide.
+2.2. Add browser version guard by default
+Rails now adds the ability to specify the browser versions that will be allowed to access all actions
+(or some, as limited by only: or except:).
+Only browsers matched in the hash or named set passed to versions: will be blocked if they're below the versions
+specified.
+This means that all other unknown browsers, as well as agents that aren't reporting a user-agent header, will be allowed access.
+A browser that's blocked will by default be served the file in public/406-unsupported-browser.html with an HTTP status
+code of "406 Not Acceptable".
+Examples:
+class ApplicationController < ActionController::Base
+# Allow only browsers natively supporting webp images, web push, badges, import maps, CSS nesting + :has
+allow_browser versions: :modern
+end
+class ApplicationController < ActionController::Base
+# All versions of Chrome and Opera will be allowed, but no versions of "internet explorer" (ie). Safari needs to be 16.4+ and Firefox 121+.
+allow_browser versions: { safari: 16.4, firefox: 121, ie: false }
+end
+class MessagesController < ApplicationController
+# In addition to the browsers blocked by ApplicationController, also block Opera below 104 and Chrome below 119 for the show action.
+allow_browser versions: { opera: 104, chrome: 119 }, only: :show
+end
+Copy
+Newly generated applications have this guard set in ApplicationController.
+For more information, see the allow_browser
+documentation.
+2.3. Make Ruby 3.1 the new minimum version
+Until now, Rails only dropped compatibility with older Rubies on new majors version.
+We are changing this policy because it causes us to keep compatibility with long
+unsupported versions of Ruby or to bump the Rails major version more often, and to
+drop multiple Ruby versions at once when we bump the major.
+We will now drop Ruby versions that are end-of-life on minor Rails versions at the time of the release.
+For Rails 7.2, Ruby 3.1 is the new minimum version.
+2.4. Default Progressive Web Application (PWA) files
+In preparation to better supporting the creation of PWA applications with Rails, we now generate default PWA files for the manifest
+and service worker, which are served from app/views/pwa and can be dynamically rendered through ERB. Those files
+are mounted explicitly at the root with default routes in the generated routes file.
+For more information, see the pull request adding the feature.
+2.5. Add omakase RuboCop rules by default
+Rails applications now come with RuboCop configured with a set of rules from rubocop-rails-omakase by default.
+Ruby is a beautifully expressive language that not only tolerates many different dialects, but celebrates their
+diversity. It was never meant as a language to be written exclusively in a single style across all libraries,
+frameworks, or applications. If you or your team has developed a particular house style that brings you joy,
+you should cherish that.
+This collection of RuboCop styles is for those who haven't committed to any specific dialect already. Who would just
+like to have a reasonable starting point, and who will benefit from some default rules to at least start a consistent
+approach to Ruby styling.
+These specific rules aren't right or wrong, but merely represent the idiosyncratic aesthetic sensibilities of Rails'
+creator. Use them whole, use them as a starting point, use them as inspiration, or however you see fit.
+2.6. Add GitHub CI workflow by default to new applications
+Rails now adds a default GitHub CI workflow file to new applications. This will get especially newcomers off to a good
+start with automated scanning, linting, and testing. We find that a natural continuation for the modern age of what
+we've done since the start with unit tests.
+It's of course true that GitHub Actions are a commercial cloud product for private repositories after you've used the
+free tokens. But given the relationship between GitHub and Rails, the overwhelming default nature of the platform for
+newcomers, and the value of teaching newcomers good CI habits, we find this to be an acceptable trade-off.
+2.7. Add Brakeman by default to new applications
+Brakeman is a great way to prevent common security vulnerabilities in Rails from going
+into production.
+New applications come with Brakeman installed and combined with the GitHub CI workflow, it will run automatically on
+every push.
+2.8. Set a new default for the Puma thread count
+Rails changed the default number of threads in Puma from 5 to 3.
+Due to the nature of well-optimized Rails applications, with quick SQL queries and slow 3rd-party calls running via jobs,
+Ruby can spend a significant amount of time waiting for the Global VM Lock (GVL) to release when the thread count is too
+high, which is hurting latency (request response time).
+After careful consideration, investigation, and based on battle-tested experience from applications running in
+production, we decided that a default of 3 threads is a good balance between concurrency and performance.
+You can follow a very detailed discussion about this change in the issue.
+2.9. Prevent jobs from being scheduled within transactions
+A common mistake with Active Job is to enqueue jobs from inside a transaction, causing them to potentially be picked
+and ran by another process, before the transaction is committed, which result in various errors.
+Topic.transaction do
+topic = Topic.create
+NewTopicNotificationJob.perform_later(topic)
+end
+Copy
+Now Active Job will automatically defer the enqueuing to after the transaction is committed, and drop the job if the
+transaction is rolled back.
+Various queue implementations can chose to disable this behavior, and users can disable it, or force it on a per job
+basis:
+class NewTopicNotificationJob < ApplicationJob
+self.enqueue_after_transaction_commit = :never
+end
+Copy
+2.10. Per transaction commit and rollback callbacks
+This is now possible due to a new feature that allows registering transaction callbacks outside of a record.
+ActiveRecord::Base.transaction now yields an ActiveRecord::Transaction object, which allows registering callbacks
+on it.
+Article.transaction do |transaction|
+article.update(published: true)
+transaction.after_commit do
+PublishNotificationMailer.with(article: article).deliver_later
+end
+end
+Copy
+ActiveRecord::Base.current_transaction was also added to allow to register callbacks on it.
+Article.current_transaction.after_commit do
+PublishNotificationMailer.with(article: article).deliver_later
+end
+Copy
+And finally, ActiveRecord.after_all_transactions_commit was added, for code that may run either inside or outside a
+transaction and needs to perform work after the state changes have been properly persisted.
+def publish_article(article)
+article.update(published: true)
+ActiveRecord.after_all_transactions_commit do
+PublishNotificationMailer.with(article: article).deliver_later
+end
+end
+Copy
+See #51474 and #51426 for more information:
+2.11. Enable YJIT by default if running Ruby 3.3+
+YJIT is Ruby's JIT compiler that is available in CRuby since Ruby 3.1. It can provide significant performance
+improvements for Rails applications, offering 15-25% latency improvements.
+In Rails 7.2, YJIT is enabled by default if running Ruby 3.3 or newer.
+You can disable YJIT by setting:
+Rails.application.config.yjit = false
+Copy
+2.12. New design for the Rails guides
+When Rails 7.0 landed in December 2021, it came with a fresh new homepage and a new boot screen. The design of the
+guides, however, has remained largely untouched since 2009 - a point which hasn’t gone unnoticed (we heard your feedback).
+With all of the work right now going into removing complexity from the Rails framework and making the documentation
+consistent, clear, and up-to-date, it was time to tackle the design of the guides and make them equally modern, simple,
+and fresh.
+We worked with UX designer John Athayde to take the look and feel of the homepage and
+transfer that over to the Rails guides to make them clean, sleek, and up-to-date.
+The layout will remain the same, but from today you will see the following changes reflected in the guides:
+Cleaner, less busy design.
+Fonts, color scheme, and logo more consistent with the home page.
+Updated iconography.
+Simplified navigation.
+Sticky "Chapters" navbar when scrolling.
+See the announcement blog post for some before/after images.
+2.13. Setup jemalloc in default Dockerfile to optimize memory allocation
+Ruby's use of malloc can create memory fragmentation problems, especially when using multiple threads
+like Puma does. Switching to an allocator that uses different patterns to avoid fragmentation can decrease memory usage
+by a substantial margin.
+Rails 7.2 now includes jemalloc in the default Dockerfile to optimize memory allocation.
+2.14. Suggest puma-dev configuration in bin/setup
+Puma-dev is the golden path for developing multiple Rails applications locally, if you're not using Docker.
+Rails now suggests how to get that setup in a new comment you'll find in bin/setup.
+3. Railties
+Please refer to the Changelog for detailed changes.
+3.1. Removals
+Remove deprecated Rails::Generators::Testing::Behaviour.
+Remove deprecated Rails.application.secrets.
+Remove deprecated Rails.config.enable_dependency_loading.
+Remove deprecated find_cmd_and_exec console helper.
+Remove support for oracle, sqlserver, and JRuby specific database adapters from the new
+and db:system:change rails commands.
+Remove config.public_file_server.enabled option from the generators.
+3.2. Deprecations
+3.3. Notable changes
+Add RuboCop with rules from rubocop-rails-omakase
+by default in both new applications and plugins.
+Add Brakeman with default configuration for security checks in new applications.
+Add GitHub CI files for Dependabot, Brakeman, RuboCop, and running tests by default for new applications and plugins.
+YJIT is now enabled by default for new applications running on Ruby 3.3+.
+Generate a .devcontainer folder for running the application in a container with Visual Studio Code.
+$ rails new myapp --devcontainer
+Copy
+Introduce Rails::Generators::Testing::Assertions#assert_initializer to test initializers.
+System tests now use Headless Chrome by default for new applications.
+Support the BACKTRACE environment variable to turn off backtrace cleaning in normal server runnings.
+Previously, this was only available for testing.
+Add default Progressive Web App (PWA) files for the manifest and service worker, served from app/views/pwa,
+and make them dynamically renderable through ERB.
+4. Action Cable
+Please refer to the Changelog for detailed changes.
+4.1. Removals
+4.2. Deprecations
+4.3. Notable changes
+5. Action Pack
+Please refer to the Changelog for detailed changes.
+5.1. Removals
+Remove deprecated constant ActionDispatch::IllegalStateError.
+Remove deprecated constant AbstractController::Helpers::MissingHelperError.
+Remove deprecated comparison between ActionController::Parameters and Hash.
+Remove deprecated Rails.application.config.action_dispatch.return_only_request_media_type_on_content_type.
+Remove deprecated speaker, vibrate, and vr permissions policy directives.
+Remove deprecated support to set Rails.application.config.action_dispatch.show_exceptions to true and false.
+5.2. Deprecations
+Deprecate Rails.application.config.action_controller.allow_deprecated_parameters_hash_equality.
+5.3. Notable changes
+6. Action View
+Please refer to the Changelog for detailed changes.
+6.1. Removals
+Remove deprecated @rails/ujs in favor of Turbo.
+6.2. Deprecations
+Deprecate passing content to void elements when using tag.br type tag builders.
+6.3. Notable changes
+7. Action Mailer
+Please refer to the Changelog for detailed changes.
+7.1. Removals
+Remove deprecated config.action_mailer.preview_path.
+Remove deprecated params via :args for assert_enqueued_email_with.
+7.2. Deprecations
+7.3. Notable changes
+8. Active Record
+Please refer to the Changelog for detailed changes.
+8.1. Removals
+Remove deprecated Rails.application.config.active_record.suppress_multiple_database_warning.
+Remove deprecated support to call alias_attribute with non-existent attribute names.
+Remove deprecated name argument from ActiveRecord::Base.remove_connection.
+Remove deprecated ActiveRecord::Base.clear_active_connections!.
+Remove deprecated ActiveRecord::Base.clear_reloadable_connections!.
+Remove deprecated ActiveRecord::Base.clear_all_connections!.
+Remove deprecated ActiveRecord::Base.flush_idle_connections!.
+Remove deprecated ActiveRecord::ActiveJobRequiredError.
+Remove deprecated support to define explain in the connection adapter with 2 arguments.
+Remove deprecated ActiveRecord::LogSubscriber.runtime method.
+Remove deprecated ActiveRecord::LogSubscriber.runtime= method.
+Remove deprecated ActiveRecord::LogSubscriber.reset_runtime method.
+Remove deprecated ActiveRecord::Migration.check_pending method.
+Remove deprecated support to passing SchemaMigration and InternalMetadata classes as arguments to
+ActiveRecord::MigrationContext.
+Remove deprecated behavior to support referring to a singular association by its plural name.
+Remove deprecated TestFixtures.fixture_path.
+Remove deprecated support to ActiveRecord::Base#read_attribute(:id) to return the custom primary key value.
+Remove deprecated support to passing coder and class as second argument to serialize.
+Remove deprecated #all_foreign_keys_valid? from database adapters.
+Remove deprecated ActiveRecord::ConnectionAdapters::SchemaCache.load_from.
+Remove deprecated ActiveRecord::ConnectionAdapters::SchemaCache#data_sources.
+Remove deprecated #all_connection_pools.
+Remove deprecated support to apply #connection_pool_list, #active_connections?, #clear_active_connections!,
+#clear_reloadable_connections!, #clear_all_connections! and #flush_idle_connections! to the connections pools
+for the current role when the role argument isn't provided.
+Remove deprecated ActiveRecord::ConnectionAdapters::ConnectionPool#connection_klass.
+Remove deprecated #quote_bound_value.
+Remove deprecated support to quote ActiveSupport::Duration.
+Remove deprecated support to pass deferrable: true to add_foreign_key.
+Remove deprecated support to pass rewhere to ActiveRecord::Relation#merge.
+Remove deprecated behavior that would rollback a transaction block when exited using return, break or throw.
+8.2. Deprecations
+Deprecate Rails.application.config.active_record.allow_deprecated_singular_associations_name
+Deprecate Rails.application.config.active_record.commit_transaction_on_non_local_return
+8.3. Notable changes
+ActiveRecord::Base.establish_connection no longer sets ActiveRecord::Base.connection.active? to true. If you need this behavior, you can use ActiveRecord::Base.connection.verify! instead.
+9. Active Storage
+Please refer to the Changelog for detailed changes.
+9.1. Removals
+Remove deprecated config.active_storage.replace_on_assign_to_many.
+Remove deprecated config.active_storage.silence_invalid_content_types_warning.
+9.2. Deprecations
+9.3. Notable changes
+10. Active Model
+Please refer to the Changelog for detailed changes.
+10.1. Removals
+10.2. Deprecations
+10.3. Notable changes
+11. Active Support
+Please refer to the Changelog for detailed changes.
+11.1. Removals
+Remove deprecated ActiveSupport::Notifications::Event#children and ActiveSupport::Notifications::Event#parent_of?.
+Remove deprecated support to call the following methods without passing a deprecator:
+deprecate
+deprecate_constant
+ActiveSupport::Deprecation::DeprecatedObjectProxy.new
+ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new
+ActiveSupport::Deprecation::DeprecatedConstantProxy.new
+assert_deprecated
+assert_not_deprecated
+collect_deprecations
+Remove deprecated ActiveSupport::Deprecation delegation to instance.
+Remove deprecated SafeBuffer#clone_empty.
+Remove deprecated #to_default_s from Array, Date, DateTime and Time.
+Remove deprecated :pool_size and :pool_timeout options for the cache storage.
+Remove deprecated support for config.active_support.cache_format_version = 6.1.
+Remove deprecated constants ActiveSupport::LogSubscriber::CLEAR and ActiveSupport::LogSubscriber::BOLD.
+Remove deprecated support to bolding log text with positional boolean in ActiveSupport::LogSubscriber#color.
+Remove deprecated config.active_support.disable_to_s_conversion.
+Remove deprecated config.active_support.remove_deprecated_time_with_zone_name.
+Remove deprecated config.active_support.use_rfc4122_namespaced_uuids.
+Remove deprecated support to passing Dalli::Client instances to MemCacheStore.
+11.2. Deprecations
+11.3. Notable changes
+12. Active Job
+Please refer to the Changelog for detailed changes.
+12.1. Removals
+Remove deprecated primitive serializer for BigDecimal arguments.
+Remove deprecated support to set numeric values to scheduled_at attribute.
+Remove deprecated :exponentially_longer value for the :wait in retry_on.
+12.2. Deprecations
+Deprecate Rails.application.config.active_job.use_big_decimal_serializer.
+12.3. Notable changes
+13. Action Text
+Please refer to the Changelog for detailed changes.
+13.1. Removals
+13.2. Deprecations
+13.3. Notable changes
+14. Action Mailbox
+Please refer to the Changelog for detailed changes.
+14.1. Removals
+14.2. Deprecations
+14.3. Notable changes
+15. Ruby on Rails Guides
+Please refer to the Changelog for detailed changes.
+15.1. Notable changes
+16. Credits
+See the
+full list of contributors to Rails
+for the many people who spent many hours making Rails, the stable and robust
+framework it is. Kudos to all of them.
+Feedback
+You're encouraged to help improve the quality of this guide.
+Please contribute if you see any typos or factual errors.
+To get started, you can read our documentation contributions section.
+You may also find incomplete content or stuff that is not up to date.
+Please do add any missing documentation for main. Make sure to check
+Edge Guides first to verify
+if the issues are already fixed or not on the main branch.
+Check the Ruby on Rails Guides Guidelines
+for style and conventions.
+If for whatever reason you spot something to fix but cannot patch it yourself, please
+open an issue.
+And last but not least, any kind of discussion regarding Ruby on Rails
+documentation is very welcome on the official Ruby on Rails Forum.
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License
+"Rails", "Ruby on Rails", and the Rails logo are trademarks of David Heinemeier Hansson. All rights reserved.
+Back to top

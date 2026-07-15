@@ -1,0 +1,1860 @@
+{
+ "aggregate_verdict": "BLOCK",
+ "artifact_discipline": {
+  "no_calibration_answers_used": true,
+  "no_pinned_production_modifications": true,
+  "review_output_is_candidate_only": true,
+  "unpinned_candidate_review": true
+ },
+ "assignment": "P3B bounded cold semantic review",
+ "authorizes_contact": false,
+ "authorizes_integration": false,
+ "budget_audit_review": {
+  "checks": {
+   "expected_row_count": 10,
+   "report_all_deltas_non_positive": true,
+   "report_row_count": 10,
+   "report_within_budget": true,
+   "reran_all_deltas_non_positive": true,
+   "reran_row_count": 10,
+   "reran_within_budget": true
+  },
+  "verdict": "ENDORSE"
+ },
+ "explicit_authorization_statement": "This review authorizes neither integration of the v2 candidate into a production manifest nor any engine contact, probe rerun, or calibration call.",
+ "input_hashes": {
+  "ax_ir_budget_audit": "9ee1106214464146de24af029a79ccc1b0453e01920f0d6bdbbc40a133c159c5",
+  "cold_review_vectors_evaluated": "c5d79c1286f86267506305f311df3aae9bc6de1d8438acd5e7922e398860047c",
+  "p3_candidate_derivation_report": "d5dc5ce7e087fb7e01ae5a0118839b4843c9c6ead95f0c9bf5d1dbfa8d1114ea",
+  "structured_inputs_v1": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9",
+  "structured_inputs_v2_candidate": "c44d78d5a94ca054597014705c1456a126c55980056e9505af5876e0d1ef0ffa",
+  "world_oracle_answer_key_candidate": "4b85d0a8b9332aed6d3dba45e5dd39f1d254660e92fc3c83e7b86313b5f8bc83"
+ },
+ "ir_derivation_review": [
+  {
+   "candidate_row": {
+    "decision_scope_sha256": "4a5ec78cdc32705d0f7b5570fa15f7e0e155ef8187832e8642b0cd61deb4d38d",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "anyhow",
+     "upper_exclusive": "1.0.103",
+     "version": "1.0.102"
+    },
+    "operation": "cargo_affected_membership",
+    "raw_sha256": "3affa195aaeaa70f6f03c74523fe053ff448379c077d94bbd61b779bc9bf05f0",
+    "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190"
+   },
+   "checks": {
+    "decision_scope_sha256_matches": true,
+    "no_forbidden_keys": true,
+    "operands_match": true,
+    "operation_evaluates_to_matches_oracle": true,
+    "operation_matches": true,
+    "raw_sha256_matches": true,
+    "source_reference_matches": true
+   },
+   "fixture_id": "ir-01",
+   "notes": "mechanically derived from fixture + oracle bytes",
+   "oracle_expected_scope_matches": true,
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "reconstructed_row": {
+    "decision_scope_sha256": "4a5ec78cdc32705d0f7b5570fa15f7e0e155ef8187832e8642b0cd61deb4d38d",
+    "operands": {
+     "ecosystem": "crates.io",
+     "package": "anyhow",
+     "upper_exclusive": "1.0.103",
+     "version": "1.0.102"
+    },
+    "operation": "cargo_affected_membership",
+    "raw_sha256": "3affa195aaeaa70f6f03c74523fe053ff448379c077d94bbd61b779bc9bf05f0",
+    "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190"
+   },
+   "verdict": "ENDORSE"
+  },
+  {
+   "candidate_row": {
+    "decision_scope_sha256": "4b38e221e4be7753da627bd3eba88dd78709a5bb27fe1cf6e92a67796ed0c1c5",
+    "operands": {
+     "ecosystem": "pip",
+     "package": "pyjwt",
+     "range_strings": [
+      "< 2.13.0"
+     ],
+     "version": "2.13.0"
+    },
+    "operation": "ghsa_semver_membership",
+    "raw_sha256": "98ab15235745d4b4671dde2ccaedf854b4a37005210f91bcc80518245e1741d0",
+    "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx"
+   },
+   "checks": {
+    "decision_scope_sha256_matches": true,
+    "no_forbidden_keys": true,
+    "operands_match": true,
+    "operation_evaluates_to_matches_oracle": true,
+    "operation_matches": true,
+    "raw_sha256_matches": true,
+    "source_reference_matches": true
+   },
+   "fixture_id": "ir-02",
+   "notes": "mechanically derived from fixture + oracle bytes",
+   "oracle_expected_scope_matches": false,
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "reconstructed_row": {
+    "decision_scope_sha256": "4b38e221e4be7753da627bd3eba88dd78709a5bb27fe1cf6e92a67796ed0c1c5",
+    "operands": {
+     "ecosystem": "pip",
+     "package": "pyjwt",
+     "range_strings": [
+      "< 2.13.0"
+     ],
+     "version": "2.13.0"
+    },
+    "operation": "ghsa_semver_membership",
+    "raw_sha256": "98ab15235745d4b4671dde2ccaedf854b4a37005210f91bcc80518245e1741d0",
+    "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx"
+   },
+   "verdict": "ENDORSE"
+  },
+  {
+   "candidate_row": {
+    "decision_scope_sha256": "278c3e264615f7502b04a3157231abcdeb87da5afcccf884bd6201a6af94c4d5",
+    "operands": {
+     "check_date": "2026-01-01",
+     "cycle": "7.0",
+     "eol_date": "2025-10-02",
+     "product": "esxi"
+    },
+    "operation": "eol_support_on_date",
+    "raw_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+    "source_reference": "https://endoflife.date/api/esxi.json"
+   },
+   "checks": {
+    "decision_scope_sha256_matches": true,
+    "no_forbidden_keys": true,
+    "operands_match": true,
+    "operation_evaluates_to_matches_oracle": true,
+    "operation_matches": true,
+    "raw_sha256_matches": true,
+    "source_reference_matches": true
+   },
+   "fixture_id": "ir-03",
+   "notes": "mechanically derived from fixture + oracle bytes",
+   "oracle_expected_scope_matches": false,
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "reconstructed_row": {
+    "decision_scope_sha256": "278c3e264615f7502b04a3157231abcdeb87da5afcccf884bd6201a6af94c4d5",
+    "operands": {
+     "check_date": "2026-01-01",
+     "cycle": "7.0",
+     "eol_date": "2025-10-02",
+     "product": "esxi"
+    },
+    "operation": "eol_support_on_date",
+    "raw_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+    "source_reference": "https://endoflife.date/api/esxi.json"
+   },
+   "verdict": "ENDORSE"
+  },
+  {
+   "candidate_row": {
+    "decision_scope_sha256": "d46e41de2621d3b34a674906cc4800f43a3aed9e749ea549392b41a96ee1c18c",
+    "operands": {
+     "listed_symbol": "file_server",
+     "module": "github.com/caddyserver/caddy/v2",
+     "symbol": "file_server",
+     "upper_exclusive": "2.11.1",
+     "version": "2.11.0"
+    },
+    "operation": "go_symbol_version_membership",
+    "raw_sha256": "8f8fa5d05f27bf83d482eec3d06ea06c63363d1df7cf259893a12d536bbea74b",
+    "source_reference": "https://vuln.go.dev/ID/GO-2026-4535.json"
+   },
+   "checks": {
+    "decision_scope_sha256_matches": true,
+    "no_forbidden_keys": true,
+    "operands_match": true,
+    "operation_evaluates_to_matches_oracle": true,
+    "operation_matches": true,
+    "raw_sha256_matches": true,
+    "source_reference_matches": true
+   },
+   "fixture_id": "ir-04",
+   "notes": "mechanically derived from fixture + oracle bytes",
+   "oracle_expected_scope_matches": true,
+   "oracle_required_behavior": "baseline_action_settled_by_direct_observation",
+   "reconstructed_row": {
+    "decision_scope_sha256": "d46e41de2621d3b34a674906cc4800f43a3aed9e749ea549392b41a96ee1c18c",
+    "operands": {
+     "listed_symbol": "file_server",
+     "module": "github.com/caddyserver/caddy/v2",
+     "symbol": "file_server",
+     "upper_exclusive": "2.11.1",
+     "version": "2.11.0"
+    },
+    "operation": "go_symbol_version_membership",
+    "raw_sha256": "8f8fa5d05f27bf83d482eec3d06ea06c63363d1df7cf259893a12d536bbea74b",
+    "source_reference": "https://vuln.go.dev/ID/GO-2026-4535.json"
+   },
+   "verdict": "ENDORSE"
+  },
+  {
+   "candidate_row": {
+    "decision_scope_sha256": "3c2ad61040ea543a101582e93d7e91228f8177bec935fd52c6eb7ab1fa640929",
+    "operands": {
+     "clause_text": "6. Disclaimer of Warranty                                           *\n*  -------------------------                                           *\n*                                                                      *\n*  Covered Software is provided under this License on an \"as is\"       *\n*  basis, without warranty of any kind, either expressed, implied, or  *\n*  statutory, including, without limitation, warranties that the       *\n*  Covered Software is free of defects, merchantable, fit for a        *\n*  particular purpose or non-infringing. The entire risk as to the     *\n*  quality and performance of the Covered Software is with You.        *\n*  Should any Covered Software prove defective in any respect, You     *\n*  (not any Contributor) assume the cost of any necessary servicing,   *\n*  repair, or correction. This disclaimer of warranty constitutes an   *\n*  essential part of this License. No use of any Covered Software is   *\n*  authorized under this License except under this disclaimer.         *\n*                                                                      *\n************************************************************************\n\n************************************************************************\n*                                                                      *\n*",
+     "license_id": "MPL-2.0",
+     "required_phrases": [
+      "Larger Work",
+      "independent modules",
+      "terms of your choice"
+     ]
+    },
+    "operation": "license_permission_granted",
+    "raw_sha256": "d4a775424b576b2864cee5e9f21476b6e37531b516df6303da3b0b42859629a2",
+    "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json"
+   },
+   "checks": {
+    "decision_scope_sha256_matches": true,
+    "no_forbidden_keys": true,
+    "operands_match": true,
+    "operation_evaluates_to_matches_oracle": true,
+    "operation_matches": true,
+    "raw_sha256_matches": true,
+    "source_reference_matches": true
+   },
+   "fixture_id": "ir-05",
+   "notes": "clause_text is the MPL-2.0 disclaimer slice, not the permission-granting Secondary License section; required phrases are standard MPL-2.0 permission vocabulary; the slice choice makes the operation evaluate to false consistently with the oracle; residual judgment risk must be disclosed at pin time",
+   "oracle_expected_scope_matches": false,
+   "oracle_required_behavior": "baseline_action_settled_by_internal_policy",
+   "reconstructed_row": {
+    "decision_scope_sha256": "3c2ad61040ea543a101582e93d7e91228f8177bec935fd52c6eb7ab1fa640929",
+    "operands": {
+     "clause_text": "6. Disclaimer of Warranty                                           *\n*  -------------------------                                           *\n*                                                                      *\n*  Covered Software is provided under this License on an \"as is\"       *\n*  basis, without warranty of any kind, either expressed, implied, or  *\n*  statutory, including, without limitation, warranties that the       *\n*  Covered Software is free of defects, merchantable, fit for a        *\n*  particular purpose or non-infringing. The entire risk as to the     *\n*  quality and performance of the Covered Software is with You.        *\n*  Should any Covered Software prove defective in any respect, You     *\n*  (not any Contributor) assume the cost of any necessary servicing,   *\n*  repair, or correction. This disclaimer of warranty constitutes an   *\n*  essential part of this License. No use of any Covered Software is   *\n*  authorized under this License except under this disclaimer.         *\n*                                                                      *\n************************************************************************\n\n************************************************************************\n*                                                                      *\n*",
+     "license_id": "MPL-2.0",
+     "required_phrases": [
+      "Larger Work",
+      "independent modules",
+      "terms of your choice"
+     ]
+    },
+    "operation": "license_permission_granted",
+    "raw_sha256": "d4a775424b576b2864cee5e9f21476b6e37531b516df6303da3b0b42859629a2",
+    "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json"
+   },
+   "verdict": "ENDORSE_WITH_DISCLOSURE"
+  }
+ ],
+ "reviewer": "cursor/kimi-k2.7-code",
+ "schema_version": "efc_p3b_cold_semantic_review_v1",
+ "smallest_actionable_blockers": [
+  "mm-05: self-contradiction (any_of 'do not approve' contains none_of 'approve')",
+  "systematic negation gap in none_of affects ir-01, ir-02, ir-04, ir-05, mc-01, mc-02, mc-03, mc-04, mc-05, mm-01, mm-02, mm-03, mm-04, mm-05, sf-01, sf-02, sf-03, sf-04, sf-05; example in mm-05 'We should not reject the build' passes due to 'reject'",
+  "paraphrase coverage gap in any_of affects ir-01, ir-03, ir-04, ir-05, mc-02, mm-01, mm-02, mm-03, mm-04, mm-05, sf-01, sf-04; example in ir-01 'Pin the fixed version of anyhow.' is rejected"
+ ],
+ "structured_inputs_v1_old_15_proof": [
+  {
+   "byte_identical": true,
+   "index": 0,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002"
+  },
+  {
+   "byte_identical": true,
+   "index": 1,
+   "source_reference": "https://endoflife.date/api/spring-boot.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 2,
+   "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj"
+  },
+  {
+   "byte_identical": true,
+   "index": 3,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 4,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 5,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185"
+  },
+  {
+   "byte_identical": true,
+   "index": 6,
+   "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p"
+  },
+  {
+   "byte_identical": true,
+   "index": 7,
+   "source_reference": "https://endoflife.date/api/visual-studio.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 8,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 9,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/BSL-1.0.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 10,
+   "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f"
+  },
+  {
+   "byte_identical": true,
+   "index": 11,
+   "source_reference": "https://endoflife.date/api/tomcat.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 12,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 13,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json"
+  },
+  {
+   "byte_identical": true,
+   "index": 14,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072"
+  }
+ ],
+ "world_oracle_rule_review": {
+  "adversarial_vector_count": 80,
+  "coverage_gap_rules": [
+   {
+    "examples": [
+     "Pin the fixed version of anyhow.",
+     "Move to the patched release."
+    ],
+    "fixture_id": "ir-01"
+   },
+   {
+    "examples": [
+     "Move to a supported hypervisor platform."
+    ],
+    "fixture_id": "ir-03"
+   },
+   {
+    "examples": [
+     "Continue the rollout as planned.",
+     "No action is needed."
+    ],
+    "fixture_id": "ir-04"
+   },
+   {
+    "examples": [
+     "Submit for legal review.",
+     "Send to the licensing committee."
+    ],
+    "fixture_id": "ir-05"
+   },
+   {
+    "examples": [
+     "No change to the servlet line."
+    ],
+    "fixture_id": "mc-02"
+   },
+   {
+    "examples": [
+     "Take the service out of rotation.",
+     "Stop serving traffic now."
+    ],
+    "fixture_id": "mm-01"
+   },
+   {
+    "examples": [
+     "Don't ship this release."
+    ],
+    "fixture_id": "mm-02"
+   },
+   {
+    "examples": [
+     "Ask for better terms before renewing."
+    ],
+    "fixture_id": "mm-03"
+   },
+   {
+    "examples": [
+     "Turn off the crawler until patched."
+    ],
+    "fixture_id": "mm-04"
+   },
+   {
+    "examples": [
+     "I do not approve the installer build.",
+     "Refuse the build until the license is embedded."
+    ],
+    "fixture_id": "mm-05"
+   },
+   {
+    "examples": [
+     "Push back on the hotfix."
+    ],
+    "fixture_id": "sf-01"
+   },
+   {
+    "examples": [
+     "Allow distribution under the exception."
+    ],
+    "fixture_id": "sf-04"
+   }
+  ],
+  "negation_gap_rules": [
+   {
+    "examples": [
+     "Do not update the crate yet.",
+     "We should not upgrade before review."
+    ],
+    "fixture_id": "ir-01",
+    "matched_tokens": [
+     [
+      "update"
+     ],
+     [
+      "upgrade"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not close the ticket yet."
+    ],
+    "fixture_id": "ir-02",
+    "matched_tokens": [
+     [
+      "close"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not keep the rollout."
+    ],
+    "fixture_id": "ir-04",
+    "matched_tokens": [
+     [
+      "keep"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not route to the review board."
+    ],
+    "fixture_id": "ir-05",
+    "matched_tokens": [
+     [
+      "route",
+      "review board"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "We should not merge today."
+    ],
+    "fixture_id": "mc-01",
+    "matched_tokens": [
+     [
+      "merge"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not keep the current line."
+    ],
+    "fixture_id": "mc-02",
+    "matched_tokens": [
+     [
+      "keep"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "We should not upgrade yet.",
+     "Do not update spdystream."
+    ],
+    "fixture_id": "mc-03",
+    "matched_tokens": [
+     [
+      "upgrade"
+     ],
+     [
+      "update"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not allow the redistribution."
+    ],
+    "fixture_id": "mc-04",
+    "matched_tokens": [
+     [
+      "allow"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not execute the plan.",
+     "We should not proceed with rotation."
+    ],
+    "fixture_id": "mc-05",
+    "matched_tokens": [
+     [
+      "execute"
+     ],
+     [
+      "proceed"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not divert traffic."
+    ],
+    "fixture_id": "mm-01",
+    "matched_tokens": [
+     [
+      "divert"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "We will not block the release."
+    ],
+    "fixture_id": "mm-02",
+    "matched_tokens": [
+     [
+      "block"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not renegotiate."
+    ],
+    "fixture_id": "mm-03",
+    "matched_tokens": [
+     [
+      "renegotiate"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not suspend the crawler."
+    ],
+    "fixture_id": "mm-04",
+    "matched_tokens": [
+     [
+      "suspend"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "We should not reject the build."
+    ],
+    "fixture_id": "mm-05",
+    "matched_tokens": [
+     [
+      "reject"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not reject the hotfix."
+    ],
+    "fixture_id": "sf-01",
+    "matched_tokens": [
+     [
+      "reject"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not defer the upgrade."
+    ],
+    "fixture_id": "sf-02",
+    "matched_tokens": [
+     [
+      "defer"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "Do not disable the pool."
+    ],
+    "fixture_id": "sf-03",
+    "matched_tokens": [
+     [
+      "disable"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "We should not ship this.",
+     "Do not release the executable."
+    ],
+    "fixture_id": "sf-04",
+    "matched_tokens": [
+     [
+      "ship"
+     ],
+     [
+      "release"
+     ]
+    ]
+   },
+   {
+    "examples": [
+     "We should not patch this tonight."
+    ],
+    "fixture_id": "sf-05",
+    "matched_tokens": [
+     [
+      "patch"
+     ]
+    ]
+   }
+  ],
+  "per_fixture_results": [
+   {
+    "false_negatives": 2,
+    "false_positives": 2,
+    "fixture_id": "ir-01",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Pin the fixed version of anyhow."
+      },
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Move to the patched release."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "update"
+       ],
+       "passed": true,
+       "text": "Do not update the crate yet."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "upgrade"
+       ],
+       "passed": true,
+       "text": "We should not upgrade before review."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "upgrade",
+       "update",
+       "bump",
+       "new pin",
+       "new version"
+      ],
+      "none_of": [
+       "defer",
+       "wait for",
+       "do not upgrade",
+       "hold pin"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 1,
+    "fixture_id": "ir-02",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "The ticket can be closed now."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Mark the incident resolved."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "close"
+       ],
+       "passed": true,
+       "text": "Do not close the ticket yet."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "The ticket should stay open."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "close",
+       "resolve",
+       "mark resolved",
+       "ticket closed"
+      ],
+      "none_of": [
+       "keep open",
+       "reopen",
+       "investigate further"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 0,
+    "fixture_id": "ir-03",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Move to a supported hypervisor platform."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Plan the migration away from ESXi 7.0."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Do not migrate yet."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "We can stay on ESXi 7.0."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "schedule",
+       "migrate",
+       "migration",
+       "proceed"
+      ],
+      "none_of": [
+       "defer",
+       "postpone",
+       "do not migrate"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 2,
+    "false_positives": 1,
+    "fixture_id": "ir-04",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Continue the rollout as planned."
+      },
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "No action is needed."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "keep"
+       ],
+       "passed": true,
+       "text": "Do not keep the rollout."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Pause the rollout immediately."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "keep",
+       "maintain",
+       "proceed",
+       "no change",
+       "stay on schedule"
+      ],
+      "none_of": [
+       "pause rollout",
+       "halt",
+       "rollback",
+       "delay rollout"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 2,
+    "false_positives": 1,
+    "fixture_id": "ir-05",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Submit for legal review."
+      },
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Send to the licensing committee."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "route",
+        "review board"
+       ],
+       "passed": true,
+       "text": "Do not route to the review board."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Adopt without any review."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "route",
+       "review board",
+       "board review",
+       "oss review",
+       "submit for review",
+       "follow policy"
+      ],
+      "none_of": [
+       "skip review",
+       "adopt directly",
+       "bypass",
+       "without review"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 1,
+    "fixture_id": "mc-01",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Merge the flatted update."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Approve the dependency merge."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Do not merge this yet."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "merge"
+       ],
+       "passed": true,
+       "text": "We should not merge today."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "merge",
+       "upgrade",
+       "proceed",
+       "approve"
+      ],
+      "none_of": [
+       "decline",
+       "defer",
+       "do not merge"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 1,
+    "fixture_id": "mc-02",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Keep the fleet on Tomcat 9.0."
+      },
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "No change to the servlet line."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "keep"
+       ],
+       "passed": true,
+       "text": "Do not keep the current line."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Migrate off the line immediately."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "keep",
+       "remain",
+       "stay",
+       "continue",
+       "maintain"
+      ],
+      "none_of": [
+       "migrate now",
+       "upgrade immediately",
+       "change line"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 2,
+    "fixture_id": "mc-03",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Update spdystream before release."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Bump the SPDY dependency."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "upgrade"
+       ],
+       "passed": true,
+       "text": "We should not upgrade yet."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "update"
+       ],
+       "passed": true,
+       "text": "Do not update spdystream."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "bump",
+       "upgrade",
+       "update",
+       "proceed",
+       "roll out"
+      ],
+      "none_of": [
+       "defer",
+       "decline",
+       "do not upgrade",
+       "don't upgrade"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 1,
+    "fixture_id": "mc-04",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Allow the object-form redistribution."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Permit the LLVM exception reliance."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "We decline to permit this."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "allow"
+       ],
+       "passed": true,
+       "text": "Do not allow the redistribution."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "approve",
+       "authorize",
+       "permit",
+       "allow"
+      ],
+      "none_of": [
+       "reject",
+       "decline",
+       "block"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 2,
+    "fixture_id": "mc-05",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Execute the key rotation plan."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Proceed with the cryptography upgrade."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "execute"
+       ],
+       "passed": true,
+       "text": "Do not execute the plan."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "proceed"
+       ],
+       "passed": true,
+       "text": "We should not proceed with rotation."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "execute",
+       "proceed",
+       "rotate",
+       "upgrade",
+       "approve"
+      ],
+      "none_of": [
+       "defer",
+       "decline",
+       "postpone"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 2,
+    "false_positives": 1,
+    "fixture_id": "mm-01",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Take the service out of rotation."
+      },
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Stop serving traffic now."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "divert"
+       ],
+       "passed": true,
+       "text": "Do not divert traffic."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Keep serving traffic unchanged."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "drain",
+       "divert",
+       "stop traffic",
+       "pause",
+       "shutdown"
+      ],
+      "none_of": [
+       "keep serving",
+       "continue as-is",
+       "no action"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 1,
+    "fixture_id": "mm-02",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Don't ship this release."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Reject the release."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "block"
+       ],
+       "passed": true,
+       "text": "We will not block the release."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Ship the release on schedule."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "block",
+       "hold",
+       "stop",
+       "reject",
+       "delay"
+      ],
+      "none_of": [
+       "proceed with release",
+       "ship the release",
+       "approve release"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 1,
+    "fixture_id": "mm-03",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Ask for better terms before renewing."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Modify the renewal package."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "renegotiate"
+       ],
+       "passed": true,
+       "text": "Do not renegotiate."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Renew unchanged as proposed."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "renegotiate",
+       "change the renewal",
+       "modify the renewal",
+       "different terms"
+      ],
+      "none_of": [
+       "approve renewal unchanged",
+       "proceed with unchanged renewal",
+       "renew unchanged"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 1,
+    "fixture_id": "mm-04",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Turn off the crawler until patched."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Halt the parsing pipeline."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "suspend"
+       ],
+       "passed": true,
+       "text": "Do not suspend the crawler."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Resume ingestion immediately."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "pause",
+       "stop",
+       "halt",
+       "suspend",
+       "disable"
+      ],
+      "none_of": [
+       "continue ingestion",
+       "keep running",
+       "resume"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 2,
+    "false_positives": 1,
+    "fixture_id": "mm-05",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_none_of",
+       "expect_pass": true,
+       "matched_tokens": [
+        "approve"
+       ],
+       "passed": false,
+       "text": "I do not approve the installer build."
+      },
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Refuse the build until the license is embedded."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Approve the installer build."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "reject"
+       ],
+       "passed": true,
+       "text": "We should not reject the build."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "reject",
+       "decline",
+       "block",
+       "do not approve"
+      ],
+      "none_of": [
+       "approve",
+       "accept installer",
+       "allow build"
+      ]
+     }
+    },
+    "self_contradiction": true,
+    "self_contradiction_detail": "any_of 'do not approve' contains none_of 'approve'",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 1,
+    "fixture_id": "sf-01",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Push back on the hotfix."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "I decline the emergency patch."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "reject"
+       ],
+       "passed": true,
+       "text": "Do not reject the hotfix."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Approve the hotfix and ship today."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "decline",
+       "reject",
+       "do not approve",
+       "not approve",
+       "hold",
+       "defer"
+      ],
+      "none_of": [
+       "approve the hotfix",
+       "ship the hotfix",
+       "merge today"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 1,
+    "fixture_id": "sf-02",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "We can wait until next fiscal year."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Postpone the upgrade."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "defer"
+       ],
+       "passed": true,
+       "text": "Do not defer the upgrade."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Upgrade immediately."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "defer",
+       "wait",
+       "postpone",
+       "can wait",
+       "next fiscal"
+      ],
+      "none_of": [
+       "upgrade now",
+       "proceed with upgrade",
+       "must upgrade immediately"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 1,
+    "fixture_id": "sf-03",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Disable the proxy pool."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Shut down the pooling feature."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "disable"
+       ],
+       "passed": true,
+       "text": "Do not disable the pool."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Keep the feature running."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "disable",
+       "turn off",
+       "shut down",
+       "block",
+       "pause pooling"
+      ],
+      "none_of": [
+       "keep enabled",
+       "leave enabled",
+       "no change"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 1,
+    "false_positives": 2,
+    "fixture_id": "sf-04",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "false_negative_coverage",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Allow distribution under the exception."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Ship the linked executable."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "ship"
+       ],
+       "passed": true,
+       "text": "We should not ship this."
+      },
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "release"
+       ],
+       "passed": true,
+       "text": "Do not release the executable."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "approve",
+       "authorize",
+       "permit",
+       "release",
+       "ship"
+      ],
+      "none_of": [
+       "decline",
+       "reject",
+       "block",
+       "do not approve"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   },
+   {
+    "false_negatives": 0,
+    "false_positives": 1,
+    "fixture_id": "sf-05",
+    "results": {
+     "correct": [
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Patch the RPC framework tonight."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": true,
+       "matched_tokens": [],
+       "passed": true,
+       "text": "Deploy the fix in the maintenance window."
+      }
+     ],
+     "incorrect": [
+      {
+       "diagnosis": "false_positive_any_of",
+       "expect_pass": false,
+       "matched_tokens": [
+        "patch"
+       ],
+       "passed": true,
+       "text": "We should not patch this tonight."
+      },
+      {
+       "diagnosis": "ok",
+       "expect_pass": false,
+       "matched_tokens": [],
+       "passed": false,
+       "text": "Do not schedule maintenance."
+      }
+     ]
+    },
+    "rule": {
+     "pass_when": {
+      "any_of": [
+       "schedule",
+       "patch",
+       "proceed",
+       "deploy",
+       "approve"
+      ],
+      "none_of": [
+       "decline",
+       "defer",
+       "do not patch",
+       "do not schedule"
+      ]
+     }
+    },
+    "self_contradiction": false,
+    "self_contradiction_detail": "",
+    "verdict": "BLOCK"
+   }
+  ],
+  "self_contradiction_rules": [
+   {
+    "detail": "any_of 'do not approve' contains none_of 'approve'",
+    "fixture_id": "mm-05"
+   }
+  ]
+ }
+}

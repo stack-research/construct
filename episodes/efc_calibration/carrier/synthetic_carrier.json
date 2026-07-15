@@ -1,0 +1,41 @@
+{
+ "carrier": {
+  "check_contract_hash": "f77db2c1ab9ab8429bb4afb935420b1dac057cf6042ba94f366385561d0131bb",
+  "check_id": "scope_provenance_check_v0",
+  "extractor_hash": "bccf26e1955018dad2d6debf56bfd4947e65e7cb1011ffb54deea02e10eaf4d8",
+  "mechanism_id": "epistemic_frame_check",
+  "mechanism_version": "v0",
+  "per_invocation_cost_ceiling": 1024,
+  "predicate_contract_hash": "6b3d4272bbdd1ec0e0b07339990693350a04d998446b1b3779b3fda4127ee008",
+  "predicate_feature_bindings": {
+   "assertion_basis_kind": "cited_source",
+   "decision_scope_present": true,
+   "observation_boundary_present": false,
+   "source_reference_present": true
+  },
+  "retirement_rules_hash": "39dda3e98ad84b9caa72372f92840a46d891db284f43b2b199e2362a9537c9e6",
+  "revision_scope_rules_hash": "7540eb5b2882aef601efb8edf32e705041793176b72c7eac37c9df11e8bc478c",
+  "status": "experimental_probationary",
+  "validity_envelope": {
+   "check_contract_hash": "f77db2c1ab9ab8429bb4afb935420b1dac057cf6042ba94f366385561d0131bb",
+   "controller_id": "efc_controller_v0",
+   "decoding_contract_id": "efc-c2-synthetic-decoding",
+   "engine_admission_packet_hash": "1110c8ee669f33fbe7373f1081a1147ca9066597b6dea826c5b4d6a241f0cbb7",
+   "extractor_hash": "bccf26e1955018dad2d6debf56bfd4947e65e7cb1011ffb54deea02e10eaf4d8",
+   "foreground_template_hash": "d70e6a316a157509ca3a87abe340eb4cf1aca3de612e9340e387344e728f56b4",
+   "model_id": "efc-c2-synthetic-nonmintable-engine",
+   "per_invocation_cost_ceiling": 1024,
+   "predicate_contract_hash": "6b3d4272bbdd1ec0e0b07339990693350a04d998446b1b3779b3fda4127ee008",
+   "renderer_id": "efc_renderer_v0",
+   "source_family_hash": "90ab5bf69f82bb96b00af17ec5dfd4013bc386a077480e8631a6ec0a0ab9963c",
+   "target_population_hash": "4c7375de5c244501e87e4460fdf33b37bdd36d3623b350d5d854ab593b54d41e",
+   "tool_contract_id": "efc-c2-synthetic-tool-contract"
+  },
+  "warrant_event_ids": [
+   "efc-c2-synthetic-warrant-0"
+  ],
+  "warrant_result_hash": "c282b09c712bd0fcfee73db7c16729291cd2394576d1a906a18ce6b51de28aa3"
+ },
+ "non_mintable": true,
+ "synthetic": true
+}

@@ -1,0 +1,133 @@
+{
+ "adapter_contract_sha256": "d866e8061b8f840d720d0e3f8b039785b9cfd00b6a4bf4b9706f9df85a3017d8",
+ "candidate_check_contract_hash": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b",
+ "conformance_vectors_path": "corpus/efc_calibration/comparison/conformance_vectors_v1.json",
+ "conformance_vectors_sha256": "20a067497db456cc3d0c392bf53ed56a53e660d3a2ac5b3515312445e104c3e3",
+ "derivation_module_unreachable_from_production": true,
+ "dispositive_row_count": 15,
+ "interpreter_modules": [
+  "harness/efc_compare_production.py",
+  "harness/efc_compare_version.py"
+ ],
+ "interpreter_sha256": "0ce8aac27362914c64e291a42a9ec3dd25bd36f4dcc506cc7ac50eb4a708db05",
+ "license_binding_review_note": "typed license atoms and population bindings require separate conformance review; not covered by Kimi C2a semantic review",
+ "oracle_agreement_count": 15,
+ "outputs": [
+  {
+   "decision_scope_sha256": "936373f58d54091823e42f1937d40b4122a88a7e395bceab682a0cb341d7cc01",
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "5e9e5c99b25f3b25c2ec375a4d9fde03fc435a05e35e3cb894d13b3024e0c275",
+   "scope_matches": false,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002"
+  },
+  {
+   "decision_scope_sha256": "ef955a948c252c7a6898d313859105de1484bd2e8adbaa81838767ed3eb0dcf4",
+   "operation": "eol_support_on_date",
+   "raw_sha256": "e284f93bb376ab40281b600611ff86c99691e084246a547383d08e8551a9879e",
+   "scope_matches": false,
+   "source_reference": "https://endoflife.date/api/spring-boot.json"
+  },
+  {
+   "decision_scope_sha256": "2ba01613bedab119155da112cd580b8aa24c54fee6a09ea09b4d62246e8a24b2",
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "bcd52cf0f5e2aadc834026750c8ebeb7ca071ffccfc63dcab791cd61d2f3ea16",
+   "scope_matches": false,
+   "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj"
+  },
+  {
+   "decision_scope_sha256": "b3d76d80ecff5180537ebc9c73edde6fb676a86258a1bf119a54418010af3c28",
+   "operation": "license_permission_granted",
+   "raw_sha256": "1da5f30a136e02ed2465305246fd0761c997a2fbd26829c87d85c23505e3ef06",
+   "scope_matches": true,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json"
+  },
+  {
+   "decision_scope_sha256": "f2538536dadf2ff61d93f222347f8a0ddb19d22ad362df3a149c4d6dd7ecafac",
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "dd6d021a23106f58c3142cb0e1d53d4bb7e4289af07b5e215021b1d509645e63",
+   "scope_matches": true,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json"
+  },
+  {
+   "decision_scope_sha256": "304ba90a753319a31615dab157a8838f299458e84eacd438540815578edb44fd",
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "aa59dbfd5b0bc0378363f904543475cefa8b795793ee2bb6226a239afa586555",
+   "scope_matches": false,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185"
+  },
+  {
+   "decision_scope_sha256": "7ec75bcd3c9250263841971c5b051f82d6c0cad7aac547db2fef2407c3efe6f1",
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "db96c762f2e654604fb76813122dd710e2c1c848e15230e0aecb6d10ddbda4ec",
+   "scope_matches": false,
+   "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p"
+  },
+  {
+   "decision_scope_sha256": "6585f1330553484a7c0fbeccfc6c5746b36848bced964e562660e8960923b049",
+   "operation": "eol_support_on_date",
+   "raw_sha256": "76fc11ae94a7f3069ceefedd9888e069220ad3817fbccd2a00f50bfc8b21cd96",
+   "scope_matches": false,
+   "source_reference": "https://endoflife.date/api/visual-studio.json"
+  },
+  {
+   "decision_scope_sha256": "2c187987244634580e551f41876321cbc2d3c01da14fa2876c3b99b15a85b822",
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "24009bbd8ff231dca1f182003b7c82c0ad4a5e2763fb525037050692eabdfe45",
+   "scope_matches": false,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json"
+  },
+  {
+   "decision_scope_sha256": "d5264c0c1f6694fcfdb33d6c9bbe1d27bdb802193bd6e081bfd350ed08a8f57f",
+   "operation": "license_inclusion_obligation_holds",
+   "raw_sha256": "613d688bf9cc4304dd9e90743aa1d8e10aede130a49e69ea8a732d86fb550355",
+   "scope_matches": false,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/BSL-1.0.json"
+  },
+  {
+   "decision_scope_sha256": "6d35e58fb75b7ba78d107a97e84c67562b0a011990081548f24b072f4822e675",
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "782f49707422ccf16557d8fab272c5495502fb843a0f5eb315cb4449452b4b5a",
+   "scope_matches": true,
+   "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f"
+  },
+  {
+   "decision_scope_sha256": "0f414c8881d74300ee41cabaea0efbf15a9e9ab09f407542e4f1df3e4b76a968",
+   "operation": "eol_support_on_date",
+   "raw_sha256": "13496c043f2c8f802031041df62256547c0fd08e1f7cb6e9ab9eeb38956c212e",
+   "scope_matches": true,
+   "source_reference": "https://endoflife.date/api/tomcat.json"
+  },
+  {
+   "decision_scope_sha256": "b5f5f509ac3a4ba7b47da9c1492513269f7c1459f224f8f2015b385494ed8850",
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "619992c4761c7f868db2a07f585e95b08e597251ca2ae136fcce40e1cde02607",
+   "scope_matches": true,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json"
+  },
+  {
+   "decision_scope_sha256": "fc55041d3f92a6d0fba83995e6b6f7fe8afcbf3a04e34dcc30836a963c9dd435",
+   "operation": "license_section_waiver_applies",
+   "raw_sha256": "caad73fc83226f9762861f2447e9f8b8cdfa46907f6f95ee79e064185dec7c6a",
+   "scope_matches": true,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json"
+  },
+  {
+   "decision_scope_sha256": "ccab64699849823d2e32f213ecae0315831bca24acb1496325e25932830e1064",
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "f3b5c57702576562af7d17b2751fb7721bd8acfecd95e44d648cc137a58d9754",
+   "scope_matches": true,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072"
+  }
+ ],
+ "production_rule_path": "corpus/efc_calibration/comparison/production_rule_v1.json",
+ "rule_artifact_canonical_sha256": "41a9c2e061ac7c2f651df9c265eef85a46fb0002b6636cba423dbf108ee4b135",
+ "rule_artifact_file_sha256": "8155720db938067c9ea77e77497c7ef8eeb5b0f67331b4df6bee74a5ab8460c2",
+ "schema_version": "efc-production-comparison-integration-v1",
+ "status": "candidate_not_pinned",
+ "structured_inputs_file_sha256": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9",
+ "structured_inputs_path": "corpus/efc_calibration/comparison/structured_inputs_v1.json",
+ "structured_inputs_population_binding_sha256": "b996c706189eb026187ab3b8d14947a1955a0c90945e6e4590c421a8aff4d0a1",
+ "structured_inputs_row_count": 15,
+ "structured_inputs_schema_version": "efc-production-structured-inputs-v1",
+ "wire_lookup_unreachable_from_production": true
+}

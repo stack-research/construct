@@ -1,0 +1,95 @@
+{
+ "artifacts_explicitly_not_modified": [
+  "corpus/efc_calibration/authoring_c4/C4_candidate_calibration_manifest.json",
+  "corpus/efc_calibration/authoring_c4/roster_decoding_pin_candidate.json",
+  "corpus/efc_calibration/authoring_c4/budget_derivation_ledger.json",
+  "corpus/efc_calibration/authoring_c4/operator_approval_record.json",
+  "corpus/efc_calibration/authoring_c4/c4_conformance_report.json",
+  "corpus/efc_calibration/authoring_c4/final_manifest_review_composer.json",
+  "corpus/efc_calibration/authoring_c4/calibration_manifest_pin.json"
+ ],
+ "artifacts_modified_by_c4c": [
+  "corpus/efc_calibration/_acquisition/k4/promotion_identity_ledger.json",
+  "corpus/efc_calibration/_acquisition/k4/capture_report.json",
+  "tests/test_efc_capture_k4.py",
+  "tests/test_efc_author_c4.py",
+  "tests/test_efc_lineage_hygiene_c4c.py",
+  "corpus/efc_calibration/authoring_c4/c4c_lineage_hygiene_repair.json"
+ ],
+ "assignment": "C4c lineage restoration and test-hygiene repair",
+ "authorizes_probes_or_calibration_contact": false,
+ "authorizes_repin": false,
+ "disclosure": {
+  "commits": 0,
+  "engines_contacted": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0
+ },
+ "generated_at_utc": "2026-07-15T11:47:33Z",
+ "mutator_audit": {
+  "production_writers_found_and_repaired": [
+   "tests/test_efc_capture_k4.py::LiveK4.test_repair_ledger_zero_network",
+   "tests/test_efc_author_c4.py::TestC4Derivation.setUpClass (removed builder rerun)",
+   "tests/test_efc_author_c4.py::TestC4Derivation.test_builder_is_idempotent"
+  ],
+  "read_only_production_call_sites_verified": [
+   "tests/test_efc_capture_k4br.py::LiveK4BR (verify_hashes, json.loads ledger)",
+   "tests/test_efc_pin_c4b.py (sandbox box only)",
+   "tests/test_efc_compare_production.py (temp dirs for mutations)",
+   "all other tests/test_efc_capture_* and tests/test_efc_refetch_* (tempfile roots)"
+  ],
+  "remaining_production_writers": []
+ },
+ "pre_repair_drift": {
+  "g4_authority_sha256": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac",
+  "k4_capture_report_pollution": "ledger_repaired_at_utc field added by test_repair_ledger_zero_network",
+  "k4_capture_report_sha256": "d4800341762be6e719f44fee2abc5d920cb8f15c0c808ab5b871a0f708b563ae",
+  "k4_promotion_identity_ledger_generated_at_utc": "2026-07-15T10:39:27Z",
+  "k4_promotion_identity_ledger_sha256": "9b791331b2a58cdefcf1e0222f69c0880134000d22cf80c1680991bdbce5c3aa"
+ },
+ "protected_production_snapshot_after_repair": {
+  "corpus/efc_calibration/_acquisition/k4/capture_report.json": "afedf89d26d5ebc790cb7d2cc7e85e38ecc6dc079f407f077723b0ede76cd4cf",
+  "corpus/efc_calibration/_acquisition/k4/promotion_identity_ledger.json": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac",
+  "corpus/efc_calibration/authoring_c4/C4_candidate_calibration_manifest.json": "d5965001e19d846826aba8be0b130bf4a16fd82f63fbc21c8927b153237b971e",
+  "corpus/efc_calibration/authoring_c4/budget_derivation_ledger.json": "b14466c1542ec034b6ab5c018d379b49b0f8b32ce107d899249f6c4c470a2eb6",
+  "corpus/efc_calibration/authoring_c4/c4_conformance_report.json": "e5f16e22db4793757ea5dcbca89597ff5e997421206e35197d7f80eb97888d15",
+  "corpus/efc_calibration/authoring_c4/calibration_manifest_pin.json": "9ea99f15392e1b46e01964f5eb656b09205585901ae696bdd4aa465540632e0d",
+  "corpus/efc_calibration/authoring_c4/final_manifest_review_composer.json": "0a490085dec8732cade54150f7b321cd579830191b5d071c157ce03ea22595da",
+  "corpus/efc_calibration/authoring_c4/operator_approval_record.json": "4545fb8b2b6e29bdce3ecbdd54d2c7b25c3de77c4a027010112227eb338f08a9",
+  "corpus/efc_calibration/authoring_c4/roster_decoding_pin_candidate.json": "4b3e452bd140ae88a971d0e7e9b1e68b95cc2ec8978abf3c194bdbe1ccb7521b"
+ },
+ "restoration_proof": {
+  "method": "substitute only generated_at_utc to 2026-07-14T21:46:25Z in on-disk ledger bytes",
+  "recovered_g4_hash": true,
+  "row_semantics_unchanged": true
+ },
+ "restored_hashes": {
+  "k4_capture_report_note": "hygiene restoration only; not promoted to authority pin",
+  "k4_capture_report_sha256": "afedf89d26d5ebc790cb7d2cc7e85e38ecc6dc079f407f077723b0ede76cd4cf",
+  "k4_promotion_identity_ledger_sha256": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac"
+ },
+ "seat": "cursor/composer-2.5-capture",
+ "test_repairs": [
+  {
+   "change": "test_repair_ledger_zero_network runs repair_ledger against temp copytree; asserts production bytes unchanged",
+   "file": "tests/test_efc_capture_k4.py"
+  },
+  {
+   "change": "setUpClass loads existing C4 artifacts read-only; test_builder_is_idempotent runs builder twice on temp copy with C4_ROOT patched",
+   "file": "tests/test_efc_author_c4.py"
+  },
+  {
+   "change": "new zero-network production-tree immutability regression (3 tests)",
+   "file": "tests/test_efc_lineage_hygiene_c4c.py"
+  }
+ ],
+ "verification": {
+  "failed_pin_verify_refusal": "corpus/efc_calibration/authoring_c4/c4_conformance_report.json sha256 e5f16e22db4793757ea5dcbca89597ff5e997421206e35197d7f80eb97888d15 != reviewed 5b6ca196f668a4d9ae6fa44697b581a42463deefa238240ef7d587f6a60d955e",
+  "focused_tests": "5/5 pass (repair_ledger, builder idempotent, immutability x3)",
+  "full_suite_failures_scope": "14/14 in tests/test_efc_pin_c4b.py only \u2014 on-disk failed pin correctly refuses because c4_conformance_report.json (e5f16e22\u2026) != stabilized pin constant (5b6ca196\u2026); not a production mutator",
+  "full_test_efc_star": "520 run; 506 pass; 8 failures; 6 errors",
+  "git_diff_check": "clean",
+  "production_snapshot_unchanged_after_two_consecutive_full_runs": true
+ }
+}

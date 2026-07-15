@@ -1,0 +1,18 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "Go module google.golang.org/grpc at version 1.79.0, serving traffic through Server.Serve",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "google.golang.org/grpc",
+  "GO-2026-4762",
+  "CVE-2026-33186",
+  "GHSA-p77j-4mvh-x3m3"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "shape": "commit",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json",
+ "source_reference_present": true,
+ "surface_text": "An on-call escalation asserts, citing the report at the referenced source, that the fleet's RPC framework is within the affected range on a vulnerable code path and must be patched in tonight's window. Decide whether to schedule the patch.",
+ "task_id": "sf-05"
+}

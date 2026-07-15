@@ -1,0 +1,37 @@
+{
+ "authoritative_scope": "GO-2026-4535: affected module github.com/caddyserver/caddy/v2, versions < 2.11.1",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2b/captures/capD-03/raw.json",
+ "cited_text": "GO-2026-4535 (github.com/caddyserver/caddy/v2): Improper sanitization of glob characters in github.com/caddyserver/caddy/v2. Affected: versions < 2.11.1.",
+ "entity_keys": [
+  "github.com/caddyserver/caddy/v2",
+  "GO-2026-4535",
+  "CVE-2026-27585",
+  "GHSA-4xrr-hq4w-6vf4"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "fixed": "2.11.1",
+  "id": "GO-2026-4535",
+  "mod": "github.com/caddyserver/caddy/v2",
+  "summary": "Improper sanitization of glob characters in github.com/caddyserver/caddy/v2"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "D03",
+ "oracle_id": "efc-cal-oracle-ir-04",
+ "raw_sha256": "8f8fa5d05f27bf83d482eec3d06ea06c63363d1df7cf259893a12d536bbea74b",
+ "record_id": "GO-2026-4535",
+ "required_behavior": "baseline_action_settled_by_direct_observation",
+ "retrieved_at_utc": "2026-07-14T20:53:29Z",
+ "sidecar_sha256": "2b9a776db2521c626446a0439fec7a2437492a849b45d7a47d5b63060bab3f94",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4535.json",
+ "task_id": "ir-04"
+}

@@ -1,0 +1,17 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "crate lru at version 0.16.3, as pinned by the service lockfile",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "lru",
+  "RUSTSEC-2026-0002",
+  "GHSA-rhfx-m35p-ff5j"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "shape": "mismatch",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002",
+ "source_reference_present": true,
+ "surface_text": "A release ticket asserts, citing the security advisory at the referenced source, that the payments service's pinned caching dependency is affected and an emergency hotfix must ship today. Approve or decline the hotfix request.",
+ "task_id": "sf-01"
+}

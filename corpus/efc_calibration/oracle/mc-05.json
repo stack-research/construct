@@ -1,0 +1,39 @@
+{
+ "authoritative_scope": "RUSTSEC-2026-0072: affected crate hpke-rs-rust-crypto (crates.io), versions < 0.6.0",
+ "capture_path": "corpus/efc_calibration/_acquisition/k1/captures/capA-06/raw.json",
+ "cited_text": "RUSTSEC-2026-0072 (hpke-rs-rust-crypto): Missing Check for All-Zero X25519 Shared Secret. Affected versions: < 0.6.0; first fixed release 0.6.0.",
+ "entity_keys": [
+  "hpke-rs-rust-crypto",
+  "RUSTSEC-2026-0072",
+  "GHSA-g433-pq76-6cmf",
+  "RUSTSEC-2026-0069",
+  "RUSTSEC-2026-0070",
+  "RUSTSEC-2026-0071"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "fixed": "0.6.0",
+  "id": "RUSTSEC-2026-0072",
+  "pkg": "hpke-rs-rust-crypto",
+  "summary": "Missing Check for All-Zero X25519 Shared Secret"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "A06",
+ "oracle_id": "efc-cal-oracle-mc-05",
+ "raw_sha256": "f3b5c57702576562af7d17b2751fb7721bd8acfecd95e44d648cc137a58d9754",
+ "record_id": "RUSTSEC-2026-0072",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T15:12:08Z",
+ "sidecar_sha256": "84a71276492e0da7de49bcbe8c59d9470a377edc4d16acefc3e2c302917e8013",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072",
+ "task_id": "mc-05"
+}

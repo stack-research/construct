@@ -1,0 +1,21 @@
+{
+ "pins": [
+  {
+   "event_id": "efc-cal-manifest-pin-2600d1fdba7b-s2",
+   "path": "corpus/efc_calibration/authoring_c4/calibration_manifest_pin_superseding.json",
+   "role": "active",
+   "sha256": "68debac028ccac177b1fc135adb65dc037aba10e73459499b056d7b12dfbdc73"
+  },
+  {
+   "disposition": "invalid_non_authoritative_preserved",
+   "event_id": "efc-cal-manifest-pin-2600d1fdba7b",
+   "failure_record": "corpus/efc_calibration/authoring_c4/calibration_manifest_pin_failure_record.json",
+   "path": "corpus/efc_calibration/authoring_c4/calibration_manifest_pin.json",
+   "role": "invalid",
+   "sha256": "9ea99f15392e1b46e01964f5eb656b09205585901ae696bdd4aa465540632e0d"
+  }
+ ],
+ "role": "sole_active_pin_selector",
+ "rule": "consumers and verifiers MUST resolve this artifact first and MUST reject any pin presented without it; the failed first pin is never valid alone or otherwise",
+ "schema_version": "efc_calibration_pin_status_v1"
+}

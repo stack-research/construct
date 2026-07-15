@@ -1,0 +1,169 @@
+{
+ "active": {
+  "ir-01": {
+   "family": "A",
+   "record": "A04",
+   "role": "analog",
+   "stratum": "irrelevant",
+   "variant": "canonical"
+  },
+  "ir-02": {
+   "family": "B",
+   "record": "BR03",
+   "role": "analog",
+   "stratum": "irrelevant",
+   "variant": "canonical"
+  },
+  "ir-03": {
+   "family": "C",
+   "record": "C05",
+   "role": "analog",
+   "stratum": "irrelevant",
+   "variant": "canonical"
+  },
+  "ir-04": {
+   "family": "D",
+   "record": "D03",
+   "role": "analog",
+   "stratum": "irrelevant",
+   "variant": "canonical"
+  },
+  "ir-05": {
+   "family": "E",
+   "record": "E05",
+   "role": "analog",
+   "stratum": "irrelevant",
+   "variant": "basis_kind"
+  },
+  "mc-01": {
+   "family": "B",
+   "record": "B01",
+   "role": "analog",
+   "stratum": "match_commit"
+  },
+  "mc-02": {
+   "family": "C",
+   "record": "C01",
+   "role": "analog",
+   "stratum": "match_commit"
+  },
+  "mc-03": {
+   "family": "D",
+   "record": "D06",
+   "role": "analog",
+   "stratum": "match_commit"
+  },
+  "mc-04": {
+   "family": "E",
+   "record": "E02",
+   "role": "analog",
+   "stratum": "match_commit"
+  },
+  "mc-05": {
+   "family": "A",
+   "record": "A06",
+   "role": "analog",
+   "stratum": "match_commit"
+  },
+  "mm-01": {
+   "family": "A",
+   "record": "A05",
+   "role": "analog",
+   "stratum": "match_mismatch"
+  },
+  "mm-02": {
+   "family": "B",
+   "record": "B04",
+   "role": "analog",
+   "stratum": "match_mismatch"
+  },
+  "mm-03": {
+   "family": "C",
+   "record": "C04",
+   "role": "analog",
+   "stratum": "match_mismatch"
+  },
+  "mm-04": {
+   "family": "D",
+   "record": "D01",
+   "role": "analog",
+   "stratum": "match_mismatch"
+  },
+  "mm-05": {
+   "family": "E",
+   "record": "E04",
+   "role": "analog",
+   "stratum": "match_mismatch"
+  },
+  "sf-01": {
+   "family": "A",
+   "record": "A01",
+   "role": "s_family",
+   "shape": "mismatch"
+  },
+  "sf-02": {
+   "family": "C",
+   "record": "C02",
+   "role": "s_family",
+   "shape": "mismatch"
+  },
+  "sf-03": {
+   "family": "B",
+   "record": "BR02",
+   "role": "s_family",
+   "shape": "mismatch"
+  },
+  "sf-04": {
+   "family": "E",
+   "record": "E01",
+   "role": "s_family",
+   "shape": "commit"
+  },
+  "sf-05": {
+   "family": "D",
+   "record": "D04",
+   "role": "s_family",
+   "shape": "commit"
+  }
+ },
+ "placebo_pool": {
+  "P01": "RUSTSEC-2026-0122",
+  "P02": "GHSA-jggg-4jg4-v7c6",
+  "P03": "typo3",
+  "P04": "GO-2026-5676",
+  "P05": "0BSD",
+  "P06": "RUSTSEC-2026-0103"
+ },
+ "reserves": {
+  "A": [
+   "A02",
+   "A03"
+  ],
+  "B": [
+   "B05",
+   "BR01"
+  ],
+  "C": [
+   "C03",
+   "C06"
+  ],
+  "D": [
+   "D02",
+   "D05"
+  ],
+  "E": [
+   "E03",
+   "E06"
+  ],
+  "F_unreserved_candidates": [
+   "F01",
+   "F02",
+   "F03",
+   "F04"
+  ]
+ },
+ "wire_rule": {
+  "rule_id": "efc_c2_wire_lookup",
+  "wire_contract_sha256": "ee254ae2a0fb5f5dec644c31577e94ad8de40ec468d0079f3d67863db68a742b"
+ }
+}

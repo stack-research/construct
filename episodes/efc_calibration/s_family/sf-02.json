@@ -1,0 +1,15 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "spring-boot release line 3.5 remaining in security support on 2027-03-01",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "spring-boot"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "shape": "mismatch",
+ "source_reference": "https://endoflife.date/api/spring-boot.json",
+ "source_reference_present": true,
+ "surface_text": "A platform migration memo asserts, citing the referenced lifecycle page, that the team's current framework line still receives security fixes through the planned audit date, so the upgrade can wait until next fiscal year. Decide whether to defer the upgrade.",
+ "task_id": "sf-02"
+}

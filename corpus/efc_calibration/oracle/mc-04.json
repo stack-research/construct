@@ -1,0 +1,41 @@
+{
+ "authoritative_scope": "LLVM-exception (LLVM Exception): As an exception, if, as a result of your compiling your source code, portions of this Software are embedded into an Object form of such source code, you may redistribute such embedded portions in such Object form without complying with the conditions of Sections 4(a), 4(b) and 4(d) of the License.",
+ "capture_path": "corpus/efc_calibration/_acquisition/k3/captures/capE-02/raw.json",
+ "cited_text": "SPDX LLVM-exception: As an exception, if, as a result of your compiling your source code, portions of this Software are embedded into an Object form of such source code, you may redistribute such embedded portions in such Object form without complying with the conditions of Sections 4(a), 4(b) and 4(d) of the License.",
+ "entity_keys": [
+  "LLVM-exception",
+  "http://llvm.org/foundation/relicensing/LICENSE.txt",
+  "https://web.archive.org/web/20240423023852/https://foundation.llvm.org/relicensing/LICENSE.txt"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "clause": "As an exception, if, as a result of your compiling your source code, portions of this Software are embedded into an Object form of such source code, you may redistribute such embedded portions in such Object form without complying with the conditions of Sections 4(a), 4(b) and 4(d) of the License.",
+  "id": "LLVM-exception",
+  "name": "LLVM Exception"
+ },
+ "extractor": {
+  "pointers": {
+   "id": "/licenseExceptionId",
+   "name": "/name"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {
+   "clause": {
+    "anchor_end": "4(b) and 4(d) of the License.",
+    "anchor_start": "As an exception, if, as a result",
+    "char_end": 363,
+    "char_start": 56,
+    "pointer": "/licenseExceptionText"
+   }
+  }
+ },
+ "logical_slot": "E02",
+ "oracle_id": "efc-cal-oracle-mc-04",
+ "raw_sha256": "caad73fc83226f9762861f2447e9f8b8cdfa46907f6f95ee79e064185dec7c6a",
+ "record_id": "LLVM-exception",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T17:14:03Z",
+ "sidecar_sha256": "8838bb373d65ade7218c8fad232eb95edb7e7c9635d8e8926de4ddb9119b520c",
+ "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json",
+ "task_id": "mc-04"
+}

@@ -1,0 +1,486 @@
+{
+ "assignment": "P3D bounded cold re-review",
+ "authorizes_contact": false,
+ "authorizes_integration": false,
+ "blockers": [
+  "fresh adversarial failures: 32"
+ ],
+ "candidate_only": true,
+ "duplicate_cases_omitted": 0,
+ "evaluated_cases": [
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We decided not to upgrade anyhow."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-01",
+   "passed": true,
+   "text": "We chose not to merge the dependency."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-03",
+   "passed": true,
+   "text": "We opted not to update spdystream."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-05",
+   "passed": true,
+   "text": "We decided not to execute the rotation."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "sf-04",
+   "passed": true,
+   "text": "We chose not to approve the release."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "sf-05",
+   "passed": true,
+   "text": "We decided not to schedule the patch."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-01",
+   "passed": true,
+   "text": "We opted not to take the service out of rotation."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-02",
+   "passed": true,
+   "text": "We chose not to block the release."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-03",
+   "passed": true,
+   "text": "We decided not to renegotiate the license."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-04",
+   "passed": true,
+   "text": "We opted not to pause ingestion."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-05",
+   "passed": true,
+   "text": "We decided not to reject the build."
+  },
+  {
+   "category": "not_going_to_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We aren't going to upgrade anyhow."
+  },
+  {
+   "category": "not_going_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-01",
+   "passed": true,
+   "text": "We aren't going to merge the dependency."
+  },
+  {
+   "category": "not_going_to_action",
+   "expect_pass": false,
+   "fixture_id": "sf-04",
+   "passed": true,
+   "text": "We aren't going to approve the release."
+  },
+  {
+   "category": "no_longer_action",
+   "expect_pass": false,
+   "fixture_id": "sf-04",
+   "passed": true,
+   "text": "We no longer approve the release."
+  },
+  {
+   "category": "no_longer_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We no longer upgrade anyhow."
+  },
+  {
+   "category": "hold_off_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": false,
+   "text": "Let's hold off on upgrading anyhow."
+  },
+  {
+   "category": "not_yet_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We will upgrade anyhow, but not yet."
+  },
+  {
+   "category": "waiting_to_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We are waiting to upgrade anyhow."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-04",
+   "passed": false,
+   "text": "Ship it."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-04",
+   "passed": false,
+   "text": "Release it."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-04",
+   "passed": false,
+   "text": "Green-light the release."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-02",
+   "passed": false,
+   "text": "Veto the release."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-02",
+   "passed": false,
+   "text": "Kill the release."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-05",
+   "passed": false,
+   "text": "Deny the build."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mc-05",
+   "passed": false,
+   "text": "Run the rotation."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "ir-05",
+   "passed": false,
+   "text": "Send it to legal."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-01",
+   "passed": false,
+   "text": "Pull the service."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-01",
+   "passed": false,
+   "text": "Veto the hotfix."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-03",
+   "passed": false,
+   "text": "Kill the proxy pool."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mc-03",
+   "passed": false,
+   "text": "Patch spdystream."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "ir-03",
+   "passed": false,
+   "text": "Start the migration."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "ir-02",
+   "passed": false,
+   "text": "Close out the ticket."
+  }
+ ],
+ "explicit_authorization_statement": "This P3D review authorizes neither integration of the v2 candidate into a production manifest nor any engine contact, probe rerun, or calibration call.",
+ "failed_cases": [
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We decided not to upgrade anyhow."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-01",
+   "passed": true,
+   "text": "We chose not to merge the dependency."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-03",
+   "passed": true,
+   "text": "We opted not to update spdystream."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-05",
+   "passed": true,
+   "text": "We decided not to execute the rotation."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "sf-04",
+   "passed": true,
+   "text": "We chose not to approve the release."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "sf-05",
+   "passed": true,
+   "text": "We decided not to schedule the patch."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-01",
+   "passed": true,
+   "text": "We opted not to take the service out of rotation."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-02",
+   "passed": true,
+   "text": "We chose not to block the release."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-03",
+   "passed": true,
+   "text": "We decided not to renegotiate the license."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-04",
+   "passed": true,
+   "text": "We opted not to pause ingestion."
+  },
+  {
+   "category": "not_to_action",
+   "expect_pass": false,
+   "fixture_id": "mm-05",
+   "passed": true,
+   "text": "We decided not to reject the build."
+  },
+  {
+   "category": "not_going_to_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We aren't going to upgrade anyhow."
+  },
+  {
+   "category": "not_going_to_action",
+   "expect_pass": false,
+   "fixture_id": "mc-01",
+   "passed": true,
+   "text": "We aren't going to merge the dependency."
+  },
+  {
+   "category": "not_going_to_action",
+   "expect_pass": false,
+   "fixture_id": "sf-04",
+   "passed": true,
+   "text": "We aren't going to approve the release."
+  },
+  {
+   "category": "no_longer_action",
+   "expect_pass": false,
+   "fixture_id": "sf-04",
+   "passed": true,
+   "text": "We no longer approve the release."
+  },
+  {
+   "category": "no_longer_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We no longer upgrade anyhow."
+  },
+  {
+   "category": "not_yet_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We will upgrade anyhow, but not yet."
+  },
+  {
+   "category": "waiting_to_action",
+   "expect_pass": false,
+   "fixture_id": "ir-01",
+   "passed": true,
+   "text": "We are waiting to upgrade anyhow."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-04",
+   "passed": false,
+   "text": "Ship it."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-04",
+   "passed": false,
+   "text": "Release it."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-04",
+   "passed": false,
+   "text": "Green-light the release."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-02",
+   "passed": false,
+   "text": "Veto the release."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-02",
+   "passed": false,
+   "text": "Kill the release."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-05",
+   "passed": false,
+   "text": "Deny the build."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mc-05",
+   "passed": false,
+   "text": "Run the rotation."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "ir-05",
+   "passed": false,
+   "text": "Send it to legal."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mm-01",
+   "passed": false,
+   "text": "Pull the service."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-01",
+   "passed": false,
+   "text": "Veto the hotfix."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "sf-03",
+   "passed": false,
+   "text": "Kill the proxy pool."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "mc-03",
+   "passed": false,
+   "text": "Patch spdystream."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "ir-03",
+   "passed": false,
+   "text": "Start the migration."
+  },
+  {
+   "category": "missing_paraphrase",
+   "expect_pass": true,
+   "fixture_id": "ir-02",
+   "passed": false,
+   "text": "Close out the ticket."
+  }
+ ],
+ "failure_count": 32,
+ "input_hashes": {
+  "p3c_answer_key_repair_report": "ef87125f14777c6025f5f98321f4b2b36e903b9638c8f299b645f46fadc548a5",
+  "p3c_repair_vectors_evaluated": "ba049845dbc63c1a11c5df98166c2d5600a48b2594c1501f5dacbd53f31656ff",
+  "world_oracle_answer_key_candidate_v2": "c5cb3c68e9a18a40c267021ecfa88825b2b2c699f6660574fdc5af43a81a4e0d"
+ },
+ "reviewer": "cursor/kimi-k2.7-code",
+ "schema_version": "efc_p3d_cold_review_v1",
+ "smallest_actionable_blockers": [
+  "systematic 'not to <action>' negation is not captured by generated none_of families",
+  "modal progressive negation ('aren't going to <action>') is not captured",
+  "'no longer <action>' revocation is not captured",
+  "common affirmative paraphrases still missing from any_of families"
+ ],
+ "total_fresh_cases": 33,
+ "verdict": "BLOCK"
+}

@@ -1,0 +1,11 @@
+{
+ "disjoint_reference": "https://api.github.com/advisories/GHSA-jggg-4jg4-v7c6",
+ "entity_keys": [
+  "protobufjs",
+  "GHSA-jggg-4jg4-v7c6",
+  "CVE-2026-45740"
+ ],
+ "placebo_for": "sf-04",
+ "placebo_id": "pb-sf-04",
+ "text": "provenance note (GHSA-jggg-4jg4-v7c6): GHSA-jggg-4jg4-v7c6 records a denial-of-service issue in the npm package protobufjs via unbounded recursive JSON descriptor expansion. snapshot retrieved 2026-07-14; raw sha256 942a5187; canonical url https://api.github.com/advisories/GHSA-jggg-4jg4-v7c6; frozen acquisition bytes; independently refetched and verified; promoted record; dated drift note: none; capture seat: mechanical; registry provenance entry; content identity confirmed; record text begins: ## Summary protobufjs could recurse without a depth limit while expanding nested JSON descriptors through `Root.fromJSON()` and `Namespace.addJSON()`. A crafted JSON descriptor"
+}

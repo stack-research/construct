@@ -1,0 +1,36 @@
+{
+ "authoritative_scope": "endoflife.date record for esxi: release line 7.0 reaches end-of-life on 2025-10-02",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2/captures/capC-05/raw.json",
+ "cited_text": "endoflife.date, esxi release line 7.0: end-of-life date 2025-10-02.",
+ "entity_keys": [
+  "esxi"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "cycle": "7.0",
+  "eol": "2025-10-02"
+ },
+ "extractor": {
+  "pointers": {
+   "cycle": "/3/cycle",
+   "eol": "/3/eol"
+  },
+  "product_identity": {
+   "canonical_url": "https://endoflife.date/api/esxi.json",
+   "entity_key": "esxi",
+   "note": "the product token in authoritative_scope/cited_text is ledger/URL-derived, NOT raw-extracted; only cycle/date facts come from the raw array pointers",
+   "source": "k4_promotion_ledger_entity_key+canonical_url_slug"
+  },
+  "provenance_kind": "ledger_entity_plus_raw_cycle",
+  "slices": {}
+ },
+ "logical_slot": "C05",
+ "oracle_id": "efc-cal-oracle-ir-03",
+ "raw_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+ "record_id": "esxi",
+ "required_behavior": "baseline_action_settled_by_direct_observation",
+ "retrieved_at_utc": "2026-07-14T17:51:14Z",
+ "sidecar_sha256": "e89a103c21de2346fac9927fe595064c0657bb655e37a5522a7da52db4608228",
+ "source_reference": "https://endoflife.date/api/esxi.json",
+ "task_id": "ir-03"
+}

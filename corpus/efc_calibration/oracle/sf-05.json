@@ -1,0 +1,41 @@
+{
+ "authoritative_scope": "GO-2026-4762: affected module google.golang.org/grpc, versions < 1.79.3; vulnerable symbols in google.golang.org/grpc include Server.Serve",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2b/captures/capD-04/raw.json",
+ "cited_text": "GO-2026-4762 (google.golang.org/grpc): Authorization bypass in gRPC-Go via missing leading slash in :path in google.golang.org/grpc. Affected: versions < 1.79.3; vulnerable symbols in google.golang.org/grpc include Server.Serve.",
+ "entity_keys": [
+  "google.golang.org/grpc",
+  "GO-2026-4762",
+  "CVE-2026-33186",
+  "GHSA-p77j-4mvh-x3m3"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "fixed": "1.79.3",
+  "id": "GO-2026-4762",
+  "mod": "google.golang.org/grpc",
+  "summary": "Authorization bypass in gRPC-Go via missing leading slash in :path in google.golang.org/grpc",
+  "sym0": "Server.Serve",
+  "sympath": "google.golang.org/grpc"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary",
+   "sym0": "/affected/0/ecosystem_specific/imports/0/symbols/0",
+   "sympath": "/affected/0/ecosystem_specific/imports/0/path"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "D04",
+ "oracle_id": "efc-cal-oracle-sf-05",
+ "raw_sha256": "dd6d021a23106f58c3142cb0e1d53d4bb7e4289af07b5e215021b1d509645e63",
+ "record_id": "GO-2026-4762",
+ "required_behavior": "commit_source_backed_result",
+ "retrieved_at_utc": "2026-07-14T20:53:29Z",
+ "sidecar_sha256": "bc09706d5c86dc5336357bb808bc033f57ea98cc334d3433d452894bdbd6d5ad",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json",
+ "task_id": "sf-05"
+}

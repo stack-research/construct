@@ -1,0 +1,137 @@
+{
+ "blocking_items": [],
+ "c4c_repair_evidence": {
+  "attestation_path": "corpus/efc_calibration/authoring_c4/c4c_lineage_hygiene_repair.json",
+  "attestation_sha256": "1e649f89a041cee9c18b56637962e1e0684069eb8cfb8ea9ce1fa6753d2d1cd7",
+  "note": "these file identities are recorded AND enforced by full verification: editing them invalidates the pin verification, per the post-pin invalidation rule",
+  "repaired_files_sha256": {
+   "tests/test_efc_author_c4.py": "eb12df55fb178a7f3e24e4d25323f5f86b7382a32b9e3328b4fa1015b0141a47",
+   "tests/test_efc_capture_k4.py": "01f3d97d49d627fce1d17a09e6005bbff674d0304aed44119032bb533731f080",
+   "tests/test_efc_lineage_hygiene_c4c.py": "46a260d96a73ddd26de719961be129ebaf1738ce2406a20f1ea639b1475f1af0"
+  }
+ },
+ "checks": {
+  "budget_rederivation": {
+   "analog_calls": 90,
+   "branch_ceiling_calls": 225,
+   "branch_prompt_tokens": 17761,
+   "branch_total_tokens": 593761,
+   "conditional_calls": 105,
+   "probe_calls": 15,
+   "rows_byte_equal_to_pinned_ledger": true,
+   "s_family_calls": 15,
+   "total_budget_tokens": 1187522
+  },
+  "check_contract_recomputation": {
+   "adapter_contract_sha256": "d866e8061b8f840d720d0e3f8b039785b9cfd00b6a4bf4b9706f9df85a3017d8",
+   "candidate_check_contract_hash": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b"
+  },
+  "derived_call_plan": {
+   "analog_calls_branch": 90,
+   "ceiling_calls_branch": 225,
+   "conditional_calls_branch": 105,
+   "primary_calls_branch": 120,
+   "probe_calls_branch": 15,
+   "roster_ceiling_total": 450,
+   "s_family_calls_branch": 15
+  },
+  "manifest_machine_check": {
+   "canonical_hash": "2600d1fdba7bbf7fca5f4c0c75b57130afe2c04560d351aa5fa7d743fc28a94d",
+   "ok": true
+  },
+  "no_placeholder_identities": "clean",
+  "packet_hash_verification": "37 entries + 3 siblings match packet_index.json",
+  "packet_loader": "ok",
+  "population_declaration_byte_match": true,
+  "roster_r2_contract_match": {
+   "api": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+   "local": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0"
+  }
+ },
+ "derives_from": "current on-disk bytes only",
+ "disclosure": {
+  "engines_contacted": 0,
+  "held_out_fixtures_authored": 0,
+  "historical_artifacts_modified": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0
+ },
+ "grok_narrow_review_testimony": {
+  "disclosure": "thread testimony; no separate review artifact file was authored by that seat (per its assignment)",
+  "entry_timestamp_utc": "2026-07-15T11:54:00Z",
+  "local_entry_file": null,
+  "participant": "cursor/grok-4.5",
+  "thread": "construct/epistemic-frame-check-v0-content"
+ },
+ "historical_reports": {
+  "byte_preserved": true,
+  "c4a_stabilized_sha256_testimony": "5b6ca196f668a4d9ae6fa44697b581a42463deefa238240ef7d587f6a60d955e",
+  "handoff_time_sha256_testimony": "c46d6e3a366fa501311b8293c993af4a4b3674b662b1b929f841187171740b1b",
+  "pre_approval_report_current_sha256": "e5f16e22db4793757ea5dcbca89597ff5e997421206e35197d7f80eb97888d15",
+  "stale_k4_lineage_note": "its recorded K4 hash predates the C4c restoration and is testimony only; current authority is this report's lineage_sha256"
+ },
+ "lineage_paths": {
+  "allocation": "corpus/efc_calibration/authoring_c2/allocation.json",
+  "c2_check_report": "corpus/efc_calibration/authoring_c2/c2_check_report.json",
+  "cold_semantic_review_kimi": "corpus/efc_calibration/authoring_c2/cold_semantic_review_kimi.json",
+  "comparison_expectations_v1": "corpus/efc_calibration/authoring_c2/comparison_expectations_v1.json",
+  "conformance_vectors_v1": "corpus/efc_calibration/comparison/conformance_vectors_v1.json",
+  "decoding_surface_r2": "corpus/efc_calibration/roster/decoding_surface_r2.json",
+  "exclusion_manifest": "episodes/efc_calibration/exclusion/exclusion_manifest.json",
+  "g4_identity_audit": "corpus/efc_calibration/_acquisition/g4/identity_audit.json",
+  "g4_refetch_report": "corpus/efc_calibration/_acquisition/g4/refetch_report.json",
+  "k4_promotion_identity_ledger": "corpus/efc_calibration/_acquisition/k4/promotion_identity_ledger.json",
+  "packet_index": "episodes/efc_calibration/packet_index.json",
+  "placebo_truth_verification": "corpus/efc_calibration/authoring_c2/placebo_truth_verification.json",
+  "population_intent_declaration": "corpus/efc_calibration/authoring_c2/population_intent_declaration.json",
+  "production_comparison_integration": "corpus/efc_calibration/authoring_c2/production_comparison_integration.json",
+  "production_comparison_review_grok": "corpus/efc_calibration/authoring_c2/production_comparison_review_grok.json",
+  "production_rule_v1": "corpus/efc_calibration/comparison/production_rule_v1.json",
+  "roster_enumeration_r1": "corpus/efc_calibration/roster/roster_enumeration_r1.json",
+  "structured_inputs_v1": "corpus/efc_calibration/comparison/structured_inputs_v1.json"
+ },
+ "lineage_sha256": {
+  "allocation": "8d4ba4a5e26746c98f499aee10c63d29f8daf2f2fffc40eea045db9d99f21dd0",
+  "c2_check_report": "3606dd6742efce667e08277b82a372dc7cc25625108a0b3d63361a563ff8484b",
+  "cold_semantic_review_kimi": "18234bddba5ae9af63fb7500f00bb6c156029f95dafbaa603876305c9991681d",
+  "comparison_expectations_v1": "3e047f90ece3bb690f5f280710f0e97a34f25d6fd6d295022f5c7e0dca3f5d66",
+  "conformance_vectors_v1": "20a067497db456cc3d0c392bf53ed56a53e660d3a2ac5b3515312445e104c3e3",
+  "decoding_surface_r2": "ac76d1769911eb61a0d39f5c9766a862090467ea3e4d2d0ab7c4da2b5d4ac208",
+  "exclusion_manifest": "23d068e3cea6f85f11737e5462e805d87cf8770972f45fba1c4b64433a0f27f7",
+  "g4_identity_audit": "5f6f78a9154147a82d9cef8735a04e0e09a95382892f3a0be6de16ebcec02ef0",
+  "g4_refetch_report": "e685fcb9903a5812fb9c0ea2964727b9d14f9a9d4ec362aa3d6899fd6ebe9d15",
+  "k4_promotion_identity_ledger": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac",
+  "packet_index": "82e553f05a97d9e344d6b5eef54ba148e26400dce9cb862008bcda9f60b06167",
+  "placebo_truth_verification": "35ec580554733e3e95c8a214ed071d17752613dab1066933878dfd5247bc8774",
+  "population_intent_declaration": "ffebe7034f8cccd6cfd63073e1ac22f36db2f9fcc8b481d4e1c481e270085ba6",
+  "production_comparison_integration": "aa65d60ebc9e8e9bee0c7356ddac3d55a8886ab9c75b72ecb4be637f7ccbcf43",
+  "production_comparison_review_grok": "d167ccb548a73949f4930b3db486baaf8103665217f0c1d0a41a41916feb4474",
+  "production_rule_v1": "8155720db938067c9ea77e77497c7ef8eeb5b0f67331b4df6bee74a5ab8460c2",
+  "roster_enumeration_r1": "f24f4885419c3b05f5c0d3f5b8b35c145a4d41a1586ee41b429d4579bdbcca96",
+  "structured_inputs_v1": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9"
+ },
+ "resolutions": {
+  "decoding_contract_id_is_a_name": {
+   "resolved_by": "atomic manifest+sibling binding in the superseding pin; the name binds only through the sibling payload bytes"
+  },
+  "extractor_identity_layer": {
+   "resolved_by": "C4a check C5 endorse (two-layer identity: module bytes + predicate contract)",
+   "review_sha256": "0a490085dec8732cade54150f7b321cd579830191b5d071c157ce03ea22595da"
+  },
+  "g4_lineage_authority": {
+   "holds": true,
+   "requirement": "disk ledger == G4 plan/refetch/audit pinned value, cross-artifact, not disk-only",
+   "value": "b086689591d03a2f9ee6aa7bfffd16683f58d5b4d4674f6f19795089224d45ac"
+  },
+  "license_binding_conformance_review": {
+   "resolved_by": "C4a check C4 endorse citing the Grok C3 license_audit (sf-04/mm-05/mc-04) and byte-stable structured inputs through the C3b parser repair"
+  },
+  "operator_roster_budget_approval": {
+   "resolved_by": "corpus/efc_calibration/authoring_c4/operator_approval_record.json",
+   "sha256": "4545fb8b2b6e29bdce3ecbdd54d2c7b25c3de77c4a027010112227eb338f08a9"
+  }
+ },
+ "schema_version": "efc_c4_final_conformance_report_v1",
+ "status": "final_post_approval_post_repair"
+}

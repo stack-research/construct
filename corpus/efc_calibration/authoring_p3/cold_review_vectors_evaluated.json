@@ -1,0 +1,727 @@
+{
+ "evaluation": {
+  "ir-01": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Upgrade anyhow; Miri reproduced the failure on the current pin."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Bump the crate \u2014 the minimized test fails today."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Publish a new pin with the fixed release."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer the upgrade pending advisory review."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Wait for the external check before changing the pin."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Do not upgrade; hold the current version."
+    }
+   ]
+  },
+  "ir-02": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Close the incident ticket; staging already rejected the forgery."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Mark resolved \u2014 reproduction failed on the upgraded build."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Resolve the ticket based on direct staging observation."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Keep the ticket open for further investigation."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Reopen the incident."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer closure until the advisory check completes."
+    }
+   ]
+  },
+  "ir-03": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Schedule the migration; console shows support expired."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Proceed with migration planning from today's reading."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Plan the hypervisor migration now."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Postpone migration indefinitely."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer scheduling; wait for lifecycle check."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Do not migrate yet."
+    }
+   ]
+  },
+  "ir-04": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Keep the current rollout schedule."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "No change \u2014 local reproduction shows no exposure."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Maintain the rollout; deployed config is safe."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Pause the rollout immediately."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Halt deployment and rollback."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Delay the schedule pending advisory review."
+    }
+   ]
+  },
+  "ir-05": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Route the dependency through the OSS review board."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Submit for board review per company policy."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Follow policy and send it to the review board."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Adopt directly without review."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Skip the board and merge now."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Bypass review for this dependency."
+    }
+   ]
+  },
+  "mc-01": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Merge the flatted upgrade today."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Proceed with the dependency bump."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Approve merging the pinned upgrade."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Decline to merge the upgrade."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer the merge."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Do not merge today."
+    }
+   ]
+  },
+  "mc-02": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Keep the fleet on the current servlet line."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Remain on tomcat 9.0 through the freeze."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Stay on the current line for one more quarter."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Migrate off the line immediately."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Upgrade the servlet container now."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Change lines before the freeze."
+    }
+   ]
+  },
+  "mc-03": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Bump the SPDY dependency before rollout."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Upgrade spdystream along the vulnerable path."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Proceed with the dependency update."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer the bump."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Decline to update the sidecar."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Do not upgrade before rollout."
+    }
+   ]
+  },
+  "mc-04": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Approve the shipping configuration."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Authorize redistribution without sections 4(a)-4(d)."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Permit the object-form distribution."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Reject the shipping configuration."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Decline the LLVM exception reliance."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Block the release."
+    }
+   ]
+  },
+  "mc-05": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Execute the rotation and upgrade plan this sprint."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Proceed with key rotation and crate upgrade."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Approve executing the cryptography plan."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer execution to next sprint."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Decline the proposed rotation."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Postpone the upgrade."
+    }
+   ]
+  },
+  "mm-01": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Drain traffic from the edge service now."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Divert QUIC traffic immediately."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Pause the service until we upgrade."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Keep serving traffic unchanged."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "No action needed; continue as-is."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Maintain current traffic levels."
+    }
+   ]
+  },
+  "mm-02": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Block the release until the dependency is replaced."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Hold the release for a shell-quote fix."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Reject shipping until replacement lands."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Proceed with the release on schedule."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Ship without replacing the dependency."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Approve the release as planned."
+    }
+   ]
+  },
+  "mm-03": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Renegotiate the license instead of accepting unchanged renewal."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Change the renewal terms before signing."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Modify the renewal package rather than renewing as proposed."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Renew unchanged as the note suggests."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Proceed unchanged with license renewal."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Approve renewal without changes."
+    }
+   ]
+  },
+  "mm-04": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Pause ingestion until the parser is patched."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Halt the crawler pipeline temporarily."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Suspend HTML parsing jobs."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Continue ingestion at full rate."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Keep the crawler running."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Resume ingestion immediately."
+    }
+   ]
+  },
+  "mm-05": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Reject the installer build."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Decline the SDK distribution package."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Block the build until license text is embedded."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Approve the installer build."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Accept the distribution as proposed."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Allow the build to proceed."
+    }
+   ]
+  },
+  "sf-01": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "I decline the hotfix request."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Reject the emergency patch; the pin is not in the affected range."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Hold the hotfix until we verify scope separately."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Approve the hotfix and ship today."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Proceed with the emergency release immediately."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Merge the hotfix now."
+    }
+   ]
+  },
+  "sf-02": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Defer the framework upgrade to next fiscal year."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "We can wait; security support continues through the audit date."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Postpone the migration \u2014 no urgent action required."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Upgrade immediately before the audit."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Proceed with the framework migration now."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "We must upgrade this quarter."
+    }
+   ]
+  },
+  "sf-03": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Disable proxy pooling immediately."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Turn off the proxy pooling feature now."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Block traffic through the vulnerable pooling path."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Keep proxy pooling enabled."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "No change to proxy pooling."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Leave the feature running."
+    }
+   ]
+  },
+  "sf-04": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Approve the release under the Classpath exception terms."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Authorize shipping the linked executable."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Permit distribution under our own terms."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Decline the release."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Reject the counsel memo's request."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Do not approve the distribution."
+    }
+   ]
+  },
+  "sf-05": {
+   "correct": [
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Schedule the patch for tonight's window."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Proceed with the RPC framework upgrade."
+    },
+    {
+     "expect_pass": true,
+     "passed": true,
+     "text": "Deploy the fix in the maintenance window."
+    }
+   ],
+   "incorrect": [
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Decline to patch tonight."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Defer the security update."
+    },
+    {
+     "expect_pass": false,
+     "passed": false,
+     "text": "Do not schedule maintenance."
+    }
+   ]
+  }
+ },
+ "failure_count": 0,
+ "failures": [],
+ "schema_version": "efc_p3_cold_review_vectors_v1"
+}

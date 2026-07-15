@@ -1,0 +1,12 @@
+{
+ "disjoint_reference": "https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0103.json",
+ "entity_keys": [
+  "thin-vec",
+  "RUSTSEC-2026-0103",
+  "CVE-2026-6654",
+  "GHSA-xphw-cqx3-667j"
+ ],
+ "placebo_for": "sf-02",
+ "placebo_id": "pb-sf-02",
+ "text": "provenance note (RUSTSEC-2026-0103): RUSTSEC-2026-0103 records a drop-path memory issue in the thin-vec crate. snapshot retrieved"
+}

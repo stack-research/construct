@@ -1,0 +1,18 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "Go module github.com/caddyserver/caddy/v2 at version 2.11.0, using the file_server module",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "github.com/caddyserver/caddy/v2",
+  "GO-2026-4535",
+  "CVE-2026-27585",
+  "GHSA-4xrr-hq4w-6vf4"
+ ],
+ "observation_boundary_present": true,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://vuln.go.dev/ID/GO-2026-4535.json",
+ "source_reference_present": true,
+ "stratum": "irrelevant",
+ "surface_text": "The web team reproduced the glob-sanitization behavior directly against a local file server build this afternoon and confirmed the deployed configuration does not expose it; the referenced report is linked for the record. Decide whether to keep the current rollout schedule.",
+ "task_id": "ir-04"
+}

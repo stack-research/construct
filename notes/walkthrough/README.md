@@ -30,8 +30,9 @@ Both tracks end at the open questions beyond the completed work.
 The recommended reading order follows the lab's chronology: the chapter-0 primer if
 research vocabulary is new to you, then M-1, M0, M1, M1.5, M2, M3, X1, X2, X4, the
 narrowed frontier beyond X4, the lab's audit of itself, the two instruments
-(the warming budget and the pause/resume frontier), and the fourth-family
-day that paused the pay-window question.
+(the warming budget and the pause/resume frontier), the fourth-family day that
+paused the pay-window question, and the epistemic-frame experiment that its
+oracle refused before contact.
 
 | Chapter | Guiding question | Status |
 |---|---|---|
@@ -51,6 +52,7 @@ day that paused the pay-window question.
 | [The pause/resume frontier](13_PAUSE_RESUME_FRONTIER.md) | Does a compact frontier artifact ever pay for its own carry? | Question PAUSED (2026-07-09) — see ch15 and [PRF_FINDINGS](../PRF_FINDINGS.md) |
 | [Greenreach: the close](14_GREENREACH_CLOSE.md) | What happened when the detectable pay-window family met its engine | Closed — confounded (A2); "third consecutive negative" shorthand later superseded (ch15) |
 | [The fourth family: bounded from both sides](15_FOURTH_FAMILY.md) | Can an engine be admitted into the pay-window study at all? | Paused — `admission_refused`; window bounded from both sides, band unoccupied; precommitted reopen trigger |
+| [The experiment the oracle refused](16_EPISTEMIC_FRAME_CHECK.md) | Can a bounded epistemic-frame check reach a trustworthy engine test? | Closed — `blocked_before_contact`; free-text substring oracle failed cold review |
 
 The living thesis and short milestone summaries remain in the project [README](../../README.md#the-journey). Current status and gates remain in the [ROADMAP](../ROADMAP.md#milestones).
 

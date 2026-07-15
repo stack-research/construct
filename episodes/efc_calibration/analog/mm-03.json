@@ -1,0 +1,15 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "visual-studio release line 18.6 remaining in support on 2026-09-01",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "visual-studio"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://endoflife.date/api/visual-studio.json",
+ "source_reference_present": true,
+ "stratum": "match_mismatch",
+ "surface_text": "A procurement note asserts, citing the referenced lifecycle page, that the current IDE release line is still vendor-supported this autumn, so license renewal can proceed unchanged. Decide whether to renew unchanged.",
+ "task_id": "mm-03"
+}

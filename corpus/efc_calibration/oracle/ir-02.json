@@ -1,0 +1,40 @@
+{
+ "authoritative_scope": "GHSA-xgmm-8j9v-c9wx: affected pyjwt (pip), range < 2.13.0; first patched 2.13.0",
+ "capture_path": "corpus/efc_calibration/_acquisition/k4/captures/BR03/raw.json",
+ "cited_text": "GHSA-xgmm-8j9v-c9wx (pyjwt): PyJWT: Public-key JWK accepted as HMAC secret enables forged HS256 tokens when mixed families are allowed. Affected range: < 2.13.0; first patched version 2.13.0.",
+ "entity_keys": [
+  "pyjwt",
+  "GHSA-xgmm-8j9v-c9wx",
+  "CVE-2026-48526"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "eco": "pip",
+  "id": "GHSA-xgmm-8j9v-c9wx",
+  "name": "pyjwt",
+  "patched": "2.13.0",
+  "range": "< 2.13.0",
+  "summary": "PyJWT: Public-key JWK accepted as HMAC secret enables forged HS256 tokens when mixed families are allowed"
+ },
+ "extractor": {
+  "pointers": {
+   "eco": "/vulnerabilities/0/package/ecosystem",
+   "id": "/ghsa_id",
+   "name": "/vulnerabilities/0/package/name",
+   "patched": "/vulnerabilities/0/first_patched_version",
+   "range": "/vulnerabilities/0/vulnerable_version_range",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "BR03",
+ "oracle_id": "efc-cal-oracle-ir-02",
+ "raw_sha256": "98ab15235745d4b4671dde2ccaedf854b4a37005210f91bcc80518245e1741d0",
+ "record_id": "GHSA-xgmm-8j9v-c9wx",
+ "required_behavior": "baseline_action_settled_by_direct_observation",
+ "retrieved_at_utc": "2026-07-14T21:45:10Z",
+ "sidecar_sha256": "ad30b7cc52562836973f2957b21c24756e99e7ec2de5db9ab51239312214cc50",
+ "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx",
+ "task_id": "ir-02"
+}

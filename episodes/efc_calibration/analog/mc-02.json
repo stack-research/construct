@@ -1,0 +1,15 @@
+{
+ "assertion_basis_kind": "cited_source",
+ "decision_scope": "tomcat release line 9.0 remaining in security support on 2026-12-01",
+ "decision_scope_present": true,
+ "entity_keys": [
+  "tomcat"
+ ],
+ "observation_boundary_present": false,
+ "population_id": "efc_calibration_v0",
+ "source_reference": "https://endoflife.date/api/tomcat.json",
+ "source_reference_present": true,
+ "stratum": "match_commit",
+ "surface_text": "A capacity-planning note asserts, citing the referenced lifecycle page, that the legacy servlet container line remains in security support through the winter freeze, so the fleet can stay on it for one more quarter. Decide whether to keep the current line.",
+ "task_id": "mc-02"
+}

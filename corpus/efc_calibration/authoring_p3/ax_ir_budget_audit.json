@@ -1,0 +1,128 @@
+{
+ "blockers": [],
+ "rows": [
+  {
+   "call_id": "primary.ir-01.A_always_check",
+   "candidate_per_call_total": 2644,
+   "candidate_prompt_tokens": 84,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-01",
+   "lane": "A_always_check",
+   "pinned_allowance": 2644,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "conditional_t07.ir-01.A_always_check",
+   "candidate_per_call_total": 2644,
+   "candidate_prompt_tokens": 84,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-01",
+   "lane": "A_always_check",
+   "pinned_allowance": 2644,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "primary.ir-02.A_always_check",
+   "candidate_per_call_total": 2660,
+   "candidate_prompt_tokens": 100,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-02",
+   "lane": "A_always_check",
+   "pinned_allowance": 2660,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "conditional_t07.ir-02.A_always_check",
+   "candidate_per_call_total": 2660,
+   "candidate_prompt_tokens": 100,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-02",
+   "lane": "A_always_check",
+   "pinned_allowance": 2660,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "primary.ir-03.A_always_check",
+   "candidate_per_call_total": 2639,
+   "candidate_prompt_tokens": 79,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-03",
+   "lane": "A_always_check",
+   "pinned_allowance": 2639,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "conditional_t07.ir-03.A_always_check",
+   "candidate_per_call_total": 2639,
+   "candidate_prompt_tokens": 79,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-03",
+   "lane": "A_always_check",
+   "pinned_allowance": 2639,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "primary.ir-04.A_always_check",
+   "candidate_per_call_total": 2650,
+   "candidate_prompt_tokens": 90,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-04",
+   "lane": "A_always_check",
+   "pinned_allowance": 2650,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "conditional_t07.ir-04.A_always_check",
+   "candidate_per_call_total": 2650,
+   "candidate_prompt_tokens": 90,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-04",
+   "lane": "A_always_check",
+   "pinned_allowance": 2650,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "primary.ir-05.A_always_check",
+   "candidate_per_call_total": 2637,
+   "candidate_prompt_tokens": 77,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-05",
+   "lane": "A_always_check",
+   "pinned_allowance": 2637,
+   "prompt_differs_from_wire_budget": false
+  },
+  {
+   "call_id": "conditional_t07.ir-05.A_always_check",
+   "candidate_per_call_total": 2637,
+   "candidate_prompt_tokens": 77,
+   "completion_request_ceiling": 2048,
+   "controller_source_read_bound": 512,
+   "delta": 0,
+   "fixture_id": "ir-05",
+   "lane": "A_always_check",
+   "pinned_allowance": 2637,
+   "prompt_differs_from_wire_budget": false
+  }
+ ],
+ "schema_version": "efc_p3_ax_ir_budget_audit_v1",
+ "structured_inputs_path": "corpus/efc_calibration/authoring_p3/structured_inputs_v2_candidate.json",
+ "within_budget": true
+}

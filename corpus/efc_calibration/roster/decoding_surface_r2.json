@@ -1,0 +1,352 @@
+{
+ "assignment": "R2 non-fixture decoding-surface wire checks",
+ "branches": {
+  "api": {
+   "branch": "api",
+   "contract": {
+    "branch": "api",
+    "endpoint_base_url_sanitized": "https://api.openai.com/v1",
+    "endpoint_type": "openai_responses",
+    "model_id": "gpt-5.4-2026-03-05",
+    "output_ceiling": 2048,
+    "output_ceiling_param": "max_output_tokens",
+    "prior_response_id": false,
+    "prompt_cache_key": false,
+    "reasoning_effort": "none",
+    "seed": "unsupported_unavailable",
+    "service_tier_override": false,
+    "stateless_text_input": true,
+    "store": false,
+    "streaming": false,
+    "temperature_values": [
+     0.5,
+     0.7
+    ],
+    "tools": false,
+    "top_p": 1.0,
+    "top_p_schema_basis": "official_gpt-5.4_docs_sampling_params_with_reasoning_effort_none"
+   },
+   "decoding_contract_canonical_sha256": "7fdb78bc5c78db47fe9ad16b0ee567c9e27ae3b76040a965342552f27fd42da0",
+   "verdict": "pass"
+  },
+  "local": {
+   "branch": "local",
+   "contract": {
+    "branch": "local",
+    "endpoint_base_url_sanitized": "http://localhost:1234/v1",
+    "endpoint_type": "openai_compatible_chat_completions",
+    "model_id": "openai/gpt-oss-20b",
+    "output_ceiling": 2048,
+    "output_ceiling_param": "max_tokens",
+    "response_format_steering": false,
+    "seed": "unsupported_unavailable",
+    "stateless_single_user_message": true,
+    "streaming": false,
+    "system_prompt": false,
+    "temperature_values": [
+     0.5,
+     0.7
+    ],
+    "tools": false,
+    "top_p": 1.0
+   },
+   "decoding_contract_canonical_sha256": "b36dfdc49ff83e0d52610580e8a9b00a62ed85d7b5d30e7c498c210a03f3bcd0",
+   "verdict": "pass"
+  }
+ },
+ "calls": [
+  {
+   "branch": "local",
+   "endpoint_url_sanitized": "http://localhost:1234/v1/chat/completions",
+   "fail_reasons": [],
+   "http_status": 200,
+   "output_text": "ACK",
+   "pass": true,
+   "request_body_sanitized": {
+    "max_tokens": 2048,
+    "messages": [
+     {
+      "content": "Return exactly the single word ACK.",
+      "role": "user"
+     }
+    ],
+    "model": "openai/gpt-oss-20b",
+    "stream": false,
+    "temperature": 0.5,
+    "top_p": 1.0
+   },
+   "request_body_sha256": "94f33ba0b612d16a296c023d9d8fb69301bfbd3927fa50fb4339c0a87356d402",
+   "requested_output_ceiling": 2048,
+   "requested_temperature": 0.5,
+   "response_id": "chatcmpl-fflvesu4s9rpb4ao80gu2c",
+   "response_sanitized": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message_content": "ACK",
+      "message_role": "assistant"
+     }
+    ],
+    "id": "chatcmpl-fflvesu4s9rpb4ao80gu2c",
+    "model": "openai/gpt-oss-20b",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 16,
+     "completion_tokens_details": {
+      "reasoning_tokens": 5
+     },
+     "prompt_tokens": 74,
+     "total_tokens": 90
+    }
+   },
+   "response_sanitized_sha256": "4a704b2608bc166ae1d28c3da58baae5620bccddd9a55b6c21a4d58ee16273e4",
+   "returned_model": "openai/gpt-oss-20b",
+   "timestamp_utc": "2026-07-15T01:16:36Z",
+   "transport_error": null,
+   "usage": {
+    "completion_tokens": 16,
+    "completion_tokens_details": {
+     "reasoning_tokens": 5
+    },
+    "prompt_tokens": 74,
+    "total_tokens": 90
+   }
+  },
+  {
+   "branch": "local",
+   "endpoint_url_sanitized": "http://localhost:1234/v1/chat/completions",
+   "fail_reasons": [],
+   "http_status": 200,
+   "output_text": "ACK",
+   "pass": true,
+   "request_body_sanitized": {
+    "max_tokens": 2048,
+    "messages": [
+     {
+      "content": "Return exactly the single word ACK.",
+      "role": "user"
+     }
+    ],
+    "model": "openai/gpt-oss-20b",
+    "stream": false,
+    "temperature": 0.7,
+    "top_p": 1.0
+   },
+   "request_body_sha256": "7c198c59d708d4331ffecbbf0ed78c0b036871d55e027092b669d2c4de0845bd",
+   "requested_output_ceiling": 2048,
+   "requested_temperature": 0.7,
+   "response_id": "chatcmpl-o66m2b3po4n643myunokde",
+   "response_sanitized": {
+    "choices": [
+     {
+      "finish_reason": "stop",
+      "index": 0,
+      "message_content": "ACK",
+      "message_role": "assistant"
+     }
+    ],
+    "id": "chatcmpl-o66m2b3po4n643myunokde",
+    "model": "openai/gpt-oss-20b",
+    "object": "chat.completion",
+    "usage": {
+     "completion_tokens": 16,
+     "completion_tokens_details": {
+      "reasoning_tokens": 5
+     },
+     "prompt_tokens": 74,
+     "total_tokens": 90
+    }
+   },
+   "response_sanitized_sha256": "a8592183e5133fdaf0a2e4f504655fe16b00ab76b70a8a8591dfae5bde192dc7",
+   "returned_model": "openai/gpt-oss-20b",
+   "timestamp_utc": "2026-07-15T01:16:37Z",
+   "transport_error": null,
+   "usage": {
+    "completion_tokens": 16,
+    "completion_tokens_details": {
+     "reasoning_tokens": 5
+    },
+    "prompt_tokens": 74,
+    "total_tokens": 90
+   }
+  },
+  {
+   "branch": "api",
+   "endpoint_url_sanitized": "https://api.openai.com/v1/responses",
+   "fail_reasons": [],
+   "http_status": 200,
+   "output_text": "ACK",
+   "pass": true,
+   "request_body_sanitized": {
+    "input": [
+     {
+      "content": "Return exactly the single word ACK.",
+      "role": "user"
+     }
+    ],
+    "max_output_tokens": 2048,
+    "model": "gpt-5.4-2026-03-05",
+    "reasoning": {
+     "effort": "none"
+    },
+    "store": false,
+    "stream": false,
+    "temperature": 0.5,
+    "top_p": 1.0
+   },
+   "request_body_sha256": "3b9bc0bbbdf7043875f64278199cc21b93c67c9e2b50d9835279a40688742cbb",
+   "requested_output_ceiling": 2048,
+   "requested_temperature": 0.5,
+   "response_id": "resp_09321f14a9ef96a9016a56df76eeac81958e047d1782f681a9",
+   "response_sanitized": {
+    "error": null,
+    "id": "resp_09321f14a9ef96a9016a56df76eeac81958e047d1782f681a9",
+    "model": "gpt-5.4-2026-03-05",
+    "object": "response",
+    "output": [
+     {
+      "content": [
+       {
+        "annotations": [],
+        "logprobs": [],
+        "text": "ACK",
+        "type": "output_text"
+       }
+      ],
+      "id": "msg_09321f14a9ef96a9016a56df77a99881959f1dc1cfcd9c8268",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+     }
+    ],
+    "status": "completed",
+    "temperature": 0.5,
+    "top_p": 1.0,
+    "usage": {
+     "input_tokens": 13,
+     "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+     },
+     "output_tokens": 5,
+     "output_tokens_details": {
+      "reasoning_tokens": 0
+     },
+     "total_tokens": 18
+    }
+   },
+   "response_sanitized_sha256": "a910b73a98b9fc4c9cc3fa7b4a4e4b1e606df2500f8194c6bfaf794594d3a526",
+   "returned_model": "gpt-5.4-2026-03-05",
+   "timestamp_utc": "2026-07-15T01:16:37Z",
+   "transport_error": null,
+   "usage": {
+    "input_tokens": 13,
+    "input_tokens_details": {
+     "cache_write_tokens": 0,
+     "cached_tokens": 0
+    },
+    "output_tokens": 5,
+    "output_tokens_details": {
+     "reasoning_tokens": 0
+    },
+    "total_tokens": 18
+   }
+  },
+  {
+   "branch": "api",
+   "endpoint_url_sanitized": "https://api.openai.com/v1/responses",
+   "fail_reasons": [],
+   "http_status": 200,
+   "output_text": "ACK",
+   "pass": true,
+   "request_body_sanitized": {
+    "input": [
+     {
+      "content": "Return exactly the single word ACK.",
+      "role": "user"
+     }
+    ],
+    "max_output_tokens": 2048,
+    "model": "gpt-5.4-2026-03-05",
+    "reasoning": {
+     "effort": "none"
+    },
+    "store": false,
+    "stream": false,
+    "temperature": 0.7,
+    "top_p": 1.0
+   },
+   "request_body_sha256": "6a854783b7554526b7237c398e7b3a7c69f70d9ae314f9bf2ce34417c57cf7a7",
+   "requested_output_ceiling": 2048,
+   "requested_temperature": 0.7,
+   "response_id": "resp_075cba22b8761d31016a56df780a348193bea16f9bb95bdcc9",
+   "response_sanitized": {
+    "error": null,
+    "id": "resp_075cba22b8761d31016a56df780a348193bea16f9bb95bdcc9",
+    "model": "gpt-5.4-2026-03-05",
+    "object": "response",
+    "output": [
+     {
+      "content": [
+       {
+        "annotations": [],
+        "logprobs": [],
+        "text": "ACK",
+        "type": "output_text"
+       }
+      ],
+      "id": "msg_075cba22b8761d31016a56df78bb7c8193b254489c90aa32e7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+     }
+    ],
+    "status": "completed",
+    "temperature": 0.7,
+    "top_p": 1.0,
+    "usage": {
+     "input_tokens": 13,
+     "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+     },
+     "output_tokens": 5,
+     "output_tokens_details": {
+      "reasoning_tokens": 0
+     },
+     "total_tokens": 18
+    }
+   },
+   "response_sanitized_sha256": "e534fed80ea348a0736e2c34373c6582d41d9fd98b01b51991f6fd9174841271",
+   "returned_model": "gpt-5.4-2026-03-05",
+   "timestamp_utc": "2026-07-15T01:16:39Z",
+   "transport_error": null,
+   "usage": {
+    "input_tokens": 13,
+    "input_tokens_details": {
+     "cache_write_tokens": 0,
+     "cached_tokens": 0
+    },
+    "output_tokens": 5,
+    "output_tokens_details": {
+     "reasoning_tokens": 0
+    },
+    "total_tokens": 18
+   }
+  }
+ ],
+ "disclosure": {
+  "inference_calls": 4,
+  "neutral_prompt_only": true,
+  "packet_fixture_probe_calibration_or_source_text_sent": false,
+  "retries": 0
+ },
+ "frozen_wire_prompt": "Return exactly the single word ACK.",
+ "frozen_wire_prompt_sha256": "d1573102217e72f72607ebbee94293274c2a7b7461ebaa4f125f4881eb350114",
+ "r1_artifact_path": "corpus/efc_calibration/roster/roster_enumeration_r1.json",
+ "r1_artifact_sha256": "f24f4885419c3b05f5c0d3f5b8b35c145a4d41a1586ee41b429d4579bdbcca96",
+ "schema_version": "efc-decoding-surface-r2-v1"
+}

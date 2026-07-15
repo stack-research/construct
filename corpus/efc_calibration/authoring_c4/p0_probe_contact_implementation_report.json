@@ -1,0 +1,36 @@
+{
+ "active_pin_event_id": "efc-cal-manifest-pin-2600d1fdba7b-s2",
+ "assignment": "P0a execute-time identity repair",
+ "disclosure": {
+  "engines_contacted": 0,
+  "listing_calls": 0,
+  "network_calls": 0,
+  "probes_run": 0,
+  "real_inference_calls": 0
+ },
+ "future_contact_commands": [
+  {
+   "branch": "local",
+   "command": "python3 -m harness.efc_probe_contact --contact --branch local --output-dir <dir>",
+   "max_real_calls": 15,
+   "model_id": "openai/gpt-oss-20b"
+  },
+  {
+   "branch": "api",
+   "command": "python3 -m harness.efc_probe_contact --contact --branch api --output-dir <dir>",
+   "max_real_calls": 15,
+   "model_id": "gpt-5.4-2026-03-05"
+  }
+ ],
+ "module_path": "harness/efc_probe_contact.py",
+ "module_sha256": "0e4502789ed1054b6726b426fb6886126612e9dfc91a8f6952dd9364db742ec6",
+ "provider_cache": "unverified",
+ "roster_branch_order": [
+  "local",
+  "api"
+ ],
+ "schema_version": "efc_p0_probe_contact_report_v1",
+ "seat": "cursor/composer-2.5-capture",
+ "test_path": "tests/test_efc_probe_contact.py",
+ "test_sha256": "5e60e1b05226c9d86c1346ccd1e631c0e8e5286885371c269bc5cf29a5441afd"
+}

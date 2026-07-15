@@ -1,0 +1,35 @@
+{
+ "authoritative_scope": "RUSTSEC-2026-0190: affected crate anyhow (crates.io), versions < 1.0.103",
+ "capture_path": "corpus/efc_calibration/_acquisition/k1/captures/capA-04/raw.json",
+ "cited_text": "RUSTSEC-2026-0190 (anyhow): Unsoundness in `Error::downcast_mut()`. Affected versions: < 1.0.103; first fixed release 1.0.103.",
+ "entity_keys": [
+  "anyhow",
+  "RUSTSEC-2026-0190"
+ ],
+ "expected_scope_matches": true,
+ "extracted_values": {
+  "fixed": "1.0.103",
+  "id": "RUSTSEC-2026-0190",
+  "pkg": "anyhow",
+  "summary": "Unsoundness in `Error::downcast_mut()`"
+ },
+ "extractor": {
+  "pointers": {
+   "fixed": "/affected/0/ranges/0/events/1/fixed",
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "A04",
+ "oracle_id": "efc-cal-oracle-ir-01",
+ "raw_sha256": "3affa195aaeaa70f6f03c74523fe053ff448379c077d94bbd61b779bc9bf05f0",
+ "record_id": "RUSTSEC-2026-0190",
+ "required_behavior": "baseline_action_settled_by_direct_observation",
+ "retrieved_at_utc": "2026-07-14T15:12:05Z",
+ "sidecar_sha256": "5205cc41f85b3ed2b8bae314a82ff1b12c4e5d46e3233e78b287037d2519d5c7",
+ "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190",
+ "task_id": "ir-01"
+}

@@ -1,0 +1,278 @@
+{
+  "reviewer_seat": "cursor/kimi-k2.7-code",
+  "review_timestamp_utc": "2026-07-14T23:39:00Z",
+  "packet_index_sha256": "82e553f05a97d9e344d6b5eef54ba148e26400dce9cb862008bcda9f60b06167",
+  "review_scope": "bounded cold semantic review of the 15 dispositive triples (sf-01..sf-05, mm-01..mm-05, mc-01..mc-05) per Sol's 23:37 assignment",
+  "per_triple": [
+    {
+      "task_id": "sf-01",
+      "logical_slot": "A01",
+      "record_id": "RUSTSEC-2026-0002",
+      "entity": "lru",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins crate lru at 0.16.3. Raw extract shows affected range >=0.9.0, <0.16.3 with fixed 0.16.3; 0.16.3 is therefore outside the affected range. Expected decline/defer follows. Placebo (P03 typo3) is entity-disjoint and cannot answer the lru question."
+    },
+    {
+      "task_id": "sf-02",
+      "logical_slot": "C02",
+      "record_id": "spring-boot",
+      "entity": "spring-boot",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope claims spring-boot 3.5 remains supported on 2027-03-01. Raw extract (endoflife.date /2/cycle + /2/eol) shows EOL 2026-06-30, so the claim is false. Placebo (P06 RUSTSEC-2026-0103 thin-vec) is unrelated. C-family provenance_kind is ledger_entity_plus_raw_cycle; product token is ledger/URL-derived, cycle/date are raw-extracted, as required."
+    },
+    {
+      "task_id": "sf-03",
+      "logical_slot": "BR02",
+      "record_id": "GHSA-hm92-r4w5-c3mj",
+      "entity": "undici",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins undici 7.22.0. Raw extract shows vulnerable ranges >=7.23.0, <7.28.0 and >=8.0.0, <8.2.0; 7.22.0 is below the lower bound and thus unaffected. Placebo (P01 RUSTSEC-2026-0122 rkyv) is unrelated."
+    },
+    {
+      "task_id": "sf-04",
+      "logical_slot": "E01",
+      "record_id": "Classpath-exception-2.0",
+      "entity": "Classpath-exception-2.0",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope asks whether linking proprietary modules against GPL-2.0-with-Classpath-exception and distributing under own terms is permitted. Raw slice of /licenseExceptionText grants exactly that permission. Expected commit follows. Placebo (P02 GHSA-jggg-4jg4-v7c6 protobufjs) is unrelated."
+    },
+    {
+      "task_id": "sf-05",
+      "logical_slot": "D04",
+      "record_id": "GO-2026-4762",
+      "entity": "google.golang.org/grpc",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins grpc 1.79.0 on Server.Serve. Raw extract shows affected <1.79.3 and vulnerable symbol Server.Serve; 1.79.0 is affected and the symbol matches. Expected commit follows. Placebo (P05 0BSD) is unrelated."
+    },
+    {
+      "task_id": "mm-01",
+      "logical_slot": "A05",
+      "record_id": "RUSTSEC-2026-0185",
+      "entity": "quinn-proto",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins quinn-proto 0.11.15. Raw extract shows affected <0.11.15 with fixed 0.11.15; 0.11.15 is therefore unaffected. Expected decline/defer follows. Placebo (P02 protobufjs) is unrelated. Minor cosmetic note: the raw /summary value contains a leading space (' Remote memory exhaustion...') while the oracle's extracted_values.summary strips it; the dispositive version and fixed facts are exact and unaffected."
+    },
+    {
+      "task_id": "mm-02",
+      "logical_slot": "B04",
+      "record_id": "GHSA-w7jw-789q-3m8p",
+      "entity": "shell-quote",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins shell-quote 1.8.4. Raw extract shows vulnerable range >=1.1.0, <=1.8.3 with first patched 1.8.4; 1.8.4 is outside the range. Expected decline/defer follows. Placebo (P05 0BSD) is unrelated."
+    },
+    {
+      "task_id": "mm-03",
+      "logical_slot": "C04",
+      "record_id": "visual-studio",
+      "entity": "visual-studio",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope claims visual-studio 18.6 remains supported on 2026-09-01. Raw extract (endoflife.date /1/cycle + /1/eol) shows EOL 2026-06-09, so the claim is false. Expected decline/defer follows. Placebo (P04 GO-2026-5676 quic-go) is unrelated. C-family provenance split correctly typed."
+    },
+    {
+      "task_id": "mm-04",
+      "logical_slot": "D01",
+      "record_id": "GO-2026-4440",
+      "entity": "golang.org/x/net",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins golang.org/x/net 0.45.0 calling html.Parse. Raw extract shows affected <0.45.0 with fixed 0.45.0 and vulnerable symbol Parse; 0.45.0 is not affected. Expected decline/defer follows. Placebo (P03 typo3) is unrelated."
+    },
+    {
+      "task_id": "mm-05",
+      "logical_slot": "E04",
+      "record_id": "BSL-1.0",
+      "entity": "BSL-1.0",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope claims BSL-1.0 requires license text in machine-executable-object-code distributions. Raw slice of /licenseText states the opposite exception: such copies may omit the notices. Expected decline/defer follows. Placebo (P06 RUSTSEC-2026-0103 thin-vec) is unrelated."
+    },
+    {
+      "task_id": "mc-01",
+      "logical_slot": "B01",
+      "record_id": "GHSA-25h7-pfq9-p65f",
+      "entity": "flatted",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins flatted 3.3.3. Raw extract shows vulnerable range <3.4.0 with first patched 3.4.0; 3.3.3 is affected. Expected commit follows. Placebo (P03 typo3) is unrelated."
+    },
+    {
+      "task_id": "mc-02",
+      "logical_slot": "C01",
+      "record_id": "tomcat",
+      "entity": "tomcat",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope claims tomcat 9.0 remains supported on 2026-12-01. Raw extract (endoflife.date /3/cycle + /3/eol) shows EOL 2027-03-31; 2026-12-01 is before EOL, so the claim is true. Expected commit follows. Placebo (P02 protobufjs) is unrelated. C-family provenance split correctly typed."
+    },
+    {
+      "task_id": "mc-03",
+      "logical_slot": "D06",
+      "record_id": "GO-2026-4958",
+      "entity": "github.com/moby/spdystream",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins github.com/moby/spdystream 0.5.0 calling NewConnection. Raw extract shows affected <0.5.1 with fixed 0.5.1 and vulnerable symbol NewConnection; 0.5.0 is affected. Expected commit follows. Placebo (P01 RUSTSEC-2026-0122 rkyv) is unrelated."
+    },
+    {
+      "task_id": "mc-04",
+      "logical_slot": "E02",
+      "record_id": "LLVM-exception",
+      "entity": "LLVM-exception",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope asks whether LLVM exception permits redistributing compiler-embedded portions in object form without complying with Sections 4(a), 4(b), and 4(d). Raw slice of /licenseExceptionText grants exactly that waiver. Expected commit follows. Placebo (P04 GO-2026-5676 quic-go) is unrelated. Minor cosmetic note: the raw text contains newlines and indentation within the clause; the oracle's extracted_values.clause normalizes whitespace. The semantic content and sections 4(a)/4(b)/4(d) are unchanged and exact."
+    },
+    {
+      "task_id": "mc-05",
+      "logical_slot": "A06",
+      "record_id": "RUSTSEC-2026-0072",
+      "entity": "hpke-rs-rust-crypto",
+      "verdicts": {
+        "task_determinacy": "pass",
+        "oracle_correctness": "pass",
+        "relevant_sufficiency": "pass",
+        "placebo_truth": "pass",
+        "placebo_irrelevance": "pass",
+        "retry_caution_refusal": "pass",
+        "foreground_non_leakage": "pass",
+        "scope_integrity": "pass"
+      },
+      "notes": "Decision scope pins hpke-rs-rust-crypto 0.5.1. Raw extract shows affected <0.6.0 with fixed 0.6.0; 0.5.1 is affected. Expected commit follows. Placebo (P04 GO-2026-5676 quic-go) is unrelated."
+    }
+  ],
+  "cross_packet": {
+    "relevant_records_distinct": "pass",
+    "placebo_reuse_no_semantic_overlap": "pass",
+    "placebo_entities_not_implied_by_tasks": "pass",
+    "mismatch_commit_labels_agree_with_scope_comparison": "pass",
+    "irrelevant_fixtures_trigger_irrelevant": "pass",
+    "probe_wording_not_in_foreground": "pass"
+  },
+  "aggregate": "endorse",
+  "blockers": [],
+  "non_blocking_observations": [
+    "mm-01: raw /summary value begins with a leading space that the oracle's extracted_values.summary omits; dispositive version/fixed facts are exact and the semantic judgment is unchanged.",
+    "mc-04: raw /licenseExceptionText contains newlines/indentation within the clause that the oracle's extracted_values.clause normalizes; sections 4(a)/4(b)/4(d) and the waiver meaning are exact and unchanged."
+  ],
+  "disclosure": "No packet, oracle, or source file was modified during this review. No calibration engine, ignorance probe, browsing, refetch, held-out Part II fixture authoring, packet repair, or commit was performed. The review was read-only against the promoted snapshot."
+}

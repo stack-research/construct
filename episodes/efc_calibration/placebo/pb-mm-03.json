@@ -1,0 +1,12 @@
+{
+ "disjoint_reference": "https://vuln.go.dev/ID/GO-2026-5676.json",
+ "entity_keys": [
+  "github.com/quic-go/quic-go",
+  "GO-2026-5676",
+  "CVE-2026-40898",
+  "GHSA-vvgj-x9jq-8cj9"
+ ],
+ "placebo_for": "mm-03",
+ "placebo_id": "pb-mm-03",
+ "text": "provenance note (GO-2026-5676): GO-2026-5676 records an HTTP/3 QPACK trailer expansion memory exhaustion issue in the Go module github.com/quic-go/quic-go."
+}

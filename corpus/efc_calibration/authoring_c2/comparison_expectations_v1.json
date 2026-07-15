@@ -1,0 +1,82 @@
+{
+ "note": "test-layer only; production interpreter must not read this",
+ "row_count": 15,
+ "rows": [
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002",
+   "task_id": "sf-01"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://endoflife.date/api/spring-boot.json",
+   "task_id": "sf-02"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj",
+   "task_id": "sf-03"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json",
+   "task_id": "sf-04"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json",
+   "task_id": "sf-05"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185",
+   "task_id": "mm-01"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p",
+   "task_id": "mm-02"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://endoflife.date/api/visual-studio.json",
+   "task_id": "mm-03"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json",
+   "task_id": "mm-04"
+  },
+  {
+   "expected_scope_matches": false,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/BSL-1.0.json",
+   "task_id": "mm-05"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f",
+   "task_id": "mc-01"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://endoflife.date/api/tomcat.json",
+   "task_id": "mc-02"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json",
+   "task_id": "mc-03"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json",
+   "task_id": "mc-04"
+  },
+  {
+   "expected_scope_matches": true,
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072",
+   "task_id": "mc-05"
+  }
+ ],
+ "schema_version": "efc-comparison-expectations-v1"
+}

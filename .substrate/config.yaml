@@ -48,3 +48,5 @@ participants:
       kind: agent
     - name: codex/gpt-5.6-sol
       kind: agent
+    - name: cursor/composer-2.5-capture
+      kind: agent

@@ -180,8 +180,10 @@ either way. `admission_marginal` reopens nothing. Until then the question
 is parked where an instrument should park: paused, typed, and cheap to
 resume.
 
-The lab's attention moved the next day to the NEXT-substrate arc — the
-body architecture and the epistemic frame check — where the
-admission-ladder discipline built here (probe, calibrate, gate, refuse)
-became the template for calibrating engines against a sealed spec. That
-arc is still in flight; its chapter comes when its seam does.
+The lab's attention moved the next day to the NEXT-substrate arc — the body
+architecture and the epistemic-frame check — where the admission-ladder
+discipline built here (probe, calibrate, gate, refuse) became the template for
+calibrating engines against a sealed spec. The gate refused that experiment
+before calibration contact because its free-text oracle failed cold semantic
+review. [Chapter 16](16_EPISTEMIC_FRAME_CHECK.md) follows the refusal and the
+review loop that made a terminal budget necessary.

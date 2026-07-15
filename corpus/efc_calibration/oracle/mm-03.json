@@ -1,0 +1,36 @@
+{
+ "authoritative_scope": "endoflife.date record for visual-studio: release line 18.6 reaches end-of-life on 2026-06-09",
+ "capture_path": "corpus/efc_calibration/_acquisition/k2/captures/capC-04/raw.json",
+ "cited_text": "endoflife.date, visual-studio release line 18.6: end-of-life date 2026-06-09.",
+ "entity_keys": [
+  "visual-studio"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "cycle": "18.6",
+  "eol": "2026-06-09"
+ },
+ "extractor": {
+  "pointers": {
+   "cycle": "/1/cycle",
+   "eol": "/1/eol"
+  },
+  "product_identity": {
+   "canonical_url": "https://endoflife.date/api/visual-studio.json",
+   "entity_key": "visual-studio",
+   "note": "the product token in authoritative_scope/cited_text is ledger/URL-derived, NOT raw-extracted; only cycle/date facts come from the raw array pointers",
+   "source": "k4_promotion_ledger_entity_key+canonical_url_slug"
+  },
+  "provenance_kind": "ledger_entity_plus_raw_cycle",
+  "slices": {}
+ },
+ "logical_slot": "C04",
+ "oracle_id": "efc-cal-oracle-mm-03",
+ "raw_sha256": "76fc11ae94a7f3069ceefedd9888e069220ad3817fbccd2a00f50bfc8b21cd96",
+ "record_id": "visual-studio",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T17:51:13Z",
+ "sidecar_sha256": "e7df336e686b6e7e558baad53bbac0efbea21b6216e15c5272cf8cf797c24e92",
+ "source_reference": "https://endoflife.date/api/visual-studio.json",
+ "task_id": "mm-03"
+}

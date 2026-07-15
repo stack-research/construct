@@ -1,0 +1,270 @@
+{
+ "candidate_note": "unpinned P3A candidate; v1 rows byte-identical; five ir rows added for \u00a78.2/\u00a78.5 repair",
+ "population_binding_sha256": "05351e66e31807ae11987a850a7d6bac1b14d2321e1e0c2ce8de6d3d9d827b8b",
+ "row_count": 20,
+ "rows": [
+  {
+   "decision_scope_sha256": "936373f58d54091823e42f1937d40b4122a88a7e395bceab682a0cb341d7cc01",
+   "operands": {
+    "ecosystem": "crates.io",
+    "fixed_exclusive": "0.16.3",
+    "introduced": "0.9.0",
+    "package": "lru",
+    "version": "0.16.3"
+   },
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "5e9e5c99b25f3b25c2ec375a4d9fde03fc435a05e35e3cb894d13b3024e0c275",
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0002"
+  },
+  {
+   "decision_scope_sha256": "ef955a948c252c7a6898d313859105de1484bd2e8adbaa81838767ed3eb0dcf4",
+   "operands": {
+    "check_date": "2027-03-01",
+    "cycle": "3.5",
+    "eol_date": "2026-06-30",
+    "product": "spring-boot"
+   },
+   "operation": "eol_support_on_date",
+   "raw_sha256": "e284f93bb376ab40281b600611ff86c99691e084246a547383d08e8551a9879e",
+   "source_reference": "https://endoflife.date/api/spring-boot.json"
+  },
+  {
+   "decision_scope_sha256": "2ba01613bedab119155da112cd580b8aa24c54fee6a09ea09b4d62246e8a24b2",
+   "operands": {
+    "ecosystem": "npm",
+    "package": "undici",
+    "range_strings": [
+     ">= 7.23.0, < 7.28.0",
+     ">= 8.0.0, < 8.2.0"
+    ],
+    "version": "7.22.0"
+   },
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "bcd52cf0f5e2aadc834026750c8ebeb7ca071ffccfc63dcab791cd61d2f3ea16",
+   "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj"
+  },
+  {
+   "decision_scope_sha256": "b3d76d80ecff5180537ebc9c73edde6fb676a86258a1bf119a54418010af3c28",
+   "operands": {
+    "clause_text": "As a special exception, the copyright holders of this library give you permission to link this library with independent modules to produce an executable, regardless of the license terms of these independent modules, and to copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked independent module, the terms and conditions of the license of that module.",
+    "license_id": "Classpath-exception-2.0",
+    "required_phrases": [
+     "independent modules",
+     "executable",
+     "terms of your choice"
+    ]
+   },
+   "operation": "license_permission_granted",
+   "raw_sha256": "1da5f30a136e02ed2465305246fd0761c997a2fbd26829c87d85c23505e3ef06",
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/Classpath-exception-2.0.json"
+  },
+  {
+   "decision_scope_sha256": "f2538536dadf2ff61d93f222347f8a0ddb19d22ad362df3a149c4d6dd7ecafac",
+   "operands": {
+    "listed_symbol": "Server.Serve",
+    "module": "google.golang.org/grpc",
+    "symbol": "Server.Serve",
+    "upper_exclusive": "1.79.3",
+    "version": "1.79.0"
+   },
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "dd6d021a23106f58c3142cb0e1d53d4bb7e4289af07b5e215021b1d509645e63",
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4762.json"
+  },
+  {
+   "decision_scope_sha256": "304ba90a753319a31615dab157a8838f299458e84eacd438540815578edb44fd",
+   "operands": {
+    "ecosystem": "crates.io",
+    "package": "quinn-proto",
+    "upper_exclusive": "0.11.15",
+    "version": "0.11.15"
+   },
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "aa59dbfd5b0bc0378363f904543475cefa8b795793ee2bb6226a239afa586555",
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185"
+  },
+  {
+   "decision_scope_sha256": "7ec75bcd3c9250263841971c5b051f82d6c0cad7aac547db2fef2407c3efe6f1",
+   "operands": {
+    "ecosystem": "npm",
+    "package": "shell-quote",
+    "range_strings": [
+     ">= 1.1.0, <= 1.8.3"
+    ],
+    "version": "1.8.4"
+   },
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "db96c762f2e654604fb76813122dd710e2c1c848e15230e0aecb6d10ddbda4ec",
+   "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p"
+  },
+  {
+   "decision_scope_sha256": "6585f1330553484a7c0fbeccfc6c5746b36848bced964e562660e8960923b049",
+   "operands": {
+    "check_date": "2026-09-01",
+    "cycle": "18.6",
+    "eol_date": "2026-06-09",
+    "product": "visual-studio"
+   },
+   "operation": "eol_support_on_date",
+   "raw_sha256": "76fc11ae94a7f3069ceefedd9888e069220ad3817fbccd2a00f50bfc8b21cd96",
+   "source_reference": "https://endoflife.date/api/visual-studio.json"
+  },
+  {
+   "decision_scope_sha256": "2c187987244634580e551f41876321cbc2d3c01da14fa2876c3b99b15a85b822",
+   "operands": {
+    "listed_symbol": "Parse",
+    "module": "golang.org/x/net",
+    "symbol": "Parse",
+    "upper_exclusive": "0.45.0",
+    "version": "0.45.0"
+   },
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "24009bbd8ff231dca1f182003b7c82c0ad4a5e2763fb525037050692eabdfe45",
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json"
+  },
+  {
+   "decision_scope_sha256": "d5264c0c1f6694fcfdb33d6c9bbe1d27bdb802193bd6e081bfd350ed08a8f57f",
+   "operands": {
+    "category_phrase": "solely in the form of machine-executable object code",
+    "clause_text": "The copyright notices in the Software and this entire statement, including the above license grant, this restriction and the following disclaimer, must be included in all copies of the Software, in whole or in part, and all derivative works of the Software, unless such copies or derivative works are solely in the form of machine-executable object code generated by a source language processor.",
+    "license_id": "BSL-1.0"
+   },
+   "operation": "license_inclusion_obligation_holds",
+   "raw_sha256": "613d688bf9cc4304dd9e90743aa1d8e10aede130a49e69ea8a732d86fb550355",
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/BSL-1.0.json"
+  },
+  {
+   "decision_scope_sha256": "6d35e58fb75b7ba78d107a97e84c67562b0a011990081548f24b072f4822e675",
+   "operands": {
+    "ecosystem": "npm",
+    "package": "flatted",
+    "range_strings": [
+     "< 3.4.0"
+    ],
+    "version": "3.3.3"
+   },
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "782f49707422ccf16557d8fab272c5495502fb843a0f5eb315cb4449452b4b5a",
+   "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f"
+  },
+  {
+   "decision_scope_sha256": "0f414c8881d74300ee41cabaea0efbf15a9e9ab09f407542e4f1df3e4b76a968",
+   "operands": {
+    "check_date": "2026-12-01",
+    "cycle": "9.0",
+    "eol_date": "2027-03-31",
+    "product": "tomcat"
+   },
+   "operation": "eol_support_on_date",
+   "raw_sha256": "13496c043f2c8f802031041df62256547c0fd08e1f7cb6e9ab9eeb38956c212e",
+   "source_reference": "https://endoflife.date/api/tomcat.json"
+  },
+  {
+   "decision_scope_sha256": "b5f5f509ac3a4ba7b47da9c1492513269f7c1459f224f8f2015b385494ed8850",
+   "operands": {
+    "listed_symbol": "NewConnection",
+    "module": "github.com/moby/spdystream",
+    "symbol": "NewConnection",
+    "upper_exclusive": "0.5.1",
+    "version": "0.5.0"
+   },
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "619992c4761c7f868db2a07f585e95b08e597251ca2ae136fcce40e1cde02607",
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json"
+  },
+  {
+   "decision_scope_sha256": "fc55041d3f92a6d0fba83995e6b6f7fe8afcbf3a04e34dcc30836a963c9dd435",
+   "operands": {
+    "clause_text": "As an exception, if, as a result of your compiling your source code, portions of this Software are embedded into an Object form of such source code, you may redistribute such embedded portions in such Object form without complying with the conditions of Sections 4(a), 4(b) and 4(d) of the License.",
+    "license_id": "LLVM-exception",
+    "sections": [
+     "4(a)",
+     "4(b)",
+     "4(d)"
+    ]
+   },
+   "operation": "license_section_waiver_applies",
+   "raw_sha256": "caad73fc83226f9762861f2447e9f8b8cdfa46907f6f95ee79e064185dec7c6a",
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json"
+  },
+  {
+   "decision_scope_sha256": "ccab64699849823d2e32f213ecae0315831bca24acb1496325e25932830e1064",
+   "operands": {
+    "ecosystem": "crates.io",
+    "package": "hpke-rs-rust-crypto",
+    "upper_exclusive": "0.6.0",
+    "version": "0.5.1"
+   },
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "f3b5c57702576562af7d17b2751fb7721bd8acfecd95e44d648cc137a58d9754",
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072"
+  },
+  {
+   "decision_scope_sha256": "4a5ec78cdc32705d0f7b5570fa15f7e0e155ef8187832e8642b0cd61deb4d38d",
+   "operands": {
+    "ecosystem": "crates.io",
+    "package": "anyhow",
+    "upper_exclusive": "1.0.103",
+    "version": "1.0.102"
+   },
+   "operation": "cargo_affected_membership",
+   "raw_sha256": "3affa195aaeaa70f6f03c74523fe053ff448379c077d94bbd61b779bc9bf05f0",
+   "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190"
+  },
+  {
+   "decision_scope_sha256": "4b38e221e4be7753da627bd3eba88dd78709a5bb27fe1cf6e92a67796ed0c1c5",
+   "operands": {
+    "ecosystem": "pip",
+    "package": "pyjwt",
+    "range_strings": [
+     "< 2.13.0"
+    ],
+    "version": "2.13.0"
+   },
+   "operation": "ghsa_semver_membership",
+   "raw_sha256": "98ab15235745d4b4671dde2ccaedf854b4a37005210f91bcc80518245e1741d0",
+   "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx"
+  },
+  {
+   "decision_scope_sha256": "278c3e264615f7502b04a3157231abcdeb87da5afcccf884bd6201a6af94c4d5",
+   "operands": {
+    "check_date": "2026-01-01",
+    "cycle": "7.0",
+    "eol_date": "2025-10-02",
+    "product": "esxi"
+   },
+   "operation": "eol_support_on_date",
+   "raw_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+   "source_reference": "https://endoflife.date/api/esxi.json"
+  },
+  {
+   "decision_scope_sha256": "d46e41de2621d3b34a674906cc4800f43a3aed9e749ea549392b41a96ee1c18c",
+   "operands": {
+    "listed_symbol": "file_server",
+    "module": "github.com/caddyserver/caddy/v2",
+    "symbol": "file_server",
+    "upper_exclusive": "2.11.1",
+    "version": "2.11.0"
+   },
+   "operation": "go_symbol_version_membership",
+   "raw_sha256": "8f8fa5d05f27bf83d482eec3d06ea06c63363d1df7cf259893a12d536bbea74b",
+   "source_reference": "https://vuln.go.dev/ID/GO-2026-4535.json"
+  },
+  {
+   "decision_scope_sha256": "3c2ad61040ea543a101582e93d7e91228f8177bec935fd52c6eb7ab1fa640929",
+   "operands": {
+    "clause_text": "6. Disclaimer of Warranty                                           *\n*  -------------------------                                           *\n*                                                                      *\n*  Covered Software is provided under this License on an \"as is\"       *\n*  basis, without warranty of any kind, either expressed, implied, or  *\n*  statutory, including, without limitation, warranties that the       *\n*  Covered Software is free of defects, merchantable, fit for a        *\n*  particular purpose or non-infringing. The entire risk as to the     *\n*  quality and performance of the Covered Software is with You.        *\n*  Should any Covered Software prove defective in any respect, You     *\n*  (not any Contributor) assume the cost of any necessary servicing,   *\n*  repair, or correction. This disclaimer of warranty constitutes an   *\n*  essential part of this License. No use of any Covered Software is   *\n*  authorized under this License except under this disclaimer.         *\n*                                                                      *\n************************************************************************\n\n************************************************************************\n*                                                                      *\n*",
+    "license_id": "MPL-2.0",
+    "required_phrases": [
+     "Larger Work",
+     "independent modules",
+     "terms of your choice"
+    ]
+   },
+   "operation": "license_permission_granted",
+   "raw_sha256": "d4a775424b576b2864cee5e9f21476b6e37531b516df6303da3b0b42859629a2",
+   "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json"
+  }
+ ],
+ "schema_version": "efc-production-structured-inputs-v1"
+}

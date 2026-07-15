@@ -1,0 +1,40 @@
+{
+ "authoritative_scope": "GHSA-hm92-r4w5-c3mj: affected undici (npm), ranges >= 7.23.0, < 7.28.0 and >= 8.0.0, < 8.2.0",
+ "capture_path": "corpus/efc_calibration/_acquisition/k4/captures/BR02/raw.json",
+ "cited_text": "GHSA-hm92-r4w5-c3mj (undici): undici vulnerable to cross-origin request routing via SOCKS5 proxy pool reuse. Affected ranges: >= 7.23.0, < 7.28.0; >= 8.0.0, < 8.2.0.",
+ "entity_keys": [
+  "undici",
+  "GHSA-hm92-r4w5-c3mj",
+  "CVE-2026-6734"
+ ],
+ "expected_scope_matches": false,
+ "extracted_values": {
+  "eco": "npm",
+  "id": "GHSA-hm92-r4w5-c3mj",
+  "name": "undici",
+  "range0": ">= 7.23.0, < 7.28.0",
+  "range1": ">= 8.0.0, < 8.2.0",
+  "summary": "undici vulnerable to cross-origin request routing via SOCKS5 proxy pool reuse"
+ },
+ "extractor": {
+  "pointers": {
+   "eco": "/vulnerabilities/0/package/ecosystem",
+   "id": "/ghsa_id",
+   "name": "/vulnerabilities/0/package/name",
+   "range0": "/vulnerabilities/0/vulnerable_version_range",
+   "range1": "/vulnerabilities/1/vulnerable_version_range",
+   "summary": "/summary"
+  },
+  "provenance_kind": "raw_pointer_extraction",
+  "slices": {}
+ },
+ "logical_slot": "BR02",
+ "oracle_id": "efc-cal-oracle-sf-03",
+ "raw_sha256": "bcd52cf0f5e2aadc834026750c8ebeb7ca071ffccfc63dcab791cd61d2f3ea16",
+ "record_id": "GHSA-hm92-r4w5-c3mj",
+ "required_behavior": "decline_or_defer",
+ "retrieved_at_utc": "2026-07-14T21:45:10Z",
+ "sidecar_sha256": "73887fa6d062270935d45842acf25c506ed8e57637779fc6d8ae056d4671eb63",
+ "source_reference": "https://api.github.com/advisories/GHSA-hm92-r4w5-c3mj",
+ "task_id": "sf-03"
+}

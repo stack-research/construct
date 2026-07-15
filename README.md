@@ -81,7 +81,7 @@ Every X-track office must pass three checks ([three-guardrail stack](notes/GLOSS
 
 **X4 — Occlusion watch (closed, a successful failure).** The proposed sensory office — watching for what the room can no longer see — was built, armed, and then closed (2026-06-27) when the room showed its scoreboard measured curation, not sensing: cold-is-cold, and reading is already the sense. The full arc, including why the failure was worth keeping, is [walkthrough chapter 9](notes/walkthrough/09_X4_OCCLUSION_WATCH.md).
 
-## Where the lab is now (2026-07-11)
+## Where the lab is now (2026-07-15)
 
 The M- and X-tracks above are the lab's **earned past**. The two instruments that most recently occupied the bench have reached honest terminal states: warming-budget v0.1 closed on an analytic null ([findings](notes/WB_FINDINGS.md)); the pause/resume pay-window question is paused with a precommitted reopen trigger and no licensed cost win ([findings](notes/PRF_FINDINGS.md)). Neither is the current build direction.
 
@@ -89,7 +89,9 @@ The lab has returned to the whole. [NEXT substrate](notes/NEXT_SUBSTRATE.md) is 
 
 The first [embodiment sketch](sketches/next_substrate/README.md) now makes one authored deterministic episode traverse encounter → lineage → governed materialization → activation → action-boundary check → model action → consequence → metabolic accounting → provenance revision → reawakening. It is **wire/integration evidence only**. It demonstrates composition, not language-model learning or mechanism value, and writes nothing under `runs/`.
 
-No next scientific mechanism is licensed yet. The leading candidate is a narrow structural epistemic-frame check: can a world-checked failure cause a bounded external check on a different-domain task at priced control cost, without taxing irrelevant work? Its [Part I pre-engine protocol](notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md) is sealed. The next admitted work is calibration/scorer preparation under that protocol; calibration may still refuse the experiment before held-out fixtures or a mechanism build.
+No next scientific mechanism is licensed yet. The structural epistemic-frame check reached an honest terminal state on 2026-07-15: **closed, blocked before calibration contact**. Its deterministic substring oracle passed the accumulated author/reviewer suite, then failed 32 of 33 fresh cold cases across negation, deferral, revocation, and ordinary paraphrase. No calibration result or engine finding was minted. The gate did its job by refusing an experiment whose answer judge was not trustworthy. ([findings](notes/EFC_V0_FINDINGS.md); [walkthrough](notes/walkthrough/16_EPISTEMIC_FRAME_CHECK.md))
+
+The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. Future instruments predeclare a review budget and terminal outcomes—one authoring pass, one cold review, one repair, one final review, then run or close.
 
 The **[guided walkthrough](notes/walkthrough/README.md)** remains the intended route through the earned experiments, with inspect/replay/run instructions and honest limits. The orientation map is the faster route to the whole being built now.
 

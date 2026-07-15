@@ -1,0 +1,401 @@
+{
+ "pb-mc-01": {
+  "backing_record": "P03",
+  "base_claims_verified_by": {
+   "cycle0": "/0/cycle",
+   "eol0": "/0/eol"
+  },
+  "base_text": "the endoflife.date registry record for typo3 lists dated support and end-of-life windows for typo3 release lines.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "f57dae29;",
+   "canonical",
+   "url"
+  ],
+  "raw_sha256": "f57dae293c4a47bbba38a4d21d3f99816ce3617b4a0710cf06f3fa50e4a66a6f",
+  "record_id": "typo3",
+  "relevant_evidence_tokens": 27
+ },
+ "pb-mc-02": {
+  "backing_record": "P02",
+  "base_claims_verified_by": {
+   "id": "/ghsa_id",
+   "pkg": "/vulnerabilities/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "GHSA-jggg-4jg4-v7c6 records a denial-of-service issue in the npm package protobufjs via unbounded recursive JSON descriptor expansion.",
+  "excerpt": null,
+  "pad": [],
+  "raw_sha256": "942a5187d4170df5f7ee5cca7d4dbf29bf13b3f0b7aeee8647855c1a35d9cae2",
+  "record_id": "GHSA-jggg-4jg4-v7c6",
+  "relevant_evidence_tokens": 15
+ },
+ "pb-mc-03": {
+  "backing_record": "P01",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "RUSTSEC-2026-0122 records a panic-safety use-after-free issue in the rkyv crate's InlineVec and SerVec clear methods.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "a2f4350d;",
+   "canonical",
+   "url",
+   "https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0122.json;",
+   "frozen"
+  ],
+  "raw_sha256": "a2f4350d3e4064c9732a53400892adb3d06f0b3ac7a0ed0ff356de47dbb3fef8",
+  "record_id": "RUSTSEC-2026-0122",
+  "relevant_evidence_tokens": 28
+ },
+ "pb-mc-04": {
+  "backing_record": "P04",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "GO-2026-5676 records an HTTP/3 QPACK trailer expansion memory exhaustion issue in the Go module github.com/quic-go/quic-go.",
+  "excerpt": {
+   "pointer": "/details",
+   "token_count": 8
+  },
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "95280bd2;",
+   "canonical",
+   "url",
+   "https://vuln.go.dev/ID/GO-2026-5676.json;",
+   "frozen",
+   "acquisition",
+   "bytes;",
+   "independently",
+   "refetched",
+   "and",
+   "verified;",
+   "promoted",
+   "record;",
+   "dated",
+   "drift",
+   "note:",
+   "none;",
+   "capture",
+   "seat:",
+   "mechanical;",
+   "registry",
+   "provenance",
+   "entry;",
+   "content",
+   "identity",
+   "confirmed;"
+  ],
+  "raw_sha256": "95280bd2a5a14604332b922ea03a8d51e6f77d95b7471ef1eefacfe0b5c41972",
+  "record_id": "GO-2026-5676",
+  "relevant_evidence_tokens": 60
+ },
+ "pb-mc-05": {
+  "backing_record": "P04",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "GO-2026-5676 records an HTTP/3 QPACK trailer expansion memory exhaustion issue in the Go module github.com/quic-go/quic-go.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "95280bd2;"
+  ],
+  "raw_sha256": "95280bd2a5a14604332b922ea03a8d51e6f77d95b7471ef1eefacfe0b5c41972",
+  "record_id": "GO-2026-5676",
+  "relevant_evidence_tokens": 24
+ },
+ "pb-mm-01": {
+  "backing_record": "P02",
+  "base_claims_verified_by": {
+   "id": "/ghsa_id",
+   "pkg": "/vulnerabilities/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "GHSA-jggg-4jg4-v7c6 records a denial-of-service issue in the npm package protobufjs via unbounded recursive JSON descriptor expansion.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "942a5187;",
+   "canonical",
+   "url"
+  ],
+  "raw_sha256": "942a5187d4170df5f7ee5cca7d4dbf29bf13b3f0b7aeee8647855c1a35d9cae2",
+  "record_id": "GHSA-jggg-4jg4-v7c6",
+  "relevant_evidence_tokens": 27
+ },
+ "pb-mm-02": {
+  "backing_record": "P05",
+  "base_claims_verified_by": {
+   "id": "/licenseId",
+   "name": "/name"
+  },
+  "base_text": "the SPDX license list records 0BSD, the BSD Zero Clause License, as a current listed license entry.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "9bd30f09;",
+   "canonical",
+   "url",
+   "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/0BSD.json;"
+  ],
+  "raw_sha256": "9bd30f0972bb397889275b013305566dff35a74d250379c62713090193623c7e",
+  "record_id": "0BSD",
+  "relevant_evidence_tokens": 29
+ },
+ "pb-mm-03": {
+  "backing_record": "P04",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "mod": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "GO-2026-5676 records an HTTP/3 QPACK trailer expansion memory exhaustion issue in the Go module github.com/quic-go/quic-go.",
+  "excerpt": null,
+  "pad": [],
+  "raw_sha256": "95280bd2a5a14604332b922ea03a8d51e6f77d95b7471ef1eefacfe0b5c41972",
+  "record_id": "GO-2026-5676",
+  "relevant_evidence_tokens": 15
+ },
+ "pb-mm-04": {
+  "backing_record": "P03",
+  "base_claims_verified_by": {
+   "cycle0": "/0/cycle",
+   "eol0": "/0/eol"
+  },
+  "base_text": "the endoflife.date registry record for typo3 lists dated support and end-of-life windows for typo3 release lines.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256"
+  ],
+  "raw_sha256": "f57dae293c4a47bbba38a4d21d3f99816ce3617b4a0710cf06f3fa50e4a66a6f",
+  "record_id": "typo3",
+  "relevant_evidence_tokens": 24
+ },
+ "pb-mm-05": {
+  "backing_record": "P06",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "RUSTSEC-2026-0103 records a use-after-free and double free in the thin-vec crate's IntoIter drop path when an element drop panics.",
+  "excerpt": {
+   "pointer": "/details",
+   "token_count": 16
+  },
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "1207db30;",
+   "canonical",
+   "url",
+   "https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0103.json;",
+   "frozen",
+   "acquisition",
+   "bytes;",
+   "independently",
+   "refetched",
+   "and",
+   "verified;",
+   "promoted",
+   "record;",
+   "dated",
+   "drift",
+   "note:",
+   "none;",
+   "capture",
+   "seat:",
+   "mechanical;",
+   "registry",
+   "provenance",
+   "entry;",
+   "content",
+   "identity",
+   "confirmed;"
+  ],
+  "raw_sha256": "1207db308ee3f23dbf7694e2d567538e5fed3c09c941c62e67b8cfdf4d5aa3ef",
+  "record_id": "RUSTSEC-2026-0103",
+  "relevant_evidence_tokens": 72
+ },
+ "pb-sf-01": {
+  "backing_record": "P03",
+  "base_claims_verified_by": {
+   "cycle0": "/0/cycle",
+   "eol0": "/0/eol"
+  },
+  "base_text": "the endoflife.date registry record for typo3 lists dated support and end-of-life windows for typo3 release lines.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "f57dae29;",
+   "canonical",
+   "url"
+  ],
+  "raw_sha256": "f57dae293c4a47bbba38a4d21d3f99816ce3617b4a0710cf06f3fa50e4a66a6f",
+  "record_id": "typo3",
+  "relevant_evidence_tokens": 27
+ },
+ "pb-sf-02": {
+  "backing_record": "P06",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "RUSTSEC-2026-0103 records a drop-path memory issue in the thin-vec crate.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved"
+  ],
+  "raw_sha256": "1207db308ee3f23dbf7694e2d567538e5fed3c09c941c62e67b8cfdf4d5aa3ef",
+  "record_id": "RUSTSEC-2026-0103",
+  "relevant_evidence_tokens": 15
+ },
+ "pb-sf-03": {
+  "backing_record": "P01",
+  "base_claims_verified_by": {
+   "id": "/id",
+   "pkg": "/affected/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "RUSTSEC-2026-0122 records a panic-safety use-after-free issue in the rkyv crate's InlineVec and SerVec clear methods.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "a2f4350d;",
+   "canonical",
+   "url",
+   "https://raw.githubusercontent.com/rustsec/advisory-db/osv/crates/RUSTSEC-2026-0122.json;",
+   "frozen",
+   "acquisition",
+   "bytes;"
+  ],
+  "raw_sha256": "a2f4350d3e4064c9732a53400892adb3d06f0b3ac7a0ed0ff356de47dbb3fef8",
+  "record_id": "RUSTSEC-2026-0122",
+  "relevant_evidence_tokens": 30
+ },
+ "pb-sf-04": {
+  "backing_record": "P02",
+  "base_claims_verified_by": {
+   "id": "/ghsa_id",
+   "pkg": "/vulnerabilities/0/package/name",
+   "summary": "/summary"
+  },
+  "base_text": "GHSA-jggg-4jg4-v7c6 records a denial-of-service issue in the npm package protobufjs via unbounded recursive JSON descriptor expansion.",
+  "excerpt": {
+   "pointer": "/description",
+   "token_count": 22
+  },
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "942a5187;",
+   "canonical",
+   "url",
+   "https://api.github.com/advisories/GHSA-jggg-4jg4-v7c6;",
+   "frozen",
+   "acquisition",
+   "bytes;",
+   "independently",
+   "refetched",
+   "and",
+   "verified;",
+   "promoted",
+   "record;",
+   "dated",
+   "drift",
+   "note:",
+   "none;",
+   "capture",
+   "seat:",
+   "mechanical;",
+   "registry",
+   "provenance",
+   "entry;",
+   "content",
+   "identity",
+   "confirmed;"
+  ],
+  "raw_sha256": "942a5187d4170df5f7ee5cca7d4dbf29bf13b3f0b7aeee8647855c1a35d9cae2",
+  "record_id": "GHSA-jggg-4jg4-v7c6",
+  "relevant_evidence_tokens": 75
+ },
+ "pb-sf-05": {
+  "backing_record": "P05",
+  "base_claims_verified_by": {
+   "id": "/licenseId",
+   "name": "/name"
+  },
+  "base_text": "the SPDX license list records 0BSD, the BSD Zero Clause License, as a current listed license entry.",
+  "excerpt": null,
+  "pad": [
+   "snapshot",
+   "retrieved",
+   "2026-07-14;",
+   "raw",
+   "sha256",
+   "9bd30f09;",
+   "canonical",
+   "url",
+   "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/0BSD.json;",
+   "frozen",
+   "acquisition"
+  ],
+  "raw_sha256": "9bd30f0972bb397889275b013305566dff35a74d250379c62713090193623c7e",
+  "record_id": "0BSD",
+  "relevant_evidence_tokens": 31
+ }
+}

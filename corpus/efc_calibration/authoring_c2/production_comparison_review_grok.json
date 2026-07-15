@@ -1,0 +1,364 @@
+{
+  "reviewer_seat": "cursor/grok-4.5",
+  "review_kind": "independent_production_comparison_conformance",
+  "review_timestamp_utc": "2026-07-15T00:30:00Z",
+  "assignment_source": "codex/gpt-5.6-sol C3a re-review handoff (2026-07-15T00:18:41Z)",
+  "scope": "read-only one-pass review of production comparison contract, runtime, 15 population rows, license bindings, and version/date/symbol parsers; no code or packet repairs",
+  "constraints_observed": [
+    "no modifications outside this review artifact",
+    "no engine contact",
+    "no probe",
+    "no manifest pin",
+    "no network",
+    "no held-out authoring",
+    "no commit"
+  ],
+  "reviewed_hashes": {
+    "rule_artifact_file_sha256": "809ba76a82beb707c3f2a6253f84ab1ecb258490752583d843182c18a24ea0d5",
+    "rule_artifact_canonical_sha256": "9eddec83c2a66c85380a3d2b70236455fd727ad797ed14d1c655992cbe7786c5",
+    "structured_inputs_file_sha256": "5756a951b5c19d21e46d099ae58fb7faaa6e1562ff0fcd80d8af9b19dd2133a9",
+    "structured_inputs_population_binding_sha256": "b996c706189eb026187ab3b8d14947a1955a0c90945e6e4590c421a8aff4d0a1",
+    "candidate_check_contract_hash": "3eb9ef2c26d3895810fb23b78e3433c026a2947707d0e754cc1fe2ddfd74ddf8",
+    "interpreter_sha256": "211b7cfd199f2337cbbd22a329511c4bcd7f34b0116a0c09c2e32af1b36f13a1",
+    "conformance_vectors_sha256": "4f90b82c9889ca610a53bf119314672d1875e0e62852f9687ba31e559dd269b9",
+    "adapter_contract_sha256": "d866e8061b8f840d720d0e3f8b039785b9cfd00b6a4bf4b9706f9df85a3017d8"
+  },
+  "hash_recompute": {
+    "all_candidate_identities_match_sol_pins": true,
+    "file_vs_canonical_labels_distinct": true,
+    "structured_file_vs_population_binding_labels_distinct": true
+  },
+  "mutation_audit": {
+    "identity_hash_changes_when_mutating": {
+      "rule_artifact_file_sha256": true,
+      "interpreter_sha256": true,
+      "conformance_vectors_sha256": true,
+      "structured_inputs_file_sha256": true,
+      "structured_inputs_population_binding_sha256": true,
+      "adapter_contract_sha256": true,
+      "ceilings": true
+    },
+    "population_binding_hash_changes_when_mutating": {
+      "range_or_version_operand": true,
+      "eol_date_operand": true,
+      "go_symbol_operand": true,
+      "license_phrase_operand": true,
+      "source_reference": true,
+      "raw_sha256": true,
+      "decision_scope_sha256": true
+    },
+    "stale_contract_rejects_mutated_structured_file": true,
+    "notes": "Mutating any listed pin either changes the check-contract identity payload hash or causes validation/load failure under the prior contract."
+  },
+  "runtime_audit": {
+    "entrypoints_traced": [
+      "harness.efc_check.run_production_scope_check",
+      "harness.efc_compare_production.execute_pinned_binding",
+      "harness.efc_compare_production.resolve_pinned_row",
+      "harness.efc_compare_production.interpret_structured_input"
+    ],
+    "routes": {
+      "caller_supplied_unpinned_operands": {
+        "possible": false,
+        "evidence": "run_production_scope_check and execute_pinned_binding accept only store/source_reference/decision_scope_sha256/contract (+ provenance raw from store); no operand parameters"
+      },
+      "wire_rule_or_wire_lookup": {
+        "possible": false,
+        "evidence": "WireComparisonRule rejected by validate_production_comparison_contract; production module AST imports only efc_compare_version among harness deps; wire_lookup_unreachable() true"
+      },
+      "derivation_or_expectation_module": {
+        "possible": false,
+        "evidence": "derivation_module_unreachable() true; no import of efc_compare_inputs / efc_compare_expectations / efc_author_c2; expectations file is test-layer only"
+      },
+      "expected_label_or_logical_dispatch_key": {
+        "possible": false,
+        "evidence": "forbidden keys rejected on validate; population rows contain none of expected_scope_matches/task_id/oracle_id/fixture_id/logical_slot/behavior"
+      },
+      "row_with_mismatched_source_or_raw_lineage": {
+        "possible": false,
+        "evidence": "execute_pinned_binding requires row.raw_sha256 == provenance_raw_sha256 from store.fetch; selector miss/duplicate rejected; source_reference swap yields no binding"
+      }
+    },
+    "verdict": "pass"
+  },
+  "fifteen_row_conformance": {
+    "row_count": 15,
+    "method": "For each dispositive task: recompute decision_scope SHA-256 from authored fixture scope; re-derive structured operands via efc_compare_inputs.derive_structured_input; compare to pinned structured_inputs_v1 row; independently recompute membership/date/symbol semantics from extracted oracle values; run interpret_structured_input and run_production_scope_check; compare to separately stored comparison_expectations_v1 expected_scope_matches without treating agreement alone as proof",
+    "aggregate": {
+      "scope_hash_match": 15,
+      "derived_equals_pinned": 15,
+      "raw_and_source_lineage_match": 15,
+      "manual_operator_semantics_match_interpreter": 15,
+      "interpreter_agrees_expectations_test_layer": 15,
+      "production_path_agrees_interpreter": 15
+    },
+    "per_row": [
+      {
+        "task_id": "sf-01",
+        "operation": "cargo_affected_membership",
+        "decision_scope_sha256": "936373f58d54091823e42f1937d40b4122a88a7e395bceab682a0cb341d7cc01",
+        "endpoint_note": "version 0.16.3 at fixed_exclusive 0.16.3 is outside [introduced, fixed) => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "sf-02",
+        "operation": "eol_support_on_date",
+        "decision_scope_sha256": "ef955a948c252c7a6898d313859105de1484bd2e8adbaa81838767ed3eb0dcf4",
+        "endpoint_note": "check_date 2027-03-01 after eol 2026-06-30 => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "sf-03",
+        "operation": "ghsa_semver_membership",
+        "decision_scope_sha256": "2ba01613bedab119155da112cd580b8aa24c54fee6a09ea09b4d62246e8a24b2",
+        "endpoint_note": "7.22.0 below both comma-separated multi-ranges => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "sf-04",
+        "operation": "license_permission_granted",
+        "decision_scope_sha256": "b3d76d80ecff5180537ebc9c73edde6fb676a86258a1bf119a54418010af3c28",
+        "endpoint_note": "see license_audit",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "sf-05",
+        "operation": "go_symbol_version_membership",
+        "decision_scope_sha256": "f2538536dadf2ff61d93f222347f8a0ddb19d22ad362df3a149c4d6dd7ecafac",
+        "endpoint_note": "symbol identity match and 1.79.0 < 1.79.3 => true",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mm-01",
+        "operation": "cargo_affected_membership",
+        "decision_scope_sha256": "304ba90a753319a31615dab157a8838f299458e84eacd438540815578edb44fd",
+        "endpoint_note": "version == upper_exclusive 0.11.15 => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mm-02",
+        "operation": "ghsa_semver_membership",
+        "decision_scope_sha256": "7ec75bcd3c9250263841971c5b051f82d6c0cad7aac547db2fef2407c3efe6f1",
+        "endpoint_note": "1.8.4 outside inclusive upper <=1.8.3 => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mm-03",
+        "operation": "eol_support_on_date",
+        "decision_scope_sha256": "6585f1330553484a7c0fbeccfc6c5746b36848bced964e562660e8960923b049",
+        "endpoint_note": "check_date 2026-09-01 after eol 2026-06-09 => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mm-04",
+        "operation": "go_symbol_version_membership",
+        "decision_scope_sha256": "2c187987244634580e551f41876321cbc2d3c01da14fa2876c3b99b15a85b822",
+        "endpoint_note": "version == upper_exclusive 0.45.0 => false",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mm-05",
+        "operation": "license_inclusion_obligation_holds",
+        "decision_scope_sha256": "d5264c0c1f6694fcfdb33d6c9bbe1d27bdb802193bd6e081bfd350ed08a8f57f",
+        "endpoint_note": "see license_audit",
+        "interpreter": false,
+        "expected": false,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mc-01",
+        "operation": "ghsa_semver_membership",
+        "decision_scope_sha256": "6d35e58fb75b7ba78d107a97e84c67562b0a011990081548f24b072f4822e675",
+        "endpoint_note": "3.3.3 satisfies < 3.4.0 => true",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mc-02",
+        "operation": "eol_support_on_date",
+        "decision_scope_sha256": "0f414c8881d74300ee41cabaea0efbf15a9e9ab09f407542e4f1df3e4b76a968",
+        "endpoint_note": "check_date 2026-12-01 on/before eol 2027-03-31 => true",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mc-03",
+        "operation": "go_symbol_version_membership",
+        "decision_scope_sha256": "b5f5f509ac3a4ba7b47da9c1492513269f7c1459f224f8f2015b385494ed8850",
+        "endpoint_note": "symbol match and 0.5.0 < 0.5.1 => true",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mc-04",
+        "operation": "license_section_waiver_applies",
+        "decision_scope_sha256": "fc55041d3f92a6d0fba83995e6b6f7fe8afcbf3a04e34dcc30836a963c9dd435",
+        "endpoint_note": "see license_audit",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      },
+      {
+        "task_id": "mc-05",
+        "operation": "cargo_affected_membership",
+        "decision_scope_sha256": "ccab64699849823d2e32f213ecae0315831bca24acb1496325e25932830e1064",
+        "endpoint_note": "0.5.1 < upper_exclusive 0.6.0 => true",
+        "interpreter": true,
+        "expected": true,
+        "verdict": "pass"
+      }
+    ],
+    "verdict": "pass"
+  },
+  "license_audit": {
+    "sf-04": {
+      "operation": "license_permission_granted",
+      "clause_exact_apart_from_disclosed_whitespace_normalization": true,
+      "clause_vs_raw": "byte-exact substring of /licenseExceptionText at oracle slice [210:626] in k3/capE-01; structured clause == oracle extracted clause",
+      "typed_phrases_present": {
+        "independent modules": true,
+        "executable": true,
+        "terms of your choice": true
+      },
+      "operation_expresses_task_proposition": true,
+      "proposition_note": "decision scope asks linking/distribution permission; required phrases are substantive clause atoms for that permission, not a hardcoded boolean",
+      "negative_behavior": {
+        "missing_phrase_returns_false": true,
+        "vector_id": "license-permission-missing-phrase"
+      },
+      "no_general_legal_entailment_claim": true,
+      "verdict": "pass"
+    },
+    "mm-05": {
+      "operation": "license_inclusion_obligation_holds",
+      "clause_exact_apart_from_disclosed_whitespace_normalization": true,
+      "clause_vs_raw": "byte-exact substring of /licenseText at oracle slice [467:862] in k3c/capE-04c; structured clause == oracle extracted clause",
+      "typed_category_present": true,
+      "category_phrase": "solely in the form of machine-executable object code",
+      "operation_expresses_task_proposition": true,
+      "proposition_note": "scope asks whether inclusion obligation holds for object-code-only distributions; interpreter returns false when category phrase and unless-carveout co-occur — matches BSL carveout semantics rather than encoding expected false directly",
+      "negative_behavior": {
+        "carveout_returns_false_vector": "license-inclusion-carveout",
+        "absent_obligation_language_errors": true,
+        "nonmatching_category_does_not_trigger_carveout": true
+      },
+      "no_general_legal_entailment_claim": true,
+      "verdict": "pass"
+    },
+    "mc-04": {
+      "operation": "license_section_waiver_applies",
+      "clause_exact_apart_from_disclosed_whitespace_normalization": true,
+      "clause_vs_raw": "oracle/structured clause matches raw /licenseExceptionText slice after disclosed whitespace normalization (raw slice contains newlines; normalized clause collapses whitespace); structured clause == oracle extracted clause",
+      "typed_sections_present": {
+        "4(a)": true,
+        "4(b)": true,
+        "4(d)": true
+      },
+      "waiver_language_present": true,
+      "operation_expresses_task_proposition": true,
+      "proposition_note": "scope asks redistribution without complying with Sections 4(a)/4(b)/4(d); operation requires those section atoms plus without complying",
+      "negative_behavior": {
+        "missing_section_errors_vector": "license-waiver-missing-section",
+        "absent_waiver_language_errors": true
+      },
+      "no_general_legal_entailment_claim": true,
+      "verdict": "pass"
+    },
+    "aggregate_verdict": "pass"
+  },
+  "version_date_symbol_audit": {
+    "cargo": {
+      "forms_used": ["introduced_plus_fixed_exclusive", "upper_exclusive"],
+      "endpoints_verified_on_population_and_vectors": true,
+      "at_fixed_or_upper_boundary_is_exclusive": true,
+      "verdict": "pass"
+    },
+    "ghsa": {
+      "claimed_grammar": "comma_separated_comparators (>=,<,<=,>,= fragments)",
+      "population_ranges_use_only_claimed_forms": true,
+      "inclusive_and_exclusive_endpoints_verified": true,
+      "multi_range_any_semantics_verified": true,
+      "accepts_unsupported_ambiguous_forms": true,
+      "ambiguous_examples": [
+        {
+          "input": ">= 7.23.0 < 7.28.0",
+          "observed": "accepted as single constraint with opaque bound '7.23.0 < 7.28.0'",
+          "wrong_result": "version 7.30.0 satisfies constraints (true) though outside the intended range"
+        },
+        {
+          "input": ">= 1.2.3 || < 2",
+          "observed": "accepted rather than rejected; bound becomes '1.2.3 || < 2'"
+        }
+      ],
+      "fail_closed_gap": "parser must reject non-comma dual comparators / || forms, or the rule claim must be narrowed and bounds validated as version tokens only after rejecting multi-operator residue",
+      "verdict": "block"
+    },
+    "eol": {
+      "before_on_after_vectors_ok": true,
+      "inclusive_through_eol_date": true,
+      "rejects_non_YYYY_MM_DD_shapes": true,
+      "calendar_invalid_YYYY_MM_DD_note": "2026-02-30 matches regex then raises datetime.ValueError rather than CompareDomainError/ProductionCompareError — secondary fail-closed typing gap; not used by population rows",
+      "verdict": "pass_with_note"
+    },
+    "go": {
+      "upper_exclusive_and_exact_symbol_identity_verified": true,
+      "symbol_mismatch_returns_false": true,
+      "verdict": "pass"
+    },
+    "aggregate_verdict": "block"
+  },
+  "conformance_vectors": {
+    "count": 24,
+    "all_match_expect": true
+  },
+  "focused_tests": {
+    "tests.test_efc_compare_production": "23/23 pass",
+    "tests.test_efc_check": "13/13 pass",
+    "git_diff_check": "clean"
+  },
+  "aggregate": "block",
+  "blockers": [
+    {
+      "id": "B1",
+      "severity": "blocking",
+      "area": "ghsa_range_fail_closed",
+      "summary": "parse_ghsa_range accepts unsupported ambiguous forms outside the claimed comma-separated comparator grammar and evaluates them with incorrect membership semantics instead of erroring.",
+      "evidence": "Input '>= 7.23.0 < 7.28.0' (missing comma) parses as RangeConstraint('>=', '7.23.0 < 7.28.0'); version_satisfies_constraints('7.30.0', ...) returns True. Claimed grammar in production_rule_v1.json version_grammars.ghsa is comma_separated_comparators.",
+      "required_repair": "Reject fragments whose bound is not a single version token (or otherwise reject space-/||-separated multi-comparators without commas), add negative conformance vectors for those forms, and re-pin interpreter/rule hashes; alternatively narrow the published grammar claim only if acceptance is intentional and bounds are strictly validated — silent wrong-true membership is not acceptable under fail-closed."
+    }
+  ],
+  "non_blocking_notes": [
+    {
+      "id": "N1",
+      "area": "iso_date_exception_typing",
+      "summary": "Calendar-invalid ISO dates that match YYYY-MM-DD (e.g. 2026-02-30) raise ValueError from datetime rather than CompareDomainError/ProductionCompareError."
+    },
+    {
+      "id": "N2",
+      "area": "population_ghsa_hygiene",
+      "summary": "All four population GHSA range strings are well-formed comma-separated comparators; B1 is a parser/contract fail-closed defect, not a current population-operand error."
+    }
+  ],
+  "gate_effect": "This review does not close the comparison-contract gate. Manifest conformance, roster/decoding pins, exact budget, and final pre-contact audit remain out of scope and still required before engine contact."
+}
