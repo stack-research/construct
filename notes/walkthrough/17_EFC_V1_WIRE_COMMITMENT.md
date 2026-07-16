@@ -1,15 +1,14 @@
-# Chapter 17 — The wire commitment (DRAFT)
+# Chapter 17 — The wire commitment
 
-Previous: [The experiment the oracle refused](16_EPISTEMIC_FRAME_CHECK.md) · [Walkthrough index](README.md)
+Previous: [The experiment the oracle refused](16_EPISTEMIC_FRAME_CHECK.md) · [Walkthrough index](README.md) · Next: [The instrument that priced its own surface](18_EFC_V1_CALIBRATION_CLOSE.md)
 
-**Status: DRAFT — holding at the operator's read.** This chapter was written
-the same day the events happened, *before* the human review it describes as
-pending. Nothing in it is sealed. The candidate protocol is
-[SPEC_EPISTEMIC_FRAME_CHECK_V1.md](../SPEC_EPISTEMIC_FRAME_CHECK_V1.md)
-(uncommitted at time of writing); the authoritative record of the round is the
-substrate thread `epistemic-frame-check-v1`. If the operator blocks at read
-time, this chapter becomes the record of a second valid close, and its title
-keeps the word DRAFT until that verdict lands either way.
+**Status: the operator sealed Part I on 2026-07-16**
+(`part_i_spec_hash 2d37f6bf…5b6097d`, commit `cdd7087`), and the calibration
+that followed is [chapter 18](18_EFC_V1_CALIBRATION_CLOSE.md)'s story. The
+text below is preserved as written — the same day as the events, *before*
+the operator's read — because the pre-verdict framing was the point. The
+protocol is [SPEC_EPISTEMIC_FRAME_CHECK_V1.md](../SPEC_EPISTEMIC_FRAME_CHECK_V1.md);
+the round's record is the substrate thread `epistemic-frame-check-v1`.
 
 ## The plain-language question
 

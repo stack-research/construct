@@ -9,4 +9,4 @@ turn_order:
     - cursor/grok-4.5
     - cursor/kimi-k2.7-code
 next_index: 1
-status: active
+status: ended
