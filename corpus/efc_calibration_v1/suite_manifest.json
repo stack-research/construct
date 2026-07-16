@@ -6,24 +6,13 @@
     "release",
     "table"
   ],
-  "attestation_pending": [
-    "efc_v1-mm-01",
-    "efc_v1-mm-02",
-    "efc_v1-mm-03",
-    "efc_v1-mm-04",
-    "efc_v1-mm-05",
-    "efc_v1-mc-01",
-    "efc_v1-mc-02",
-    "efc_v1-mc-03",
-    "efc_v1-mc-04",
-    "efc_v1-mc-05",
-    "efc_v1-ir-01",
-    "efc_v1-ir-02",
-    "efc_v1-ir-03",
-    "efc_v1-ir-04",
-    "efc_v1-ir-05"
-  ],
-  "attestation_status": "pending",
+  "attestation_authority": {
+    "reviewer_seat": "cold_fixture_reviewer",
+    "ruling_entry": "20260716T110305984Z__dan.md",
+    "ruling_timestamp_utc": "2026-07-16T11:03:05.984Z"
+  },
+  "attestation_pending": [],
+  "attestation_status": "signed",
   "carried_debts": {
     "discrete_threshold_small_n": "At n=5, k=5: fail_threshold=0.30; effective fail requires >=2/5 correct per leg/stratum (grok D4-NB1).",
     "homoglyph_hygiene": "D3-NB1: NFC gate does not detect confusable scripts.",
@@ -35,77 +24,77 @@
   "fixtures": [
     {
       "fixture_id": "efc_v1-mm-01",
-      "fixture_sha256": "481ed56828286709e246bb62048d7231accd639f25f20fdec5c0ebf2dfef069a",
+      "fixture_sha256": "09dc0fa783df9c6a52975ee12d309cf55a675c4952027e60d3b6ee83282f30e2",
       "stratum": "match_mismatch"
     },
     {
       "fixture_id": "efc_v1-mm-02",
-      "fixture_sha256": "ef205d78bf75753f7bacc6c8f6dfd9920d481e3e9edb78863a477aede6342961",
+      "fixture_sha256": "8e8789925b9e85733b0dcb74b64fc187623d5a86833639378c3e447c8bec6ae6",
       "stratum": "match_mismatch"
     },
     {
       "fixture_id": "efc_v1-mm-03",
-      "fixture_sha256": "e4c065857a0edeff8685faae427e31e2145a1c9e3fa89056b4d7d5f330ca1ea4",
+      "fixture_sha256": "38342eba34abca95a0e7b5853d3d4bfba8b761bf503013f84479ff1edda631fc",
       "stratum": "match_mismatch"
     },
     {
       "fixture_id": "efc_v1-mm-04",
-      "fixture_sha256": "212b370a42f85ca70da7a8b317bdd0601345ba0e62f26326f2bb449c0ec288bb",
+      "fixture_sha256": "6127dedb07fcefbb8cf5089fed9047b2006b5b88f34a9b171f6e8fe8522dd96c",
       "stratum": "match_mismatch"
     },
     {
       "fixture_id": "efc_v1-mm-05",
-      "fixture_sha256": "08409f937846b51b2382ce5fcc1f81981e5a27f3920904fedf57bcf571fa161a",
+      "fixture_sha256": "2d4f116b6c5d5911471f12a4a186024f14292ae0bff2ae0dac766af222817fa4",
       "stratum": "match_mismatch"
     },
     {
       "fixture_id": "efc_v1-mc-01",
-      "fixture_sha256": "8d94511da2f2c5088a7795ea5efd9317691fe9c7b40ff0d69fc7159b56a35a4e",
+      "fixture_sha256": "57344788acb91570715da751a707ab118c2deadf9bc072b382f543aac0b452ad",
       "stratum": "match_commit"
     },
     {
       "fixture_id": "efc_v1-mc-02",
-      "fixture_sha256": "c05225205ffc1a54a86dff25050102128ceea0d5f4fbb76e99335dee77743a23",
+      "fixture_sha256": "1f751090df1d3af3ddfed971b35c0495ecdd770285560969283dfc0fb322b4e7",
       "stratum": "match_commit"
     },
     {
       "fixture_id": "efc_v1-mc-03",
-      "fixture_sha256": "ed31f8c30715b1a823f25945adbc986ef302a8bfeebc23e16dccc9453beb0ebb",
+      "fixture_sha256": "136c7e87c5f853542f4cfb7322a088c79a7d02fb324e9a2b7309d3dde07a851c",
       "stratum": "match_commit"
     },
     {
       "fixture_id": "efc_v1-mc-04",
-      "fixture_sha256": "4e3e4df4ba35b8e3308656ebf90958dc6787134eb9d7aa8cf137ddb73e999563",
+      "fixture_sha256": "a6e7464d8a8739af1fc2f79caaa8b1b775517693087b710543917142ea184192",
       "stratum": "match_commit"
     },
     {
       "fixture_id": "efc_v1-mc-05",
-      "fixture_sha256": "b1442e1f76eef724c4c584e4501af582f70474684202eb2e036802e9cd889085",
+      "fixture_sha256": "ef0b160026f6c99d4513b834bb9d6c044ab40908618956d586a3340657df4d9e",
       "stratum": "match_commit"
     },
     {
       "fixture_id": "efc_v1-ir-01",
-      "fixture_sha256": "e3957d02fdcf6fd365ab33f4ce29af4d63b1308e3f0ee6339ec6b95b8eb0dc79",
+      "fixture_sha256": "0d817ff73731ffbe974e76e4e1ed23f64af2cc5948108f8bdbaf05edf3b1a772",
       "stratum": "irrelevant"
     },
     {
       "fixture_id": "efc_v1-ir-02",
-      "fixture_sha256": "cdaca02e4b0dd98d84cc069845b8f7e35f955b78e3f3846c80373365bbbb8874",
+      "fixture_sha256": "a7d29f968e0bbb288405a10a94b9f85bea44cf63f63d08b18b274ce0cb0e2d01",
       "stratum": "irrelevant"
     },
     {
       "fixture_id": "efc_v1-ir-03",
-      "fixture_sha256": "b90c28b17c2af5863438cc4130081518bb4dde9d96dc2d36b4198c9ce7005ced",
+      "fixture_sha256": "4aa7f7cde7c16d77a75c8e3b15ee561cd47a6fedd588e796521fbfec2ce56a4c",
       "stratum": "irrelevant"
     },
     {
       "fixture_id": "efc_v1-ir-04",
-      "fixture_sha256": "a3ce9b902dd84d41611e1136ab066e64f2a6b2518f341e6cd97519b559e369cd",
+      "fixture_sha256": "8b64dcbdfe7bb3738e07601b173076c96c11625896f7b0c4df8c29029d8d6aa5",
       "stratum": "irrelevant"
     },
     {
       "fixture_id": "efc_v1-ir-05",
-      "fixture_sha256": "1ac5b9c9dfcc5795c971e0f6de48f14ed600ec9842930a578f71a48a20ff3691",
+      "fixture_sha256": "12f0581dd1fb4d078a874ea4594063547d5f8248b0052af4b371e582f2cab140",
       "stratum": "irrelevant"
     }
   ],

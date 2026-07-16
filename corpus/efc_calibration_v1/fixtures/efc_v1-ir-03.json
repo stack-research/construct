@@ -19,6 +19,13 @@
     "table"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "efc-v1-att-05a1edf1d9c6ce13",
+    "fixture_id": "efc_v1-ir-03",
+    "reviewed_at": "2026-07-16T11:03:05.984Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v1",
   "provenance": {
     "capture_family": "C",

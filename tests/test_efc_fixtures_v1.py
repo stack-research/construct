@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -51,18 +52,36 @@ class TestFixtureBuilder(unittest.TestCase):
       self.assertEqual(suite_bytes(build_suite().fixtures), first)
 
   def test_written_artifacts_match_builder(self):
-    built = write_suite_artifacts()
-    self.assertTrue(FIXTURES_DIR.is_dir())
-    self.assertTrue(MANIFEST_PATH.is_file())
-    for fixture in built.fixtures:
-      path = FIXTURES_DIR / f"{fixture['fixture_id']}.json"
-      self.assertTrue(path.is_file())
-      on_disk = json.loads(path.read_text(encoding="utf-8"))
-      self.assertEqual(on_disk, fixture)
-      self.assertNotIn("plausibility_attestation", on_disk)
-    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    self.assertEqual(manifest["k"], SUITE_K)
-    self.assertEqual(manifest["attestation_status"], "pending")
+    # Writes go to a temp root, never the real corpus tree: the live
+    # corpus may carry human attestations the builder must not erase
+    # (v0 K4 repair_ledger lesson — mutators behind temp roots).
+    with tempfile.TemporaryDirectory() as tmp:
+      fixtures_dir = Path(tmp) / "fixtures"
+      manifest_path = Path(tmp) / "suite_manifest.json"
+      built = write_suite_artifacts(
+          fixtures_dir=fixtures_dir, manifest_path=manifest_path)
+      self.assertTrue(fixtures_dir.is_dir())
+      self.assertTrue(manifest_path.is_file())
+      for fixture in built.fixtures:
+        path = fixtures_dir / f"{fixture['fixture_id']}.json"
+        self.assertTrue(path.is_file())
+        on_disk = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(on_disk, fixture)
+        self.assertNotIn("plausibility_attestation", on_disk)
+      manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+      self.assertEqual(manifest["k"], SUITE_K)
+      self.assertEqual(manifest["attestation_status"], "pending")
+
+  def test_full_suite_run_never_writes_real_corpus(self):
+    # Regression guard for the mutation defect found 2026-07-16: the
+    # real corpus bytes must be untouched by running this module.
+    before = {p: p.read_bytes() for p in sorted(FIXTURES_DIR.glob("*.json"))}
+    with tempfile.TemporaryDirectory() as tmp:
+      write_suite_artifacts(
+          fixtures_dir=Path(tmp) / "fx",
+          manifest_path=Path(tmp) / "m.json")
+    for p, data in before.items():
+      self.assertEqual(p.read_bytes(), data)
 
   def test_k_choice_and_ordinal_histogram(self):
     built = build_suite()
