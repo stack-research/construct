@@ -1,0 +1,318 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "attestation_pending": [
+    "efc_v1-mm-01",
+    "efc_v1-mm-02",
+    "efc_v1-mm-03",
+    "efc_v1-mm-04",
+    "efc_v1-mm-05",
+    "efc_v1-mc-01",
+    "efc_v1-mc-02",
+    "efc_v1-mc-03",
+    "efc_v1-mc-04",
+    "efc_v1-mc-05",
+    "efc_v1-ir-01",
+    "efc_v1-ir-02",
+    "efc_v1-ir-03",
+    "efc_v1-ir-04",
+    "efc_v1-ir-05"
+  ],
+  "attestation_status": "pending",
+  "carried_debts": {
+    "discrete_threshold_small_n": "At n=5, k=5: fail_threshold=0.30; effective fail requires >=2/5 correct per leg/stratum (grok D4-NB1).",
+    "homoglyph_hygiene": "D3-NB1: NFC gate does not detect confusable scripts.",
+    "l2_floor_residuals": "D4-NB2: synonym/morph semantic leaks priced by M_task_menu.",
+    "plausibility_attestation_pending": "cold_fixture_reviewer must sign per-fixture attestations before pin; machine gates ran with require_plausibility_attestation=False.",
+    "trigger_projection_required": "Every fixture carries D4-computed trigger_feature_strings; empty or mismatched projections refuse before leak audit."
+  },
+  "fixture_count": 15,
+  "fixtures": [
+    {
+      "fixture_id": "efc_v1-mm-01",
+      "fixture_sha256": "481ed56828286709e246bb62048d7231accd639f25f20fdec5c0ebf2dfef069a",
+      "stratum": "match_mismatch"
+    },
+    {
+      "fixture_id": "efc_v1-mm-02",
+      "fixture_sha256": "ef205d78bf75753f7bacc6c8f6dfd9920d481e3e9edb78863a477aede6342961",
+      "stratum": "match_mismatch"
+    },
+    {
+      "fixture_id": "efc_v1-mm-03",
+      "fixture_sha256": "e4c065857a0edeff8685faae427e31e2145a1c9e3fa89056b4d7d5f330ca1ea4",
+      "stratum": "match_mismatch"
+    },
+    {
+      "fixture_id": "efc_v1-mm-04",
+      "fixture_sha256": "212b370a42f85ca70da7a8b317bdd0601345ba0e62f26326f2bb449c0ec288bb",
+      "stratum": "match_mismatch"
+    },
+    {
+      "fixture_id": "efc_v1-mm-05",
+      "fixture_sha256": "08409f937846b51b2382ce5fcc1f81981e5a27f3920904fedf57bcf571fa161a",
+      "stratum": "match_mismatch"
+    },
+    {
+      "fixture_id": "efc_v1-mc-01",
+      "fixture_sha256": "8d94511da2f2c5088a7795ea5efd9317691fe9c7b40ff0d69fc7159b56a35a4e",
+      "stratum": "match_commit"
+    },
+    {
+      "fixture_id": "efc_v1-mc-02",
+      "fixture_sha256": "c05225205ffc1a54a86dff25050102128ceea0d5f4fbb76e99335dee77743a23",
+      "stratum": "match_commit"
+    },
+    {
+      "fixture_id": "efc_v1-mc-03",
+      "fixture_sha256": "ed31f8c30715b1a823f25945adbc986ef302a8bfeebc23e16dccc9453beb0ebb",
+      "stratum": "match_commit"
+    },
+    {
+      "fixture_id": "efc_v1-mc-04",
+      "fixture_sha256": "4e3e4df4ba35b8e3308656ebf90958dc6787134eb9d7aa8cf137ddb73e999563",
+      "stratum": "match_commit"
+    },
+    {
+      "fixture_id": "efc_v1-mc-05",
+      "fixture_sha256": "b1442e1f76eef724c4c584e4501af582f70474684202eb2e036802e9cd889085",
+      "stratum": "match_commit"
+    },
+    {
+      "fixture_id": "efc_v1-ir-01",
+      "fixture_sha256": "e3957d02fdcf6fd365ab33f4ce29af4d63b1308e3f0ee6339ec6b95b8eb0dc79",
+      "stratum": "irrelevant"
+    },
+    {
+      "fixture_id": "efc_v1-ir-02",
+      "fixture_sha256": "cdaca02e4b0dd98d84cc069845b8f7e35f955b78e3f3846c80373365bbbb8874",
+      "stratum": "irrelevant"
+    },
+    {
+      "fixture_id": "efc_v1-ir-03",
+      "fixture_sha256": "b90c28b17c2af5863438cc4130081518bb4dde9d96dc2d36b4198c9ce7005ced",
+      "stratum": "irrelevant"
+    },
+    {
+      "fixture_id": "efc_v1-ir-04",
+      "fixture_sha256": "a3ce9b902dd84d41611e1136ab066e64f2a6b2518f341e6cd97519b559e369cd",
+      "stratum": "irrelevant"
+    },
+    {
+      "fixture_id": "efc_v1-ir-05",
+      "fixture_sha256": "1ac5b9c9dfcc5795c971e0f6de48f14ed600ec9842930a578f71a48a20ff3691",
+      "stratum": "irrelevant"
+    }
+  ],
+  "fixtures_per_stratum": 5,
+  "gate_results": {
+    "composition_ok": true,
+    "extraction_integrity_ok": true,
+    "family_validity_ok": true,
+    "leak_audit_cells": [
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L1",
+        "passed": true,
+        "stratum": "match_mismatch",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L1",
+        "passed": true,
+        "stratum": "match_commit",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L1",
+        "passed": true,
+        "stratum": "irrelevant",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L2",
+        "passed": true,
+        "stratum": "match_mismatch",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L2",
+        "passed": true,
+        "stratum": "match_commit",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L2",
+        "passed": true,
+        "stratum": "irrelevant",
+        "total": 5
+      }
+    ],
+    "leak_audit_ok": true,
+    "lexical_marking_ok": true,
+    "lexical_marking_refusals": [],
+    "ordinal_uniformity_ok": true
+  },
+  "k": 5,
+  "k_justification": "k=5 gives one ordinal slot per fixture within each stratum (n=5/stratum), keeping L1/L2 per-stratum accuracy at 0.20 with the suite-wide ordinal histogram (3,3,3,3,3) under max_abs_dev(15,5)=2. At n=5 per stratum the discrete leak-audit fail line is >1/5 (grok D4-NB1 carried debt).",
+  "ordinal_histogram": [
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "ordinal_max_abs_dev_bound": 2,
+  "ordinal_max_observed_deviation": 0.0,
+  "part_i_spec_sha256": "2d37f6bf0cd4aab830cb1dcf5eb9576f13b9acff65b63cd7d5b5fe0ea5b6097d",
+  "population_id": "efc_calibration_v1",
+  "provenance_index": {
+    "efc_v1-ir-01": {
+      "episode_path": "episodes/efc_calibration/analog/ir-01.json",
+      "episode_sha256": "abae8c9ea8d2abe8c566f15468abc610561293e62727fb60ed8081e479816240",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-ir-02": {
+      "episode_path": "episodes/efc_calibration/analog/ir-02.json",
+      "episode_sha256": "d670b688bc398d112271573ab7ab6059c22b705e1986b3f967d6a934ca7f09ed",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-ir-03": {
+      "capture_family": "C",
+      "capture_path": "corpus/efc_calibration/_acquisition/g4/refetch/C05/raw.json",
+      "capture_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+      "entity_key": "esxi",
+      "logical_slot": "C05",
+      "rewording_applied": false,
+      "sidecar_path": "corpus/efc_calibration/_acquisition/g4/refetch/C05/sidecar.json",
+      "source_kind": "v0_capture_c_family"
+    },
+    "efc_v1-ir-04": {
+      "episode_path": "episodes/efc_calibration/analog/ir-04.json",
+      "episode_sha256": "b4e4ebb2da8a6651d263673de11f1460e83e20b0ceb1e97704f98df876b552b6",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-ir-05": {
+      "episode_path": "episodes/efc_calibration/analog/ir-05.json",
+      "episode_sha256": "f6a58dfe3e785fee2a83e0300e0bc91df6c589f8406d7f967f937f04f6d13a27",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mc-01": {
+      "episode_path": "episodes/efc_calibration/analog/mc-01.json",
+      "episode_sha256": "35c338d5dab8792adff54632f990a9292524d6ff533beab61735a3ecb9adc90c",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mc-02": {
+      "capture_family": "C",
+      "capture_path": "corpus/efc_calibration/_acquisition/g4/refetch/C01/raw.json",
+      "capture_sha256": "13496c043f2c8f802031041df62256547c0fd08e1f7cb6e9ab9eeb38956c212e",
+      "entity_key": "tomcat",
+      "logical_slot": "C01",
+      "rewording_applied": false,
+      "sidecar_path": "corpus/efc_calibration/_acquisition/g4/refetch/C01/sidecar.json",
+      "source_kind": "v0_capture_c_family"
+    },
+    "efc_v1-mc-03": {
+      "episode_path": "episodes/efc_calibration/analog/mc-03.json",
+      "episode_sha256": "82675a78d39012857b65730d6ea89a03eca36dd905e1755da9dc1878a5d2a9c6",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mc-04": {
+      "episode_path": "episodes/efc_calibration/analog/mc-04.json",
+      "episode_sha256": "968a0f6c2a588d96716663f30f0f556589b70121c52ab9657dc5394d79fdb3c8",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mc-05": {
+      "episode_path": "episodes/efc_calibration/analog/mc-05.json",
+      "episode_sha256": "591672b4307ceed2a4b79e0060117d52506e45c14b27638abf52c3d8019cff08",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mm-01": {
+      "episode_path": "episodes/efc_calibration/analog/mm-01.json",
+      "episode_sha256": "6b2ec67767550caeba8d0401bc837b358b736627d4ad187b72d52cf9c53e8899",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mm-02": {
+      "episode_path": "episodes/efc_calibration/analog/mm-02.json",
+      "episode_sha256": "b5d9306a229774ffb7106b89fdf06a74a9889693d12251f56cbf013e81a36b4d",
+      "rewording_applied": true,
+      "rewording_note": "Scrubbed menu-token 'release' from task body (episode surface: 'the release must be blocked').",
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mm-03": {
+      "capture_family": "C",
+      "capture_path": "corpus/efc_calibration/_acquisition/g4/refetch/C04/raw.json",
+      "capture_sha256": "76fc11ae94a7f3069ceefedd9888e069220ad3817fbccd2a00f50bfc8b21cd96",
+      "entity_key": "visual-studio",
+      "logical_slot": "C04",
+      "rewording_applied": false,
+      "sidecar_path": "corpus/efc_calibration/_acquisition/g4/refetch/C04/sidecar.json",
+      "source_kind": "v0_capture_c_family"
+    },
+    "efc_v1-mm-04": {
+      "episode_path": "episodes/efc_calibration/analog/mm-04.json",
+      "episode_sha256": "9c6bc6cd602345c81df1f621761e6297d367639257181bfdcae726618827f455",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    },
+    "efc_v1-mm-05": {
+      "episode_path": "episodes/efc_calibration/analog/mm-05.json",
+      "episode_sha256": "37addc27591d7374d3a8d74566633708e10c63806a67042a05cac7720b5434e3",
+      "rewording_applied": false,
+      "source_kind": "episode_surface_adaptation"
+    }
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "schema_version": "efc_calibration_suite_v1",
+  "seal_dependent_hashes": {
+    "action_menu_composition_rules_hash": "TO-BE-COMPUTED-AT-SEAL",
+    "leak_audit_contract_hash": "TO-BE-COMPUTED-AT-SEAL",
+    "leak_audit_predictor_hash": "TO-BE-COMPUTED-AT-SEAL",
+    "suite_manifest_hash": "TO-BE-COMPUTED-AT-SEAL"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "suite_id": "efc_calibration_v1"
+}

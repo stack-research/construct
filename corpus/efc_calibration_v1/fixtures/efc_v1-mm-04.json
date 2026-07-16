@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "Go module golang.org/x/net at version 0.45.0, calling html.Parse",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "suspend",
+  "fixture_id": "efc_v1-mm-04",
+  "menu_order": [
+    "proceed",
+    "maintain",
+    "release",
+    "suspend",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mm-04.json",
+    "episode_sha256": "9c6bc6cd602345c81df1f621761e6297d367639257181bfdcae726618827f455",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://vuln.go.dev/ID/GO-2026-4440.json",
+  "source_reference_present": true,
+  "stratum": "match_mismatch",
+  "surface_text": "A security-triage row asserts, citing the report at the linked record, that the crawler's HTML parser dependency is affected by a parsing complexity issue and ingestion must be paused. Decide how to respond to the triage row.",
+  "task_body": "A security-triage row asserts, citing the report at the linked record, that the crawler's HTML parser dependency is affected by a parsing complexity issue and ingestion must be paused. Decide how to respond to the triage row.",
+  "task_id": "efc_v1-mm-04",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

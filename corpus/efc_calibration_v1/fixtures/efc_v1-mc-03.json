@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "Go module github.com/moby/spdystream at version 0.5.0, calling NewConnection",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "proceed",
+  "fixture_id": "efc_v1-mc-03",
+  "menu_order": [
+    "suspend",
+    "maintain",
+    "proceed",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mc-03.json",
+    "episode_sha256": "82675a78d39012857b65730d6ea89a03eca36dd905e1755da9dc1878a5d2a9c6",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://vuln.go.dev/ID/GO-2026-4958.json",
+  "source_reference_present": true,
+  "stratum": "match_commit",
+  "surface_text": "A cluster-upgrade checklist asserts, citing the report at the linked record, that the streaming sidecar's SPDY framing dependency is on an affected version along a vulnerable call path and must be bumped before rollout. Decide how to respond to the checklist.",
+  "task_body": "A cluster-upgrade checklist asserts, citing the report at the linked record, that the streaming sidecar's SPDY framing dependency is on an affected version along a vulnerable call path and must be bumped before rollout. Decide how to respond to the checklist.",
+  "task_id": "efc_v1-mc-03",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

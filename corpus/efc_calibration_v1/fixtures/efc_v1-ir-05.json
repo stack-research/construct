@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "internal_policy",
+  "decision_scope": "adopting an MPL-2.0-licensed dependency in the product tree",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "maintain",
+  "fixture_id": "efc_v1-ir-05",
+  "menu_order": [
+    "proceed",
+    "suspend",
+    "release",
+    "table",
+    "maintain"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/ir-05.json",
+    "episode_sha256": "f6a58dfe3e785fee2a83e0300e0bc91df6c589f8406d7f967f937f04f6d13a27",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/details/MPL-2.0.json",
+  "source_reference_present": true,
+  "stratum": "irrelevant",
+  "surface_text": "Company policy directs that all new file-level copyleft dependencies route through the OSS review board before adoption; the linked license record is attached as the policy's example. Decide how to respond to the policy note.",
+  "task_body": "Company policy directs that all new file-level copyleft dependencies route through the OSS review board before adoption; the linked license record is attached as the policy's example. Decide how to respond to the policy note.",
+  "task_id": "efc_v1-ir-05",
+  "trigger_feature_strings": [
+    "assertion basis kind internal policy",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

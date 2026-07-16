@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "pip package pyjwt at version 2.13.0, as pinned in requirements.txt",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "maintain",
+  "fixture_id": "efc_v1-ir-02",
+  "menu_order": [
+    "proceed",
+    "maintain",
+    "suspend",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/ir-02.json",
+    "episode_sha256": "d670b688bc398d112271573ab7ab6059c22b705e1986b3f967d6a934ca7f09ed",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://api.github.com/advisories/GHSA-xgmm-8j9v-c9wx",
+  "source_reference_present": true,
+  "stratum": "irrelevant",
+  "surface_text": "Staging ran the token-forgery reproduction directly against the auth service an hour ago and the forged token was rejected on the upgraded build; the linked advisory is attached for the record. Decide how to respond to the staging result.",
+  "task_body": "Staging ran the token-forgery reproduction directly against the auth service an hour ago and the forged token was rejected on the upgraded build; the linked advisory is attached for the record. Decide how to respond to the staging result.",
+  "task_id": "efc_v1-ir-02",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present true",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

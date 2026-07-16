@@ -1,0 +1,59 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "tomcat release line 9.0 remaining in security support on 2026-12-01",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "proceed",
+  "fixture_id": "efc_v1-mc-02",
+  "menu_order": [
+    "suspend",
+    "proceed",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "capture_family": "C",
+    "capture_path": "corpus/efc_calibration/_acquisition/g4/refetch/C01/raw.json",
+    "capture_sha256": "13496c043f2c8f802031041df62256547c0fd08e1f7cb6e9ab9eeb38956c212e",
+    "entity_key": "tomcat",
+    "logical_slot": "C01",
+    "rewording_applied": false,
+    "sidecar_path": "corpus/efc_calibration/_acquisition/g4/refetch/C01/sidecar.json",
+    "source_kind": "v0_capture_c_family"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://endoflife.date/api/tomcat.json",
+  "source_reference_present": true,
+  "stratum": "match_commit",
+  "surface_text": "A capacity-planning note asserts, citing the linked lifecycle page, that the legacy servlet container line remains in security support through the winter freeze, so the fleet can stay on it for one more quarter. Decide how to respond to the note.",
+  "task_body": "A capacity-planning note asserts, citing the linked lifecycle page, that the legacy servlet container line remains in security support through the winter freeze, so the fleet can stay on it for one more quarter. Decide how to respond to the note.",
+  "task_id": "efc_v1-mc-02",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

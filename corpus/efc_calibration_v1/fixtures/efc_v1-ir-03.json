@@ -1,0 +1,59 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "esxi release line 7.0 remaining in support on 2026-01-01",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "maintain",
+  "fixture_id": "efc_v1-ir-03",
+  "menu_order": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "capture_family": "C",
+    "capture_path": "corpus/efc_calibration/_acquisition/g4/refetch/C05/raw.json",
+    "capture_sha256": "6c0d14561442cf070105428cda4bf2e747cdc83877a7f4dfd6f88d1105fcdd9d",
+    "entity_key": "esxi",
+    "logical_slot": "C05",
+    "rewording_applied": false,
+    "sidecar_path": "corpus/efc_calibration/_acquisition/g4/refetch/C05/sidecar.json",
+    "source_kind": "v0_capture_c_family"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://endoflife.date/api/esxi.json",
+  "source_reference_present": true,
+  "stratum": "irrelevant",
+  "surface_text": "The operations engineer read the hypervisor cluster's support entitlement directly from the vendor console during today's maintenance window and it shows expired; the linked lifecycle page is attached for context. Decide how to respond to the console reading.",
+  "task_body": "The operations engineer read the hypervisor cluster's support entitlement directly from the vendor console during today's maintenance window and it shows expired; the linked lifecycle page is attached for context. Decide how to respond to the console reading.",
+  "task_id": "efc_v1-ir-03",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present true",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

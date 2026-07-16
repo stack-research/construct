@@ -1,0 +1,59 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "visual-studio release line 18.6 remaining in support on 2026-09-01",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "suspend",
+  "fixture_id": "efc_v1-mm-03",
+  "menu_order": [
+    "proceed",
+    "maintain",
+    "suspend",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "capture_family": "C",
+    "capture_path": "corpus/efc_calibration/_acquisition/g4/refetch/C04/raw.json",
+    "capture_sha256": "76fc11ae94a7f3069ceefedd9888e069220ad3817fbccd2a00f50bfc8b21cd96",
+    "entity_key": "visual-studio",
+    "logical_slot": "C04",
+    "rewording_applied": false,
+    "sidecar_path": "corpus/efc_calibration/_acquisition/g4/refetch/C04/sidecar.json",
+    "source_kind": "v0_capture_c_family"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://endoflife.date/api/visual-studio.json",
+  "source_reference_present": true,
+  "stratum": "match_mismatch",
+  "surface_text": "A procurement note asserts, citing the linked lifecycle page, that the current IDE version line is still vendor-supported this autumn, so license renewal may continue unchanged. Decide how to respond to the procurement note.",
+  "task_body": "A procurement note asserts, citing the linked lifecycle page, that the current IDE version line is still vendor-supported this autumn, so license renewal may continue unchanged. Decide how to respond to the procurement note.",
+  "task_id": "efc_v1-mm-03",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

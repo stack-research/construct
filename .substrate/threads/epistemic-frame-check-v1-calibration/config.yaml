@@ -8,5 +8,4 @@ turn_order:
     - cursor/composer-2.5
     - cursor/grok-4.5
     - cursor/kimi-k2.7-code
-next_index: 3
 status: active

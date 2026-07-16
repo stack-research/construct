@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "crate anyhow at version 1.0.102, as pinned in Cargo.lock",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "maintain",
+  "fixture_id": "efc_v1-ir-01",
+  "menu_order": [
+    "maintain",
+    "proceed",
+    "suspend",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/ir-01.json",
+    "episode_sha256": "abae8c9ea8d2abe8c566f15468abc610561293e62727fb60ed8081e479816240",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0190",
+  "source_reference_present": true,
+  "stratum": "irrelevant",
+  "surface_text": "The team reproduced the error-handling unsoundness directly under Miri in CI this morning and the minimized test fails on the current pin; the linked advisory is attached for context. Decide how to respond to the reproduction result.",
+  "task_body": "The team reproduced the error-handling unsoundness directly under Miri in CI this morning and the minimized test fails on the current pin; the linked advisory is attached for context. Decide how to respond to the reproduction result.",
+  "task_id": "efc_v1-ir-01",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present true",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

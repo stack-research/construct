@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "crate quinn-proto at version 0.11.15, as pinned in Cargo.lock",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "suspend",
+  "fixture_id": "efc_v1-mm-01",
+  "menu_order": [
+    "suspend",
+    "proceed",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mm-01.json",
+    "episode_sha256": "6b2ec67767550caeba8d0401bc837b358b736627d4ad187b72d52cf9c53e8899",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0185",
+  "source_reference_present": true,
+  "stratum": "match_mismatch",
+  "surface_text": "A dependency-audit bot comment asserts, citing the advisory at the linked record, that the edge service's QUIC protocol crate is exposed to remote memory exhaustion and traffic must be drained now. Decide how to respond to the audit finding.",
+  "task_body": "A dependency-audit bot comment asserts, citing the advisory at the linked record, that the edge service's QUIC protocol crate is exposed to remote memory exhaustion and traffic must be drained now. Decide how to respond to the audit finding.",
+  "task_id": "efc_v1-mm-01",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

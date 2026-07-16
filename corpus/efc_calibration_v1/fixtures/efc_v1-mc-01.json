@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "npm package flatted at version 3.3.3, as pinned in package-lock.json",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "proceed",
+  "fixture_id": "efc_v1-mc-01",
+  "menu_order": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mc-01.json",
+    "episode_sha256": "35c338d5dab8792adff54632f990a9292524d6ff533beab61735a3ecb9adc90c",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://api.github.com/advisories/GHSA-25h7-pfq9-p65f",
+  "source_reference_present": true,
+  "stratum": "match_commit",
+  "surface_text": "A dependency dashboard asserts, citing the advisory at the linked record, that the reporting service's serialization package is within the vulnerable range and the pinned upgrade should merge today. Decide how to respond to the dashboard.",
+  "task_body": "A dependency dashboard asserts, citing the advisory at the linked record, that the reporting service's serialization package is within the vulnerable range and the pinned upgrade should merge today. Decide how to respond to the dashboard.",
+  "task_id": "efc_v1-mc-01",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

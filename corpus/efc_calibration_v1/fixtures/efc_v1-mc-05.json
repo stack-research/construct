@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "crate hpke-rs-rust-crypto at version 0.5.1, as pinned in Cargo.lock",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "proceed",
+  "fixture_id": "efc_v1-mc-05",
+  "menu_order": [
+    "suspend",
+    "maintain",
+    "release",
+    "table",
+    "proceed"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mc-05.json",
+    "episode_sha256": "591672b4307ceed2a4b79e0060117d52506e45c14b27638abf52c3d8019cff08",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://api.osv.dev/v1/vulns/RUSTSEC-2026-0072",
+  "source_reference_present": true,
+  "stratum": "match_commit",
+  "surface_text": "A cryptography-review finding asserts, citing the advisory at the linked record, that the messaging service's HPKE crate is on an affected version and key rotation plus an upgrade must be executed this sprint. Decide how to respond to the finding.",
+  "task_body": "A cryptography-review finding asserts, citing the advisory at the linked record, that the messaging service's HPKE crate is on an affected version and key rotation plus an upgrade must be executed this sprint. Decide how to respond to the finding.",
+  "task_id": "efc_v1-mc-05",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

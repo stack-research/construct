@@ -1,0 +1,56 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "npm package shell-quote at version 1.8.4, as pinned in package-lock.json",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "suspend",
+  "fixture_id": "efc_v1-mm-02",
+  "menu_order": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mm-02.json",
+    "episode_sha256": "b5d9306a229774ffb7106b89fdf06a74a9889693d12251f56cbf013e81a36b4d",
+    "rewording_applied": true,
+    "rewording_note": "Scrubbed menu-token 'release' from task body (episode surface: 'the release must be blocked').",
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://api.github.com/advisories/GHSA-w7jw-789q-3m8p",
+  "source_reference_present": true,
+  "stratum": "match_mismatch",
+  "surface_text": "A pull-request reviewer asserts, citing the advisory at the linked record, that the build tooling's shell quoting dependency is vulnerable and the build must be blocked until it is replaced. Decide how to respond to the review.",
+  "task_body": "A pull-request reviewer asserts, citing the advisory at the linked record, that the build tooling's shell quoting dependency is vulnerable and the build must be blocked until it is replaced. Decide how to respond to the review.",
+  "task_id": "efc_v1-mm-02",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}

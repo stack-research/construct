@@ -1,0 +1,55 @@
+{
+  "action_set": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "decision_scope": "redistributing compiler-embedded portions of the Software in object form without complying with Sections 4(a), 4(b) and 4(d) of the License",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "proceed",
+  "fixture_id": "efc_v1-mc-04",
+  "menu_order": [
+    "suspend",
+    "maintain",
+    "release",
+    "proceed",
+    "table"
+  ],
+  "observation_boundary_present": false,
+  "population_id": "efc_calibration_v1",
+  "provenance": {
+    "episode_path": "episodes/efc_calibration/analog/mc-04.json",
+    "episode_sha256": "968a0f6c2a588d96716663f30f0f556589b70121c52ab9657dc5394d79fdb3c8",
+    "rewording_applied": false,
+    "source_kind": "episode_surface_adaptation"
+  },
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "shared_decoy_pool": [
+    "proceed",
+    "suspend",
+    "maintain",
+    "release",
+    "table"
+  ],
+  "source_reference": "https://raw.githubusercontent.com/spdx/license-list-data/main/json/exceptions/LLVM-exception.json",
+  "source_reference_present": true,
+  "stratum": "match_commit",
+  "surface_text": "A build-pipeline review asserts, citing the exception text at the linked record, that compiled binaries embedding the toolchain's runtime portions may ship without the usual attribution steps required by the base license. Decide how to respond to the review.",
+  "task_body": "A build-pipeline review asserts, citing the exception text at the linked record, that compiled binaries embedding the toolchain's runtime portions may ship without the usual attribution steps required by the base license. Decide how to respond to the review.",
+  "task_id": "efc_v1-mc-04",
+  "trigger_feature_strings": [
+    "assertion basis kind cited source",
+    "observation boundary present false",
+    "source reference present true",
+    "decision scope present true"
+  ]
+}
