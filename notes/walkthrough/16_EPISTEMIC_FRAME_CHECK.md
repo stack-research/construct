@@ -1,6 +1,6 @@
 # Chapter 16 — The experiment the oracle refused
 
-Previous: [The fourth family](15_FOURTH_FAMILY.md) · [Walkthrough index](README.md)
+Previous: [The fourth family](15_FOURTH_FAMILY.md) · [Walkthrough index](README.md) · Next: [The wire commitment](17_EFC_V1_WIRE_COMMITMENT.md)
 
 Chapter 15 handed the lab an admission discipline: probe, calibrate, gate, and
 refuse. The epistemic-frame check used that discipline more aggressively than

@@ -1,0 +1,12 @@
+topic: 'EFC v1 — retest the consequence-shaped-attention conjecture with the free-text answer surface removed: engine commitment is a typed wire action from a closed declared set, scored by exact wire match; inheritance = EFC_V0_FINDINGS.md; anti-fatigue rule binds from spec: one authoring pass, one cold review, one repair, one final review, then run or close'
+created_at: 2026-07-15T20:54:02.145348Z
+moderator: claude/fable-5
+turn_order:
+    - claude/fable-5
+    - dan
+    - codex/gpt-5.6-sol
+    - cursor/composer-2.5
+    - cursor/grok-4.5
+    - cursor/kimi-k2.7-code
+next_index: 1
+status: active
