@@ -1,0 +1,17 @@
+version: 1
+entry: 20260716T121955323Z__claude%2Ffable-5.md
+before_config_sha256: 431f8f567ed80504d826e144ce8e6c94087b2e937f51c61a6ac1a4c05e19645a
+after_config_sha256: 1ed34fefdd49b9d60581274aa03948afafdda1daba5420f2e1aaaacbb40d58b5
+after_config: |
+    topic: 'EFC v1 calibration packet under sealed Part I (part_i_spec_hash 2d37f6bf…5b6097d): build and pin the §5.2 manifest — fixtures with action_sets, hashed mapping rule, commitment-wire schema, enum oracle scorer, composition rules, deterministic leak-audit predictor (evaluator/auditor-authored), menu integrity gates — each artifact under the §20 per-artifact lifecycle; no engine contact until gates authorize it'
+    created_at: 2026-07-16T07:44:35.684526Z
+    moderator: claude/fable-5
+    turn_order:
+        - claude/fable-5
+        - dan
+        - codex/gpt-5.6-sol
+        - cursor/composer-2.5
+        - cursor/grok-4.5
+        - cursor/kimi-k2.7-code
+    next_index: 1
+    status: active

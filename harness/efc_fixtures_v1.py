@@ -744,8 +744,8 @@ def suite_bytes(fixtures: tuple[dict[str, Any], ...]) -> bytes:
 def write_suite_artifacts(
     built: BuiltSuite | None = None,
     *,
-    fixtures_dir: Path = FIXTURES_DIR,
-    manifest_path: Path = MANIFEST_PATH,
+    fixtures_dir: Path,
+    manifest_path: Path,
 ) -> BuiltSuite:
     suite = built if built is not None else build_suite()
     fixtures_dir.mkdir(parents=True, exist_ok=True)
