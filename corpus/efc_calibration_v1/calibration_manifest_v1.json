@@ -1,0 +1,545 @@
+{
+  "action_menu_composition_rules_hash": "085f7701408b633385d6383e3fc99230c1116fd4714a6199d724493e6e58d803",
+  "attestation_authority": {
+    "reviewer_seat": "cold_fixture_reviewer",
+    "ruling_entry": "20260716T110305984Z__dan.md",
+    "ruling_timestamp_utc": "2026-07-16T11:03:05.984Z"
+  },
+  "budget_ledger": {
+    "budget_refusal_typed_outcome": "budget_refusal",
+    "calls_already_spent": 3,
+    "calls_remaining_ceiling": 255,
+    "cost_formula": "cost_usd = 2.50*input_tokens/1,000,000 + 15.00*output_tokens/1,000,000",
+    "hard_cost_ceiling_usd": 1.0,
+    "headroom_below_hard_ceiling_usd": 0.13005,
+    "input_token_ceiling": 250000,
+    "max_output_tokens_per_request": 64,
+    "output_ceiling_derivation": "10 output tokens already spent + 255 remaining calls × 64 max_output_tokens = 16,330",
+    "output_token_ceiling": 16330,
+    "parameterization_note": "If ignorance-probe fact count F changes, recompute total_call_ceiling = 243 + F before pin.",
+    "pricing": {
+      "cached_input_discount_ignored": true,
+      "input_usd_per_million": 2.5,
+      "output_usd_per_million": 15.0,
+      "retrieved_date": "2026-07-16",
+      "source_url": "https://developers.openai.com/api/docs/models/gpt-5.4"
+    },
+    "stop_before_crossing": true,
+    "total_call_ceiling": 258,
+    "wire_probe_calls_completed": 2,
+    "wire_probe_calls_rejected": 1,
+    "wire_probe_tokens": {
+      "input": 18,
+      "output": 10,
+      "total": 28
+    },
+    "worst_case_cost_usd": 0.86995
+  },
+  "calibration_fixture_hash_definition": "canonical_compact_json",
+  "calibration_fixtures": [
+    {
+      "fixture_id": "efc_v1-mm-01",
+      "sha256": "09dc0fa783df9c6a52975ee12d309cf55a675c4952027e60d3b6ee83282f30e2"
+    },
+    {
+      "fixture_id": "efc_v1-mm-02",
+      "sha256": "8e8789925b9e85733b0dcb74b64fc187623d5a86833639378c3e447c8bec6ae6"
+    },
+    {
+      "fixture_id": "efc_v1-mm-03",
+      "sha256": "38342eba34abca95a0e7b5853d3d4bfba8b761bf503013f84479ff1edda631fc"
+    },
+    {
+      "fixture_id": "efc_v1-mm-04",
+      "sha256": "6127dedb07fcefbb8cf5089fed9047b2006b5b88f34a9b171f6e8fe8522dd96c"
+    },
+    {
+      "fixture_id": "efc_v1-mm-05",
+      "sha256": "2d4f116b6c5d5911471f12a4a186024f14292ae0bff2ae0dac766af222817fa4"
+    },
+    {
+      "fixture_id": "efc_v1-mc-01",
+      "sha256": "57344788acb91570715da751a707ab118c2deadf9bc072b382f543aac0b452ad"
+    },
+    {
+      "fixture_id": "efc_v1-mc-02",
+      "sha256": "1f751090df1d3af3ddfed971b35c0495ecdd770285560969283dfc0fb322b4e7"
+    },
+    {
+      "fixture_id": "efc_v1-mc-03",
+      "sha256": "136c7e87c5f853542f4cfb7322a088c79a7d02fb324e9a2b7309d3dde07a851c"
+    },
+    {
+      "fixture_id": "efc_v1-mc-04",
+      "sha256": "a6e7464d8a8739af1fc2f79caaa8b1b775517693087b710543917142ea184192"
+    },
+    {
+      "fixture_id": "efc_v1-mc-05",
+      "sha256": "ef0b160026f6c99d4513b834bb9d6c044ab40908618956d586a3340657df4d9e"
+    },
+    {
+      "fixture_id": "efc_v1-ir-01",
+      "sha256": "0d817ff73731ffbe974e76e4e1ed23f64af2cc5948108f8bdbaf05edf3b1a772"
+    },
+    {
+      "fixture_id": "efc_v1-ir-02",
+      "sha256": "a7d29f968e0bbb288405a10a94b9f85bea44cf63f63d08b18b274ce0cb0e2d01"
+    },
+    {
+      "fixture_id": "efc_v1-ir-03",
+      "sha256": "4aa7f7cde7c16d77a75c8e3b15ee561cd47a6fedd588e796521fbfec2ce56a4c"
+    },
+    {
+      "fixture_id": "efc_v1-ir-04",
+      "sha256": "8b64dcbdfe7bb3738e07601b173076c96c11625896f7b0c4df8c29029d8d6aa5"
+    },
+    {
+      "fixture_id": "efc_v1-ir-05",
+      "sha256": "12f0581dd1fb4d078a874ea4594063547d5f8248b0052af4b371e582f2cab140"
+    }
+  ],
+  "calibration_k": 5,
+  "check_contract_hash": "af370e93a021436771dd805b384139c59be592bda677d2675eb1904ea5bfa79b",
+  "collapse_diagnostic_temperature": 0.7,
+  "commitment_invalid_rate_ceiling": {
+    "cells": [
+      {
+        "ceiling": 0.05,
+        "lane": "M_menu_only",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "M_menu_only",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "M_menu_only",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "M_task_menu",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "M_task_menu",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "M_task_menu",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "B_inactive",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "B_inactive",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "B_inactive",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "C_controlled_check",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "C_controlled_check",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "C_controlled_check",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "P_placebo",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "P_placebo",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "P_placebo",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "A_always_check",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "A_always_check",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "A_always_check",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "G_generic_caution",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "G_generic_caution",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "G_generic_caution",
+        "stratum": "irrelevant"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "O_offer_projection",
+        "stratum": "match_mismatch"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "O_offer_projection",
+        "stratum": "match_commit"
+      },
+      {
+        "ceiling": 0.05,
+        "lane": "O_offer_projection",
+        "stratum": "irrelevant"
+      }
+    ],
+    "discrete_consequence_at_n5": "At pilot n=5 observable invalid rates are 0, 0.20, 0.40, ...; therefore one invalid commitment gives 1/5=0.20 > 0.05 and confounds the cell. Zero invalids is required at n=5. At the strict held-out ceiling n=128, at most 6 invalids pass (6/128=0.046875); 7 fail (7/128=0.0546875). Invalid rows still count as failures in every quality numerator and denominator per §2.5.4.",
+    "global_minimum": 0.05
+  },
+  "commitment_oracle_scorer_hash": "e8d17029553693445873c2e3f9f517a777f8ac96fe3303df374c946165db7ef0",
+  "commitment_wire_schema_hash": "2492f6ea3f50177da3c034174444ca925eeeb9d552a1bd291cf6e56a650114f7",
+  "contract_hash_definitions": {
+    "check_contract_hash": "sha256(json.dumps(production_contract_identity_payload, sort_keys=True, separators=(',', ':'))) — harness/efc_compare_production.py",
+    "extractor_hash": "sha256(raw bytes of harness/efc_trigger.py module source)",
+    "predicate_contract_hash": "sha256(json.dumps(V0_PREDICATE_FEATURE_BINDINGS, sort_keys=True, separators=(',', ':'))) — harness/efc_carrier.py"
+  },
+  "contract_precommit": {
+    "action_menu_composition_rules_hash": "085f7701408b633385d6383e3fc99230c1116fd4714a6199d724493e6e58d803",
+    "commitment_oracle_scorer_hash": "e8d17029553693445873c2e3f9f517a777f8ac96fe3303df374c946165db7ef0",
+    "commitment_wire_schema_hash": "2492f6ea3f50177da3c034174444ca925eeeb9d552a1bd291cf6e56a650114f7",
+    "leak_audit_contract_hash": "1fd0626b892d619723a35cfdeb58fc927d2a8ed7dad081cd460c81fd3f53fbe9"
+  },
+  "decoding_contract": {
+    "api_surface": "openai_responses",
+    "endpoint": "POST /v1/responses",
+    "max_output_tokens": 64,
+    "model_snapshot": "gpt-5.4-2026-03-05",
+    "reasoning_effort": "none",
+    "seed": "unsupported_disclosed",
+    "seed_disclosure": "Live wire probe: HTTP/API rejection Unknown parameter: 'seed' on OpenAI Responses API (Sol ruling 2026-07-16).",
+    "temperature_collapse_diagnostic": 0.7,
+    "temperature_primary": 0.5
+  },
+  "disclosure_block": [
+    {
+      "id": "tie_break_spelling_selector",
+      "origin": "grok D5-NB2",
+      "text": "Mapping-rule tie-break is lexicographic minimum UTF-8 label among role members (TIE_BREAK_ID=lexicographic_minimum_utf8)."
+    },
+    {
+      "id": "l2_equiv_l1_on_suite",
+      "origin": "D5-NB4",
+      "text": "On this suite L1 and L2 leak-audit legs share identical per-stratum accuracy (0.20) because ordinal histogram (3,3,3,3,3) keeps token-overlap scores tied at menu index 0."
+    },
+    {
+      "id": "mapping_consumes_role_map",
+      "origin": "kimi D3-NB1",
+      "text": "Mechanical enum mapping consumes each fixture's frozen role_map; authors choose labels/decoys, not per-fixture expected enums."
+    },
+    {
+      "id": "discrete_threshold_small_n",
+      "origin": "grok D4-NB1",
+      "text": "At n=5, k=5: leak-audit fail_threshold=0.30; effective fail requires >=2/5 correct per leg/stratum."
+    },
+    {
+      "id": "l2_floor_residuals",
+      "origin": "D4-NB2",
+      "text": "Synonym/morph semantic leaks below the L2 token floor are priced by the M_task_menu pilot ceiling gate."
+    },
+    {
+      "id": "engine_surface_superset",
+      "origin": "grok D6a-A1",
+      "text": "Full-render engine-visible surface (header, trigger surface, caution, menu) is strictly larger than L1/L2 leak-audit inputs; residual priced by M_task_menu at pilot contact."
+    },
+    {
+      "id": "homoglyph_hygiene",
+      "origin": "D3-NB1",
+      "text": "NFC canonicalization gate does not detect confusable scripts."
+    },
+    {
+      "id": "attest_filename_trust",
+      "origin": "grok B1",
+      "text": "Attestation applier authority pointer is filename-trust on the ruling substrate entry, not a content-hash of that entry."
+    },
+    {
+      "id": "oracle_scorer_in_contract_precommit",
+      "origin": "grok v1-NB3",
+      "text": "contract_precommit MUST include commitment_oracle_scorer_hash per §13/§14 admission checklist."
+    },
+    {
+      "id": "response_curve_only_scope",
+      "origin": "dan ruling 2026-07-16",
+      "text": "response_curve_only=true: no population-level authority claim; upgrade path requires a superseding manifest."
+    },
+    {
+      "id": "single_engine_no_fallback",
+      "origin": "dan ruling / Sol wire report 2026-07-16",
+      "text": "Single engine gpt-5.4-2026-03-05; NO fallback engine. An admission refusal blocks the phase as a valid typed outcome."
+    },
+    {
+      "id": "manifest_verify_referent_honesty",
+      "origin": "grok D6-NB1",
+      "text": "manifest_verify checks referent honesty (disk-recomputable hashes and integrity gates), not whole-document self-integrity; manifest self-integrity is dan's pin of the exact emitted bytes (manifest_hash)."
+    }
+  ],
+  "engine_roster": [
+    "gpt-5.4-2026-03-05"
+  ],
+  "extractor_hash": "cfe9c05a1509568df4c2aa1cfeeae04b85ef5dc4c4b39ae6c6f2a1bfadd028ce",
+  "fallback_engine": null,
+  "fixtures_raw_bytes_sha256": {
+    "entries": [
+      {
+        "fixture_id": "efc_v1-mm-01",
+        "sha256": "1929d1cc77c320e5c5ebf78fcd4b5994fd6e406d1601691bda8278a3f2929376"
+      },
+      {
+        "fixture_id": "efc_v1-mm-02",
+        "sha256": "3dcd9af4a6018b2039f24bbda7624e63f40c0c10c0e1beb4211303e4e034af13"
+      },
+      {
+        "fixture_id": "efc_v1-mm-03",
+        "sha256": "d4993f052d7ec811dc7537a7efeeb31330b5aba98778d052da76b5097623b293"
+      },
+      {
+        "fixture_id": "efc_v1-mm-04",
+        "sha256": "0336049d7468f6ac45f7e1bfd2ccca9f13e1afb2dd7eeb8ec96174fd1de87026"
+      },
+      {
+        "fixture_id": "efc_v1-mm-05",
+        "sha256": "aaf06ab2950fdebb6f99460572232de3489f2c0091acea1b6dc1e11419d52247"
+      },
+      {
+        "fixture_id": "efc_v1-mc-01",
+        "sha256": "2e985dddd36a5edf070702f08fb377bb4923644ca92684172b92f05d5ac49024"
+      },
+      {
+        "fixture_id": "efc_v1-mc-02",
+        "sha256": "e65c849b740283296d373af65c85bcd38a4bcdfc30f4a9712630673fea8a6263"
+      },
+      {
+        "fixture_id": "efc_v1-mc-03",
+        "sha256": "706a21a57981eee5878639986f17f8252db72b9c12d3f09adbcc66cd24afd2fe"
+      },
+      {
+        "fixture_id": "efc_v1-mc-04",
+        "sha256": "a001acd1d33ccfd17aed9006c304fef86e000fbd7d2a9d83d86797ef7aa34290"
+      },
+      {
+        "fixture_id": "efc_v1-mc-05",
+        "sha256": "0c0862032114709ddc06c52516a668a17e76767c6086dfb49411bef5bfcf97bf"
+      },
+      {
+        "fixture_id": "efc_v1-ir-01",
+        "sha256": "45100d09ea9b621993a419a3965f1c72451774a555d73444736f792f0102ec3c"
+      },
+      {
+        "fixture_id": "efc_v1-ir-02",
+        "sha256": "02f1b0acb9073d30b306f55cf7b1cb08c82f9e56ee196ffcfa7e087da3448b9b"
+      },
+      {
+        "fixture_id": "efc_v1-ir-03",
+        "sha256": "2ee351c8b92330adedf6bb3f067868cf1a70a85a668cc85c5f29d3458ea1acf8"
+      },
+      {
+        "fixture_id": "efc_v1-ir-04",
+        "sha256": "64be560bff05037e2f12d529235feeb5a856fc114bbe74b538060724fb73e1a4"
+      },
+      {
+        "fixture_id": "efc_v1-ir-05",
+        "sha256": "9b2508e88dfc7aa81793b1483bba2a3157fa1577d3d3b4cfac3275e01c67869f"
+      }
+    ],
+    "hash_definition": "raw_file_bytes"
+  },
+  "foreground_template_hash": "bda77e1a14d1e006a1e9dec0680535a297225d30af4ab8cda7073bea2b1d132b",
+  "generic_caution_sha256": "b25af70799fad818b054781a56851504369fe35d8e1cb0534ed8ada29b46e877",
+  "generic_caution_text": "Before committing, use the available provenance tool when the evidentiary basis or scope of a claim is unclear.",
+  "ignorance_probe_contract": {
+    "candidate_carried_from_v0_C2a": true,
+    "gate_rule": "pass iff recovered <= 3 of 15",
+    "max_recoverable_count": 3,
+    "max_recoverable_rate": 0.2,
+    "probe_fact_count_F": 15,
+    "probe_facts_are_suite_fixtures": true,
+    "probe_fixture_ids": [
+      "efc_v1-mm-01",
+      "efc_v1-mm-02",
+      "efc_v1-mm-03",
+      "efc_v1-mm-04",
+      "efc_v1-mm-05",
+      "efc_v1-mc-01",
+      "efc_v1-mc-02",
+      "efc_v1-mc-03",
+      "efc_v1-mc-04",
+      "efc_v1-mc-05",
+      "efc_v1-ir-01",
+      "efc_v1-ir-02",
+      "efc_v1-ir-03",
+      "efc_v1-ir-04",
+      "efc_v1-ir-05"
+    ],
+    "review_flag": "v0 C2a rule carried as candidate — flag for cold review"
+  },
+  "integrity_gate_requirements": {
+    "check_no_lexical_marking": true,
+    "evaluate_leak_audit": true,
+    "render_byte_determinism": true,
+    "render_modes": [
+      "full",
+      "menu_only"
+    ],
+    "validate_suite_attestation_required": true
+  },
+  "leak_audit_contract_hash": "1fd0626b892d619723a35cfdeb58fc927d2a8ed7dad081cd460c81fd3f53fbe9",
+  "leak_audit_predictor_hash": "f0fa52ce50427e94b0134d2d3cf2cb8ec58e499e193b8a2c2387d03187d6a7ed",
+  "menu_ceiling_gate_params": {
+    "C_pin": 1.0,
+    "K": 5,
+    "confidence": 0.95,
+    "descriptive_rates_other_strata": "match_commit and irrelevant receive descriptive M_task_menu rates but no menu-ceiling refusal.",
+    "discrete_consequence_at_K5": "At K=5 on match_mismatch only: for x=0 recovered, Newcombe lower bound of (C_pin-B_obs) headroom passes; for x=1 (B_obs=1/5), headroom lower bound fails. Therefore only B_obs=0/5 passes both conditions; every B_obs>=1/5 fails the headroom gate, and B_obs>=4/5 also fails condition 1 (B_obs>=0.80).",
+    "fail_condition_1_B_obs_gte": 0.8,
+    "headroom_margin": 0.25,
+    "method": "newcombe_wilson",
+    "non_extension_rationale": "§9.2 asks C to preserve B on match_commit and irrelevant via non-inferiority. High inactive-surface competence in those lose/silence strata is healthy baseline behavior, not the superiority-ceiling confound that match_mismatch prices. Applying the match_mismatch headroom rule to match_commit or irrelevant would refuse exactly the baselines those cells require.",
+    "scope_strata": [
+      "match_mismatch"
+    ]
+  },
+  "menu_only_template_hash": "80fb4d923789d18e575e160ce003511e233798f0ea5c0e4e72e0a88f24e33b9f",
+  "model_id": "gpt-5.4-2026-03-05",
+  "n_max": 128,
+  "offer_projection_sha256": "e62ae334735ece7e87f853abc48f880c1e3978f0fe48208388bc95e24704642b",
+  "offer_projection_text": "Before committing on a cited-source assertion without a direct observation boundary, verify that the cited source's scope covers the decision scope.",
+  "ordinal_histogram": [
+    3,
+    3,
+    3,
+    3,
+    3
+  ],
+  "ordinal_max_abs_dev_bound": 2,
+  "ordinal_max_observed_deviation": 0.0,
+  "part_i_spec_hash": "2d37f6bf0cd4aab830cb1dcf5eb9576f13b9acff65b63cd7d5b5fe0ea5b6097d",
+  "pin_event_id": "TO-BE-SET-AT-PIN",
+  "pinned_at": "TO-BE-SET-AT-PIN",
+  "pinned_by": "TO-BE-SET-AT-PIN",
+  "population_region": {
+    "disclosure": "No population-level authority claim; upgrade path = superseding manifest (dan ruling 2026-07-16).",
+    "response_curve_only": true
+  },
+  "predicate_contract_hash": "f8c3f07439dfc634c88385b37ec33f6f2ac2df9cd22b4c1960e147d3d6c732ed",
+  "renderer_contract_hash": "ff72d0456fb9188918aba852b91b39836931f4890dd59d873d707f04205efcbe",
+  "renderer_id": "efc_render_v1",
+  "role_map": {
+    "maintain": "baseline",
+    "proceed": "commit",
+    "release": "commit",
+    "suspend": "non_commit",
+    "table": "non_commit"
+  },
+  "schema_version": "efc_calibration_manifest_v1",
+  "stop_rule": "k5_packet_plus_single_t07_collapse_probe",
+  "suite_gate_results": {
+    "composition_ok": true,
+    "extraction_integrity_ok": true,
+    "family_validity_ok": true,
+    "leak_audit_cells": [
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L1",
+        "passed": true,
+        "stratum": "match_mismatch",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L1",
+        "passed": true,
+        "stratum": "match_commit",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L1",
+        "passed": true,
+        "stratum": "irrelevant",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L2",
+        "passed": true,
+        "stratum": "match_mismatch",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L2",
+        "passed": true,
+        "stratum": "match_commit",
+        "total": 5
+      },
+      {
+        "accuracy": 0.2,
+        "correct": 1,
+        "fail_threshold": 0.30000000000000004,
+        "leg": "L2",
+        "passed": true,
+        "stratum": "irrelevant",
+        "total": 5
+      }
+    ],
+    "leak_audit_ok": true,
+    "lexical_marking_ok": true,
+    "lexical_marking_refusals": [],
+    "ordinal_uniformity_ok": true
+  },
+  "suite_id": "efc_calibration_v1",
+  "suite_k": 5,
+  "suite_manifest_path": "corpus/efc_calibration_v1/suite_manifest.json",
+  "suite_manifest_sha256": "2f23f975b6bebfd1b9c4817c4c4a7ad345942cc0d945ce1f7b806ffefabe88bb",
+  "temperature": 0.5
+}
