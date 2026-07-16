@@ -1,0 +1,12 @@
+{
+  "manifest_file_sha256_raw": "ec22c407d30af060f09e5a4c37965b0e7542aa4a1f0948222e14718b5846c2b4",
+  "manifest_hash_canonical": "c91c223a1dbf3f1d9ce7cadfa19a9ca1b3dd573385b8404281866cce7da948c3",
+  "manifest_path": "corpus/efc_calibration_v1/calibration_manifest_v2.json",
+  "note": "Superseding pin per Option-A ruling; v1 pin preserved, never valid alone hereafter; manifest bytes exactly as kimi-final-reviewed (PASS 20260716T153554010Z).",
+  "pin_event_id": "efc-v1-manifest-pin-ecb3e5a6eb65db0e",
+  "pinned_at": "2026-07-16T15:40:00Z",
+  "pinned_by": "dan",
+  "ruling_source": "main conversation, Option A; standing contact ruling thread entry 20260716T141524387Z__dan.md",
+  "ruling_text": "A. raise the cap to $3",
+  "supersedes_pin_event": "efc-v1-manifest-pin-3f2232aa0e11451c"
+}
