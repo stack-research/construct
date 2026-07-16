@@ -22,14 +22,16 @@ from typing import Any, Literal, Protocol
 from harness.efc_commitment_oracle_v1 import score_commitment_oracle_v1
 from harness.efc_commitment_wire_v1 import validate_commitment_wire
 from harness.efc_intervals import newcombe_diff_interval
-from harness.efc_manifest_v1 import (MANIFEST_RELPATH, REPO_ROOT,
-                                       manifest_hash, manifest_verify,
+from harness.efc_manifest_v1 import (MANIFEST_RELPATH, MANIFEST_V2_RELPATH,
+                                       REPO_ROOT, manifest_hash, manifest_verify,
                                        sha256_bytes, sha256_canon, sha256_path)
 from harness.efc_render_v1 import render_prompt, render_prompt_menu_only
 from harness.efc_roster_r2 import API_BASE, _extract_text, _http_post
 
 CONTRACT_RELPATH = "harness/efc_pilot_runner_contract_v1.md"
-PIN_SIDECAR_RELPATH = "corpus/efc_calibration_v1/manifest_pin_v1.json"
+PIN_SIDECAR_V1_RELPATH = "corpus/efc_calibration_v1/manifest_pin_v1.json"
+PIN_SIDECAR_V2_RELPATH = "corpus/efc_calibration_v1/manifest_pin_v2.json"
+PIN_SIDECAR_RELPATH = PIN_SIDECAR_V1_RELPATH
 LEDGER_DIR_REL = "runs/efc_calibration_v1"
 PIN_EVENT_ID = "efc-v1-manifest-pin-3f2232aa0e11451c"
 PART_I_SPEC_SHA256 = (
@@ -51,6 +53,8 @@ Outcome = Literal[
     "construction_refused",
     "budget_refusal",
     "transport_refusal",
+    "confounded(commitment_invalid_rate)",
+    "confounded(menu_ceiling)",
 ]
 
 CallOutcome = Literal[
@@ -71,6 +75,18 @@ RUNNER_DISCLOSURES: tuple[str, ...] = (
     "§10.2 collapse-to-T0.7 is out of scope for this runner; "
     "admission/calibration runner owns it.",
 )
+
+
+@dataclass(frozen=True)
+class LoadedPinManifest:
+    manifest: dict[str, Any]
+    pin_event_id: str
+    manifest_path: str
+    pin_sidecar_path: str
+
+    @property
+    def manifest_hash_canonical(self) -> str:
+        return manifest_hash(self.manifest)
 
 
 @dataclass(frozen=True)
@@ -158,11 +174,17 @@ def estimated_input_tokens(prompt: str) -> int:
 def load_budget_state(manifest: dict[str, Any]) -> BudgetState:
     budget = manifest["budget_ledger"]
     pricing = budget["pricing"]
-    wire = budget["wire_probe_tokens"]
+    if "opening_input_tokens_spent" in budget:
+        input_spent = int(budget["opening_input_tokens_spent"])
+        output_spent = int(budget["opening_output_tokens_spent"])
+    else:
+        wire = budget["wire_probe_tokens"]
+        input_spent = int(wire["input"])
+        output_spent = int(wire["output"])
     return BudgetState(
         calls_spent=int(budget["calls_already_spent"]),
-        input_tokens_spent=int(wire["input"]),
-        output_tokens_spent=int(wire["output"]),
+        input_tokens_spent=input_spent,
+        output_tokens_spent=output_spent,
         input_token_ceiling=int(budget["input_token_ceiling"]),
         output_token_ceiling=int(budget["output_token_ceiling"]),
         total_call_ceiling=int(budget["total_call_ceiling"]),
@@ -223,19 +245,36 @@ def check_budget_actual(state: BudgetState) -> BudgetRefusal | None:
     return None
 
 
-def verify_pin_sidecar(root: Path, manifest: dict[str, Any]) -> tuple[bool, str]:
-    pin_path = root / PIN_SIDECAR_RELPATH
+def resolve_default_manifest_paths(
+    root: Path = REPO_ROOT,
+) -> tuple[str, str]:
+    """Supersession chain: v2 pin sidecar wins when present, else v1."""
+    if (root / PIN_SIDECAR_V2_RELPATH).is_file():
+        return MANIFEST_V2_RELPATH, PIN_SIDECAR_V2_RELPATH
+    return MANIFEST_RELPATH, PIN_SIDECAR_V1_RELPATH
+
+
+def verify_pin_sidecar(
+    root: Path,
+    manifest: dict[str, Any],
+    *,
+    manifest_relpath: str,
+    pin_sidecar_relpath: str,
+) -> tuple[bool, str]:
+    pin_path = root / pin_sidecar_relpath
     if not pin_path.is_file():
+        if manifest.get("supersedes"):
+            return False, "unpinned_superseding_manifest"
         return False, "pin_sidecar_missing"
     pin = json.loads(pin_path.read_text(encoding="utf-8"))
     canonical = manifest_hash(manifest)
     if pin.get("manifest_hash_canonical") != canonical:
         return False, "pin_hash_mismatch:manifest_hash_canonical"
-    manifest_path = root / MANIFEST_RELPATH
+    manifest_path = root / manifest_relpath
     raw_sha = sha256_path(manifest_path)
     if pin.get("manifest_file_sha256_raw") != raw_sha:
         return False, "pin_hash_mismatch:manifest_file_sha256_raw"
-    if pin.get("manifest_path") != MANIFEST_RELPATH:
+    if pin.get("manifest_path") != manifest_relpath:
         return False, "pin_sidecar_path_mismatch"
     return True, ""
 
@@ -243,12 +282,18 @@ def verify_pin_sidecar(root: Path, manifest: dict[str, Any]) -> tuple[bool, str]
 def load_pinned_manifest(
     root: Path = REPO_ROOT,
     *,
+    manifest_path: str | None = None,
+    pin_sidecar_path: str | None = None,
     require_pin: bool = True,
-) -> dict[str, Any]:
-    manifest_path = root / MANIFEST_RELPATH
-    if not manifest_path.is_file():
+) -> LoadedPinManifest:
+    default_manifest, default_pin = resolve_default_manifest_paths(root)
+    manifest_relpath = manifest_path or default_manifest
+    pin_relpath = pin_sidecar_path or default_pin
+
+    manifest_file = root / manifest_relpath
+    if not manifest_file.is_file():
         raise PilotRunnerRefusal("construction_refused", "manifest_missing")
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
     if manifest.get("part_i_spec_hash") != PART_I_SPEC_SHA256:
         raise PilotRunnerRefusal(
             "construction_refused", "part_i_spec_hash_mismatch"
@@ -260,10 +305,33 @@ def load_pinned_manifest(
             "manifest_verify_failed:" + ";".join(verify.failures[:5]),
         )
     if require_pin:
-        ok, reason = verify_pin_sidecar(root, manifest)
+        if manifest.get("supersedes") and not (root / pin_relpath).is_file():
+            raise PilotRunnerRefusal(
+                "construction_refused", "unpinned_superseding_manifest"
+            )
+        ok, reason = verify_pin_sidecar(
+            root,
+            manifest,
+            manifest_relpath=manifest_relpath,
+            pin_sidecar_relpath=pin_relpath,
+        )
         if not ok:
             raise PilotRunnerRefusal("construction_refused", reason)
-    return manifest
+        pin = json.loads((root / pin_relpath).read_text(encoding="utf-8"))
+        pin_event_id = pin.get("pin_event_id")
+        if not isinstance(pin_event_id, str) or not pin_event_id:
+            raise PilotRunnerRefusal(
+                "construction_refused", "pin_sidecar_missing_pin_event_id"
+            )
+    else:
+        pin_event_id = ""
+
+    return LoadedPinManifest(
+        manifest=manifest,
+        pin_event_id=pin_event_id,
+        manifest_path=manifest_relpath,
+        pin_sidecar_path=pin_relpath,
+    )
 
 
 def load_fixtures(root: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:
@@ -286,6 +354,7 @@ def build_request_body(
     temperature: float | None = None,
 ) -> dict[str, Any]:
     decoding = manifest["decoding_contract"]
+    budget = manifest["budget_ledger"]
     if temperature is None:
         temperature = float(manifest["temperature"])
     return {
@@ -293,7 +362,7 @@ def build_request_body(
         "input": [{"role": "user", "content": prompt}],
         "reasoning": {"effort": decoding["reasoning_effort"]},
         "temperature": temperature,
-        "max_output_tokens": decoding["max_output_tokens"],
+        "max_output_tokens": int(budget["max_output_tokens_per_request"]),
         "store": False,
         "stream": False,
     }
@@ -406,6 +475,104 @@ def evaluate_menu_ceiling_gate(
             else "confounded(menu_ceiling)"
         ),
     }
+
+
+def evaluate_commitment_invalid_rate_gate(
+    rows: list[dict[str, Any]],
+    ceiling_spec: dict[str, Any],
+) -> dict[str, Any]:
+    """Per lane×stratum invalid-rate ceiling — manifest-pinned integrity gate."""
+    global_ceiling = float(ceiling_spec.get("global_minimum", 0.05))
+    cells_spec = ceiling_spec.get("cells", [])
+    ceiling_by_cell: dict[tuple[str, str], float] = {}
+    for cell in cells_spec:
+        if not isinstance(cell, dict):
+            continue
+        lane = cell.get("lane")
+        stratum = cell.get("stratum")
+        ceiling = cell.get("ceiling")
+        if (
+            isinstance(lane, str)
+            and isinstance(stratum, str)
+            and isinstance(ceiling, (int, float))
+        ):
+            ceiling_by_cell[(lane, stratum)] = float(ceiling)
+
+    cells: list[dict[str, Any]] = []
+    refusals: list[str] = []
+    seen: set[tuple[str, str]] = set()
+    for cell in cells_spec:
+        if not isinstance(cell, dict):
+            continue
+        lane = cell.get("lane")
+        stratum = cell.get("stratum")
+        if not isinstance(lane, str) or not isinstance(stratum, str):
+            continue
+        key = (lane, stratum)
+        if key in seen:
+            continue
+        seen.add(key)
+        scoped = [
+            row
+            for row in rows
+            if row["lane"] == lane
+            and row["stratum"] == stratum
+            and row.get("validation_outcome") != "budget_refusal"
+        ]
+        invalid = sum(
+            1
+            for row in scoped
+            if row.get("validation_outcome") == "commitment_invalid"
+        )
+        total = len(scoped)
+        rate = invalid / total if total else 0.0
+        ceiling = ceiling_by_cell.get(key, global_ceiling)
+        passed = rate <= ceiling
+        if not passed:
+            refusals.append(
+                f"confounded(commitment_invalid_rate):{lane}:{stratum}"
+            )
+        cells.append(
+            {
+                "lane": lane,
+                "stratum": stratum,
+                "invalid": invalid,
+                "total": total,
+                "rate": rate,
+                "ceiling": ceiling,
+                "passed": passed,
+            }
+        )
+    return {
+        "gate": "commitment_invalid_rate",
+        "cells": cells,
+        "passed": not refusals,
+        "verdict": (
+            "pass"
+            if not refusals
+            else "confounded(commitment_invalid_rate)"
+        ),
+        "refusals": refusals,
+    }
+
+
+def _confound_status_from_gates(gates: dict[str, Any]) -> str | None:
+    for gate_name in (
+        "commitment_invalid_rate",
+        "menu_ceiling",
+        "menu_only_solicitation",
+    ):
+        gate = gates.get(gate_name)
+        if not isinstance(gate, dict):
+            continue
+        verdict = gate.get("verdict", "")
+        if verdict != "pass" and "confounded" in str(verdict):
+            if verdict.startswith("confounded(commitment_invalid_rate)"):
+                return "confounded(commitment_invalid_rate)"
+            if verdict.startswith("confounded(menu_ceiling)"):
+                return "confounded(menu_ceiling)"
+            return str(verdict)
+    return None
 
 
 def evaluate_menu_only_solicitation_gate(
@@ -703,15 +870,30 @@ def run_integrity_pilot(
     root: Path = REPO_ROOT,
     transport: Transport,
     manifest: dict[str, Any] | None = None,
+    loaded: LoadedPinManifest | None = None,
+    pin_event_id: str | None = None,
+    manifest_hash_canonical: str | None = None,
     ledger_path: Path | None = None,
     run_id: str | None = None,
+    live: bool = False,
     timestamp_fn: Any | None = None,
 ) -> dict[str, Any]:
     """Execute §10.6 integrity-lanes pilot contact (30 calls)."""
     if timestamp_fn is None:
         timestamp_fn = lambda: datetime.now(timezone.utc).isoformat()
-    if manifest is None:
-        manifest = load_pinned_manifest(root)
+    if loaded is not None:
+        manifest = loaded.manifest
+        pin_event_id = loaded.pin_event_id
+        manifest_hash_canonical = loaded.manifest_hash_canonical
+    elif manifest is None:
+        loaded = load_pinned_manifest(root)
+        manifest = loaded.manifest
+        pin_event_id = loaded.pin_event_id
+        manifest_hash_canonical = loaded.manifest_hash_canonical
+    if manifest_hash_canonical is None:
+        manifest_hash_canonical = manifest_hash(manifest)
+    if pin_event_id is None:
+        pin_event_id = ""
     fixtures = load_fixtures(root, manifest)
     budget = load_budget_state(manifest)
     params = manifest["menu_ceiling_gate_params"]
@@ -719,14 +901,24 @@ def run_integrity_pilot(
     if ledger_path is None:
         ledger_dir = root / LEDGER_DIR_REL
         ledger_dir.mkdir(parents=True, exist_ok=True)
-        run_id = run_id or datetime.now(timezone.utc).strftime(
-            "%Y%m%dT%H%M%SZ"
-        )
+        if run_id is None:
+            if live:
+                run_id = (
+                    "live_"
+                    + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+                )
+            else:
+                run_id = "dryrun"
         ledger_path = ledger_dir / f"pilot_integrity_{run_id}.jsonl"
     elif ledger_path.exists():
         raise PilotRunnerRefusal(
             "construction_refused", "ledger_path_exists_append_only"
         )
+    if run_id is None and ledger_path is not None:
+        name = ledger_path.name
+        prefix = "pilot_integrity_"
+        if name.startswith(prefix) and name.endswith(".jsonl"):
+            run_id = name[len(prefix) : -len(".jsonl")]
 
     rows: list[dict[str, Any]] = []
     seq = 0
@@ -934,6 +1126,18 @@ def run_integrity_pilot(
 
     menu_ceiling = evaluate_menu_ceiling_gate(rows, params)
     menu_only = evaluate_menu_only_solicitation_gate(rows)
+    invalid_rate = evaluate_commitment_invalid_rate_gate(
+        rows, manifest["commitment_invalid_rate_ceiling"]
+    )
+    gates = {
+        "menu_ceiling": menu_ceiling,
+        "menu_only_solicitation": menu_only,
+        "commitment_invalid_rate": invalid_rate,
+    }
+    if outcome == "completed":
+        confound = _confound_status_from_gates(gates)
+        if confound is not None:
+            outcome = confound  # type: ignore[assignment]
 
     return {
         "status": outcome,
@@ -943,24 +1147,35 @@ def run_integrity_pilot(
             if str(ledger_path).startswith(str(root))
             else str(ledger_path)
         ),
+        "run_id": run_id,
         "invocations": len(
             [r for r in rows if r.get("call_outcome") == "completed"]
         ),
         "rows_written": len(rows),
         "budget_final": budget.snapshot(),
         "disclosure": list(RUNNER_DISCLOSURES),
-        "gates": {
-            "menu_ceiling": menu_ceiling,
-            "menu_only_solicitation": menu_only,
-        },
-        "manifest_hash_canonical": manifest_hash(manifest),
-        "pin_event_id": PIN_EVENT_ID,
+        "gates": gates,
+        "manifest_hash_canonical": manifest_hash_canonical,
+        "pin_event_id": pin_event_id,
     }
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="EFC v1 integrity-lanes pilot runner (§10.6)"
+    )
+    parser.add_argument(
+        "--manifest",
+        default=None,
+        help=(
+            "Calibration manifest path (default: latest pinned by "
+            "supersession chain)"
+        ),
+    )
+    parser.add_argument(
+        "--pin-sidecar",
+        default=None,
+        help="Manifest pin sidecar path (default: paired with --manifest)",
     )
     parser.add_argument(
         "--live",
@@ -979,24 +1194,36 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--run-id",
-        default="dryrun",
-        help="Run identifier for ledger filename",
+        default=None,
+        help="Run identifier for ledger filename (live default: live_<UTC-ts>)",
     )
     args = parser.parse_args(argv)
 
-    if args.live:
-        if args.pin_event_id != PIN_EVENT_ID:
-            print(
-                f"refused: --live requires --pin-event-id {PIN_EVENT_ID}",
-                file=sys.stderr,
-            )
-            return 2
-
     try:
-        manifest = load_pinned_manifest(REPO_ROOT)
+        loaded = load_pinned_manifest(
+            REPO_ROOT,
+            manifest_path=args.manifest,
+            pin_sidecar_path=args.pin_sidecar,
+        )
     except PilotRunnerRefusal as exc:
         print(f"refused: {exc.reason}:{exc.detail}", file=sys.stderr)
         return 1
+
+    if args.live:
+        if args.pin_event_id is None:
+            print(
+                "refused: --live requires --pin-event-id matching loaded "
+                "pin sidecar",
+                file=sys.stderr,
+            )
+            return 2
+        if args.pin_event_id != loaded.pin_event_id:
+            print(
+                "refused: --pin-event-id mismatch "
+                f"(loaded sidecar expects {loaded.pin_event_id!r})",
+                file=sys.stderr,
+            )
+            return 2
 
     transport: Transport
     if args.live:
@@ -1004,14 +1231,22 @@ def main(argv: list[str] | None = None) -> int:
     else:
         transport = MockTransport()
 
+    if args.live:
+        run_id = args.run_id or (
+            "live_" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        )
+    else:
+        run_id = args.run_id or "dryrun"
+
     ledger_path = Path(args.output) if args.output else None
     try:
         result = run_integrity_pilot(
             root=REPO_ROOT,
             transport=transport,
-            manifest=manifest,
+            loaded=loaded,
             ledger_path=ledger_path,
-            run_id=args.run_id,
+            run_id=run_id,
+            live=args.live,
         )
     except PilotRunnerRefusal as exc:
         print(f"refused: {exc.reason}:{exc.detail}", file=sys.stderr)

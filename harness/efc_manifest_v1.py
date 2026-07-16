@@ -33,7 +33,14 @@ from harness.efc_render_v1 import (RENDERER_ID, foreground_template_hash,
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PART_I_SPEC_RELPATH = "notes/SPEC_EPISTEMIC_FRAME_CHECK_V1.md"
 MANIFEST_RELPATH = "corpus/efc_calibration_v1/calibration_manifest_v1.json"
+MANIFEST_V2_RELPATH = "corpus/efc_calibration_v1/calibration_manifest_v2.json"
 SCHEMA_VERSION = "efc_calibration_manifest_v1"
+
+SUPERSEDES_PIN_EVENT_ID = "efc-v1-manifest-pin-3f2232aa0e11451c"
+SUPERSESSION_REASON = (
+    "confounded(commitment_invalid_rate) on M_task_menu at cap 64 "
+    "(runs/efc_calibration_v1/pilot_integrity_dryrun.jsonl)"
+)
 
 PART_I_SPEC_SHA256 = (
     "2d37f6bf0cd4aab830cb1dcf5eb9576f13b9acff65b63cd7d5b5fe0ea5b6097d"
@@ -245,6 +252,57 @@ def _ignorance_probe_contract(suite: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _budget_ledger_v2() -> dict[str, Any]:
+    """Superseding manifest budget — Sol ledger v2 derivation (Option A, $3 ceiling)."""
+    input_ceiling = 250_000
+    output_ceiling = 66_368
+    input_rate = 2.50
+    output_rate = 15.00
+    worst_case_cost = (
+        input_ceiling * input_rate / 1_000_000
+        + output_ceiling * output_rate / 1_000_000
+    )
+    return {
+        "total_call_ceiling": 288,
+        "calls_already_spent": 33,
+        "calls_remaining_ceiling": 255,
+        "wire_probe_calls_completed": 2,
+        "wire_probe_calls_rejected": 1,
+        "wire_probe_tokens": {"input": 18, "output": 10, "total": 28},
+        "pilot_calls_spent": 30,
+        "pilot_tokens": {"input": 4827, "output": 1078},
+        "opening_input_tokens_spent": 4845,
+        "opening_output_tokens_spent": 1088,
+        "opening_cost_usd": 0.0284325,
+        "max_output_tokens_per_request": 256,
+        "input_token_ceiling": input_ceiling,
+        "output_token_ceiling": output_ceiling,
+        "output_ceiling_derivation": (
+            "1,088 output tokens already spent + 255 remaining calls × 256 "
+            "max_output_tokens = 66,368"
+        ),
+        "worst_case_cost_usd": round(worst_case_cost, 5),
+        "hard_cost_ceiling_usd": 3.00,
+        "headroom_below_hard_ceiling_usd": round(3.00 - worst_case_cost, 5),
+        "pricing": {
+            "source_url": "https://developers.openai.com/api/docs/models/gpt-5.4",
+            "retrieved_date": "2026-07-16",
+            "input_usd_per_million": input_rate,
+            "output_usd_per_million": output_rate,
+            "cached_input_discount_ignored": True,
+        },
+        "cost_formula": (
+            "cost_usd = 2.50*input_tokens/1,000,000 + 15.00*output_tokens/1,000,000"
+        ),
+        "stop_before_crossing": True,
+        "budget_refusal_typed_outcome": "budget_refusal",
+        "parameterization_note": (
+            "If ignorance-probe fact count F changes, recompute "
+            "total_call_ceiling = 243 + F before pin."
+        ),
+    }
+
+
 def _budget_ledger() -> dict[str, Any]:
     input_ceiling = 250_000
     output_ceiling = 16_330
@@ -393,15 +451,14 @@ def _disclosure_block() -> list[dict[str, str]]:
     ]
 
 
-def assemble_manifest(
+def _assemble_manifest_dict(
     *,
-    root: Path = REPO_ROOT,
-    output_path: Path | None = None,
-) -> tuple[dict[str, Any], bytes]:
-    """Assemble the v1 calibration manifest from on-disk artifacts."""
-    if output_path is None:
-        output_path = _root_path(root, MANIFEST_RELPATH)
-
+    root: Path,
+    budget_ledger: dict[str, Any],
+    max_output_tokens: int,
+    extra_fields: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Shared manifest body — contract pins recomputed from on-disk bytes."""
     suite = _load_suite_manifest(root)
     if suite.get("attestation_status") != "signed":
         raise ValueError(
@@ -440,7 +497,7 @@ def assemble_manifest(
             "api_surface": "openai_responses",
             "endpoint": "POST /v1/responses",
             "model_snapshot": "gpt-5.4-2026-03-05",
-            "max_output_tokens": 64,
+            "max_output_tokens": max_output_tokens,
             "reasoning_effort": "none",
             "temperature_primary": c.CALIBRATION_TEMPERATURE,
             "temperature_collapse_diagnostic": c.COLLAPSE_DIAGNOSTIC_TEMPERATURE,
@@ -509,7 +566,7 @@ def assemble_manifest(
         "commitment_invalid_rate_ceiling": _commitment_invalid_rate_ceiling(),
         "menu_ceiling_gate_params": _menu_ceiling_gate_params(),
         "ignorance_probe_contract": _ignorance_probe_contract(suite),
-        "budget_ledger": _budget_ledger(),
+        "budget_ledger": budget_ledger,
         "integrity_gate_requirements": {
             "validate_suite_attestation_required": True,
             "evaluate_leak_audit": True,
@@ -519,11 +576,55 @@ def assemble_manifest(
         },
         "disclosure_block": _disclosure_block(),
     }
+    if extra_fields:
+        manifest.update(extra_fields)
+    return manifest
 
+
+def _write_manifest(
+    manifest: dict[str, Any],
+    output_path: Path,
+) -> tuple[dict[str, Any], bytes]:
     rendered = json.dumps(manifest, **_JSON_DUMP) + "\n"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_bytes(rendered.encode("utf-8"))
     return manifest, rendered.encode("utf-8")
+
+
+def assemble_manifest(
+    *,
+    root: Path = REPO_ROOT,
+    output_path: Path | None = None,
+) -> tuple[dict[str, Any], bytes]:
+    """Assemble the v1 calibration manifest from on-disk artifacts."""
+    if output_path is None:
+        output_path = _root_path(root, MANIFEST_RELPATH)
+    manifest = _assemble_manifest_dict(
+        root=root,
+        budget_ledger=_budget_ledger(),
+        max_output_tokens=64,
+    )
+    return _write_manifest(manifest, output_path)
+
+
+def assemble_manifest_v2(
+    *,
+    root: Path = REPO_ROOT,
+    output_path: Path | None = None,
+) -> tuple[dict[str, Any], bytes]:
+    """Assemble superseding v2 manifest — Sol ledger derivation, Option A."""
+    if output_path is None:
+        output_path = _root_path(root, MANIFEST_V2_RELPATH)
+    manifest = _assemble_manifest_dict(
+        root=root,
+        budget_ledger=_budget_ledger_v2(),
+        max_output_tokens=256,
+        extra_fields={
+            "supersedes": SUPERSEDES_PIN_EVENT_ID,
+            "supersession_reason": SUPERSESSION_REASON,
+        },
+    )
+    return _write_manifest(manifest, output_path)
 
 
 def _verify_hash_pins(
@@ -734,7 +835,10 @@ def manifest_verify(
     if not isinstance(budget, dict):
         failures.append("malformed:budget_ledger")
     else:
-        _verify_budget_arithmetic(budget, failures)
+        if manifest.get("supersedes") == SUPERSEDES_PIN_EVENT_ID:
+            _verify_budget_arithmetic_v2(budget, failures)
+        else:
+            _verify_budget_arithmetic(budget, failures)
 
     ok = not failures
     return ManifestVerifyResult(
@@ -777,4 +881,56 @@ def _verify_budget_arithmetic(budget: dict[str, Any], failures: list[str]) -> No
     if abs(recomputed - worst) > 1e-9:
         failures.append("budget_inconsistent:cost_formula")
     if worst > 1.00:
+        failures.append("budget_inconsistent:exceeds_hard_ceiling")
+
+
+def _verify_budget_arithmetic_v2(
+    budget: dict[str, Any],
+    failures: list[str],
+) -> None:
+    if budget.get("total_call_ceiling") != 288:
+        failures.append("budget_inconsistent:total_call_ceiling")
+    if budget.get("calls_already_spent") != 33:
+        failures.append("budget_inconsistent:calls_already_spent")
+    if budget.get("max_output_tokens_per_request") != 256:
+        failures.append("budget_inconsistent:max_output_tokens_per_request")
+    input_ceiling = budget.get("input_token_ceiling")
+    output_ceiling = budget.get("output_token_ceiling")
+    if input_ceiling != 250_000:
+        failures.append("budget_inconsistent:input_token_ceiling")
+    if output_ceiling != 66_368:
+        failures.append("budget_inconsistent:output_token_ceiling")
+    if budget.get("opening_input_tokens_spent") != 4845:
+        failures.append("budget_inconsistent:opening_input_tokens_spent")
+    if budget.get("opening_output_tokens_spent") != 1088:
+        failures.append("budget_inconsistent:opening_output_tokens_spent")
+    if budget.get("opening_cost_usd") != 0.0284325:
+        failures.append("budget_inconsistent:opening_cost_usd")
+
+    pricing = budget.get("pricing")
+    if not isinstance(pricing, dict):
+        failures.append("malformed:budget_ledger.pricing")
+        return
+
+    in_rate = pricing.get("input_usd_per_million")
+    out_rate = pricing.get("output_usd_per_million")
+    if in_rate != 2.50 or out_rate != 15.00:
+        failures.append("malformed:budget_ledger.pricing_rates")
+        return
+
+    worst = budget.get("worst_case_cost_usd")
+    if not isinstance(worst, (int, float)):
+        failures.append("malformed:budget_ledger.worst_case_cost_usd")
+        return
+
+    recomputed = (
+        input_ceiling * in_rate / 1_000_000
+        + output_ceiling * out_rate / 1_000_000
+    )
+    if abs(recomputed - worst) > 1e-9:
+        failures.append("budget_inconsistent:cost_formula")
+    hard = budget.get("hard_cost_ceiling_usd")
+    if hard != 3.00:
+        failures.append("budget_inconsistent:hard_cost_ceiling_usd")
+    if worst > hard:
         failures.append("budget_inconsistent:exceeds_hard_ceiling")

@@ -10,8 +10,10 @@ import unittest
 from pathlib import Path
 
 from harness.efc_fixtures_v1 import FIXTURES_DIR, MANIFEST_PATH as SUITE_MANIFEST_PATH
-from harness.efc_manifest_v1 import (MANIFEST_RELPATH, PART_I_SPEC_SHA256,
-                                     assemble_manifest, compute_contract_hashes,
+from harness.efc_manifest_v1 import (MANIFEST_RELPATH, MANIFEST_V2_RELPATH,
+                                     PART_I_SPEC_SHA256, SUPERSEDES_PIN_EVENT_ID,
+                                     SUPERSESSION_REASON, assemble_manifest,
+                                     assemble_manifest_v2, compute_contract_hashes,
                                      compute_check_contract_hash,
                                      compute_extractor_hash,
                                      compute_predicate_contract_hash,
@@ -357,6 +359,112 @@ class TestBudgetLedger(unittest.TestCase):
             )
             self.assertAlmostEqual(cost, budget["worst_case_cost_usd"])
             self.assertLessEqual(budget["worst_case_cost_usd"], 1.00)
+
+
+class TestManifestV2Assembly(unittest.TestCase):
+    SOL_V2_BUDGET_FIELDS = {
+        "total_call_ceiling": 288,
+        "calls_already_spent": 33,
+        "calls_remaining_ceiling": 255,
+        "wire_probe_calls_completed": 2,
+        "wire_probe_calls_rejected": 1,
+        "wire_probe_tokens": {"input": 18, "output": 10, "total": 28},
+        "pilot_calls_spent": 30,
+        "pilot_tokens": {"input": 4827, "output": 1078},
+        "opening_input_tokens_spent": 4845,
+        "opening_output_tokens_spent": 1088,
+        "opening_cost_usd": 0.0284325,
+        "max_output_tokens_per_request": 256,
+        "input_token_ceiling": 250_000,
+        "output_token_ceiling": 66_368,
+        "output_ceiling_derivation": (
+            "1,088 output tokens already spent + 255 remaining calls × 256 "
+            "max_output_tokens = 66,368"
+        ),
+        "worst_case_cost_usd": 1.62052,
+        "hard_cost_ceiling_usd": 3.00,
+        "headroom_below_hard_ceiling_usd": 1.37948,
+        "stop_before_crossing": True,
+        "budget_refusal_typed_outcome": "budget_refusal",
+    }
+
+    def test_v2_assembly_byte_deterministic(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _copy_corpus_tree(Path(tmp))
+            out = root / "calibration_manifest_v2.json"
+            _, first = assemble_manifest_v2(root=root, output_path=out)
+            _, second = assemble_manifest_v2(root=root, output_path=out)
+            self.assertEqual(first, second)
+
+    def test_v2_supersedes_and_sol_table_values(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _copy_corpus_tree(Path(tmp))
+            out = root / "calibration_manifest_v2.json"
+            manifest, _ = assemble_manifest_v2(root=root, output_path=out)
+            self.assertEqual(manifest["supersedes"], SUPERSEDES_PIN_EVENT_ID)
+            self.assertEqual(manifest["supersession_reason"], SUPERSESSION_REASON)
+            self.assertEqual(manifest["decoding_contract"]["max_output_tokens"], 256)
+            budget = manifest["budget_ledger"]
+            for key, value in self.SOL_V2_BUDGET_FIELDS.items():
+                self.assertEqual(budget[key], value, key)
+            self.assertEqual(
+                budget["pricing"]["input_usd_per_million"],
+                2.50,
+            )
+            self.assertEqual(
+                budget["pricing"]["output_usd_per_million"],
+                15.00,
+            )
+
+    def test_v2_contract_pins_match_v1_assembly(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _copy_corpus_tree(Path(tmp))
+            v1, _ = assemble_manifest(
+                root=root,
+                output_path=root / "calibration_manifest_v1.json",
+            )
+            v2, _ = assemble_manifest_v2(
+                root=root,
+                output_path=root / "calibration_manifest_v2.json",
+            )
+            pin_fields = (
+                "part_i_spec_hash",
+                "commitment_wire_schema_hash",
+                "commitment_oracle_scorer_hash",
+                "renderer_contract_hash",
+                "foreground_template_hash",
+                "menu_only_template_hash",
+                "calibration_fixtures",
+                "suite_manifest_sha256",
+            )
+            for field in pin_fields:
+                self.assertEqual(v1[field], v2[field], field)
+
+    def test_v2_manifest_verify_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _copy_corpus_tree(Path(tmp))
+            out = root / "calibration_manifest_v2.json"
+            manifest, _ = assemble_manifest_v2(root=root, output_path=out)
+            result = manifest_verify(manifest, root=root, render_repeats=2)
+            self.assertTrue(result.ok, result.failures)
+            self.assertIsNotNone(result.manifest_hash)
+
+    def test_emit_live_repo_v2_manifest(self):
+        """Emit corpus v2 artifact (new file; v1 bytes untouched)."""
+        v1_before = (REPO_ROOT / MANIFEST_RELPATH).read_bytes()
+        out = REPO_ROOT / MANIFEST_V2_RELPATH
+        manifest, rendered = assemble_manifest_v2(root=REPO_ROOT, output_path=out)
+        self.assertTrue(out.is_file())
+        v1_after = (REPO_ROOT / MANIFEST_RELPATH).read_bytes()
+        self.assertEqual(v1_before, v1_after)
+        self.assertNotEqual(
+            manifest_hash(manifest),
+            manifest_hash(
+                json.loads((REPO_ROOT / MANIFEST_RELPATH).read_text())
+            ),
+        )
+        self._v2_canonical_hash = manifest_hash(manifest)
+        self._v2_rendered = rendered
 
 
 class TestCorpusUntouched(unittest.TestCase):

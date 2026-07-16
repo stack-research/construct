@@ -12,33 +12,59 @@ from pathlib import Path
 from unittest.mock import patch
 
 from harness.efc_intervals import newcombe_diff_interval
-from harness.efc_manifest_v1 import manifest_hash, sha256_path
+from harness.efc_manifest_v1 import MANIFEST_V2_RELPATH, manifest_hash, sha256_path
 from harness.efc_pilot_runner_v1 import (
     PIN_EVENT_ID,
     PIN_SIDECAR_RELPATH,
+    PIN_SIDECAR_V2_RELPATH,
     RUNNER_DISCLOSURES,
     BudgetRefusal,
     BudgetState,
     CallContext,
     FailingTransport,
+    LoadedPinManifest,
     MockTransport,
     PilotRunnerRefusal,
     RejectThenSuccessTransport,
     TransportRefusal,
+    build_request_body,
     check_budget_actual,
     check_budget_guard,
     detect_solicitation,
+    evaluate_commitment_invalid_rate_gate,
     evaluate_menu_ceiling_gate,
     evaluate_menu_only_solicitation_gate,
     load_budget_state,
     load_pinned_manifest,
     main,
     menu_ceiling_headroom_lower_bound,
+    resolve_default_manifest_paths,
     run_integrity_pilot,
     verify_pin_sidecar,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+V2_PIN_EVENT_ID = "efc-v2-manifest-pin-a1b2c3d4e5f6"
+MANIFEST_V1_RELPATH = "corpus/efc_calibration_v1/calibration_manifest_v1.json"
+
+
+def _write_v2_pin_sidecar(
+    box: Path,
+    pin_event_id: str = V2_PIN_EVENT_ID,
+) -> None:
+    manifest_path = box / MANIFEST_V2_RELPATH
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    pin = {
+        "manifest_file_sha256_raw": sha256_path(manifest_path),
+        "manifest_hash_canonical": manifest_hash(manifest),
+        "manifest_path": MANIFEST_V2_RELPATH,
+        "pin_event_id": pin_event_id,
+        "pinned_at": "2026-07-16T16:00:00.000Z",
+        "pinned_by": "test",
+    }
+    sidecar = box / PIN_SIDECAR_V2_RELPATH
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text(json.dumps(pin, indent=2, sort_keys=True) + "\n")
 
 
 class _RefusingSocket(socket.socket):
@@ -137,7 +163,12 @@ class TestConstructionRefusal(SocketRefusalMixin, unittest.TestCase):
             (box / "corpus/efc_calibration_v1/calibration_manifest_v1.json"
              ).read_text()
         )
-        ok, reason = verify_pin_sidecar(box, manifest)
+        ok, reason = verify_pin_sidecar(
+            box,
+            manifest,
+            manifest_relpath=MANIFEST_V1_RELPATH,
+            pin_sidecar_relpath=PIN_SIDECAR_RELPATH,
+        )
         self.assertFalse(ok)
         self.assertIn("pin_hash_mismatch", reason)
 
@@ -201,7 +232,7 @@ class TestPostCallBudgetEnforcement(SocketRefusalMixin, unittest.TestCase):
         budget: BudgetState,
         transport: MockTransport,
     ) -> dict:
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-budget-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
         ledger = out / "pilot.jsonl"
@@ -212,7 +243,7 @@ class TestPostCallBudgetEnforcement(SocketRefusalMixin, unittest.TestCase):
             return run_integrity_pilot(
                 root=ROOT,
                 transport=transport,
-                manifest=manifest,
+                loaded=loaded,
                 ledger_path=ledger,
                 timestamp_fn=lambda: "2026-07-16T14:00:00+00:00",
             ), ledger
@@ -307,7 +338,7 @@ class TestPostCallBudgetEnforcement(SocketRefusalMixin, unittest.TestCase):
 
 class TestTransportAccounting(SocketRefusalMixin, unittest.TestCase):
     def test_failing_transport_writes_row_and_counts_call(self):
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         transport = FailingTransport(detail="simulated_http_429", http_status=429)
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-transport-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
@@ -315,7 +346,7 @@ class TestTransportAccounting(SocketRefusalMixin, unittest.TestCase):
         result = run_integrity_pilot(
             root=ROOT,
             transport=transport,
-            manifest=manifest,
+            loaded=loaded,
             ledger_path=ledger,
             timestamp_fn=lambda: "2026-07-16T14:00:00+00:00",
         )
@@ -328,8 +359,8 @@ class TestTransportAccounting(SocketRefusalMixin, unittest.TestCase):
         self.assertEqual(row["usage"], {"input_tokens": 0, "output_tokens": 0})
 
     def test_reject_then_success_sequence_counts_two_calls_two_rows(self):
-        manifest = load_pinned_manifest(ROOT)
-        budget = load_budget_state(manifest)
+        loaded = load_pinned_manifest(ROOT)
+        budget = load_budget_state(loaded.manifest)
         transport = RejectThenSuccessTransport()
         body = {"model": "test", "input": []}
         ctx = CallContext(
@@ -371,13 +402,13 @@ class TestTransportAccounting(SocketRefusalMixin, unittest.TestCase):
 
 class TestRunnerDisclosure(SocketRefusalMixin, unittest.TestCase):
     def test_run_report_carries_disclosure(self):
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-disc-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
         result = run_integrity_pilot(
             root=ROOT,
             transport=MockTransport(),
-            manifest=manifest,
+            loaded=loaded,
             ledger_path=out / "pilot.jsonl",
             timestamp_fn=lambda: "2026-07-16T14:00:00+00:00",
         )
@@ -443,6 +474,70 @@ class TestGateArithmetic(unittest.TestCase):
         self.assertFalse(gate["passed"])
         self.assertIn("confounded(menu_induces_checking", gate["verdict"])
 
+    def test_invalid_rate_gate_vectors(self):
+        ceiling_spec = {
+            "global_minimum": 0.05,
+            "cells": [
+                {"lane": "M_task_menu", "stratum": "match_mismatch", "ceiling": 0.05},
+                {"lane": "M_task_menu", "stratum": "match_commit", "ceiling": 0.05},
+                {"lane": "M_task_menu", "stratum": "irrelevant", "ceiling": 0.05},
+            ],
+        }
+
+        def task_menu_rows(
+            *,
+            stratum: str,
+            invalid_count: int,
+            total: int = 5,
+        ) -> list[dict]:
+            rows = []
+            for i in range(total):
+                rows.append(
+                    {
+                        "lane": "M_task_menu",
+                        "stratum": stratum,
+                        "validation_outcome": (
+                            "commitment_invalid"
+                            if i < invalid_count
+                            else "commitment_valid"
+                        ),
+                    }
+                )
+            return rows
+
+        rows_12_of_15 = []
+        for stratum in ("match_mismatch", "match_commit", "irrelevant"):
+            rows_12_of_15.extend(
+                task_menu_rows(stratum=stratum, invalid_count=4, total=5)
+            )
+        confounded = evaluate_commitment_invalid_rate_gate(
+            rows_12_of_15, ceiling_spec
+        )
+        self.assertFalse(confounded["passed"])
+        self.assertEqual(
+            confounded["verdict"], "confounded(commitment_invalid_rate)"
+        )
+
+        rows_0_of_15 = []
+        for stratum in ("match_mismatch", "match_commit", "irrelevant"):
+            rows_0_of_15.extend(
+                task_menu_rows(stratum=stratum, invalid_count=0, total=5)
+            )
+        passed = evaluate_commitment_invalid_rate_gate(rows_0_of_15, ceiling_spec)
+        self.assertTrue(passed["passed"])
+        self.assertEqual(passed["verdict"], "pass")
+
+        one_cell = task_menu_rows(
+            stratum="match_commit", invalid_count=1, total=5
+        )
+        cell_fail = evaluate_commitment_invalid_rate_gate(one_cell, ceiling_spec)
+        self.assertFalse(cell_fail["passed"])
+        failed_cells = [c for c in cell_fail["cells"] if not c["passed"]]
+        self.assertEqual(len(failed_cells), 1)
+        self.assertEqual(failed_cells[0]["stratum"], "match_commit")
+        self.assertEqual(failed_cells[0]["invalid"], 1)
+        self.assertEqual(failed_cells[0]["total"], 5)
+
 
 class TestSolicitationDetector(unittest.TestCase):
     def test_tool_call_positive(self):
@@ -464,7 +559,7 @@ class TestSolicitationDetector(unittest.TestCase):
 
 class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
     def test_full_dry_run_green(self):
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         transport = MockTransport()
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-run-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
@@ -473,9 +568,14 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
         result = run_integrity_pilot(
             root=ROOT,
             transport=transport,
-            manifest=manifest,
+            loaded=loaded,
             ledger_path=ledger,
             timestamp_fn=lambda: next(fixed_ts),
+        )
+        self.assertEqual(result["pin_event_id"], PIN_EVENT_ID)
+        self.assertEqual(
+            result["manifest_hash_canonical"],
+            loaded.manifest_hash_canonical,
         )
         self.assertEqual(result["status"], "completed")
         self.assertEqual(result["invocations"], 30)
@@ -483,6 +583,7 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
         self.assertEqual(result["disclosure"], list(RUNNER_DISCLOSURES))
         self.assertTrue(result["gates"]["menu_ceiling"]["passed"])
         self.assertTrue(result["gates"]["menu_only_solicitation"]["passed"])
+        self.assertTrue(result["gates"]["commitment_invalid_rate"]["passed"])
         lines = ledger.read_text().strip().splitlines()
         self.assertEqual(len(lines), 30)
         row0 = json.loads(lines[0])
@@ -491,7 +592,7 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
         self.assertIn("budget_state", row0)
 
     def test_ledger_append_only_refusal(self):
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         transport = MockTransport()
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-run-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
@@ -501,12 +602,12 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
             run_integrity_pilot(
                 root=ROOT,
                 transport=transport,
-                manifest=manifest,
+                loaded=loaded,
                 ledger_path=ledger,
             )
 
     def test_ledger_determinism(self):
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         fixed_ts = iter(["2026-07-16T14:00:00+00:00"] * 100)
 
         def run_once() -> list[dict]:
@@ -516,7 +617,7 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
             run_integrity_pilot(
                 root=ROOT,
                 transport=transport,
-                manifest=manifest,
+                loaded=loaded,
                 ledger_path=ledger,
                 timestamp_fn=lambda: next(iter(["2026-07-16T14:00:00+00:00"] * 100)),
             )
@@ -530,13 +631,13 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
 
     def test_corpus_untouched(self):
         before = _corpus_hashes(ROOT)
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-corpus-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
         run_integrity_pilot(
             root=ROOT,
             transport=MockTransport(),
-            manifest=manifest,
+            loaded=loaded,
             ledger_path=out / "pilot.jsonl",
             timestamp_fn=lambda: "2026-07-16T14:00:00+00:00",
         )
@@ -544,7 +645,7 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
         self.assertEqual(before, after)
 
     def test_budget_refusal_stops_run(self):
-        manifest = load_pinned_manifest(ROOT)
+        loaded = load_pinned_manifest(ROOT)
         transport = MockTransport()
         out = Path(tempfile.mkdtemp(prefix="efc-pilot-budget-"))
         self.addCleanup(shutil.rmtree, out, ignore_errors=True)
@@ -567,7 +668,7 @@ class TestPilotRun(SocketRefusalMixin, unittest.TestCase):
             result = run_integrity_pilot(
                 root=ROOT,
                 transport=transport,
-                manifest=manifest,
+                loaded=loaded,
                 ledger_path=ledger,
                 timestamp_fn=lambda: "2026-07-16T14:00:00+00:00",
             )
@@ -603,13 +704,126 @@ class TestLiveFlagGating(SocketRefusalMixin, unittest.TestCase):
         self.assertTrue((out / "cli.jsonl").is_file())
 
 
+class TestRunIdNaming(SocketRefusalMixin, unittest.TestCase):
+    def test_mock_default_run_id_is_dryrun(self):
+        loaded = load_pinned_manifest(ROOT)
+        out = Path(tempfile.mkdtemp(prefix="efc-pilot-runid-"))
+        self.addCleanup(shutil.rmtree, out, ignore_errors=True)
+        result = run_integrity_pilot(
+            root=ROOT,
+            transport=MockTransport(),
+            loaded=loaded,
+            ledger_path=out / "pilot_integrity_dryrun.jsonl",
+            run_id="dryrun",
+            live=False,
+            timestamp_fn=lambda: "2026-07-16T14:00:00+00:00",
+        )
+        self.assertEqual(result["run_id"], "dryrun")
+        self.assertIn("pilot_integrity_dryrun.jsonl", result["ledger_path"])
+
+    def test_live_run_id_prefix(self):
+        loaded = load_pinned_manifest(ROOT)
+        out = Path(tempfile.mkdtemp(prefix="efc-pilot-liveid-"))
+        self.addCleanup(shutil.rmtree, out, ignore_errors=True)
+        result = run_integrity_pilot(
+            root=ROOT,
+            transport=MockTransport(),
+            loaded=loaded,
+            ledger_path=out / "pilot_integrity_live_20260716T150000Z.jsonl",
+            run_id="live_20260716T150000Z",
+            live=True,
+            timestamp_fn=lambda: "2026-07-16T15:00:00+00:00",
+        )
+        self.assertEqual(result["run_id"], "live_20260716T150000Z")
+        self.assertTrue(result["run_id"].startswith("live_"))
+
+
+class TestCapFromManifest(SocketRefusalMixin, unittest.TestCase):
+    def test_request_body_reads_max_output_tokens_from_manifest(self):
+        loaded = load_pinned_manifest(ROOT)
+        manifest = copy.deepcopy(loaded.manifest)
+        manifest["budget_ledger"]["max_output_tokens_per_request"] = 256
+        body = build_request_body(manifest, "probe prompt")
+        self.assertEqual(body["max_output_tokens"], 256)
+
+
+class TestManifestPinLoadB1(SocketRefusalMixin, unittest.TestCase):
+    def test_v1_path_still_works_with_v1_pin_id(self):
+        loaded = load_pinned_manifest(ROOT)
+        self.assertEqual(loaded.manifest_path, MANIFEST_V1_RELPATH)
+        self.assertEqual(loaded.pin_event_id, PIN_EVENT_ID)
+
+    def test_v2_without_pin_sidecar_refuses_typed(self):
+        box = Path(tempfile.mkdtemp(prefix="efc-pilot-v2-unpinned-"))
+        self.addCleanup(shutil.rmtree, box, ignore_errors=True)
+        _copy_repo_tree(box)
+        with self.assertRaises(PilotRunnerRefusal) as ctx:
+            load_pinned_manifest(
+                box,
+                manifest_path=MANIFEST_V2_RELPATH,
+                pin_sidecar_path=PIN_SIDECAR_V2_RELPATH,
+            )
+        self.assertEqual(ctx.exception.detail, "unpinned_superseding_manifest")
+
+    def test_v2_with_pin_sidecar_loads_and_echoes_v2_pin_id(self):
+        box = Path(tempfile.mkdtemp(prefix="efc-pilot-v2-pinned-"))
+        self.addCleanup(shutil.rmtree, box, ignore_errors=True)
+        _copy_repo_tree(box)
+        _write_v2_pin_sidecar(box)
+        loaded = load_pinned_manifest(
+            box,
+            manifest_path=MANIFEST_V2_RELPATH,
+            pin_sidecar_path=PIN_SIDECAR_V2_RELPATH,
+        )
+        self.assertEqual(loaded.pin_event_id, V2_PIN_EVENT_ID)
+        out = Path(tempfile.mkdtemp(prefix="efc-pilot-v2-run-"))
+        self.addCleanup(shutil.rmtree, out, ignore_errors=True)
+        result = run_integrity_pilot(
+            root=box,
+            transport=MockTransport(),
+            loaded=loaded,
+            ledger_path=out / "pilot.jsonl",
+            timestamp_fn=lambda: "2026-07-16T16:00:00+00:00",
+        )
+        self.assertEqual(result["pin_event_id"], V2_PIN_EVENT_ID)
+        self.assertEqual(
+            result["manifest_hash_canonical"],
+            loaded.manifest_hash_canonical,
+        )
+        self.assertNotEqual(result["pin_event_id"], PIN_EVENT_ID)
+
+    def test_supersession_chain_default_resolution_picks_v2_when_sidecar_exists(
+        self,
+    ):
+        box = Path(tempfile.mkdtemp(prefix="efc-pilot-v2-default-"))
+        self.addCleanup(shutil.rmtree, box, ignore_errors=True)
+        _copy_repo_tree(box)
+        _write_v2_pin_sidecar(box)
+        manifest_path, pin_path = resolve_default_manifest_paths(box)
+        self.assertEqual(manifest_path, MANIFEST_V2_RELPATH)
+        self.assertEqual(pin_path, PIN_SIDECAR_V2_RELPATH)
+        loaded = load_pinned_manifest(box)
+        self.assertEqual(loaded.pin_event_id, V2_PIN_EVENT_ID)
+
+    def test_wrong_pin_event_id_for_loaded_sidecar_refuses(self):
+        self.assertEqual(
+            main(["--live", "--pin-event-id", "wrong-pin-id"]),
+            2,
+        )
+
+
 class TestPinSidecarBinding(unittest.TestCase):
     def test_real_tree_pin_matches_manifest(self):
         manifest = json.loads(
             (ROOT / "corpus/efc_calibration_v1/calibration_manifest_v1.json"
              ).read_text()
         )
-        ok, reason = verify_pin_sidecar(ROOT, manifest)
+        ok, reason = verify_pin_sidecar(
+            ROOT,
+            manifest,
+            manifest_relpath=MANIFEST_V1_RELPATH,
+            pin_sidecar_relpath=PIN_SIDECAR_RELPATH,
+        )
         self.assertTrue(ok, reason)
         pin = json.loads((ROOT / PIN_SIDECAR_RELPATH).read_text())
         self.assertEqual(pin["pin_event_id"], PIN_EVENT_ID)
