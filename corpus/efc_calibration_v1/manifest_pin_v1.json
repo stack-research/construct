@@ -1,0 +1,11 @@
+{
+  "manifest_file_sha256_raw": "4e4c501e022bc410e008456d0e3ad0f4ad8b1f28d2cc921a27177a2b9f083da9",
+  "manifest_hash_canonical": "c7faddf24a8aa2f52fde223967d168c7e5c5abe3d8736e9d610a9af38829dd37",
+  "manifest_path": "corpus/efc_calibration_v1/calibration_manifest_v1.json",
+  "note": "Manifest bytes pinned exactly as final-reviewed (kimi PASS 20260716T131847120Z); in-manifest pin fields remain TO-BE-SET-AT-PIN by design - manifest_verify enforces placeholder state; this sidecar record is the pin event.",
+  "pin_event_id": "efc-v1-manifest-pin-3f2232aa0e11451c",
+  "pinned_at": "2026-07-16T14:15:24.387Z",
+  "pinned_by": "dan",
+  "ruling_entry": "20260716T141524387Z__dan.md",
+  "ruling_text": "pin it and move to engine contact. proceed."
+}
