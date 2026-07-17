@@ -393,6 +393,52 @@ class TestEarlyCensorRefusal(unittest.TestCase):
             self.assertEqual(result["call_count"], 8)
             self.assertEqual(transport.call_count, 8)
 
+    def test_nonmatching_empty_stop_disarms_early_censor_sol_counterprobe(self):
+        """Call 1 = empty finish_reason=stop; calls 2-9 = censor => no refusal."""
+        manifest = _manifest_with_fork(ROOT)
+        fixtures = make_minimal_suite(2)
+
+        class CounterprobeTransport:
+            def __init__(self):
+                self.call_count = 0
+                self._censor = CensoringMockTransport(
+                    max_output_tokens=CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+                )
+
+            def call(self, request_body, context):
+                self.call_count += 1
+                if self.call_count == 1:
+                    raw = {
+                        "choices": [
+                            {
+                                "finish_reason": "stop",
+                                "message": {"content": ""},
+                            }
+                        ],
+                        "usage": {"prompt_tokens": 10, "completion_tokens": 0},
+                    }
+                    return TransportResult(
+                        raw=raw,
+                        text="",
+                        input_tokens=10,
+                        output_tokens=0,
+                        tool_calls_present=False,
+                    )
+                return self._censor.call(request_body, context)
+
+        transport = CounterprobeTransport()
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "pilot.jsonl"
+            result = run_admission_pilot(
+                root=ROOT,
+                transport=transport,
+                manifest=manifest,
+                fixtures=fixtures,
+                ledger_path=ledger,
+            )
+            self.assertNotEqual(result["status"], EARLY_OUTPUT_CENSORING_OUTCOME)
+            self.assertGreater(result["call_count"], 8)
+
     def test_content_response_disables_early_censor(self):
         manifest = _manifest_with_fork(ROOT)
         fixtures = make_minimal_suite(2)

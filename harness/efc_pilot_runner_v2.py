@@ -271,7 +271,7 @@ def check_early_censor_refusal(
         return None
     if envelope_attempts < first_k:
         return None
-    if censor_matches < first_k:
+    if censor_matches != first_k:
         return None
     typed = early.get("typed_outcome", EARLY_OUTPUT_CENSORING_OUTCOME)
     return typed if isinstance(typed, str) else EARLY_OUTPUT_CENSORING_OUTCOME
@@ -1085,9 +1085,7 @@ def run_admission_pilot(
 
             if early_censor_active and early_censor is not None:
                 envelope_attempts += 1
-                if transport_result.text != "":
-                    early_censor_active = False
-                elif matches_early_censor_predicates(
+                if matches_early_censor_predicates(
                     raw=transport_result.raw,
                     text=transport_result.text,
                     output_tokens=transport_result.output_tokens,
@@ -1095,11 +1093,17 @@ def run_admission_pilot(
                     tolerance=censor_tolerance,
                 ):
                     censor_matches += 1
-                refused = check_early_censor_refusal(
-                    manifest=manifest,
-                    envelope_attempts=envelope_attempts,
-                    censor_matches=censor_matches,
-                    early=early_censor,
+                else:
+                    early_censor_active = False
+                refused = (
+                    check_early_censor_refusal(
+                        manifest=manifest,
+                        envelope_attempts=envelope_attempts,
+                        censor_matches=censor_matches,
+                        early=early_censor,
+                    )
+                    if early_censor_active
+                    else None
                 )
                 if refused is not None:
                     outcome = refused  # type: ignore[assignment]
