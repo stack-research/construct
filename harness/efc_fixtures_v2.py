@@ -22,6 +22,11 @@ from harness.efc_menu_composition_v2 import (
     check_counterfactual_block_shape,
     check_fixture_composition,
 )
+from harness.efc_provenance_record_store_v2 import (
+    ProvenanceRecordStore,
+    check_fixture_provenance_against_store,
+    record_store_hash,
+)
 
 PART_I_SPEC_SHA256 = (
     "8cedf6537aa7f6c2df792ad581d4f937066d5c639812907c3c8ea90c21197d62"
@@ -138,8 +143,9 @@ def suite_hash(
     fixtures: list[dict[str, Any]],
     *,
     k_pairs: int,
+    record_store: ProvenanceRecordStore,
 ) -> str:
-    """Frozen suite-level digest: membership, input order, and balance metadata."""
+    """Frozen suite-level digest: membership, input order, balances, record store."""
     payload = {
         "hash_definition": HASH_DEFINITION_CANONICAL_COMPACT_JSON,
         "k_pairs": k_pairs,
@@ -147,6 +153,7 @@ def suite_hash(
         "fixture_hashes": [fixture_identity_hash(fx) for fx in fixtures],
         "scope_dimension_histogram": scope_dimension_histogram(fixtures),
         "handle_orientation_histogram": handle_orientation_histogram(fixtures),
+        "provenance_record_store_hash": record_store_hash(record_store),
     }
     return sha256_canon(payload)
 
@@ -172,16 +179,23 @@ def validate_suite(
     *,
     require_plausibility_attestation: bool = False,
     expected_k_pairs: int = K_PAIRS,
+    record_store: ProvenanceRecordStore | None = None,
 ) -> SuiteValidationResult:
     """Validate suite shape, mapping, block pairing, balances, and leak-audit preconditions."""
     if not isinstance(fixtures, list):
         return SuiteValidationResult(False, ("malformed_fixture_suite",))
+    if record_store is None:
+        return SuiteValidationResult(False, ("provenance_record_store_missing",))
 
     refusals: list[str] = []
     validated: list[dict[str, Any]] = []
     for fixture in fixtures:
         if not isinstance(fixture, dict):
             return SuiteValidationResult(False, ("malformed_fixture",))
+        provenance = check_fixture_provenance_against_store(fixture, record_store)
+        if not provenance.ok:
+            refusals.append(provenance.refusal or "provenance_record_missing")
+            continue
         comp = check_fixture_composition(
             fixture,
             require_plausibility_attestation=require_plausibility_attestation,

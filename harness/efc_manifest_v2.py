@@ -31,6 +31,9 @@ from harness.efc_fixtures_v2 import (
     suite_hash,
     validate_suite,
 )
+from harness.efc_provenance_record_store_v2 import (
+    build_record_store_from_fixtures,
+)
 from harness.efc_leak_audit_v2 import canonical_predictor_spec_bytes
 from harness.efc_menu_composition_v2 import ALL_STRATA, RELEVANT_STRATA
 from harness.efc_render_v2 import (
@@ -187,7 +190,11 @@ def assemble_manifest(
                 "fixture_id": fixture["fixture_id"],
                 "sha256": fixture_identity_hash(fixture),
             })
-        fixture_suite_hash = suite_hash(fixtures, k_pairs=K_PAIRS)
+        fixture_suite_hash = suite_hash(
+            fixtures,
+            k_pairs=K_PAIRS,
+            record_store=build_record_store_from_fixtures(fixtures),
+        )
 
     manifest: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -278,10 +285,15 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
 
     if loaded is not None:
         fixtures, suite_manifest_order = loaded
-        suite_result = validate_suite(fixtures)
+        store = build_record_store_from_fixtures(fixtures)
+        suite_result = validate_suite(fixtures, record_store=store)
         if not suite_result.ok:
             failures.extend(suite_result.refusals)
-        recomputed_suite_hash = suite_hash(fixtures, k_pairs=K_PAIRS)
+        recomputed_suite_hash = suite_hash(
+            fixtures,
+            k_pairs=K_PAIRS,
+            record_store=store,
+        )
         if pinned_suite_hash is not None and pinned_suite_hash != recomputed_suite_hash:
             failures.append("fixture_suite_hash_mismatch")
         calibration_order = [
