@@ -13,6 +13,7 @@ import argparse
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable
@@ -240,6 +241,7 @@ def verify_pin_sidecar(
     *,
     manifest_relpath: str,
     pin_sidecar_relpath: str,
+    licensed_pin_event_id: str | None = None,
 ) -> tuple[bool, str]:
     pin_path = root / pin_sidecar_relpath
     if not pin_path.is_file():
@@ -253,6 +255,10 @@ def verify_pin_sidecar(
         return False, "pin_hash_mismatch:manifest_file_sha256_raw"
     if pin.get("manifest_path") != manifest_relpath:
         return False, "pin_sidecar_path_mismatch"
+    pin_event_id = pin.get("pin_event_id")
+    if licensed_pin_event_id is not None:
+        if pin_event_id != licensed_pin_event_id:
+            return False, "pin_event_id_not_licensed"
     return True, ""
 
 
@@ -283,6 +289,7 @@ def load_pinned_manifest(
             manifest,
             manifest_relpath=manifest_relpath,
             pin_sidecar_relpath=pin_relpath,
+            licensed_pin_event_id=PIN_EVENT_ID,
         )
         if not ok:
             raise PilotRunnerRefusal("construction_refused", reason)
@@ -346,12 +353,19 @@ def strip_think_blocks(text: str) -> str:
 
 def adapt_responses_to_chat_completions(body: dict[str, Any]) -> dict[str, Any]:
     """Transport-internal adapter; canonical body hash is computed before this."""
+    reasoning = body.get("reasoning") or {}
+    effort = reasoning.get("effort")
+    if not isinstance(effort, str) or not effort:
+        raise PilotRunnerRefusal(
+            "construction_refused", "fork_identity_effort_missing"
+        )
     return {
         "model": body["model"],
         "messages": list(body.get("input", [])),
         "temperature": body.get("temperature", 0.0),
         "max_tokens": body.get("max_output_tokens", 256),
         "stream": body.get("stream", False),
+        "reasoning_effort": effort,
     }
 
 
@@ -560,6 +574,10 @@ class MockTransport:
 @dataclass
 class FailingTransport:
     detail: str = "simulated_transport_refusal"
+    http_status: int = 429
+    sanitized_body: dict[str, Any] | None = None
+    input_tokens: int = 0
+    output_tokens: int = 0
     call_count: int = 0
 
     def call(
@@ -568,7 +586,14 @@ class FailingTransport:
         context: CallContext,
     ) -> TransportResult:
         self.call_count += 1
-        raise TransportRefusal("transport_refusal", self.detail)
+        raise TransportRefusal(
+            "transport_refusal",
+            self.detail,
+            http_status=self.http_status,
+            sanitized_body=self.sanitized_body,
+            input_tokens=self.input_tokens,
+            output_tokens=self.output_tokens,
+        )
 
 
 @dataclass
@@ -603,16 +628,17 @@ class LiveTransport:
                 input_tokens=inp if isinstance(inp, int) else 0,
                 output_tokens=out if isinstance(out, int) else 0,
             )
-        text = extract_chat_completion_text(data)
-        inp_tok, out_tok = map_chat_completion_usage(data)
-        if not text:
+        if not isinstance(data, dict) or not data.get("choices"):
+            inp_tok, out_tok = map_chat_completion_usage(data if isinstance(data, dict) else {})
             raise ParseFailure(
                 "transport_refusal",
-                "missing_text_output",
-                sanitized_body=data,
+                "malformed_transport_envelope",
+                sanitized_body=data if isinstance(data, dict) else None,
                 input_tokens=inp_tok,
                 output_tokens=out_tok,
             )
+        text = extract_chat_completion_text(data)
+        inp_tok, out_tok = map_chat_completion_usage(data)
         usage = data.get("usage") or {}
         inp = usage.get("prompt_tokens")
         out = usage.get("completion_tokens")
@@ -626,11 +652,28 @@ class LiveTransport:
             )
         return TransportResult(
             raw=data,
-            text=text,
+            text=text or "",
             input_tokens=inp,
             output_tokens=out,
             tool_calls_present=response_has_tool_calls(data),
         )
+
+
+def _record_transport_failure(
+    *,
+    exc: TransportRefusal | ParseFailure,
+    call_outcome: CallOutcome,
+) -> tuple[dict[str, Any], int, int]:
+    input_tokens = getattr(exc, "input_tokens", 0) or 0
+    output_tokens = getattr(exc, "output_tokens", 0) or 0
+    validation = {
+        "validation_outcome": call_outcome,
+        "invalid_reason": exc.detail,
+        "oracle_outcome": None,
+        "solicitation_detected": False,
+        "usage": {"input_tokens": input_tokens, "output_tokens": output_tokens},
+    }
+    return validation, input_tokens, output_tokens
 
 
 def _ledger_row(
@@ -647,9 +690,16 @@ def _ledger_row(
     budget: BudgetState,
     timestamp_utc: str,
     call_outcome: CallOutcome,
+    wall_time_ms: float,
     supplied_class: str | None = None,
     over_ceiling: bool = False,
 ) -> dict[str, Any]:
+    usage = validation.get("usage")
+    if usage is None and transport is not None:
+        usage = {
+            "input_tokens": transport.input_tokens,
+            "output_tokens": transport.output_tokens,
+        }
     return {
         "schema_version": "efc_pilot_runner_ledger_v2",
         "seq": seq,
@@ -663,16 +713,10 @@ def _ledger_row(
         "request_body": request_body,
         "call_outcome": call_outcome,
         "over_ceiling": over_ceiling,
+        "wall_time_ms": round(wall_time_ms, 3),
         "response_raw": transport.raw if transport else None,
         "response_text": transport.text if transport else None,
-        "usage": (
-            {
-                "input_tokens": transport.input_tokens,
-                "output_tokens": transport.output_tokens,
-            }
-            if transport
-            else None
-        ),
+        "usage": usage,
         "validation_outcome": validation.get("validation_outcome"),
         "invalid_reason": validation.get("invalid_reason"),
         "oracle_outcome": validation.get("oracle_outcome"),
@@ -789,6 +833,7 @@ def run_admission_pilot(
                     budget=budget,
                     timestamp_utc=timestamp_fn(),
                     call_outcome="budget_refusal",
+                    wall_time_ms=0.0,
                     supplied_class=supplied_class,
                 )
                 ledger.write(json.dumps(row, sort_keys=True) + "\n")
@@ -798,19 +843,19 @@ def run_admission_pilot(
                 stopped = True
                 break
 
+            call_started = time.perf_counter()
             try:
                 transport_result = transport.call(body, ctx)
             except ParseFailure as exc:
-                seq += 1
+                wall_time_ms = (time.perf_counter() - call_started) * 1000
+                call_outcome: CallOutcome = "parse_failed"
+                validation, inp_tok, out_tok = _record_transport_failure(
+                    exc=exc, call_outcome=call_outcome
+                )
                 budget.calls_spent += 1
-                budget.input_tokens_spent += exc.input_tokens
-                budget.output_tokens_spent += exc.output_tokens
-                validation = {
-                    "validation_outcome": "parse_failed",
-                    "invalid_reason": exc.detail,
-                    "oracle_outcome": None,
-                    "solicitation_detected": False,
-                }
+                budget.input_tokens_spent += inp_tok
+                budget.output_tokens_spent += out_tok
+                seq += 1
                 row = _ledger_row(
                     seq=seq,
                     fixture_id=fixture_id,
@@ -823,7 +868,8 @@ def run_admission_pilot(
                     validation=validation,
                     budget=budget,
                     timestamp_utc=timestamp_fn(),
-                    call_outcome="parse_failed",
+                    call_outcome=call_outcome,
+                    wall_time_ms=wall_time_ms,
                     supplied_class=supplied_class,
                 )
                 ledger.write(json.dumps(row, sort_keys=True) + "\n")
@@ -833,13 +879,15 @@ def run_admission_pilot(
                 stopped = True
                 break
             except TransportRefusal as exc:
+                wall_time_ms = (time.perf_counter() - call_started) * 1000
+                call_outcome = "transport_rejected"
+                validation, inp_tok, out_tok = _record_transport_failure(
+                    exc=exc, call_outcome=call_outcome
+                )
+                budget.calls_spent += 1
+                budget.input_tokens_spent += inp_tok
+                budget.output_tokens_spent += out_tok
                 seq += 1
-                validation = {
-                    "validation_outcome": "transport_rejected",
-                    "invalid_reason": exc.detail,
-                    "oracle_outcome": None,
-                    "solicitation_detected": False,
-                }
                 row = _ledger_row(
                     seq=seq,
                     fixture_id=fixture_id,
@@ -852,7 +900,8 @@ def run_admission_pilot(
                     validation=validation,
                     budget=budget,
                     timestamp_utc=timestamp_fn(),
-                    call_outcome="transport_rejected",
+                    call_outcome=call_outcome,
+                    wall_time_ms=wall_time_ms,
                     supplied_class=supplied_class,
                 )
                 ledger.write(json.dumps(row, sort_keys=True) + "\n")
@@ -862,6 +911,7 @@ def run_admission_pilot(
                 stopped = True
                 break
 
+            wall_time_ms = (time.perf_counter() - call_started) * 1000
             budget.calls_spent += 1
             budget.input_tokens_spent += transport_result.input_tokens
             budget.output_tokens_spent += transport_result.output_tokens
@@ -888,6 +938,7 @@ def run_admission_pilot(
                     budget=budget,
                     timestamp_utc=timestamp_fn(),
                     call_outcome="over_ceiling",
+                    wall_time_ms=wall_time_ms,
                     supplied_class=supplied_class,
                     over_ceiling=True,
                 )
@@ -926,6 +977,7 @@ def run_admission_pilot(
                 budget=budget,
                 timestamp_utc=timestamp_fn(),
                 call_outcome="completed",
+                wall_time_ms=wall_time_ms,
                 supplied_class=supplied_class,
             )
             ledger.write(json.dumps(row, sort_keys=True) + "\n")
@@ -994,6 +1046,13 @@ def main(argv: list[str] | None = None) -> int:
             print(
                 "refused: --live requires --pin-event-id matching loaded "
                 "pin sidecar",
+                file=sys.stderr,
+            )
+            return 2
+        if args.pin_event_id != PIN_EVENT_ID:
+            print(
+                "refused: --pin-event-id does not match licensed pin event "
+                f"(expected {PIN_EVENT_ID!r})",
                 file=sys.stderr,
             )
             return 2

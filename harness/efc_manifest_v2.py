@@ -232,6 +232,8 @@ def assemble_manifest(
             "effort": effort,
             "render_hash": contract_hashes["foreground_template_hash"],
         },
+        "engine": engine,
+        "effort": effort,
         "pin_event_id": PIN_PLACEHOLDER,
         "pinned_at": PIN_PLACEHOLDER,
         "pinned_by": PIN_PLACEHOLDER,

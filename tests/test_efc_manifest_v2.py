@@ -33,6 +33,8 @@ class TestManifestV2(unittest.TestCase):
         recomputed = compute_contract_hashes(REPO_ROOT)
         self.assertEqual(manifest["contract_hashes"], recomputed)
         self.assertEqual(manifest["part_i_spec_sha256"], PART_I_SPEC_SHA256)
+        self.assertEqual(manifest["engine"], manifest["fork_identity"]["engine"])
+        self.assertEqual(manifest["effort"], manifest["fork_identity"]["effort"])
         pins = recomputed
         self.assertIn("scope_comparison_rule_artifact_sha256", pins)
         self.assertIn("scope_comparison_interpreter_sha256", pins)

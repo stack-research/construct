@@ -16,17 +16,19 @@ from harness.efc_pilot_runner_v2 import (
     FailingTransport,
     LiveTransport,
     MockTransport,
+    PIN_EVENT_ID,
     PilotRunnerRefusal,
-    TransportRefusal,
     adapt_responses_to_chat_completions,
     build_request_body,
     check_budget_actual,
     check_budget_guard,
     extract_chat_completion_text,
+    main,
     parse_commitment_wire_text,
     request_hash,
     run_admission_pilot,
     strip_think_blocks,
+    verify_pin_sidecar,
     verify_pinned_engine_available,
 )
 from tests.efc_v2_test_fixtures import make_minimal_suite
@@ -150,6 +152,7 @@ class TestAdapterMapping(unittest.TestCase):
         self.assertEqual(adapted["messages"], body["input"])
         self.assertEqual(adapted["max_tokens"], body["max_output_tokens"])
         self.assertEqual(adapted["model"], body["model"])
+        self.assertEqual(adapted["reasoning_effort"], "high")
         self.assertNotIn("input", adapted)
         self.assertNotIn("max_output_tokens", adapted)
 
@@ -169,6 +172,7 @@ class TestAdapterMapping(unittest.TestCase):
             self.assertIsNone(api_key)
             self.assertEqual(posted["messages"], body["input"])
             self.assertEqual(posted["max_tokens"], body["max_output_tokens"])
+            self.assertEqual(posted["reasoning_effort"], "high")
             return {
                 "http_status": 200,
                 "data": {
@@ -196,6 +200,69 @@ class TestAdapterMapping(unittest.TestCase):
         self.assertEqual(
             result.text, '{"commitment_enum": "alpha_commit"}',
         )
+
+    def test_think_only_content_returns_empty_text_not_parse_failure(self):
+        manifest = _manifest_with_fork(ROOT)
+        body = build_request_body(manifest, "wire prompt")
+
+        def http_post(_url: str, _posted: dict, _api_key):
+            return {
+                "http_status": 200,
+                "data": {
+                    "choices": [
+                        {
+                            "message": {
+                                "content": "<think>only</think>"
+                            }
+                        }
+                    ],
+                    "usage": {"prompt_tokens": 5, "completion_tokens": 1},
+                },
+            }
+
+        transport = LiveTransport(http_post_fn=http_post)
+        result = transport.call(
+            body,
+            type("Ctx", (), {"fixture_id": "f", "lane": "M_untreated"})(),
+        )
+        self.assertEqual(result.text, "")
+
+
+class TestThinkOnlyCommitmentInvalid(unittest.TestCase):
+    def test_think_only_ledger_is_commitment_invalid_not_transport_refusal(self):
+        manifest = _manifest_with_fork(ROOT)
+        fixtures = make_minimal_suite(1)
+
+        def http_post(_url: str, _posted: dict, _api_key):
+            return {
+                "http_status": 200,
+                "data": {
+                    "choices": [
+                        {
+                            "message": {
+                                "content": "<think>x</think>"
+                            }
+                        }
+                    ],
+                    "usage": {"prompt_tokens": 3, "completion_tokens": 2},
+                },
+            }
+
+        transport = LiveTransport(http_post_fn=http_post)
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "pilot.jsonl"
+            result = run_admission_pilot(
+                root=ROOT,
+                transport=transport,
+                manifest=manifest,
+                fixtures=fixtures,
+                ledger_path=ledger,
+            )
+            self.assertNotEqual(result["status"], "transport_refusal")
+            row = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(row["validation_outcome"], "commitment_invalid")
+            self.assertEqual(row["call_outcome"], "completed")
+            self.assertGreaterEqual(row["wall_time_ms"], 0.0)
 
 
 class TestBudgetGuards(unittest.TestCase):
@@ -249,20 +316,32 @@ class TestAdmissionPilot(SocketRefusalMixin, unittest.TestCase):
             self.assertGreater(result["call_count"], 0)
             first = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
             self.assertEqual(first["request_body"]["model"], "qwen/qwen3.5-9b")
+            self.assertIn("wall_time_ms", first)
 
-    def test_transport_refusal_halts(self):
+    def test_transport_refusal_halts_and_accounts_budget(self):
         manifest = _manifest_with_fork(ROOT)
         fixtures = make_minimal_suite(1)
+        transport = FailingTransport(
+            detail="simulated_http_429",
+            http_status=429,
+            input_tokens=7,
+            output_tokens=2,
+        )
         with tempfile.TemporaryDirectory() as tmp:
             ledger = Path(tmp) / "pilot.jsonl"
             result = run_admission_pilot(
                 root=ROOT,
-                transport=FailingTransport(),
+                transport=transport,
                 manifest=manifest,
                 fixtures=fixtures,
                 ledger_path=ledger,
             )
             self.assertEqual(result["status"], "transport_refusal")
+            row = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(row["call_outcome"], "transport_rejected")
+            self.assertEqual(row["usage"], {"input_tokens": 7, "output_tokens": 2})
+            self.assertEqual(row["budget_state"]["calls_spent"], 1)
+            self.assertIn("wall_time_ms", row)
 
     def test_append_only_ledger_refusal(self):
         manifest = _manifest_with_fork(ROOT)
@@ -278,3 +357,56 @@ class TestAdmissionPilot(SocketRefusalMixin, unittest.TestCase):
                     fixtures=fixtures,
                     ledger_path=ledger,
                 )
+
+
+class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
+    def test_wrong_pin_event_id_cli_refuses(self):
+        self.assertEqual(
+            main(["--live", "--pin-event-id", "wrong-pin-id"]),
+            2,
+        )
+
+    def test_unlicensed_pin_event_id_cli_refuses(self):
+        self.assertEqual(
+            main(
+                [
+                    "--live",
+                    "--pin-event-id",
+                    "efc-v2-manifest-pin-forged0000000000",
+                ]
+            ),
+            2,
+        )
+
+    def test_forged_sidecar_event_id_cannot_self_authorize(self):
+        manifest = json.loads(
+            (ROOT / "corpus/efc_calibration_v2/calibration_manifest.json").read_text()
+        )
+        pin = json.loads(
+            (ROOT / "corpus/efc_calibration_v2/manifest_pin.json").read_text()
+        )
+        forged_pin = pin.copy()
+        forged_pin["pin_event_id"] = "efc-v2-manifest-pin-forged0000000000"
+        temp_pin = tempfile.NamedTemporaryFile(
+            "w",
+            dir=ROOT,
+            suffix=".json",
+            delete=False,
+        )
+        pin_path = Path(temp_pin.name)
+        try:
+            json.dump(forged_pin, temp_pin)
+            temp_pin.flush()
+            rel_pin = pin_path.relative_to(ROOT).as_posix()
+            ok, reason = verify_pin_sidecar(
+                ROOT,
+                manifest,
+                manifest_relpath="corpus/efc_calibration_v2/calibration_manifest.json",
+                pin_sidecar_relpath=rel_pin,
+                licensed_pin_event_id=PIN_EVENT_ID,
+            )
+            self.assertFalse(ok)
+            self.assertEqual(reason, "pin_event_id_not_licensed")
+        finally:
+            temp_pin.close()
+            pin_path.unlink(missing_ok=True)
