@@ -5,7 +5,7 @@
     "live_001_ledger_relpath": "runs/efc_calibration_v2/admission_pilot_efc-v2-admission-live-001.jsonl",
     "live_001_ledger_sha256": "6ce22be29fb2510ab4f1e1469feaadf98cda6cd37b7092705b24599b61470988",
     "rerun_preserves": {
-      "effort": "high",
+      "effort": "none",
       "engine": "qwen/qwen3.5-9b",
       "fixture_suite_hash": "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828",
       "lane_order": "iter_calibration_call_specs fixture×lane order",
@@ -1683,12 +1683,12 @@
     "stop_before_call_index": 9,
     "typed_outcome": "instrument_refusal(early_output_censoring)"
   },
-  "effort": "high",
+  "effort": "none",
   "engine": "qwen/qwen3.5-9b",
   "estimand": "balanced_relevant_accuracy",
   "fixture_suite_hash": "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828",
   "fork_identity": {
-    "effort": "high",
+    "effort": "none",
     "engine": "qwen/qwen3.5-9b",
     "render_hash": "98317b270b4ed161b05ba36ef1116c0b8fa04ff876779058aee15f3fa9a87d0a"
   },
