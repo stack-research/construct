@@ -9,21 +9,32 @@ import unittest
 from pathlib import Path
 
 from harness.efc_commitment_wire_v2 import validate_commitment_wire
-from harness.efc_manifest_v2 import assemble_manifest, manifest_hash, sha256_path
+from harness.efc_manifest_v2 import (
+    CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+    EARLY_OUTPUT_CENSORING_OUTCOME,
+    assemble_manifest,
+    manifest_hash,
+    sha256_path,
+)
 from harness.efc_pilot_runner_v2 import (
     BudgetRefusal,
     BudgetState,
+    CensoringMockTransport,
     FailingTransport,
     LiveTransport,
     MockTransport,
     PIN_EVENT_ID,
     PilotRunnerRefusal,
+    TransportResult,
     adapt_responses_to_chat_completions,
     build_request_body,
     check_budget_actual,
     check_budget_guard,
+    check_early_censor_refusal,
     extract_chat_completion_text,
+    load_budget_state,
     main,
+    matches_early_censor_predicates,
     parse_commitment_wire_text,
     request_hash,
     run_admission_pilot,
@@ -86,6 +97,8 @@ def _manifest_with_fork(root: Path) -> dict:
         "effort": "high",
         "render_hash": manifest["contract_hashes"]["foreground_template_hash"],
     }
+    manifest["engine"] = "qwen/qwen3.5-9b"
+    manifest["effort"] = "high"
     return manifest
 
 
@@ -326,6 +339,146 @@ class TestBudgetGuards(unittest.TestCase):
         self.assertIsNotNone(refusal)
 
 
+class TestEarlyCensorRefusal(unittest.TestCase):
+    def test_predicate_matches_length_capped_empty_envelope(self):
+        raw = {
+            "choices": [{"finish_reason": "length", "message": {"content": ""}}],
+        }
+        self.assertTrue(
+            matches_early_censor_predicates(
+                raw=raw,
+                text="",
+                output_tokens=2047,
+                max_output_tokens=2048,
+                tolerance=1,
+            )
+        )
+
+    def test_predicate_rejects_nonempty_content(self):
+        raw = {
+            "choices": [
+                {
+                    "finish_reason": "length",
+                    "message": {"content": '{"commitment_enum":"x"}'},
+                }
+            ],
+        }
+        self.assertFalse(
+            matches_early_censor_predicates(
+                raw=raw,
+                text='{"commitment_enum":"x"}',
+                output_tokens=2047,
+                max_output_tokens=2048,
+                tolerance=1,
+            )
+        )
+
+    def test_early_censor_refusal_after_eight_censored_envelopes(self):
+        manifest = _manifest_with_fork(ROOT)
+        fixtures = make_minimal_suite(2)
+        transport = CensoringMockTransport(
+            max_output_tokens=CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "pilot.jsonl"
+            result = run_admission_pilot(
+                root=ROOT,
+                transport=transport,
+                manifest=manifest,
+                fixtures=fixtures,
+                ledger_path=ledger,
+            )
+            self.assertEqual(result["status"], EARLY_OUTPUT_CENSORING_OUTCOME)
+            self.assertEqual(result["stop_reason"], "early_output_censoring")
+            self.assertEqual(result["call_count"], 8)
+            self.assertEqual(transport.call_count, 8)
+
+    def test_content_response_disables_early_censor(self):
+        manifest = _manifest_with_fork(ROOT)
+        fixtures = make_minimal_suite(2)
+
+        class MixedTransport:
+            def __init__(self):
+                self.call_count = 0
+
+            def call(self, request_body, context):
+                self.call_count += 1
+                if self.call_count == 3:
+                    text = json.dumps({"commitment_enum": "alpha_commit"})
+                    raw = {
+                        "choices": [
+                            {
+                                "finish_reason": "stop",
+                                "message": {"content": text},
+                            }
+                        ],
+                        "usage": {"prompt_tokens": 10, "completion_tokens": 5},
+                    }
+                    return TransportResult(
+                        raw=raw,
+                        text=text,
+                        input_tokens=10,
+                        output_tokens=5,
+                        tool_calls_present=False,
+                    )
+                return CensoringMockTransport(
+                    max_output_tokens=CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+                ).call(request_body, context)
+
+        transport = MixedTransport()
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "pilot.jsonl"
+            result = run_admission_pilot(
+                root=ROOT,
+                transport=transport,
+                manifest=manifest,
+                fixtures=fixtures,
+                ledger_path=ledger,
+            )
+            self.assertNotEqual(result["status"], EARLY_OUTPUT_CENSORING_OUTCOME)
+            self.assertGreater(result["call_count"], 8)
+
+    def test_check_early_censor_refusal_unit(self):
+        manifest = _manifest_with_fork(ROOT)
+        early = manifest["early_censor_refusal"]
+        self.assertEqual(
+            check_early_censor_refusal(
+                manifest=manifest,
+                envelope_attempts=8,
+                censor_matches=8,
+                early=early,
+            ),
+            EARLY_OUTPUT_CENSORING_OUTCOME,
+        )
+        self.assertIsNone(
+            check_early_censor_refusal(
+                manifest=manifest,
+                envelope_attempts=8,
+                censor_matches=7,
+                early=early,
+            )
+        )
+
+
+class TestCap2048BudgetLedger(unittest.TestCase):
+    def test_load_budget_state_zero_dollar_pricing(self):
+        manifest = _manifest_with_fork(ROOT)
+        state = load_budget_state(manifest)
+        self.assertEqual(
+            state.max_output_tokens_per_request,
+            CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+        )
+        self.assertEqual(state.hard_cost_ceiling_usd, 0.0)
+        self.assertEqual(state.input_usd_per_million, 0.0)
+        self.assertEqual(state.output_usd_per_million, 0.0)
+        self.assertEqual(state.calls_spent, 528)
+
+    def test_build_request_body_uses_cap2048(self):
+        manifest = _manifest_with_fork(ROOT)
+        body = build_request_body(manifest, "prompt")
+        self.assertEqual(body["max_output_tokens"], CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST)
+
+
 class TestAdmissionPilot(SocketRefusalMixin, unittest.TestCase):
     def test_dryrun_writes_ledger(self):
         manifest = _manifest_with_fork(ROOT)
@@ -367,7 +520,10 @@ class TestAdmissionPilot(SocketRefusalMixin, unittest.TestCase):
             row = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
             self.assertEqual(row["call_outcome"], "transport_rejected")
             self.assertEqual(row["usage"], {"input_tokens": 7, "output_tokens": 2})
-            self.assertEqual(row["budget_state"]["calls_spent"], 1)
+            self.assertEqual(
+                row["budget_state"]["calls_spent"],
+                manifest["budget_ledger"]["calls_already_spent"] + 1,
+            )
             self.assertIn("wall_time_ms", row)
 
     def test_append_only_ledger_refusal(self):

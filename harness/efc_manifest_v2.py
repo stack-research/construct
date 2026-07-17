@@ -40,6 +40,7 @@ from harness.efc_render_v2 import (
     RENDERER_ID,
     forced_class_template_hash,
     foreground_template_hash,
+    render_for_lane,
     renderer_contract_hash,
 )
 
@@ -52,6 +53,26 @@ PIN_PLACEHOLDER = "TO-BE-SET-AT-PIN"
 
 INTEGRITY_LANES = ("M_untreated", "M_forced_class", "M_irrelevant")
 STRATA = ALL_STRATA
+FORCED_CLASSES = ("commit", "non_commit")
+
+# Sol cap-2048 amendment (live-001 carry-forward + full 896-call rerun headroom).
+CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST = 2048
+CAP2048_OPENING_CALLS = 528
+CAP2048_OPENING_INPUT_TOKENS = 158_957
+CAP2048_OPENING_OUTPUT_TOKENS = 134_640
+CAP2048_RERUN_CALLS = 896
+CAP2048_TOTAL_CALL_CEILING = 1_424
+CAP2048_OUTPUT_TOKEN_CEILING = 1_969_648
+CAP2048_PROVIDER_OFF_BY_ONE_TOLERANCE = 1
+
+LIVE_001_LEDGER_RELPATH = (
+    "runs/efc_calibration_v2/admission_pilot_efc-v2-admission-live-001.jsonl"
+)
+LIVE_001_ABORT_RECORD_RELPATH = (
+    "runs/efc_calibration_v2/live-001.abort_record.json"
+)
+
+EARLY_OUTPUT_CENSORING_OUTCOME = "instrument_refusal(early_output_censoring)"
 
 _JSON_DUMP = {"indent": 2, "sort_keys": True, "ensure_ascii": False}
 
@@ -156,6 +177,150 @@ def compute_contract_hashes(root: Path = REPO_ROOT) -> dict[str, str]:
     }
 
 
+def estimated_input_tokens(prompt: str) -> int:
+    """Disclosed utf8_len//4 floor — matches runner pre-call estimate."""
+    return max(1, (len(prompt.encode("utf-8")) + 3) // 4)
+
+
+def iter_calibration_call_specs(
+    fixtures: list[dict[str, Any]],
+) -> list[tuple[dict[str, Any], str, str | None]]:
+    """Expand fixtures into (fixture, lane, supplied_class) in runner order."""
+    specs: list[tuple[dict[str, Any], str, str | None]] = []
+    for fixture in fixtures:
+        stratum = fixture["stratum"]
+        if stratum in RELEVANT_STRATA:
+            specs.append((fixture, "M_untreated", None))
+            for cls in FORCED_CLASSES:
+                specs.append((fixture, "M_forced_class", cls))
+        else:
+            specs.append((fixture, "M_irrelevant", None))
+    return specs
+
+
+def compute_rendered_suite_input_token_estimate(
+    root: Path = REPO_ROOT,
+) -> int | None:
+    """Sum estimated_input_tokens over render_for_lane for all call specs."""
+    loaded = _load_suite_fixtures(root)
+    if loaded is None:
+        return None
+    fixtures, _order = loaded
+    total = 0
+    for fixture, lane, supplied_class in iter_calibration_call_specs(fixtures):
+        rendered = render_for_lane(fixture, lane, supplied_class=supplied_class)
+        total += estimated_input_tokens(rendered.prompt)
+    return total
+
+
+def _budget_ledger_cap2048(
+    *,
+    rendered_suite_input_token_estimate: int,
+) -> dict[str, Any]:
+    input_ceiling = (
+        rendered_suite_input_token_estimate + CAP2048_OPENING_INPUT_TOKENS
+    )
+    return {
+        "max_output_tokens_per_request": CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+        "calls_already_spent": CAP2048_OPENING_CALLS,
+        "opening_input_tokens_spent": CAP2048_OPENING_INPUT_TOKENS,
+        "opening_output_tokens_spent": CAP2048_OPENING_OUTPUT_TOKENS,
+        "total_call_ceiling": CAP2048_TOTAL_CALL_CEILING,
+        "output_token_ceiling": CAP2048_OUTPUT_TOKEN_CEILING,
+        "input_token_ceiling": input_ceiling,
+        "rendered_suite_input_token_estimate": rendered_suite_input_token_estimate,
+        "rendered_suite_input_estimate_method": (
+            "estimated_input_tokens(render_for_lane(...)) over all "
+            f"{CAP2048_RERUN_CALLS} call specs"
+        ),
+        "output_ceiling_derivation": (
+            f"{CAP2048_OPENING_OUTPUT_TOKENS} opening output tokens + "
+            f"{CAP2048_RERUN_CALLS} remaining calls × "
+            f"{CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST} "
+            f"max_output_tokens = {CAP2048_OUTPUT_TOKEN_CEILING}"
+        ),
+        "input_ceiling_derivation": (
+            f"{rendered_suite_input_token_estimate} rendered-suite estimate + "
+            f"{CAP2048_OPENING_INPUT_TOKENS} opening input tokens = "
+            f"{input_ceiling}"
+        ),
+        "hard_cost_ceiling_usd": 0.0,
+        "pricing": {
+            "local_lm_studio_zero_dollar": True,
+            "input_usd_per_million": 0.0,
+            "output_usd_per_million": 0.0,
+        },
+        "cost_formula": (
+            "cost_usd = 0.0*input_tokens/1,000,000 + 0.0*output_tokens/1,000,000"
+        ),
+        "stop_before_crossing": True,
+        "budget_refusal_typed_outcome": "budget_refusal",
+        "carry_forward_run_id": "efc-v2-admission-live-001",
+    }
+
+
+def _early_censor_refusal() -> dict[str, Any]:
+    return {
+        "first_k": 8,
+        "predicates": {
+            "finish_reason": "length",
+            "normalized_content_empty": True,
+            "completion_tokens_at_cap_minus_tolerance": True,
+        },
+        "normalized_content_rule": (
+            "strip <think>...</think> from final "
+            "message content; empty after strip"
+        ),
+        "completion_tokens_predicate": (
+            "completion_tokens >= max_output_tokens_per_request - "
+            "provider_off_by_one_tolerance"
+        ),
+        "provider_off_by_one_tolerance": CAP2048_PROVIDER_OFF_BY_ONE_TOLERANCE,
+        "typed_outcome": EARLY_OUTPUT_CENSORING_OUTCOME,
+        "stop_before_call_index": 9,
+    }
+
+
+def _completion_budget_contract() -> dict[str, Any]:
+    return {
+        "transport": "chat-completions",
+        "max_tokens_semantics": "shared reasoning-plus-final-content cap",
+        "reasoning_content_in_wire_parser": False,
+        "reasoning_content_in_completion_usage": True,
+        "provider_off_by_one_tolerance": CAP2048_PROVIDER_OFF_BY_ONE_TOLERANCE,
+    }
+
+
+def _abort_evidence_binding(
+    root: Path,
+    *,
+    fixture_suite_hash: str | None,
+    engine: str,
+    effort: str,
+    render_hash: str,
+) -> dict[str, Any]:
+    ledger_path = _root_path(root, LIVE_001_LEDGER_RELPATH)
+    abort_path = _root_path(root, LIVE_001_ABORT_RECORD_RELPATH)
+    return {
+        "live_001_ledger_sha256": sha256_path(ledger_path),
+        "live_001_abort_record_sha256": sha256_path(abort_path),
+        "live_001_ledger_relpath": LIVE_001_LEDGER_RELPATH,
+        "live_001_abort_record_relpath": LIVE_001_ABORT_RECORD_RELPATH,
+        "rerun_preserves": {
+            "fixture_suite_hash": fixture_suite_hash,
+            "engine": engine,
+            "effort": effort,
+            "render_hash": render_hash,
+            "lane_order": "iter_calibration_call_specs fixture×lane order",
+        },
+        "statement": (
+            "Superseding rerun reuses identical fixture_suite_hash, engine, "
+            "effort, renderer, and lane order; live-001's 528 censored calls "
+            "and spend are carried forward via budget_ledger opening actuals."
+        ),
+    }
+
+
 def _commitment_invalid_rate_ceiling() -> dict[str, Any]:
     cells = [
         {"lane": lane, "stratum": stratum, "ceiling": 0.05}
@@ -253,6 +418,26 @@ def assemble_manifest(
     }
     if fixture_suite_hash is not None:
         manifest["fixture_suite_hash"] = fixture_suite_hash
+
+    rendered_input_estimate = compute_rendered_suite_input_token_estimate(root)
+    if rendered_input_estimate is not None:
+        manifest["budget_ledger"] = _budget_ledger_cap2048(
+            rendered_suite_input_token_estimate=rendered_input_estimate,
+        )
+        manifest["early_censor_refusal"] = _early_censor_refusal()
+        manifest["completion_budget_contract"] = _completion_budget_contract()
+        manifest["abort_evidence_binding"] = _abort_evidence_binding(
+            root,
+            fixture_suite_hash=fixture_suite_hash,
+            engine=engine,
+            effort=effort,
+            render_hash=contract_hashes["foreground_template_hash"],
+        )
+        manifest["typed_outcomes"] = [
+            *manifest["typed_outcomes"],
+            EARLY_OUTPUT_CENSORING_OUTCOME,
+        ]
+
     return manifest
 
 
@@ -341,6 +526,47 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
                 )
     elif pinned_suite_hash or calibration_rows:
         failures.append("fixture_suite_on_disk_missing")
+
+    budget = manifest.get("budget_ledger")
+    if budget is not None:
+        if rendered_estimate := compute_rendered_suite_input_token_estimate(root):
+            expected_budget = _budget_ledger_cap2048(
+                rendered_suite_input_token_estimate=rendered_estimate,
+            )
+            for key, val in expected_budget.items():
+                if budget.get(key) != val:
+                    failures.append(f"budget_ledger_mismatch:{key}")
+        else:
+            failures.append("budget_ledger_present_but_suite_missing")
+
+        early = manifest.get("early_censor_refusal")
+        if early != _early_censor_refusal():
+            failures.append("early_censor_refusal_mismatch")
+
+        completion = manifest.get("completion_budget_contract")
+        if completion != _completion_budget_contract():
+            failures.append("completion_budget_contract_mismatch")
+
+        fork = manifest.get("fork_identity", {})
+        binding = manifest.get("abort_evidence_binding")
+        expected_binding = _abort_evidence_binding(
+            root,
+            fixture_suite_hash=pinned_suite_hash,
+            engine=str(fork.get("engine", manifest.get("engine", ""))),
+            effort=str(fork.get("effort", manifest.get("effort", ""))),
+            render_hash=str(
+                fork.get(
+                    "render_hash",
+                    recomputed.get("foreground_template_hash", ""),
+                )
+            ),
+        )
+        if binding != expected_binding:
+            failures.append("abort_evidence_binding_mismatch")
+
+        typed = manifest.get("typed_outcomes", [])
+        if EARLY_OUTPUT_CENSORING_OUTCOME not in typed:
+            failures.append("typed_outcomes_missing_early_output_censoring")
 
     mh = manifest_hash(manifest)
     return ManifestVerifyResult(not failures, tuple(failures), mh)

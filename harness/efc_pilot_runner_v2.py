@@ -31,8 +31,10 @@ from harness.efc_commitment_oracle_v2 import score_commitment_oracle_v2
 from harness.efc_commitment_wire_v2 import validate_commitment_wire
 from harness.efc_fixtures_v2 import FIXTURES_DIR, RELEVANT_STRATA
 from harness.efc_manifest_v2 import (
+    EARLY_OUTPUT_CENSORING_OUTCOME,
     MANIFEST_RELPATH,
     REPO_ROOT,
+    iter_calibration_call_specs,
     manifest_hash,
     manifest_verify,
     sha256_path,
@@ -63,7 +65,7 @@ Outcome = Literal[
     "construction_refused",
     "budget_refusal",
     "transport_refusal",
-] | AdmissionOutcome
+] | AdmissionOutcome | Literal["instrument_refusal(early_output_censoring)"]
 
 CallOutcome = Literal[
     "completed",
@@ -207,10 +209,72 @@ def load_budget_state(manifest: dict[str, Any]) -> BudgetState:
         max_output_tokens_per_request=int(
             budget.get("max_output_tokens_per_request", 256)
         ),
-        hard_cost_ceiling_usd=float(budget.get("hard_cost_ceiling_usd", 100.0)),
-        input_usd_per_million=float(pricing.get("input_usd_per_million", 2.50)),
-        output_usd_per_million=float(pricing.get("output_usd_per_million", 15.00)),
+        hard_cost_ceiling_usd=float(budget.get("hard_cost_ceiling_usd", 0.0)),
+        input_usd_per_million=float(pricing.get("input_usd_per_million", 0.0)),
+        output_usd_per_million=float(pricing.get("output_usd_per_million", 0.0)),
     )
+
+
+def extract_finish_reason(raw: dict[str, Any]) -> str | None:
+    choices = raw.get("choices") or []
+    if not choices:
+        return None
+    finish_reason = choices[0].get("finish_reason")
+    return finish_reason if isinstance(finish_reason, str) else None
+
+
+def matches_early_censor_predicates(
+    *,
+    raw: dict[str, Any],
+    text: str,
+    output_tokens: int,
+    max_output_tokens: int,
+    tolerance: int,
+) -> bool:
+    """True when a live envelope matches all three early-censor predicates."""
+    if extract_finish_reason(raw) != "length":
+        return False
+    if text != "":
+        return False
+    if output_tokens < max_output_tokens - tolerance:
+        return False
+    return True
+
+
+def _early_censor_config(manifest: dict[str, Any]) -> dict[str, Any] | None:
+    early = manifest.get("early_censor_refusal")
+    return early if isinstance(early, dict) else None
+
+
+def _early_censor_tolerance(
+    manifest: dict[str, Any],
+    early: dict[str, Any],
+) -> int:
+    contract = manifest.get("completion_budget_contract", {})
+    if isinstance(contract, dict):
+        tol = contract.get("provider_off_by_one_tolerance")
+        if isinstance(tol, int):
+            return tol
+    tol = early.get("provider_off_by_one_tolerance")
+    return tol if isinstance(tol, int) else 1
+
+
+def check_early_censor_refusal(
+    *,
+    manifest: dict[str, Any],
+    envelope_attempts: int,
+    censor_matches: int,
+    early: dict[str, Any],
+) -> str | None:
+    first_k = early.get("first_k")
+    if not isinstance(first_k, int) or first_k < 1:
+        return None
+    if envelope_attempts < first_k:
+        return None
+    if censor_matches < first_k:
+        return None
+    typed = early.get("typed_outcome", EARLY_OUTPUT_CENSORING_OUTCOME)
+    return typed if isinstance(typed, str) else EARLY_OUTPUT_CENSORING_OUTCOME
 
 
 def check_budget_guard(
@@ -572,6 +636,43 @@ class MockTransport:
 
 
 @dataclass
+class CensoringMockTransport:
+    """Mock transport returning live-shaped length-capped empty envelopes."""
+
+    max_output_tokens: int = 2048
+    tolerance: int = 1
+    call_count: int = 0
+
+    def call(
+        self,
+        request_body: dict[str, Any],
+        context: CallContext,
+    ) -> TransportResult:
+        del context
+        self.call_count += 1
+        output_tokens = self.max_output_tokens - self.tolerance
+        raw = {
+            "choices": [
+                {
+                    "finish_reason": "length",
+                    "message": {"content": ""},
+                }
+            ],
+            "usage": {
+                "prompt_tokens": 100,
+                "completion_tokens": output_tokens,
+            },
+        }
+        return TransportResult(
+            raw=raw,
+            text="",
+            input_tokens=100,
+            output_tokens=output_tokens,
+            tool_calls_present=False,
+        )
+
+
+@dataclass
 class FailingTransport:
     detail: str = "simulated_transport_refusal"
     http_status: int = 429
@@ -729,17 +830,7 @@ def _ledger_row(
 def _iter_call_specs(
     fixtures: list[dict[str, Any]],
 ) -> list[tuple[dict[str, Any], str, str | None]]:
-    """Expand fixtures into (fixture, lane, supplied_class) call specs."""
-    specs: list[tuple[dict[str, Any], str, str | None]] = []
-    for fixture in fixtures:
-        stratum = fixture["stratum"]
-        if stratum in RELEVANT_STRATA:
-            specs.append((fixture, "M_untreated", None))
-            for cls in FORCED_CLASSES:
-                specs.append((fixture, "M_forced_class", cls))
-        else:
-            specs.append((fixture, "M_irrelevant", None))
-    return specs
+    return iter_calibration_call_specs(fixtures)
 
 
 def run_admission_pilot(
@@ -786,6 +877,15 @@ def run_admission_pilot(
     outcome: Outcome = "completed"
     stop_reason: str | None = None
     stopped = False
+    early_censor = _early_censor_config(manifest)
+    early_censor_active = early_censor is not None
+    envelope_attempts = 0
+    censor_matches = 0
+    censor_tolerance = (
+        _early_censor_tolerance(manifest, early_censor)
+        if early_censor is not None
+        else 1
+    )
 
     with ledger_path.open("w", encoding="utf-8") as ledger:
         for fixture, lane, supplied_class in _iter_call_specs(fixtures):
@@ -982,6 +1082,30 @@ def run_admission_pilot(
             )
             ledger.write(json.dumps(row, sort_keys=True) + "\n")
             rows.append(row)
+
+            if early_censor_active and early_censor is not None:
+                envelope_attempts += 1
+                if transport_result.text != "":
+                    early_censor_active = False
+                elif matches_early_censor_predicates(
+                    raw=transport_result.raw,
+                    text=transport_result.text,
+                    output_tokens=transport_result.output_tokens,
+                    max_output_tokens=budget.max_output_tokens_per_request,
+                    tolerance=censor_tolerance,
+                ):
+                    censor_matches += 1
+                refused = check_early_censor_refusal(
+                    manifest=manifest,
+                    envelope_attempts=envelope_attempts,
+                    censor_matches=censor_matches,
+                    early=early_censor,
+                )
+                if refused is not None:
+                    outcome = refused  # type: ignore[assignment]
+                    stop_reason = "early_output_censoring"
+                    stopped = True
+                    break
 
     gate_report = evaluate_admission_gate(
         rows=rows,
