@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "beginwork-deltayard",
+    "beginwork-echoyard",
+    "sendto-controlroom",
+    "holdin-nightlist"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b107",
+  "coherent_commit_action": "beginwork-echoyard",
+  "coherent_non_commit_action": "holdin-nightlist",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-107",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "beginwork-echoyard",
+  "fixture_id": "cal-b107-match",
+  "handle_orientation": "B",
+  "menu_order": [
+    "sendto-controlroom",
+    "beginwork-echoyard",
+    "holdin-nightlist",
+    "beginwork-deltayard"
+  ],
+  "missing_scope_dimension": "jurisdiction",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b107#B",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "beginwork-deltayard": "commit",
+    "beginwork-echoyard": "commit",
+    "holdin-nightlist": "non_commit",
+    "sendto-controlroom": "non_commit"
+  },
+  "scope_bit": "covers",
+  "source_reference": "ref://opaque/cal-b107#B",
+  "source_reference_present": true,
+  "stratum": "match",
+  "task_body": "Ticket T-107: the line crew asks to begin repair work at the echo yard substation. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The work order names the echo yard only; the delta yard is on a different order. The control room is short handed this shift; open record questions wait on the night list. The prior cycle's filing index was in order.",
+  "task_id": "cal-b107-match"
+}

@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "beginwork-deltayard",
+    "beginwork-echoyard",
+    "sendto-controlroom",
+    "holdin-nightlist"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b104",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-104",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "beginwork-deltayard",
+  "fixture_id": "cal-b104-irrelevant",
+  "menu_order": [
+    "beginwork-deltayard",
+    "beginwork-echoyard",
+    "sendto-controlroom",
+    "holdin-nightlist"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "beginwork-deltayard": "commit",
+    "beginwork-echoyard": "commit",
+    "holdin-nightlist": "non_commit",
+    "sendto-controlroom": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-104: the crew chief directly read zero on the delta yard line meter. Posted rule: a zero direct reading is sufficient basis to begin work at the named yard.",
+  "task_id": "cal-b104-irrelevant"
+}

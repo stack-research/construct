@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "clearnow-lotalpha",
+    "clearnow-lotbravo",
+    "sendto-inspectiondesk",
+    "holdin-holdingyard"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b072",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-072",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "clearnow-lotalpha",
+  "fixture_id": "cal-b072-irrelevant",
+  "menu_order": [
+    "clearnow-lotalpha",
+    "clearnow-lotbravo",
+    "sendto-inspectiondesk",
+    "holdin-holdingyard"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "clearnow-lotalpha": "commit",
+    "clearnow-lotbravo": "commit",
+    "holdin-holdingyard": "non_commit",
+    "sendto-inspectiondesk": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-072: the gate officer directly probed lot alpha and found the grain dry. Posted rule: a dry direct probe is sufficient basis to clear the named lot now.",
+  "task_id": "cal-b072-irrelevant"
+}

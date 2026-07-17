@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "listnow-historycourse",
+    "listnow-physicscourse",
+    "sendto-facultyboard",
+    "holdin-draftfolder"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b090",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-090",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "listnow-historycourse",
+  "fixture_id": "cal-b090-irrelevant",
+  "menu_order": [
+    "sendto-facultyboard",
+    "holdin-draftfolder",
+    "listnow-historycourse",
+    "listnow-physicscourse"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-draftfolder": "non_commit",
+    "listnow-historycourse": "commit",
+    "listnow-physicscourse": "commit",
+    "sendto-facultyboard": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-090: the registrar directly read the signed instructor sheet for the history course. Posted rule: a signed sheet in hand is sufficient basis to list the named course now.",
+  "task_id": "cal-b090-irrelevant"
+}

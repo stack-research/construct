@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "clearnow-lotalpha",
+    "clearnow-lotbravo",
+    "sendto-inspectiondesk",
+    "holdin-holdingyard"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b071",
+  "coherent_commit_action": "clearnow-lotbravo",
+  "coherent_non_commit_action": "holdin-holdingyard",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-071",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "clearnow-lotbravo",
+  "fixture_id": "cal-b071-match",
+  "handle_orientation": "B",
+  "menu_order": [
+    "sendto-inspectiondesk",
+    "clearnow-lotbravo",
+    "holdin-holdingyard",
+    "clearnow-lotalpha"
+  ],
+  "missing_scope_dimension": "interval",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b071#B",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "clearnow-lotalpha": "commit",
+    "clearnow-lotbravo": "commit",
+    "holdin-holdingyard": "non_commit",
+    "sendto-inspectiondesk": "non_commit"
+  },
+  "scope_bit": "covers",
+  "source_reference": "ref://opaque/cal-b071#B",
+  "source_reference_present": true,
+  "stratum": "match",
+  "task_body": "Ticket T-071: the exporter asks to clear lot bravo of the grain shipment. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The paperwork names lot bravo only; lot alpha is not on the paperwork. The inspection desk is off site this week; open record questions wait in the holding yard. The prior cycle's filing index was in order.",
+  "task_id": "cal-b071-match"
+}

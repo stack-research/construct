@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "pullnow-batchnineteen",
+    "pullnow-batchtwenty",
+    "sendto-qualitydesk",
+    "holdin-reviewbin"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b018",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-018",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "pullnow-batchnineteen",
+  "fixture_id": "cal-b018-irrelevant",
+  "menu_order": [
+    "sendto-qualitydesk",
+    "holdin-reviewbin",
+    "pullnow-batchnineteen",
+    "pullnow-batchtwenty"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-reviewbin": "non_commit",
+    "pullnow-batchnineteen": "commit",
+    "pullnow-batchtwenty": "commit",
+    "sendto-qualitydesk": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-018: the shift lead directly inspected batch nineteen and found dented cans. Posted rule: dented cans are sufficient basis to pull the named batch now.",
+  "task_id": "cal-b018-irrelevant"
+}

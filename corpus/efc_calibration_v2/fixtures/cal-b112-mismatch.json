@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "switchon-tierone",
+    "switchon-tiertwo",
+    "sendto-riskdesk",
+    "holdin-parkedqueue"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b112",
+  "coherent_commit_action": "switchon-tierone",
+  "coherent_non_commit_action": "sendto-riskdesk",
+  "decision_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-112",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "sendto-riskdesk",
+  "fixture_id": "cal-b112-mismatch",
+  "handle_orientation": "A",
+  "menu_order": [
+    "switchon-tierone",
+    "sendto-riskdesk",
+    "switchon-tiertwo",
+    "holdin-parkedqueue"
+  ],
+  "missing_scope_dimension": "jurisdiction",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b112#B",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-parkedqueue": "non_commit",
+    "sendto-riskdesk": "non_commit",
+    "switchon-tierone": "commit",
+    "switchon-tiertwo": "commit"
+  },
+  "scope_bit": "misses",
+  "source_reference": "ref://opaque/cal-b112#B",
+  "source_reference_present": true,
+  "stratum": "mismatch",
+  "task_body": "Ticket T-112: the payments team asks to switch on the new payout rule for tier one accounts. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The filing names tier one accounts only; tier two accounts are out of the filing. Open record questions go to the risk desk this cycle. The prior cycle's filing index was partial.",
+  "task_id": "cal-b112-mismatch"
+}

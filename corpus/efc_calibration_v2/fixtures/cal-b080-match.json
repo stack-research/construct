@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "listnow-historycourse",
+    "listnow-physicscourse",
+    "sendto-facultyboard",
+    "holdin-draftfolder"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b080",
+  "coherent_commit_action": "listnow-historycourse",
+  "coherent_non_commit_action": "sendto-facultyboard",
+  "decision_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-080",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "listnow-historycourse",
+  "fixture_id": "cal-b080-match",
+  "handle_orientation": "A",
+  "menu_order": [
+    "listnow-historycourse",
+    "sendto-facultyboard",
+    "listnow-physicscourse",
+    "holdin-draftfolder"
+  ],
+  "missing_scope_dimension": "population",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b080#A",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-draftfolder": "non_commit",
+    "listnow-historycourse": "commit",
+    "listnow-physicscourse": "commit",
+    "sendto-facultyboard": "non_commit"
+  },
+  "scope_bit": "covers",
+  "source_reference": "ref://opaque/cal-b080#A",
+  "source_reference_present": true,
+  "stratum": "match",
+  "task_body": "Ticket T-080: the registrar asks to list the new history course in the fall catalog. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The submission names the history course only; the physics course is a separate submission. Open record questions go to the faculty board this term. The prior cycle's filing index was partial.",
+  "task_id": "cal-b080-match"
+}

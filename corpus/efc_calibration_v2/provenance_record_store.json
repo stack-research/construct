@@ -1,0 +1,1285 @@
+{
+  "schema_version": "efc_provenance_record_store_v2",
+  "records": [
+    {
+      "record_id": "cal-b000#A",
+      "source_reference": "ref://opaque/cal-b000#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-000"
+    },
+    {
+      "record_id": "cal-b000#B",
+      "source_reference": "ref://opaque/cal-b000#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0"
+    },
+    {
+      "record_id": "cal-b001#A",
+      "source_reference": "ref://opaque/cal-b001#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;jurisdiction=area-0;population=group-001"
+    },
+    {
+      "record_id": "cal-b001#B",
+      "source_reference": "ref://opaque/cal-b001#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-001"
+    },
+    {
+      "record_id": "cal-b002#A",
+      "source_reference": "ref://opaque/cal-b002#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-002"
+    },
+    {
+      "record_id": "cal-b002#B",
+      "source_reference": "ref://opaque/cal-b002#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;population=group-002"
+    },
+    {
+      "record_id": "cal-b003#A",
+      "source_reference": "ref://opaque/cal-b003#A",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-0;population=group-003"
+    },
+    {
+      "record_id": "cal-b003#B",
+      "source_reference": "ref://opaque/cal-b003#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-003"
+    },
+    {
+      "record_id": "cal-b004#A",
+      "source_reference": "ref://opaque/cal-b004#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-004"
+    },
+    {
+      "record_id": "cal-b004#B",
+      "source_reference": "ref://opaque/cal-b004#B",
+      "authoritative_scope": "endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-004"
+    },
+    {
+      "record_id": "cal-b005#A",
+      "source_reference": "ref://opaque/cal-b005#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0"
+    },
+    {
+      "record_id": "cal-b005#B",
+      "source_reference": "ref://opaque/cal-b005#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-005"
+    },
+    {
+      "record_id": "cal-b006#A",
+      "source_reference": "ref://opaque/cal-b006#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-006"
+    },
+    {
+      "record_id": "cal-b006#B",
+      "source_reference": "ref://opaque/cal-b006#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;jurisdiction=area-0;population=group-006"
+    },
+    {
+      "record_id": "cal-b007#A",
+      "source_reference": "ref://opaque/cal-b007#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;population=group-007"
+    },
+    {
+      "record_id": "cal-b007#B",
+      "source_reference": "ref://opaque/cal-b007#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-007"
+    },
+    {
+      "record_id": "cal-b008#A",
+      "source_reference": "ref://opaque/cal-b008#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-008"
+    },
+    {
+      "record_id": "cal-b008#B",
+      "source_reference": "ref://opaque/cal-b008#B",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-0;population=group-008"
+    },
+    {
+      "record_id": "cal-b009#A",
+      "source_reference": "ref://opaque/cal-b009#A",
+      "authoritative_scope": "endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-009"
+    },
+    {
+      "record_id": "cal-b009#B",
+      "source_reference": "ref://opaque/cal-b009#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-009"
+    },
+    {
+      "record_id": "cal-b010#A",
+      "source_reference": "ref://opaque/cal-b010#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-010"
+    },
+    {
+      "record_id": "cal-b010#B",
+      "source_reference": "ref://opaque/cal-b010#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0"
+    },
+    {
+      "record_id": "cal-b011#A",
+      "source_reference": "ref://opaque/cal-b011#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;jurisdiction=area-0;population=group-011"
+    },
+    {
+      "record_id": "cal-b011#B",
+      "source_reference": "ref://opaque/cal-b011#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-011"
+    },
+    {
+      "record_id": "cal-b012#A",
+      "source_reference": "ref://opaque/cal-b012#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-012"
+    },
+    {
+      "record_id": "cal-b012#B",
+      "source_reference": "ref://opaque/cal-b012#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;population=group-012"
+    },
+    {
+      "record_id": "cal-b013#A",
+      "source_reference": "ref://opaque/cal-b013#A",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-0;population=group-013"
+    },
+    {
+      "record_id": "cal-b013#B",
+      "source_reference": "ref://opaque/cal-b013#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-013"
+    },
+    {
+      "record_id": "cal-b014#A",
+      "source_reference": "ref://opaque/cal-b014#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-014"
+    },
+    {
+      "record_id": "cal-b014#B",
+      "source_reference": "ref://opaque/cal-b014#B",
+      "authoritative_scope": "endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-014"
+    },
+    {
+      "record_id": "cal-b015#A",
+      "source_reference": "ref://opaque/cal-b015#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0"
+    },
+    {
+      "record_id": "cal-b015#B",
+      "source_reference": "ref://opaque/cal-b015#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-015"
+    },
+    {
+      "record_id": "cal-b016#A",
+      "source_reference": "ref://opaque/cal-b016#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-016"
+    },
+    {
+      "record_id": "cal-b016#B",
+      "source_reference": "ref://opaque/cal-b016#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;jurisdiction=area-1;population=group-016"
+    },
+    {
+      "record_id": "cal-b017#A",
+      "source_reference": "ref://opaque/cal-b017#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;population=group-017"
+    },
+    {
+      "record_id": "cal-b017#B",
+      "source_reference": "ref://opaque/cal-b017#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-017"
+    },
+    {
+      "record_id": "cal-b018#A",
+      "source_reference": "ref://opaque/cal-b018#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-018"
+    },
+    {
+      "record_id": "cal-b018#B",
+      "source_reference": "ref://opaque/cal-b018#B",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-1;population=group-018"
+    },
+    {
+      "record_id": "cal-b019#A",
+      "source_reference": "ref://opaque/cal-b019#A",
+      "authoritative_scope": "endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-019"
+    },
+    {
+      "record_id": "cal-b019#B",
+      "source_reference": "ref://opaque/cal-b019#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-019"
+    },
+    {
+      "record_id": "cal-b020#A",
+      "source_reference": "ref://opaque/cal-b020#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-020"
+    },
+    {
+      "record_id": "cal-b020#B",
+      "source_reference": "ref://opaque/cal-b020#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1"
+    },
+    {
+      "record_id": "cal-b021#A",
+      "source_reference": "ref://opaque/cal-b021#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;jurisdiction=area-1;population=group-021"
+    },
+    {
+      "record_id": "cal-b021#B",
+      "source_reference": "ref://opaque/cal-b021#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-021"
+    },
+    {
+      "record_id": "cal-b022#A",
+      "source_reference": "ref://opaque/cal-b022#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-022"
+    },
+    {
+      "record_id": "cal-b022#B",
+      "source_reference": "ref://opaque/cal-b022#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;population=group-022"
+    },
+    {
+      "record_id": "cal-b023#A",
+      "source_reference": "ref://opaque/cal-b023#A",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-1;population=group-023"
+    },
+    {
+      "record_id": "cal-b023#B",
+      "source_reference": "ref://opaque/cal-b023#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-023"
+    },
+    {
+      "record_id": "cal-b024#A",
+      "source_reference": "ref://opaque/cal-b024#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-024"
+    },
+    {
+      "record_id": "cal-b024#B",
+      "source_reference": "ref://opaque/cal-b024#B",
+      "authoritative_scope": "endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-024"
+    },
+    {
+      "record_id": "cal-b025#A",
+      "source_reference": "ref://opaque/cal-b025#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1"
+    },
+    {
+      "record_id": "cal-b025#B",
+      "source_reference": "ref://opaque/cal-b025#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-025"
+    },
+    {
+      "record_id": "cal-b026#A",
+      "source_reference": "ref://opaque/cal-b026#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-026"
+    },
+    {
+      "record_id": "cal-b026#B",
+      "source_reference": "ref://opaque/cal-b026#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;jurisdiction=area-1;population=group-026"
+    },
+    {
+      "record_id": "cal-b027#A",
+      "source_reference": "ref://opaque/cal-b027#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;population=group-027"
+    },
+    {
+      "record_id": "cal-b027#B",
+      "source_reference": "ref://opaque/cal-b027#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-027"
+    },
+    {
+      "record_id": "cal-b028#A",
+      "source_reference": "ref://opaque/cal-b028#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-028"
+    },
+    {
+      "record_id": "cal-b028#B",
+      "source_reference": "ref://opaque/cal-b028#B",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-1;population=group-028"
+    },
+    {
+      "record_id": "cal-b029#A",
+      "source_reference": "ref://opaque/cal-b029#A",
+      "authoritative_scope": "endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-029"
+    },
+    {
+      "record_id": "cal-b029#B",
+      "source_reference": "ref://opaque/cal-b029#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-029"
+    },
+    {
+      "record_id": "cal-b030#A",
+      "source_reference": "ref://opaque/cal-b030#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-030"
+    },
+    {
+      "record_id": "cal-b030#B",
+      "source_reference": "ref://opaque/cal-b030#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1"
+    },
+    {
+      "record_id": "cal-b031#A",
+      "source_reference": "ref://opaque/cal-b031#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;jurisdiction=area-1;population=group-031"
+    },
+    {
+      "record_id": "cal-b031#B",
+      "source_reference": "ref://opaque/cal-b031#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-031"
+    },
+    {
+      "record_id": "cal-b032#A",
+      "source_reference": "ref://opaque/cal-b032#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-032"
+    },
+    {
+      "record_id": "cal-b032#B",
+      "source_reference": "ref://opaque/cal-b032#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;population=group-032"
+    },
+    {
+      "record_id": "cal-b033#A",
+      "source_reference": "ref://opaque/cal-b033#A",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-2;population=group-033"
+    },
+    {
+      "record_id": "cal-b033#B",
+      "source_reference": "ref://opaque/cal-b033#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-033"
+    },
+    {
+      "record_id": "cal-b034#A",
+      "source_reference": "ref://opaque/cal-b034#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-034"
+    },
+    {
+      "record_id": "cal-b034#B",
+      "source_reference": "ref://opaque/cal-b034#B",
+      "authoritative_scope": "endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-034"
+    },
+    {
+      "record_id": "cal-b035#A",
+      "source_reference": "ref://opaque/cal-b035#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2"
+    },
+    {
+      "record_id": "cal-b035#B",
+      "source_reference": "ref://opaque/cal-b035#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-035"
+    },
+    {
+      "record_id": "cal-b036#A",
+      "source_reference": "ref://opaque/cal-b036#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-036"
+    },
+    {
+      "record_id": "cal-b036#B",
+      "source_reference": "ref://opaque/cal-b036#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;jurisdiction=area-2;population=group-036"
+    },
+    {
+      "record_id": "cal-b037#A",
+      "source_reference": "ref://opaque/cal-b037#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;population=group-037"
+    },
+    {
+      "record_id": "cal-b037#B",
+      "source_reference": "ref://opaque/cal-b037#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-037"
+    },
+    {
+      "record_id": "cal-b038#A",
+      "source_reference": "ref://opaque/cal-b038#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-038"
+    },
+    {
+      "record_id": "cal-b038#B",
+      "source_reference": "ref://opaque/cal-b038#B",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-2;population=group-038"
+    },
+    {
+      "record_id": "cal-b039#A",
+      "source_reference": "ref://opaque/cal-b039#A",
+      "authoritative_scope": "endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-039"
+    },
+    {
+      "record_id": "cal-b039#B",
+      "source_reference": "ref://opaque/cal-b039#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-039"
+    },
+    {
+      "record_id": "cal-b040#A",
+      "source_reference": "ref://opaque/cal-b040#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-040"
+    },
+    {
+      "record_id": "cal-b040#B",
+      "source_reference": "ref://opaque/cal-b040#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2"
+    },
+    {
+      "record_id": "cal-b041#A",
+      "source_reference": "ref://opaque/cal-b041#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;jurisdiction=area-2;population=group-041"
+    },
+    {
+      "record_id": "cal-b041#B",
+      "source_reference": "ref://opaque/cal-b041#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-041"
+    },
+    {
+      "record_id": "cal-b042#A",
+      "source_reference": "ref://opaque/cal-b042#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-042"
+    },
+    {
+      "record_id": "cal-b042#B",
+      "source_reference": "ref://opaque/cal-b042#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;population=group-042"
+    },
+    {
+      "record_id": "cal-b043#A",
+      "source_reference": "ref://opaque/cal-b043#A",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-2;population=group-043"
+    },
+    {
+      "record_id": "cal-b043#B",
+      "source_reference": "ref://opaque/cal-b043#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-043"
+    },
+    {
+      "record_id": "cal-b044#A",
+      "source_reference": "ref://opaque/cal-b044#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-044"
+    },
+    {
+      "record_id": "cal-b044#B",
+      "source_reference": "ref://opaque/cal-b044#B",
+      "authoritative_scope": "endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-044"
+    },
+    {
+      "record_id": "cal-b045#A",
+      "source_reference": "ref://opaque/cal-b045#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2"
+    },
+    {
+      "record_id": "cal-b045#B",
+      "source_reference": "ref://opaque/cal-b045#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-045"
+    },
+    {
+      "record_id": "cal-b046#A",
+      "source_reference": "ref://opaque/cal-b046#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-046"
+    },
+    {
+      "record_id": "cal-b046#B",
+      "source_reference": "ref://opaque/cal-b046#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;jurisdiction=area-2;population=group-046"
+    },
+    {
+      "record_id": "cal-b047#A",
+      "source_reference": "ref://opaque/cal-b047#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;population=group-047"
+    },
+    {
+      "record_id": "cal-b047#B",
+      "source_reference": "ref://opaque/cal-b047#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-047"
+    },
+    {
+      "record_id": "cal-b048#A",
+      "source_reference": "ref://opaque/cal-b048#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-048"
+    },
+    {
+      "record_id": "cal-b048#B",
+      "source_reference": "ref://opaque/cal-b048#B",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-3;population=group-048"
+    },
+    {
+      "record_id": "cal-b049#A",
+      "source_reference": "ref://opaque/cal-b049#A",
+      "authoritative_scope": "endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-049"
+    },
+    {
+      "record_id": "cal-b049#B",
+      "source_reference": "ref://opaque/cal-b049#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-049"
+    },
+    {
+      "record_id": "cal-b050#A",
+      "source_reference": "ref://opaque/cal-b050#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-050"
+    },
+    {
+      "record_id": "cal-b050#B",
+      "source_reference": "ref://opaque/cal-b050#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3"
+    },
+    {
+      "record_id": "cal-b051#A",
+      "source_reference": "ref://opaque/cal-b051#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;jurisdiction=area-3;population=group-051"
+    },
+    {
+      "record_id": "cal-b051#B",
+      "source_reference": "ref://opaque/cal-b051#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-051"
+    },
+    {
+      "record_id": "cal-b052#A",
+      "source_reference": "ref://opaque/cal-b052#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-052"
+    },
+    {
+      "record_id": "cal-b052#B",
+      "source_reference": "ref://opaque/cal-b052#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;population=group-052"
+    },
+    {
+      "record_id": "cal-b053#A",
+      "source_reference": "ref://opaque/cal-b053#A",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-3;population=group-053"
+    },
+    {
+      "record_id": "cal-b053#B",
+      "source_reference": "ref://opaque/cal-b053#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-053"
+    },
+    {
+      "record_id": "cal-b054#A",
+      "source_reference": "ref://opaque/cal-b054#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-054"
+    },
+    {
+      "record_id": "cal-b054#B",
+      "source_reference": "ref://opaque/cal-b054#B",
+      "authoritative_scope": "endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-054"
+    },
+    {
+      "record_id": "cal-b055#A",
+      "source_reference": "ref://opaque/cal-b055#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3"
+    },
+    {
+      "record_id": "cal-b055#B",
+      "source_reference": "ref://opaque/cal-b055#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-055"
+    },
+    {
+      "record_id": "cal-b056#A",
+      "source_reference": "ref://opaque/cal-b056#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-056"
+    },
+    {
+      "record_id": "cal-b056#B",
+      "source_reference": "ref://opaque/cal-b056#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;jurisdiction=area-3;population=group-056"
+    },
+    {
+      "record_id": "cal-b057#A",
+      "source_reference": "ref://opaque/cal-b057#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;population=group-057"
+    },
+    {
+      "record_id": "cal-b057#B",
+      "source_reference": "ref://opaque/cal-b057#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-057"
+    },
+    {
+      "record_id": "cal-b058#A",
+      "source_reference": "ref://opaque/cal-b058#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-058"
+    },
+    {
+      "record_id": "cal-b058#B",
+      "source_reference": "ref://opaque/cal-b058#B",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-3;population=group-058"
+    },
+    {
+      "record_id": "cal-b059#A",
+      "source_reference": "ref://opaque/cal-b059#A",
+      "authoritative_scope": "endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-059"
+    },
+    {
+      "record_id": "cal-b059#B",
+      "source_reference": "ref://opaque/cal-b059#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-059"
+    },
+    {
+      "record_id": "cal-b060#A",
+      "source_reference": "ref://opaque/cal-b060#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-060"
+    },
+    {
+      "record_id": "cal-b060#B",
+      "source_reference": "ref://opaque/cal-b060#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3"
+    },
+    {
+      "record_id": "cal-b061#A",
+      "source_reference": "ref://opaque/cal-b061#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;jurisdiction=area-3;population=group-061"
+    },
+    {
+      "record_id": "cal-b061#B",
+      "source_reference": "ref://opaque/cal-b061#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-061"
+    },
+    {
+      "record_id": "cal-b062#A",
+      "source_reference": "ref://opaque/cal-b062#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-062"
+    },
+    {
+      "record_id": "cal-b062#B",
+      "source_reference": "ref://opaque/cal-b062#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;population=group-062"
+    },
+    {
+      "record_id": "cal-b063#A",
+      "source_reference": "ref://opaque/cal-b063#A",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-3;population=group-063"
+    },
+    {
+      "record_id": "cal-b063#B",
+      "source_reference": "ref://opaque/cal-b063#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-063"
+    },
+    {
+      "record_id": "cal-b064#A",
+      "source_reference": "ref://opaque/cal-b064#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-064"
+    },
+    {
+      "record_id": "cal-b064#B",
+      "source_reference": "ref://opaque/cal-b064#B",
+      "authoritative_scope": "endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-064"
+    },
+    {
+      "record_id": "cal-b065#A",
+      "source_reference": "ref://opaque/cal-b065#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4"
+    },
+    {
+      "record_id": "cal-b065#B",
+      "source_reference": "ref://opaque/cal-b065#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-065"
+    },
+    {
+      "record_id": "cal-b066#A",
+      "source_reference": "ref://opaque/cal-b066#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-066"
+    },
+    {
+      "record_id": "cal-b066#B",
+      "source_reference": "ref://opaque/cal-b066#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;jurisdiction=area-4;population=group-066"
+    },
+    {
+      "record_id": "cal-b067#A",
+      "source_reference": "ref://opaque/cal-b067#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;population=group-067"
+    },
+    {
+      "record_id": "cal-b067#B",
+      "source_reference": "ref://opaque/cal-b067#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-067"
+    },
+    {
+      "record_id": "cal-b068#A",
+      "source_reference": "ref://opaque/cal-b068#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-068"
+    },
+    {
+      "record_id": "cal-b068#B",
+      "source_reference": "ref://opaque/cal-b068#B",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-4;population=group-068"
+    },
+    {
+      "record_id": "cal-b069#A",
+      "source_reference": "ref://opaque/cal-b069#A",
+      "authoritative_scope": "endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-069"
+    },
+    {
+      "record_id": "cal-b069#B",
+      "source_reference": "ref://opaque/cal-b069#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-069"
+    },
+    {
+      "record_id": "cal-b070#A",
+      "source_reference": "ref://opaque/cal-b070#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-070"
+    },
+    {
+      "record_id": "cal-b070#B",
+      "source_reference": "ref://opaque/cal-b070#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4"
+    },
+    {
+      "record_id": "cal-b071#A",
+      "source_reference": "ref://opaque/cal-b071#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;jurisdiction=area-4;population=group-071"
+    },
+    {
+      "record_id": "cal-b071#B",
+      "source_reference": "ref://opaque/cal-b071#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-071"
+    },
+    {
+      "record_id": "cal-b072#A",
+      "source_reference": "ref://opaque/cal-b072#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-072"
+    },
+    {
+      "record_id": "cal-b072#B",
+      "source_reference": "ref://opaque/cal-b072#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;population=group-072"
+    },
+    {
+      "record_id": "cal-b073#A",
+      "source_reference": "ref://opaque/cal-b073#A",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-4;population=group-073"
+    },
+    {
+      "record_id": "cal-b073#B",
+      "source_reference": "ref://opaque/cal-b073#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-073"
+    },
+    {
+      "record_id": "cal-b074#A",
+      "source_reference": "ref://opaque/cal-b074#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-074"
+    },
+    {
+      "record_id": "cal-b074#B",
+      "source_reference": "ref://opaque/cal-b074#B",
+      "authoritative_scope": "endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-074"
+    },
+    {
+      "record_id": "cal-b075#A",
+      "source_reference": "ref://opaque/cal-b075#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4"
+    },
+    {
+      "record_id": "cal-b075#B",
+      "source_reference": "ref://opaque/cal-b075#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-075"
+    },
+    {
+      "record_id": "cal-b076#A",
+      "source_reference": "ref://opaque/cal-b076#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-076"
+    },
+    {
+      "record_id": "cal-b076#B",
+      "source_reference": "ref://opaque/cal-b076#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;jurisdiction=area-4;population=group-076"
+    },
+    {
+      "record_id": "cal-b077#A",
+      "source_reference": "ref://opaque/cal-b077#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;population=group-077"
+    },
+    {
+      "record_id": "cal-b077#B",
+      "source_reference": "ref://opaque/cal-b077#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-077"
+    },
+    {
+      "record_id": "cal-b078#A",
+      "source_reference": "ref://opaque/cal-b078#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-078"
+    },
+    {
+      "record_id": "cal-b078#B",
+      "source_reference": "ref://opaque/cal-b078#B",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-4;population=group-078"
+    },
+    {
+      "record_id": "cal-b079#A",
+      "source_reference": "ref://opaque/cal-b079#A",
+      "authoritative_scope": "endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-079"
+    },
+    {
+      "record_id": "cal-b079#B",
+      "source_reference": "ref://opaque/cal-b079#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-079"
+    },
+    {
+      "record_id": "cal-b080#A",
+      "source_reference": "ref://opaque/cal-b080#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-080"
+    },
+    {
+      "record_id": "cal-b080#B",
+      "source_reference": "ref://opaque/cal-b080#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5"
+    },
+    {
+      "record_id": "cal-b081#A",
+      "source_reference": "ref://opaque/cal-b081#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;jurisdiction=area-5;population=group-081"
+    },
+    {
+      "record_id": "cal-b081#B",
+      "source_reference": "ref://opaque/cal-b081#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-081"
+    },
+    {
+      "record_id": "cal-b082#A",
+      "source_reference": "ref://opaque/cal-b082#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-082"
+    },
+    {
+      "record_id": "cal-b082#B",
+      "source_reference": "ref://opaque/cal-b082#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;population=group-082"
+    },
+    {
+      "record_id": "cal-b083#A",
+      "source_reference": "ref://opaque/cal-b083#A",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-5;population=group-083"
+    },
+    {
+      "record_id": "cal-b083#B",
+      "source_reference": "ref://opaque/cal-b083#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-083"
+    },
+    {
+      "record_id": "cal-b084#A",
+      "source_reference": "ref://opaque/cal-b084#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-084"
+    },
+    {
+      "record_id": "cal-b084#B",
+      "source_reference": "ref://opaque/cal-b084#B",
+      "authoritative_scope": "endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-084"
+    },
+    {
+      "record_id": "cal-b085#A",
+      "source_reference": "ref://opaque/cal-b085#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5"
+    },
+    {
+      "record_id": "cal-b085#B",
+      "source_reference": "ref://opaque/cal-b085#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-085"
+    },
+    {
+      "record_id": "cal-b086#A",
+      "source_reference": "ref://opaque/cal-b086#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-086"
+    },
+    {
+      "record_id": "cal-b086#B",
+      "source_reference": "ref://opaque/cal-b086#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;jurisdiction=area-5;population=group-086"
+    },
+    {
+      "record_id": "cal-b087#A",
+      "source_reference": "ref://opaque/cal-b087#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;population=group-087"
+    },
+    {
+      "record_id": "cal-b087#B",
+      "source_reference": "ref://opaque/cal-b087#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-087"
+    },
+    {
+      "record_id": "cal-b088#A",
+      "source_reference": "ref://opaque/cal-b088#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-088"
+    },
+    {
+      "record_id": "cal-b088#B",
+      "source_reference": "ref://opaque/cal-b088#B",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-5;population=group-088"
+    },
+    {
+      "record_id": "cal-b089#A",
+      "source_reference": "ref://opaque/cal-b089#A",
+      "authoritative_scope": "endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-089"
+    },
+    {
+      "record_id": "cal-b089#B",
+      "source_reference": "ref://opaque/cal-b089#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-089"
+    },
+    {
+      "record_id": "cal-b090#A",
+      "source_reference": "ref://opaque/cal-b090#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-090"
+    },
+    {
+      "record_id": "cal-b090#B",
+      "source_reference": "ref://opaque/cal-b090#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5"
+    },
+    {
+      "record_id": "cal-b091#A",
+      "source_reference": "ref://opaque/cal-b091#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;jurisdiction=area-5;population=group-091"
+    },
+    {
+      "record_id": "cal-b091#B",
+      "source_reference": "ref://opaque/cal-b091#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-091"
+    },
+    {
+      "record_id": "cal-b092#A",
+      "source_reference": "ref://opaque/cal-b092#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-092"
+    },
+    {
+      "record_id": "cal-b092#B",
+      "source_reference": "ref://opaque/cal-b092#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;population=group-092"
+    },
+    {
+      "record_id": "cal-b093#A",
+      "source_reference": "ref://opaque/cal-b093#A",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-5;population=group-093"
+    },
+    {
+      "record_id": "cal-b093#B",
+      "source_reference": "ref://opaque/cal-b093#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-093"
+    },
+    {
+      "record_id": "cal-b094#A",
+      "source_reference": "ref://opaque/cal-b094#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-094"
+    },
+    {
+      "record_id": "cal-b094#B",
+      "source_reference": "ref://opaque/cal-b094#B",
+      "authoritative_scope": "endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-094"
+    },
+    {
+      "record_id": "cal-b095#A",
+      "source_reference": "ref://opaque/cal-b095#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5"
+    },
+    {
+      "record_id": "cal-b095#B",
+      "source_reference": "ref://opaque/cal-b095#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-095"
+    },
+    {
+      "record_id": "cal-b096#A",
+      "source_reference": "ref://opaque/cal-b096#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-096"
+    },
+    {
+      "record_id": "cal-b096#B",
+      "source_reference": "ref://opaque/cal-b096#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;jurisdiction=area-6;population=group-096"
+    },
+    {
+      "record_id": "cal-b097#A",
+      "source_reference": "ref://opaque/cal-b097#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;population=group-097"
+    },
+    {
+      "record_id": "cal-b097#B",
+      "source_reference": "ref://opaque/cal-b097#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-097"
+    },
+    {
+      "record_id": "cal-b098#A",
+      "source_reference": "ref://opaque/cal-b098#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-098"
+    },
+    {
+      "record_id": "cal-b098#B",
+      "source_reference": "ref://opaque/cal-b098#B",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-6;population=group-098"
+    },
+    {
+      "record_id": "cal-b099#A",
+      "source_reference": "ref://opaque/cal-b099#A",
+      "authoritative_scope": "endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-099"
+    },
+    {
+      "record_id": "cal-b099#B",
+      "source_reference": "ref://opaque/cal-b099#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-099"
+    },
+    {
+      "record_id": "cal-b100#A",
+      "source_reference": "ref://opaque/cal-b100#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-100"
+    },
+    {
+      "record_id": "cal-b100#B",
+      "source_reference": "ref://opaque/cal-b100#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6"
+    },
+    {
+      "record_id": "cal-b101#A",
+      "source_reference": "ref://opaque/cal-b101#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;jurisdiction=area-6;population=group-101"
+    },
+    {
+      "record_id": "cal-b101#B",
+      "source_reference": "ref://opaque/cal-b101#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-101"
+    },
+    {
+      "record_id": "cal-b102#A",
+      "source_reference": "ref://opaque/cal-b102#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-102"
+    },
+    {
+      "record_id": "cal-b102#B",
+      "source_reference": "ref://opaque/cal-b102#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;population=group-102"
+    },
+    {
+      "record_id": "cal-b103#A",
+      "source_reference": "ref://opaque/cal-b103#A",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-6;population=group-103"
+    },
+    {
+      "record_id": "cal-b103#B",
+      "source_reference": "ref://opaque/cal-b103#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-103"
+    },
+    {
+      "record_id": "cal-b104#A",
+      "source_reference": "ref://opaque/cal-b104#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-104"
+    },
+    {
+      "record_id": "cal-b104#B",
+      "source_reference": "ref://opaque/cal-b104#B",
+      "authoritative_scope": "endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-104"
+    },
+    {
+      "record_id": "cal-b105#A",
+      "source_reference": "ref://opaque/cal-b105#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6"
+    },
+    {
+      "record_id": "cal-b105#B",
+      "source_reference": "ref://opaque/cal-b105#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-105"
+    },
+    {
+      "record_id": "cal-b106#A",
+      "source_reference": "ref://opaque/cal-b106#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-106"
+    },
+    {
+      "record_id": "cal-b106#B",
+      "source_reference": "ref://opaque/cal-b106#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;jurisdiction=area-6;population=group-106"
+    },
+    {
+      "record_id": "cal-b107#A",
+      "source_reference": "ref://opaque/cal-b107#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;population=group-107"
+    },
+    {
+      "record_id": "cal-b107#B",
+      "source_reference": "ref://opaque/cal-b107#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-107"
+    },
+    {
+      "record_id": "cal-b108#A",
+      "source_reference": "ref://opaque/cal-b108#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-108"
+    },
+    {
+      "record_id": "cal-b108#B",
+      "source_reference": "ref://opaque/cal-b108#B",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-6;population=group-108"
+    },
+    {
+      "record_id": "cal-b109#A",
+      "source_reference": "ref://opaque/cal-b109#A",
+      "authoritative_scope": "endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-109"
+    },
+    {
+      "record_id": "cal-b109#B",
+      "source_reference": "ref://opaque/cal-b109#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-109"
+    },
+    {
+      "record_id": "cal-b110#A",
+      "source_reference": "ref://opaque/cal-b110#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-110"
+    },
+    {
+      "record_id": "cal-b110#B",
+      "source_reference": "ref://opaque/cal-b110#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6"
+    },
+    {
+      "record_id": "cal-b111#A",
+      "source_reference": "ref://opaque/cal-b111#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;jurisdiction=area-6;population=group-111"
+    },
+    {
+      "record_id": "cal-b111#B",
+      "source_reference": "ref://opaque/cal-b111#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-111"
+    },
+    {
+      "record_id": "cal-b112#A",
+      "source_reference": "ref://opaque/cal-b112#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-112"
+    },
+    {
+      "record_id": "cal-b112#B",
+      "source_reference": "ref://opaque/cal-b112#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;population=group-112"
+    },
+    {
+      "record_id": "cal-b113#A",
+      "source_reference": "ref://opaque/cal-b113#A",
+      "authoritative_scope": "artifact_version=2.0;interval=2026-q4;jurisdiction=area-7;population=group-113"
+    },
+    {
+      "record_id": "cal-b113#B",
+      "source_reference": "ref://opaque/cal-b113#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-113"
+    },
+    {
+      "record_id": "cal-b114#A",
+      "source_reference": "ref://opaque/cal-b114#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-114"
+    },
+    {
+      "record_id": "cal-b114#B",
+      "source_reference": "ref://opaque/cal-b114#B",
+      "authoritative_scope": "endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-114"
+    },
+    {
+      "record_id": "cal-b115#A",
+      "source_reference": "ref://opaque/cal-b115#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7"
+    },
+    {
+      "record_id": "cal-b115#B",
+      "source_reference": "ref://opaque/cal-b115#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-115"
+    },
+    {
+      "record_id": "cal-b116#A",
+      "source_reference": "ref://opaque/cal-b116#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-116"
+    },
+    {
+      "record_id": "cal-b116#B",
+      "source_reference": "ref://opaque/cal-b116#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;jurisdiction=area-7;population=group-116"
+    },
+    {
+      "record_id": "cal-b117#A",
+      "source_reference": "ref://opaque/cal-b117#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;population=group-117"
+    },
+    {
+      "record_id": "cal-b117#B",
+      "source_reference": "ref://opaque/cal-b117#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-117"
+    },
+    {
+      "record_id": "cal-b118#A",
+      "source_reference": "ref://opaque/cal-b118#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-118"
+    },
+    {
+      "record_id": "cal-b118#B",
+      "source_reference": "ref://opaque/cal-b118#B",
+      "authoritative_scope": "artifact_version=1.0;interval=2026-q4;jurisdiction=area-7;population=group-118"
+    },
+    {
+      "record_id": "cal-b119#A",
+      "source_reference": "ref://opaque/cal-b119#A",
+      "authoritative_scope": "endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-119"
+    },
+    {
+      "record_id": "cal-b119#B",
+      "source_reference": "ref://opaque/cal-b119#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-119"
+    },
+    {
+      "record_id": "cal-b120#A",
+      "source_reference": "ref://opaque/cal-b120#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-120"
+    },
+    {
+      "record_id": "cal-b120#B",
+      "source_reference": "ref://opaque/cal-b120#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7"
+    },
+    {
+      "record_id": "cal-b121#A",
+      "source_reference": "ref://opaque/cal-b121#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;jurisdiction=area-7;population=group-121"
+    },
+    {
+      "record_id": "cal-b121#B",
+      "source_reference": "ref://opaque/cal-b121#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-121"
+    },
+    {
+      "record_id": "cal-b122#A",
+      "source_reference": "ref://opaque/cal-b122#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-122"
+    },
+    {
+      "record_id": "cal-b122#B",
+      "source_reference": "ref://opaque/cal-b122#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;population=group-122"
+    },
+    {
+      "record_id": "cal-b123#A",
+      "source_reference": "ref://opaque/cal-b123#A",
+      "authoritative_scope": "artifact_version=3.0;interval=2026-q4;jurisdiction=area-7;population=group-123"
+    },
+    {
+      "record_id": "cal-b123#B",
+      "source_reference": "ref://opaque/cal-b123#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-123"
+    },
+    {
+      "record_id": "cal-b124#A",
+      "source_reference": "ref://opaque/cal-b124#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-124"
+    },
+    {
+      "record_id": "cal-b124#B",
+      "source_reference": "ref://opaque/cal-b124#B",
+      "authoritative_scope": "endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-124"
+    },
+    {
+      "record_id": "cal-b125#A",
+      "source_reference": "ref://opaque/cal-b125#A",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7"
+    },
+    {
+      "record_id": "cal-b125#B",
+      "source_reference": "ref://opaque/cal-b125#B",
+      "authoritative_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-125"
+    },
+    {
+      "record_id": "cal-b126#A",
+      "source_reference": "ref://opaque/cal-b126#A",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-126"
+    },
+    {
+      "record_id": "cal-b126#B",
+      "source_reference": "ref://opaque/cal-b126#B",
+      "authoritative_scope": "artifact_version=3.0;endpoint=desk-7.local/v1;jurisdiction=area-7;population=group-126"
+    },
+    {
+      "record_id": "cal-b127#A",
+      "source_reference": "ref://opaque/cal-b127#A",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;population=group-127"
+    },
+    {
+      "record_id": "cal-b127#B",
+      "source_reference": "ref://opaque/cal-b127#B",
+      "authoritative_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-127"
+    }
+  ]
+}

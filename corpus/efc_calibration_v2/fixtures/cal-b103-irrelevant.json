@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "beginwork-deltayard",
+    "beginwork-echoyard",
+    "sendto-controlroom",
+    "holdin-nightlist"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b103",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-6.local/v1;interval=2026-q4;jurisdiction=area-6;population=group-103",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "sendto-controlroom",
+  "fixture_id": "cal-b103-irrelevant",
+  "menu_order": [
+    "holdin-nightlist",
+    "sendto-controlroom",
+    "beginwork-deltayard",
+    "beginwork-echoyard"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "beginwork-deltayard": "commit",
+    "beginwork-echoyard": "commit",
+    "holdin-nightlist": "non_commit",
+    "sendto-controlroom": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-103: the crew chief directly heard the standby generator running at the echo yard. Posted rule: a running standby generator sends the order to the control room.",
+  "task_id": "cal-b103-irrelevant"
+}

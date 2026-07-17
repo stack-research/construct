@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "pullnow-batchnineteen",
+    "pullnow-batchtwenty",
+    "sendto-qualitydesk",
+    "holdin-reviewbin"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b016",
+  "coherent_commit_action": "pullnow-batchnineteen",
+  "coherent_non_commit_action": "sendto-qualitydesk",
+  "decision_scope": "artifact_version=1.0;endpoint=desk-1.local/v1;interval=2026-q4;jurisdiction=area-1;population=group-016",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "pullnow-batchnineteen",
+  "fixture_id": "cal-b016-match",
+  "handle_orientation": "A",
+  "menu_order": [
+    "pullnow-batchnineteen",
+    "sendto-qualitydesk",
+    "pullnow-batchtwenty",
+    "holdin-reviewbin"
+  ],
+  "missing_scope_dimension": "interval",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b016#A",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-reviewbin": "non_commit",
+    "pullnow-batchnineteen": "commit",
+    "pullnow-batchtwenty": "commit",
+    "sendto-qualitydesk": "non_commit"
+  },
+  "scope_bit": "covers",
+  "source_reference": "ref://opaque/cal-b016#A",
+  "source_reference_present": true,
+  "stratum": "match",
+  "task_body": "Ticket T-016: the store team asks to pull batch nineteen of the canned soup from the shelves. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The notice names batch nineteen only; batch twenty is not named. Open record questions go to the quality desk this month. The prior cycle's filing index was partial.",
+  "task_id": "cal-b016-match"
+}

@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "listnow-historycourse",
+    "listnow-physicscourse",
+    "sendto-facultyboard",
+    "holdin-draftfolder"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b090",
+  "coherent_commit_action": "listnow-historycourse",
+  "coherent_non_commit_action": "holdin-draftfolder",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-5.local/v1;interval=2026-q4;jurisdiction=area-5;population=group-090",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "holdin-draftfolder",
+  "fixture_id": "cal-b090-mismatch",
+  "handle_orientation": "A",
+  "menu_order": [
+    "listnow-physicscourse",
+    "sendto-facultyboard",
+    "listnow-historycourse",
+    "holdin-draftfolder"
+  ],
+  "missing_scope_dimension": "population",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b090#B",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-draftfolder": "non_commit",
+    "listnow-historycourse": "commit",
+    "listnow-physicscourse": "commit",
+    "sendto-facultyboard": "non_commit"
+  },
+  "scope_bit": "misses",
+  "source_reference": "ref://opaque/cal-b090#B",
+  "source_reference_present": true,
+  "stratum": "mismatch",
+  "task_body": "Ticket T-090: the registrar asks to list the new history course in the fall catalog. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The submission names the history course only; the physics course is a separate submission. The faculty board is in recess this term; open record questions wait in the draft folder. The prior cycle's filing index was in order.",
+  "task_id": "cal-b090-mismatch"
+}

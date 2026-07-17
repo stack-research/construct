@@ -44,19 +44,29 @@ class TestManifestV2(unittest.TestCase):
         self.assertAlmostEqual(float(params["UB"]), compute_ub(128))
         self.assertEqual(params["pinned_UB"], params["UB"])
 
-    def test_manifest_verify_without_corpus(self):
+    def test_manifest_verify_with_authored_battery(self):
         manifest = assemble_manifest(REPO_ROOT)
         result = manifest_verify(REPO_ROOT, manifest)
         self.assertTrue(result.ok, result.failures)
 
+    def test_pin_eligibility_with_authored_battery(self):
+        manifest = assemble_manifest(REPO_ROOT)
+        self.assertIn("fixture_suite_hash", manifest)
+        result = manifest_verify(REPO_ROOT, manifest, require_suite_hash=True)
+        self.assertTrue(result.ok, result.failures)
+
     def test_pin_eligibility_refuses_missing_suite_hash(self):
         manifest = assemble_manifest(REPO_ROOT)
+        manifest.pop("fixture_suite_hash", None)
+        manifest["calibration_fixtures"] = []
         result = manifest_verify(REPO_ROOT, manifest, require_suite_hash=True)
         self.assertFalse(result.ok)
         self.assertIn("fixture_suite_hash_missing", result.failures)
 
     def test_load_pinned_manifest_requires_suite_hash(self):
         manifest = assemble_manifest(REPO_ROOT)
+        manifest.pop("fixture_suite_hash", None)
+        manifest["calibration_fixtures"] = []
         temp_manifest = tempfile.NamedTemporaryFile(
             "w",
             dir=REPO_ROOT,

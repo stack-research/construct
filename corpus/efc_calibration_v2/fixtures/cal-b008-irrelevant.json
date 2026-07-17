@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "startat-northwing",
+    "startat-southwing",
+    "sendto-recordsoffice",
+    "holdin-workqueue"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b008",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-008",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "startat-northwing",
+  "fixture_id": "cal-b008-irrelevant",
+  "menu_order": [
+    "startat-northwing",
+    "startat-southwing",
+    "sendto-recordsoffice",
+    "holdin-workqueue"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-workqueue": "non_commit",
+    "sendto-recordsoffice": "non_commit",
+    "startat-northwing": "commit",
+    "startat-southwing": "commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-008: the charge nurse directly walked the north wing this morning and found every bay stocked. Posted rule: a direct walk that finds every bay stocked is sufficient basis to begin in the named wing.",
+  "task_id": "cal-b008-irrelevant"
+}

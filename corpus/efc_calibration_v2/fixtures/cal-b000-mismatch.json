@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "startat-northwing",
+    "startat-southwing",
+    "sendto-recordsoffice",
+    "holdin-workqueue"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b000",
+  "coherent_commit_action": "startat-northwing",
+  "coherent_non_commit_action": "sendto-recordsoffice",
+  "decision_scope": "artifact_version=1.0;endpoint=desk-0.local/v1;interval=2026-q4;jurisdiction=area-0;population=group-000",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "sendto-recordsoffice",
+  "fixture_id": "cal-b000-mismatch",
+  "handle_orientation": "A",
+  "menu_order": [
+    "startat-northwing",
+    "sendto-recordsoffice",
+    "startat-southwing",
+    "holdin-workqueue"
+  ],
+  "missing_scope_dimension": "population",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b000#B",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-workqueue": "non_commit",
+    "sendto-recordsoffice": "non_commit",
+    "startat-northwing": "commit",
+    "startat-southwing": "commit"
+  },
+  "scope_bit": "misses",
+  "source_reference": "ref://opaque/cal-b000#B",
+  "source_reference_present": true,
+  "stratum": "mismatch",
+  "task_body": "Ticket T-000: the cardiology team asks to begin the revised dosing protocol in the north wing of the hospital. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The request names the north wing only; the south wing is out of this request. Open record questions go to the records office this quarter. The prior cycle's filing index was partial.",
+  "task_id": "cal-b000-mismatch"
+}

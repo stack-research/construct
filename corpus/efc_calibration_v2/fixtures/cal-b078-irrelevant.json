@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "clearnow-lotalpha",
+    "clearnow-lotbravo",
+    "sendto-inspectiondesk",
+    "holdin-holdingyard"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b078",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-078",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "holdin-holdingyard",
+  "fixture_id": "cal-b078-irrelevant",
+  "menu_order": [
+    "clearnow-lotbravo",
+    "sendto-inspectiondesk",
+    "holdin-holdingyard",
+    "clearnow-lotalpha"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "clearnow-lotalpha": "commit",
+    "clearnow-lotbravo": "commit",
+    "holdin-holdingyard": "non_commit",
+    "sendto-inspectiondesk": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-078: the gate officer directly saw rain soaking the lot alpha tarps. Posted rule: soaked tarps mean the request waits in the holding yard.",
+  "task_id": "cal-b078-irrelevant"
+}

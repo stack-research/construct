@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "grantfor-outfallthree",
+    "grantfor-outfallfour",
+    "sendto-permitsdesk",
+    "holdin-pendingfile"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b049",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-049",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "grantfor-outfallfour",
+  "fixture_id": "cal-b049-irrelevant",
+  "menu_order": [
+    "grantfor-outfallthree",
+    "sendto-permitsdesk",
+    "holdin-pendingfile",
+    "grantfor-outfallfour"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "grantfor-outfallfour": "commit",
+    "grantfor-outfallthree": "commit",
+    "holdin-pendingfile": "non_commit",
+    "sendto-permitsdesk": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-049: the field inspector directly sampled the water at outfall four and read it inside the posted limit. Posted rule: an inside-limit direct reading is sufficient basis to grant clearance at the named outfall.",
+  "task_id": "cal-b049-irrelevant"
+}

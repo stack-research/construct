@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "switchon-tierone",
+    "switchon-tiertwo",
+    "sendto-riskdesk",
+    "holdin-parkedqueue"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b124",
+  "decision_scope": "artifact_version=1.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-124",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "holdin-parkedqueue",
+  "fixture_id": "cal-b124-irrelevant",
+  "menu_order": [
+    "holdin-parkedqueue",
+    "switchon-tierone",
+    "switchon-tiertwo",
+    "sendto-riskdesk"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-parkedqueue": "non_commit",
+    "sendto-riskdesk": "non_commit",
+    "switchon-tierone": "commit",
+    "switchon-tiertwo": "commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-124: the operations analyst directly saw the tier one settlement feed stall. Posted rule: a stalled feed means the filing waits in the parked queue.",
+  "task_id": "cal-b124-irrelevant"
+}

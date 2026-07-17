@@ -1,0 +1,1157 @@
+{
+  "suite_id": "efc_calibration_v2",
+  "fixtures": [
+    {
+      "fixture_id": "cal-b000-match"
+    },
+    {
+      "fixture_id": "cal-b000-mismatch"
+    },
+    {
+      "fixture_id": "cal-b000-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b001-match"
+    },
+    {
+      "fixture_id": "cal-b001-mismatch"
+    },
+    {
+      "fixture_id": "cal-b001-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b002-match"
+    },
+    {
+      "fixture_id": "cal-b002-mismatch"
+    },
+    {
+      "fixture_id": "cal-b002-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b003-match"
+    },
+    {
+      "fixture_id": "cal-b003-mismatch"
+    },
+    {
+      "fixture_id": "cal-b003-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b004-match"
+    },
+    {
+      "fixture_id": "cal-b004-mismatch"
+    },
+    {
+      "fixture_id": "cal-b004-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b005-match"
+    },
+    {
+      "fixture_id": "cal-b005-mismatch"
+    },
+    {
+      "fixture_id": "cal-b005-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b006-match"
+    },
+    {
+      "fixture_id": "cal-b006-mismatch"
+    },
+    {
+      "fixture_id": "cal-b006-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b007-match"
+    },
+    {
+      "fixture_id": "cal-b007-mismatch"
+    },
+    {
+      "fixture_id": "cal-b007-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b008-match"
+    },
+    {
+      "fixture_id": "cal-b008-mismatch"
+    },
+    {
+      "fixture_id": "cal-b008-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b009-match"
+    },
+    {
+      "fixture_id": "cal-b009-mismatch"
+    },
+    {
+      "fixture_id": "cal-b009-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b010-match"
+    },
+    {
+      "fixture_id": "cal-b010-mismatch"
+    },
+    {
+      "fixture_id": "cal-b010-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b011-match"
+    },
+    {
+      "fixture_id": "cal-b011-mismatch"
+    },
+    {
+      "fixture_id": "cal-b011-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b012-match"
+    },
+    {
+      "fixture_id": "cal-b012-mismatch"
+    },
+    {
+      "fixture_id": "cal-b012-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b013-match"
+    },
+    {
+      "fixture_id": "cal-b013-mismatch"
+    },
+    {
+      "fixture_id": "cal-b013-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b014-match"
+    },
+    {
+      "fixture_id": "cal-b014-mismatch"
+    },
+    {
+      "fixture_id": "cal-b014-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b015-match"
+    },
+    {
+      "fixture_id": "cal-b015-mismatch"
+    },
+    {
+      "fixture_id": "cal-b015-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b016-match"
+    },
+    {
+      "fixture_id": "cal-b016-mismatch"
+    },
+    {
+      "fixture_id": "cal-b016-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b017-match"
+    },
+    {
+      "fixture_id": "cal-b017-mismatch"
+    },
+    {
+      "fixture_id": "cal-b017-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b018-match"
+    },
+    {
+      "fixture_id": "cal-b018-mismatch"
+    },
+    {
+      "fixture_id": "cal-b018-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b019-match"
+    },
+    {
+      "fixture_id": "cal-b019-mismatch"
+    },
+    {
+      "fixture_id": "cal-b019-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b020-match"
+    },
+    {
+      "fixture_id": "cal-b020-mismatch"
+    },
+    {
+      "fixture_id": "cal-b020-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b021-match"
+    },
+    {
+      "fixture_id": "cal-b021-mismatch"
+    },
+    {
+      "fixture_id": "cal-b021-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b022-match"
+    },
+    {
+      "fixture_id": "cal-b022-mismatch"
+    },
+    {
+      "fixture_id": "cal-b022-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b023-match"
+    },
+    {
+      "fixture_id": "cal-b023-mismatch"
+    },
+    {
+      "fixture_id": "cal-b023-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b024-match"
+    },
+    {
+      "fixture_id": "cal-b024-mismatch"
+    },
+    {
+      "fixture_id": "cal-b024-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b025-match"
+    },
+    {
+      "fixture_id": "cal-b025-mismatch"
+    },
+    {
+      "fixture_id": "cal-b025-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b026-match"
+    },
+    {
+      "fixture_id": "cal-b026-mismatch"
+    },
+    {
+      "fixture_id": "cal-b026-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b027-match"
+    },
+    {
+      "fixture_id": "cal-b027-mismatch"
+    },
+    {
+      "fixture_id": "cal-b027-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b028-match"
+    },
+    {
+      "fixture_id": "cal-b028-mismatch"
+    },
+    {
+      "fixture_id": "cal-b028-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b029-match"
+    },
+    {
+      "fixture_id": "cal-b029-mismatch"
+    },
+    {
+      "fixture_id": "cal-b029-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b030-match"
+    },
+    {
+      "fixture_id": "cal-b030-mismatch"
+    },
+    {
+      "fixture_id": "cal-b030-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b031-match"
+    },
+    {
+      "fixture_id": "cal-b031-mismatch"
+    },
+    {
+      "fixture_id": "cal-b031-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b032-match"
+    },
+    {
+      "fixture_id": "cal-b032-mismatch"
+    },
+    {
+      "fixture_id": "cal-b032-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b033-match"
+    },
+    {
+      "fixture_id": "cal-b033-mismatch"
+    },
+    {
+      "fixture_id": "cal-b033-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b034-match"
+    },
+    {
+      "fixture_id": "cal-b034-mismatch"
+    },
+    {
+      "fixture_id": "cal-b034-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b035-match"
+    },
+    {
+      "fixture_id": "cal-b035-mismatch"
+    },
+    {
+      "fixture_id": "cal-b035-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b036-match"
+    },
+    {
+      "fixture_id": "cal-b036-mismatch"
+    },
+    {
+      "fixture_id": "cal-b036-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b037-match"
+    },
+    {
+      "fixture_id": "cal-b037-mismatch"
+    },
+    {
+      "fixture_id": "cal-b037-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b038-match"
+    },
+    {
+      "fixture_id": "cal-b038-mismatch"
+    },
+    {
+      "fixture_id": "cal-b038-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b039-match"
+    },
+    {
+      "fixture_id": "cal-b039-mismatch"
+    },
+    {
+      "fixture_id": "cal-b039-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b040-match"
+    },
+    {
+      "fixture_id": "cal-b040-mismatch"
+    },
+    {
+      "fixture_id": "cal-b040-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b041-match"
+    },
+    {
+      "fixture_id": "cal-b041-mismatch"
+    },
+    {
+      "fixture_id": "cal-b041-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b042-match"
+    },
+    {
+      "fixture_id": "cal-b042-mismatch"
+    },
+    {
+      "fixture_id": "cal-b042-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b043-match"
+    },
+    {
+      "fixture_id": "cal-b043-mismatch"
+    },
+    {
+      "fixture_id": "cal-b043-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b044-match"
+    },
+    {
+      "fixture_id": "cal-b044-mismatch"
+    },
+    {
+      "fixture_id": "cal-b044-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b045-match"
+    },
+    {
+      "fixture_id": "cal-b045-mismatch"
+    },
+    {
+      "fixture_id": "cal-b045-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b046-match"
+    },
+    {
+      "fixture_id": "cal-b046-mismatch"
+    },
+    {
+      "fixture_id": "cal-b046-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b047-match"
+    },
+    {
+      "fixture_id": "cal-b047-mismatch"
+    },
+    {
+      "fixture_id": "cal-b047-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b048-match"
+    },
+    {
+      "fixture_id": "cal-b048-mismatch"
+    },
+    {
+      "fixture_id": "cal-b048-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b049-match"
+    },
+    {
+      "fixture_id": "cal-b049-mismatch"
+    },
+    {
+      "fixture_id": "cal-b049-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b050-match"
+    },
+    {
+      "fixture_id": "cal-b050-mismatch"
+    },
+    {
+      "fixture_id": "cal-b050-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b051-match"
+    },
+    {
+      "fixture_id": "cal-b051-mismatch"
+    },
+    {
+      "fixture_id": "cal-b051-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b052-match"
+    },
+    {
+      "fixture_id": "cal-b052-mismatch"
+    },
+    {
+      "fixture_id": "cal-b052-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b053-match"
+    },
+    {
+      "fixture_id": "cal-b053-mismatch"
+    },
+    {
+      "fixture_id": "cal-b053-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b054-match"
+    },
+    {
+      "fixture_id": "cal-b054-mismatch"
+    },
+    {
+      "fixture_id": "cal-b054-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b055-match"
+    },
+    {
+      "fixture_id": "cal-b055-mismatch"
+    },
+    {
+      "fixture_id": "cal-b055-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b056-match"
+    },
+    {
+      "fixture_id": "cal-b056-mismatch"
+    },
+    {
+      "fixture_id": "cal-b056-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b057-match"
+    },
+    {
+      "fixture_id": "cal-b057-mismatch"
+    },
+    {
+      "fixture_id": "cal-b057-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b058-match"
+    },
+    {
+      "fixture_id": "cal-b058-mismatch"
+    },
+    {
+      "fixture_id": "cal-b058-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b059-match"
+    },
+    {
+      "fixture_id": "cal-b059-mismatch"
+    },
+    {
+      "fixture_id": "cal-b059-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b060-match"
+    },
+    {
+      "fixture_id": "cal-b060-mismatch"
+    },
+    {
+      "fixture_id": "cal-b060-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b061-match"
+    },
+    {
+      "fixture_id": "cal-b061-mismatch"
+    },
+    {
+      "fixture_id": "cal-b061-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b062-match"
+    },
+    {
+      "fixture_id": "cal-b062-mismatch"
+    },
+    {
+      "fixture_id": "cal-b062-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b063-match"
+    },
+    {
+      "fixture_id": "cal-b063-mismatch"
+    },
+    {
+      "fixture_id": "cal-b063-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b064-match"
+    },
+    {
+      "fixture_id": "cal-b064-mismatch"
+    },
+    {
+      "fixture_id": "cal-b064-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b065-match"
+    },
+    {
+      "fixture_id": "cal-b065-mismatch"
+    },
+    {
+      "fixture_id": "cal-b065-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b066-match"
+    },
+    {
+      "fixture_id": "cal-b066-mismatch"
+    },
+    {
+      "fixture_id": "cal-b066-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b067-match"
+    },
+    {
+      "fixture_id": "cal-b067-mismatch"
+    },
+    {
+      "fixture_id": "cal-b067-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b068-match"
+    },
+    {
+      "fixture_id": "cal-b068-mismatch"
+    },
+    {
+      "fixture_id": "cal-b068-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b069-match"
+    },
+    {
+      "fixture_id": "cal-b069-mismatch"
+    },
+    {
+      "fixture_id": "cal-b069-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b070-match"
+    },
+    {
+      "fixture_id": "cal-b070-mismatch"
+    },
+    {
+      "fixture_id": "cal-b070-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b071-match"
+    },
+    {
+      "fixture_id": "cal-b071-mismatch"
+    },
+    {
+      "fixture_id": "cal-b071-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b072-match"
+    },
+    {
+      "fixture_id": "cal-b072-mismatch"
+    },
+    {
+      "fixture_id": "cal-b072-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b073-match"
+    },
+    {
+      "fixture_id": "cal-b073-mismatch"
+    },
+    {
+      "fixture_id": "cal-b073-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b074-match"
+    },
+    {
+      "fixture_id": "cal-b074-mismatch"
+    },
+    {
+      "fixture_id": "cal-b074-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b075-match"
+    },
+    {
+      "fixture_id": "cal-b075-mismatch"
+    },
+    {
+      "fixture_id": "cal-b075-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b076-match"
+    },
+    {
+      "fixture_id": "cal-b076-mismatch"
+    },
+    {
+      "fixture_id": "cal-b076-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b077-match"
+    },
+    {
+      "fixture_id": "cal-b077-mismatch"
+    },
+    {
+      "fixture_id": "cal-b077-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b078-match"
+    },
+    {
+      "fixture_id": "cal-b078-mismatch"
+    },
+    {
+      "fixture_id": "cal-b078-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b079-match"
+    },
+    {
+      "fixture_id": "cal-b079-mismatch"
+    },
+    {
+      "fixture_id": "cal-b079-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b080-match"
+    },
+    {
+      "fixture_id": "cal-b080-mismatch"
+    },
+    {
+      "fixture_id": "cal-b080-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b081-match"
+    },
+    {
+      "fixture_id": "cal-b081-mismatch"
+    },
+    {
+      "fixture_id": "cal-b081-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b082-match"
+    },
+    {
+      "fixture_id": "cal-b082-mismatch"
+    },
+    {
+      "fixture_id": "cal-b082-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b083-match"
+    },
+    {
+      "fixture_id": "cal-b083-mismatch"
+    },
+    {
+      "fixture_id": "cal-b083-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b084-match"
+    },
+    {
+      "fixture_id": "cal-b084-mismatch"
+    },
+    {
+      "fixture_id": "cal-b084-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b085-match"
+    },
+    {
+      "fixture_id": "cal-b085-mismatch"
+    },
+    {
+      "fixture_id": "cal-b085-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b086-match"
+    },
+    {
+      "fixture_id": "cal-b086-mismatch"
+    },
+    {
+      "fixture_id": "cal-b086-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b087-match"
+    },
+    {
+      "fixture_id": "cal-b087-mismatch"
+    },
+    {
+      "fixture_id": "cal-b087-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b088-match"
+    },
+    {
+      "fixture_id": "cal-b088-mismatch"
+    },
+    {
+      "fixture_id": "cal-b088-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b089-match"
+    },
+    {
+      "fixture_id": "cal-b089-mismatch"
+    },
+    {
+      "fixture_id": "cal-b089-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b090-match"
+    },
+    {
+      "fixture_id": "cal-b090-mismatch"
+    },
+    {
+      "fixture_id": "cal-b090-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b091-match"
+    },
+    {
+      "fixture_id": "cal-b091-mismatch"
+    },
+    {
+      "fixture_id": "cal-b091-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b092-match"
+    },
+    {
+      "fixture_id": "cal-b092-mismatch"
+    },
+    {
+      "fixture_id": "cal-b092-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b093-match"
+    },
+    {
+      "fixture_id": "cal-b093-mismatch"
+    },
+    {
+      "fixture_id": "cal-b093-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b094-match"
+    },
+    {
+      "fixture_id": "cal-b094-mismatch"
+    },
+    {
+      "fixture_id": "cal-b094-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b095-match"
+    },
+    {
+      "fixture_id": "cal-b095-mismatch"
+    },
+    {
+      "fixture_id": "cal-b095-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b096-match"
+    },
+    {
+      "fixture_id": "cal-b096-mismatch"
+    },
+    {
+      "fixture_id": "cal-b096-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b097-match"
+    },
+    {
+      "fixture_id": "cal-b097-mismatch"
+    },
+    {
+      "fixture_id": "cal-b097-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b098-match"
+    },
+    {
+      "fixture_id": "cal-b098-mismatch"
+    },
+    {
+      "fixture_id": "cal-b098-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b099-match"
+    },
+    {
+      "fixture_id": "cal-b099-mismatch"
+    },
+    {
+      "fixture_id": "cal-b099-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b100-match"
+    },
+    {
+      "fixture_id": "cal-b100-mismatch"
+    },
+    {
+      "fixture_id": "cal-b100-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b101-match"
+    },
+    {
+      "fixture_id": "cal-b101-mismatch"
+    },
+    {
+      "fixture_id": "cal-b101-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b102-match"
+    },
+    {
+      "fixture_id": "cal-b102-mismatch"
+    },
+    {
+      "fixture_id": "cal-b102-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b103-match"
+    },
+    {
+      "fixture_id": "cal-b103-mismatch"
+    },
+    {
+      "fixture_id": "cal-b103-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b104-match"
+    },
+    {
+      "fixture_id": "cal-b104-mismatch"
+    },
+    {
+      "fixture_id": "cal-b104-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b105-match"
+    },
+    {
+      "fixture_id": "cal-b105-mismatch"
+    },
+    {
+      "fixture_id": "cal-b105-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b106-match"
+    },
+    {
+      "fixture_id": "cal-b106-mismatch"
+    },
+    {
+      "fixture_id": "cal-b106-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b107-match"
+    },
+    {
+      "fixture_id": "cal-b107-mismatch"
+    },
+    {
+      "fixture_id": "cal-b107-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b108-match"
+    },
+    {
+      "fixture_id": "cal-b108-mismatch"
+    },
+    {
+      "fixture_id": "cal-b108-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b109-match"
+    },
+    {
+      "fixture_id": "cal-b109-mismatch"
+    },
+    {
+      "fixture_id": "cal-b109-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b110-match"
+    },
+    {
+      "fixture_id": "cal-b110-mismatch"
+    },
+    {
+      "fixture_id": "cal-b110-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b111-match"
+    },
+    {
+      "fixture_id": "cal-b111-mismatch"
+    },
+    {
+      "fixture_id": "cal-b111-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b112-match"
+    },
+    {
+      "fixture_id": "cal-b112-mismatch"
+    },
+    {
+      "fixture_id": "cal-b112-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b113-match"
+    },
+    {
+      "fixture_id": "cal-b113-mismatch"
+    },
+    {
+      "fixture_id": "cal-b113-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b114-match"
+    },
+    {
+      "fixture_id": "cal-b114-mismatch"
+    },
+    {
+      "fixture_id": "cal-b114-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b115-match"
+    },
+    {
+      "fixture_id": "cal-b115-mismatch"
+    },
+    {
+      "fixture_id": "cal-b115-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b116-match"
+    },
+    {
+      "fixture_id": "cal-b116-mismatch"
+    },
+    {
+      "fixture_id": "cal-b116-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b117-match"
+    },
+    {
+      "fixture_id": "cal-b117-mismatch"
+    },
+    {
+      "fixture_id": "cal-b117-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b118-match"
+    },
+    {
+      "fixture_id": "cal-b118-mismatch"
+    },
+    {
+      "fixture_id": "cal-b118-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b119-match"
+    },
+    {
+      "fixture_id": "cal-b119-mismatch"
+    },
+    {
+      "fixture_id": "cal-b119-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b120-match"
+    },
+    {
+      "fixture_id": "cal-b120-mismatch"
+    },
+    {
+      "fixture_id": "cal-b120-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b121-match"
+    },
+    {
+      "fixture_id": "cal-b121-mismatch"
+    },
+    {
+      "fixture_id": "cal-b121-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b122-match"
+    },
+    {
+      "fixture_id": "cal-b122-mismatch"
+    },
+    {
+      "fixture_id": "cal-b122-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b123-match"
+    },
+    {
+      "fixture_id": "cal-b123-mismatch"
+    },
+    {
+      "fixture_id": "cal-b123-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b124-match"
+    },
+    {
+      "fixture_id": "cal-b124-mismatch"
+    },
+    {
+      "fixture_id": "cal-b124-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b125-match"
+    },
+    {
+      "fixture_id": "cal-b125-mismatch"
+    },
+    {
+      "fixture_id": "cal-b125-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b126-match"
+    },
+    {
+      "fixture_id": "cal-b126-mismatch"
+    },
+    {
+      "fixture_id": "cal-b126-irrelevant"
+    },
+    {
+      "fixture_id": "cal-b127-match"
+    },
+    {
+      "fixture_id": "cal-b127-mismatch"
+    },
+    {
+      "fixture_id": "cal-b127-irrelevant"
+    }
+  ]
+}

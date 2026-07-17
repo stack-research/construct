@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "switchon-tierone",
+    "switchon-tiertwo",
+    "sendto-riskdesk",
+    "holdin-parkedqueue"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b113",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-7.local/v1;interval=2026-q4;jurisdiction=area-7;population=group-113",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "switchon-tiertwo",
+  "fixture_id": "cal-b113-irrelevant",
+  "menu_order": [
+    "switchon-tierone",
+    "sendto-riskdesk",
+    "holdin-parkedqueue",
+    "switchon-tiertwo"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-parkedqueue": "non_commit",
+    "sendto-riskdesk": "non_commit",
+    "switchon-tierone": "commit",
+    "switchon-tiertwo": "commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-113: the operations analyst directly reran the ledger totals for tier two accounts and the totals agreed. Posted rule: agreeing direct totals are sufficient basis to switch the rule on for the named tier.",
+  "task_id": "cal-b113-irrelevant"
+}

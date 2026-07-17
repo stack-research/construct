@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "grantfor-outfallthree",
+    "grantfor-outfallfour",
+    "sendto-permitsdesk",
+    "holdin-pendingfile"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b053",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-053",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "sendto-permitsdesk",
+  "fixture_id": "cal-b053-irrelevant",
+  "menu_order": [
+    "grantfor-outfallthree",
+    "grantfor-outfallfour",
+    "holdin-pendingfile",
+    "sendto-permitsdesk"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "grantfor-outfallfour": "commit",
+    "grantfor-outfallthree": "commit",
+    "holdin-pendingfile": "non_commit",
+    "sendto-permitsdesk": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-053: the field inspector directly saw foam on the water at outfall four. Posted rule: visible foam sends the request to the permits desk.",
+  "task_id": "cal-b053-irrelevant"
+}

@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "turnon-eastregion",
+    "turnon-westregion",
+    "sendto-changeboard",
+    "holdin-deferredlist"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b043",
+  "coherent_commit_action": "turnon-westregion",
+  "coherent_non_commit_action": "holdin-deferredlist",
+  "decision_scope": "artifact_version=3.0;endpoint=desk-2.local/v1;interval=2026-q4;jurisdiction=area-2;population=group-043",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "holdin-deferredlist",
+  "fixture_id": "cal-b043-mismatch",
+  "handle_orientation": "B",
+  "menu_order": [
+    "sendto-changeboard",
+    "turnon-westregion",
+    "holdin-deferredlist",
+    "turnon-eastregion"
+  ],
+  "missing_scope_dimension": "endpoint",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b043#A",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "holdin-deferredlist": "non_commit",
+    "sendto-changeboard": "non_commit",
+    "turnon-eastregion": "commit",
+    "turnon-westregion": "commit"
+  },
+  "scope_bit": "misses",
+  "source_reference": "ref://opaque/cal-b043#A",
+  "source_reference_present": true,
+  "stratum": "mismatch",
+  "task_body": "Ticket T-043: the platform team asks to turn on the new checkout flow in the west region. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The rollout form lists the west region only; the east region stays on the old flow. The change board does not meet this sprint; open record questions wait on the deferred list. The prior cycle's filing index was in order.",
+  "task_id": "cal-b043-mismatch"
+}

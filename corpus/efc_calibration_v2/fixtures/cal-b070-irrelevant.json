@@ -1,0 +1,33 @@
+{
+  "action_set": [
+    "clearnow-lotalpha",
+    "clearnow-lotbravo",
+    "sendto-inspectiondesk",
+    "holdin-holdingyard"
+  ],
+  "assertion_basis_kind": "direct_observation",
+  "block_id": "cal-b070",
+  "decision_scope": "artifact_version=1.0;endpoint=desk-4.local/v1;interval=2026-q4;jurisdiction=area-4;population=group-070",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "sendto-inspectiondesk",
+  "fixture_id": "cal-b070-irrelevant",
+  "menu_order": [
+    "clearnow-lotbravo",
+    "holdin-holdingyard",
+    "sendto-inspectiondesk",
+    "clearnow-lotalpha"
+  ],
+  "observation_boundary_present": true,
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "clearnow-lotalpha": "commit",
+    "clearnow-lotbravo": "commit",
+    "holdin-holdingyard": "non_commit",
+    "sendto-inspectiondesk": "non_commit"
+  },
+  "source_reference": "",
+  "source_reference_present": false,
+  "stratum": "irrelevant",
+  "task_body": "Observation log O-070: the gate officer directly found live insects in the lot alpha sample. Posted rule: live insects send the request to the inspection desk.",
+  "task_id": "cal-b070-irrelevant"
+}

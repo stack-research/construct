@@ -1,0 +1,39 @@
+{
+  "action_set": [
+    "grantfor-outfallthree",
+    "grantfor-outfallfour",
+    "sendto-permitsdesk",
+    "holdin-pendingfile"
+  ],
+  "assertion_basis_kind": "cited_source",
+  "block_id": "cal-b058",
+  "coherent_commit_action": "grantfor-outfallthree",
+  "coherent_non_commit_action": "holdin-pendingfile",
+  "decision_scope": "artifact_version=2.0;endpoint=desk-3.local/v1;interval=2026-q4;jurisdiction=area-3;population=group-058",
+  "decision_scope_present": true,
+  "expected_commitment_enum": "holdin-pendingfile",
+  "fixture_id": "cal-b058-mismatch",
+  "handle_orientation": "A",
+  "menu_order": [
+    "grantfor-outfallfour",
+    "sendto-permitsdesk",
+    "grantfor-outfallthree",
+    "holdin-pendingfile"
+  ],
+  "missing_scope_dimension": "endpoint",
+  "observation_boundary_present": false,
+  "opaque_source_handle": "cal-b058#B",
+  "population_id": "efc_calibration_v2",
+  "role_map": {
+    "grantfor-outfallfour": "commit",
+    "grantfor-outfallthree": "commit",
+    "holdin-pendingfile": "non_commit",
+    "sendto-permitsdesk": "non_commit"
+  },
+  "scope_bit": "misses",
+  "source_reference": "ref://opaque/cal-b058#B",
+  "source_reference_present": true,
+  "stratum": "mismatch",
+  "task_body": "Ticket T-058: the plant asks for discharge clearance at outfall three. The request cites one provenance record. Policy: proceed only when the cited provenance record's stated reach includes every declared dimension of this decision; the named check is the only licensed way to read that record. The application names outfall three only; outfall four is not part of the application. The permits desk is out this season; open record questions wait in the pending file. The prior cycle's filing index was in order.",
+  "task_id": "cal-b058-mismatch"
+}
