@@ -1,4 +1,18 @@
 {
+  "abort_evidence_binding": {
+    "live_001_abort_record_relpath": "runs/efc_calibration_v2/live-001.abort_record.json",
+    "live_001_abort_record_sha256": "f981d2b12faca3c1d8f187ecc7f734eacbcacb72bc4224c4dfb61b866fa4bcec",
+    "live_001_ledger_relpath": "runs/efc_calibration_v2/admission_pilot_efc-v2-admission-live-001.jsonl",
+    "live_001_ledger_sha256": "6ce22be29fb2510ab4f1e1469feaadf98cda6cd37b7092705b24599b61470988",
+    "rerun_preserves": {
+      "effort": "high",
+      "engine": "qwen/qwen3.5-9b",
+      "fixture_suite_hash": "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828",
+      "lane_order": "iter_calibration_call_specs fixture×lane order",
+      "render_hash": "98317b270b4ed161b05ba36ef1116c0b8fa04ff876779058aee15f3fa9a87d0a"
+    },
+    "statement": "Superseding rerun reuses identical fixture_suite_hash, engine, effort, renderer, and lane order; live-001's 528 censored calls and spend are carried forward via budget_ledger opening actuals."
+  },
   "admission_gate_params": {
     "C0": 0.8,
     "K": 128,
@@ -19,6 +33,29 @@
     ],
     "pinned_UB": 0.4375,
     "within_class_wilson_floor": 0.8
+  },
+  "budget_ledger": {
+    "budget_refusal_typed_outcome": "budget_refusal",
+    "calls_already_spent": 528,
+    "carry_forward_run_id": "efc-v2-admission-live-001",
+    "cost_formula": "cost_usd = 0.0*input_tokens/1,000,000 + 0.0*output_tokens/1,000,000",
+    "hard_cost_ceiling_usd": 0.0,
+    "input_ceiling_derivation": "279890 rendered-suite estimate + 158957 opening input tokens = 438847",
+    "input_token_ceiling": 438847,
+    "max_output_tokens_per_request": 2048,
+    "opening_input_tokens_spent": 158957,
+    "opening_output_tokens_spent": 134640,
+    "output_ceiling_derivation": "134640 opening output tokens + 896 remaining calls × 2048 max_output_tokens = 1969648",
+    "output_token_ceiling": 1969648,
+    "pricing": {
+      "input_usd_per_million": 0.0,
+      "local_lm_studio_zero_dollar": true,
+      "output_usd_per_million": 0.0
+    },
+    "rendered_suite_input_estimate_method": "estimated_input_tokens(render_for_lane(...)) over all 896 call specs",
+    "rendered_suite_input_token_estimate": 279890,
+    "stop_before_crossing": true,
+    "total_call_ceiling": 1424
   },
   "calibration_fixture_hash_definition": "canonical_compact_json",
   "calibration_fixtures": [
@@ -1610,6 +1647,13 @@
     "discrete_consequence_at_n128": "At K=128 observable invalid rates are multiples of 1/128; at most 6 invalids pass (6/128=0.046875); 7 fail.",
     "global_minimum": 0.05
   },
+  "completion_budget_contract": {
+    "max_tokens_semantics": "shared reasoning-plus-final-content cap",
+    "provider_off_by_one_tolerance": 1,
+    "reasoning_content_in_completion_usage": true,
+    "reasoning_content_in_wire_parser": false,
+    "transport": "chat-completions"
+  },
   "contract_hashes": {
     "action_menu_composition_rules_hash": "0955049ee25bef7a396e7fee6f63616bdc72406c37c57e6ee4c453d622676a51",
     "admission_gate_module_hash": "8684b741e4003607cca4ccff9e6fa92e9c9058a73b8ecd84c4cdcd5dfbc57b17",
@@ -1625,6 +1669,19 @@
     "scope_comparison_conformance_vectors_sha256": "d3a39025c6f7ec85fcbcb62e45acfb07f407cb6ce64f36328e7f19667a9a616c",
     "scope_comparison_interpreter_sha256": "5f913bcd5f85f2af4ce01a5ec7689050a9559588d61f73f3aa726033d641853e",
     "scope_comparison_rule_artifact_sha256": "e50375d9072e908b5458c0b37dc535e85a6bfcc1401eb2591e49861759a8de79"
+  },
+  "early_censor_refusal": {
+    "completion_tokens_predicate": "completion_tokens >= max_output_tokens_per_request - provider_off_by_one_tolerance",
+    "first_k": 8,
+    "normalized_content_rule": "strip <think>...</think> from final message content; empty after strip",
+    "predicates": {
+      "completion_tokens_at_cap_minus_tolerance": true,
+      "finish_reason": "length",
+      "normalized_content_empty": true
+    },
+    "provider_off_by_one_tolerance": 1,
+    "stop_before_call_index": 9,
+    "typed_outcome": "instrument_refusal(early_output_censoring)"
   },
   "effort": "high",
   "engine": "qwen/qwen3.5-9b",
@@ -1652,6 +1709,7 @@
     "confounded(render_leak)",
     "confounded(irrelevant_band)",
     "confounded(battery_shopping)",
-    "confounded(commitment_invalid_rate)"
+    "confounded(commitment_invalid_rate)",
+    "instrument_refusal(early_output_censoring)"
   ]
 }
