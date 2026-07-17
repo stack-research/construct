@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -14,6 +16,7 @@ from harness.efc_manifest_v2 import (
     manifest_verify,
     sha256_path,
 )
+from harness.efc_pilot_runner_v2 import PilotRunnerRefusal, load_pinned_manifest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -47,6 +50,30 @@ class TestManifestV2(unittest.TestCase):
         result = manifest_verify(REPO_ROOT, manifest, require_suite_hash=True)
         self.assertFalse(result.ok)
         self.assertIn("fixture_suite_hash_missing", result.failures)
+
+    def test_load_pinned_manifest_requires_suite_hash(self):
+        manifest = assemble_manifest(REPO_ROOT)
+        temp_manifest = tempfile.NamedTemporaryFile(
+            "w",
+            dir=REPO_ROOT,
+            suffix=".json",
+            delete=False,
+        )
+        try:
+            json.dump(manifest, temp_manifest)
+            temp_manifest.flush()
+            manifest_path = Path(temp_manifest.name)
+            rel_manifest = manifest_path.relative_to(REPO_ROOT).as_posix()
+            with self.assertRaises(PilotRunnerRefusal) as ctx:
+                load_pinned_manifest(
+                    REPO_ROOT,
+                    manifest_path=rel_manifest,
+                    require_pin=False,
+                )
+            self.assertIn("fixture_suite_hash_missing", str(ctx.exception))
+        finally:
+            temp_manifest.close()
+            manifest_path.unlink(missing_ok=True)
 
     def test_manifest_relpath_target(self):
         self.assertEqual(

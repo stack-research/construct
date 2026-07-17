@@ -148,20 +148,22 @@ def _commitment_invalid_rate_ceiling() -> dict[str, Any]:
     }
 
 
-def _load_suite_fixtures(root: Path) -> list[dict[str, Any]] | None:
+def _load_suite_fixtures(root: Path) -> tuple[list[dict[str, Any]], list[str]] | None:
     suite_path = _root_path(root, str(SUITE_MANIFEST_PATH.relative_to(REPO_ROOT)))
     if not suite_path.is_file():
         return None
     suite = json.loads(suite_path.read_text(encoding="utf-8"))
     fixtures_dir = _root_path(root, str(FIXTURES_DIR.relative_to(REPO_ROOT)))
     fixtures: list[dict[str, Any]] = []
+    fixture_order: list[str] = []
     for entry in suite.get("fixtures", []):
         fixture_id = entry["fixture_id"]
         path = fixtures_dir / f"{fixture_id}.json"
         if not path.is_file():
             return None
         fixtures.append(json.loads(path.read_text(encoding="utf-8")))
-    return fixtures
+        fixture_order.append(fixture_id)
+    return fixtures, fixture_order
 
 
 def assemble_manifest(
@@ -177,8 +179,9 @@ def assemble_manifest(
 
     calibration_fixtures: list[dict[str, Any]] = []
     fixture_suite_hash: str | None = None
-    fixtures = _load_suite_fixtures(root)
-    if fixtures is not None:
+    loaded = _load_suite_fixtures(root)
+    if loaded is not None:
+        fixtures, _fixture_order = loaded
         for fixture in fixtures:
             calibration_fixtures.append({
                 "fixture_id": fixture["fixture_id"],
@@ -261,7 +264,7 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
     if pinned_ub is not None and abs(float(pinned_ub) - derived_ub) > 1e-12:
         failures.append("pinned_ub_disagreement")
 
-    fixtures = _load_suite_fixtures(root)
+    loaded = _load_suite_fixtures(root)
     pinned_suite_hash = manifest.get("fixture_suite_hash")
     calibration_rows = manifest.get("calibration_fixtures", [])
 
@@ -273,13 +276,21 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
         ):
             failures.append("calibration_fixtures_incomplete")
 
-    if fixtures is not None:
+    if loaded is not None:
+        fixtures, suite_manifest_order = loaded
         suite_result = validate_suite(fixtures)
         if not suite_result.ok:
             failures.extend(suite_result.refusals)
         recomputed_suite_hash = suite_hash(fixtures, k_pairs=K_PAIRS)
         if pinned_suite_hash is not None and pinned_suite_hash != recomputed_suite_hash:
             failures.append("fixture_suite_hash_mismatch")
+        calibration_order = [
+            row.get("fixture_id")
+            for row in calibration_rows
+            if isinstance(row, dict)
+        ]
+        if calibration_order != suite_manifest_order:
+            failures.append("calibration_fixtures_order_mismatch")
         for fixture in fixtures:
             expected = fixture_identity_hash(fixture)
             row = next(

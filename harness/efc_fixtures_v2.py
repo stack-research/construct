@@ -134,31 +134,17 @@ def check_handle_orientation_balance(
     return True, None
 
 
-def suite_fixture_order(fixtures: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Deterministic suite membership order: block_id, then stratum."""
-    stratum_rank = {"match": 0, "mismatch": 1, "irrelevant": 2}
-
-    def sort_key(fixture: dict[str, Any]) -> tuple[str, int]:
-        block_id = str(fixture.get("block_id", ""))
-        stratum = fixture.get("stratum")
-        rank = stratum_rank.get(stratum, 99) if isinstance(stratum, str) else 99
-        return block_id, rank
-
-    return sorted(fixtures, key=sort_key)
-
-
 def suite_hash(
     fixtures: list[dict[str, Any]],
     *,
     k_pairs: int,
 ) -> str:
-    """Frozen suite-level digest: membership, order, and balance metadata."""
-    ordered = suite_fixture_order(fixtures)
+    """Frozen suite-level digest: membership, input order, and balance metadata."""
     payload = {
         "hash_definition": HASH_DEFINITION_CANONICAL_COMPACT_JSON,
         "k_pairs": k_pairs,
-        "fixture_order": [fx["fixture_id"] for fx in ordered],
-        "fixture_hashes": [fixture_identity_hash(fx) for fx in ordered],
+        "fixture_order": [fx["fixture_id"] for fx in fixtures],
+        "fixture_hashes": [fixture_identity_hash(fx) for fx in fixtures],
         "scope_dimension_histogram": scope_dimension_histogram(fixtures),
         "handle_orientation_histogram": handle_orientation_histogram(fixtures),
     }

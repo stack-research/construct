@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from harness.efc_menu_composition_v2 import SCOPE_DIMENSIONS
+from harness.efc_menu_composition_v2 import (
+    SCOPE_DIMENSIONS,
+    expected_opaque_source_handle,
+    expected_source_reference,
+)
 
 ACTION_SET = ("alpha_commit", "beta_commit", "gamma_hold", "delta_hold")
 MENU_ORDER = ["beta_commit", "delta_hold", "gamma_hold", "alpha_commit"]
@@ -49,9 +53,11 @@ def make_relevant_fixture(
 ) -> dict[str, Any]:
     expected = coherent_commit if scope_bit == "covers" else coherent_non_commit
     if opaque_source_handle is None:
-        opaque_source_handle = f"handle-{block_id}-{stratum}"
+        opaque_source_handle = expected_opaque_source_handle(
+            block_id, handle_orientation
+        )
     if source_reference is None:
-        source_reference = f"ref://opaque/{opaque_source_handle}"
+        source_reference = expected_source_reference(opaque_source_handle)
     if task_body is None:
         task_body = (
             f"Review operational ticket for block {block_id}. "
@@ -126,6 +132,8 @@ def make_block(block_index: int) -> list[dict[str, Any]]:
         f"Choose one response label from the menu. {lexical_tail}"
     )
     shared_scope = "service example-api version 1.0"
+    opaque_handle = expected_opaque_source_handle(bid, orientation)
+    source_ref = expected_source_reference(opaque_handle)
     return [
         make_relevant_fixture(
             fixture_id=f"{bid}-match",
@@ -134,9 +142,9 @@ def make_block(block_index: int) -> list[dict[str, Any]]:
             scope_bit="covers",
             missing_scope_dimension=dim,
             handle_orientation=orientation,
-            opaque_source_handle=f"handle-{bid}-covers",
+            opaque_source_handle=opaque_handle,
             task_body=shared_task,
-            source_reference=f"ref://opaque/handle-{bid}-covers",
+            source_reference=source_ref,
             decision_scope=shared_scope,
         ),
         make_relevant_fixture(
@@ -146,9 +154,9 @@ def make_block(block_index: int) -> list[dict[str, Any]]:
             scope_bit="misses",
             missing_scope_dimension=dim,
             handle_orientation=orientation,
-            opaque_source_handle=f"handle-{bid}-misses",
+            opaque_source_handle=opaque_handle,
             task_body=shared_task,
-            source_reference=f"ref://opaque/handle-{bid}-misses",
+            source_reference=source_ref,
             decision_scope=shared_scope,
         ),
         make_irrelevant_fixture(

@@ -51,6 +51,13 @@ class TestFixturesV2(unittest.TestCase):
         h2 = suite_hash(suite_b, k_pairs=2)
         self.assertNotEqual(h1, h2)
 
+    def test_suite_hash_binds_input_order(self):
+        suite = make_minimal_suite(2)
+        reversed_suite = list(reversed(suite))
+        h1 = suite_hash(suite, k_pairs=2)
+        h2 = suite_hash(reversed_suite, k_pairs=2)
+        self.assertNotEqual(h1, h2)
+
 
 class TestMutationProbes(unittest.TestCase):
     """Sol structural-review mutation probes — must fail validation."""
@@ -112,13 +119,47 @@ class TestMutationProbes(unittest.TestCase):
 
     def test_handle_orientation_imbalance_fails(self):
         suite = make_minimal_suite(4)
+        from harness.efc_menu_composition_v2 import (
+            expected_opaque_source_handle,
+            expected_source_reference,
+        )
+
         for fx in suite:
-            if fx["stratum"] == "match":
+            if fx["stratum"] in ("match", "mismatch"):
                 fx["handle_orientation"] = "A"
-            if fx["stratum"] == "mismatch":
-                fx["handle_orientation"] = "A"
+                handle = expected_opaque_source_handle(fx["block_id"], "A")
+                fx["opaque_source_handle"] = handle
+                fx["source_reference"] = expected_source_reference(handle)
         result = validate_suite(suite, expected_k_pairs=4)
         self.assertFalse(result.ok)
         self.assertTrue(
             any("handle_orientation_imbalance" in r for r in result.refusals)
         )
+
+    def test_mutated_source_reference_only_fails(self):
+        suite = make_minimal_suite(2)
+        match = next(f for f in suite if f["fixture_id"] == "block-0000-match")
+        match["source_reference"] = "ref://opaque/arbitrary-shopped-handle"
+        result = validate_suite(suite, expected_k_pairs=2)
+        self.assertFalse(result.ok)
+        self.assertTrue(
+            any(
+                r in result.refusals
+                for r in (
+                    "counterfactual_provenance_reference_mismatch",
+                    "handle_orientation_handle_mismatch",
+                )
+            )
+        )
+
+    def test_lexical_scope_bit_in_handles_fails(self):
+        suite = make_minimal_suite(1)
+        match = next(f for f in suite if f["stratum"] == "match")
+        mismatch = next(f for f in suite if f["stratum"] == "mismatch")
+        match["opaque_source_handle"] = "handle-block-0000-covers"
+        match["source_reference"] = "ref://opaque/handle-block-0000-covers"
+        mismatch["opaque_source_handle"] = "handle-block-0000-misses"
+        mismatch["source_reference"] = "ref://opaque/handle-block-0000-misses"
+        result = validate_suite(suite, expected_k_pairs=1)
+        self.assertFalse(result.ok)
+        self.assertIn("provenance_lexical_scope_leak", result.refusals)

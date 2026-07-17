@@ -258,7 +258,7 @@ def load_pinned_manifest(
     manifest = json.loads(manifest_file.read_text(encoding="utf-8"))
     if manifest.get("part_i_spec_sha256") != PART_I_SPEC_SHA256:
         raise PilotRunnerRefusal("construction_refused", "part_i_spec_sha256_mismatch")
-    verify = manifest_verify(root, manifest)
+    verify = manifest_verify(root, manifest, require_suite_hash=True)
     if not verify.ok:
         raise PilotRunnerRefusal(
             "construction_refused",

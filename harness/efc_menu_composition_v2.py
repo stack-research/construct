@@ -35,6 +35,8 @@ SCOPE_DIMENSIONS = (
 
 HANDLE_ORIENTATIONS = ("A", "B")
 
+SCOPE_BIT_LEXICAL_MARKERS = ("covers", "misses")
+
 # §B shared block surface — byte-equal across relevant mates.
 BLOCK_SHARED_SURFACE_KEYS = (
     "task_body",
@@ -96,7 +98,11 @@ CompositionRefusal = Literal[
     "counterfactual_surface_mismatch",
     "counterfactual_scope_bit_invalid",
     "counterfactual_provenance_unchanged",
+    "counterfactual_provenance_reference_mismatch",
+    "counterfactual_provenance_handle_mismatch",
     "counterfactual_missing_scope_dimension_mismatch",
+    "handle_orientation_handle_mismatch",
+    "provenance_lexical_scope_leak",
     "missing_plausibility_attestation",
     "malformed_plausibility_attestation",
 ]
@@ -162,6 +168,50 @@ def block_shared_surface_hash(fixture: dict[str, Any]) -> str:
 def provenance_record_bytes(fixture: dict[str, Any]) -> bytes:
     record = {key: fixture[key] for key in PROVENANCE_RECORD_KEYS}
     return _canon_bytes(record)
+
+
+def expected_opaque_source_handle(block_id: str, handle_orientation: str) -> str:
+    """Mechanical §B binding: frozen opaque bytes from block + orientation schedule."""
+    return f"{block_id}#{handle_orientation}"
+
+
+def expected_source_reference(opaque_source_handle: str) -> str:
+    return f"ref://opaque/{opaque_source_handle}"
+
+
+def provenance_carries_scope_lexicon(text: str) -> bool:
+    """True when opaque provenance bytes encode the hidden scope bit."""
+    lower = text.casefold()
+    return any(marker in lower for marker in SCOPE_BIT_LEXICAL_MARKERS)
+
+
+def check_provenance_lexical_neutrality(fixture: dict[str, Any]) -> CompositionCheck:
+    """§B: opaque handles/references must not lexicalize covers vs misses."""
+    for field in ("opaque_source_handle", "source_reference"):
+        value = fixture.get(field)
+        if not isinstance(value, str):
+            return CompositionCheck(False, refusal="malformed_fixture")
+        if provenance_carries_scope_lexicon(value):
+            return CompositionCheck(False, refusal="provenance_lexical_scope_leak")
+    return CompositionCheck(True)
+
+
+def check_handle_orientation_binding(fixture: dict[str, Any]) -> CompositionCheck:
+    """§B: handle_orientation must match the assigned opaque provenance bytes."""
+    block_id = fixture.get("block_id")
+    handle_orientation = fixture.get("handle_orientation")
+    opaque_handle = fixture.get("opaque_source_handle")
+    source_reference = fixture.get("source_reference")
+    if not isinstance(block_id, str) or not isinstance(handle_orientation, str):
+        return CompositionCheck(False, refusal="malformed_fixture")
+    if not isinstance(opaque_handle, str) or not isinstance(source_reference, str):
+        return CompositionCheck(False, refusal="malformed_fixture")
+    expected_handle = expected_opaque_source_handle(block_id, handle_orientation)
+    if opaque_handle != expected_handle:
+        return CompositionCheck(False, refusal="handle_orientation_handle_mismatch")
+    if source_reference != expected_source_reference(expected_handle):
+        return CompositionCheck(False, refusal="handle_orientation_handle_mismatch")
+    return CompositionCheck(True)
 
 
 def canonicalize_action_set(action_set: object) -> CanonicalizationResult:
@@ -348,6 +398,13 @@ def check_fixture_composition(
         if not isinstance(opaque_handle, str) or opaque_handle == "":
             return CompositionCheck(False, refusal="missing_opaque_source_handle")
 
+        lexical = check_provenance_lexical_neutrality(fixture)
+        if not lexical.ok:
+            return lexical
+        binding = check_handle_orientation_binding(fixture)
+        if not binding.ok:
+            return binding
+
         derived = derive_expected_enum_relevant(
             scope_bit=scope_bit,
             coherent_commit_action=coherent_commit,
@@ -443,6 +500,19 @@ def check_counterfactual_block_shape(
 
         if provenance_record_bytes(match_fx) == provenance_record_bytes(mismatch_fx):
             return CompositionCheck(False, refusal="counterfactual_provenance_unchanged")
+
+        if match_fx.get("source_reference") != mismatch_fx.get("source_reference"):
+            return CompositionCheck(
+                False,
+                refusal="counterfactual_provenance_reference_mismatch",
+            )
+        if match_fx.get("opaque_source_handle") != mismatch_fx.get(
+            "opaque_source_handle"
+        ):
+            return CompositionCheck(
+                False,
+                refusal="counterfactual_provenance_handle_mismatch",
+            )
 
         if match_fx.get("handle_orientation") != mismatch_fx.get("handle_orientation"):
             return CompositionCheck(False, refusal="counterfactual_surface_mismatch")
