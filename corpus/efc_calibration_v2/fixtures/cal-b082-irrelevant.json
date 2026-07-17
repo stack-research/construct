@@ -18,6 +18,13 @@
     "listnow-physicscourse"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "cf31062a735acbf9a805798fc0d25686f58fd31969ed931bc5d5bf69277d39ef",
+    "fixture_id": "cal-b082-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-draftfolder": "non_commit",

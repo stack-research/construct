@@ -18,6 +18,13 @@
     "pullnow-batchtwenty"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "d4c8cb3a5bbfbc306a312f598863b17370663180ee4b9fc882bae6f5128e8bd1",
+    "fixture_id": "cal-b023-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-reviewbin": "non_commit",

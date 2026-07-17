@@ -18,6 +18,13 @@
     "switchon-tierone"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "1f116f372cea4ca54d3af5a6153ad3023f827739efe5883a7727f66ad1179963",
+    "fixture_id": "cal-b118-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-parkedqueue": "non_commit",

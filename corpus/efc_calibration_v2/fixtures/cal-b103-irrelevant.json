@@ -18,6 +18,13 @@
     "beginwork-echoyard"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "cd187259558594e24c6f14ac3e76c11f50ebc2a2517037eda5a9c505173348d3",
+    "fixture_id": "cal-b103-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "beginwork-deltayard": "commit",

@@ -18,6 +18,13 @@
     "holdin-parkedqueue"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "ad02887f0073c4d6222566545a3a6beaa2162e641e3a2826ff3dda5c77da24dc",
+    "fixture_id": "cal-b125-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-parkedqueue": "non_commit",

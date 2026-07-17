@@ -18,6 +18,13 @@
     "holdin-reviewbin"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "1569dbbce737a48bc28b6a652fedf624deaa4291a50ca012d79605b37f961971",
+    "fixture_id": "cal-b020-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-reviewbin": "non_commit",

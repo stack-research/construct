@@ -18,6 +18,13 @@
     "listnow-historycourse"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "bd42eee261895b602df1323ae9d85e58d3abb83cff934de849b62661b6dd2bad",
+    "fixture_id": "cal-b094-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-draftfolder": "non_commit",

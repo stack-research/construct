@@ -18,6 +18,13 @@
     "turnon-westregion"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "4a2a7854cc33973c67fda158f60d39612845ea749927f1e5c04e2473a9348c58",
+    "fixture_id": "cal-b042-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-deferredlist": "non_commit",

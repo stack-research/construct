@@ -18,6 +18,13 @@
     "sendto-controlroom"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "726e037d0919d38aae48b89b9761cf9fbd46f7a356eb1b24dbb6ae39b9ef3d39",
+    "fixture_id": "cal-b101-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "beginwork-deltayard": "commit",

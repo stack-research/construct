@@ -18,6 +18,13 @@
     "sendto-qualitydesk"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "7d4490fdf51e88b94e87c40a75128b705c56ee9264a2fa4925bc3e4f59ef1edf",
+    "fixture_id": "cal-b027-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-reviewbin": "non_commit",

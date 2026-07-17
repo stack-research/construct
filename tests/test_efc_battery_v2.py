@@ -40,17 +40,45 @@ def load_disk_suite() -> list[dict]:
 
 
 def test_disk_suite_matches_deterministic_author() -> None:
-    disk = load_disk_suite()
-    built = build_suite()
-    assert disk == built
+    """Authored content is byte-reproducible; attestation rows overlay it."""
+    stripped = [
+        {k: v for k, v in fx.items() if k != "plausibility_attestation"}
+        for fx in load_disk_suite()
+    ]
+    assert stripped == build_suite()
 
 
-def test_disk_suite_validates() -> None:
+def test_disk_suite_validates_with_attestations_required() -> None:
     fixtures = load_disk_suite()
     store = build_record_store_from_fixtures(fixtures)
-    result = validate_suite(fixtures, record_store=store)
+    result = validate_suite(
+        fixtures,
+        record_store=store,
+        require_plausibility_attestation=True,
+    )
     assert result.ok, result.refusals[:5]
     assert result.fixture_count == 3 * K_PAIRS
+
+
+def test_attestations_trace_to_review_entry() -> None:
+    import hashlib
+
+    from harness.efc_attest_battery_v2 import (
+        REVIEW_ENTRY_SHA256,
+        REVIEWED_AT,
+        verify_review_entry,
+    )
+
+    verify_review_entry()
+    for fixture in load_disk_suite():
+        att = fixture["plausibility_attestation"]
+        assert att["reviewer_seat"] == "cold_fixture_reviewer"
+        assert att["reviewed_at"] == REVIEWED_AT
+        assert att["stratum"] == fixture["stratum"]
+        expected_id = hashlib.sha256(
+            f"{REVIEW_ENTRY_SHA256}:{fixture['fixture_id']}".encode("utf-8")
+        ).hexdigest()
+        assert att["attestation_id"] == expected_id
 
 
 def test_disk_suite_leak_audit_green() -> None:
@@ -83,5 +111,5 @@ def test_suite_hash_stable() -> None:
     store = build_record_store_from_fixtures(fixtures)
     digest = suite_hash(fixtures, k_pairs=K_PAIRS, record_store=store)
     assert digest == (
-        "aca52a4a78c0aaf25731758aeff89bfd1f3c79585114e76c25f3fe3cf9065df0"
+        "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828"
     )

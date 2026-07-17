@@ -23,6 +23,13 @@
   "missing_scope_dimension": "interval",
   "observation_boundary_present": false,
   "opaque_source_handle": "cal-b071#B",
+  "plausibility_attestation": {
+    "attestation_id": "b0b988fd334d376decb635808bd038b2b4a42b2cdd2caeaad295eb210017d91e",
+    "fixture_id": "cal-b071-match",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "match"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "clearnow-lotalpha": "commit",

@@ -18,6 +18,13 @@
     "sendto-permitsdesk"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "c5a82c13097e745556792fc93273ffc36304dd97dcdac076517c2c89348e61c3",
+    "fixture_id": "cal-b060-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "grantfor-outfallfour": "commit",

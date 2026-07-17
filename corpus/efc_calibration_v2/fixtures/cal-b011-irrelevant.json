@@ -18,6 +18,13 @@
     "sendto-recordsoffice"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "fe89a977df9f0f78f303cc1936ddabb734a8e0a6135bc5f4e553d7590f510a34",
+    "fixture_id": "cal-b011-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-workqueue": "non_commit",

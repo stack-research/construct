@@ -18,6 +18,13 @@
     "holdin-holdingyard"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "c57776e5dc246ee7d3d5d0523ed76e84ebe2f26d4cc29fc333d9d70b39a625b8",
+    "fixture_id": "cal-b064-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "clearnow-lotalpha": "commit",

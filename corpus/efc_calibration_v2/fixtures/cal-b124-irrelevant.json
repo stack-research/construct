@@ -18,6 +18,13 @@
     "sendto-riskdesk"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "aca6ba54a96065222cd0082bd868052f5f2181ebef825a26cee4d83662f54726",
+    "fixture_id": "cal-b124-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-parkedqueue": "non_commit",

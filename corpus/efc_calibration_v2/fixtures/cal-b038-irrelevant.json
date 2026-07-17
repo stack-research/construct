@@ -18,6 +18,13 @@
     "turnon-eastregion"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "a401ea273d80b50b6c8d0879900824deda2b51f972610796762dc51ccf470a82",
+    "fixture_id": "cal-b038-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-deferredlist": "non_commit",

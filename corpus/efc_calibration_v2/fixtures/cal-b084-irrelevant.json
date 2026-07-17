@@ -18,6 +18,13 @@
     "holdin-draftfolder"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "76c255a2f8c5673f14fb276b701b39d818c7f01848ac94e9fe922de984ff6a37",
+    "fixture_id": "cal-b084-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-draftfolder": "non_commit",

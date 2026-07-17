@@ -18,6 +18,13 @@
     "clearnow-lotbravo"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "b7c649b41e620df9842262c3fb30c552789dcabca7a19c8343761f5607fcc0d8",
+    "fixture_id": "cal-b073-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "clearnow-lotalpha": "commit",

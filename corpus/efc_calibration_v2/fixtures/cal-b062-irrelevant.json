@@ -18,6 +18,13 @@
     "grantfor-outfallthree"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "00cf551c32e08aee1237f0aa21e6e9bd3fcf2b7635782537c76566257d3d5265",
+    "fixture_id": "cal-b062-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "grantfor-outfallfour": "commit",

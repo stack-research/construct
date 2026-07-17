@@ -23,6 +23,13 @@
   "missing_scope_dimension": "jurisdiction",
   "observation_boundary_present": false,
   "opaque_source_handle": "cal-b102#B",
+  "plausibility_attestation": {
+    "attestation_id": "0c747f52c644ad6ba0eb79dc1515702e8839c33e7eeb7cd4ad9133d7c4c7ad0a",
+    "fixture_id": "cal-b102-mismatch",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "mismatch"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "beginwork-deltayard": "commit",

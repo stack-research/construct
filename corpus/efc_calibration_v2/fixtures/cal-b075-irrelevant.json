@@ -18,6 +18,13 @@
     "sendto-inspectiondesk"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "b8d0a39480ed0d7fbb69446d4b02d1e679f9cb0cd9bab8af78a8c8e9eecf7829",
+    "fixture_id": "cal-b075-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "clearnow-lotalpha": "commit",

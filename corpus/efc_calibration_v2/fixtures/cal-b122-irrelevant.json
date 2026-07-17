@@ -18,6 +18,13 @@
     "switchon-tiertwo"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "6753ef6a404155affda6d7b1ead99fd2d401788aeb75133fab39c42a30455554",
+    "fixture_id": "cal-b122-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-parkedqueue": "non_commit",

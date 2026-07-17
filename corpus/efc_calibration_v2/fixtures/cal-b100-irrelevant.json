@@ -18,6 +18,13 @@
     "holdin-nightlist"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "aaa1438285fffeed753109bf5c7c55db0e01335a98e79ccb86760294a27132d1",
+    "fixture_id": "cal-b100-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "beginwork-deltayard": "commit",

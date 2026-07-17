@@ -18,6 +18,13 @@
     "startat-southwing"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "f56e673b8ad95b1c00b8bf0db05537a37974370b7d718eb3a0eb68b049e58663",
+    "fixture_id": "cal-b015-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-workqueue": "non_commit",

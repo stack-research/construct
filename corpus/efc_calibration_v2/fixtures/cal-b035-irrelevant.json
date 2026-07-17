@@ -18,6 +18,13 @@
     "sendto-changeboard"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "4df6749a8e988f6fedf60ed7d5000c1672efc165e122c51ac875fc1aafe89090",
+    "fixture_id": "cal-b035-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-deferredlist": "non_commit",

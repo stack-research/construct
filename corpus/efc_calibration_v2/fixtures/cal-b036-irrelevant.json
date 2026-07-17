@@ -18,6 +18,13 @@
     "holdin-deferredlist"
   ],
   "observation_boundary_present": true,
+  "plausibility_attestation": {
+    "attestation_id": "6981d352fce7d516c4d591bf29c472b2f2deda5f3bed5fe4b4f579f201281a8e",
+    "fixture_id": "cal-b036-irrelevant",
+    "reviewed_at": "2026-07-17T12:09:53.98Z",
+    "reviewer_seat": "cold_fixture_reviewer",
+    "stratum": "irrelevant"
+  },
   "population_id": "efc_calibration_v2",
   "role_map": {
     "holdin-deferredlist": "non_commit",
