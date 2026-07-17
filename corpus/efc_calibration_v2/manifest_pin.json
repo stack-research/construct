@@ -1,12 +1,12 @@
 {
-  "manifest_file_sha256_raw": "18f0fb0a067f0d100931ec2ac101a33a29356b896d5119c5e15118728563846d",
-  "manifest_hash_canonical": "c3f2fc7710b583d81a969e3b5177ccd33b0ca399676c92428adb2a5007c27844",
+  "manifest_file_sha256_raw": "ff33faa8e46c0ef79c72cbee3a1108e44f646260a107271e64cf10c65bac2879",
+  "manifest_hash_canonical": "8a4686b8d81e382815e34b837b69e3d1dea63334197410f9663c59f2203709a3",
   "manifest_path": "corpus/efc_calibration_v2/calibration_manifest.json",
-  "note": "Superseding pin: fork nvidia/nemotron-3-nano-4b effort none (dan's one-more-then-close ruling), budget carry-forward through run 002 (sol CONFIRM, arithmetic exact), run-002 ledger bound. Final admission attempt of the v2 contact stage; close + findings follow its typed outcome.",
-  "pin_event_id": "efc-v2-manifest-pin-c3f2fc7710b583d8",
-  "pinned_at": "2026-07-17T19:30:12Z",
+  "note": "Superseding pin: input ceiling re-based on measured nemotron rate via code-pinned formula ceil(279868/883*896*1.05) -> 1008425 (sol caught the moderator's prose arithmetic; formula now testable code). Run 004 = the verdict run; close + findings on its typed outcome.",
+  "pin_event_id": "efc-v2-manifest-pin-8a4686b8d81e3828",
+  "pinned_at": "2026-07-17T19:54:09Z",
   "pinned_by": "dan",
-  "ruling_source": "main conversation 2026-07-17: (a) one more, nvidia/nemotron-3-nano-4b; after the run (d) close and write it up",
-  "ruling_text": "one more engine, nemotron-3-nano-4b, then close and write findings",
-  "supersedes_pin_event": "efc-v2-manifest-pin-70253eed5d07e6af"
+  "ruling_source": "main conversation 2026-07-17: Option 1 (rerun for formal verdict)",
+  "ruling_text": "re-base input ceiling and rerun nemotron for the sealed-gate verdict, then close and write it up",
+  "supersedes_pin_event": "efc-v2-manifest-pin-c3f2fc7710b583d8"
 }
