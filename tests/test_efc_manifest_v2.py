@@ -19,6 +19,7 @@ from harness.efc_manifest_v2 import (
     EARLY_OUTPUT_CENSORING_OUTCOME,
     LIVE_001_ABORT_RECORD_RELPATH,
     LIVE_001_LEDGER_RELPATH,
+    LIVE_002_LEDGER_RELPATH,
     MANIFEST_RELPATH,
     PART_I_SPEC_RELPATH,
     assemble_manifest,
@@ -162,6 +163,14 @@ class TestManifestV2(unittest.TestCase):
         self.assertEqual(
             binding["live_001_abort_record_sha256"],
             sha256_path(REPO_ROOT / LIVE_001_ABORT_RECORD_RELPATH),
+        )
+        self.assertEqual(
+            binding["live_002_ledger_sha256"],
+            sha256_path(REPO_ROOT / LIVE_002_LEDGER_RELPATH),
+        )
+        self.assertEqual(
+            binding["live_002_ledger_relpath"],
+            LIVE_002_LEDGER_RELPATH,
         )
         preserves = binding["rerun_preserves"]
         self.assertEqual(

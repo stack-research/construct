@@ -55,14 +55,14 @@ INTEGRITY_LANES = ("M_untreated", "M_forced_class", "M_irrelevant")
 STRATA = ALL_STRATA
 FORCED_CLASSES = ("commit", "non_commit")
 
-# Sol cap-2048 amendment (live-001 carry-forward + full 896-call rerun headroom).
+# Sol cap-2048 amendment (live-001/002 carry-forward + full 896-call rerun headroom).
 CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST = 2048
-CAP2048_OPENING_CALLS = 528
-CAP2048_OPENING_INPUT_TOKENS = 158_957
-CAP2048_OPENING_OUTPUT_TOKENS = 134_640
+CAP2048_OPENING_CALLS = 1_424
+CAP2048_OPENING_INPUT_TOKENS = 430_369
+CAP2048_OPENING_OUTPUT_TOKENS = 150_674
 CAP2048_RERUN_CALLS = 896
-CAP2048_TOTAL_CALL_CEILING = 1_424
-CAP2048_OUTPUT_TOKEN_CEILING = 1_969_648
+CAP2048_TOTAL_CALL_CEILING = 2_320
+CAP2048_OUTPUT_TOKEN_CEILING = 1_985_682
 CAP2048_PROVIDER_OFF_BY_ONE_TOLERANCE = 1
 
 LIVE_001_LEDGER_RELPATH = (
@@ -70,6 +70,9 @@ LIVE_001_LEDGER_RELPATH = (
 )
 LIVE_001_ABORT_RECORD_RELPATH = (
     "runs/efc_calibration_v2/live-001.abort_record.json"
+)
+LIVE_002_LEDGER_RELPATH = (
+    "runs/efc_calibration_v2/admission_pilot_efc-v2-admission-live-002.jsonl"
 )
 
 EARLY_OUTPUT_CENSORING_OUTCOME = "instrument_refusal(early_output_censoring)"
@@ -255,7 +258,7 @@ def _budget_ledger_cap2048(
         ),
         "stop_before_crossing": True,
         "budget_refusal_typed_outcome": "budget_refusal",
-        "carry_forward_run_id": "efc-v2-admission-live-001",
+        "carry_forward_run_id": "efc-v2-admission-live-002",
     }
 
 
@@ -299,13 +302,16 @@ def _abort_evidence_binding(
     effort: str,
     render_hash: str,
 ) -> dict[str, Any]:
-    ledger_path = _root_path(root, LIVE_001_LEDGER_RELPATH)
+    ledger_001_path = _root_path(root, LIVE_001_LEDGER_RELPATH)
     abort_path = _root_path(root, LIVE_001_ABORT_RECORD_RELPATH)
+    ledger_002_path = _root_path(root, LIVE_002_LEDGER_RELPATH)
     return {
-        "live_001_ledger_sha256": sha256_path(ledger_path),
+        "live_001_ledger_sha256": sha256_path(ledger_001_path),
         "live_001_abort_record_sha256": sha256_path(abort_path),
         "live_001_ledger_relpath": LIVE_001_LEDGER_RELPATH,
         "live_001_abort_record_relpath": LIVE_001_ABORT_RECORD_RELPATH,
+        "live_002_ledger_sha256": sha256_path(ledger_002_path),
+        "live_002_ledger_relpath": LIVE_002_LEDGER_RELPATH,
         "rerun_preserves": {
             "fixture_suite_hash": fixture_suite_hash,
             "engine": engine,
@@ -315,8 +321,9 @@ def _abort_evidence_binding(
         },
         "statement": (
             "Superseding rerun reuses identical fixture_suite_hash, engine, "
-            "effort, renderer, and lane order; live-001's 528 censored calls "
-            "and spend are carried forward via budget_ledger opening actuals."
+            "effort, renderer, and lane order; live-001 abort evidence and "
+            "live-002's 1424 completed calls and spend are carried forward "
+            "via budget_ledger opening actuals."
         ),
     }
 

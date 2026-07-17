@@ -11,6 +11,7 @@ from pathlib import Path
 from harness.efc_commitment_wire_v2 import validate_commitment_wire
 from harness.efc_manifest_v2 import (
     CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
+    CAP2048_OPENING_CALLS,
     EARLY_OUTPUT_CENSORING_OUTCOME,
     assemble_manifest,
     manifest_hash,
@@ -59,19 +60,39 @@ def _write_superseding_pin_sidecar(
     root: Path,
     *,
     pin_event_id: str,
+    manifest_relpath: str | None = None,
 ) -> None:
-    _, raw_sha, canonical = _current_manifest_hashes(root)
+    manifest_relpath = manifest_relpath or MANIFEST_RELPATH
+    manifest_path = root / manifest_relpath
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    raw_sha = sha256_path(manifest_path)
+    canonical = manifest_hash(manifest)
     json.dump(
         {
             "manifest_file_sha256_raw": raw_sha,
             "manifest_hash_canonical": canonical,
-            "manifest_path": MANIFEST_RELPATH,
+            "manifest_path": manifest_relpath,
             "pin_event_id": pin_event_id,
             "pinned_at": "2026-07-17T13:38:51Z",
             "pinned_by": "test",
         },
         handle,
     )
+
+
+def _write_temp_assembled_manifest(root: Path) -> tuple[Path, str]:
+    manifest = _manifest_with_fork(root)
+    temp_manifest = tempfile.NamedTemporaryFile(
+        "w",
+        dir=root,
+        suffix=".json",
+        delete=False,
+    )
+    json.dump(manifest, temp_manifest, indent=2, sort_keys=True)
+    temp_manifest.flush()
+    temp_manifest.close()
+    path = Path(temp_manifest.name)
+    return path, path.relative_to(root).as_posix()
 
 
 class _RefusingSocket(socket.socket):
@@ -91,14 +112,7 @@ class SocketRefusalMixin:
 
 
 def _manifest_with_fork(root: Path) -> dict:
-    manifest = assemble_manifest(root)
-    manifest["fork_identity"] = {
-        "engine": "qwen/qwen3.5-9b",
-        "effort": "high",
-        "render_hash": manifest["contract_hashes"]["foreground_template_hash"],
-    }
-    manifest["engine"] = "qwen/qwen3.5-9b"
-    manifest["effort"] = "high"
+    manifest = assemble_manifest(root, engine="qwen/qwen3.5-9b", effort="high")
     return manifest
 
 
@@ -517,7 +531,7 @@ class TestCap2048BudgetLedger(unittest.TestCase):
         self.assertEqual(state.hard_cost_ceiling_usd, 0.0)
         self.assertEqual(state.input_usd_per_million, 0.0)
         self.assertEqual(state.output_usd_per_million, 0.0)
-        self.assertEqual(state.calls_spent, 528)
+        self.assertEqual(state.calls_spent, CAP2048_OPENING_CALLS)
 
     def test_build_request_body_uses_cap2048(self):
         manifest = _manifest_with_fork(ROOT)
@@ -589,7 +603,9 @@ class TestAdmissionPilot(SocketRefusalMixin, unittest.TestCase):
 
 
 class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
-    def _licensed_pin_sidecar_argv(self) -> tuple[list[str], Path]:
+    def _licensed_pin_sidecar_argv(self) -> tuple[list[str], Path, Path]:
+        manifest_path, rel_manifest = _write_temp_assembled_manifest(ROOT)
+        self.addCleanup(manifest_path.unlink, missing_ok=True)
         temp_pin = tempfile.NamedTemporaryFile(
             "w",
             dir=ROOT,
@@ -601,15 +617,20 @@ class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
             temp_pin,
             ROOT,
             pin_event_id=PIN_EVENT_ID,
+            manifest_relpath=rel_manifest,
         )
         temp_pin.flush()
         temp_pin.close()
         self.addCleanup(pin_path.unlink, missing_ok=True)
         rel_pin = pin_path.relative_to(ROOT).as_posix()
-        return ["--pin-sidecar", rel_pin], pin_path
+        return (
+            ["--manifest", rel_manifest, "--pin-sidecar", rel_pin],
+            pin_path,
+            manifest_path,
+        )
 
     def test_wrong_pin_event_id_cli_refuses(self):
-        pin_argv, _ = self._licensed_pin_sidecar_argv()
+        pin_argv, _, _ = self._licensed_pin_sidecar_argv()
         self.assertEqual(
             main(
                 [
@@ -623,7 +644,7 @@ class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
         )
 
     def test_unlicensed_pin_event_id_cli_refuses(self):
-        pin_argv, _ = self._licensed_pin_sidecar_argv()
+        pin_argv, _, _ = self._licensed_pin_sidecar_argv()
         self.assertEqual(
             main(
                 [
