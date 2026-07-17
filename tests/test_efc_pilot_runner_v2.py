@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 from harness.efc_commitment_wire_v2 import validate_commitment_wire
-from harness.efc_manifest_v2 import assemble_manifest
+from harness.efc_manifest_v2 import assemble_manifest, manifest_hash, sha256_path
 from harness.efc_pilot_runner_v2 import (
     BudgetRefusal,
     BudgetState,
@@ -34,6 +34,33 @@ from harness.efc_pilot_runner_v2 import (
 from tests.efc_v2_test_fixtures import make_minimal_suite
 
 ROOT = Path(__file__).resolve().parents[1]
+MANIFEST_RELPATH = "corpus/efc_calibration_v2/calibration_manifest.json"
+
+
+def _current_manifest_hashes(root: Path) -> tuple[dict, str, str]:
+    manifest_path = root / MANIFEST_RELPATH
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    return manifest, sha256_path(manifest_path), manifest_hash(manifest)
+
+
+def _write_superseding_pin_sidecar(
+    handle,
+    root: Path,
+    *,
+    pin_event_id: str,
+) -> None:
+    _, raw_sha, canonical = _current_manifest_hashes(root)
+    json.dump(
+        {
+            "manifest_file_sha256_raw": raw_sha,
+            "manifest_hash_canonical": canonical,
+            "manifest_path": MANIFEST_RELPATH,
+            "pin_event_id": pin_event_id,
+            "pinned_at": "2026-07-17T13:38:51Z",
+            "pinned_by": "test",
+        },
+        handle,
+    )
 
 
 class _RefusingSocket(socket.socket):
@@ -360,17 +387,46 @@ class TestAdmissionPilot(SocketRefusalMixin, unittest.TestCase):
 
 
 class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
-    def test_wrong_pin_event_id_cli_refuses(self):
-        self.assertEqual(
-            main(["--live", "--pin-event-id", "wrong-pin-id"]),
-            2,
+    def _licensed_pin_sidecar_argv(self) -> tuple[list[str], Path]:
+        temp_pin = tempfile.NamedTemporaryFile(
+            "w",
+            dir=ROOT,
+            suffix=".json",
+            delete=False,
         )
+        pin_path = Path(temp_pin.name)
+        _write_superseding_pin_sidecar(
+            temp_pin,
+            ROOT,
+            pin_event_id=PIN_EVENT_ID,
+        )
+        temp_pin.flush()
+        temp_pin.close()
+        self.addCleanup(pin_path.unlink, missing_ok=True)
+        rel_pin = pin_path.relative_to(ROOT).as_posix()
+        return ["--pin-sidecar", rel_pin], pin_path
 
-    def test_unlicensed_pin_event_id_cli_refuses(self):
+    def test_wrong_pin_event_id_cli_refuses(self):
+        pin_argv, _ = self._licensed_pin_sidecar_argv()
         self.assertEqual(
             main(
                 [
                     "--live",
+                    *pin_argv,
+                    "--pin-event-id",
+                    "wrong-pin-id",
+                ]
+            ),
+            2,
+        )
+
+    def test_unlicensed_pin_event_id_cli_refuses(self):
+        pin_argv, _ = self._licensed_pin_sidecar_argv()
+        self.assertEqual(
+            main(
+                [
+                    "--live",
+                    *pin_argv,
                     "--pin-event-id",
                     "efc-v2-manifest-pin-forged0000000000",
                 ]
@@ -379,14 +435,7 @@ class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
         )
 
     def test_forged_sidecar_event_id_cannot_self_authorize(self):
-        manifest = json.loads(
-            (ROOT / "corpus/efc_calibration_v2/calibration_manifest.json").read_text()
-        )
-        pin = json.loads(
-            (ROOT / "corpus/efc_calibration_v2/manifest_pin.json").read_text()
-        )
-        forged_pin = pin.copy()
-        forged_pin["pin_event_id"] = "efc-v2-manifest-pin-forged0000000000"
+        manifest, _, _ = _current_manifest_hashes(ROOT)
         temp_pin = tempfile.NamedTemporaryFile(
             "w",
             dir=ROOT,
@@ -395,13 +444,17 @@ class TestLivePinAuthorization(SocketRefusalMixin, unittest.TestCase):
         )
         pin_path = Path(temp_pin.name)
         try:
-            json.dump(forged_pin, temp_pin)
+            _write_superseding_pin_sidecar(
+                temp_pin,
+                ROOT,
+                pin_event_id="efc-v2-manifest-pin-forged0000000000",
+            )
             temp_pin.flush()
             rel_pin = pin_path.relative_to(ROOT).as_posix()
             ok, reason = verify_pin_sidecar(
                 ROOT,
                 manifest,
-                manifest_relpath="corpus/efc_calibration_v2/calibration_manifest.json",
+                manifest_relpath=MANIFEST_RELPATH,
                 pin_sidecar_relpath=rel_pin,
                 licensed_pin_event_id=PIN_EVENT_ID,
             )
