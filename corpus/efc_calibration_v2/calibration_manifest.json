@@ -1626,6 +1626,8 @@
     "scope_comparison_interpreter_sha256": "5f913bcd5f85f2af4ce01a5ec7689050a9559588d61f73f3aa726033d641853e",
     "scope_comparison_rule_artifact_sha256": "e50375d9072e908b5458c0b37dc535e85a6bfcc1401eb2591e49861759a8de79"
   },
+  "effort": "high",
+  "engine": "qwen/qwen3.5-9b",
   "estimand": "balanced_relevant_accuracy",
   "fixture_suite_hash": "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828",
   "fork_identity": {
