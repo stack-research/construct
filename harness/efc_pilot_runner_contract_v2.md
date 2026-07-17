@@ -18,7 +18,7 @@ irrelevant floor rows; ledger under `runs/efc_calibration_v2/`.
 ## Live contact gate
 
 - **Default:** `MockTransport` — zero network, deterministic canned responses.
-- **`--live`:** requires `--pin-event-id efc-v2-manifest-pin-70253eed5d07e6af`.
+- **`--live`:** requires `--pin-event-id efc-v2-manifest-pin-c3f2fc7710b583d8`.
   Uses `LiveTransport` → LM Studio OpenAI-compatible chat-completions at
   `http://localhost:1234/v1` (no API key).
 - Before live contact: `GET /v1/models` must list the pinned

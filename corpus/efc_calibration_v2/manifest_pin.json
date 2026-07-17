@@ -1,12 +1,12 @@
 {
-  "manifest_file_sha256_raw": "98a497499d7ddd4753e351a80dabc93cdb4fa8c3e1bf16766e1d0f75576e4bd4",
-  "manifest_hash_canonical": "70253eed5d07e6af1f8a7bc07a11daf86accdeadae319dc55edb52d299c2758a",
+  "manifest_file_sha256_raw": "18f0fb0a067f0d100931ec2ac101a33a29356b896d5119c5e15118728563846d",
+  "manifest_hash_canonical": "c3f2fc7710b583d81a969e3b5177ccd33b0ca399676c92428adb2a5007c27844",
   "manifest_path": "corpus/efc_calibration_v2/calibration_manifest.json",
-  "note": "Superseding pin: fork effort 'none' (qwen thinking off — dan's on/off correction; 'high' was a false tier label). Sol CONFIRM all three points; cap 2048 + K=8 tripwire stand; prior pins preserved, never valid alone hereafter.",
-  "pin_event_id": "efc-v2-manifest-pin-70253eed5d07e6af",
-  "pinned_at": "2026-07-17T17:50:20Z",
+  "note": "Superseding pin: fork nvidia/nemotron-3-nano-4b effort none (dan's one-more-then-close ruling), budget carry-forward through run 002 (sol CONFIRM, arithmetic exact), run-002 ledger bound. Final admission attempt of the v2 contact stage; close + findings follow its typed outcome.",
+  "pin_event_id": "efc-v2-manifest-pin-c3f2fc7710b583d8",
+  "pinned_at": "2026-07-17T19:30:12Z",
   "pinned_by": "dan",
-  "ruling_source": "main conversation 2026-07-17: qwen effort on/off correction; sol CONFIRM entry",
-  "ruling_text": "fork qwen/qwen3.5-9b effort none; no other delta; run 002 on pin",
-  "supersedes_pin_event": "efc-v2-manifest-pin-394d1092becda60f"
+  "ruling_source": "main conversation 2026-07-17: (a) one more, nvidia/nemotron-3-nano-4b; after the run (d) close and write it up",
+  "ruling_text": "one more engine, nemotron-3-nano-4b, then close and write findings",
+  "supersedes_pin_event": "efc-v2-manifest-pin-70253eed5d07e6af"
 }
