@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -63,8 +64,24 @@ CAP2048_OPENING_OUTPUT_TOKENS = 165_303
 CAP2048_RERUN_CALLS = 896
 CAP2048_TOTAL_CALL_CEILING = 3_204
 CAP2048_OUTPUT_TOKEN_CEILING = 2_000_311
-# opening + 896×317×1.05 measured nemotron rate (replaces utf8÷4 estimate basis).
-CAP2048_INPUT_TOKEN_CEILING = 1_008_423
+# live-003 observed input rate extrapolated to full rerun with 5% margin.
+RUN003_INPUT_TOKENS = 279_868
+RUN003_COMPLETED_CALLS = 883
+CAP2048_INPUT_RATE_MARGIN = 1.05
+
+
+def _cap2048_input_token_ceiling_increment() -> int:
+    return math.ceil(
+        RUN003_INPUT_TOKENS
+        / RUN003_COMPLETED_CALLS
+        * CAP2048_RERUN_CALLS
+        * CAP2048_INPUT_RATE_MARGIN
+    )
+
+
+CAP2048_INPUT_TOKEN_CEILING = (
+    CAP2048_OPENING_INPUT_TOKENS + _cap2048_input_token_ceiling_increment()
+)
 CAP2048_PROVIDER_OFF_BY_ONE_TOLERANCE = 1
 
 LIVE_001_LEDGER_RELPATH = (
@@ -246,8 +263,9 @@ def _budget_ledger_cap2048(
         ),
         "input_ceiling_derivation": (
             f"{CAP2048_OPENING_INPUT_TOKENS} opening input tokens + "
-            f"{CAP2048_RERUN_CALLS}×317×1.05 measured-rate margin = "
-            f"{CAP2048_INPUT_TOKEN_CEILING}"
+            f"ceil({RUN003_INPUT_TOKENS}/{RUN003_COMPLETED_CALLS}×"
+            f"{CAP2048_RERUN_CALLS}×{CAP2048_INPUT_RATE_MARGIN}) "
+            f"measured-rate margin = {CAP2048_INPUT_TOKEN_CEILING}"
         ),
         "hard_cost_ceiling_usd": 0.0,
         "pricing": {
