@@ -1,0 +1,11 @@
+{
+  "manifest_file_sha256_raw": "d9d787b6d9c41daeb11575ce0ac290909368d7963198d1151c0fc75c91644d85",
+  "manifest_hash_canonical": "16f1dc707c95e08166d5bc0b164a015d8a808c4160f76518f1cfbf058e345158",
+  "manifest_path": "corpus/efc_calibration_v2/calibration_manifest.json",
+  "note": "First v2 pin; battery 9ce5b4c+2d1c3f1, glm cold PASS + attestation ENDORSE; fork identity qwen/qwen3.5-9b high per dan's ruling.",
+  "pin_event_id": "efc-v2-manifest-pin-16f1dc707c95e081",
+  "pinned_at": "2026-07-17T13:38:51Z",
+  "pinned_by": "dan",
+  "ruling_source": "main conversation 2026-07-17: attestation ruling + qwen/qwen3.5-9b engine ruling",
+  "ruling_text": "require materialized plausibility_attestation rows; engine qwen/qwen3.5-9b (LM Studio), effort high"
+}
