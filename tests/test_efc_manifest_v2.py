@@ -33,6 +33,10 @@ class TestManifestV2(unittest.TestCase):
         recomputed = compute_contract_hashes(REPO_ROOT)
         self.assertEqual(manifest["contract_hashes"], recomputed)
         self.assertEqual(manifest["part_i_spec_sha256"], PART_I_SPEC_SHA256)
+        pins = recomputed
+        self.assertIn("scope_comparison_rule_artifact_sha256", pins)
+        self.assertIn("scope_comparison_interpreter_sha256", pins)
+        self.assertIn("scope_comparison_conformance_vectors_sha256", pins)
 
     def test_derived_ub_in_manifest_params(self):
         manifest = assemble_manifest(REPO_ROOT)

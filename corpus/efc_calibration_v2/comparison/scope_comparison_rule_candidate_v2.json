@@ -1,0 +1,29 @@
+{
+ "canonicalization": {
+  "authoritative_scope_allows_partial": true,
+  "decision_scope_requires_all_dimensions": true,
+  "dimension_keys": [
+   "population",
+   "interval",
+   "jurisdiction",
+   "endpoint",
+   "artifact_version"
+  ],
+  "key_order": "sorted_lexicographic",
+  "serialization": "semicolon_separated_key_value_pairs",
+  "value_normalization": "strip_whitespace"
+ },
+ "conformance_vectors_path": "corpus/efc_calibration_v2/comparison/conformance_vectors_v2.json",
+ "conformance_vectors_sha256": "d3a39025c6f7ec85fcbcb62e45acfb07f407cb6ce64f36328e7f19667a9a616c",
+ "interpreter_module": "harness/efc_scope_comparison_v2.py",
+ "interpreter_sha256": "54b309fa9772b9c9c76a9204902b7f8215e182616a4c85fadab539700c7a13bb",
+ "rule_artifact_canonical_sha256": "457a7d900faeef85d5e7a48b1024895986949926586ae31681dd7f22d7d05198",
+ "rule_id": "efc_scope_comparison_candidate_v2",
+ "schema_version": "efc-scope-comparison-rule-candidate-v2",
+ "semantics": {
+  "boolean_scope_matches": "covers",
+  "covers": "every decision dimension present in authoritative with equal normalized value",
+  "misses": "exactly one decision dimension absent or unequal in authoritative"
+ },
+ "status": "candidate_not_production"
+}

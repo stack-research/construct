@@ -1,0 +1,70 @@
+{
+  "schema_version": "efc-scope-comparison-conformance-v2",
+  "vectors": [
+    {
+      "id": "order-permutation-covers",
+      "authoritative_scope": "endpoint=api.example/v1;population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;artifact_version=1.0",
+      "decision_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": true,
+      "expect_verdict": "covers",
+      "expect_missed_dimension": null
+    },
+    {
+      "id": "canonical-serialization-covers",
+      "authoritative_scope": "artifact_version=1.0;endpoint=api.example/v1;interval=2026-Q1;jurisdiction=us-west;population=pop-efc-wire-0000",
+      "decision_scope": "artifact_version=1.0;endpoint=api.example/v1;interval=2026-Q1;jurisdiction=us-west;population=pop-efc-wire-0000",
+      "expect_covers": true,
+      "expect_verdict": "covers",
+      "expect_missed_dimension": null
+    },
+    {
+      "id": "whitespace-normalization-covers",
+      "authoritative_scope": "population= pop-efc-wire-0000 ;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "decision_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": true,
+      "expect_verdict": "covers",
+      "expect_missed_dimension": null
+    },
+    {
+      "id": "one-dimension-absent-misses",
+      "authoritative_scope": "interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "decision_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": false,
+      "expect_verdict": "misses",
+      "expect_missed_dimension": "population"
+    },
+    {
+      "id": "one-dimension-wrong-misses",
+      "authoritative_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=9.9",
+      "decision_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": false,
+      "expect_verdict": "misses",
+      "expect_missed_dimension": "artifact_version"
+    },
+    {
+      "id": "two-dimensions-wrong-misses-unspecified",
+      "authoritative_scope": "population=pop-other;interval=2026-Q2;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "decision_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": false,
+      "expect_verdict": "misses",
+      "expect_missed_dimension": null
+    },
+    {
+      "id": "wire-exemplar-token-cover-would-fail-order",
+      "authoritative_scope": "endpoint=api.example/v1;population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;artifact_version=1.0",
+      "decision_scope": "population=pop-efc-wire-0000;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": true,
+      "expect_verdict": "covers",
+      "expect_missed_dimension": null,
+      "note": "Sol divergence probe: token_cover_rule and exact_equality_rule return false here"
+    },
+    {
+      "id": "partial-authoritative-four-of-five-misses",
+      "authoritative_scope": "interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "decision_scope": "population=pop-efc-wire-0001;interval=2026-Q1;jurisdiction=us-west;endpoint=api.example/v1;artifact_version=1.0",
+      "expect_covers": false,
+      "expect_verdict": "misses",
+      "expect_missed_dimension": "population"
+    }
+  ]
+}

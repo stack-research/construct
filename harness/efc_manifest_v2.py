@@ -117,6 +117,22 @@ def compute_admission_gate_module_hash(root: Path = REPO_ROOT) -> str:
     return sha256_path(_root_path(root, "harness/efc_admission_gate_v2.py"))
 
 
+def compute_scope_comparison_rule_hash(root: Path = REPO_ROOT) -> str:
+    return sha256_path(
+        _root_path(root, "corpus/efc_calibration_v2/comparison/scope_comparison_rule_candidate_v2.json")
+    )
+
+
+def compute_scope_comparison_interpreter_hash(root: Path = REPO_ROOT) -> str:
+    return sha256_path(_root_path(root, "harness/efc_scope_comparison_v2.py"))
+
+
+def compute_scope_comparison_vectors_hash(root: Path = REPO_ROOT) -> str:
+    return sha256_path(
+        _root_path(root, "corpus/efc_calibration_v2/comparison/conformance_vectors_v2.json")
+    )
+
+
 def compute_contract_hashes(root: Path = REPO_ROOT) -> dict[str, str]:
     return {
         "part_i_spec_hash": compute_part_i_spec_hash(root),
@@ -128,6 +144,11 @@ def compute_contract_hashes(root: Path = REPO_ROOT) -> dict[str, str]:
         "leak_audit_contract_hash": compute_leak_audit_contract_hash(root),
         "leak_audit_predictor_hash": compute_leak_audit_predictor_hash(),
         "admission_gate_module_hash": compute_admission_gate_module_hash(root),
+        "scope_comparison_rule_artifact_sha256": compute_scope_comparison_rule_hash(root),
+        "scope_comparison_interpreter_sha256": compute_scope_comparison_interpreter_hash(root),
+        "scope_comparison_conformance_vectors_sha256": (
+            compute_scope_comparison_vectors_hash(root)
+        ),
         "renderer_id": RENDERER_ID,
         "foreground_template_hash": foreground_template_hash(),
         "forced_class_template_hash": forced_class_template_hash(),

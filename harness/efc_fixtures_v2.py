@@ -27,6 +27,7 @@ from harness.efc_provenance_record_store_v2 import (
     check_fixture_provenance_against_store,
     record_store_hash,
 )
+from harness.efc_scope_comparison_v2 import scope_comparison_pin_payload
 
 PART_I_SPEC_SHA256 = (
     "8cedf6537aa7f6c2df792ad581d4f937066d5c639812907c3c8ea90c21197d62"
@@ -154,6 +155,7 @@ def suite_hash(
         "scope_dimension_histogram": scope_dimension_histogram(fixtures),
         "handle_orientation_histogram": handle_orientation_histogram(fixtures),
         "provenance_record_store_hash": record_store_hash(record_store),
+        "scope_comparison_rule": scope_comparison_pin_payload(),
     }
     return sha256_canon(payload)
 

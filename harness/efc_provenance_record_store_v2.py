@@ -12,7 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
-from typing import Any, Literal
+from typing import Any
 
 from harness.efc_menu_composition_v2 import (
     RELEVANT_STRATA,
@@ -21,8 +21,28 @@ from harness.efc_menu_composition_v2 import (
     CompositionCheck,
     provenance_carries_scope_lexicon,
 )
+from harness.efc_scope_comparison_v2 import (
+    ScopeComparisonError,
+    ScopeVerdict,
+    compare_scope_covers,
+    derive_scope_verdict,
+    format_scope_dimensions,
+    parse_scope_dimensions,
+    parse_scope_dimensions_partial,
+    scope_missing_dimensions,
+)
 
-ScopeVerdict = Literal["covers", "misses"]
+# Re-export scope comparison API for callers that import from this module.
+__all_scope_comparison__ = (
+    "ScopeVerdict",
+    "compare_scope_covers",
+    "compare_scope_like_check_c",
+    "derive_scope_verdict",
+    "format_scope_dimensions",
+    "parse_scope_dimensions",
+    "parse_scope_dimensions_partial",
+    "scope_missing_dimensions",
+)
 
 STORE_SCHEMA_VERSION = "efc_provenance_record_store_v2"
 
@@ -55,41 +75,12 @@ def _canon_bytes(obj: object) -> bytes:
     ).encode("utf-8")
 
 
-def parse_scope_dimensions(scope: str) -> dict[str, str]:
-    """Parse a frozen semicolon-separated scope string (all five dimensions)."""
-    dims = parse_scope_dimensions_partial(scope)
-    missing = [dim for dim in SCOPE_DIMENSIONS if dim not in dims]
-    if missing:
-        raise ValueError(f"scope missing dimensions: {missing}")
-    return dims
-
-
-def parse_scope_dimensions_partial(scope: str) -> dict[str, str]:
-    """Parse scope dimensions present in an authoritative record."""
-    if not isinstance(scope, str) or not scope.strip():
-        raise ValueError("scope must be a non-empty string")
-    dims: dict[str, str] = {}
-    for fragment in scope.split(";"):
-        piece = fragment.strip()
-        if not piece:
-            continue
-        if "=" not in piece:
-            raise ValueError(f"malformed scope fragment: {piece!r}")
-        key, value = piece.split("=", 1)
-        key = key.strip()
-        value = value.strip()
-        if key not in SCOPE_DIMENSIONS:
-            raise ValueError(f"unknown scope dimension: {key!r}")
-        if not value:
-            raise ValueError(f"empty scope value for dimension {key!r}")
-        dims[key] = value
-    return dims
-
-
-def format_scope_dimensions(dimensions: dict[str, str]) -> str:
-    """Canonical scope serialization — sorted keys, no lexical scope-bit markers."""
-    ordered = {dim: dimensions[dim] for dim in SCOPE_DIMENSIONS if dim in dimensions}
-    return ";".join(f"{key}={ordered[key]}" for key in sorted(ordered))
+def compare_scope_like_check_c(
+    authoritative_scope: str,
+    decision_scope: str,
+) -> bool:
+    """Boolean scope comparison alias — pinned candidate rule interpreter."""
+    return compare_scope_covers(authoritative_scope, decision_scope)
 
 
 def decision_scope_for_block(block_index: int) -> str:
@@ -117,43 +108,6 @@ def authoritative_scope_for_stratum(
         raise ValueError(f"invalid missing_scope_dimension: {missing_scope_dimension!r}")
     narrowed = {key: value for key, value in dims.items() if key != missing_scope_dimension}
     return format_scope_dimensions(narrowed)
-
-
-def scope_missing_dimensions(authoritative_scope: str, decision_scope: str) -> frozenset[str]:
-    """Dimensions required by decision_scope that authoritative_scope does not cover."""
-    decision_dims = parse_scope_dimensions(decision_scope)
-    try:
-        authoritative_dims = parse_scope_dimensions_partial(authoritative_scope)
-    except ValueError:
-        authoritative_dims = {}
-    missing: set[str] = set()
-    for dim, required in decision_dims.items():
-        actual = authoritative_dims.get(dim)
-        if actual != required:
-            missing.add(dim)
-    return frozenset(missing)
-
-
-def derive_scope_verdict(
-    authoritative_scope: str,
-    decision_scope: str,
-) -> tuple[ScopeVerdict, str | None]:
-    """Named-check-C contract: covers, or misses on exactly one dimension."""
-    missing = scope_missing_dimensions(authoritative_scope, decision_scope)
-    if not missing:
-        return "covers", None
-    if len(missing) == 1:
-        return "misses", next(iter(missing))
-    return "misses", None
-
-
-def compare_scope_like_check_c(
-    authoritative_scope: str,
-    decision_scope: str,
-) -> bool:
-    """Boolean scope comparison — True iff decision_scope is fully covered."""
-    verdict, _ = derive_scope_verdict(authoritative_scope, decision_scope)
-    return verdict == "covers"
 
 
 def record_store_canonical_payload(store: ProvenanceRecordStore) -> dict[str, Any]:
@@ -282,7 +236,7 @@ def check_fixture_provenance_against_store(
             record.authoritative_scope,
             decision_scope,
         )
-    except ValueError:
+    except ScopeComparisonError:
         return CompositionCheck(False, refusal="provenance_record_scope_invalid")
 
     if scope_bit != verdict:
