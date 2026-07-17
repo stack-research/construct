@@ -6,9 +6,11 @@ structure validators. No fixture content is authored here.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import unicodedata
 from dataclasses import dataclass
-from typing import Literal
+from typing import Any, Literal
 
 from harness.efc_commitment_wire_v2 import ACTION_SET_MAX, ACTION_SET_MIN
 
@@ -29,6 +31,32 @@ SCOPE_DIMENSIONS = (
     "jurisdiction",
     "endpoint",
     "artifact_version",
+)
+
+HANDLE_ORIENTATIONS = ("A", "B")
+
+# §B shared block surface — byte-equal across relevant mates.
+BLOCK_SHARED_SURFACE_KEYS = (
+    "task_body",
+    "coherent_commit_action",
+    "coherent_non_commit_action",
+    "assertion_basis_kind",
+    "observation_boundary_present",
+    "source_reference_present",
+    "decision_scope_present",
+    "decision_scope",
+    "action_set",
+    "role_map",
+    "menu_order",
+    "missing_scope_dimension",
+    "handle_orientation",
+)
+
+# Licensed provenance delta between counterfactual mates.
+PROVENANCE_RECORD_KEYS = (
+    "scope_bit",
+    "source_reference",
+    "opaque_source_handle",
 )
 
 CanonicalizationFailure = Literal[
@@ -62,6 +90,13 @@ CompositionRefusal = Literal[
     "invalid_pair_structure",
     "missing_scope_dimension",
     "invalid_scope_dimension",
+    "missing_opaque_source_handle",
+    "missing_handle_orientation",
+    "invalid_handle_orientation",
+    "counterfactual_surface_mismatch",
+    "counterfactual_scope_bit_invalid",
+    "counterfactual_provenance_unchanged",
+    "counterfactual_missing_scope_dimension_mismatch",
     "missing_plausibility_attestation",
     "malformed_plausibility_attestation",
 ]
@@ -103,6 +138,30 @@ class CompositionCheck:
 
 def _has_forbidden_format_char(label: str) -> bool:
     return any(unicodedata.category(ch) == "Cf" for ch in label)
+
+
+def _canon_bytes(obj: object) -> bytes:
+    return json.dumps(
+        obj,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+
+
+def block_shared_surface_bytes(fixture: dict[str, Any]) -> bytes:
+    """Canonical bytes for the §B shared counterfactual surface."""
+    surface = {key: fixture[key] for key in BLOCK_SHARED_SURFACE_KEYS}
+    return _canon_bytes(surface)
+
+
+def block_shared_surface_hash(fixture: dict[str, Any]) -> str:
+    return hashlib.sha256(block_shared_surface_bytes(fixture)).hexdigest()
+
+
+def provenance_record_bytes(fixture: dict[str, Any]) -> bytes:
+    record = {key: fixture[key] for key in PROVENANCE_RECORD_KEYS}
+    return _canon_bytes(record)
 
 
 def canonicalize_action_set(action_set: object) -> CanonicalizationResult:
@@ -263,19 +322,31 @@ def check_fixture_composition(
             "coherent_commit_action",
             "coherent_non_commit_action",
             "missing_scope_dimension",
+            "opaque_source_handle",
+            "handle_orientation",
         ):
             if field not in fixture:
+                if field == "opaque_source_handle":
+                    return CompositionCheck(False, refusal="missing_opaque_source_handle")
+                if field == "handle_orientation":
+                    return CompositionCheck(False, refusal="missing_handle_orientation")
                 return CompositionCheck(False, refusal="malformed_fixture")
         scope_bit = fixture["scope_bit"]
         coherent_commit = fixture["coherent_commit_action"]
         coherent_non_commit = fixture["coherent_non_commit_action"]
         missing_dim = fixture["missing_scope_dimension"]
+        handle_orientation = fixture["handle_orientation"]
+        opaque_handle = fixture["opaque_source_handle"]
         if not isinstance(scope_bit, str) or not isinstance(coherent_commit, str):
             return CompositionCheck(False, refusal="malformed_fixture")
         if not isinstance(coherent_non_commit, str):
             return CompositionCheck(False, refusal="malformed_fixture")
         if not isinstance(missing_dim, str) or missing_dim not in SCOPE_DIMENSIONS:
             return CompositionCheck(False, refusal="invalid_scope_dimension")
+        if not isinstance(handle_orientation, str) or handle_orientation not in HANDLE_ORIENTATIONS:
+            return CompositionCheck(False, refusal="invalid_handle_orientation")
+        if not isinstance(opaque_handle, str) or opaque_handle == "":
+            return CompositionCheck(False, refusal="missing_opaque_source_handle")
 
         derived = derive_expected_enum_relevant(
             scope_bit=scope_bit,
@@ -329,4 +400,51 @@ def check_block_pair_structure(fixtures: list[dict[str, object]]) -> Composition
     for counts in blocks.values():
         if counts["match"] != 1 or counts["mismatch"] != 1 or counts["irrelevant"] != 1:
             return CompositionCheck(False, refusal="invalid_pair_structure")
+    return CompositionCheck(True)
+
+
+def check_counterfactual_block_shape(
+    fixtures: list[dict[str, Any]],
+) -> CompositionCheck:
+    """§B: relevant mates share the block surface; provenance differs exactly once."""
+    by_block: dict[str, dict[str, dict[str, Any]]] = {}
+    for fixture in fixtures:
+        block_id = fixture.get("block_id")
+        stratum = fixture.get("stratum")
+        if not isinstance(block_id, str) or not isinstance(stratum, str):
+            return CompositionCheck(False, refusal="malformed_fixture")
+        if stratum not in RELEVANT_STRATA:
+            continue
+        by_block.setdefault(block_id, {})[stratum] = fixture
+
+    for block_id, mates in by_block.items():
+        if "match" not in mates or "mismatch" not in mates:
+            return CompositionCheck(False, refusal="invalid_pair_structure")
+        match_fx = mates["match"]
+        mismatch_fx = mates["mismatch"]
+
+        if match_fx.get("scope_bit") != "covers":
+            return CompositionCheck(False, refusal="counterfactual_scope_bit_invalid")
+        if mismatch_fx.get("scope_bit") != "misses":
+            return CompositionCheck(False, refusal="counterfactual_scope_bit_invalid")
+
+        if match_fx.get("missing_scope_dimension") != mismatch_fx.get(
+            "missing_scope_dimension"
+        ):
+            return CompositionCheck(
+                False,
+                refusal="counterfactual_missing_scope_dimension_mismatch",
+            )
+
+        if block_shared_surface_bytes(match_fx) != block_shared_surface_bytes(
+            mismatch_fx
+        ):
+            return CompositionCheck(False, refusal="counterfactual_surface_mismatch")
+
+        if provenance_record_bytes(match_fx) == provenance_record_bytes(mismatch_fx):
+            return CompositionCheck(False, refusal="counterfactual_provenance_unchanged")
+
+        if match_fx.get("handle_orientation") != mismatch_fx.get("handle_orientation"):
+            return CompositionCheck(False, refusal="counterfactual_surface_mismatch")
+
     return CompositionCheck(True)

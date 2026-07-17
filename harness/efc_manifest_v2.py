@@ -23,10 +23,12 @@ from harness.efc_admission_gate_v2 import (
 from harness.efc_commitment_wire_v2 import SCHEMA_RELPATH as WIRE_SCHEMA_RELPATH
 from harness.efc_fixtures_v2 import (
     FIXTURES_DIR,
+    HASH_DEFINITION_CANONICAL_COMPACT_JSON,
     K_PAIRS,
     MANIFEST_PATH as SUITE_MANIFEST_PATH,
     SUITE_ID,
     fixture_identity_hash,
+    suite_hash,
     validate_suite,
 )
 from harness.efc_leak_audit_v2 import canonical_predictor_spec_bytes
@@ -174,6 +176,7 @@ def assemble_manifest(
     params["pinned_UB"] = params["UB"]
 
     calibration_fixtures: list[dict[str, Any]] = []
+    fixture_suite_hash: str | None = None
     fixtures = _load_suite_fixtures(root)
     if fixtures is not None:
         for fixture in fixtures:
@@ -181,8 +184,9 @@ def assemble_manifest(
                 "fixture_id": fixture["fixture_id"],
                 "sha256": fixture_identity_hash(fixture),
             })
+        fixture_suite_hash = suite_hash(fixtures, k_pairs=K_PAIRS)
 
-    return {
+    manifest: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
         "suite_id": SUITE_ID,
         "k_pairs": K_PAIRS,
@@ -190,6 +194,7 @@ def assemble_manifest(
         "contract_hashes": contract_hashes,
         "admission_gate_params": params,
         "commitment_invalid_rate_ceiling": _commitment_invalid_rate_ceiling(),
+        "calibration_fixture_hash_definition": HASH_DEFINITION_CANONICAL_COMPACT_JSON,
         "calibration_fixtures": calibration_fixtures,
         "fork_identity": {
             "engine": engine,
@@ -213,10 +218,13 @@ def assemble_manifest(
             "confounded(commitment_invalid_rate)",
         ],
     }
+    if fixture_suite_hash is not None:
+        manifest["fixture_suite_hash"] = fixture_suite_hash
+    return manifest
 
 
-def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = None
-                    ) -> ManifestVerifyResult:
+def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = None,
+                    *, require_suite_hash: bool = False) -> ManifestVerifyResult:
     """Recompute every pinned hash and derived UB; fail on disagreement."""
     failures: list[str] = []
 
@@ -231,6 +239,12 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
 
     if manifest.get("part_i_spec_sha256") != PART_I_SPEC_SHA256:
         failures.append("part_i_spec_sha256_mismatch")
+
+    if manifest.get("calibration_fixture_hash_definition") not in (
+        None,
+        HASH_DEFINITION_CANONICAL_COMPACT_JSON,
+    ):
+        failures.append("calibration_fixture_hash_definition_mismatch")
 
     recomputed = compute_contract_hashes(root)
     pinned = manifest.get("contract_hashes", {})
@@ -248,15 +262,29 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
         failures.append("pinned_ub_disagreement")
 
     fixtures = _load_suite_fixtures(root)
+    pinned_suite_hash = manifest.get("fixture_suite_hash")
+    calibration_rows = manifest.get("calibration_fixtures", [])
+
+    if require_suite_hash:
+        if not pinned_suite_hash:
+            failures.append("fixture_suite_hash_missing")
+        if not isinstance(calibration_rows, list) or len(calibration_rows) != (
+            K_PAIRS * 3
+        ):
+            failures.append("calibration_fixtures_incomplete")
+
     if fixtures is not None:
         suite_result = validate_suite(fixtures)
         if not suite_result.ok:
             failures.extend(suite_result.refusals)
+        recomputed_suite_hash = suite_hash(fixtures, k_pairs=K_PAIRS)
+        if pinned_suite_hash is not None and pinned_suite_hash != recomputed_suite_hash:
+            failures.append("fixture_suite_hash_mismatch")
         for fixture in fixtures:
             expected = fixture_identity_hash(fixture)
             row = next(
                 (
-                    r for r in manifest.get("calibration_fixtures", [])
+                    r for r in calibration_rows
                     if r.get("fixture_id") == fixture["fixture_id"]
                 ),
                 None,
@@ -265,6 +293,8 @@ def manifest_verify(root: Path = REPO_ROOT, manifest: dict[str, Any] | None = No
                 failures.append(
                     f"fixture_hash_mismatch:{fixture['fixture_id']}"
                 )
+    elif pinned_suite_hash or calibration_rows:
+        failures.append("fixture_suite_on_disk_missing")
 
     mh = manifest_hash(manifest)
     return ManifestVerifyResult(not failures, tuple(failures), mh)

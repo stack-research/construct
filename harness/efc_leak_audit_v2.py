@@ -97,19 +97,6 @@ def predict_task_menu(
 def predict_scope_from_render(rendered_surface: str) -> str:
     """L3: lexical heuristic on full render — must fail to recover scope bit."""
     surface_tokens = set(tokens(rendered_surface))
-    # Field labels in the render template contain the substring "scope";
-    # score only task-body-like tokens by excluding declared trigger keys.
-    stripped = rendered_surface
-    for field in (
-        "assertion_basis_kind",
-        "observation_boundary_present",
-        "source_reference_present",
-        "decision_scope_present",
-        "source_reference",
-        "decision_scope",
-    ):
-        stripped = stripped.replace(field, "")
-    surface_tokens = set(tokens(stripped))
     covers_score = len(surface_tokens & {"covers", "cover", "complete"})
     misses_score = len(surface_tokens & {"misses", "miss", "gap", "partial"})
     return "covers" if covers_score >= misses_score else "misses"
