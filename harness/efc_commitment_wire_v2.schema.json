@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:construct:efc:commitment_wire:v2",
+  "title": "efc_commitment_wire_v2",
+  "description": "Commitment-wire contract — SPEC_EPISTEMIC_FRAME_CHECK_V2 (inherits v1 §2.5.1). The model-authored wire names exactly one action_set member via commitment_enum (string only); optional prose is never scored.",
+  "$defs": {
+    "enum_label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "action_set": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/enum_label"
+      }
+    },
+    "commitment_wire": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commitment_enum"],
+      "properties": {
+        "commitment_enum": {
+          "$ref": "#/$defs/enum_label"
+        },
+        "optional_prose": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$ref": "#/$defs/commitment_wire"
+}

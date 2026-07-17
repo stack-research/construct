@@ -1,0 +1,49 @@
+"""Conformance vectors for EFC v2 manifest."""
+
+from __future__ import annotations
+
+import unittest
+from pathlib import Path
+
+from harness.efc_admission_gate_v2 import PART_I_SPEC_SHA256, compute_ub
+from harness.efc_manifest_v2 import (
+    MANIFEST_RELPATH,
+    PART_I_SPEC_RELPATH,
+    assemble_manifest,
+    compute_contract_hashes,
+    manifest_verify,
+    sha256_path,
+)
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+class TestManifestV2(unittest.TestCase):
+    def test_part_i_spec_hash_on_disk(self):
+        self.assertEqual(
+            sha256_path(REPO_ROOT / PART_I_SPEC_RELPATH),
+            PART_I_SPEC_SHA256,
+        )
+
+    def test_assemble_manifest_contract_hashes(self):
+        manifest = assemble_manifest(REPO_ROOT)
+        recomputed = compute_contract_hashes(REPO_ROOT)
+        self.assertEqual(manifest["contract_hashes"], recomputed)
+        self.assertEqual(manifest["part_i_spec_sha256"], PART_I_SPEC_SHA256)
+
+    def test_derived_ub_in_manifest_params(self):
+        manifest = assemble_manifest(REPO_ROOT)
+        params = manifest["admission_gate_params"]
+        self.assertAlmostEqual(float(params["UB"]), compute_ub(128))
+        self.assertEqual(params["pinned_UB"], params["UB"])
+
+    def test_manifest_verify_without_corpus(self):
+        manifest = assemble_manifest(REPO_ROOT)
+        result = manifest_verify(REPO_ROOT, manifest)
+        self.assertTrue(result.ok, result.failures)
+
+    def test_manifest_relpath_target(self):
+        self.assertEqual(
+            MANIFEST_RELPATH,
+            "corpus/efc_calibration_v2/calibration_manifest.json",
+        )
