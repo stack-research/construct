@@ -43,7 +43,7 @@ CONTRACT_RELPATH = "harness/efc_pilot_runner_contract_v2.md"
 PIN_SIDECAR_RELPATH = "corpus/efc_calibration_v2/manifest_pin.json"
 LEDGER_DIR_REL = "runs/efc_calibration_v2"
 LOCAL_BASE = "http://localhost:1234/v1"
-PIN_EVENT_ID = "efc-v2-manifest-pin-16f1dc707c95e081"
+PIN_EVENT_ID = "efc-v2-manifest-pin-27d5a79f33037bea"
 
 THINK_BLOCK_PATTERN = re.compile(
     r"<think>.*?</think>",
