@@ -9,22 +9,22 @@ from pathlib import Path
 
 from harness.efc_admission_gate_v2 import PART_I_SPEC_SHA256, compute_ub
 from harness.efc_manifest_v2 import (
+    CAP2048_INPUT_TOKEN_CEILING,
     CAP2048_MAX_OUTPUT_TOKENS_PER_REQUEST,
     CAP2048_OPENING_CALLS,
     CAP2048_OPENING_INPUT_TOKENS,
     CAP2048_OPENING_OUTPUT_TOKENS,
     CAP2048_OUTPUT_TOKEN_CEILING,
-    CAP2048_RERUN_CALLS,
     CAP2048_TOTAL_CALL_CEILING,
     EARLY_OUTPUT_CENSORING_OUTCOME,
     LIVE_001_ABORT_RECORD_RELPATH,
     LIVE_001_LEDGER_RELPATH,
     LIVE_002_LEDGER_RELPATH,
+    LIVE_003_LEDGER_RELPATH,
     MANIFEST_RELPATH,
     PART_I_SPEC_RELPATH,
     assemble_manifest,
     compute_contract_hashes,
-    compute_rendered_suite_input_token_estimate,
     manifest_verify,
     sha256_path,
 )
@@ -125,12 +125,7 @@ class TestManifestV2(unittest.TestCase):
         )
         self.assertEqual(budget["total_call_ceiling"], CAP2048_TOTAL_CALL_CEILING)
         self.assertEqual(budget["output_token_ceiling"], CAP2048_OUTPUT_TOKEN_CEILING)
-        estimate = compute_rendered_suite_input_token_estimate(REPO_ROOT)
-        self.assertIsNotNone(estimate)
-        self.assertEqual(
-            budget["input_token_ceiling"],
-            estimate + CAP2048_OPENING_INPUT_TOKENS,
-        )
+        self.assertEqual(budget["input_token_ceiling"], CAP2048_INPUT_TOKEN_CEILING)
         self.assertEqual(budget["hard_cost_ceiling_usd"], 0.0)
         self.assertEqual(budget["pricing"]["input_usd_per_million"], 0.0)
         self.assertEqual(budget["pricing"]["output_usd_per_million"], 0.0)
@@ -171,6 +166,14 @@ class TestManifestV2(unittest.TestCase):
         self.assertEqual(
             binding["live_002_ledger_relpath"],
             LIVE_002_LEDGER_RELPATH,
+        )
+        self.assertEqual(
+            binding["live_003_ledger_sha256"],
+            sha256_path(REPO_ROOT / LIVE_003_LEDGER_RELPATH),
+        )
+        self.assertEqual(
+            binding["live_003_ledger_relpath"],
+            LIVE_003_LEDGER_RELPATH,
         )
         preserves = binding["rerun_preserves"]
         self.assertEqual(
