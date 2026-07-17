@@ -55,6 +55,7 @@ oracle refused before contact.
 | [The experiment the oracle refused](16_EPISTEMIC_FRAME_CHECK.md) | Can a bounded epistemic-frame check reach a trustworthy engine test? | Closed — `blocked_before_contact`; free-text substring oracle failed cold review |
 | [The wire commitment](17_EFC_V1_WIRE_COMMITMENT.md) | Can the same question be asked on a surface a machine can score? | Available — Part I sealed 2026-07-16; superseded status notes in ch18 |
 | [The instrument that priced its own surface](18_EFC_V1_CALIBRATION_CLOSE.md) | What did the first live engine contact buy? | Closed — `confounded(menu_ceiling)`; wire positive replicated; reopen condition recorded |
+| [Six pins, four runs, and the band nobody lives in](19_EFC_V2_UNOCCUPIED_BAND.md) | Does any small engine occupy the admission band? | Closed — `confounded(admission_band)`; two engines formally typed; third unoccupied-band sighting |
 
 The living thesis and short milestone summaries remain in the project [README](../../README.md#the-journey). Current status and gates remain in the [ROADMAP](../ROADMAP.md#milestones).
 
