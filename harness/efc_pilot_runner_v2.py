@@ -1,7 +1,8 @@
 """EFC v2 admission pilot runner — SPEC §C pre-engine protocol.
 
-Deterministic dry-run (MockTransport) only. Live engine contact is
-structurally unconstructible: no LiveTransport and no network imports.
+Deterministic dry-run (MockTransport) is the default. Live engine contact
+requires explicit ``--live`` and matching ``--pin-event-id`` (LM Studio at
+localhost:1234; no API key). Unlicensed contact remains structurally refused.
 
 Normative contract: ``harness/efc_pilot_runner_contract_v2.md``.
 """
@@ -12,6 +13,9 @@ import argparse
 import json
 import re
 import sys
+import urllib.error
+import urllib.request
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -37,6 +41,13 @@ from harness.efc_render_v2 import render_for_lane
 CONTRACT_RELPATH = "harness/efc_pilot_runner_contract_v2.md"
 PIN_SIDECAR_RELPATH = "corpus/efc_calibration_v2/manifest_pin.json"
 LEDGER_DIR_REL = "runs/efc_calibration_v2"
+LOCAL_BASE = "http://localhost:1234/v1"
+PIN_EVENT_ID = "efc-v2-manifest-pin-16f1dc707c95e081"
+
+THINK_BLOCK_PATTERN = re.compile(
+    r"<think>.*?</think>",
+    re.DOTALL | re.IGNORECASE,
+)
 
 LANES = ("M_untreated", "M_forced_class", "M_irrelevant")
 FORCED_CLASSES = ("commit", "non_commit")
@@ -62,9 +73,11 @@ CallOutcome = Literal[
 ]
 
 RUNNER_DISCLOSURES: tuple[str, ...] = (
-    "v2 runner: MockTransport only; live contact authorization is "
-    "structurally unconstructible.",
+    "v2 runner: MockTransport default; --live authorizes LM Studio contact "
+    "at localhost:1234 (no API key).",
     "Pre-call input estimate (utf8_len//4) is a disclosed first-line floor.",
+    "Live transport adapts canonical Responses-shaped body to "
+    "chat-completions internally; request_hash binds the canonical body.",
 )
 
 
@@ -300,12 +313,22 @@ def load_fixtures(root: Path, manifest: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def build_request_body(manifest: dict[str, Any], prompt: str) -> dict[str, Any]:
-    decoding = manifest.get("decoding_contract", {})
+    fork = manifest.get("fork_identity", {})
+    engine = fork.get("engine")
+    effort = fork.get("effort")
+    if not isinstance(engine, str) or not engine:
+        raise PilotRunnerRefusal(
+            "construction_refused", "fork_identity_engine_missing"
+        )
+    if not isinstance(effort, str) or not effort:
+        raise PilotRunnerRefusal(
+            "construction_refused", "fork_identity_effort_missing"
+        )
     budget = manifest.get("budget_ledger", {})
     return {
-        "model": decoding.get("model_snapshot", "dry-run"),
+        "model": engine,
         "input": [{"role": "user", "content": prompt}],
-        "reasoning": {"effort": decoding.get("reasoning_effort", "high")},
+        "reasoning": {"effort": effort},
         "temperature": float(manifest.get("temperature", 0.0)),
         "max_output_tokens": int(
             budget.get("max_output_tokens_per_request", 256)
@@ -314,6 +337,141 @@ def build_request_body(manifest: dict[str, Any], prompt: str) -> dict[str, Any]:
         "store": False,
         "stream": False,
     }
+
+
+def strip_think_blocks(text: str) -> str:
+    """Remove embedded think-tags; reasoning_content is excluded upstream."""
+    return THINK_BLOCK_PATTERN.sub("", text).strip()
+
+
+def adapt_responses_to_chat_completions(body: dict[str, Any]) -> dict[str, Any]:
+    """Transport-internal adapter; canonical body hash is computed before this."""
+    return {
+        "model": body["model"],
+        "messages": list(body.get("input", [])),
+        "temperature": body.get("temperature", 0.0),
+        "max_tokens": body.get("max_output_tokens", 256),
+        "stream": body.get("stream", False),
+    }
+
+
+def _http_get(url: str) -> dict[str, Any]:
+    req = urllib.request.Request(url, method="GET")
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            raw = resp.read()
+            return {
+                "http_status": resp.status,
+                "data": json.loads(raw),
+                "error": None,
+            }
+    except urllib.error.HTTPError as e:
+        raw = e.read()
+        parsed = None
+        try:
+            parsed = json.loads(raw) if raw else None
+        except json.JSONDecodeError:
+            parsed = {"raw_error_body": raw.decode("utf-8", errors="replace")}
+        return {
+            "http_status": e.code,
+            "data": parsed,
+            "error": str(e),
+        }
+
+
+def _http_post(url: str, body: dict[str, Any], api_key: str | None = None) -> dict:
+    payload = json.dumps(body).encode("utf-8")
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+    req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            raw = resp.read()
+            return {
+                "http_status": resp.status,
+                "data": json.loads(raw),
+                "error": None,
+            }
+    except urllib.error.HTTPError as e:
+        raw = e.read()
+        parsed = None
+        try:
+            parsed = json.loads(raw) if raw else None
+        except json.JSONDecodeError:
+            parsed = {"raw_error_body": raw.decode("utf-8", errors="replace")}
+        return {
+            "http_status": e.code,
+            "data": parsed,
+            "error": str(e),
+        }
+
+
+def fetch_served_model_ids(
+    base_url: str = LOCAL_BASE,
+    *,
+    http_get: Callable[[str], dict[str, Any]] = _http_get,
+) -> list[str]:
+    result = http_get(f"{base_url}/models")
+    if result.get("error") or result.get("http_status") != 200:
+        raise PilotRunnerRefusal(
+            "construction_refused",
+            f"model_list_fetch_failed:http_status={result.get('http_status')}",
+        )
+    data = result.get("data") or {}
+    models = data.get("data") or []
+    ids: list[str] = []
+    for entry in models:
+        if isinstance(entry, dict):
+            model_id = entry.get("id")
+            if isinstance(model_id, str) and model_id:
+                ids.append(model_id)
+    return ids
+
+
+def verify_pinned_engine_available(
+    manifest: dict[str, Any],
+    *,
+    base_url: str = LOCAL_BASE,
+    http_get: Callable[[str], dict[str, Any]] = _http_get,
+) -> None:
+    fork = manifest.get("fork_identity", {})
+    engine = fork.get("engine")
+    if not isinstance(engine, str) or not engine:
+        raise PilotRunnerRefusal(
+            "construction_refused", "fork_identity_engine_missing"
+        )
+    served = fetch_served_model_ids(base_url, http_get=http_get)
+    if engine not in served:
+        raise PilotRunnerRefusal(
+            "construction_refused", "pinned_engine_not_in_model_list"
+        )
+
+
+def extract_chat_completion_text(data: dict[str, Any] | None) -> str | None:
+    if not isinstance(data, dict):
+        return None
+    choices = data.get("choices") or []
+    if not choices:
+        return None
+    msg = choices[0].get("message", {})
+    content = msg.get("content")
+    if content is None:
+        return None
+    return strip_think_blocks(str(content))
+
+
+def map_chat_completion_usage(data: dict[str, Any]) -> tuple[int, int]:
+    usage = data.get("usage") or {}
+    inp = usage.get("prompt_tokens")
+    if inp is None:
+        inp = usage.get("input_tokens")
+    out = usage.get("completion_tokens")
+    if out is None:
+        out = usage.get("output_tokens")
+    inp_tok = inp if isinstance(inp, int) else 0
+    out_tok = out if isinstance(out, int) else 0
+    return inp_tok, out_tok
 
 
 def request_hash(body: dict[str, Any]) -> str:
@@ -413,6 +571,68 @@ class FailingTransport:
         raise TransportRefusal("transport_refusal", self.detail)
 
 
+@dataclass
+class LiveTransport:
+    """LM Studio chat-completions — gated behind ``--live``."""
+
+    base_url: str = LOCAL_BASE
+    http_post_fn: Callable[[str, dict[str, Any], str | None], dict] = field(
+        default=_http_post
+    )
+
+    def call(
+        self,
+        request_body: dict[str, Any],
+        context: CallContext,
+    ) -> TransportResult:
+        del context
+        url = f"{self.base_url}/chat/completions"
+        chat_body = adapt_responses_to_chat_completions(request_body)
+        result = self.http_post_fn(url, chat_body, None)
+        http_status = result.get("http_status")
+        data = result.get("data") or {}
+        if result.get("error") or http_status != 200:
+            usage = data.get("usage") or {}
+            inp = usage.get("prompt_tokens")
+            out = usage.get("completion_tokens")
+            raise TransportRefusal(
+                "transport_refusal",
+                f"http_status={http_status} error={result.get('error')}",
+                http_status=http_status if isinstance(http_status, int) else None,
+                sanitized_body=data if data else {"error": result.get("error")},
+                input_tokens=inp if isinstance(inp, int) else 0,
+                output_tokens=out if isinstance(out, int) else 0,
+            )
+        text = extract_chat_completion_text(data)
+        inp_tok, out_tok = map_chat_completion_usage(data)
+        if not text:
+            raise ParseFailure(
+                "transport_refusal",
+                "missing_text_output",
+                sanitized_body=data,
+                input_tokens=inp_tok,
+                output_tokens=out_tok,
+            )
+        usage = data.get("usage") or {}
+        inp = usage.get("prompt_tokens")
+        out = usage.get("completion_tokens")
+        if not isinstance(inp, int) or not isinstance(out, int):
+            raise ParseFailure(
+                "transport_refusal",
+                "missing_usage_tokens",
+                sanitized_body=data,
+                input_tokens=inp_tok,
+                output_tokens=out_tok,
+            )
+        return TransportResult(
+            raw=data,
+            text=text,
+            input_tokens=inp,
+            output_tokens=out,
+            tool_calls_present=response_has_tool_calls(data),
+        )
+
+
 def _ledger_row(
     *,
     seq: int,
@@ -489,7 +709,7 @@ def run_admission_pilot(
     run_id: str | None = None,
     timestamp_fn: Any | None = None,
 ) -> dict[str, Any]:
-    """Execute v2 admission-lane contact (MockTransport only)."""
+    """Execute v2 admission-lane contact (MockTransport default; --live gated)."""
     if timestamp_fn is None:
         timestamp_fn = lambda: datetime.now(timezone.utc).isoformat()
     if loaded is not None:
@@ -580,6 +800,38 @@ def run_admission_pilot(
 
             try:
                 transport_result = transport.call(body, ctx)
+            except ParseFailure as exc:
+                seq += 1
+                budget.calls_spent += 1
+                budget.input_tokens_spent += exc.input_tokens
+                budget.output_tokens_spent += exc.output_tokens
+                validation = {
+                    "validation_outcome": "parse_failed",
+                    "invalid_reason": exc.detail,
+                    "oracle_outcome": None,
+                    "solicitation_detected": False,
+                }
+                row = _ledger_row(
+                    seq=seq,
+                    fixture_id=fixture_id,
+                    lane=lane,
+                    stratum=stratum,
+                    req_hash=req_hash,
+                    prompt_sha256=rendered.sha256,
+                    request_body=body,
+                    transport=None,
+                    validation=validation,
+                    budget=budget,
+                    timestamp_utc=timestamp_fn(),
+                    call_outcome="parse_failed",
+                    supplied_class=supplied_class,
+                )
+                ledger.write(json.dumps(row, sort_keys=True) + "\n")
+                rows.append(row)
+                outcome = "transport_refusal"
+                stop_reason = exc.detail
+                stopped = True
+                break
             except TransportRefusal as exc:
                 seq += 1
                 validation = {
@@ -708,12 +960,22 @@ def run_admission_pilot(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="EFC v2 admission pilot runner (MockTransport only)"
+        description="EFC v2 admission pilot runner (MockTransport default; --live gated)"
     )
     parser.add_argument("--manifest", default=None)
     parser.add_argument("--pin-sidecar", default=None)
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Use LiveTransport (requires --pin-event-id)",
+    )
+    parser.add_argument(
+        "--pin-event-id",
+        default=None,
+        help="Required pin event id for --live contact",
+    )
     parser.add_argument("--output", default=None)
-    parser.add_argument("--run-id", default="dryrun")
+    parser.add_argument("--run-id", default=None)
     args = parser.parse_args(argv)
 
     try:
@@ -721,13 +983,46 @@ def main(argv: list[str] | None = None) -> int:
             REPO_ROOT,
             manifest_path=args.manifest,
             pin_sidecar_path=args.pin_sidecar,
-            require_pin=False,
+            require_pin=args.live,
         )
     except PilotRunnerRefusal as exc:
         print(f"refused: {exc.reason}:{exc.detail}", file=sys.stderr)
         return 1
 
-    transport: Transport = MockTransport()
+    if args.live:
+        if args.pin_event_id is None:
+            print(
+                "refused: --live requires --pin-event-id matching loaded "
+                "pin sidecar",
+                file=sys.stderr,
+            )
+            return 2
+        if args.pin_event_id != loaded.pin_event_id:
+            print(
+                "refused: --pin-event-id mismatch "
+                f"(loaded sidecar expects {loaded.pin_event_id!r})",
+                file=sys.stderr,
+            )
+            return 2
+        try:
+            verify_pinned_engine_available(loaded.manifest)
+        except PilotRunnerRefusal as exc:
+            print(f"refused: {exc.reason}:{exc.detail}", file=sys.stderr)
+            return 1
+
+    transport: Transport
+    if args.live:
+        transport = LiveTransport()
+    else:
+        transport = MockTransport()
+
+    if args.live:
+        run_id = args.run_id or (
+            "live_" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        )
+    else:
+        run_id = args.run_id or "dryrun"
+
     ledger_path = Path(args.output) if args.output else None
     try:
         result = run_admission_pilot(
@@ -735,7 +1030,7 @@ def main(argv: list[str] | None = None) -> int:
             transport=transport,
             loaded=loaded,
             ledger_path=ledger_path,
-            run_id=args.run_id,
+            run_id=run_id,
         )
     except PilotRunnerRefusal as exc:
         print(f"refused: {exc.reason}:{exc.detail}", file=sys.stderr)
