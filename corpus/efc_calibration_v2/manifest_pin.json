@@ -1,12 +1,12 @@
 {
-  "manifest_file_sha256_raw": "65fffe2d3935263dbdeaa455b40ff34781f8af73ee6b96c2d74c518a4bea10f8",
-  "manifest_hash_canonical": "27d5a79f33037bea0491283ab4cc028587bae35e8d88bb297306db16dfa4f4b6",
+  "manifest_file_sha256_raw": "fb46c8029d0d76b68354220468324a451e275bc2d6773a8e60c660dea26d92bb",
+  "manifest_hash_canonical": "394d1092becda60f980a0770aeb8e5322d22f216a16e1c8ad658235749b9cb9d",
   "manifest_path": "corpus/efc_calibration_v2/calibration_manifest.json",
-  "note": "Superseding pin per Sol B4 (fork identity mirrored to sealed-gate keys); B1-B5 repair round closed, sol ruled READY 20260717T141059Z; prior pin preserved, never valid alone hereafter.",
-  "pin_event_id": "efc-v2-manifest-pin-27d5a79f33037bea",
-  "pinned_at": "2026-07-17T15:17:23Z",
+  "note": "Superseding pin: cap-2048 budget ledger + early-censor refusal (sol ruling M=2048/K=8, first-K residual closed, sol READY 20260717T1611Z+final); run-001 abort evidence bound; prior pins preserved, never valid alone hereafter.",
+  "pin_event_id": "efc-v2-manifest-pin-394d1092becda60f",
+  "pinned_at": "2026-07-17T16:23:36Z",
   "pinned_by": "dan",
-  "ruling_source": "main conversation 2026-07-17: engine ruling qwen/qwen3.5-9b high; moderator B4 ruling per v1 Option-A precedent",
-  "ruling_text": "supersede 16f1dc70 manifest with sealed-gate-readable fork identity; engine qwen/qwen3.5-9b (LM Studio), effort high",
-  "supersedes_pin_event": "efc-v2-manifest-pin-16f1dc707c95e081"
+  "ruling_source": "main conversation 2026-07-17: abort ruling + small-batch principle; sol cap-sizing entry",
+  "ruling_text": "cap 2048, K=8 early-censor refusal, budget carry-forward from live-001; smoke-test before long invocations",
+  "supersedes_pin_event": "efc-v2-manifest-pin-27d5a79f33037bea"
 }
