@@ -1,0 +1,10 @@
+{
+  "run_id": "efc-v2-admission-live-001",
+  "aborted_by": "dan's ruling in main conversation 2026-07-17 ('if it's all invalid, why continue the run?')",
+  "rows_at_abort": 528,
+  "rows_planned": 896,
+  "uniform_signature": "finish_reason=length x528, output_tokens=255 x528, content empty x528, commitment_invalid x528",
+  "typed_outcome_from_sealed_gate": "confounded(commitment_invalid_rate)",
+  "cause": "max_output_tokens fell back to 256 (manifest carries no budget_ledger); qwen3.5-9b at effort high consumes full cap in reasoning_content; zero final content; zero engine judgment recorded",
+  "engine_contamination": "none \u2014 no fixture ever received an engine answer, battery-shopping clause untriggered"
+}
