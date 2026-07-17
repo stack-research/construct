@@ -4,14 +4,16 @@
     "live_001_abort_record_sha256": "f981d2b12faca3c1d8f187ecc7f734eacbcacb72bc4224c4dfb61b866fa4bcec",
     "live_001_ledger_relpath": "runs/efc_calibration_v2/admission_pilot_efc-v2-admission-live-001.jsonl",
     "live_001_ledger_sha256": "6ce22be29fb2510ab4f1e1469feaadf98cda6cd37b7092705b24599b61470988",
+    "live_002_ledger_relpath": "runs/efc_calibration_v2/admission_pilot_efc-v2-admission-live-002.jsonl",
+    "live_002_ledger_sha256": "d26ac0a5be2c3c0be663d9b7ec4d54dec1961836dca5a951fcf300f1e25e1170",
     "rerun_preserves": {
       "effort": "none",
-      "engine": "qwen/qwen3.5-9b",
+      "engine": "nvidia/nemotron-3-nano-4b",
       "fixture_suite_hash": "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828",
       "lane_order": "iter_calibration_call_specs fixture×lane order",
       "render_hash": "98317b270b4ed161b05ba36ef1116c0b8fa04ff876779058aee15f3fa9a87d0a"
     },
-    "statement": "Superseding rerun reuses identical fixture_suite_hash, engine, effort, renderer, and lane order; live-001's 528 censored calls and spend are carried forward via budget_ledger opening actuals."
+    "statement": "Superseding rerun reuses identical fixture_suite_hash, engine, effort, renderer, and lane order; live-001 abort evidence and live-002's 1424 completed calls and spend are carried forward via budget_ledger opening actuals."
   },
   "admission_gate_params": {
     "C0": 0.8,
@@ -36,17 +38,17 @@
   },
   "budget_ledger": {
     "budget_refusal_typed_outcome": "budget_refusal",
-    "calls_already_spent": 528,
-    "carry_forward_run_id": "efc-v2-admission-live-001",
+    "calls_already_spent": 1424,
+    "carry_forward_run_id": "efc-v2-admission-live-002",
     "cost_formula": "cost_usd = 0.0*input_tokens/1,000,000 + 0.0*output_tokens/1,000,000",
     "hard_cost_ceiling_usd": 0.0,
-    "input_ceiling_derivation": "279890 rendered-suite estimate + 158957 opening input tokens = 438847",
-    "input_token_ceiling": 438847,
+    "input_ceiling_derivation": "279890 rendered-suite estimate + 430369 opening input tokens = 710259",
+    "input_token_ceiling": 710259,
     "max_output_tokens_per_request": 2048,
-    "opening_input_tokens_spent": 158957,
-    "opening_output_tokens_spent": 134640,
-    "output_ceiling_derivation": "134640 opening output tokens + 896 remaining calls × 2048 max_output_tokens = 1969648",
-    "output_token_ceiling": 1969648,
+    "opening_input_tokens_spent": 430369,
+    "opening_output_tokens_spent": 150674,
+    "output_ceiling_derivation": "150674 opening output tokens + 896 remaining calls × 2048 max_output_tokens = 1985682",
+    "output_token_ceiling": 1985682,
     "pricing": {
       "input_usd_per_million": 0.0,
       "local_lm_studio_zero_dollar": true,
@@ -55,7 +57,7 @@
     "rendered_suite_input_estimate_method": "estimated_input_tokens(render_for_lane(...)) over all 896 call specs",
     "rendered_suite_input_token_estimate": 279890,
     "stop_before_crossing": true,
-    "total_call_ceiling": 1424
+    "total_call_ceiling": 2320
   },
   "calibration_fixture_hash_definition": "canonical_compact_json",
   "calibration_fixtures": [
@@ -1684,12 +1686,12 @@
     "typed_outcome": "instrument_refusal(early_output_censoring)"
   },
   "effort": "none",
-  "engine": "qwen/qwen3.5-9b",
+  "engine": "nvidia/nemotron-3-nano-4b",
   "estimand": "balanced_relevant_accuracy",
   "fixture_suite_hash": "ca4f173b6f113b8b04bd38ff191b647f1f81015e6976cb987e865045ffff2828",
   "fork_identity": {
     "effort": "none",
-    "engine": "qwen/qwen3.5-9b",
+    "engine": "nvidia/nemotron-3-nano-4b",
     "render_hash": "98317b270b4ed161b05ba36ef1116c0b8fa04ff876779058aee15f3fa9a87d0a"
   },
   "k_pairs": 128,
