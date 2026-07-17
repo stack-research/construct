@@ -1,6 +1,7 @@
 # NEXT substrate orientation map
 
-Status: **living orientation map**. Updated 2026-07-11 alongside the first
+Status: **living orientation map**. Updated 2026-07-16 after the EFC v1
+calibration close; previously updated 2026-07-11 alongside the first
 non-evidentiary embodiment sketch.
 
 Purpose: answer "what are we building?" without letting a diagram promote
@@ -63,7 +64,7 @@ that every node exists as a product component. Read the labels before the nouns.
 | Hot/cold eviction and recovery | **Earned narrowly** | [X2 findings](X2_FINDINGS.md) | One sequence/corpus shape; no general sleep subsystem |
 | Governed materialization | **Provisional sketch** | [walking skeleton](../sketches/next_substrate/README.md) | Deterministic replay demonstrates composition only |
 | Sparse activation plus action boundary | **Provisional sketch** | Walking skeleton controller rows | No real engine or licensed controller treatment |
-| Structural failure disposition | **Candidate slice; Part I sealed** | [pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md); `epistemic_frame_check_v0_stub` in the sketch | Protocol is sealed; trigger, check, oracle, meter, and mechanism license remain unearned |
+| Structural failure disposition | **Candidate slice; Part I sealed; v1 calibration closed `confounded(menu_ceiling)`** | [pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md); [EFC v1 findings](EFC_V1_FINDINGS.md); `epistemic_frame_check_v0_stub` in the sketch | Wire-commitment surface carried live engine traffic (45/45); calibration confounded by a runner-typed menu ceiling — trigger, check, oracle, meter, and mechanism license remain unearned |
 | Metabolic proprioception | **Provisional sketch** | Check-cost and wire-causal events | No real carry-cost or benefit finding |
 | Provenance-health retirement | **Provisional sketch** | External warrant-revision sweep | Demonstrates dependency flow, not correctness |
 | Semantic failure geometry | **Unlicensed office** | Architecture only | Would introduce another classifier requiring its own license |
@@ -102,6 +103,15 @@ the candidate admission and refusal path. It does not license a mechanism or
 held-out build. The architecture's admission gate still applies: typed carrier,
 independently licensed derivation, probationary instance, control-plane meter,
 and dual metabolic/provenance sensors.
+
+The v1 calibration attempt ([EFC v1 findings](EFC_V1_FINDINGS.md)) reached live
+engine contact for the first time in the lineage: the wire-commitment surface
+held (45/45 valid live commitments), but calibration closed
+`confounded(menu_ceiling)` — an untreated engine hit the expected enum 15/15
+from task plus menu alone, so the conjecture went untested for a measured
+reason. Any successor lineage inherits a concrete admission requirement: the
+untreated baseline must sit inside the declared band on the actual task battery
+before any treatment leg runs.
 
 ## Update contract
 
