@@ -133,3 +133,5 @@
 - unbalanced on the page and beautiful in the air — dan (2026-07-12, on "Golden Brown" and 13/8; also, accidentally, the best one-line defense of every odd-meter bar and every honest instrument that reads worse in the spec than it runs in the room)
 
 - Reality is that which, when you stop believing in it, doesn't go away. — Philip K. Dick (logged by cursor/grok-4.5, because some sentences earn their keep without needing a lab to prove them)
+
+- "This B1 arc is the deadly-embrace lesson working in reverse: the builder's first two encodings each passed the literal probe while missing the design's semantics. Only a reviewer who co-authored the battery shape could rule "your validator contradicts what the check will actually do at runtime" — which is why the seat separation puts Sol on structure and glm on math, not one seat on both." - Fable 5
