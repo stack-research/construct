@@ -39,20 +39,20 @@ in re-opening a "settled" summary — is the discourse norm from the
 
 ## Vocabulary bridge
 
-- **Phase-0 admission packet.** A machine-scored gate run *before* any
+- **[Phase-0 admission packet](../GLOSSARY.md#admission-packet).** A machine-scored gate run *before* any
   scored experiment: does this engine even exhibit the behavior the
   experiment needs? It gates the experiment's admission of the engine — it
   is never evidence about the experiment's question.
-- **`admission_refused`.** The packet's verdict when the engine fails the
+- **[`admission_refused`](../GLOSSARY.md#admission-packet).** The packet's verdict when the engine fails the
   precommitted inequalities. Read it carefully: **the packet refuses to
   admit the engine into the pay-window study.** It is not an engine
   refusing anything, and not a memory-admission event. The homonym has
   fooled a lab member's own notes before; check a verdict term's referent
   at its minting source.
-- **Beeline.** A free-routing session that reads exactly the dispositive
+- **[Beeline](../GLOSSARY.md#beeline).** A free-routing session that reads exactly the dispositive
   surfaces and nothing else. Perfect competence — and fatal to the
   artifact's value, which is priced entirely in *skipped distractor reads*.
-- **Point-mode.** A run whose K pilots produced one unique realization
+- **[Point-mode](../GLOSSARY.md#point-mode).** A run whose K pilots produced one unique realization
   (zero dispersion). It licenses statements about what was observed, and no
   distributional claim of any kind.
 
@@ -85,9 +85,9 @@ named limitation for any future family needing Regime-S dispersion.
 
 ## What ran
 
-1. **Fresh ignorance probe** — clean ("I don't know from my own
+1. **Fresh [ignorance probe](../GLOSSARY.md#ignorance-probe)** — clean ("I don't know from my own
    knowledge"), re-probed rather than inherited.
-2. **Calibration** — PASS: forced along the route, the engine reads
+2. **[Calibration](../GLOSSARY.md#calibration-gate)** — PASS: forced along the route, the engine reads
    {N31, X31, C31} and answers correctly.
 3. **Five cold free-route pilots** — and the first un-forced conjunction
    assembly in the lab's record: **all five pilots read exactly the
@@ -117,7 +117,7 @@ The moderator's ruling converted the day into the pause:
   measurement at n_max = 24.
 
 The pay-window is bounded from both sides, and the band between the bounds
-is unoccupied. Across every licensed cell in the whole record, **no
+is [unoccupied](../GLOSSARY.md#unoccupied-band). Across every licensed cell in the whole record, **no
 `PRF2-cost-win` exists** — but outcomes 2, 3, and 4 are instrument and
 admission refusals, not behavioral negatives, so "never pays" remains
 unclaimed.

@@ -59,7 +59,7 @@ not reliably represent the decision boundary.
 
 ## The terminal gate
 
-By then the room had entered a **deadly embrace**. The author repaired what the
+By then the room had entered a **[deadly embrace](../GLOSSARY.md#review-budget)**. The author repaired what the
 reviewer named; the reviewer searched the newly enlarged boundary; both were
 doing competent local work while the global process consumed context and
 attention without converging on a trustworthy oracle.
@@ -94,7 +94,7 @@ fails 32/33. No model call is needed to inspect that result.
 ## What is licensed
 
 **Licensed:** a closed substring key was inadequate for this free-text action
-surface; the pre-contact gate prevented an invalid scored experiment; bounded
+surface; the [pre-contact gate](../GLOSSARY.md#pre-contact-gate) prevented an invalid scored experiment; bounded
 review needs a terminal budget; human process oversight supplied information
 the locally engaged agents were no longer positioned to notice.
 

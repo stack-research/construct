@@ -60,7 +60,7 @@ ever say "for this one task, the right answer is..."
 
 ## The anti-fatigue rule, used in anger
 
-Chapter 16 minted a process rule from v0's deadly embrace: predeclare **one
+Chapter 16 minted a process rule — the [review budget](../GLOSSARY.md#review-budget) — from v0's deadly embrace: predeclare **one
 authoring pass, one cold review, one bounded repair, one final cold review by a
 fresh reviewer — then run or close**. Fatigue must not silently become the
 plan.
@@ -137,18 +137,18 @@ lab's — the operator's read is part of the gate.
 
 ## Vocabulary bridge for this chapter
 
-- **wire / wire key:** a machine-comparable surface — bytes either match or
+- **[wire / wire key](../GLOSSARY.md#wire-commitment):** a machine-comparable surface — bytes either match or
   they don't; no interpretation step.
-- **seal / pin:** freezing an artifact's exact bytes (by hash) so later work
+- **[seal / pin](../GLOSSARY.md#pin-seal):** freezing an artifact's exact bytes (by hash) so later work
   provably used *this* version; "holding at read" means no hash has been
   computed yet.
-- **pre-contact gate:** a deterministic test that can refuse the experiment
+- **[pre-contact gate](../GLOSSARY.md#pre-contact-gate):** a deterministic test that can refuse the experiment
   before any engine output is scored.
-- **cold review:** review by a seat that did not build the artifact and, for
+- **[cold review](../GLOSSARY.md#cold-review):** review by a seat that did not build the artifact and, for
   the final review, has not seen the repair conversation.
 - **lane:** one arm of the experiment (treatment, controls, baselines), each
   priced separately.
-- **`confounded(...)`:** a typed verdict meaning "the instrument, not the
+- **[`confounded(...)`](../GLOSSARY.md#confounded):** a typed verdict meaning "the instrument, not the
   engine, produced this result" — the family is uninterpretable, by name.
 
 ## The handoff

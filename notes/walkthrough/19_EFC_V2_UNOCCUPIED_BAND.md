@@ -11,7 +11,7 @@ conjecture still untested, for the third measured reason in a row.
 ## The morning: a battery with its review baked into its hash
 
 v1 died of a saturated surface, so v2's first job was a real battery: 128
-counterfactual blocks — same task, same menu, same evidence, differing only in
+[counterfactual blocks](../GLOSSARY.md#counterfactual-battery) — same task, same menu, same evidence, differing only in
 an opaque provenance record that either covers the declared decision scope or
 misses exactly one dimension. One deterministic script authored all 384
 fixtures; deleting the corpus and rerunning reproduces it byte-for-byte. The
@@ -41,7 +41,7 @@ structural review found five blockers, one of which — the sealed admission
 gate reading manifest keys the pinned manifest didn't carry — meant an
 admission *pass* was mechanically unreachable: first contact would have burned
 896 calls on a verdict decided in advance by a key-name mismatch. The repair
-chain ended with a pin-authorization gate that, hours later, refused **dan's
+chain ended with a [pin](../GLOSSARY.md#pin-seal)-authorization gate that, hours later, refused **dan's
 own pin** until the runner's licensed constant was updated to acknowledge the
 new event. The security property demonstrated itself on its first real input:
 sidecars cannot self-authorize, not even for the person whose authority they
@@ -97,10 +97,10 @@ Same sideways shape, different engine family, different size. Closed.
 
 Three studies in this lineage have now ended on the same shape: PRF's
 pay-window, v1's menu ceiling, and v2's sideways failures all found the
-competent-but-distractible band *unoccupied* — every measured engine is too
+competent-but-distractible band [*unoccupied*](../GLOSSARY.md#unoccupied-band) — every measured engine is too
 strong, constant-policy, or incompetent-within-class. The repetition across
 three differently-typed closes is itself the finding. The conjecture remains
-untested, and the admission gate did precisely its job: it refused to let a
+untested, and the [admission gate](../GLOSSARY.md#admission-packet) did precisely its job: it refused to let a
 treatment study run where no effect could have been read.
 
 The reopen condition is on file, and the instrument is now cheap to point at

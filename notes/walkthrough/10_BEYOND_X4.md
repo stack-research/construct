@@ -35,7 +35,7 @@ join the null family, seven members deep.
 The candidate experiment entered the thread as chapter drafts described it: pause a
 task at a precommitted seam, then continue three ways — **A** uninterrupted, **B**
 cold reread, **C** from a small resumable state — and score resume cost at matched
-decision quality, with changed-world and stale-frontier loses-cells.
+decision quality, with changed-world and stale-frontier [loses-cells](../GLOSSARY.md#loses-cell).
 
 Several rounds of adversarial review reshaped it:
 
@@ -66,7 +66,7 @@ Several rounds of adversarial review reshaped it:
 
 **What survives** is deliberately modest: a cost question. Does a compact state —
 with the forward conditional demoted from "authorization" to a *priced routing hint*
-— buy measurable **warming budget** (read-tokens-to-matched-quality along a
+— buy measurable **[warming budget](../GLOSSARY.md#warming-budget)** (read-tokens-to-matched-quality along a
 prescribed, replayable route) over the heir lane? With the world-moved and
 world-silent legs both priced, and the standing prediction from the lab's own W3/L-D
 verdicts that the hint's *noise cost* is real everywhere even if its win is not.
@@ -87,7 +87,7 @@ That question sits un-sealed at the moderator's gate. It may not be worth buildi
   independent.
 - **Store-shaped salience** — same reader, same route, different memory condition;
   what gets flagged *first*, scored on downstream action — is the one probe that
-  survives into branch-and-offer with fork identity intact.
+  survives into branch-and-offer with [fork identity](../GLOSSARY.md#fork-identity) intact.
 
 ## Disposition and transfer: world-keyed, boundary-declared
 

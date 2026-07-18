@@ -21,7 +21,7 @@ Part IV pinned the detectable form of the pay-window question (§36–§37, ch13
 cheap decoy siblings make the cold branch's *distracted* realization an
 expensive PASS rather than a budget-blowing fail, so the pay-window is
 arithmetically measurable at `n_max = 24`. One new oracle-side law came with
-it — the **conjunctive evidence gate** (§41): no disposition is adequate
+it — the **[conjunctive evidence gate](../GLOSSARY.md#conjunctive-evidence-gate)** (§41): no disposition is adequate
 unless the session actually read all three dispositive legs. That law was
 designed to seal a partial-credit hole found in the docket's ledgers. It
 ended up being the day's protagonist.
@@ -37,8 +37,8 @@ ended up being the day's protagonist.
    Sealed families were re-scored byte-identical under the new scorer.
 2. **Five-seat build review.** All PASS, zero blocking findings — including
    the first seated read from the lab's proxied external cold reviewer.
-3. **Engine contact.** Fresh ignorance probe (clean, confabulation disclosed),
-   calibration PASS — and then the **A2 detector fired on the very first
+3. **Engine contact.** Fresh [ignorance probe](../GLOSSARY.md#ignorance-probe) (clean, confabulation disclosed),
+   [calibration](../GLOSSARY.md#calibration-gate) PASS — and then the **A2 detector fired on the very first
    dispersion pilot**: cold conjunctive pass-rate 0/5.
 4. **Stop the line.** Diagnosis found two transport defects, not engine
    behavior: pilot sessions never received the R-handle instruction (a
@@ -71,7 +71,7 @@ ended up being the day's protagonist.
    decision table priced — pure `c_max` mass. Condition (b) triggered: the
    fits-24 derivation was retracted by its own author, on schedule.
 8. **Close.** Family closed on A2 by the precommitted stop rule. The analogs
-   ran as point-mode instrument alarms and stayed correctly silent (a
+   ran as [point-mode](../GLOSSARY.md#point-mode) instrument alarms and stayed correctly silent (a
    falsifier needs a resumable cost-win; lazy-stopping prices every branch
    at `c_max`).
 

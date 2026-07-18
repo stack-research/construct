@@ -14,7 +14,7 @@ this chapter narrates; [SPEC_PAUSE_RESUME.md](../SPEC_PAUSE_RESUME.md) governs.
 
 ## The question
 
-> When work is interrupted and resumed, does a compact **frontier artifact** —
+> When work is interrupted and resumed, does a compact **[frontier artifact](../GLOSSARY.md#frontier-artifact)** —
 > minted at pause time from structural evidence only, carrying obligations but
 > never answers — ever let the resumed session reach the same-quality decision
 > **cheaper** than re-reading from cold?
@@ -54,24 +54,24 @@ honest cold competitor on a symmetric surface.
 
 ## Vocabulary bridge
 
-**SBR (Symmetric Bounded Retrieval)** is the arena: a catalog of numbered
+**[SBR (Symmetric Bounded Retrieval)](../GLOSSARY.md#sbr)** is the arena: a catalog of numbered
 surfaces behind a closed action grammar (`R01`…`R21` or `STOP`), identical on
 both branches, with a hard read budget. The **cold-reread** branch gets the
 catalog and nothing else. The **resumable-state** branch gets the same catalog
 plus the rendered artifact — and *pays for it*: the artifact's rendered tokens
 (`a_i`) are charged to every resume.
 
-**ECAC (expected cost to adequate continuation)** is the score: read tokens plus
+**[ECAC (expected cost to adequate continuation)](../GLOSSARY.md#ecac)** is the score: read tokens plus
 artifact carry, counted only when the answer passes the oracle at the pinned
 quality bar. Failure prices at `c_max` — there is no partial credit.
 
-A **loses-cell** is an authored outcome where the artifact *should* lose
+A **[loses-cell](../GLOSSARY.md#loses-cell)** is an authored outcome where the artifact *should* lose
 (`PRF2-heir-dominates`: cold reads the same legs and stops). A **self-falsifier**
 is a fixture variant where any artifact win refutes the instrument itself
 (`PRF2-ballast-null`: the bundle points at wrong surfaces; `PRF2-neutral-null`:
 the bundle carries no prunable frontier). Band = 0: any strict win fires.
 
-The **pay-window** is the region where an engine is strong enough to use the
+The **[pay-window](../GLOSSARY.md#pay-window)** is the region where an engine is strong enough to use the
 artifact but weak enough to need it. Whether it exists, for any engine on any
 family, is the falsifiable target.
 

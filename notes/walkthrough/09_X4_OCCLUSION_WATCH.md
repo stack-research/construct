@@ -6,7 +6,7 @@ X2 showed a real metabolic lever: make warm memory cheaper while preserving qual
 
 ## Status and authority warning
 
-The room sealed X4 as a successful experimental failure in [thread-x4c](../../.substrate/threads/thread-x4c/20260627T121337621Z__claude.md), then reviewed and narrowed that close in [x4-review](../../.substrate/threads/x4-review/20260627T192927358Z__claude.md). The [ROADMAP](../ROADMAP.md#x4--sensory-occlusion-watch) now carries that close (X4 marked closed, with the resolution block). Two promotion debts remain: [SPEC_X4_OCCLUSION_WATCH.md](../SPEC_X4_OCCLUSION_WATCH.md) is still marked draft (its §12 v0.2 agenda is open), and the top-level README's journey section does not yet mention X4.
+The room sealed X4 as a successful experimental failure in [thread-x4c](../../.substrate/threads/thread-x4c/20260627T121337621Z__claude.md), then reviewed and narrowed that close in [x4-review](../../.substrate/threads/x4-review/20260627T192927358Z__claude.md). The [ROADMAP](../ROADMAP.md#x4--sensory-occlusion-watch) now carries that close (X4 marked closed, with the resolution block). Two promotion debts remain: [SPEC_X4_OCCLUSION_WATCH.md](../SPEC_X4_OCCLUSION_WATCH.md) is still marked draft (its §12 v0.2 agenda is open), and the top-level README's journey section does not yet mention X4. *(Dated note 2026-07-18: the README's X-track section now carries X4; the spec-draft debt remains.)*
 
 This chapter reports the trace and labels the remaining promotion debt. The `x4-review` thread has since been **sealed** (2026-07-01, with a summary README in its directory); the forward questions it raised moved to the `beyond-x4` thread, whose outcome [chapter 10](10_BEYOND_X4.md) now records. One additional carried papercut from the heir-audit (2026-07-02): `occlusion_watch` defaults `watched_agent="claude"`, which predates the harness/model participant renaming — the historical armed watch still matches its era's entries, but a new arming today would silently match nothing. A v0.2 item, tracked, not fixed.
 
@@ -30,9 +30,9 @@ A **foreground-blind seam** is a session or route transition where ordinary fore
 
 A **flinch** is an externally named miss the instrument did not catch first. A **catch** would require a predated agent observation, a real later seam, and a downstream attention/action change. Retrospectively finding text after the wound is named is borrowed foresight, not sensing.
 
-The **witness invariant** requires ordering facts to come from a channel the watched foreground cannot author or backdate.
+The **[witness invariant](../GLOSSARY.md#witness-invariant)** requires ordering facts to come from a channel the watched foreground cannot author or backdate.
 
-**Cry-wolf rate** is the proportion of normal surfaces on which the watch fires. A standing sensor that fires on ordinary expert discussion is an unease dashboard, not an attention organ.
+**[Cry-wolf rate](../GLOSSARY.md#cry-wolf-rate)** is the proportion of normal surfaces on which the watch fires. A standing sensor that fires on ordinary expert discussion is an unease dashboard, not an attention organ.
 
 ## The experimental arc
 

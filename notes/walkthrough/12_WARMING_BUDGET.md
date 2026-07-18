@@ -40,22 +40,22 @@ audit had diagnosed the same week.
 
 ## Vocabulary bridge
 
-A **chronology packet** is the corpus unit: what the world said at pause (T0), what
+A **[chronology packet](../GLOSSARY.md#chronology-packet)** is the corpus unit: what the world said at pause (T0), what
 it says at resume (T1), the public surfaces either branch may read, and one narrow
 world fact (`status_key`) an oracle can score.
 
-A **prospective watch** inverts the lab's usual relationship to evidence: instead of
+A **[prospective watch](../GLOSSARY.md#prospective-watch)** inverts the lab's usual relationship to evidence: instead of
 scoring what already happened, the harness stamps its commitments *first* —
 population, match rule, trigger, compact state — and then waits. The world grades
-the bets on its own schedule. **Foresight leak** is the failure this discipline
+the bets on its own schedule. **[Foresight leak](../GLOSSARY.md#foresight-leak)** is the failure this discipline
 exists to refuse: any enrollment choice informed by knowing which units are likely
 to move.
 
-The **warming budget** is the cost axis: `route_read_tokens` to matched outcome
+The **[warming budget](../GLOSSARY.md#warming-budget)** is the cost axis: `route_read_tokens` to matched outcome
 along a replayable route — what re-entry *reads*, as distinct from what the hot
 store *holds* (X2's axis, explicitly fenced off).
 
-An **answer-bearing certificate** is a surface whose change *is* the world movement.
+An **[answer-bearing certificate](../GLOSSARY.md#answer-bearing-certificate)** is a surface whose change *is* the world movement.
 The one rule this chapter turns on: certificates are **derived, never authored** —
 a pure function over T0/T1 hashes and a match rule frozen at population time.
 Hand-authored certificate marks anywhere in the data are refused fail-closed.

@@ -44,7 +44,7 @@ toward endorsements. The central finding of this chapter is that evidence and pr
 can rot independently.
 
 A **forcing function** is a mechanism that makes an obligation structurally
-unavoidable rather than remembered. A **computed close** is this lab's newest
+unavoidable rather than remembered. A **[computed close](../GLOSSARY.md#computed-close)** is this lab's newest
 example: a milestone close that refuses to exist as a ledger row until its
 preconditions demonstrably hold.
 

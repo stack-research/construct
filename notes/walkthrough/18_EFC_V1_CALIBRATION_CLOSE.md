@@ -9,7 +9,7 @@ API spend bought.
 
 ## Where chapter 17 left off
 
-The v1 protocol was sealed with a wire-commitment surface: the engine
+The v1 protocol was sealed with a [wire-commitment](../GLOSSARY.md#wire-commitment) surface: the engine
 answers by naming one action from a closed menu in a machine-validated
 field, and the scorer is exact byte equality. Chapter 17 closed with the
 operator's read pending. He sealed it the next morning, and the calibration
@@ -63,7 +63,7 @@ consequence-carried disposition make the engine check *more* — has no room
 to exist on this surface with this engine, because untreated behavior is
 already perfect.
 
-The menu-ceiling gate fired exactly as designed (`B_obs = 1.0 ≥ 0.80`), and
+The [menu-ceiling](../GLOSSARY.md#menu-ceiling) gate fired exactly as designed (`B_obs = 1.0 ≥ 0.80`), and
 this time the runner itself typed the verdict: `confounded(menu_ceiling)`.
 The operator closed v1 calibration on that verdict.
 
@@ -73,7 +73,7 @@ This threat was named before anything was built. In the v1 design round,
 the adversarial reviewer's first-ranked threat (T1) was precisely this: a
 closed menu can make competent engines look perfect regardless of any
 disposition, flattening the treatment delta — and the review demanded a
-pre-contact gate rather than a score-time discovery. The gate was built,
+[pre-contact gate](../GLOSSARY.md#pre-contact-gate) rather than a score-time discovery. The gate was built,
 survived its own review cycle, and eleven hours later it caught the real
 thing, live, before a single calibration claim existed.
 
@@ -82,7 +82,7 @@ represent the decision boundary. v1's scorer is beyond reproach — and the
 close moved one layer up, to the *surface*: this engine at this reasoning
 effort saturates these tasks. That is the fourth family's pattern again
 (chapter 15): the band an experiment needs — competent but not saturating —
-can simply be unoccupied. Each close is more informative than the last
+can simply be [unoccupied](../GLOSSARY.md#unoccupied-band). Each close is more informative than the last
 because each instrument got further before refusing.
 
 ## What is licensed
