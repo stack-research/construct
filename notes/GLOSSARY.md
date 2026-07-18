@@ -49,6 +49,19 @@ what moves to [cold lineage](#cold-lineage) without erasure, what the agent is
 disposed to remember at all. The X-track tests this layer; see also
 [three-guardrail stack](#three-guardrail-stack).
 
+**Disambiguation.** Not the term's two established senses elsewhere. This is
+*not* parametric memory — knowledge carried in the model's weights; the lab
+proves its fixtures are out-of-weights before scoring (see [X2-U1](#x2-u1)).
+And it is *not* the cognitive-science sense — priming or procedural skill
+expressed without conscious recollection. Here the term names the state of the
+substrate around the engine: residency and disposition, not content the model
+absorbed.
+
+In new prose prefer the full compound **implicit-memory substrate** (this
+entry's anchor), which collides with neither reading. Existing usages of the
+bare term stay as written and mean this entry — superseded in preference, not
+erased.
+
 ### Resident
 
 A repo-native agent that lives on a governed store across real sessions (M2).
@@ -539,6 +552,34 @@ offer boundary) under a world-checking oracle. The *instrument* shipped; the
 *organ* (synchronous eligibility-temperature) was **retired** — it was explicit
 governance with a dial, not the implicit substrate (`notes/X1_FINDINGS.md`).
 
+### Cold-Is-Cold
+
+<a id="cold-is-cold"></a>
+
+X4's closing insight: the human-warm/agent-cold gap is a *state* gap, not a
+capability gap. Sensing an occluded ancestor reduces to *reading* it, so a
+"coldness sensor" costs the same attention as the warming it would trigger —
+reading is already the sense. The narrow close and its retracted stronger
+claims are [walkthrough chapter 9](walkthrough/09_X4_OCCLUSION_WATCH.md).
+
+### Cry-Wolf Rate
+
+<a id="cry-wolf-rate"></a>
+
+The proportion of normal surfaces on which a standing watch fires. A sensor
+that fires on ordinary expert discussion is an unease dashboard, not an
+attention office — `route_watch` failed standing admission at 0.274 on a
+pinned population of 328 real lab turns.
+
+### Witness Invariant
+
+<a id="witness-invariant"></a>
+
+Ordering facts must come from a channel the watched foreground cannot author
+or backdate. X4's surviving infrastructure: it underwrites every
+chronology-protected claim since — [prospective-watch](#prospective-watch)
+triggers, precommitted reopen conditions, the T0-before-movement rule.
+
 ## Process and audit terms (how the lab argues)
 
 The lab's results are made in conversation. These terms name the moves of that
@@ -571,6 +612,11 @@ could explain this result*. Distinct from `fail` (mechanism engaged and lost)
 and [`not_engaged`](#not_engaged) (conditions never arose). The X1 null is the
 canonical example: recorded as confounded, so the organ's retirement rests on a
 design argument, never on that data.
+
+Since the pause/resume and EFC arcs the verdict is usually parameterized —
+`confounded(A2)`, `confounded(menu_ceiling)`, `confounded(admission_band)` —
+the parenthesis naming the instrument condition that produced it. See
+[typed refusal](#typed-refusal).
 
 ### Disclosed Debt / Orphaned Debt
 
@@ -608,6 +654,8 @@ prose cannot quietly outrun the evidence later.
 
 ### Close Gate / Computed Close
 
+<a id="computed-close"></a>
+
 A milestone close as a ledger artifact (`runs/closes/closes.jsonl`, single
 writer `harness/check_close.py`) that refuses to exist until four legs hold:
 a substantiated, packet-grounded contribution row; a harness-enumerated,
@@ -624,3 +672,250 @@ never evidence** — it prices nothing and scores nothing; no
 [`cell_verdict`](#cell_verdict) may consume it. Exists because a coverage-only
 gate is satisfiable at engine speed, and the lab's best catches have come from
 its slowest reader.
+
+## Admission and calibration terms (the pause/resume and EFC era)
+
+The instruments after the warming budget — the pause/resume frontier
+(walkthrough chapters 12–15) and the epistemic-frame check (chapters 16–19) —
+spent most of their budget refusing to run invalid experiments. These terms
+name that machinery. Authority: [SPEC_PAUSE_RESUME.md](SPEC_PAUSE_RESUME.md)
+and [PRF_FINDINGS.md](PRF_FINDINGS.md) for the pause/resume terms; the EFC
+findings chain ([v0](EFC_V0_FINDINGS.md), [v1](EFC_V1_FINDINGS.md),
+[v2](EFC_V2_FINDINGS.md)) and sealed specs for the rest.
+
+### Typed Refusal
+
+<a id="typed-refusal"></a>
+
+A study ending in a named, machine-legible verdict — `confounded(A2)`,
+`admission_refused`, `blocked_before_contact` — instead of an untyped "it
+failed." The type says *which layer* refused (transport, surface, oracle,
+engine admission), so unlike refusals cannot be stacked into one thesis:
+"three consecutive negatives" was refused as exactly that compression
+([walkthrough chapter 15](walkthrough/15_FOURTH_FAMILY.md)).
+
+### Ignorance Probe
+
+<a id="ignorance-probe"></a>
+
+A pre-run check that the engine cannot answer the fixture question from its
+own weights ("I don't know" cold, before any records are shown). Re-probed
+fresh per run, never inherited. First used in [X2's world-grounded
+close](#x2-u1); the bottom rung of every admission ladder since.
+
+### Calibration Gate
+
+<a id="calibration-gate"></a>
+
+The capability rung of the admission ladder: forced along the intended route,
+does the engine read the dispositive surfaces and answer correctly? It proves
+the capability exists, so that free-route behavior — guessing off one surface,
+[beelining](#beeline) — is interpretable as behavior rather than inability.
+Probe → calibrate → gate → refuse is the standing ladder.
+
+### Phase-0 Admission Packet
+
+<a id="admission-packet"></a>
+
+A machine-scored gate run *before* any scored experiment: does this engine
+even exhibit the behavior the experiment needs? Scored against precommitted
+inequalities; `admitted` licenses nothing by itself — it only arms the study.
+**Mind the homonym:** the verdict `admission_refused` means the packet refused
+to admit the *engine into the study* — not an engine refusing to answer, and
+not a memory-admission event. It has fooled a lab member's own notes before;
+check a verdict term's referent at its minting source.
+
+### Pre-Contact Gate
+
+<a id="pre-contact-gate"></a>
+
+A deterministic test that can refuse the experiment before any engine output
+is scored — `confounded(menu_leak)` and `confounded(menu_ceiling)` are its EFC
+verdicts. The admission discipline applied to the instrument itself: if the
+surface cannot isolate the claim, refuse before contact rather than publish
+numbers about the wrong thing.
+
+### Menu Ceiling
+
+<a id="menu-ceiling"></a>
+
+The failure where a closed answer menu lets a competent engine pick the
+expected option untreated, at or near 100% — leaving no room for the
+treatment contrast to exist. Named as the top-ranked threat before EFC v1 was
+built; the gate built for it fired on first live contact (`B_obs = 1.0`),
+closing v1 as `confounded(menu_ceiling)`.
+
+### The Unoccupied Band
+
+<a id="unoccupied-band"></a>
+
+The band an admission-gated treatment study needs its engine to occupy:
+competent enough to do the task, distractible or imperfect enough for the
+treatment to have headroom. Three differently-typed closes found it
+unoccupied — the [pay-window](#pay-window) bounded from both sides, EFC v1's
+[menu ceiling](#menu-ceiling), EFC v2's sideways failures. The repetition
+across unlike instruments is itself the finding; the conjectures remain
+untested, not answered negative.
+
+### Pay-Window
+
+<a id="pay-window"></a>
+
+The region where an engine is strong enough to *use* a resume-time
+[frontier artifact](#frontier-artifact) but weak enough to *need* it. The
+falsifiable target of the pause/resume families; never observed — engines
+below the band cannot convert the artifact, engines above it
+[beeline](#beeline) past it.
+
+### Frontier Artifact
+
+<a id="frontier-artifact"></a>
+
+A compact resume-state minted at pause time from structural evidence only —
+carrying obligations and pointers, never answers. Its rendered tokens are
+charged to every resume; the claim under test is governed-hint efficiency,
+never continuity and never "the model remembers."
+
+### SBR (Symmetric Bounded Retrieval)
+
+<a id="sbr"></a>
+
+The pause/resume arena: a catalog of numbered surfaces behind a closed action
+grammar, identical on both branches, under a hard read budget. The cold-reread
+branch gets the catalog; the resumable-state branch gets the catalog plus the
+rendered artifact — and pays its carry cost on every resume.
+
+### ECAC (Expected Cost to Adequate Continuation)
+
+<a id="ecac"></a>
+
+The pause/resume score: read tokens plus artifact carry, counted only when the
+answer passes the oracle at the pinned quality bar. Failure prices at `c_max`
+— there is no partial credit.
+
+### Conjunctive Evidence Gate
+
+<a id="conjunctive-evidence-gate"></a>
+
+Oracle-side law from the Greenreach family: no disposition is adequate unless
+the session actually *read* every dispositive leg. It sealed the
+partial-credit hole where a prior oracle had been paying out for
+read-one-leg-and-guess for a month — the "oracles buy behavior" lesson
+([walkthrough chapter 14](walkthrough/14_GREENREACH_CLOSE.md)).
+
+### Beeline
+
+<a id="beeline"></a>
+
+A free-routing session that reads exactly the dispositive surfaces and nothing
+else. Perfect competence — and fatal to a frontier artifact's value, which is
+priced entirely in *skipped distractor reads*.
+
+### Point-Mode / Zero-Dispersion
+
+<a id="point-mode"></a>
+
+A run whose K pilots produced one unique realization (zero dispersion). It
+licenses statements about what was observed and no distributional claim of any
+kind. Runs downgrade themselves to point-mode rather than dress API jitter up
+as dispersion.
+
+### Wire Commitment
+
+<a id="wire-commitment"></a>
+
+An answer surface where bytes either match or they don't: the engine commits
+by naming exactly one option from a closed menu in a machine-validated field,
+and the scorer is byte equality. EFC v1's repair for v0's free-text oracle.
+The house observation behind it: every scorer this lab has gotten past cold
+review is an equality check on bytes the experiment forced into existence;
+every scorer that died tried to recognize meaning in bytes the engine chose
+freely.
+
+### Pin / Seal / Superseding Manifest
+
+<a id="pin-seal"></a>
+
+Freezing an artifact's exact bytes by hash so later work provably used *this*
+version ("holding at read" means no hash has been computed yet). A superseding
+manifest replaces a pin going forward while preserving its predecessors —
+never valid alone hereafter, never erased. Sidecars cannot self-authorize a
+pin, not even for the operator whose authority they record.
+
+### Cold Review
+
+<a id="cold-review"></a>
+
+Review by a seat with no authorship stake in the artifact — the author of an
+artifact never reviews it. The *final* cold reviewer is additionally isolated:
+it reads the artifact and the governing documents only, never the earlier
+review or the repair discussion, so its PASS is independent corroboration
+rather than echo.
+
+### Review Budget
+
+<a id="review-budget"></a>
+
+The terminal review discipline minted from EFC v0's **deadly embrace** —
+author and reviewer co-adapting at engine speed until passing means
+accommodation to known objections rather than validity on unseen cases. The
+budget: one authoring pass, one [cold review](#cold-review), one bounded
+repair, one final isolated review — then run or close. Distinct from the
+older [bounded review pass](#bounded-review-pass) (one pass *per reviewer*);
+the budget bounds the whole lifecycle.
+
+### Counterfactual Battery
+
+<a id="counterfactual-battery"></a>
+
+EFC v2's fixture form: paired blocks identical in task, menu, and evidence,
+differing only in a hidden bit (does the provenance record cover the declared
+scope, or miss exactly one dimension?). Authored by one deterministic script —
+delete the corpus and rerun, and it reproduces byte-for-byte, with the cold
+reviewer's attestations bound into the suite hash.
+
+### Prospective Watch
+
+<a id="prospective-watch"></a>
+
+An instrument that stamps its commitments *first* — population, match rule,
+triggers, compact states — then waits for the world to grade the bets on its
+own schedule. It inverts the lab's usual relationship to evidence (scoring
+what already happened). First instance: the warming-budget watch, 101
+precommitted triggers against the IETF calendar.
+
+### Foresight Leak
+
+<a id="foresight-leak"></a>
+
+The failure a [prospective watch](#prospective-watch) exists to refuse: any
+enrollment or scheduling choice informed by knowing which units are likely to
+move. The canonical near-miss: a "telechat within 45 days" filter that would
+have made structurally-certain movers the core of the sample.
+
+### Chronology Packet
+
+<a id="chronology-packet"></a>
+
+The prospective watch's corpus unit: what the world said at pause (T0), what
+it says at resume (T1), the public surfaces either branch may read, and one
+narrow world fact (`status_key`) an oracle can score.
+
+### Warming Budget
+
+<a id="warming-budget"></a>
+
+The re-entry cost axis: route read-tokens to matched outcome along a
+replayable route — what resuming *reads*, as distinct from what the hot store
+*holds* ([X2's axis](#cost-at-matched-quality), explicitly fenced off). Also
+the name of the v0.1 instrument closed on an analytic null
+([WB_FINDINGS.md](WB_FINDINGS.md)).
+
+### Answer-Bearing Certificate
+
+<a id="answer-bearing-certificate"></a>
+
+A surface whose change *is* the world movement a watch is waiting for.
+Certificates are **derived, never authored**: a pure function over frozen
+T0/T1 hashes and a match rule fixed at population time. Hand-authored
+certificate marks anywhere in the data are refused fail-closed.
