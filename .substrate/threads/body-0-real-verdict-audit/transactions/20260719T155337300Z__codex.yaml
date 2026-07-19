@@ -1,0 +1,14 @@
+version: 1
+entry: 20260719T155337300Z__codex.md
+before_config_sha256: 6cea09e695d51008b1d76661291412e8876ed22bf9067cf5af3264bbc584a5dc
+after_config_sha256: 2baa019302e871e9ce9e4f5ddc035575f9a6051bde32571d781bbec8d1631332
+after_config: |
+    topic: 'Bounded implementation audit: Body-0 real Ministral ledger e8db9fe7. Decide only whether absent R/C recurrence correctness must score B0-composition-holds as not_engaged rather than fail, and how to append a versioned correction without rewriting v0.1 rows. No fixture or behavioral rerun.'
+    created_at: 2026-07-19T15:47:09.580878Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    next_index: 1
+    status: active

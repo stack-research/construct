@@ -1,8 +1,8 @@
 # NEXT substrate orientation map
 
-Status: **living orientation map**. Updated 2026-07-16 after the EFC v1
-calibration close; previously updated 2026-07-11 alongside the first
-non-evidentiary embodiment sketch.
+Status: **living orientation map**. Updated 2026-07-19 after the EFC v2
+admission-band close and the Body-0 v0.2 `not_engaged` close; previously updated
+2026-07-16 after the EFC v1 calibration close.
 
 Purpose: answer "what are we building?" without letting a diagram promote
 proposed anatomy into findings. The architecture lives in
@@ -64,7 +64,8 @@ that every node exists as a product component. Read the labels before the nouns.
 | Hot/cold eviction and recovery | **Earned narrowly** | [X2 findings](X2_FINDINGS.md) | One sequence/corpus shape; no general sleep subsystem |
 | Governed materialization | **Provisional sketch** | [walking skeleton](../sketches/next_substrate/README.md) | Deterministic replay demonstrates composition only |
 | Sparse activation plus action boundary | **Provisional sketch** | Walking skeleton controller rows | No real engine or licensed controller treatment |
-| Structural failure disposition | **Candidate slice; Part I sealed; v1 calibration closed `confounded(menu_ceiling)`** | [pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md); [EFC v1 findings](EFC_V1_FINDINGS.md); `epistemic_frame_check_v0_stub` in the sketch | Wire-commitment surface carried live engine traffic (45/45); calibration confounded by a runner-typed menu ceiling — trigger, check, oracle, meter, and mechanism license remain unearned |
+| Structural failure disposition | **Parked candidate; three typed refusals** | [v0](EFC_V0_FINDINGS.md), [v1](EFC_V1_FINDINGS.md), and [v2](EFC_V2_FINDINGS.md) findings; `epistemic_frame_check_v0_stub` in the sketch | v0's free-text oracle failed cold review; v1 found a menu ceiling; v2 found within-class chance behavior and constant policy. The mechanism remains unearned and reopens only on its sealed admission trigger |
+| Earned-property composition | **Closed `not_engaged`; integration unearned** | [Body-0 findings](BODY_0_FINDINGS.md) | R/C failed recurrence while A/X answered without the earned path. Machinery held, but causal need was absent |
 | Metabolic proprioception | **Provisional sketch** | Check-cost and wire-causal events | No real carry-cost or benefit finding |
 | Provenance-health retirement | **Provisional sketch** | External warrant-revision sweep | Demonstrates dependency flow, not correctness |
 | Semantic failure geometry | **Unlicensed office** | Architecture only | Would introduce another classifier requiring its own license |
@@ -85,10 +86,10 @@ that every node exists as a product component. Read the labels before the nouns.
 It does **not** establish language-model learning, transfer, mechanism value, or
 scientific superiority. Its deterministic behavior is authored.
 
-## Current candidate slice
+## Current candidate work
 
-The first candidate experiment remains consequence-shaped attention at
-structural width:
+No new scientific mechanism is licensed. The epistemic-frame candidate remains
+parked after three typed refusals:
 
 ```text
 world-checked failure
@@ -98,20 +99,22 @@ world-checked failure
   -> no tax on non-matching tasks
 ```
 
-The sealed [Part I pre-engine protocol](SPEC_EPISTEMIC_FRAME_CHECK_V0.md) freezes
-the candidate admission and refusal path. It does not license a mechanism or
-held-out build. The architecture's admission gate still applies: typed carrier,
-independently licensed derivation, probationary instance, control-plane meter,
-and dual metabolic/provenance sensors.
+The lineage moved from v0's failed free-text oracle, through v1's live
+wire-commitment surface and menu ceiling, to v2's sealed counterfactual battery.
+Two small-engine families passed ordinary competence but failed sideways:
+constant policy and chance-level within-class choice. The successor admission
+requirement is now executable and sealed: an untreated engine must land inside
+the declared band with all competence and anti-constant guards passing before a
+treatment leg may run. Candidate engines may be smoke-tested against that gate;
+the instrument is not redesigned around misses.
 
-The v1 calibration attempt ([EFC v1 findings](EFC_V1_FINDINGS.md)) reached live
-engine contact for the first time in the lineage: the wire-commitment surface
-held (45/45 valid live commitments), but calibration closed
-`confounded(menu_ceiling)` — an untreated engine hit the expected enum 15/15
-from task plus menu alone, so the conjecture went untested for a measured
-reason. Any successor lineage inherits a concrete admission requirement: the
-untreated baseline must sit inside the declared band on the actual task battery
-before any treatment leg runs.
+[Body-0](BODY_0_COMPOSITION_AUDIT.md) then tested whether the already-earned M2
+consequence path, M3 authority boundary, and X2 hot/cold recovery preserve their
+narrow properties when composed in one persistent loop. Its real run closed
+`not_engaged`: R/C missed the recurrence while A/X answered correctly without
+the earned path. The protected projection and replayed cost machinery held, but
+the composition edge remains provisional because no causal integration result
+was earned. See [findings](BODY_0_FINDINGS.md).
 
 ## Update contract
 

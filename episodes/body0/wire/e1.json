@@ -1,0 +1,33 @@
+{
+  "episode_id": "body0-rw0001-e1",
+  "_notes": "Body-0 wire fixture, Failure step. The mock returns the tempting original record beginning with 'cite'; the rw-0001 retraction oracle scores that answer wrong, allowing the unchanged M2 Wall-B mint to produce the earned correction. Wire/integration only.",
+  "expected_winner_condition": null,
+  "question": "May we cite the reported DNA-methylation age-clock finding in three threatened Australian freshwater fish species as current evidence? Answer cite or decline, then one sentence.",
+  "expected_answer": "",
+  "oracle_ref": {
+    "corpus_entry": "corpus/retractions/rw-0001.json",
+    "representativeness": "The same narrow rw-0001 retraction chain already used by M2; one impersonal conservation-genetics result whose central figure relationship was retracted.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "fish-clock-original",
+      "text": "cite — The original 2024 publication posture presents the freshwater-fish DNA-methylation age-clock finding as suitable to cite.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "body0-ballast",
+      "text": "Archival conservation-methods index: otolith growth bands, mark-recapture schedules, telemetry receiver calibration, population viability tables, habitat-temperature series, sample-preservation protocols, microsatellite panels, mitochondrial barcodes, and field-station maintenance records collected across unrelated freshwater monitoring programs.",
+      "created_at": "2019-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

@@ -81,7 +81,7 @@ Every X-track office must pass three checks ([three-guardrail stack](notes/GLOSS
 
 **X4 — Occlusion watch (closed, a successful failure).** The proposed sensory office — watching for what the room can no longer see — was built, armed, and then closed (2026-06-27) when the room showed its scoreboard measured curation, not sensing: cold-is-cold, and reading is already the sense. The full arc, including why the failure was worth keeping, is [walkthrough chapter 9](notes/walkthrough/09_X4_OCCLUSION_WATCH.md).
 
-## Where the lab is now (2026-07-18)
+## Where the lab is now (2026-07-19)
 
 The M- and X-tracks above are the lab's **earned past**. The instruments that have occupied the bench since reached honest terminal states, each ending in a [typed refusal](notes/GLOSSARY.md#typed-refusal) rather than a result softened to look like one: warming-budget v0.1 closed on an analytic null ([findings](notes/WB_FINDINGS.md)); the pause/resume [pay-window](notes/GLOSSARY.md#pay-window) question is paused with a precommitted reopen trigger and no licensed cost win ([findings](notes/PRF_FINDINGS.md)). Neither is the current build direction.
 
@@ -96,6 +96,21 @@ No next scientific mechanism is licensed yet. The epistemic-frame check — shou
 - **v2** (closed 2026-07-17, `confounded(admission_band)`): a byte-reproducible [counterfactual battery](notes/GLOSSARY.md#counterfactual-battery) of 128 paired blocks met two live engine families across four runs. Both passed ordinary competence, then failed sideways — withholding or choosing at chance regardless of the hidden bit, the exact constant policy v1's design round predicted a naive scorer would reward. ([findings](notes/EFC_V2_FINDINGS.md); [walkthrough](notes/walkthrough/19_EFC_V2_UNOCCUPIED_BAND.md))
 
 Three lineages now end on one shape: the pay-window, v1's menu ceiling, and v2's sideways failures all found [the band the experiment needs unoccupied](notes/GLOSSARY.md#unoccupied-band) — every measured engine too strong, constant-policy, or incompetent-within-class. The repetition across three differently-typed closes is itself the finding. The conjectures stay untested, not answered negative; the batteries, gates, and pin discipline are sealed and reusable, and pointing them at a new candidate engine costs a smoke test.
+
+The next milestone was not a fourth mechanism surface. [Body-0](notes/BODY_0_COMPOSITION_AUDIT.md) asked whether the narrow properties already earned in M2, M3, and X2 survive one persistent causal loop: consequence-carrying continuity, prompt-resistant out-of-band authority, and hot/cold recovery. Its v0.2 instrument passed wire review and then closed `not_engaged` on the admitted Ministral run ([findings](notes/BODY_0_FINDINGS.md)). R and C both returned empty, unparseable recurrence answers while A and X answered correctly without the earned path, so the required causal need was absent. Protected projection and replayed cost held (`C=254 < R=428`), but bookkeeping cannot rescue a missing treatment baseline. No integration claim was earned and no new scientific mechanism is licensed.
+
+The frontier search after that close produced one
+[Body-1 packet](notes/SPEC_BODY_1_EXECUTABLE_CONSEQUENCE.md): a CPython 3.14
+runtime change where a consequence-earned, narrowly scoped record changes a
+later executable action rather than citation prose. Two cold models failed in
+the stale direction, succeeded with the record on a held-out rename-only task,
+and correctly declined to over-apply it on the governance-should-lose case.
+Those remain discovery preflights, not harness evidence. The fresh declarative
+packet passed deterministic authoring checks and a unanimous one-pass final
+review at exact index hash
+`22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5`.
+That licenses an implementation proposal and later wire review only. Engine
+contact and any scientific or integration claim remain unlicensed.
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

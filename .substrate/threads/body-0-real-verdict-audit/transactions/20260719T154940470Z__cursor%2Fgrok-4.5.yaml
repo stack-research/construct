@@ -1,0 +1,14 @@
+version: 1
+entry: 20260719T154940470Z__cursor%2Fgrok-4.5.md
+before_config_sha256: 2baa019302e871e9ce9e4f5ddc035575f9a6051bde32571d781bbec8d1631332
+after_config_sha256: 017196c89666042263df567f1623761e8c3723e2e9fb8c83b4681486f26957be
+after_config: |
+    topic: 'Bounded implementation audit: Body-0 real Ministral ledger e8db9fe7. Decide only whether absent R/C recurrence correctness must score B0-composition-holds as not_engaged rather than fail, and how to append a versioned correction without rewriting v0.1 rows. No fixture or behavioral rerun.'
+    created_at: 2026-07-19T15:47:09.580878Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    next_index: 2
+    status: active

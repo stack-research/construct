@@ -1,0 +1,131 @@
+{
+  "fixture_results": [
+    {
+      "fixture": "b1-surface-control",
+      "form": "bare_partial",
+      "observed": "pass",
+      "program_sha256": "978f8954b15f5ed3d0d0a45a6b282458628e5ab0b147c0bcea870f964434c651",
+      "stderr_class": "empty",
+      "stdout_sha256": "fc6f539538d8e915b685a71cbf0a11e1c75d8c8c7fe625768375c64ccb39b4e9"
+    },
+    {
+      "fixture": "b1-surface-control",
+      "form": "nonbinding_partial",
+      "observed": "TypeError",
+      "program_sha256": "9919b54f8a5258d3657835a8c79133a35d5aca6a1ade0995c4ec66cb248d5509",
+      "stderr_class": "TypeError",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": "b1-ignorance-probe",
+      "form": "bare_partial",
+      "observed": "TypeError",
+      "program_sha256": "744b0d83383e52971ea0440e15aea5510bc233053d3d075202275d077048157d",
+      "stderr_class": "TypeError",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": "b1-ignorance-probe",
+      "form": "nonbinding_partial",
+      "observed": "pass",
+      "program_sha256": "a41ecb6064e6c41f56b3e91abf19b017c839cc5fefcb7126a6fe4ffded50a46d",
+      "stderr_class": "empty",
+      "stdout_sha256": "fc6f539538d8e915b685a71cbf0a11e1c75d8c8c7fe625768375c64ccb39b4e9"
+    },
+    {
+      "fixture": "b1-e1-route-key",
+      "form": "bare_partial",
+      "observed": "TypeError",
+      "program_sha256": "472cfca730a1260383033b41a89916e124a7eb9e7480bb0535956aeba6754792",
+      "stderr_class": "TypeError",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": "b1-e1-route-key",
+      "form": "nonbinding_partial",
+      "observed": "pass",
+      "program_sha256": "f59f2b66f6701f1709095b93f7ffe13ed6ee0b3f9015813fd403bc0eee21fe2c",
+      "stderr_class": "empty",
+      "stdout_sha256": "fc6f539538d8e915b685a71cbf0a11e1c75d8c8c7fe625768375c64ccb39b4e9"
+    },
+    {
+      "fixture": "b1-residence-ticket-key",
+      "form": "bare_partial",
+      "observed": "pass",
+      "program_sha256": "7fc7081cd2abaec435a66142f391e2fdd539790418daaa2431b42c6bc0332952",
+      "stderr_class": "empty",
+      "stdout_sha256": "fc6f539538d8e915b685a71cbf0a11e1c75d8c8c7fe625768375c64ccb39b4e9"
+    },
+    {
+      "fixture": "b1-residence-ticket-key",
+      "form": "nonbinding_partial",
+      "observed": "TypeError",
+      "program_sha256": "be8585fe449b80e1b45538f88c24fbf6838952a8d1757c8b22b22d48d21722cb",
+      "stderr_class": "TypeError",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": "b1-u-unit-key",
+      "form": "bare_partial",
+      "observed": "TypeError",
+      "program_sha256": "e445b47089b07292e7004bc4c67e9557c7cd2df51225ba677c2043a97f8e37ec",
+      "stderr_class": "TypeError",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": "b1-u-unit-key",
+      "form": "nonbinding_partial",
+      "observed": "pass",
+      "program_sha256": "e7432f3efe2a45aabddbf1051c8003b0759d755d4debf0de22b63bc015c94489",
+      "stderr_class": "empty",
+      "stdout_sha256": "fc6f539538d8e915b685a71cbf0a11e1c75d8c8c7fe625768375c64ccb39b4e9"
+    },
+    {
+      "fixture": "b1-l-owner-key",
+      "form": "bare_partial",
+      "observed": "pass",
+      "program_sha256": "24ac599ea769e8ac0a87e1f30aaf7ce45ea79d9f76ab48f95a743159627de3ea",
+      "stderr_class": "empty",
+      "stdout_sha256": "fc6f539538d8e915b685a71cbf0a11e1c75d8c8c7fe625768375c64ccb39b4e9"
+    },
+    {
+      "fixture": "b1-l-owner-key",
+      "form": "nonbinding_partial",
+      "observed": "TypeError",
+      "program_sha256": "e5dfb5dd1c7e119a9ef0f21e7cba749771cb7e3c43fdd58d3404124255b334d8",
+      "stderr_class": "TypeError",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "grammar_mutations": {
+    "additional_call": "rejected",
+    "assignment": "rejected",
+    "attribute": "rejected",
+    "code_fence": "rejected",
+    "comprehension": "rejected",
+    "keyword": "rejected",
+    "lambda": "rejected",
+    "subscript": "rejected",
+    "trailing_prose": "rejected",
+    "tuple": "rejected",
+    "wrong_callable": "rejected",
+    "wrong_literal": "rejected"
+  },
+  "preflight_id": "b1-authoring-preflight-v0.1",
+  "prompt_leak_check": "pass",
+  "result": "pass",
+  "runtime": {
+    "build_details_sha256": "2cbf1faca2d144f5f790923365c997c58d6f3797a8985058121bb50a73add25a",
+    "executable_sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+    "implementation": "cpython",
+    "invocation_flags": [
+      "-I",
+      "-S",
+      "-B"
+    ],
+    "python_version": "3.14.6",
+    "resource_limit_note": "address-space target not enforced in authoring preflight; implementation gate remains pending",
+    "sys_hexversion": 51250928
+  },
+  "scope_arithmetic_check": "pass"
+}

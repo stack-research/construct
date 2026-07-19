@@ -1,0 +1,28 @@
+{
+  "bound_args": [
+    "ticket:"
+  ],
+  "callable_name": "ticket_key",
+  "distance_class": "nonmatching_binding_required",
+  "evidence_class": "residence_quality_floor",
+  "fixture_id": "b1-residence-ticket-key",
+  "oracle": {
+    "expected_stdout": "B1_ORACLE_PASS\n",
+    "kind": "pinned_python_subprocess",
+    "pass_condition": "exit_code == 0 and stdout exact and stderr empty"
+  },
+  "packet_expressions": {
+    "bare_partial": "partial(ticket_key, \"ticket:\")",
+    "nonbinding_partial": "staticmethod(partial(ticket_key, \"ticket:\"))"
+  },
+  "program_template": "from functools import partial\n\ndef ticket_key(prefix, owner, value):\n    return f\"{prefix}{owner.name}:{value}\"\n\nclass TicketKey:\n    name = \"west\"\n    encode = ???\n\nassert TicketKey().encode(\"17\") == \"ticket:west:17\"\nprint(\"B1_ORACLE_PASS\")\n",
+  "prompt": "Coding task. Target runtime is CPython 3.14.6. Replace only ??? so the assertion passes:\n\nfrom functools import partial\n\ndef ticket_key(prefix, owner, value):\n    return f\"{prefix}{owner.name}:{value}\"\n\nclass TicketKey:\n    name = \"west\"\n    encode = ???\n\nassert TicketKey().encode(\"17\") == \"ticket:west:17\"\n\nReturn exactly the replacement Python expression and nothing else.",
+  "role": "cold_residence",
+  "scope_inputs": {
+    "bound_positional": 1,
+    "descriptor_slot": 1,
+    "instance_call_user_positional": 1,
+    "placement": "class_attribute",
+    "post_partial_required_positional": 2
+  }
+}

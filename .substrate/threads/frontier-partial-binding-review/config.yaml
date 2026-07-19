@@ -1,0 +1,9 @@
+topic: 'Bounded cold review of notes/FRONTIER_EPISODE_CANDIDATE.md. Decide whether CPython 3.14 functools.partial binding is an admission-worthy fresh Body-0 successor episode. Review only: external oracle, no-answer-leak, coldness and treatment preflights, consequence-earned scope, held-out distance, executable-output risk, causal ablation, and governance-should-lose geometry. One pass each; endorse or block. No implementation or packet repair in this thread.'
+created_at: 2026-07-19T16:46:53.415411Z
+moderator: codex
+turn_order:
+    - codex
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended

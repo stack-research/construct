@@ -1,0 +1,83 @@
+{
+  "authoring_state": {
+    "deterministic_preflight": "pass",
+    "engine_contact": false,
+    "implementation_present": false,
+    "next_gate": "one fresh final review of this exact packet-index hash"
+  },
+  "entries": [
+    {
+      "path": "notes/SPEC_BODY_1_EXECUTABLE_CONSEQUENCE.md",
+      "role": "normative_contract",
+      "sha256": "a6dc7cbea349ab781d7f955ed406cac9b48851600c4bd7fb00066ba2944f33e9"
+    },
+    {
+      "path": "episodes/body1/partial-binding/attack.json",
+      "role": "attacker_owned_foreground",
+      "sha256": "4be5439b01646bd726d0e2bbeccefa488825f287a095aa6fd18c49a6d8543c27"
+    },
+    {
+      "path": "episodes/body1/partial-binding/authoring_preflight.json",
+      "role": "deterministic_authoring_preflight",
+      "sha256": "f049259544e3629f4c09635979ae7ddb7395d81320c2cdc1655c428275b758fd"
+    },
+    {
+      "path": "episodes/body1/partial-binding/e1_failure.json",
+      "role": "consequence_failure_source",
+      "sha256": "96ccda4a56408114aa9c0e9b74fbb70aa03c128e43ac63cfcd5178f5c761cc40"
+    },
+    {
+      "path": "episodes/body1/partial-binding/earned_record.json",
+      "role": "predeclared_consequence_record",
+      "sha256": "d850d9622791faf39d5b9a712b2e48fe7f900121c29e1f6243c113b1f8e335fd"
+    },
+    {
+      "path": "episodes/body1/partial-binding/expression_contract.json",
+      "role": "closed_expression_grammar",
+      "sha256": "e70ff51d06d09f35a7dd4ae8896e1168e684c0d2a84bcedd3d08e06a129e0f0b"
+    },
+    {
+      "path": "episodes/body1/partial-binding/ignorance_probe.json",
+      "role": "engine_specific_admission_probe",
+      "sha256": "dc2e8ea1a9e561d145cecc29a95255aa52e3771e878d99ae69445d9c132c8c79"
+    },
+    {
+      "path": "episodes/body1/partial-binding/recurrence.json",
+      "role": "rename_only_recurrence",
+      "sha256": "039e3b6bd2cb433b2e39eea1902a0a4bc3fafb1076ffb09e3a40465dcab575d8"
+    },
+    {
+      "path": "episodes/body1/partial-binding/residence.json",
+      "role": "cold_residence_quality_floor",
+      "sha256": "cc2d6020a0afa44082aa0c53f7f113e3582a34b7b33ba81cb93a3fa31e36723a"
+    },
+    {
+      "path": "episodes/body1/partial-binding/runtime_pin.json",
+      "role": "external_runtime_oracle",
+      "sha256": "dcdf5ebebb53329171b6228c71434c117e5410e17b98e3639fc7868511af2b66"
+    },
+    {
+      "path": "episodes/body1/partial-binding/scope_loses.json",
+      "role": "governance_should_lose",
+      "sha256": "7bc36628b10cc07d1fa1c2a7243ff88512bbefdf9c53d5ae7d35d532084f2b39"
+    },
+    {
+      "path": "episodes/body1/partial-binding/sequence_contract.json",
+      "role": "sequence_branch_cost_and_fork_contract",
+      "sha256": "d289912093cd318d418fa01e2088c589a2410f67db73fe64c2c00c707f90f799"
+    },
+    {
+      "path": "episodes/body1/partial-binding/surface_control.json",
+      "role": "expression_surface_admission_control",
+      "sha256": "d7e70a23a62f530ae39bf68c921376e4a7f61dd61aa7214b3c4af85533eb0ef9"
+    }
+  ],
+  "hash_definition": "lowercase SHA-256 of exact file bytes; paths are repository-root-relative",
+  "packet_id": "body1-partial-binding-v0.1",
+  "review_budget": {
+    "concept_review": "complete",
+    "final_packet_review": "one pass, pending",
+    "repair_after_final_block": false
+  },
+  "status": "authored_pending_final_review"
+}

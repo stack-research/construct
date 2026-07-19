@@ -1,0 +1,144 @@
+{
+  "branch_contract": {
+    "recurrence": {
+      "A": {
+        "earned_record_state": "cold",
+        "memory_condition": "offer_ablation",
+        "required_difference_from_C": "suppress earned offer and append an offer_ablation row"
+      },
+      "C": {
+        "earned_record_state": "cold",
+        "memory_condition": "composed",
+        "required_action": "rematerialize then offer the eligible earned record"
+      },
+      "R": {
+        "earned_record_state": "hot",
+        "memory_condition": "reference",
+        "required_action": "offer the eligible earned record"
+      },
+      "X": {
+        "earned_record_state": "cold",
+        "memory_condition": "recovery_ablation",
+        "required_difference_from_C": "suppress earned-record rematerialization and append a recovery_ablation row"
+      }
+    },
+    "scope_loses": {
+      "L0": "no memory machinery",
+      "L1": "offer the earned record without eligibility governance",
+      "L2": "retain the earned record but withhold it because descriptor_slot == 1"
+    }
+  },
+  "component_pins": {
+    "m2_consequence_mint": {
+      "path": "harness/resident.py",
+      "sha256": "6aa3c64cf99d6f5fa1fb7bc986fe13bdf2ca61e8203dcbab0e6263e479dd9aac"
+    },
+    "m3_protected_projection": {
+      "path": "harness/run_m3.py",
+      "sha256": "fb94dc09f0fe47f3936c6a271b8f1187dbe40f668eaee353a0997a7e66823d96"
+    },
+    "shared_offer_runner": {
+      "path": "harness/runner.py",
+      "sha256": "5668dc4cb1e58423b1b452ea9c8f823ae73c43f2825284ebe65d3312030faaa7"
+    },
+    "x2_hot_store_actuator": {
+      "path": "harness/prune.py",
+      "sha256": "2cfe967eb8268ce3af299135e9b211b737c5093cbdd2bb05de0a0387b6834dc0"
+    }
+  },
+  "cost_contract": {
+    "ballast_records": [
+      {
+        "record_id": "b1-ballast-runtime-note",
+        "text": "The target interpreter is an isolated CPython 3.14.6 process. The replacement remains a single expression selected from the packet's closed grammar."
+      },
+      {
+        "record_id": "b1-ballast-class-note",
+        "text": "The task places the replacement expression directly in a class suite and checks behavior through a newly constructed instance."
+      },
+      {
+        "record_id": "b1-ballast-output-note",
+        "text": "A passing frozen program prints one exact sentinel after its assertion. Unexpected output, timeout, or runtime mismatch refuses the run."
+      }
+    ],
+    "cold_branch_requirement": "earned record absent from hot prompt and present in replayable lineage before recurrence",
+    "comparison": "cost_C < cost_R",
+    "primary_metric": "hot_tokens",
+    "recency_weight": 0.0,
+    "replay_rule": "derive cost from frozen rendered hot-state bytes; logged totals are untrusted",
+    "top_k": 1
+  },
+  "engine_exclusion": {
+    "forbidden_scored_identities": [
+      "cursor-grok-4.5-high",
+      "composer-2.5"
+    ],
+    "forbidden_resolution": "provider aliases and resumed chats resolving to a forbidden identity are also excluded",
+    "review_use_only": true
+  },
+  "fixture_paths": {
+    "attack": "episodes/body1/partial-binding/attack.json",
+    "e1_failure": "episodes/body1/partial-binding/e1_failure.json",
+    "earned_record": "episodes/body1/partial-binding/earned_record.json",
+    "expression_contract": "episodes/body1/partial-binding/expression_contract.json",
+    "ignorance_probe": "episodes/body1/partial-binding/ignorance_probe.json",
+    "recurrence": "episodes/body1/partial-binding/recurrence.json",
+    "residence": "episodes/body1/partial-binding/residence.json",
+    "runtime_pin": "episodes/body1/partial-binding/runtime_pin.json",
+    "scope_loses": "episodes/body1/partial-binding/scope_loses.json",
+    "surface_control": "episodes/body1/partial-binding/surface_control.json"
+  },
+  "fork_identity": {
+    "build_foreground_once_per_fork_group": true,
+    "held_constant": [
+      "engine identity and parameters",
+      "fixture bytes",
+      "prompt template",
+      "response contract",
+      "expression parser",
+      "packet-authored program variants",
+      "runtime pin",
+      "attacker-owned foreground",
+      "oracle"
+    ],
+    "only_allowed_difference": "declared memory-condition control"
+  },
+  "instrument_version": "0.1",
+  "packet_id": "body1-partial-binding-v0.1",
+  "residence_contract": {
+    "block_labels": [
+      "P",
+      "P",
+      "P",
+      "U"
+    ],
+    "inherited_geometry": "X2 P/P/P/U multiplicity only",
+    "sequence": [
+      "episodes/body1/partial-binding/residence.json",
+      "episodes/body1/partial-binding/residence.json",
+      "episodes/body1/partial-binding/residence.json",
+      "episodes/body1/partial-binding/recurrence.json"
+    ]
+  },
+  "scope_contract": {
+    "derived_relation": "descriptor_slot = post_partial_required_positional - instance_call_user_positional",
+    "eligible": "placement == class_attribute and descriptor_slot == 0 and runtime behavior verified",
+    "ineligible": "descriptor_slot == 1",
+    "other_values": "blocked(scope_relation_outside_packet)",
+    "record_offer_during_residence": false,
+    "record_offer_during_scope_loses_L2": false,
+    "record_offer_during_u_recurrence": true
+  },
+  "sequence": [
+    "surface_control",
+    "ignorance_probe",
+    "e1_failure",
+    "attack",
+    "residence",
+    "residence",
+    "residence",
+    "recurrence",
+    "scope_loses"
+  ],
+  "status": "authored_pending_final_review"
+}

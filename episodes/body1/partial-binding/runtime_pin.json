@@ -1,0 +1,46 @@
+{
+  "build_details": {
+    "cache_tag": "cpython-314",
+    "implementation": "cpython",
+    "path_at_authoring": "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/lib/python3.14/build-details.json",
+    "platform": "macosx-26.0-arm64",
+    "schema_version": "1.0",
+    "sha256": "2cbf1faca2d144f5f790923365c997c58d6f3797a8985058121bb50a73add25a",
+    "version_info": {
+      "major": 3,
+      "micro": 6,
+      "minor": 14,
+      "releaselevel": "final",
+      "serial": 0
+    }
+  },
+  "contract_id": "b1-cpython-runtime-v0.1",
+  "executable": {
+    "invoked_at_authoring": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "resolved_at_authoring": "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+    "sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+  },
+  "implementation": "cpython",
+  "invocation_flags": [
+    "-I",
+    "-S",
+    "-B"
+  ],
+  "machine": "arm64",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "python_version": "3.14.6",
+  "source": {
+    "claim": "functools.partial objects are method descriptors in Python 3.14; wrap in staticmethod to preserve old class-attribute behavior",
+    "url": "https://docs.python.org/3.14/whatsnew/3.14.html#changes-in-the-python-api"
+  },
+  "subprocess_limits": {
+    "address_space_bytes_target": 67108864,
+    "combined_output_bytes": 4096,
+    "network_needed": false,
+    "shell": false,
+    "stdin": "closed",
+    "timeout_seconds": 2
+  },
+  "sys_hexversion": 51250928,
+  "sys_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]"
+}

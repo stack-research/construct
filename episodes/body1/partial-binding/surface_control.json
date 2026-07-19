@@ -1,0 +1,28 @@
+{
+  "bound_args": [
+    "ctl:"
+  ],
+  "callable_name": "control_code",
+  "distance_class": "admission_only_distinct_names",
+  "evidence_class": "surface_control_not_evidence",
+  "fixture_id": "b1-surface-control",
+  "oracle": {
+    "expected_stdout": "B1_ORACLE_PASS\n",
+    "kind": "pinned_python_subprocess",
+    "pass_condition": "exit_code == 0 and stdout exact and stderr empty"
+  },
+  "packet_expressions": {
+    "bare_partial": "partial(control_code, \"ctl:\")",
+    "nonbinding_partial": "staticmethod(partial(control_code, \"ctl:\"))"
+  },
+  "program_template": "from functools import partial\n\ndef control_code(prefix, owner, value):\n    return f\"{prefix}{owner.name}:{value}\"\n\nclass ControlToken:\n    name = \"alpha\"\n    encode = ???\n\nassert ControlToken().encode(\"7\") == \"ctl:alpha:7\"\nprint(\"B1_ORACLE_PASS\")\n",
+  "prompt": "Cold coding control. Target runtime is CPython 3.14.6. Replace only ??? so the assertion passes:\n\nfrom functools import partial\n\ndef control_code(prefix, owner, value):\n    return f\"{prefix}{owner.name}:{value}\"\n\nclass ControlToken:\n    name = \"alpha\"\n    encode = ???\n\nassert ControlToken().encode(\"7\") == \"ctl:alpha:7\"\n\nReturn exactly the replacement Python expression and nothing else.",
+  "role": "surface_control",
+  "scope_inputs": {
+    "bound_positional": 1,
+    "descriptor_slot": 1,
+    "instance_call_user_positional": 1,
+    "placement": "class_attribute",
+    "post_partial_required_positional": 2
+  }
+}

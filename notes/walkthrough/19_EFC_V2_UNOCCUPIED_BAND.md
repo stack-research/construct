@@ -107,4 +107,4 @@ The reopen condition is on file, and the instrument is now cheap to point at
 any candidate: the battery is sealed and reusable, the pin discipline is
 proven, and a new engine costs a smoke test and fifteen minutes.
 
-*Next: [Walkthrough index](README.md)*
+*Next: [When earned parts do not yet make an earned whole](20_BODY_0_COMPOSITION.md)*

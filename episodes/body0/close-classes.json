@@ -1,0 +1,23 @@
+{
+  "contract": [
+    "notes/BODY_0_COMPOSITION_AUDIT.md",
+    "notes/BODY_0_FINDINGS.md"
+  ],
+  "instrument": "harness/*body0.py",
+  "fixture_gate": [
+    "harness/check_body0_fixture.py",
+    "harness/probe_body0.py"
+  ],
+  "frozen_fixture": "episodes/body0/wire/*.json",
+  "oracle_corpus": [
+    "corpus/retractions/rw-0001.json",
+    "corpus/world/wf-rw0001-status.json"
+  ],
+  "regression_tests": [
+    "tests/test_body0.py"
+  ],
+  "cold_review_trace": ".substrate/threads/body-0-cold-review/*.md",
+  "verdict_audit_trace": ".substrate/threads/body-0-real-verdict-audit/*.md",
+  "admission_packets": "runs/body0/admission/*.json",
+  "real_scored_ledgers": "runs/body0/real/*.body0.jsonl"
+}

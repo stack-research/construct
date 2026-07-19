@@ -1,0 +1,33 @@
+{
+  "episode_id": "body0-rw0001-recurrence",
+  "_notes": "Body-0 wire fixture, Recurrence/Decision. The current ruling needs the runtime-minted earned retraction record. R keeps it hot; C rematerializes it; A suppresses its offer after rematerialization; X suppresses rematerialization. The mock makes the branch effects visible, but never supplies memory evidence.",
+  "expected_winner_condition": null,
+  "question": "The current notice says a coauthor alerted the journal that the figure results were inaccurate and showed no real relationship between age and DNA methylation. What is the citation decision for that freshwater-fish finding? Answer cite or decline, then one sentence.",
+  "expected_answer": "decline",
+  "oracle_ref": {
+    "corpus_entry": "corpus/retractions/rw-0001.json",
+    "representativeness": "The same narrow rw-0001 current-status question already world-checked by M2.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.85
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "fish-clock-original",
+      "text": "cite — The original 2024 publication posture presents the freshwater-fish DNA-methylation age-clock finding as suitable to cite.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "body0-ballast",
+      "text": "Archival conservation-methods index: otolith growth bands, mark-recapture schedules, telemetry receiver calibration, population viability tables, habitat-temperature series, sample-preservation protocols, microsatellite panels, mitochondrial barcodes, and field-station maintenance records collected across unrelated freshwater monitoring programs.",
+      "created_at": "2019-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

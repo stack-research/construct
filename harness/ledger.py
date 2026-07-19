@@ -75,6 +75,17 @@ Prune-to-cold-store (SPEC_X2 — the hot/cold split, off the synchronous offer b
   cell_verdict — COMPUTED by score_prune.py: the win is lower hot-store cost at a
     world-checked quality FLOOR (X2-win), never a changed answer; X2-overprune and
     X2-quality-erosion are the loses-cells. Scored on a metric the offer gate cannot move.
+
+Body-0 composition audit (M2 + M3 + X2, no new organ):
+  body0_fixture_gate_result / body0_cost_state_gate — computed admission before
+    engine contact and runtime replay recheck before post-prefix contact.
+  body0_adapter_receipt / body0_protected_projection / body0_attack_result —
+    deterministic interface and protected-state receipts across every transition.
+  body0_hot_store_cost — pre-answer snapshot; scorer recomputes it from lineage +
+    prune/rematerialize rows and does not trust the logged total.
+  body0_run_meta — frozen bindings and replay inputs for score_body0.py.
+  cell_verdict — COMPUTED Body-0 integration/regression cells. Mock may emit
+    wire_pass only and is never evidence about memory.
 """
 
 from __future__ import annotations

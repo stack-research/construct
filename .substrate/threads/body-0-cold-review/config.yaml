@@ -1,0 +1,9 @@
+topic: 'Independent cold review of notes/BODY_0_COMPOSITION_AUDIT.md v0.1 draft. Review only: test claim bounds, fork identity, engagement observability, adapter discretion, replayability, and whether any positive cell rewards bookkeeping. One cold review, one bounded repair, one fresh final review; build withheld.'
+created_at: 2026-07-19T12:52:11.686173Z
+moderator: codex
+turn_order:
+    - codex
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended

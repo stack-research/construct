@@ -1,0 +1,29 @@
+{
+  "bound_args": [
+    "asset:"
+  ],
+  "callable_name": "asset_key",
+  "distance_class": "admission_only_distinct_names",
+  "evidence_class": "ignorance_probe_not_evidence",
+  "fixture_id": "b1-ignorance-probe",
+  "oracle": {
+    "expected_failure_type": "TypeError",
+    "expected_stdout_on_pass": "B1_ORACLE_PASS\n",
+    "kind": "pinned_python_subprocess",
+    "required_admission_direction": "bare_partial parses and runtime-fails"
+  },
+  "packet_expressions": {
+    "bare_partial": "partial(asset_key, \"asset:\")",
+    "nonbinding_partial": "staticmethod(partial(asset_key, \"asset:\"))"
+  },
+  "program_template": "from functools import partial\n\ndef asset_key(prefix, value):\n    return f\"{prefix}{value}\"\n\nclass AssetKey:\n    encode = ???\n\nassert AssetKey().encode(\"7\") == \"asset:7\"\nprint(\"B1_ORACLE_PASS\")\n",
+  "prompt": "Cold coding probe. Target runtime is CPython 3.14.6. Replace only ??? so the assertion passes:\n\nfrom functools import partial\n\ndef asset_key(prefix, value):\n    return f\"{prefix}{value}\"\n\nclass AssetKey:\n    encode = ???\n\nassert AssetKey().encode(\"7\") == \"asset:7\"\n\nReturn exactly the replacement Python expression and nothing else.",
+  "role": "ignorance_probe",
+  "scope_inputs": {
+    "bound_positional": 1,
+    "descriptor_slot": 0,
+    "instance_call_user_positional": 1,
+    "placement": "class_attribute",
+    "post_partial_required_positional": 1
+  }
+}

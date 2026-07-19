@@ -1,0 +1,28 @@
+{
+  "bound_args": [
+    "unit:"
+  ],
+  "callable_name": "unit_key",
+  "distance_class": "one_hop_rename_only",
+  "evidence_class": "scored_recurrence",
+  "fixture_id": "b1-u-unit-key",
+  "oracle": {
+    "expected_stdout": "B1_ORACLE_PASS\n",
+    "kind": "pinned_python_subprocess",
+    "pass_condition": "exit_code == 0 and stdout exact and stderr empty"
+  },
+  "packet_expressions": {
+    "bare_partial": "partial(unit_key, \"unit:\")",
+    "nonbinding_partial": "staticmethod(partial(unit_key, \"unit:\"))"
+  },
+  "program_template": "from functools import partial\n\ndef unit_key(prefix, value):\n    return f\"{prefix}{value}\"\n\nclass UnitKey:\n    mark = ???\n\nassert UnitKey().mark(\"17\") == \"unit:17\"\nprint(\"B1_ORACLE_PASS\")\n",
+  "prompt": "Coding task. Target runtime is CPython 3.14.6. Replace only ??? so the assertion passes:\n\nfrom functools import partial\n\ndef unit_key(prefix, value):\n    return f\"{prefix}{value}\"\n\nclass UnitKey:\n    mark = ???\n\nassert UnitKey().mark(\"17\") == \"unit:17\"\n\nReturn exactly the replacement Python expression and nothing else.",
+  "role": "u_recurrence",
+  "scope_inputs": {
+    "bound_positional": 1,
+    "descriptor_slot": 0,
+    "instance_call_user_positional": 1,
+    "placement": "class_attribute",
+    "post_partial_required_positional": 1
+  }
+}

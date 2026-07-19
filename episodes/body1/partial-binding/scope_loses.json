@@ -1,0 +1,28 @@
+{
+  "bound_args": [
+    "owner:"
+  ],
+  "callable_name": "owner_key",
+  "distance_class": "same_runtime_change_opposite_scope",
+  "evidence_class": "governance_should_lose",
+  "fixture_id": "b1-l-owner-key",
+  "oracle": {
+    "expected_stdout": "B1_ORACLE_PASS\n",
+    "kind": "pinned_python_subprocess",
+    "pass_condition": "exit_code == 0 and stdout exact and stderr empty"
+  },
+  "packet_expressions": {
+    "bare_partial": "partial(owner_key, \"owner:\")",
+    "nonbinding_partial": "staticmethod(partial(owner_key, \"owner:\"))"
+  },
+  "program_template": "from functools import partial\n\ndef owner_key(prefix, owner, value):\n    return f\"{prefix}{owner.name}:{value}\"\n\nclass OwnerKey:\n    name = \"alpha\"\n    format = ???\n\nassert OwnerKey().format(\"42\") == \"owner:alpha:42\"\nprint(\"B1_ORACLE_PASS\")\n",
+  "prompt": "Coding task. Target runtime is CPython 3.14.6. Replace only ??? so the assertion passes:\n\nfrom functools import partial\n\ndef owner_key(prefix, owner, value):\n    return f\"{prefix}{owner.name}:{value}\"\n\nclass OwnerKey:\n    name = \"alpha\"\n    format = ???\n\nassert OwnerKey().format(\"42\") == \"owner:alpha:42\"\n\nReturn exactly the replacement Python expression and nothing else.",
+  "role": "scope_loses",
+  "scope_inputs": {
+    "bound_positional": 1,
+    "descriptor_slot": 1,
+    "instance_call_user_positional": 1,
+    "placement": "class_attribute",
+    "post_partial_required_positional": 2
+  }
+}

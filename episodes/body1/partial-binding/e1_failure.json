@@ -1,0 +1,33 @@
+{
+  "bound_args": [
+    "route:"
+  ],
+  "callable_name": "route_key",
+  "distance_class": "source_task",
+  "evidence_class": "scored_failure_source",
+  "fixture_id": "b1-e1-route-key",
+  "mint_contract": {
+    "counterfactual_must_pass": "nonbinding_partial",
+    "failure_type": "TypeError",
+    "selected_expression_must_be": "bare_partial"
+  },
+  "oracle": {
+    "expected_failure_type_for_mint": "TypeError",
+    "expected_stdout_on_pass": "B1_ORACLE_PASS\n",
+    "kind": "pinned_python_subprocess"
+  },
+  "packet_expressions": {
+    "bare_partial": "partial(route_key, \"route:\")",
+    "nonbinding_partial": "staticmethod(partial(route_key, \"route:\"))"
+  },
+  "program_template": "from functools import partial\n\ndef route_key(prefix, value):\n    return f\"{prefix}{value}\"\n\nclass RouteKey:\n    render = ???\n\nassert RouteKey().render(\"north\") == \"route:north\"\nprint(\"B1_ORACLE_PASS\")\n",
+  "prompt": "Cold coding task. Target runtime is CPython 3.14.6. Replace only ??? so the assertion passes:\n\nfrom functools import partial\n\ndef route_key(prefix, value):\n    return f\"{prefix}{value}\"\n\nclass RouteKey:\n    render = ???\n\nassert RouteKey().render(\"north\") == \"route:north\"\n\nReturn exactly the replacement Python expression and nothing else.",
+  "role": "e1_failure",
+  "scope_inputs": {
+    "bound_positional": 1,
+    "descriptor_slot": 0,
+    "instance_call_user_positional": 1,
+    "placement": "class_attribute",
+    "post_partial_required_positional": 1
+  }
+}

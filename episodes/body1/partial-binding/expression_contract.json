@@ -1,0 +1,54 @@
+{
+  "accepted_forms": {
+    "bare_partial": {
+      "ast": "Expression(Call(Name('partial'), [Name(fixture.callable_name), *Constant(fixture.bound_args)], []))",
+      "packet_expression_template": "partial({callable_name}, {bound_args_csv})"
+    },
+    "nonbinding_partial": {
+      "ast": "Expression(Call(Name('staticmethod'), [Call(Name('partial'), [Name(fixture.callable_name), *Constant(fixture.bound_args)], [])], []))",
+      "packet_expression_template": "staticmethod(partial({callable_name}, {bound_args_csv}))"
+    }
+  },
+  "contract_id": "b1-expression-v0.1",
+  "execution_boundary": {
+    "model_bytes_executed": false,
+    "rule": "A recognized AST selects one packet-authored expression template. The model's raw bytes are never inserted into executable source."
+  },
+  "forbidden_nodes": [
+    "Assign",
+    "Attribute",
+    "Await",
+    "BinOp",
+    "BoolOp",
+    "Compare",
+    "Comprehension",
+    "Dict",
+    "FormattedValue",
+    "IfExp",
+    "Lambda",
+    "List",
+    "NamedExpr",
+    "Set",
+    "Subscript",
+    "Tuple",
+    "UnaryOp",
+    "Yield"
+  ],
+  "normalization": {
+    "allow_code_fence": false,
+    "allow_keywords": false,
+    "allow_trailing_prose": false,
+    "allow_whitespace_and_quote_style_only": true,
+    "max_utf8_bytes": 256,
+    "mode": "ast.parse(raw.strip(), mode='eval')",
+    "require_single_line": true
+  },
+  "response_instruction": "Return exactly the replacement Python expression and nothing else.",
+  "typed_refusals": {
+    "ambiguous_match": "blocked(expression_grammar_ambiguous)",
+    "forbidden_syntax": "unparseable",
+    "invalid_utf8": "unparseable",
+    "no_match": "unparseable",
+    "too_large": "blocked(expression_output_limit)"
+  }
+}

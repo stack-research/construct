@@ -1,18 +1,48 @@
 # ROADMAP — construct
 
-Status: **v0.1 — REVIEWED** (one bounded pass each: kagi's four sharpenings adopted unanimously; cursor's implementation framing; codex's contract/content boundary. Gates open, 2026-06-12). The README is the living thesis; this document is the curiosity gate. Review log at the end. **X-track (implicit-memory substrate): X1 RESOLVED 2026-06-20 (thread-6) — instrument engineering-closed, X1-win real-engine `not_engaged`, synchronous eligibility-temperature retired as the organ; prune-to-cold-store: **X2-LB CLOSED 2026-06-20** — the first **positive** implicit-layer result (oracle-gated hot-store eviction + rematerialization carries ~57% less memory at matched quality, cross-engine on gpt-oss-20b + claude, on a important out-of-weights fixture; scored on a cost the offer gate cannot move). **X2-U1 CLOSED 2026-06-21 (thread-7)** — the world-grounded close paid on a real external out-of-weights corpus (Node **DEP0033**, deprecated→revoked), cross-engine **−59% hot store at matched quality**, out-of-weights proven by a pre-run ignorance probe (cursor + codex verified from disk, dan's moderator close). **X4 CLOSED 2026-06-27 — a *successful failure*** (thread-x4c ENDED, x4-review narrowing): the sensory occlusion-watch organ was built + armed, v0.1 room-blocked, then the premise dissolved (**cold is cold** — sensing reduces to reading, an X1-family no-op); disclosed null on the sense itself; the implicit substrate reads as a **metabolism** (empirical, not closed ontology); the live direction is now a **pause/resume frontier**, not a fifth organ. The M-track stays v0.1 REVIEWED, closed through M3.**
+Status: **v0.1 — REVIEWED** (one bounded pass each: kagi's four sharpenings adopted unanimously; cursor's implementation framing; codex's contract/content boundary. Gates open, 2026-06-12). The README is the living thesis; this document is the curiosity gate. Review log at the end. **X-track (implicit-memory substrate): X1 RESOLVED 2026-06-20 (thread-6) — instrument engineering-closed, X1-win real-engine `not_engaged`, synchronous eligibility-temperature retired as the organ; prune-to-cold-store: **X2-LB CLOSED 2026-06-20** — the first **positive** implicit-layer result (oracle-gated hot-store eviction + rematerialization carries ~57% less memory at matched quality, cross-engine on gpt-oss-20b + claude, on an important out-of-weights fixture; scored on a cost the offer gate cannot move). **X2-U1 CLOSED 2026-06-21 (thread-7)** — the world-grounded close paid on a real external out-of-weights corpus (Node **DEP0033**, deprecated→revoked), cross-engine **−59% hot store at matched quality**, out-of-weights proven by a pre-run ignorance probe (cursor + codex verified from disk, dan's moderator close). **X4 CLOSED 2026-06-27 — a *successful failure*** (thread-x4c ENDED, x4-review narrowing): the sensory occlusion-watch organ was built + armed, v0.1 room-blocked, then the premise dissolved (**cold is cold** — sensing reduces to reading, an X1-family no-op); disclosed null on the sense itself; the implicit substrate reads as a **metabolism** (empirical, not closed ontology); its next instrument at that close was a **pause/resume frontier**, not a fifth organ. The M-track stays v0.1 REVIEWED, closed through M3.**
 
-**Current direction (2026-07-15):** WB v0.1 is closed on its analytic null and
-PRF is paused on a precommitted reopen trigger. No scientific mechanism is
-currently licensed for build. [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) is the
-cold-reviewed whole-body direction; [BODY_MAP.md](BODY_MAP.md) is the living
-maturity map; the [embodiment sketch](../sketches/next_substrate/README.md) is
-wire/integration-only. The structural epistemic-frame check is **CLOSED —
-blocked before calibration contact**: its deterministic free-text substring
-oracle failed 32/33 fresh cold cases after one bounded repair. No engine finding
-was minted; see [EFC_V0_FINDINGS.md](EFC_V0_FINDINGS.md). Reopening requires a
-fresh answer-surface or semantic-oracle contract and new lineage, not another
-repair inside v0.
+**Current direction (2026-07-19):** WB v0.1 is closed on its analytic null and
+PRF is paused on a precommitted reopen trigger. The epistemic-frame-check line
+has reached three typed terminal states: v0 `blocked_before_contact`, v1
+`confounded(menu_ceiling)`, and v2 `confounded(admission_band)`. Across PRF and
+the two live EFC surfaces, the competent-but-distractible band required for a
+treatment contrast remains unoccupied by every measured engine. The conjectures
+remain untested; no scientific mechanism is currently licensed for build.
+Reopening PRF or EFC requires its already-precommitted admission trigger, not
+another in-lineage surface repair. See [PRF_FINDINGS.md](PRF_FINDINGS.md),
+[EFC_V0_FINDINGS.md](EFC_V0_FINDINGS.md),
+[EFC_V1_FINDINGS.md](EFC_V1_FINDINGS.md), and
+[EFC_V2_FINDINGS.md](EFC_V2_FINDINGS.md).
+
+[NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) remains the cold-reviewed whole-body
+direction; [BODY_MAP.md](BODY_MAP.md) is the living maturity map; the
+[embodiment sketch](../sketches/next_substrate/README.md) remains
+wire/integration-only. **Body-0 CLOSED 2026-07-19 `not_engaged`**: the bounded
+composition audit of M2, M3, and X2 passed its deterministic wire but did not
+engage on the admitted Ministral run. R/C returned empty recurrence answers;
+A/X answered correctly without the earned path. Protected projection and cold
+replay held, and `C=254 < R=428` hot tokens, but the causal baseline was absent,
+so no integration claim was earned. The direction-blind scorer-v0.1 verdict was
+preserved and superseded append-only after unanimous Grok/Composer audit.
+[Contract](BODY_0_COMPOSITION_AUDIT.md);
+[findings](BODY_0_FINDINGS.md). No scientific mechanism is currently licensed
+for build.
+
+**Body-1 packet (2026-07-19):** the
+[CPython 3.14 partial-binding candidate](FRONTIER_EPISODE_CANDIDATE.md)
+survived deterministic runtime checks, two-model
+cold/treated/held-out/loses preflights, and bounded concept review. Its fresh
+[executable-consequence packet](SPEC_BODY_1_EXECUTABLE_CONSEQUENCE.md) freezes
+the runtime oracle, closed two-form expression surface, structural eligibility
+arithmetic, one-hop rename-only recurrence, R/C/A/X prerequisites, P/P/P/U
+cost geometry, and binding-required loses fork. Final-review thread
+`body-1-partial-binding-final-review` unanimously endorsed exact
+`packet_index.json` SHA-256
+`22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5`.
+This licenses an implementation proposal and subsequent wire review only. It
+is not harness evidence and does not license engine contact or a composition
+claim.
 
 **Review-budget law (EFC v0, 2026-07-15):** predeclare terminal review depth
 before authoring. Default: one authoring pass, one independent cold review, one

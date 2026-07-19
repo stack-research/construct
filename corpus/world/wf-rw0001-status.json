@@ -1,0 +1,21 @@
+{
+  "corpus_id": "wf-rw0001-status",
+  "fictional": false,
+  "domain": "Publication-status lifecycle for a retracted conservation-genetics finding",
+  "facts": {
+    "status_as_published": "cite",
+    "status_after_retraction": "decline"
+  },
+  "source_url": "https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.70018",
+  "real_event": {
+    "source_corpus": "corpus/retractions/rw-0001.json",
+    "article_doi": "10.1111/1755-0998.13440",
+    "retraction_doi": "10.1111/1755-0998.70018",
+    "as_published_status": "the 2024 article presented the finding as citable",
+    "current_status": "the 2025 retraction means the finding should be declined as current evidence"
+  },
+  "selection_method": "Body-0 reuses the impersonal rw-0001 publication lifecycle already world-checked by M2. The two facts separate the original-filing residence block from the current-status recurrence without changing the retraction corpus that authorizes the M2 mint.",
+  "verified_by": "cursor",
+  "verified_at": "2026-06-12",
+  "corpus_scope": "Original-versus-current citation status of one retracted freshwater-fish epigenetic-clock finding"
+}

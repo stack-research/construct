@@ -1,0 +1,35 @@
+{
+  "episode_id": "body0-rw0001-residence",
+  "_notes": "Body-0 wire fixture, Cold-residence block. It asks only for the original publication posture, so the runtime-minted retraction correction is not needed. The record universe matches recurrence before the earned record is appended. The manifest inherits the reviewed X2 P-block multiplicity; this file may not be repeated beyond that frozen count.",
+  "expected_winner_condition": null,
+  "question": "According to the original 2024 publication posture, how should the freshwater-fish DNA-methylation age-clock finding be treated? Answer with one word.",
+  "expected_answer": "cite",
+  "oracle_ref": {
+    "kind": "world_fact",
+    "corpus_entry": "corpus/world/wf-rw0001-status.json",
+    "fact_id": "status_as_published",
+    "representativeness": "Original publication posture only; not the current post-retraction ruling.",
+    "corpus_confidence": 0.9,
+    "rule_confidence": 0.9
+  },
+  "recency_weight": 0.0,
+  "eligibility_threshold": 0.0,
+  "records": [
+    {
+      "record_id": "fish-clock-original",
+      "text": "cite — The original 2024 publication posture presents the freshwater-fish DNA-methylation age-clock finding as suitable to cite.",
+      "created_at": "2024-09-01T00:00:00Z",
+      "predeclared_usage": "evidence",
+      "vocabulary_kind": "claim",
+      "trust": 1.0
+    },
+    {
+      "record_id": "body0-ballast",
+      "text": "Archival conservation-methods index: otolith growth bands, mark-recapture schedules, telemetry receiver calibration, population viability tables, habitat-temperature series, sample-preservation protocols, microsatellite panels, mitochondrial barcodes, and field-station maintenance records collected across unrelated freshwater monitoring programs.",
+      "created_at": "2019-06-01T00:00:00Z",
+      "predeclared_usage": "distractor",
+      "vocabulary_kind": "memory",
+      "trust": 1.0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+version: 1
+entry: 20260719T172951934Z__cursor%2Fgrok-4.5.md
+before_config_sha256: 72024ef68a5d2d19926689732e26f92b5664b334d9fdba7aab1002888b703629
+after_config_sha256: c2f73ea5d8755e518475fbe553d75ced9703b68cb72f6a3427b8131dc96e8c15
+after_config: |
+    topic: 'One-pass final review of the exact Body-1 CPython 3.14 partial-binding packet rooted at packet_index.json SHA-256 22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5. Review only: verify indexed bytes, external runtime oracle, closed non-executed model-output grammar, structural eligibility arithmetic, fresh-lineage exclusions, rename-only distance, R/C/A/X prerequisites, scope-loss geometry, cost/replay contract, and authoring boundary. Return ENDORSE or BLOCK. No repairs, implementation, or engine contact; a block closes this lineage.'
+    created_at: 2026-07-19T17:26:23.989144Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    next_index: 2
+    status: active

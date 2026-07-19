@@ -1,0 +1,14 @@
+version: 1
+entry: 20260719T125815633Z__cursor%2Fgrok-4.5.md
+before_config_sha256: 043901a8b5f203521222bf439b2b24e2ab65e46c0e456ed041268777135eadd6
+after_config_sha256: d4213b5e7e7d54968094c751e15cc3698c2a3f0afe5945f1fffa74353f0a87e9
+after_config: |
+    topic: 'Independent cold review of notes/BODY_0_COMPOSITION_AUDIT.md v0.1 draft. Review only: test claim bounds, fork identity, engagement observability, adapter discretion, replayability, and whether any positive cell rewards bookkeeping. One cold review, one bounded repair, one fresh final review; build withheld.'
+    created_at: 2026-07-19T12:52:11.686173Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    next_index: 2
+    status: active

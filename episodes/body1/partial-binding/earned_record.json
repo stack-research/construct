@@ -1,0 +1,25 @@
+{
+  "authority_basis": {
+    "counterfactual_required": "nonbinding_partial runtime-pass on the same frozen E1 fixture",
+    "failure_kind": "TypeError",
+    "model_decision_required": "bare_partial",
+    "oracle": "b1-cpython-runtime-v0.1",
+    "scope_derivation": "descriptor_slot == 0"
+  },
+  "created_at": "2026-07-19T00:00:00Z",
+  "predeclared_usage": "plan",
+  "record_id": "b1-earned-partial-descriptor-scope",
+  "scope": {
+    "eligible_when": {
+      "descriptor_slot": 0,
+      "placement": "class_attribute",
+      "runtime_contract_id": "b1-cpython-runtime-v0.1"
+    },
+    "ineligible_when": {
+      "descriptor_slot": 1
+    }
+  },
+  "text": "On CPython 3.14, functools.partial objects implement method-descriptor binding. When a partial is stored as a class attribute and the intended call must remain unbound to the instance, preserve that intent with Python's standard non-binding class-attribute wrapper.",
+  "trust": 1.0,
+  "vocabulary_kind": "memory"
+}

@@ -1,0 +1,18 @@
+{
+  "answer": "Cite",
+  "completion_tokens": 913,
+  "current_decision": "decline",
+  "decision": "cite",
+  "disclosure": "cold no-memory admission probe; not Body-0 evidence",
+  "engine_backend": "local_openai_compat",
+  "fixture_id": "body0-rw0001-wire",
+  "ignorant_decision": "cite",
+  "kind": "body0_ignorance_probe",
+  "knew_current": false,
+  "manifest_sha256": "0d5af7b49edc1928a3dec45c27110685509684f39634c45d092e6b8a5dd83ec9",
+  "model": "mistralai/ministral-3-14b-reasoning",
+  "probed_at": "2026-07-19T15:37:57Z",
+  "prompt_tokens": 198,
+  "question": "Is the 2024 freshwater-fish DNA-methylation age-clock finding still suitable to cite as current evidence? Answer cite or decline.",
+  "wire_only": false
+}
