@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check body0-check body0-test prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke body-sketch body-sketch-test efc-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check body0-check body0-test body1-check body1-test body1-wire body1-score prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke body-sketch body-sketch-test efc-test
 
 # SPEC_EPISTEMIC_FRAME_CHECK v0 Part I §14 wire tests (no model, never evidence):
 # shared interval functions (scipy-goldened), the §10.4 N-rule planner + §6
@@ -81,6 +81,23 @@ body0-check:
 
 body0-test:
 	uv run --no-project python -m tests.test_body0
+
+# Body-1 exact-hash implementation. The checker binds packet, final review,
+# runtime, closed grammar, structural scope, renderer, and inherited component
+# pins. Mock wire proves integration only and is never evidence about memory.
+body1-check:
+	uv run --no-project python -m harness.check_body1_fixture
+
+body1-test:
+	uv run --no-project python -m tests.test_body1
+
+body1-wire:
+	uv run --no-project python -m harness.run_body1 --engine mock \
+		--model mock-engine-v1 --runs-dir runs/body1/wire
+
+body1-score:
+	@test -n "$(LEDGER)" || (echo "LEDGER=<path> is required" >&2; exit 2)
+	uv run --no-project python -m harness.score_body1 "$(LEDGER)" --append
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:

@@ -1,0 +1,89 @@
+{
+  "entries": [
+    {
+      "path": "Makefile",
+      "role": "supported_commands",
+      "sha256": "80894dbe1b09f06dcb43167aea53bcbda1dbba4a88db04e24cc324f642882abb"
+    },
+    {
+      "path": "harness/ledger.py",
+      "role": "append_only_row_contract",
+      "sha256": "7b27f7df86d30434dfa5492dbf60047e97cd314d22585014ba79bb677155b884"
+    },
+    {
+      "path": "harness/body1.py",
+      "role": "packet_parser_runtime_scope_and_replay_primitives",
+      "sha256": "a8419f32ce5d0f9462945a4343864999084150654e9e801bec505f60c88014ce"
+    },
+    {
+      "path": "harness/body1_engine.py",
+      "role": "single_model_call_boundary",
+      "sha256": "fda4846118d522266b9e7e27855dc4089baf10b475bd239132fa5f827c625101"
+    },
+    {
+      "path": "harness/check_body1_fixture.py",
+      "role": "pre_contact_gate",
+      "sha256": "8893b9b359e2a4e817f68c6b10aa550f519d424903f726cd70d679024b22d788"
+    },
+    {
+      "path": "harness/probe_body1.py",
+      "role": "fresh_engine_admission_probe",
+      "sha256": "33291948483d34e83f1e936acec691e806727d0f7684c7c25f44dea4aa7314a6"
+    },
+    {
+      "path": "harness/run_body1.py",
+      "role": "sequence_runner_and_external_ledger_writer",
+      "sha256": "46daf425d3e78338708a1908b868601a7f41ba2865a0042739e98b2261d65188"
+    },
+    {
+      "path": "harness/score_body1.py",
+      "role": "independent_replay_scorer",
+      "sha256": "e902b6e8bd9f8d5a712fa1a93e142dc7b589b9d3201af7690ea9694d390ca0e6"
+    },
+    {
+      "path": "tests/test_body1.py",
+      "role": "wire_and_tamper_tests",
+      "sha256": "3b153c4a7c330ea63728bd86cc36a5a61e0063696e5d29aae513fd4c32d58338"
+    },
+    {
+      "path": "notes/BODY_1_IMPLEMENTATION_PROPOSAL.md",
+      "role": "implementation_boundary_and_review_assignment",
+      "sha256": "cac0a765e9d276a019f0e245668b668637c246c55181fcf7c2bdb9a65fbf05fa"
+    },
+    {
+      "path": "runs/body1/wire/body1-partial-binding-977d88cd.B1-A.hot.json",
+      "role": "wire_hot_sidecar_offer_ablation",
+      "sha256": "e93dfcfdbc0c92461c671218c56a2113b89197156287c0c8f229890dd298d2db"
+    },
+    {
+      "path": "runs/body1/wire/body1-partial-binding-977d88cd.B1-C.hot.json",
+      "role": "wire_hot_sidecar_composed",
+      "sha256": "e93dfcfdbc0c92461c671218c56a2113b89197156287c0c8f229890dd298d2db"
+    },
+    {
+      "path": "runs/body1/wire/body1-partial-binding-977d88cd.B1-R.hot.json",
+      "role": "wire_hot_sidecar_reference",
+      "sha256": "e93dfcfdbc0c92461c671218c56a2113b89197156287c0c8f229890dd298d2db"
+    },
+    {
+      "path": "runs/body1/wire/body1-partial-binding-977d88cd.B1-X.hot.json",
+      "role": "wire_hot_sidecar_recovery_ablation",
+      "sha256": "aa4b12059b3294bc4d8fd1ab8174dbcb893c4bbdae2eb7e4067fcdaade1a7db6"
+    },
+    {
+      "path": "runs/body1/wire/body1-partial-binding-977d88cd.body1.jsonl",
+      "role": "canonical_scored_mock_wire",
+      "sha256": "5b3e9ee9e7b5f794d70f4bb82717cca124e1a07bdbd2d85792364c543298e2a0"
+    }
+  ],
+  "hash_definition": "lowercase SHA-256 of exact file bytes; paths are repository-root-relative",
+  "implementation_id": "body1-partial-binding-implementation-v0.1",
+  "packet_index_sha256": "22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5",
+  "renderer_sha256": "551c5c296bea12b172b245fb8f90501b29a62df642619dd1c9fd450b4d0152fa",
+  "status": "candidate_pending_wire_review",
+  "wire": {
+    "engine_backend": "mock",
+    "evidence_class": "wire_integration_only",
+    "tests_passed": 15
+  }
+}

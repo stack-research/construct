@@ -40,9 +40,23 @@ cost geometry, and binding-required loses fork. Final-review thread
 `body-1-partial-binding-final-review` unanimously endorsed exact
 `packet_index.json` SHA-256
 `22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5`.
-This licenses an implementation proposal and subsequent wire review only. It
-is not harness evidence and does not license engine contact or a composition
-claim.
+The resulting exact implementation and disclosed mock wire were then
+unanimously endorsed in bounded thread
+`body-1-partial-binding-wire-review` at implementation-manifest SHA-256
+`b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2`.
+Both reviewers independently reproduced all manifest and packet pins,
+`body1-check`, all fifteen tests, and ledger-only scoring. The Darwin launch
+path records the 64 MiB address-space target as
+`unsupported_by_launch_path`, consistent with the packet's “where the platform
+supports it” qualifier; all other mandatory subprocess bounds remain
+enforced. This is wire/integration evidence only. It does not license engine
+contact, a memory finding, or a composition claim. The separate
+[engine-admission proposal](BODY_1_ENGINE_ADMISSION_PROPOSAL.md) was
+unanimously cold-endorsed in `body-1-engine-admission-review` at exact SHA-256
+`2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a`.
+It is admission-ready for one fixed Ministral candidate and exactly two
+admission-only calls. No admission or scored contact has occurred; any later
+scored sequence still requires an exact receipt pin.
 
 **Review-budget law (EFC v0, 2026-07-15):** predeclare terminal review depth
 before authoring. Default: one authoring pass, one independent cold review, one

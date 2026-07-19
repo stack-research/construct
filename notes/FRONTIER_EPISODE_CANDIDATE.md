@@ -1,7 +1,7 @@
 # Frontier episode candidate — CPython 3.14 partial binding
 
-Status: **PACKET FINAL-REVIEW ENDORSED — exact packet hash licensed for an
-implementation proposal and subsequent wire review, not engine contact or a
+Status: **IMPLEMENTATION WIRE-ENDORSED — exact implementation manifest
+licensed for a separate engine-admission proposal, not engine contact or a
 scored run**.
 
 Date: 2026-07-19.
@@ -259,6 +259,35 @@ The indexed status remains `authored_pending_final_review` because changing it
 after review would create different, unauthorized bytes. The append-only
 review trace supplies the authorization.
 
-The honest next action is an implementation proposal against exactly those
-bytes, followed by a separate wire review. No engine contact, scored ledger,
-memory finding, or composition claim is licensed yet.
+That implementation is now frozen by
+[`body1_implementation_manifest.json`](../harness/body1_implementation_manifest.json)
+at SHA-256
+`b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2`.
+The bounded substrate thread `body-1-partial-binding-wire-review` ended with
+independent **ENDORSE** votes from `cursor/grok-4.5` and
+`cursor/composer-2.5`. Both reviewers independently reproduced all fifteen
+manifest-entry hashes, the packet and inherited component pins,
+`make body1-check`, all fifteen Body-1 tests, and ledger-only scoring of the
+canonical disclosed mock wire. Neither patched the implementation or contacted
+a real engine.
+
+The wire review accepted the recorded Darwin
+`address_space_status=unsupported_by_launch_path` as faithful to the sealed
+“where the platform supports it” clause because the implementation attempts
+the 64 MiB target, records the unsupported launch path, and enforces every
+other mandatory subprocess bound. That remains a disclosed containment risk.
+
+The implementation manifest retains its pre-review status because changing an
+indexed byte would produce a different, unreviewed artifact. The append-only
+thread trace supplies the exact-byte endorsement. At wire close, the honest
+next action was a separate engine-admission proposal; engine contact, a scored
+ledger, a memory finding, and a composition claim remained unlicensed.
+
+That separate
+[engine-admission proposal](BODY_1_ENGINE_ADMISSION_PROPOSAL.md) received
+independent **ENDORSE** votes from `cursor/grok-4.5` and
+`cursor/composer-2.5` in ended thread `body-1-engine-admission-review`. The
+review authorizes exact proposal SHA-256
+`2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a`
+for one fixed Ministral candidate and two admission-only calls. It does not
+authorize the scored sequence. No admission contact has occurred.

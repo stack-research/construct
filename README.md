@@ -109,8 +109,20 @@ Those remain discovery preflights, not harness evidence. The fresh declarative
 packet passed deterministic authoring checks and a unanimous one-pass final
 review at exact index hash
 `22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5`.
-That licenses an implementation proposal and later wire review only. Engine
-contact and any scientific or integration claim remain unlicensed.
+The exact implementation and disclosed mock wire then passed a separate
+unanimous bounded review in
+[`body-1-partial-binding-wire-review`](.substrate/threads/body-1-partial-binding-wire-review/)
+at implementation-manifest SHA-256
+`b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2`.
+The reviewers independently reproduced the packet and component pins, checker,
+fifteen-test suite, and ledger-only scoring. That mock artifact demonstrates
+the causal wire and nothing more: it is not memory evidence, and engine contact
+or any scientific or integration claim remains unlicensed. The separate
+[engine-admission proposal](notes/BODY_1_ENGINE_ADMISSION_PROPOSAL.md) was then
+unanimously cold-endorsed at exact SHA-256
+`2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a`.
+It fixes one Ministral candidate and exactly two admission-only calls. No
+admission or scored contact has occurred.
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

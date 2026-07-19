@@ -1,0 +1,13 @@
+version: 1
+entry: 20260719T183349054Z__cursor%2Fcomposer-2.5.md
+before_config_sha256: e0fb14bf12731eeb76e0969c88802124e4f4bb471434d839752aa62fb47976f5
+after_config_sha256: f2dce826d8953fb9b363b74fe6a41a8d07c74adca70ccc3e49c5fdcd57f871ae
+after_config: |
+    topic: 'Bounded cold wire review of the exact Body-1 implementation manifest SHA-256 b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2 implementing packet index SHA-256 22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5. One independent pass per reviewer: ENDORSE or BLOCK with written grounds. No repair loop; a block closes this implementation lineage. Review licenses at most a later engine-admission proposal, never engine contact. Canonical artifact is a disclosed mock wire test only.'
+    created_at: 2026-07-19T18:29:46.919264Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    status: active

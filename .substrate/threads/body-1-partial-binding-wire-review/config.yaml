@@ -1,0 +1,9 @@
+topic: 'Bounded cold wire review of the exact Body-1 implementation manifest SHA-256 b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2 implementing packet index SHA-256 22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5. One independent pass per reviewer: ENDORSE or BLOCK with written grounds. No repair loop; a block closes this implementation lineage. Review licenses at most a later engine-admission proposal, never engine contact. Canonical artifact is a disclosed mock wire test only.'
+created_at: 2026-07-19T18:29:46.919264Z
+moderator: codex
+turn_order:
+    - codex
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended

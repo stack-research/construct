@@ -86,6 +86,21 @@ Body-0 composition audit (M2 + M3 + X2, no new organ):
   body0_run_meta — frozen bindings and replay inputs for score_body0.py.
   cell_verdict — COMPUTED Body-0 integration/regression cells. Mock may emit
     wire_pass only and is never evidence about memory.
+
+Body-1 executable-consequence composition:
+  body1_admission_gate_result — exact packet/review/runtime/renderer/engine gate
+    written before the first engine action; real runs additionally bind a fresh
+    surface-and-ignorance receipt.
+  body1_action / body1_subprocess_result — raw reply classification and the
+    separately executed packet-authored program result. The reply bytes are
+    logged for replay but never executed.
+  body1_protected_projection / body1_attack_result — protected authority and
+    lineage receipts across attacker-owned foreground.
+  body1_hot_store_cost — pre-answer state snapshot; the scorer reconstructs it
+    from lineage plus prune/rematerialize rows.
+  body1_run_meta — frozen packet, renderer, lineage, branch, and replay bindings.
+  cell_verdict — COMPUTED Body-1 composition, regression, scope-refusal, and
+    governance-should-lose cells. Mock may emit wire_pass only.
 """
 
 from __future__ import annotations

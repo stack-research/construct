@@ -1,0 +1,9 @@
+topic: 'Bounded cold review of notes/BODY_1_ENGINE_ADMISSION_PROPOSAL.md exact SHA-256 2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a, downstream of wire-endorsed implementation manifest b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2 and packet 22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5. Review the two-call admission boundary only. One independent pass each: ENDORSE or BLOCK. No patching, engine contact, scored run, or repair loop.'
+created_at: 2026-07-19T18:43:13.192458Z
+moderator: codex
+turn_order:
+    - codex
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended
