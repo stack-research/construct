@@ -1,0 +1,14 @@
+version: 1
+entry: 20260719T210948386Z__codex.md
+before_config_sha256: ec2446dfb7b43570fdd5c8c6329e4d08850d1ae9dc2dbfe57c93526fefc18cfa
+after_config_sha256: a87dd5d19d2b6d14a59de9a842cf319e606591285195146fb3f13a4739995155
+after_config: |
+    topic: 'Bounded cold review of notes/BODY_1_TERMINAL_ADMISSION_PROPOSAL.md exact SHA-256 4445bc8623ac1c92f9bf157af19dd916ec6f6741f27f9d7a3ab31f9ac912ef0f. Terminal Body-1 candidate: mistralai/ministral-3-3b, unchanged two-call probe and frozen implementation manifest b731e238ab0d6845c181b0f227c76ea21bbdaf3fa820c8227a356993ed911aa2 / packet 22d7e46d4f1598247acefdbb47bf60b3b02050a16697a4ab5cb1ba077b1685f5. One pass each: ENDORSE or BLOCK. No patching, model contact, scored run, or repair loop.'
+    created_at: 2026-07-19T21:09:28.185119Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    next_index: 1
+    status: active
