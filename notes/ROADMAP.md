@@ -60,7 +60,12 @@ call before returning model content; the ignorance call was never sent, no
 receipt was created, and the candidate closed
 `admission_refused(transport_timeout_surface_control)`. No scored contact
 occurred, and the Body-1 conjecture remains untested
-([findings](BODY_1_ADMISSION_FINDINGS.md)).
+([findings](BODY_1_ADMISSION_FINDINGS.md)). A terminal
+`mistralai/ministral-3-3b` proposal was then exact-byte reviewed and run once.
+Both admission calls completed, but both answers fell outside the frozen
+grammar; the checker failed `surface_control` and `probe_ignorance`. The
+precommitted terminal rule now closes Body-1 candidate search. No scored
+contact or behavioral verdict exists. Next direction: frontier search.
 
 **Review-budget law (EFC v0, 2026-07-15):** predeclare terminal review depth
 before authoring. Default: one authoring pass, one independent cold review, one

@@ -1,8 +1,9 @@
 # Body-1 admission findings
 
-Status: **CLOSED `admission_refused(transport_timeout_surface_control)` —
-fixed candidate exhausted its one reviewed packet; no receipt and no scored
-contact**.
+Status: **CLOSED — admission search exhausted. First candidate:
+`admission_refused(transport_timeout_surface_control)`; terminal candidate:
+`admission_refused(surface_control,probe_ignorance)`; no scored contact or
+Body-1 behavioral verdict**.
 
 Date: 2026-07-19.
 
@@ -77,3 +78,57 @@ The Body-1 conjecture remains untested. The fixed candidate is closed under the
 reviewed no-retry and no-shopping rules. Any new candidate, transport, timeout,
 or output-cap treatment requires a new admission proposal before another model
 sees either admission prompt.
+
+## Terminal candidate
+
+The lab then authorized one final candidate under exact
+[`BODY_1_TERMINAL_ADMISSION_PROPOSAL.md`](BODY_1_TERMINAL_ADMISSION_PROPOSAL.md)
+SHA-256
+`4445bc8623ac1c92f9bf157af19dd916ec6f6741f27f9d7a3ab31f9ac912ef0f`.
+Both cold reviewers endorsed those bytes in ended thread
+`body-1-terminal-admission-review`, and the proposal plus trace were committed
+at `f0a2d21` before contact.
+
+The terminal candidate was `mistralai/ministral-3-3b`. The operator pinned the
+fresh receipt
+`runs/body1/admission/20260719T211433Z-ministral-3-3b.json`, proved it absent,
+confirmed the exact model id at `/v1/models`, and ran the one authorized probe
+invocation.
+
+Both calls completed and the observed identity remained exact:
+
+| Probe | Frozen-parser result | Runtime result |
+| --- | --- | --- |
+| surface control | `unparseable(forbidden_multiline)` | not executed |
+| ignorance | `unparseable(no_match)` | not executed |
+
+The control answer used a fenced expression with a keyword argument. The
+ignorance answer used inline-code markup and a keyword argument. Neither was one
+of the two accepted AST forms, so no packet-authored program was selected and
+no raw model bytes were executed.
+
+The frozen checker passed every packet, runtime, renderer, component, cost,
+identity, and receipt-binding check, then failed exactly `surface_control` and
+`probe_ignorance`. Admission therefore closed
+`admission_refused(surface_control,probe_ignorance)`.
+
+Receipt SHA-256:
+
+```text
+390987867cd2ff82c76ace0c6fef35ed1247fbc03cb51b417c852daaf1cd5341
+```
+
+The receipt is admission-only, not scored evidence. No output was repaired,
+normalized, or reinterpreted by hand. No prompt, cap, timeout, parser, model, or
+transport parameter changed. No retry, third candidate, E1 call, or scored
+sequence occurred.
+
+## Final close
+
+Body-1's deterministic packet and mock wire remain valid as instrument
+artifacts, but neither admitted candidate reached scored contact. The
+executable-consequence conjecture is therefore untested, not negative.
+
+The terminal proposal precommitted that any refusal ends candidate search.
+Body-1 closes here. The next lab move is frontier search, not another admission
+surface.

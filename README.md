@@ -127,7 +127,11 @@ the first neutral control call before returning model content; the ignorance
 call was never sent, no receipt was created, and the candidate closed
 `admission_refused(transport_timeout_surface_control)`. This is an instrument
 refusal, not evidence about Body-1 behavior
-([findings](notes/BODY_1_ADMISSION_FINDINGS.md)).
+([findings](notes/BODY_1_ADMISSION_FINDINGS.md)). One terminal smaller
+candidate then completed both probes but returned forms outside the frozen
+grammar; the checker failed `surface_control` and `probe_ignorance`. Per its
+precommit, Body-1 candidate search is now closed with no scored contact. The
+conjecture remains untested, and the lab returns to frontier search.
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

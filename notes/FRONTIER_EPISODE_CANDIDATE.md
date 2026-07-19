@@ -1,7 +1,8 @@
 # Frontier episode candidate — CPython 3.14 partial binding
 
-Status: **ADMISSION REFUSED — fixed candidate timed out on the first neutral
-control; no receipt, ignorance call, scored run, or Body-1 finding**.
+Status: **CLOSED — both admission candidates refused before scored contact;
+terminal candidate failed the frozen expression grammar; no Body-1 behavioral
+finding**.
 
 Date: 2026-07-19.
 
@@ -299,3 +300,17 @@ the ignorance call, created no receipt, and made no scored contact. The
 candidate closes `admission_refused(transport_timeout_surface_control)` under
 the reviewed no-retry rule; see
 [BODY_1_ADMISSION_FINDINGS.md](BODY_1_ADMISSION_FINDINGS.md).
+
+One terminal candidate was then authorized under exact
+[terminal admission proposal](BODY_1_TERMINAL_ADMISSION_PROPOSAL.md) SHA-256
+`4445bc8623ac1c92f9bf157af19dd916ec6f6741f27f9d7a3ab31f9ac912ef0f`.
+`mistralai/ministral-3-3b` completed both calls, but the control returned a
+fenced keyword-argument expression and the ignorance probe returned an
+inline-code keyword-argument expression. The frozen parser accepted neither;
+the checker failed `surface_control` and `probe_ignorance`.
+
+The receipt at
+`runs/body1/admission/20260719T211433Z-ministral-3-3b.json` has SHA-256
+`390987867cd2ff82c76ace0c6fef35ed1247fbc03cb51b417c852daaf1cd5341`.
+No scored contact followed. The terminal precommit closes Body-1 candidate
+search and returns the lab to frontier work.
