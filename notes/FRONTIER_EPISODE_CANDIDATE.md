@@ -1,8 +1,7 @@
 # Frontier episode candidate — CPython 3.14 partial binding
 
-Status: **IMPLEMENTATION WIRE-ENDORSED — exact implementation manifest
-licensed for a separate engine-admission proposal, not engine contact or a
-scored run**.
+Status: **ADMISSION REFUSED — fixed candidate timed out on the first neutral
+control; no receipt, ignorance call, scored run, or Body-1 finding**.
 
 Date: 2026-07-19.
 
@@ -290,4 +289,13 @@ independent **ENDORSE** votes from `cursor/grok-4.5` and
 review authorizes exact proposal SHA-256
 `2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a`
 for one fixed Ministral candidate and two admission-only calls. It does not
-authorize the scored sequence. No admission contact has occurred.
+authorize the scored sequence. At review close, no admission contact had
+occurred.
+
+The fixed admission packet was attempted after clean checkpoint `d8f8441`.
+`mistralai/ministral-3-14b-reasoning` timed out on the first neutral control
+call before returning model content. The sequential probe therefore never sent
+the ignorance call, created no receipt, and made no scored contact. The
+candidate closes `admission_refused(transport_timeout_surface_control)` under
+the reviewed no-retry rule; see
+[BODY_1_ADMISSION_FINDINGS.md](BODY_1_ADMISSION_FINDINGS.md).

@@ -122,7 +122,12 @@ or any scientific or integration claim remains unlicensed. The separate
 unanimously cold-endorsed at exact SHA-256
 `2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a`.
 It fixes one Ministral candidate and exactly two admission-only calls. No
-admission or scored contact has occurred.
+scored contact has occurred. The fixed admission candidate then timed out on
+the first neutral control call before returning model content; the ignorance
+call was never sent, no receipt was created, and the candidate closed
+`admission_refused(transport_timeout_surface_control)`. This is an instrument
+refusal, not evidence about Body-1 behavior
+([findings](notes/BODY_1_ADMISSION_FINDINGS.md)).
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

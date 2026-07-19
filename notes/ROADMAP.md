@@ -54,9 +54,13 @@ contact, a memory finding, or a composition claim. The separate
 [engine-admission proposal](BODY_1_ENGINE_ADMISSION_PROPOSAL.md) was
 unanimously cold-endorsed in `body-1-engine-admission-review` at exact SHA-256
 `2bc1092f31aa774b9a64bdf03ff7e51b55e3454cfa2b14a6677864bdc56dbb7a`.
-It is admission-ready for one fixed Ministral candidate and exactly two
-admission-only calls. No admission or scored contact has occurred; any later
-scored sequence still requires an exact receipt pin.
+It fixed one Ministral candidate and exactly two admission-only calls. That
+candidate timed out on the first neutral control
+call before returning model content; the ignorance call was never sent, no
+receipt was created, and the candidate closed
+`admission_refused(transport_timeout_surface_control)`. No scored contact
+occurred, and the Body-1 conjecture remains untested
+([findings](BODY_1_ADMISSION_FINDINGS.md)).
 
 **Review-budget law (EFC v0, 2026-07-15):** predeclare terminal review depth
 before authoring. Default: one authoring pass, one independent cold review, one
