@@ -1,4 +1,4 @@
-"""Body Core v0.1: a small integrity kernel plus a provisional policy profile.
+"""Body Core v0.2: a small integrity kernel plus a provisional policy profile.
 
 This module is provisional runtime engineering, not a harness instrument or a
 product schema. Its integrity kernel supplies three deliberately small
@@ -25,10 +25,10 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
-CORE_SCHEMA_VERSION = "body-core-v0.1"
+CORE_SCHEMA_VERSION = "body-core-v0.2"
 EVIDENCE_CLASS = "wire_integration_only"
 GENESIS_HASH = "0" * 64
-POLICY_PROFILE_ID = "body-core-v0.1-provisional-policy"
+POLICY_PROFILE_ID = "body-core-v0.2-provisional-policy"
 
 WRITER_AUTHORITIES: dict[str, frozenset[str]] = {
     "runtime": frozenset({"administration", "system_record"}),

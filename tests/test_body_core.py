@@ -1,4 +1,4 @@
-"""Wire tests for Body Core v0.1.
+"""Wire tests for Body Core v0.2.
 
 These tests establish envelope integrity, fail-closed replay, and deterministic
 views only. They are not memory evidence.
@@ -590,4 +590,4 @@ if __name__ == "__main__":
     )
     for _, fn in tests:
         fn()
-    print(f"\nALL {len(tests)} BODY CORE V0.1 TESTS PASS")
+    print(f"\nALL {len(tests)} BODY CORE V0.2 TESTS PASS")

@@ -146,9 +146,10 @@ X-track instrument smokes (no model, disclosed wire tests): `make x1-test`, `mak
 
 Mock-engine runs are valid for **wire tests only**. They must not be cited as memory findings.
 
-Body Core v0.1 wire checks (no model, no scientific claim):
+Body Core v0.2 wire checks (no model, no scientific claim):
 `make body-core-test`. The X2 round-trip pressure test is
-`make body-core-x2-test`. The composed walking skeleton remains
+`make body-core-x2-test`; the paired M2 pressure test is
+`make body-core-m2-test`. The composed walking skeleton remains
 `make body-sketch-test`.
 
 ## Working on code

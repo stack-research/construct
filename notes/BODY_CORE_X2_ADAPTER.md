@@ -1,8 +1,10 @@
-# Body Core v0.1 — X2 adapter contract
+# Body Core v0.2 — X2 adapter contract
 
-Status: **built; awaiting bounded cold review**. Wire/integration engineering
-only. This adapter does not create a new X2 run, alter the closed X2 finding, or
-license a scientific mechanism.
+Status: **v0.1 endorsed; v0.2 correspondence repair cold-reviewed and
+endorsed**. Wire/integration engineering only. See the v0.1
+[review](BODY_CORE_X2_REVIEW.md) and the v0.2
+[cross-client review](BODY_CORE_M2_REVIEW.md). This adapter does not create a
+new X2 run, alter the closed X2 finding, or license a scientific mechanism.
 
 ## Milestone gate
 
@@ -19,7 +21,7 @@ as clean lineage.
 
 Exact success statement:
 
-> Body Core v0.1 carries X2 closed lineage so the unchanged scorer reproduces
+> Body Core v0.2 carries X2 closed lineage so the unchanged scorer reproduces
 > every earned verdict and cost total under pinned canonical equality, while
 > four refusals bite.
 
@@ -73,7 +75,9 @@ scorer. The adapter does not reproduce scorer logic.
 Each carried prune or rematerialize row also requires exactly one separate
 `placement_changed` policy receipt. That receipt binds the source event, source
 index, operation kind, state item, and hot/cold transition. A non-operation may
-not have such a receipt.
+not have such a receipt. v0.2 additionally refuses any placement change for an
+X2 materialized record without a source binding and requires terminal Core
+placement to equal the fold of all bound X2 operations.
 
 `reported_metabolic_totals` remains writer-reported accounting derived from
 lineage events. It is not an independently recomputed cost. X2's scorer-side
@@ -91,8 +95,11 @@ Named wire tests require:
 
 An additional binding probe rewrites and rehashes the final carried source row;
 the aggregate source digest pinned in `x2_adapter_started` must still refuse it.
+Two v0.2 probes reproduce and close the prior review residual: an unbound
+placement transition is refused, and a chain-consistent terminal placement
+rewrite loses to the independent operation fold.
 
-Body Core v0.1 also names the earlier adversarial probe families as tests:
+The Core suite also names the earlier adversarial probe families as tests:
 duplicate parents/warrants, invalid retention shapes, disputed-warrant
 reactivation, mid-chain rehash, unknown scopes, and blank JSONL rows.
 

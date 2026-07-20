@@ -23,23 +23,26 @@ reviewed cluster needs raw evidence, a downstream consumer, an external oracle,
 a competing explanation, and a visible loses-condition before one cold
 frontier pass is warranted.
 
-**Current engineering direction (2026-07-20): Body Core v0.1.** While scientific
+**Current engineering direction (2026-07-20): Body Core v0.2.** While scientific
 mechanism search remains paused, whole-body engineering is active on an
 integrity kernel plus an explicitly provisional lifecycle/placement/warrant
 policy profile. The acceptance checks are deterministic
 reconstruction and fail-closed refusal of changed ordering/content, invalid
 writer authority, dangling lineage, impossible lifecycle transitions, unhealthy
 warrant reactivation, stale view claims, ambiguous references, invalid retention
-shapes, unknown scopes, and blank rows. The first non-stub pressure test carries
-four closed X2 ledgers through Core; the unchanged X2 scorer must reproduce
-their verdicts and cost totals, while four adapter refusal legs bite. This is
-wire/integration-only. The
+shapes, unknown scopes, and blank rows. The X2 pressure test carries four closed
+ledgers, closes the reviewed placement-correspondence residual, and preserves
+the unchanged X2 scorer. The M2 pressure test carries ten closed S1/S2 pairs,
+materializes the S1 world failure as warrant, activates only through S2
+inheritance metadata, and preserves fresh output from the unchanged resident
+scorer. This is wire/integration-only. The
 hash chain is not cryptographic writer authentication, full replay remains
 authoritative, append/replay remains quadratic, no reconstruction-cost win is
 claimed, and no scientific
 mechanism is licensed by the build. Run `make body-core-test` or the composed
-`make body-sketch-test`; run `make body-core-x2-test` for the
-[adapter contract](BODY_CORE_X2_ADAPTER.md).
+`make body-sketch-test`; run `make body-core-x2-test` and
+`make body-core-m2-test` for the [X2](BODY_CORE_X2_ADAPTER.md) and
+[M2](BODY_CORE_M2_ADAPTER.md) adapter contracts.
 
 [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) remains the cold-reviewed whole-body
 direction; [BODY_MAP.md](BODY_MAP.md) is the living maturity map; the

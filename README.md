@@ -167,19 +167,22 @@ explanations but no mechanism design. The log is reviewed monthly, or earlier
 after three materially similar observations. A credible cluster can license
 one cold frontier pass; it cannot silently license a build or engine contact.
 
-While that search is paused, **Body Core v0.1** is the active provisional
+While that search is paused, **Body Core v0.2** is the active provisional
 engineering direction: an integrity kernel for lineage and untrusting replay,
 plus an explicitly provisional lifecycle/placement/warrant policy profile. Its
-first non-stub pressure test carries four closed X2 ledgers through the Core and
-requires the unchanged scorer to reproduce their verdicts and cost totals under
-pinned canonical equality. It refactors the walking skeleton
+X2 client carries four closed ledgers and closes policy-placement
+correspondence; its M2 client carries ten closed S1/S2 pairs through
+world-failure warranting and session-seam activation. Both require unchanged
+scorers to reproduce the prior results under pinned canonical equality. This
+refactors the walking skeleton
 rather than proposing another scientific organ. Its tests establish
 wire/integration properties only; the hash chain is not cryptographic writer
 authentication, full replay remains authoritative, append/replay remains
 quadratic, and no mechanism or
 reconstruction-cost claim is licensed
 ([orientation](notes/BODY_MAP.md);
-[adapter contract](notes/BODY_CORE_X2_ADAPTER.md)).
+[X2 adapter](notes/BODY_CORE_X2_ADAPTER.md);
+[M2 adapter](notes/BODY_CORE_M2_ADAPTER.md)).
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

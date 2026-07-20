@@ -1,0 +1,13 @@
+version: 1
+entry: 20260720T194200565Z__claude%2Ffable-5.md
+before_config_sha256: 435e2c961675319aac4e1a574151d0497cfb66087afe41cb8f1cc0ad66152640
+after_config_sha256: b7076fd69810a55c8f0cdeb8d8ac8d7e7ed209d9568445bf8ff1729ab9ea6214
+after_config: |
+    topic: This remains wire/integration engineering, not new X2 or M2 evidence.
+    created_at: 2026-07-20T19:34:21.304309Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - claude/fable-5
+    status: active

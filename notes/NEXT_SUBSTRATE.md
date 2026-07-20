@@ -1,6 +1,6 @@
 # NEXT substrate — a body for an intermittent mind
 
-Status: **architect's proposal, cold-reviewed; provisional Body Core v0.1
+Status: **architect's proposal, cold-reviewed; provisional Body Core v0.2
 engineering active**. Written from a blank page and reviewed on 2026-07-10 in
 substrate thread `next-substrate`. This is not a scored finding. The current
 provisional engineering slice is described below and remains
@@ -9,7 +9,7 @@ wire/integration-only.
 Scientific milestone: **none yet**. This names a wanted direction. Cold review
 found no block on the wanted body and sharpened one candidate first slice. Any
 selected mechanism must still pass its own admission gate, oracle, and
-loses-conditions before its behavior becomes a finding. Body Core v0.1 serves
+loses-conditions before its behavior becomes a finding. Body Core v0.2 serves
 whole-body composition engineering while active frontier search is paused; its
 checks are replay and invariant checks, not a behavioral oracle.
 
@@ -436,9 +436,9 @@ substrate that lets the model certify itself builds a persuasive diary.
 
 ---
 
-## Current build while frontier search is paused: Body Core v0.1
+## Current build while frontier search is paused: Body Core v0.2
 
-Body Core v0.1 makes the provisional whole traversable without choosing another
+Body Core v0.2 makes the provisional whole traversable without choosing another
 cognitive mechanism. Its integrity kernel extracts three facilities from the
 walking skeleton:
 
@@ -470,7 +470,16 @@ non-stub pressure test is the reversible
 [X2 adapter](BODY_CORE_X2_ADAPTER.md), exercised by
 `make body-core-x2-test`: four checked-in closed X2 ledgers pass through Core
 and reproduce the unchanged scorer's verdicts and cost totals. This is
-preservation of prior evidence, not new evidence. Every Core row
+preservation of prior evidence, not new evidence. v0.2 closes the reviewed
+placement-correspondence residual by binding every X2 placement event and
+checking the terminal operation fold.
+
+The second client is the paired [M2 adapter](BODY_CORE_M2_ADAPTER.md), exercised
+by `make body-core-m2-test`. Ten closed S1/S2 pairs pass through Core and
+fresh-score identically under the unchanged resident scorer. The S1
+world-scored failure warrants probationary state; only the carried S2
+inheritance metadata activates it across the session seam. This pressures
+lifecycle and warrant semantics without creating a new M2 finding. Every Core row
 remains `wire_integration_only`.
 
 The current hash chain is tamper-evident only relative to a trusted chain head.
@@ -479,7 +488,7 @@ claims, not cryptographically authenticated principals. Full replay is still
 the authority. The implementation is single-process and does not yet supply
 concurrent-writer locking, an external chain-head anchor, signatures,
 compaction, or migration. Append validation remains quadratic in lineage
-length. v0.1 does not claim reduced reconstruction cost,
+length. v0.2 does not claim reduced reconstruction cost,
 product-schema stability, mechanism value, or scientific superiority.
 
 This work serves the whole because any later mechanism needs trustworthy

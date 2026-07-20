@@ -1,4 +1,4 @@
-"""Wire tests for the X2-to-Body-Core v0.1 adapter.
+"""Wire tests for the X2-to-Body-Core v0.2 adapter.
 
 The four checked-in real ledgers are prior evidence. These tests only verify
 that transport through the provisional Core preserves the unchanged X2 scorer;
@@ -31,6 +31,7 @@ REAL_X2_LEDGERS = (
     ROOT / "runs/x2/x2-u1-dep0033-f4e7ab.x2.jsonl",
 )
 OBSERVER = Writer("adapter-test-observer", "observer")
+CONTROLLER = Writer("adapter-test-controller", "controller")
 
 
 def _rewrite(path: Path, rows: list[dict]) -> None:
@@ -46,6 +47,14 @@ def _rehash(row: dict) -> None:
         unsigned, sort_keys=True, separators=(",", ":"), ensure_ascii=True
     )
     row["event_hash"] = hashlib.sha256(canonical.encode()).hexdigest()
+
+
+def _rehash_chain(rows: list[dict]) -> None:
+    previous = "0" * 64
+    for row in rows:
+        row["previous_event_hash"] = previous
+        _rehash(row)
+        previous = row["event_hash"]
 
 
 def test_four_closed_real_ledgers_preserve_unchanged_x2_scorer():
@@ -182,6 +191,66 @@ def test_invalid_record_warrant_blocks_projection():
         else:
             raise AssertionError("invalid record warrant reached X2 scorer")
     print("ok  X2 refusal: invalid warrant blocks scorer projection")
+
+
+def test_unbound_x2_placement_change_is_refused():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "core.jsonl"
+        ingest_x2(REAL_X2_LEDGERS[0], path)
+        store = LineageStore(path)
+        item = next(
+            item
+            for item in store.replay().views.state_items.values()
+            if item.item_kind == "x2_materialized_record" and item.placement == "hot"
+        )
+        store.append(
+            "placement_changed",
+            writer=CONTROLLER,
+            authority="controller_transition",
+            payload={
+                "item_id": item.item_id,
+                "from_placement": "hot",
+                "to_placement": "cold",
+                "reason": "unbound policy drift probe",
+            },
+        )
+        try:
+            project_x2(store)
+        except ReplayRefusal as exc:
+            assert "lacks source_event_id" in str(exc)
+        else:
+            raise AssertionError("unbound X2 placement event survived projection")
+    print("ok  X2 refusal: every X2 placement event requires a source binding")
+
+
+def test_terminal_x2_placement_must_equal_operation_fold():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "core.jsonl"
+        source_rows = [
+            json.loads(line)
+            for line in REAL_X2_LEDGERS[0].read_text(encoding="utf-8").splitlines()
+        ]
+        meta = next(row for row in source_rows if row["kind"] == "x2_run_meta")
+        no_prune_branch = meta["branches"]["no_prune"]
+        ingest_x2(REAL_X2_LEDGERS[0], path)
+        rows = LineageStore(path).raw_rows()
+        admission = next(
+            row
+            for row in rows
+            if row["kind"] == "state_item_admitted"
+            and row["payload"].get("item_kind") == "x2_materialized_record"
+            and row["payload"].get("detail", {}).get("branch_id") == no_prune_branch
+        )
+        admission["payload"]["placement"] = "cold"
+        _rehash_chain(rows)
+        _rewrite(path, rows)
+        try:
+            project_x2(path)
+        except ReplayRefusal as exc:
+            assert "terminal Core placement disagrees" in str(exc)
+        else:
+            raise AssertionError("terminal placement drift survived operation fold")
+    print("ok  X2 refusal: terminal placement equals the bound operation fold")
 
 
 def test_x2_cost_tamper_is_caught_by_unchanged_scorer():

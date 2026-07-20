@@ -1,4 +1,4 @@
-"""Reversible X2-to-Body-Core v0.1 wire adapter.
+"""Reversible X2-to-Body-Core v0.2 wire adapter.
 
 The adapter carries each X2 field visibly in a typed Body Core source event,
 adds separate policy-profile events for hot/cold transitions, and projects the
@@ -20,7 +20,7 @@ from harness.score_prune import score_prune
 from .core import LineageStore, ReplayRefusal, Writer
 
 
-ADAPTER_VERSION = "x2-body-core-adapter-v0.1"
+ADAPTER_VERSION = "x2-body-core-adapter-v0.2"
 SOURCE_EVENT_KIND = "x2_source_row_carried"
 POLICY_EVENT_KIND = "placement_changed"
 PINNED_NON_SEMANTIC_FIELDS = frozenset({"ts"})
@@ -221,8 +221,8 @@ X2_ROW_FIELD_CONTRACT: dict[str, frozenset[str]] = {
     ),
 }
 
-ADAPTER_WRITER = Writer("x2-body-core-adapter-v0.1", "controller")
-X2_OBSERVER = Writer("x2-ledger-observer-v0.1", "observer")
+ADAPTER_WRITER = Writer("x2-body-core-adapter-v0.2", "controller")
+X2_OBSERVER = Writer("x2-ledger-observer-v0.2", "observer")
 
 
 @dataclass(frozen=True)
@@ -488,7 +488,12 @@ def project_x2(store_or_path: LineageStore | Path) -> list[dict[str, Any]]:
     for row in result.rows:
         if row["kind"] != POLICY_EVENT_KIND:
             continue
+        item_id = row["payload"].get("item_id")
         source_event_id = row["payload"].get("source_event_id")
+        if item_id in x2_items and not isinstance(source_event_id, str):
+            raise ReplayRefusal(
+                f"{row['event_id']}: X2 placement change lacks source_event_id"
+            )
         if source_event_id is not None:
             policy_by_source.setdefault(source_event_id, []).append(row)
 
@@ -559,6 +564,36 @@ def project_x2(store_or_path: LineageStore | Path) -> list[dict[str, Any]]:
         raise ReplayRefusal("projected row count disagrees with adapter start")
     if start_payload.get("source_digest") != _digest(projected):
         raise ReplayRefusal("projected source digest disagrees with adapter start")
+
+    meta = next((row for row in projected if row["kind"] == "x2_run_meta"), None)
+    if meta is None:
+        raise ReplayRefusal("projected X2 lineage lacks x2_run_meta")
+    expected_placements = {
+        _item_id(branch_id, record_id): "hot"
+        for branch_id in meta["branches"].values()
+        for record_id in meta["all_record_ids"]
+    }
+    for row in projected:
+        if row["kind"] not in {"prune", "rematerialize"}:
+            continue
+        item_id = _item_id(row.get("branch_id"), row.get("record_id"))
+        expected_from = "hot" if row["kind"] == "prune" else "cold"
+        expected_to = "cold" if row["kind"] == "prune" else "hot"
+        if expected_placements.get(item_id) != expected_from:
+            raise ReplayRefusal(
+                f"projected X2 operation history is inconsistent for {item_id}"
+            )
+        expected_placements[item_id] = expected_to
+    placement_mismatches = [
+        item_id
+        for item_id, expected in expected_placements.items()
+        if item_id not in x2_items or x2_items[item_id].placement != expected
+    ]
+    if placement_mismatches:
+        raise ReplayRefusal(
+            "terminal Core placement disagrees with bound X2 operations: "
+            f"{sorted(placement_mismatches)}"
+        )
     return projected
 
 

@@ -1,0 +1,14 @@
+version: 1
+entry: 20260720T193600370Z__codex%2Fgpt-5.6-sol.md
+before_config_sha256: 6d6ea315559ff59b1cd9ff3436b09ae76500853b2290bfc386892c9fe588ad55
+after_config_sha256: 435e2c961675319aac4e1a574151d0497cfb66087afe41cb8f1cc0ad66152640
+after_config: |
+    topic: This remains wire/integration engineering, not new X2 or M2 evidence.
+    created_at: 2026-07-20T19:34:21.304309Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - claude/fable-5
+    next_index: 2
+    status: active
