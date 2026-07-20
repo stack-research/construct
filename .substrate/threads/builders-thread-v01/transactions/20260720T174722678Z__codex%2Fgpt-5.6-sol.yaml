@@ -1,0 +1,14 @@
+version: 1
+entry: 20260720T174722678Z__codex%2Fgpt-5.6-sol.md
+before_config_sha256: db3e18987a5ed64da622bf204675422752de2caeda999b1ee2d19a13f262b939
+after_config_sha256: baa039ec8be1793feaa133d93f7d4cb0ce6ebab73f0777a12cffc870a1f9f797
+after_config: |
+    topic: high level build discourse; project roadmap
+    created_at: 2026-07-20T17:42:44.541463Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - claude/fable-5
+    next_index: 2
+    status: active

@@ -1,4 +1,4 @@
-"""Wire tests for mechanism-neutral Body Core v0.
+"""Wire tests for Body Core v0.1.
 
 These tests establish envelope integrity, fail-closed replay, and deterministic
 views only. They are not memory evidence.
@@ -90,7 +90,7 @@ def test_replay_derives_state_warrant_placement_and_metabolism():
         assert item.placement == "cold"
         assert result.views.warrant_health[warrant["event_id"]] == "current"
         assert result.views.dependents_by_warrant[warrant["event_id"]] == ["item-1"]
-        assert result.views.metabolic_totals["item-1"] == {"check_steps": 2}
+        assert result.views.reported_metabolic_totals["item-1"] == {"check_steps": 2}
         assert result.verified_view_claim_ids == (claim["event_id"],)
         print("ok  views: state + warrant + placement + metabolism rebuild")
 
@@ -422,6 +422,166 @@ def test_invalid_warrant_cannot_mint_new_active_state():
         print("ok  refusal: invalid warrant cannot mint active state")
 
 
+def test_duplicate_parent_and_warrant_references_are_refused():
+    with TemporaryDirectory() as td:
+        store = LineageStore(Path(td) / "lineage.jsonl")
+        start, warrant = _seed(store)
+        for field, references in (
+            ("causal_parent_ids", [start["event_id"], start["event_id"]]),
+            ("warrant_event_ids", [warrant["event_id"], warrant["event_id"]]),
+        ):
+            kwargs = {field: references}
+            try:
+                store.append(
+                    "duplicate_reference_probe",
+                    writer=CONTROLLER,
+                    authority="wire_diagnostic",
+                    payload={},
+                    **kwargs,
+                )
+            except ReplayRefusal as exc:
+                assert f"duplicate {field}" in str(exc)
+            else:
+                raise AssertionError(f"duplicate {field} survived")
+        print("ok  refusal: duplicate parents and warrants are not ambiguous")
+
+
+def test_invalid_retention_shapes_are_refused():
+    invalid = (
+        ({"mode": "reference", "digest": "bad", "external_ref": "artifact://x"}, {}),
+        ({"mode": "reference", "digest": "a" * 64}, {}),
+        ({"mode": "redacted", "digest": "a" * 64}, {}),
+    )
+    with TemporaryDirectory() as td:
+        store = LineageStore(Path(td) / "lineage.jsonl")
+        _seed(store)
+        for retention, payload in invalid:
+            try:
+                store.append(
+                    "retention_probe",
+                    writer=OBSERVER,
+                    authority="external_observation",
+                    retention=retention,
+                    payload=payload,
+                )
+            except ReplayRefusal:
+                pass
+            else:
+                raise AssertionError(f"invalid retention survived: {retention}")
+        print("ok  refusal: invalid retention shapes fail closed")
+
+
+def test_disputed_warrant_cannot_reactivate_suspended_state():
+    with TemporaryDirectory() as td:
+        store = LineageStore(Path(td) / "lineage.jsonl")
+        _, warrant = _seed(store)
+        store.append(
+            "state_item_admitted",
+            writer=CONTROLLER,
+            authority="controller_transition",
+            warrant_event_ids=[warrant["event_id"]],
+            payload={
+                "item_id": "disputed-dependent",
+                "item_kind": "procedure",
+                "status": "suspended",
+                "placement": "hot",
+            },
+        )
+        revision = store.append(
+            "provenance_revision",
+            writer=OBSERVER,
+            authority="external_observation",
+            payload={
+                "target_event_id": warrant["event_id"],
+                "health": "disputed",
+            },
+        )
+        try:
+            store.append(
+                "state_item_transition",
+                writer=CONTROLLER,
+                authority="controller_transition",
+                causal_parent_ids=[revision["event_id"]],
+                payload={
+                    "item_id": "disputed-dependent",
+                    "from_status": "suspended",
+                    "to_status": "active",
+                },
+            )
+        except ReplayRefusal as exc:
+            assert "unhealthy warrants" in str(exc)
+        else:
+            raise AssertionError("disputed warrant reactivated state")
+        print("ok  refusal: disputed warrant blocks reactivation")
+
+
+def test_mid_chain_rehash_does_not_repair_descendant_link():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        store = LineageStore(path)
+        _seed(store)
+        store.append(
+            "third_event",
+            writer=RUNTIME,
+            authority="system_record",
+            payload={},
+        )
+        rows = store.raw_rows()
+        rows[1]["payload"]["score"] = 1.0
+        unsigned = {key: value for key, value in rows[1].items() if key != "event_hash"}
+        canonical = json.dumps(
+            unsigned, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+        )
+        rows[1]["event_hash"] = hashlib.sha256(canonical.encode()).hexdigest()
+        _rewrite(path, rows)
+        try:
+            store.replay()
+        except ReplayRefusal as exc:
+            assert "previous_event_hash mismatch" in str(exc)
+        else:
+            raise AssertionError("mid-chain rehash repaired its descendant")
+        print("ok  refusal: local rehash cannot repair the rest of the chain")
+
+
+def test_unknown_invocation_and_encounter_scopes_are_refused():
+    with TemporaryDirectory() as td:
+        store = LineageStore(Path(td) / "lineage.jsonl")
+        _seed(store)
+        for scope in (
+            {"invocation_id": "ev-999998"},
+            {"encounter_id": "ev-999999"},
+        ):
+            try:
+                store.append(
+                    "scope_probe",
+                    writer=RUNTIME,
+                    authority="system_record",
+                    payload={},
+                    **scope,
+                )
+            except ReplayRefusal as exc:
+                assert "unknown" in str(exc) and "scope" in str(exc)
+            else:
+                raise AssertionError(f"unknown scope survived: {scope}")
+        print("ok  refusal: event scopes must name established boundaries")
+
+
+def test_blank_line_is_refused_instead_of_silently_skipped():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        store = LineageStore(path)
+        _seed(store)
+        lines = path.read_text(encoding="utf-8").splitlines()
+        path.write_text(f"{lines[0]}\n\n{lines[1]}\n", encoding="utf-8")
+        try:
+            store.replay()
+        except ReplayRefusal as exc:
+            assert "blank lines are not permitted" in str(exc)
+        else:
+            raise AssertionError("blank lineage row was silently skipped")
+        print("ok  refusal: blank lineage rows fail closed")
+
+
 if __name__ == "__main__":
     tests = sorted(
         (name, fn)
@@ -430,4 +590,4 @@ if __name__ == "__main__":
     )
     for _, fn in tests:
         fn()
-    print(f"\nALL {len(tests)} BODY CORE V0 TESTS PASS")
+    print(f"\nALL {len(tests)} BODY CORE V0.1 TESTS PASS")

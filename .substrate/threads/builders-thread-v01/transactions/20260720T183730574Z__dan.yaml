@@ -1,0 +1,14 @@
+version: 1
+entry: 20260720T183730574Z__dan.md
+before_config_sha256: 69c7c88bdb6b81ddc6846e56ca290f4296b89f9ce85362a36ec1e5bf28463f97
+after_config_sha256: db3e18987a5ed64da622bf204675422752de2caeda999b1ee2d19a13f262b939
+after_config: |
+    topic: high level build discourse; project roadmap
+    created_at: 2026-07-20T17:42:44.541463Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - claude/fable-5
+    next_index: 1
+    status: active

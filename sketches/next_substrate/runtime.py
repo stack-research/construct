@@ -96,7 +96,7 @@ class DeterministicModelStub:
 
 
 def materialize(views: BodyViews) -> BodyState:
-    """Project the mechanism-neutral views into this sketch's disposition port."""
+    """Project integrity-checked Core views into the disposition port."""
     state = BodyState()
     for item in views.state_items.values():
         if item.item_kind != "disposition":
@@ -107,7 +107,9 @@ def materialize(views: BodyViews) -> BodyState:
             status=item.status,
             validity_envelope=dict(item.detail["validity_envelope"]),
             warrant_event_ids=list(item.warrant_event_ids),
-            metabolic_counts=dict(views.metabolic_totals.get(item.item_id, {})),
+            metabolic_counts=dict(
+                views.reported_metabolic_totals.get(item.item_id, {})
+            ),
         )
         state.dispositions[disposition.disposition_id] = disposition
     return state

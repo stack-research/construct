@@ -1,15 +1,15 @@
 # NEXT substrate — a body for an intermittent mind
 
-Status: **architect's proposal, cold-reviewed; provisional Body Core v0
+Status: **architect's proposal, cold-reviewed; provisional Body Core v0.1
 engineering active**. Written from a blank page and reviewed on 2026-07-10 in
 substrate thread `next-substrate`. This is not a scored finding. The current
-mechanism-neutral engineering slice is described below and remains
+provisional engineering slice is described below and remains
 wire/integration-only.
 
 Scientific milestone: **none yet**. This names a wanted direction. Cold review
 found no block on the wanted body and sharpened one candidate first slice. Any
 selected mechanism must still pass its own admission gate, oracle, and
-loses-conditions before its behavior becomes a finding. Body Core v0 serves
+loses-conditions before its behavior becomes a finding. Body Core v0.1 serves
 whole-body composition engineering while active frontier search is paused; its
 checks are replay and invariant checks, not a behavioral oracle.
 
@@ -436,19 +436,26 @@ substrate that lets the model certify itself builds a persuasive diary.
 
 ---
 
-## Current build while frontier search is paused: Body Core v0
+## Current build while frontier search is paused: Body Core v0.1
 
-Body Core v0 makes the provisional whole traversable without choosing another
-cognitive mechanism. It extracts three facilities from the walking skeleton:
+Body Core v0.1 makes the provisional whole traversable without choosing another
+cognitive mechanism. Its integrity kernel extracts three facilities from the
+walking skeleton:
 
-1. a mechanism-neutral lineage envelope with deterministic ordering, a hash
-   chain, declared writer role and authority, causal parents, warrant pointers,
-   invocation and encounter scope, and inline/reference/redacted retention;
+1. a small integrity-kernel lineage envelope with deterministic ordering, a
+   hash chain, declared writer role and authority, causal parents, warrant
+   pointers, invocation and encounter scope, and
+   inline/reference/redacted retention;
 2. untrusting replay that refuses malformed ordering, changed rows, dangling
    references, unauthorized writer/authority combinations, impossible state
    transitions, and state reactivation under an invalid warrant;
 3. recomputable views of current state, warrant health, warrant dependents,
-   hot/cold placement, and metabolic totals.
+   hot/cold placement, and reported metabolic totals.
+
+The lifecycle table, binary hot/cold placement, three-value warrant vocabulary,
+and automatic invalid-warrant suspension are a **provisional policy profile**,
+not mechanism-neutral law. Keeping that boundary explicit lets later bodies
+reuse the integrity kernel without silently inheriting this ontology.
 
 Materialized-view rows are cache claims. Replay independently recomputes the
 view and refuses a stale digest; a logged summary never becomes authority merely
@@ -458,7 +465,12 @@ core's generic event envelope.
 
 The implementation is
 [`sketches/next_substrate/core.py`](../sketches/next_substrate/core.py), exercised
-by `make body-core-test` and transitively by `make body-sketch-test`. Every row
+by `make body-core-test` and transitively by `make body-sketch-test`. The first
+non-stub pressure test is the reversible
+[X2 adapter](BODY_CORE_X2_ADAPTER.md), exercised by
+`make body-core-x2-test`: four checked-in closed X2 ledgers pass through Core
+and reproduce the unchanged scorer's verdicts and cost totals. This is
+preservation of prior evidence, not new evidence. Every Core row
 remains `wire_integration_only`.
 
 The current hash chain is tamper-evident only relative to a trusted chain head.
@@ -466,7 +478,8 @@ It is not a signature system: writer identities and roles are enforced runtime
 claims, not cryptographically authenticated principals. Full replay is still
 the authority. The implementation is single-process and does not yet supply
 concurrent-writer locking, an external chain-head anchor, signatures,
-compaction, or migration. v0 does not claim reduced reconstruction cost,
+compaction, or migration. Append validation remains quadratic in lineage
+length. v0.1 does not claim reduced reconstruction cost,
 product-schema stability, mechanism value, or scientific superiority.
 
 This work serves the whole because any later mechanism needs trustworthy

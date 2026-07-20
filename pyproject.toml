@@ -7,3 +7,8 @@ dependencies = ["anthropic>=0.92.0"]
 
 [tool.setuptools]
 packages = ["harness"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.22",
+]

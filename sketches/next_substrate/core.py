@@ -1,11 +1,16 @@
-"""Mechanism-neutral Body Core v0.
+"""Body Core v0.1: a small integrity kernel plus a provisional policy profile.
 
 This module is provisional runtime engineering, not a harness instrument or a
-product schema. It supplies three deliberately small facilities:
+product schema. Its integrity kernel supplies three deliberately small
+facilities:
 
 1. a tamper-evident lineage envelope;
 2. fail-closed, untrusting replay;
 3. independently recomputable materialized views.
+
+The lifecycle table, binary hot/cold placement, three-value warrant health, and
+automatic suspension on invalidation are a provisional policy profile layered
+on that kernel. They are useful defaults under test, not mechanism-neutral law.
 
 Every event remains ``wire_integration_only``. Nothing here licenses a memory
 mechanism or turns authored behavior into scientific evidence.
@@ -20,9 +25,10 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
-CORE_SCHEMA_VERSION = "body-core-v0"
+CORE_SCHEMA_VERSION = "body-core-v0.1"
 EVIDENCE_CLASS = "wire_integration_only"
 GENESIS_HASH = "0" * 64
+POLICY_PROFILE_ID = "body-core-v0.1-provisional-policy"
 
 WRITER_AUTHORITIES: dict[str, frozenset[str]] = {
     "runtime": frozenset({"administration", "system_record"}),
@@ -66,15 +72,17 @@ class MaterializedItem:
 class BodyViews:
     """Views derived only from validated lineage rows."""
 
+    policy_profile_id: str = POLICY_PROFILE_ID
     state_items: dict[str, MaterializedItem] = field(default_factory=dict)
     warrant_health: dict[str, str] = field(default_factory=dict)
     dependents_by_warrant: dict[str, list[str]] = field(default_factory=dict)
-    metabolic_totals: dict[str, dict[str, int]] = field(default_factory=dict)
+    reported_metabolic_totals: dict[str, dict[str, int]] = field(default_factory=dict)
     event_count: int = 0
     through_event_id: str | None = None
 
     def canonical(self) -> dict[str, Any]:
         return {
+            "policy_profile_id": self.policy_profile_id,
             "state_items": {
                 item_id: {
                     "item_kind": item.item_kind,
@@ -88,13 +96,11 @@ class BodyViews:
             "warrant_health": dict(sorted(self.warrant_health.items())),
             "dependents_by_warrant": {
                 warrant: sorted(dependents)
-                for warrant, dependents in sorted(
-                    self.dependents_by_warrant.items()
-                )
+                for warrant, dependents in sorted(self.dependents_by_warrant.items())
             },
-            "metabolic_totals": {
+            "reported_metabolic_totals": {
                 item_id: dict(sorted(totals.items()))
-                for item_id, totals in sorted(self.metabolic_totals.items())
+                for item_id, totals in sorted(self.reported_metabolic_totals.items())
             },
             "event_count": self.event_count,
             "through_event_id": self.through_event_id,
@@ -406,7 +412,8 @@ def derive_views(rows: Iterable[dict[str, Any]]) -> BodyViews:
             target = payload.get("target_event_id")
             health = payload.get("health")
             _require(
-                target in {prior["event_id"] for prior in validated[: row["event_index"] - 1]},
+                target
+                in {prior["event_id"] for prior in validated[: row["event_index"] - 1]},
                 f"{event_id}: provenance target does not precede revision",
             )
             _require(
@@ -436,7 +443,7 @@ def derive_views(rows: Iterable[dict[str, Any]]) -> BodyViews:
                 isinstance(units, int) and not isinstance(units, bool) and units >= 0,
                 f"{event_id}: metabolic units must be a non-negative integer",
             )
-            totals = views.metabolic_totals.setdefault(item_id, {})
+            totals = views.reported_metabolic_totals.setdefault(item_id, {})
             totals[metric] = totals.get(metric, 0) + units
 
         views.event_count = row["event_index"]
@@ -485,7 +492,9 @@ class LineageStore:
             self.path.read_text(encoding="utf-8").splitlines(), start=1
         ):
             if not line.strip():
-                continue
+                raise ReplayRefusal(
+                    f"line {line_number}: blank lines are not permitted"
+                )
             try:
                 row = json.loads(line)
             except json.JSONDecodeError as exc:

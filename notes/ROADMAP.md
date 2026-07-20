@@ -23,17 +23,23 @@ reviewed cluster needs raw evidence, a downstream consumer, an external oracle,
 a competing explanation, and a visible loses-condition before one cold
 frontier pass is warranted.
 
-**Current engineering direction (2026-07-20): Body Core v0.** While scientific
-mechanism search remains paused, mechanism-neutral whole-body engineering is
-active on the explicitly provisional anatomy: a lineage envelope, untrusting
-replay, and derived materialized views. The acceptance checks are deterministic
+**Current engineering direction (2026-07-20): Body Core v0.1.** While scientific
+mechanism search remains paused, whole-body engineering is active on an
+integrity kernel plus an explicitly provisional lifecycle/placement/warrant
+policy profile. The acceptance checks are deterministic
 reconstruction and fail-closed refusal of changed ordering/content, invalid
 writer authority, dangling lineage, impossible lifecycle transitions, unhealthy
-warrant reactivation, and stale view claims. This is wire/integration-only. The
+warrant reactivation, stale view claims, ambiguous references, invalid retention
+shapes, unknown scopes, and blank rows. The first non-stub pressure test carries
+four closed X2 ledgers through Core; the unchanged X2 scorer must reproduce
+their verdicts and cost totals, while four adapter refusal legs bite. This is
+wire/integration-only. The
 hash chain is not cryptographic writer authentication, full replay remains
-authoritative, no reconstruction-cost win is claimed, and no scientific
+authoritative, append/replay remains quadratic, no reconstruction-cost win is
+claimed, and no scientific
 mechanism is licensed by the build. Run `make body-core-test` or the composed
-`make body-sketch-test`.
+`make body-sketch-test`; run `make body-core-x2-test` for the
+[adapter contract](BODY_CORE_X2_ADAPTER.md).
 
 [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) remains the cold-reviewed whole-body
 direction; [BODY_MAP.md](BODY_MAP.md) is the living maturity map; the
