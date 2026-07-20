@@ -4,6 +4,11 @@ This is an executable walking skeleton for the body described in
 [NEXT_SUBSTRATE.md](../../notes/NEXT_SUBSTRATE.md). It exists to make the whole
 runtime traversable before any proposed organ is treated as a finding.
 
+Its mechanism-neutral base is [Body Core v0](core.py): a provisional lineage
+envelope, untrusting replay, and independently recomputable materialized views.
+The epistemic-frame behavior in `runtime.py` is one stubbed consumer of that
+core, not part of its generic contract.
+
 ## Evidence boundary
 
 Every event carries:
@@ -27,6 +32,16 @@ cannot establish that:
 - the epistemic-frame check deserves a mechanism license;
 - any branch is better than a simpler baseline;
 - the event shapes are product schema.
+- Body Core reduces reconstruction cost;
+- the local writer-role claims are cryptographic authentication.
+
+The hash chain detects mutation, deletion, and reordering relative to a trusted
+chain head. It does not prevent a fully privileged writer from rebuilding a
+different chain. v0 is also a single-process sketch: it has no concurrent-writer
+locking, external chain-head anchoring, signature verification, compaction, or
+schema migration. Reference/redaction retention validates the envelope and
+content digest shape; it does not fetch or independently verify the external
+payload.
 
 Do not write its output under `runs/` or cite it as memory evidence.
 
@@ -53,7 +68,9 @@ and an external provenance-health sweep.
 | Component | Sketch implementation | Maturity |
 | --- | --- | --- |
 | Language model | Replaceable port; deterministic authored stub | **Stubbed** |
-| Durable lineage | Append-only disk JSONL with deterministic event indexes | **Provisional sketch** |
+| Durable lineage | Body Core v0 envelope, deterministic indexes, hash chain, declared authority and references | **Provisional engineering** |
+| Untrusting replay | Fail-closed envelope/state validation; stale view claims refused | **Provisional engineering** |
+| Derived views | State, warrant health/dependents, placement, metabolic totals | **Provisional engineering** |
 | Cognitive materialization | Full replay from lineage on each reawakening | **Provisional sketch** |
 | Activation field | Empty ordinary offer phase plus action-boundary placement | **Provisional sketch** |
 | Disposition mechanism license | Hard-coded epistemic-frame template | **Stubbed, not earned** |
@@ -81,9 +98,12 @@ The command refuses to append a second demo to an existing non-empty lineage.
 ## Test
 
 ```bash
+make body-core-test
 make body-sketch-test
 ```
 
-The tests check only wire properties: complete traversal, ordered append,
-replayable materialization, action-boundary placement, silence on a non-matching
-task, and refusal of an unresolved warrant.
+`body-core-test` checks only core wire properties: deterministic reconstruction,
+derived views, authority and reference validation, lifecycle invariants,
+hash-chain tamper detection, and refusal of stale materialized-view claims.
+`body-sketch-test` also checks complete traversal, action-boundary placement,
+silence on a non-matching task, and refusal of an unresolved warrant.

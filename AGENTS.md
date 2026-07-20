@@ -34,6 +34,7 @@ Open only when the task requires it:
 | Cold orientation / guided tour of the lab      | [notes/walkthrough/README.md](notes/walkthrough/README.md)                     |
 | Epistemic-frame check candidate — Part I sealed | [notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md](notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md) |
 | Passive anomaly capture / frontier review      | [notes/FRONTIER_PAUSE.md](notes/FRONTIER_PAUSE.md), then [notes/ANOMALY_LOG.md](notes/ANOMALY_LOG.md) |
+| Provisional whole-body core runtime             | [notes/NEXT_SUBSTRATE.md](notes/NEXT_SUBSTRATE.md), [notes/BODY_MAP.md](notes/BODY_MAP.md), then [sketches/next_substrate/README.md](sketches/next_substrate/README.md) |
 | Previous lab history (retrospective)           | [notes/previous/README.md](notes/previous/README.md)                           |
 | Closed research arc (2026-06-11–12)            | [.substrate/threads/research/README.md](.substrate/threads/research/README.md) |
 
@@ -144,6 +145,10 @@ uv run --no-project python -m harness.score_cells runs/poison-001.stage_b.jsonl 
 X-track instrument smokes (no model, disclosed wire tests): `make x1-test`, `make x2-test`, `make x2-fixture-check` (the X2 cost/state-dependence admission gate).
 
 Mock-engine runs are valid for **wire tests only**. They must not be cited as memory findings.
+
+Body Core v0 wire checks (no model, no scientific claim):
+`make body-core-test`. The composed walking skeleton remains
+`make body-sketch-test`.
 
 ## Working on code
 

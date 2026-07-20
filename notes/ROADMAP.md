@@ -23,6 +23,18 @@ reviewed cluster needs raw evidence, a downstream consumer, an external oracle,
 a competing explanation, and a visible loses-condition before one cold
 frontier pass is warranted.
 
+**Current engineering direction (2026-07-20): Body Core v0.** While scientific
+mechanism search remains paused, mechanism-neutral whole-body engineering is
+active on the explicitly provisional anatomy: a lineage envelope, untrusting
+replay, and derived materialized views. The acceptance checks are deterministic
+reconstruction and fail-closed refusal of changed ordering/content, invalid
+writer authority, dangling lineage, impossible lifecycle transitions, unhealthy
+warrant reactivation, and stale view claims. This is wire/integration-only. The
+hash chain is not cryptographic writer authentication, full replay remains
+authoritative, no reconstruction-cost win is claimed, and no scientific
+mechanism is licensed by the build. Run `make body-core-test` or the composed
+`make body-sketch-test`.
+
 [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) remains the cold-reviewed whole-body
 direction; [BODY_MAP.md](BODY_MAP.md) is the living maturity map; the
 [embodiment sketch](../sketches/next_substrate/README.md) remains

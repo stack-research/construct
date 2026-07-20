@@ -8,16 +8,27 @@ memory claim.
 
 from __future__ import annotations
 
-import json
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Protocol
 
+from .core import (
+    BodyViews,
+    EVIDENCE_CLASS as CORE_EVIDENCE_CLASS,
+    LineageStore,
+    Writer,
+)
 
-EVIDENCE_CLASS = "wire_integration_only"
+EVIDENCE_CLASS = CORE_EVIDENCE_CLASS
 LICENSE_STATUS = "stubbed_not_earned"
 TEMPLATE_ID = "epistemic_frame_check_v0_stub"
 CHECK_ID = "fetch_provenance_and_require_scope_match_stub"
+
+RUNTIME_WRITER = Writer("body-runtime-v0", "runtime")
+CONTROLLER_WRITER = Writer("body-controller-v0", "controller")
+MODEL_WRITER = Writer("model-port", "model")
+OBSERVER_WRITER = Writer("external-observer-stub", "observer")
+PROVENANCE_WRITER = Writer("external-provenance-sweep-stub", "observer")
 
 
 @dataclass(frozen=True)
@@ -84,72 +95,21 @@ class DeterministicModelStub:
         return "commit"
 
 
-class LineageStore:
-    """Minimal append-only JSONL store with deterministic event ordering."""
-
-    _RESERVED = frozenset({"event_id", "event_index", "kind", "evidence_class"})
-
-    def __init__(self, path: Path):
-        self.path = Path(path)
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-
-    def rows(self) -> list[dict[str, Any]]:
-        if not self.path.exists():
-            return []
-        return [
-            json.loads(line)
-            for line in self.path.read_text().splitlines()
-            if line.strip()
-        ]
-
-    def append(self, kind: str, **payload: Any) -> dict[str, Any]:
-        overlap = self._RESERVED.intersection(payload)
-        if overlap:
-            raise ValueError(f"reserved lineage fields: {sorted(overlap)}")
-        rows = self.rows()
-        event_index = rows[-1]["event_index"] + 1 if rows else 1
-        row = {
-            "event_id": f"ev-{event_index:04d}",
-            "event_index": event_index,
-            "kind": kind,
-            "evidence_class": EVIDENCE_CLASS,
-            **payload,
-        }
-        with self.path.open("a") as f:
-            f.write(json.dumps(row, sort_keys=True) + "\n")
-        return row
-
-
-def materialize(rows: list[dict[str, Any]]) -> BodyState:
-    """Rebuild the governed cognitive materialization from lineage."""
+def materialize(views: BodyViews) -> BodyState:
+    """Project the mechanism-neutral views into this sketch's disposition port."""
     state = BodyState()
-    for row in rows:
-        kind = row.get("kind")
-        if kind == "disposition_instance_activated":
-            disposition = DispositionState(
-                disposition_id=row["disposition_id"],
-                template_id=row["template_id"],
-                status=row.get("status", "probationary"),
-                validity_envelope=dict(row["validity_envelope"]),
-                warrant_event_ids=list(row["warrant_event_ids"]),
-            )
-            state.dispositions[disposition.disposition_id] = disposition
-        elif kind == "metabolic_event":
-            disposition = state.dispositions.get(row["disposition_id"])
-            if disposition is not None:
-                event = row["metabolic_kind"]
-                disposition.metabolic_counts[event] = (
-                    disposition.metabolic_counts.get(event, 0) + 1
-                )
-        elif kind == "provenance_revision":
-            target = row["target_event_id"]
-            for disposition in state.dispositions.values():
-                if target in disposition.warrant_event_ids:
-                    disposition.status = "suspended"
-        elif kind == "disposition_suspended":
-            disposition = state.dispositions.get(row["disposition_id"])
-            if disposition is not None:
-                disposition.status = "suspended"
+    for item in views.state_items.values():
+        if item.item_kind != "disposition":
+            continue
+        disposition = DispositionState(
+            disposition_id=item.item_id,
+            template_id=item.detail["template_id"],
+            status=item.status,
+            validity_envelope=dict(item.detail["validity_envelope"]),
+            warrant_event_ids=list(item.warrant_event_ids),
+            metabolic_counts=dict(views.metabolic_totals.get(item.item_id, {})),
+        )
+        state.dispositions[disposition.disposition_id] = disposition
     return state
 
 
@@ -192,47 +152,73 @@ class BodyRuntime:
         self.lineage = LineageStore(lineage_path)
         self.model = model or DeterministicModelStub()
         self.environment = environment or Environment()
-        if not self.lineage.rows():
+        if not self.lineage.replay().rows:
             self.lineage.append(
                 "sketch_started",
-                claim_boundary=(
-                    "composition demonstrator only; authored behavior; "
-                    "never memory evidence"
-                ),
-                mechanism_license=LICENSE_STATUS,
+                writer=RUNTIME_WRITER,
+                authority="administration",
+                payload={
+                    "claim_boundary": (
+                        "composition demonstrator only; authored behavior; "
+                        "never memory evidence"
+                    ),
+                    "mechanism_license": LICENSE_STATUS,
+                },
             )
 
     def state(self) -> BodyState:
-        return materialize(self.lineage.rows())
+        return materialize(self.lineage.replay().views)
+
+    def record_materialized_view_claim(self) -> dict[str, Any]:
+        """Persist a cache claim that cold replay must independently verify."""
+        return self.lineage.append_view_claim(writer=RUNTIME_WRITER)
 
     def wake(self, task: Task) -> WakeResult:
         """Run one invocation through activation, action boundary, and outcome."""
         invocation = self.lineage.append(
             "invocation_started",
-            task_id=task.task_id,
-            environment=asdict(self.environment),
+            writer=RUNTIME_WRITER,
+            authority="system_record",
+            payload={
+                "task_id": task.task_id,
+                "environment": asdict(self.environment),
+            },
         )
-        self.lineage.append(
+        encounter = self.lineage.append(
             "encounter_observed",
+            writer=OBSERVER_WRITER,
+            authority="external_observation",
+            causal_parent_ids=[invocation["event_id"]],
             invocation_id=invocation["event_id"],
-            task=asdict(task),
+            payload={"task": asdict(task)},
         )
 
         state = self.state()
-        self.lineage.append(
+        activation = self.lineage.append(
             "activation_field_built",
+            writer=CONTROLLER_WRITER,
+            authority="controller_transition",
+            causal_parent_ids=[encounter["event_id"]],
             invocation_id=invocation["event_id"],
-            offered_memory=[],
-            note="ordinary offer phase complete; controller checks follow",
+            encounter_id=encounter["event_id"],
+            payload={
+                "offered_memory": [],
+                "note": "ordinary offer phase complete; controller checks follow",
+            },
         )
-        self.lineage.append(
+        boundary = self.lineage.append(
             "action_boundary_entered",
+            writer=CONTROLLER_WRITER,
+            authority="controller_transition",
+            causal_parent_ids=[activation["event_id"]],
             invocation_id=invocation["event_id"],
-            placement="post_offer_pre_commit",
+            encounter_id=encounter["event_id"],
+            payload={"placement": "post_offer_pre_commit"},
         )
 
         fired: list[str] = []
         evidence: list[dict[str, Any]] = []
+        last_control_event_id = boundary["event_id"]
         for disposition in state.dispositions.values():
             if disposition.status != "probationary":
                 continue
@@ -241,56 +227,92 @@ class BodyRuntime:
             if not _validity_matches(disposition, self.environment):
                 continue
             matched = _trigger_matches(task)
-            self.lineage.append(
+            trigger = self.lineage.append(
                 "disposition_trigger_evaluated",
+                writer=CONTROLLER_WRITER,
+                authority="controller_transition",
+                causal_parent_ids=[last_control_event_id],
+                warrant_event_ids=disposition.warrant_event_ids,
                 invocation_id=invocation["event_id"],
-                disposition_id=disposition.disposition_id,
-                matched=matched,
+                encounter_id=encounter["event_id"],
+                payload={
+                    "disposition_id": disposition.disposition_id,
+                    "matched": matched,
+                },
             )
+            last_control_event_id = trigger["event_id"]
             if not matched:
                 continue
             fired.append(disposition.disposition_id)
             check_evidence = _run_check(task)
             evidence.append(check_evidence)
-            self.lineage.append(
+            checked = self.lineage.append(
                 "controller_check_executed",
+                writer=CONTROLLER_WRITER,
+                authority="controller_transition",
+                causal_parent_ids=[trigger["event_id"]],
+                warrant_event_ids=disposition.warrant_event_ids,
                 invocation_id=invocation["event_id"],
-                disposition_id=disposition.disposition_id,
-                controller_steps=1,
-                evidence=check_evidence,
+                encounter_id=encounter["event_id"],
+                payload={
+                    "disposition_id": disposition.disposition_id,
+                    "controller_steps": 1,
+                    "evidence": check_evidence,
+                },
             )
+            last_control_event_id = checked["event_id"]
 
         action = self.model.act(task, evidence)
-        self.lineage.append(
+        model_action = self.lineage.append(
             "model_action",
+            writer=MODEL_WRITER,
+            authority="model_proposal",
+            causal_parent_ids=[last_control_event_id],
             invocation_id=invocation["event_id"],
-            action=action,
-            writer="model_port",
+            encounter_id=encounter["event_id"],
+            payload={"action": action},
         )
         consequence = self.lineage.append(
             "consequence_observed",
+            writer=OBSERVER_WRITER,
+            authority="external_consequence",
+            causal_parent_ids=[model_action["event_id"]],
             invocation_id=invocation["event_id"],
-            oracle="deterministic_demo_oracle",
-            score=_score(task, action),
-            writer="external_observer_stub",
+            encounter_id=encounter["event_id"],
+            payload={
+                "oracle": "deterministic_demo_oracle",
+                "score": _score(task, action),
+            },
         )
+        last_event_id = consequence["event_id"]
         for disposition_id in fired:
-            self.lineage.append(
+            metabolic = self.lineage.append(
                 "metabolic_event",
-                disposition_id=disposition_id,
+                writer=CONTROLLER_WRITER,
+                authority="controller_transition",
+                causal_parent_ids=[last_event_id],
                 invocation_id=invocation["event_id"],
-                metabolic_kind="check_executed",
-                controller_steps=1,
+                encounter_id=encounter["event_id"],
+                payload={
+                    "item_id": disposition_id,
+                    "metric": "check_executed",
+                    "units": 1,
+                },
             )
+            last_event_id = metabolic["event_id"]
         self.lineage.append(
             "invocation_completed",
+            writer=RUNTIME_WRITER,
+            authority="system_record",
+            causal_parent_ids=[last_event_id],
             invocation_id=invocation["event_id"],
-            score=consequence["score"],
+            encounter_id=encounter["event_id"],
+            payload={"score": consequence["payload"]["score"]},
         )
         return WakeResult(
             task_id=task.task_id,
             action=action,
-            score=consequence["score"],
+            score=consequence["payload"]["score"],
             fired_disposition_ids=tuple(fired),
             check_evidence=tuple(evidence),
             consequence_event_id=consequence["event_id"],
@@ -308,20 +330,32 @@ class BodyRuntime:
             raise ValueError("every warrant must resolve in lineage")
         if any(rows[w]["kind"] != "consequence_observed" for w in warrant_event_ids):
             raise ValueError("stub dispositions require consequence warrants")
-        if any(float(rows[w].get("score", 1.0)) >= 1.0 for w in warrant_event_ids):
+        if any(
+            float(rows[w]["payload"].get("score", 1.0)) >= 1.0
+            for w in warrant_event_ids
+        ):
             raise ValueError("stub failure dispositions require a scored failure")
         if disposition_id in self.state().dispositions:
             raise ValueError(f"disposition already exists: {disposition_id}")
         return self.lineage.append(
-            "disposition_instance_activated",
-            disposition_id=disposition_id,
-            template_id=TEMPLATE_ID,
-            check_id=CHECK_ID,
-            license_status=LICENSE_STATUS,
-            minted_by="external_controller_stub",
-            status="probationary",
-            validity_envelope=asdict(self.environment),
+            "state_item_admitted",
+            writer=CONTROLLER_WRITER,
+            authority="controller_transition",
+            causal_parent_ids=warrant_event_ids,
             warrant_event_ids=warrant_event_ids,
+            payload={
+                "item_id": disposition_id,
+                "item_kind": "disposition",
+                "status": "probationary",
+                "placement": "hot",
+                "detail": {
+                    "template_id": TEMPLATE_ID,
+                    "check_id": CHECK_ID,
+                    "license_status": LICENSE_STATUS,
+                    "minted_by": CONTROLLER_WRITER.writer_id,
+                    "validity_envelope": asdict(self.environment),
+                },
+            },
         )
 
     def record_wire_causal_probe(
@@ -337,20 +371,28 @@ class BodyRuntime:
         effect = "helped" if treated.score > counterfactual_score else "no_gain"
         row = self.lineage.append(
             "wire_causal_probe",
-            disposition_id=disposition_id,
-            task_id=task.task_id,
-            treated_score=treated.score,
-            counterfactual_score=counterfactual_score,
-            effect=effect,
-            warning="authored deterministic probe; not a licensed causal result",
+            writer=CONTROLLER_WRITER,
+            authority="wire_diagnostic",
+            causal_parent_ids=[treated.consequence_event_id],
+            payload={
+                "item_id": disposition_id,
+                "task_id": task.task_id,
+                "treated_score": treated.score,
+                "counterfactual_score": counterfactual_score,
+                "effect": effect,
+                "warning": "authored deterministic probe; not a licensed causal result",
+            },
         )
         self.lineage.append(
             "metabolic_event",
-            disposition_id=disposition_id,
-            invocation_id=None,
-            metabolic_kind=effect,
-            controller_steps=0,
-            source_event_id=row["event_id"],
+            writer=CONTROLLER_WRITER,
+            authority="controller_transition",
+            causal_parent_ids=[row["event_id"]],
+            payload={
+                "item_id": disposition_id,
+                "metric": effect,
+                "units": 1,
+            },
         )
         return row
 
@@ -360,11 +402,16 @@ class BodyRuntime:
         if warrant_event_id not in rows:
             raise ValueError(f"unknown warrant event {warrant_event_id}")
         state_before_revision = self.state()
-        revision = self.lineage.append(
+        self.lineage.append(
             "provenance_revision",
-            target_event_id=warrant_event_id,
-            reason=reason,
-            writer="external_provenance_sweep_stub",
+            writer=PROVENANCE_WRITER,
+            authority="external_observation",
+            causal_parent_ids=[warrant_event_id],
+            payload={
+                "target_event_id": warrant_event_id,
+                "health": "invalid",
+                "reason": reason,
+            },
         )
         suspended: list[str] = []
         for disposition in state_before_revision.dispositions.values():
@@ -372,11 +419,5 @@ class BodyRuntime:
                 continue
             if warrant_event_id not in disposition.warrant_event_ids:
                 continue
-            self.lineage.append(
-                "disposition_suspended",
-                disposition_id=disposition.disposition_id,
-                reason="stale_warrant",
-                provenance_revision_id=revision["event_id"],
-            )
             suspended.append(disposition.disposition_id)
         return suspended

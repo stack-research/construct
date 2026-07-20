@@ -1,8 +1,8 @@
 # NEXT substrate orientation map
 
-Status: **living orientation map**. Updated 2026-07-20 after active frontier
-search paused; previously updated after the terminal frontier-obligation,
-Body-1, EFC v2, and Body-0 closes.
+Status: **living orientation map**. Updated 2026-07-20 for provisional Body Core
+v0 engineering after active frontier search paused; previously updated after
+the terminal frontier-obligation, Body-1, EFC v2, and Body-0 closes.
 
 Purpose: answer "what are we building?" without letting a diagram promote
 proposed anatomy into findings. The architecture lives in
@@ -23,9 +23,10 @@ proposed anatomy into findings. The architecture lives in
 ```mermaid
 flowchart TD
     World["World / task"] --> Encounter["Encounter boundary<br/>PROVISIONAL SKETCH"]
-    Encounter --> Lineage["Durable lineage<br/>EARNED DISCIPLINE<br/>PROVISIONAL BODY IMPLEMENTATION"]
+    Encounter --> Lineage["Durable lineage<br/>EARNED DISCIPLINE<br/>BODY CORE v0 PROVISIONAL"]
 
-    Lineage --> Materialization["Governed cognitive materialization<br/>PROVISIONAL SKETCH"]
+    Lineage --> Core["Body Core v0<br/>envelope + untrusting replay + views<br/>PROVISIONAL ENGINEERING"]
+    Core --> Materialization["Governed cognitive materialization<br/>PROVISIONAL SKETCH"]
     Materialization --> Activation["Sparse activation field<br/>OFFER BOUNDARY EARNED<br/>WHOLE FIELD PROVISIONAL"]
     Activation --> Model["Language model<br/>INTERMITTENT ENGINE"]
 
@@ -57,7 +58,8 @@ that every node exists as a product component. Read the labels before the nouns.
 
 | Body concern | Current state | Evidence or artifact | Honest boundary |
 | --- | --- | --- | --- |
-| Append-only lineage | **Earned discipline**; **provisional body implementation** | Harness ledgers across the lab; walking skeleton JSONL | The sketch's event shapes are not product schema |
+| Append-only lineage | **Earned discipline**; **Body Core v0 provisional implementation** | Harness ledgers across the lab; [Body Core](../sketches/next_substrate/core.py) JSONL | Hash-chain integrity is not cryptographic writer authentication; the envelope is not product schema |
+| Untrusting replay and derived views | **Provisional engineering** | Body Core v0; `make body-core-test` | Refuses tamper, invalid authority/reference/state, and stale view claims; no reconstruction-cost win claimed |
 | Governed offer boundary | **Earned** | M-track specs, rubric, and findings through M3 | Governs present influence; not the whole body |
 | Failure affecting a later session | **Earned narrowly** | [M2 findings](M2_FINDINGS.md) | One-hop earned record, not cross-domain disposition transfer |
 | Earned vs asserted trust | **Earned narrowly** | [M3 findings](M3_FINDINGS.md) | Does not solve write-time significance generally |
@@ -81,13 +83,25 @@ that every node exists as a product component. Read the labels before the nouns.
   action-boundary control, model action, consequence, metabolic accounting, and
   provenance revision.
 - Materialized state can be rebuilt from disk between invocations.
+- Body Core v0 can independently verify its envelope and view claims, then
+  rebuild state, warrant health and dependencies, placement, and metabolic
+  totals.
 - A non-matching task can remain silent.
 - An external warrant revision can suspend dependent state without model appeal.
 
 It does **not** establish language-model learning, transfer, mechanism value, or
 scientific superiority. Its deterministic behavior is authored.
 
-## Current candidate work
+## Current work
+
+The active build is mechanism-neutral **Body Core v0** engineering:
+lineage envelope, untrusting replay, and derived materialized views. This is
+allowed under the frontier pause because it has independent integration value
+for every future body slice. It remains provisional and wire/integration-only.
+It does not promote a candidate mechanism, reduce the cost of full replay, or
+change an earned boundary.
+
+## Parked candidate work
 
 No new scientific mechanism is licensed. Active frontier search is
 [paused](FRONTIER_PAUSE.md). Unplanned observations from other work go to the

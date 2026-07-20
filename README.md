@@ -167,6 +167,17 @@ explanations but no mechanism design. The log is reviewed monthly, or earlier
 after three materially similar observations. A credible cluster can license
 one cold frontier pass; it cannot silently license a build or engine contact.
 
+While that search is paused, **Body Core v0** is the active provisional
+engineering direction: a mechanism-neutral lineage envelope, untrusting replay,
+and independently recomputable views of state, warrant health and dependencies,
+hot/cold placement, and metabolic totals. It refactors the walking skeleton
+rather than proposing another scientific organ. Its tests establish
+wire/integration properties only; the hash chain is not cryptographic writer
+authentication, full replay remains authoritative, and no mechanism or
+reconstruction-cost claim is licensed
+([orientation](notes/BODY_MAP.md);
+[architecture](notes/NEXT_SUBSTRATE.md#current-build-while-frontier-search-is-paused-body-core-v0)).
+
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 
 The **[guided walkthrough](notes/walkthrough/README.md)** remains the intended route through the earned experiments, with inspect/replay/run instructions and honest limits. The orientation map is the faster route to the whole being built now.

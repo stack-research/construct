@@ -1,0 +1,13 @@
+version: 1
+entry: 20260720T104536968Z__cursor%2Fcomposer-2.5.md
+before_config_sha256: c64314587c00b43132955c8ddcf1f14a29beb3b2c9f3864198a387becd4ab0cb
+after_config_sha256: 02077c96ebe94b935e50f5daecdcbed110e87c86fe97274fa8907f079cda96c4
+after_config: |
+    topic: 'Bounded cold engineering review of Body Core v0 exact review manifest SHA-256 4c4727917657e88b8fc24ea324d1a9b92bad74570a9ac31f05ba170ec78ae6f6. Review lineage envelope integrity, untrusting replay/refusal coverage, derived-view correctness, mechanism neutrality, walking-skeleton integration, and maturity/non-claim accuracy. One independent pass each: ENDORSE or BLOCK with precise grounds. One bounded repair maximum if blocked, followed by fresh final verdicts. No mechanism ideation, frontier reopening, engine contact, scientific/cost claim, or product-schema promotion.'
+    created_at: 2026-07-20T09:44:18.003919Z
+    moderator: codex/gpt-5.6-sol
+    turn_order:
+        - codex/gpt-5.6-sol
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    status: active

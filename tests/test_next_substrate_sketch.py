@@ -12,7 +12,12 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from sketches.next_substrate.demo import run_demo
-from sketches.next_substrate.runtime import BodyRuntime, EVIDENCE_CLASS, Task
+from sketches.next_substrate.runtime import (
+    PROVENANCE_WRITER,
+    BodyRuntime,
+    EVIDENCE_CLASS,
+    Task,
+)
 
 
 def _rows(path: Path) -> list[dict]:
@@ -45,10 +50,11 @@ def test_lineage_is_append_only_and_replayable():
 
         assert [row["event_index"] for row in rows] == list(range(1, len(rows) + 1))
         assert [row["event_id"] for row in rows] == [
-            f"ev-{i:04d}" for i in range(1, len(rows) + 1)
+            f"ev-{i:06d}" for i in range(1, len(rows) + 1)
         ]
         assert all(row["evidence_class"] == EVIDENCE_CLASS for row in rows)
         assert summary["lineage_rows"] == len(rows)
+        assert summary["body_core"]["verified_view_claim_ids"]
 
         reloaded = BodyRuntime(lineage).state()
         disposition = reloaded.dispositions["disp-epistemic-frame-001"]
@@ -65,11 +71,11 @@ def test_required_check_is_on_the_action_boundary():
         start = next(
             row for row in rows
             if row["kind"] == "invocation_started"
-            and row["task_id"] == "wake-2-operations-source"
+            and row["payload"]["task_id"] == "wake-2-operations-source"
         )
         kinds = [
             row["kind"] for row in rows
-            if row.get("invocation_id") == start["event_id"]
+            if row["scope"].get("invocation_id") == start["event_id"]
         ]
 
         assert kinds.index("activation_field_built") < kinds.index("action_boundary_entered")
@@ -148,9 +154,14 @@ def test_provenance_revision_suspends_on_replay_even_before_projection_row():
         )
         runtime.lineage.append(
             "provenance_revision",
-            target_event_id=result.consequence_event_id,
-            reason="simulated interruption before projection row",
-            writer="external_provenance_sweep_stub",
+            writer=PROVENANCE_WRITER,
+            authority="external_observation",
+            causal_parent_ids=[result.consequence_event_id],
+            payload={
+                "target_event_id": result.consequence_event_id,
+                "health": "invalid",
+                "reason": "simulated interruption before projection row",
+            },
         )
 
         reloaded = BodyRuntime(runtime.lineage.path).state()

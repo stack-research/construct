@@ -79,6 +79,8 @@ def run_demo(lineage_path: Path) -> dict[str, Any]:
 
     fourth_runtime = BodyRuntime(lineage_path)
     post_revision = fourth_runtime.wake(POST_REVISION_TASK)
+    fourth_runtime.record_materialized_view_claim()
+    replay = fourth_runtime.lineage.replay()
     final_state = fourth_runtime.state()
 
     return {
@@ -92,8 +94,8 @@ def run_demo(lineage_path: Path) -> dict[str, Any]:
             "after_external_warrant_revision": _result(post_revision),
         },
         "wire_causal_probe": {
-            "effect": probe["effect"],
-            "warning": probe["warning"],
+            "effect": probe["payload"]["effect"],
+            "warning": probe["payload"]["warning"],
         },
         "suspended_disposition_ids": suspended,
         "materialized_dispositions": {
@@ -103,7 +105,12 @@ def run_demo(lineage_path: Path) -> dict[str, Any]:
             }
             for did, disposition in final_state.dispositions.items()
         },
-        "lineage_rows": len(fourth_runtime.lineage.rows()),
+        "body_core": {
+            "view_digest": replay.views.digest(),
+            "verified_view_claim_ids": list(replay.verified_view_claim_ids),
+            "warrant_health": replay.views.warrant_health,
+        },
+        "lineage_rows": len(replay.rows),
     }
 
 

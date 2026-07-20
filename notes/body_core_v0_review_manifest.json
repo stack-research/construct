@@ -1,0 +1,47 @@
+{
+  "artifact": "Body Core v0 provisional engineering review surface",
+  "claim_boundary": "wire_integration_only",
+  "created_date": "2026-07-20",
+  "files": {
+    "AGENTS.md": "29934d51df8a8b29dfd2dae73c344a98e6c441ab63550e07ae07ae3663ec5d44",
+    "Makefile": "c4578488f40ed141c5fa73d97622bd848f056c24be2f49459078019aa722b32f",
+    "README.md": "e7f5bbd355eb5ecdda11ea6dd4c18562ae34ae7bba32de7d988bffd26d26699c",
+    "notes/BODY_MAP.md": "aedf7298b42a53a0e9f44968b5dbac45b0238d9036c465e059557e745f0f133e",
+    "notes/NEXT_SUBSTRATE.md": "4f95c73d58309c7c92ef9b5fb41ab6359c3c116dbc45899fa0e18e3decbc0d15",
+    "notes/ROADMAP.md": "39130458f3fc2552ad5114b46fcad299959d31d22ce23fd06691bb0975430d65",
+    "sketches/next_substrate/README.md": "663f562f52af31f8b389dcf57b97594d23e3205c57af7e81abff057df274cd77",
+    "sketches/next_substrate/core.py": "f8daf51741ea9d1a85628a606ba9b3eb4532a880c5499f6565cf940240a6ad40",
+    "sketches/next_substrate/demo.py": "ad9368b5d8c6215f7e3706d35dd9cc9833eefec13a29949837d30ee5cfd49d5f",
+    "sketches/next_substrate/runtime.py": "07ab339dfbbf96c6b42fd4c82e70c3a579d3196b9720473b143d53e6293a83a6",
+    "tests/test_body_core.py": "3bffc7229f60e6aeaae58d1f1d290393f5403d852307728cb5e8f356643d1a66",
+    "tests/test_next_substrate_sketch.py": "80b22480892bfd890659c5232c216aa5eeeae4601acd651ff41122b0975b5753"
+  },
+  "review_contract": {
+    "allowed_outcomes": [
+      "ENDORSE",
+      "BLOCK"
+    ],
+    "repair_budget": 1,
+    "scope": [
+      "lineage envelope integrity",
+      "untrusting replay and refusal coverage",
+      "derived-view correctness",
+      "mechanism neutrality",
+      "walking-skeleton integration",
+      "maturity and non-claim accuracy"
+    ],
+    "excluded": [
+      "new mechanism design",
+      "frontier reopening",
+      "engine contact",
+      "scientific or cost claims",
+      "product-schema promotion"
+    ]
+  },
+  "verification": [
+    "UV_CACHE_DIR=/private/tmp/uv-cache uvx ruff check sketches/next_substrate/core.py sketches/next_substrate/runtime.py sketches/next_substrate/demo.py tests/test_body_core.py tests/test_next_substrate_sketch.py",
+    "make body-sketch-test",
+    "make body-sketch",
+    "git diff --check"
+  ]
+}

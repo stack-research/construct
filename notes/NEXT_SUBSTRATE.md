@@ -1,13 +1,17 @@
 # NEXT substrate — a body for an intermittent mind
 
-Status: **architect's proposal, cold-reviewed**. Written from a blank page and
-reviewed on 2026-07-10 in substrate thread `next-substrate`. This is not a
-specification, an implementation plan, or a scored finding.
+Status: **architect's proposal, cold-reviewed; provisional Body Core v0
+engineering active**. Written from a blank page and reviewed on 2026-07-10 in
+substrate thread `next-substrate`. This is not a scored finding. The current
+mechanism-neutral engineering slice is described below and remains
+wire/integration-only.
 
-Milestone: **none yet**. This names a wanted direction. Cold review found no
-block on the wanted body and sharpened one candidate first slice. Any selected
-mechanism must still pass its own admission gate, oracle, and loses-conditions
-before its behavior becomes a finding.
+Scientific milestone: **none yet**. This names a wanted direction. Cold review
+found no block on the wanted body and sharpened one candidate first slice. Any
+selected mechanism must still pass its own admission gate, oracle, and
+loses-conditions before its behavior becomes a finding. Body Core v0 serves
+whole-body composition engineering while active frontier search is paused; its
+checks are replay and invariant checks, not a behavioral oracle.
 
 Subject: the **language model**. Not memory about the user. Not the harness used
 to measure it. Not a story the system tells about having a self.
@@ -432,6 +436,46 @@ substrate that lets the model certify itself builds a persuasive diary.
 
 ---
 
+## Current build while frontier search is paused: Body Core v0
+
+Body Core v0 makes the provisional whole traversable without choosing another
+cognitive mechanism. It extracts three facilities from the walking skeleton:
+
+1. a mechanism-neutral lineage envelope with deterministic ordering, a hash
+   chain, declared writer role and authority, causal parents, warrant pointers,
+   invocation and encounter scope, and inline/reference/redacted retention;
+2. untrusting replay that refuses malformed ordering, changed rows, dangling
+   references, unauthorized writer/authority combinations, impossible state
+   transitions, and state reactivation under an invalid warrant;
+3. recomputable views of current state, warrant health, warrant dependents,
+   hot/cold placement, and metabolic totals.
+
+Materialized-view rows are cache claims. Replay independently recomputes the
+view and refuses a stale digest; a logged summary never becomes authority merely
+because the runtime wrote it. The existing epistemic-frame demonstration now
+consumes this core as one explicitly stubbed client. It does not define the
+core's generic event envelope.
+
+The implementation is
+[`sketches/next_substrate/core.py`](../sketches/next_substrate/core.py), exercised
+by `make body-core-test` and transitively by `make body-sketch-test`. Every row
+remains `wire_integration_only`.
+
+The current hash chain is tamper-evident only relative to a trusted chain head.
+It is not a signature system: writer identities and roles are enforced runtime
+claims, not cryptographically authenticated principals. Full replay is still
+the authority. The implementation is single-process and does not yet supply
+concurrent-writer locking, an external chain-head anchor, signatures,
+compaction, or migration. v0 does not claim reduced reconstruction cost,
+product-schema stability, mechanism value, or scientific superiority.
+
+This work serves the whole because any later mechanism needs trustworthy
+lineage and reconstructable state. It does not license semantic geometry,
+conflict representation, general consolidation, multi-disposition composition,
+or a new engine search.
+
+---
+
 ## The offices I would actually build
 
 An **office** is a duty the body charters, held accountably: it persists, its
@@ -461,14 +505,16 @@ must eventually name the situation in which the simpler body should win.
 
 ---
 
-## What I would build first: consequence-shaped attention
+## The first conjecture we attempted: consequence-shaped attention
 
-The first living slice should not be a general memory graph or a semantic
-failure interpreter. It should test one narrower conjecture:
+The first proposed living slice was not a general memory graph or a semantic
+failure interpreter. It tested one narrower conjecture:
 
 The candidate's implementation-facing protocol is
 [SPEC_EPISTEMIC_FRAME_CHECK_V0.md](SPEC_EPISTEMIC_FRAME_CHECK_V0.md). Part I is
-sealed, but it remains a pre-engine protocol—not a mechanism license or finding.
+sealed. The lineage has since reached three typed refusals (v0–v2), and the
+candidate is parked under its precommitted reopen trigger. The section remains
+as the historical first conjecture, not the current build direction.
 
 > A world-checked failure in one domain can produce a bounded disposition that
 > changes which external check the model-body performs on a structurally similar
