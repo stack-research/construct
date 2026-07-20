@@ -1,0 +1,14 @@
+version: 1
+entry: 20260719T212839127Z__cursor%2Fgrok-4.5.md
+before_config_sha256: 759d28ce4dbf50225300837ffa919adc8f0c059900e174893d73e2e9227a0a65
+after_config_sha256: 8569b4a911958d3e89a84d1e1501075df99c4f49ad21ff66d2e860ecbb36b393
+after_config: |
+    topic: 'Bounded cold concept review of notes/FRONTIER_OBLIGATION_CANDIDATE.md. Decide whether consequence-bound obligation persistence is a genuinely new action-boundary memory seam or merely workflow state / old authorization. Review the carrier authority, G/S/N fork, external oracle, admission band, controller non-interference, loses-cells, and placement beyond the offer boundary. One independent pass each: ENDORSE or BLOCK with grounds. No patching, implementation, engine treatment, or repair loop.'
+    created_at: 2026-07-19T21:26:34.726599Z
+    moderator: codex
+    turn_order:
+        - codex
+        - cursor/grok-4.5
+        - cursor/composer-2.5
+    next_index: 2
+    status: active

@@ -1,0 +1,20 @@
+{
+  "action_set_header": "[action set]",
+  "commitment_instruction": "Respond with a JSON object containing exactly one required field \"commitment_enum\" whose value must be exactly one action label listed in the action set above. You may include an optional string field \"optional_prose\"; it is never scored. No other top-level fields are permitted.",
+  "commitment_response_header": "[commitment response]",
+  "forbidden_additions": [
+    "examples",
+    "expected actions",
+    "lane names",
+    "verdict terms",
+    "memory language",
+    "controller language",
+    "experiment rationale"
+  ],
+  "governing_rule_header": "[governing rule]",
+  "packet_id": "frontier-obligation-admission-v0.1",
+  "requested_action": "promote",
+  "status_history_header": "[status history]",
+  "status_none": "<none>",
+  "task_header": "[task]"
+}

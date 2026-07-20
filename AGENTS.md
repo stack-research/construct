@@ -33,6 +33,7 @@ Open only when the task requires it:
 | Warming-budget instrument — armed watch        | [notes/SPEC_WARMING_BUDGET.md](notes/SPEC_WARMING_BUDGET.md)                   |
 | Cold orientation / guided tour of the lab      | [notes/walkthrough/README.md](notes/walkthrough/README.md)                     |
 | Epistemic-frame check candidate — Part I sealed | [notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md](notes/SPEC_EPISTEMIC_FRAME_CHECK_V0.md) |
+| Passive anomaly capture / frontier review      | [notes/FRONTIER_PAUSE.md](notes/FRONTIER_PAUSE.md), then [notes/ANOMALY_LOG.md](notes/ANOMALY_LOG.md) |
 | Previous lab history (retrospective)           | [notes/previous/README.md](notes/previous/README.md)                           |
 | Closed research arc (2026-06-11–12)            | [.substrate/threads/research/README.md](.substrate/threads/research/README.md) |
 

@@ -1,0 +1,9 @@
+topic: 'Cold one-pass wire review of frontier-obligation admission implementation manifest SHA-256 8a20aba44499d1e55a78fc93f5fe48bd4e32b2cea96d779225da0bf31d217aef. Authority: proposal review SHA-256 19214f49b5b34f61ea9c0aaa024efff94049039b1bbf78dc3097eeff02cca004; packet index SHA-256 5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2. Reviewers independently inspect the exact manifest entries, packet, runner, checker, tests, mock receipt, and real-contact gate. Return ENDORSE or BLOCK with precise reasons. No repair loop; a block closes this implementation lineage. Mock is wire-only, never memory evidence.'
+created_at: 2026-07-19T22:13:33.441741Z
+moderator: codex
+turn_order:
+    - codex
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended

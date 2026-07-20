@@ -1,0 +1,20 @@
+{
+  "admission_scope": "one terminal admission battery; admission-only and not memory evidence",
+  "base_url": "http://localhost:1234/v1",
+  "candidate_disclosure": "The model has prior lab use but has not seen this newly authored admission packet. It is not a review seat and its listed identity does not indicate an extended-reasoning variant.",
+  "created_at": "2026-07-19T22:18:20Z",
+  "engine_backend": "local",
+  "implementation_manifest_sha256": "8a20aba44499d1e55a78fc93f5fe48bd4e32b2cea96d779225da0bf31d217aef",
+  "implementation_review_thread": "frontier-obligation-wire-review",
+  "max_calls": 12,
+  "max_output_tokens_per_call": 512,
+  "model": "mistralai/ministral-3-3b",
+  "packet_index_sha256": "5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+  "reasoning_mode": "none_nonreasoning_model",
+  "receipt_path": "runs/frontier_obligation/admission/20260719T221820Z-ministral-3-3b.json",
+  "retries": 0,
+  "review_thread": "frontier-obligation-execution-pin-review",
+  "selection_basis": "Small available instruction model with a non-reasoning identity; exact endpoint availability was verified before pin authoring.",
+  "temperature": 0,
+  "terminal_candidate": true
+}

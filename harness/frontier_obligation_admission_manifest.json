@@ -1,0 +1,61 @@
+{
+  "entries": [
+    {
+      "path": "Makefile",
+      "sha256": "961bfbb8b58be4d0f7c4d25ed673eb7ffb4b5b277a06d0b84f40127a3a38ea31"
+    },
+    {
+      "path": "episodes/frontier_obligation/admission/decision_rule.txt",
+      "sha256": "7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb"
+    },
+    {
+      "path": "episodes/frontier_obligation/admission/fixtures.json",
+      "sha256": "9674958c78a98bcc93fe33d469cd8adcd93e5802adec518240cd6f14e2df8793"
+    },
+    {
+      "path": "episodes/frontier_obligation/admission/packet_index.json",
+      "sha256": "5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2"
+    },
+    {
+      "path": "episodes/frontier_obligation/admission/renderer_contract.json",
+      "sha256": "f2acdf664c05c5e28c32239c38fea6e672eb988f10cc2d8f827d8392df9028c0"
+    },
+    {
+      "path": "episodes/frontier_obligation/admission/response_contract.json",
+      "sha256": "8dd86501c64bb04a10e66c92cde558130b06c86e65346bfab0307c60bfad743f"
+    },
+    {
+      "path": "harness/check_frontier_obligation_admission.py",
+      "sha256": "2469bdd7c85da9a54e0daf623c93699b12efda24cf39f5a7fc3ea51f2fc0dcac"
+    },
+    {
+      "path": "harness/frontier_obligation_admission.py",
+      "sha256": "5e75ad1191a080250e568d0c12350c701b6d2a1cee0f58a6810123b6628801c5"
+    },
+    {
+      "path": "harness/probe_frontier_obligation_admission.py",
+      "sha256": "11928df3ca53857e1514944ebaa70fa62a882ad176d788473a654c9b32219d15"
+    },
+    {
+      "path": "notes/FRONTIER_OBLIGATION_IMPLEMENTATION_PROPOSAL.md",
+      "sha256": "aefd3fe3b56dd683f59ce96ea1567fb9b076327d3cd3f3d6e6f02bfb16a55c8b"
+    },
+    {
+      "path": "runs/frontier_obligation/wire/admission-mock-v0.1.json",
+      "sha256": "0afdc49a647e92e34f500374228428d59743ad887a60e01711b2441aa6f0a342"
+    },
+    {
+      "path": "tests/test_frontier_obligation_admission.py",
+      "sha256": "e21d547a01357dc6c3a58d081c8b5d3775a2301d7d2d505da739685ad629b3e8"
+    }
+  ],
+  "evidence_class": "wire_only_not_evidence",
+  "hash_definition": "lowercase SHA-256 of exact file bytes; paths are repository-relative",
+  "implementation_id": "frontier-obligation-admission-implementation-v0.1",
+  "mock_calls": 12,
+  "mock_outcome": "admitted",
+  "packet_index_sha256": "5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+  "proposal_review_sha256": "19214f49b5b34f61ea9c0aaa024efff94049039b1bbf78dc3097eeff02cca004",
+  "status": "frozen_pending_wire_review",
+  "tests_passed": 14
+}

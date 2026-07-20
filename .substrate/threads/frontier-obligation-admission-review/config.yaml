@@ -1,0 +1,9 @@
+topic: 'Bounded cold review of notes/FRONTIER_OBLIGATION_ADMISSION_PROPOSAL.md exact SHA-256 19214f49b5b34f61ea9c0aaa024efff94049039b1bbf78dc3097eeff02cca004. Review the admission-only boundary, inherited JSON wire, six paired flips, machine-derived labels, anti-constant gates, terminal one-candidate rule, refusal taxonomy, freshness, budgets, and separation from the later G/O/S/N experiment. One independent pass each: ENDORSE or BLOCK. No patching, implementation, engine contact, or fixture generation.'
+created_at: 2026-07-19T21:52:56.022463Z
+moderator: codex
+turn_order:
+    - codex
+    - cursor/grok-4.5
+    - cursor/composer-2.5
+next_index: 1
+status: ended

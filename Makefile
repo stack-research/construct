@@ -1,4 +1,4 @@
-.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check body0-check body0-test body1-check body1-test body1-wire body1-score prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke body-sketch body-sketch-test efc-test
+.PHONY: smoke smoke-local smoke-ollama smoke-claude stage-b stage-b-local suite suite-local conformance route-watch route-watch-test x4-base-rate occlusion-watch occlusion-watch-test m1-wire m2-wire m2-test m3-test x1-test x2-test x2-fixture-check body0-check body0-test body1-check body1-test body1-wire body1-score obligation-admission-check obligation-admission-test obligation-admission-wire prf-test prf-gate prf-smoke prf2-test prf2-gate prf2-smoke prf3-test prf3-gate prf3-family-gate prf3-smoke body-sketch body-sketch-test efc-test
 
 # SPEC_EPISTEMIC_FRAME_CHECK v0 Part I §14 wire tests (no model, never evidence):
 # shared interval functions (scipy-goldened), the §10.4 N-rule planner + §6
@@ -98,6 +98,23 @@ body1-wire:
 body1-score:
 	@test -n "$(LEDGER)" || (echo "LEDGER=<path> is required" >&2; exit 2)
 	uv run --no-project python -m harness.score_body1 "$(LEDGER)" --append
+
+# Frontier-obligation admission packet. The mock proves packet/runner/checker
+# wiring only; it is admission-only and never memory evidence. The canonical
+# mock receipt is immutable, so obligation-admission-wire refuses overwrite.
+obligation-admission-check:
+	UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m harness.check_frontier_obligation_admission
+
+obligation-admission-test:
+	UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m tests.test_frontier_obligation_admission
+
+obligation-admission-wire:
+	UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m harness.probe_frontier_obligation_admission \
+		--engine mock --model mock-engine-v1 \
+		--out runs/frontier_obligation/wire/admission-mock-v0.1.json
+	UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m harness.check_frontier_obligation_admission \
+		--receipt runs/frontier_obligation/wire/admission-mock-v0.1.json \
+		--engine mock --model mock-engine-v1
 
 # M1 inheritance wire: all six authored pairs on mock + cell scorers (wire_test disclosed).
 m1-wire:

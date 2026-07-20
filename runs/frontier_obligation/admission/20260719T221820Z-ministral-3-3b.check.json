@@ -1,0 +1,293 @@
+{
+  "checker": "frontier_obligation_admission_v0.1",
+  "checks": [
+    {
+      "check": "proposal_review_ended",
+      "detail": "thread=.substrate/threads/frontier-obligation-admission-review",
+      "ok": true
+    },
+    {
+      "check": "proposal_review_cursor%2Fgrok-4.5",
+      "detail": "entries=1",
+      "ok": true
+    },
+    {
+      "check": "proposal_review_cursor%2Fcomposer-2.5",
+      "detail": "entries=1",
+      "ok": true
+    },
+    {
+      "check": "proposal_review_moderator_close",
+      "detail": "matching_closes=1",
+      "ok": true
+    },
+    {
+      "check": "implementation_manifest_shape",
+      "detail": "path=harness/frontier_obligation_admission_manifest.json",
+      "ok": true
+    },
+    {
+      "check": "implementation_manifest_entry_set",
+      "detail": "entries=['Makefile', 'episodes/frontier_obligation/admission/decision_rule.txt', 'episodes/frontier_obligation/admission/fixtures.json', 'episodes/frontier_obligation/admission/packet_index.json', 'episodes/frontier_obligation/admission/renderer_contract.json', 'episodes/frontier_obligation/admission/response_contract.json', 'harness/check_frontier_obligation_admission.py', 'harness/frontier_obligation_admission.py', 'harness/probe_frontier_obligation_admission.py', 'notes/FRONTIER_OBLIGATION_IMPLEMENTATION_PROPOSAL.md', 'runs/frontier_obligation/wire/admission-mock-v0.1.json', 'tests/test_frontier_obligation_admission.py']",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_Makefile",
+      "detail": "observed=961bfbb8b58be4d0f7c4d25ed673eb7ffb4b5b277a06d0b84f40127a3a38ea31",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_episodes/frontier_obligation/admission/decision_rule.txt",
+      "detail": "observed=7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_episodes/frontier_obligation/admission/fixtures.json",
+      "detail": "observed=9674958c78a98bcc93fe33d469cd8adcd93e5802adec518240cd6f14e2df8793",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_episodes/frontier_obligation/admission/packet_index.json",
+      "detail": "observed=5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_episodes/frontier_obligation/admission/renderer_contract.json",
+      "detail": "observed=f2acdf664c05c5e28c32239c38fea6e672eb988f10cc2d8f827d8392df9028c0",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_episodes/frontier_obligation/admission/response_contract.json",
+      "detail": "observed=8dd86501c64bb04a10e66c92cde558130b06c86e65346bfab0307c60bfad743f",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_harness/check_frontier_obligation_admission.py",
+      "detail": "observed=2469bdd7c85da9a54e0daf623c93699b12efda24cf39f5a7fc3ea51f2fc0dcac",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_harness/frontier_obligation_admission.py",
+      "detail": "observed=5e75ad1191a080250e568d0c12350c701b6d2a1cee0f58a6810123b6628801c5",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_harness/probe_frontier_obligation_admission.py",
+      "detail": "observed=11928df3ca53857e1514944ebaa70fa62a882ad176d788473a654c9b32219d15",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_notes/FRONTIER_OBLIGATION_IMPLEMENTATION_PROPOSAL.md",
+      "detail": "observed=aefd3fe3b56dd683f59ce96ea1567fb9b076327d3cd3f3d6e6f02bfb16a55c8b",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_runs/frontier_obligation/wire/admission-mock-v0.1.json",
+      "detail": "observed=0afdc49a647e92e34f500374228428d59743ad887a60e01711b2441aa6f0a342",
+      "ok": true
+    },
+    {
+      "check": "implementation_hash_tests/test_frontier_obligation_admission.py",
+      "detail": "observed=e21d547a01357dc6c3a58d081c8b5d3775a2301d7d2d505da739685ad629b3e8",
+      "ok": true
+    },
+    {
+      "check": "packet_index_hash",
+      "detail": "observed=5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+      "ok": true
+    },
+    {
+      "check": "packet_id",
+      "detail": "expected=frontier-obligation-admission-v0.1",
+      "ok": true
+    },
+    {
+      "check": "proposal_review_binding",
+      "detail": "observed=19214f49b5b34f61ea9c0aaa024efff94049039b1bbf78dc3097eeff02cca004",
+      "ok": true
+    },
+    {
+      "check": "decision_rule_exact",
+      "detail": "sha256=7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb",
+      "ok": true
+    },
+    {
+      "check": "canonical_order",
+      "detail": "count=12",
+      "ok": true
+    },
+    {
+      "check": "call_count",
+      "detail": "rows=12; unique=12",
+      "ok": true
+    },
+    {
+      "check": "packet_entry_set",
+      "detail": "entries=['decision_rule.txt', 'fixtures.json', 'renderer_contract.json', 'response_contract.json']",
+      "ok": true
+    },
+    {
+      "check": "packet_hash_decision_rule.txt",
+      "detail": "observed=7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb",
+      "ok": true
+    },
+    {
+      "check": "packet_hash_fixtures.json",
+      "detail": "observed=9674958c78a98bcc93fe33d469cd8adcd93e5802adec518240cd6f14e2df8793",
+      "ok": true
+    },
+    {
+      "check": "packet_hash_renderer_contract.json",
+      "detail": "observed=f2acdf664c05c5e28c32239c38fea6e672eb988f10cc2d8f827d8392df9028c0",
+      "ok": true
+    },
+    {
+      "check": "packet_hash_response_contract.json",
+      "detail": "observed=8dd86501c64bb04a10e66c92cde558130b06c86e65346bfab0307c60bfad743f",
+      "ok": true
+    },
+    {
+      "check": "packet_no_unindexed_files",
+      "detail": "files=['decision_rule.txt', 'fixtures.json', 'packet_index.json', 'renderer_contract.json', 'response_contract.json']",
+      "ok": true
+    },
+    {
+      "check": "fixture_closed_shape",
+      "detail": "fixtures contain no expected-action or discretionary fields",
+      "ok": true
+    },
+    {
+      "check": "status_history",
+      "detail": "closed vocabulary; positive unique event_seq in render order",
+      "ok": true
+    },
+    {
+      "check": "menu_roles",
+      "detail": "each fixture contains PROMOTE and WAIT exactly once",
+      "ok": true
+    },
+    {
+      "check": "artifact_partition",
+      "detail": "{\"P1\": \"adm-cedar-17\", \"P2\": \"adm-flint-28\", \"P3\": \"adm-harbor-39\", \"P4\": \"adm-ivory-41\", \"P5\": \"adm-juniper-52\", \"P6\": \"adm-kestrel-63\"}",
+      "ok": true
+    },
+    {
+      "check": "pair_ids",
+      "detail": "pairs=['P1', 'P2', 'P3', 'P4', 'P5', 'P6']",
+      "ok": true
+    },
+    {
+      "check": "pair_mates",
+      "detail": "same artifact/menu; later member adds exactly one status event",
+      "ok": true
+    },
+    {
+      "check": "pair_expected_flips",
+      "detail": "all six pairs reverse the machine-derived action",
+      "ok": true
+    },
+    {
+      "check": "expected_role_balance",
+      "detail": "PROMOTE=6; WAIT=6",
+      "ok": true
+    },
+    {
+      "check": "expected_position_balance",
+      "detail": "first=6; second=6",
+      "ok": true
+    },
+    {
+      "check": "renderer_closed",
+      "detail": "unique_prompts=12",
+      "ok": true
+    },
+    {
+      "check": "receipt_packet_binding",
+      "detail": "packet=5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+      "ok": true
+    },
+    {
+      "check": "receipt_transport_binding",
+      "detail": "backend=local; reasoning=none_nonreasoning_model; base_url=http://localhost:1234/v1",
+      "ok": true
+    },
+    {
+      "check": "receipt_execution_pin_binding",
+      "detail": "sha256=36fc289158df1a983b30a2d5b376303968c8d6e965c71614e9f23b30259f5845; path=notes/frontier_obligation_execution_pin.json",
+      "ok": true
+    },
+    {
+      "check": "receipt_identity",
+      "detail": "requested=mistralai/ministral-3-3b; observed=mistralai/ministral-3-3b; rows=['mistralai/ministral-3-3b']",
+      "ok": true
+    },
+    {
+      "check": "receipt_contact_class",
+      "detail": "contact_class=admission_only_not_evidence",
+      "ok": true
+    },
+    {
+      "check": "receipt_complete",
+      "detail": "status=complete; attempted=12; completed=12; rows=12",
+      "ok": true
+    },
+    {
+      "check": "receipt_order",
+      "detail": "actual=['P1-first', 'P1-later', 'P2-first', 'P2-later', 'P3-first', 'P3-later', 'P4-first', 'P4-later', 'P5-first', 'P5-later', 'P6-first', 'P6-later']",
+      "ok": true
+    },
+    {
+      "check": "receipt_row_integrity",
+      "detail": "runner annotations, prompt/request hashes, and wire fields recompute",
+      "ok": true
+    },
+    {
+      "check": "wire_competence",
+      "detail": "valid=8/12; tool_calls_absent=True",
+      "ok": false
+    },
+    {
+      "check": "rule_accuracy",
+      "detail": "correct=8/12",
+      "ok": false
+    },
+    {
+      "check": "pair_constant_policy",
+      "detail": "flips=6/6",
+      "ok": true
+    },
+    {
+      "check": "action_constant_policy",
+      "detail": "PROMOTE=6; WAIT=2",
+      "ok": false
+    },
+    {
+      "check": "position_constant_policy",
+      "detail": "first=5; second=3",
+      "ok": false
+    },
+    {
+      "check": "budget",
+      "detail": "calls=12; output_tokens=305",
+      "ok": true
+    }
+  ],
+  "counts": {
+    "calls": 12,
+    "correct": 8,
+    "pair_flips": 6,
+    "selected_first_position": 5,
+    "selected_promote": 6,
+    "selected_second_position": 3,
+    "selected_wait": 2,
+    "valid": 8
+  },
+  "evidence_class": "admission_only_not_evidence",
+  "failed_checks": [
+    "wire_competence",
+    "rule_accuracy",
+    "action_constant_policy",
+    "position_constant_policy"
+  ],
+  "outcome": "admission_refused(commitment_invalid)"
+}

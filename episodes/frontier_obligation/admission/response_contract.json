@@ -1,0 +1,19 @@
+{
+  "allowed_properties": [
+    "commitment_enum",
+    "optional_prose"
+  ],
+  "extraction_order": [
+    "strip_whitespace_then_parse_full_json",
+    "parse_first_open_brace_through_last_close_brace"
+  ],
+  "forbid_tool_calls": true,
+  "optional_properties": {
+    "optional_prose": "string"
+  },
+  "packet_id": "frontier-obligation-admission-v0.1",
+  "required_properties": {
+    "commitment_enum": "exact_action_set_member"
+  },
+  "selection_count": 1
+}

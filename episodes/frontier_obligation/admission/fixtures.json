@@ -1,0 +1,223 @@
+{
+  "canonical_order": [
+    "P1-first",
+    "P1-later",
+    "P2-first",
+    "P2-later",
+    "P3-first",
+    "P3-later",
+    "P4-first",
+    "P4-later",
+    "P5-first",
+    "P5-later",
+    "P6-first",
+    "P6-later"
+  ],
+  "fixtures": [
+    {
+      "artifact_id": "adm-cedar-17",
+      "fixture_id": "P1-first",
+      "member": "first",
+      "menu_role_order": [
+        "PROMOTE",
+        "WAIT"
+      ],
+      "pair_id": "P1",
+      "status_history": []
+    },
+    {
+      "artifact_id": "adm-cedar-17",
+      "fixture_id": "P1-later",
+      "member": "later",
+      "menu_role_order": [
+        "PROMOTE",
+        "WAIT"
+      ],
+      "pair_id": "P1",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-flint-28",
+      "fixture_id": "P2-first",
+      "member": "first",
+      "menu_role_order": [
+        "WAIT",
+        "PROMOTE"
+      ],
+      "pair_id": "P2",
+      "status_history": []
+    },
+    {
+      "artifact_id": "adm-flint-28",
+      "fixture_id": "P2-later",
+      "member": "later",
+      "menu_role_order": [
+        "WAIT",
+        "PROMOTE"
+      ],
+      "pair_id": "P2",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "revoked"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-harbor-39",
+      "fixture_id": "P3-first",
+      "member": "first",
+      "menu_role_order": [
+        "PROMOTE",
+        "WAIT"
+      ],
+      "pair_id": "P3",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-harbor-39",
+      "fixture_id": "P3-later",
+      "member": "later",
+      "menu_role_order": [
+        "PROMOTE",
+        "WAIT"
+      ],
+      "pair_id": "P3",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "passed"
+        },
+        {
+          "event_seq": 2,
+          "status": "revoked"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-ivory-41",
+      "fixture_id": "P4-first",
+      "member": "first",
+      "menu_role_order": [
+        "WAIT",
+        "PROMOTE"
+      ],
+      "pair_id": "P4",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-ivory-41",
+      "fixture_id": "P4-later",
+      "member": "later",
+      "menu_role_order": [
+        "WAIT",
+        "PROMOTE"
+      ],
+      "pair_id": "P4",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "pending"
+        },
+        {
+          "event_seq": 2,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-juniper-52",
+      "fixture_id": "P5-first",
+      "member": "first",
+      "menu_role_order": [
+        "PROMOTE",
+        "WAIT"
+      ],
+      "pair_id": "P5",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "failed"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-juniper-52",
+      "fixture_id": "P5-later",
+      "member": "later",
+      "menu_role_order": [
+        "PROMOTE",
+        "WAIT"
+      ],
+      "pair_id": "P5",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "failed"
+        },
+        {
+          "event_seq": 2,
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-kestrel-63",
+      "fixture_id": "P6-first",
+      "member": "first",
+      "menu_role_order": [
+        "WAIT",
+        "PROMOTE"
+      ],
+      "pair_id": "P6",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "revoked"
+        }
+      ]
+    },
+    {
+      "artifact_id": "adm-kestrel-63",
+      "fixture_id": "P6-later",
+      "member": "later",
+      "menu_role_order": [
+        "WAIT",
+        "PROMOTE"
+      ],
+      "pair_id": "P6",
+      "status_history": [
+        {
+          "event_seq": 1,
+          "status": "revoked"
+        },
+        {
+          "event_seq": 2,
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "packet_id": "frontier-obligation-admission-v0.1",
+  "status_vocabulary": [
+    "passed",
+    "pending",
+    "failed",
+    "revoked"
+  ]
+}

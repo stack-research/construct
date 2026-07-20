@@ -81,7 +81,7 @@ Every X-track office must pass three checks ([three-guardrail stack](notes/GLOSS
 
 **X4 — Occlusion watch (closed, a successful failure).** The proposed sensory office — watching for what the room can no longer see — was built, armed, and then closed (2026-06-27) when the room showed its scoreboard measured curation, not sensing: cold-is-cold, and reading is already the sense. The full arc, including why the failure was worth keeping, is [walkthrough chapter 9](notes/walkthrough/09_X4_OCCLUSION_WATCH.md).
 
-## Where the lab is now (2026-07-19)
+## Where the lab is now (2026-07-20)
 
 The M- and X-tracks above are the lab's **earned past**. The instruments that have occupied the bench since reached honest terminal states, each ending in a [typed refusal](notes/GLOSSARY.md#typed-refusal) rather than a result softened to look like one: warming-budget v0.1 closed on an analytic null ([findings](notes/WB_FINDINGS.md)); the pause/resume [pay-window](notes/GLOSSARY.md#pay-window) question is paused with a precommitted reopen trigger and no licensed cost win ([findings](notes/PRF_FINDINGS.md)). Neither is the current build direction.
 
@@ -131,7 +131,41 @@ refusal, not evidence about Body-1 behavior
 candidate then completed both probes but returned forms outside the frozen
 grammar; the checker failed `surface_control` and `probe_ignorance`. Per its
 precommit, Body-1 candidate search is now closed with no scored contact. The
-conjecture remains untested, and the lab returns to frontier search.
+conjecture remains untested.
+
+The next frontier pass found a different seam:
+[consequence-bound obligation at a changing-world action
+boundary](notes/FRONTIER_OBLIGATION_CANDIDATE.md). An earlier external
+transaction mints one exact obligation; a later cold process carries it; and a
+precommitted world transition occurs after the ordinary offer snapshot but
+before commitment. The primary fork now includes an offer-only comparator with
+byte-identical status material, so the post-offer recheck must beat ordinary
+offering on both safety and liveness while losing on cost when the world stays
+stable. The first cold review blocked the proposal because that comparator was
+missing; the one allowed repair made it first-class, and a fresh final review
+endorsed the repaired concept. Its
+[admission-packet proposal](notes/FRONTIER_OBLIGATION_ADMISSION_PROPOSAL.md)
+then froze six paired action flips, balanced roles and menu positions, a
+machine-derived latest-status oracle, and one terminal candidate. Two cold
+reviewers endorsed the exact proposal without repair. The packet, independent
+checker, fourteen-test suite, and mock wire then passed an exact-manifest cold
+review. A separately reviewed terminal pin named
+`mistralai/ministral-3-3b`, and the twelve-call admission ran once. The checker
+closed it `admission_refused(commitment_invalid)`: eight exact commitments were
+valid and correct, while four semantically appropriate `WAIT` responses
+omitted the required artifact id. No response was repaired, no retry or
+replacement candidate is allowed, and no treatment was built. The conjecture
+remains untested
+([findings](notes/FRONTIER_OBLIGATION_ADMISSION_FINDINGS.md)).
+
+Active frontier search is now
+[paused](notes/FRONTIER_PAUSE.md) for opportunity cost, not because the
+frontier is exhausted. Funding alone is not a reopening condition. Unplanned
+memory-relevant behaviors from ordinary work belong in the
+[passive anomaly log](notes/ANOMALY_LOG.md), with raw evidence and competing
+explanations but no mechanism design. The log is reviewed monthly, or earlier
+after three materially similar observations. A credible cluster can license
+one cold frontier pass; it cannot silently license a build or engine contact.
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

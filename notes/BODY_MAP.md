@@ -1,8 +1,8 @@
 # NEXT substrate orientation map
 
-Status: **living orientation map**. Updated 2026-07-19 after the EFC v2
-admission-band close and the Body-0 v0.2 `not_engaged` close; previously updated
-2026-07-16 after the EFC v1 calibration close.
+Status: **living orientation map**. Updated 2026-07-20 after active frontier
+search paused; previously updated after the terminal frontier-obligation,
+Body-1, EFC v2, and Body-0 closes.
 
 Purpose: answer "what are we building?" without letting a diagram promote
 proposed anatomy into findings. The architecture lives in
@@ -66,6 +66,7 @@ that every node exists as a product component. Read the labels before the nouns.
 | Sparse activation plus action boundary | **Provisional sketch** | Walking skeleton controller rows | No real engine or licensed controller treatment |
 | Structural failure disposition | **Parked candidate; three typed refusals** | [v0](EFC_V0_FINDINGS.md), [v1](EFC_V1_FINDINGS.md), and [v2](EFC_V2_FINDINGS.md) findings; `epistemic_frame_check_v0_stub` in the sketch | v0's free-text oracle failed cold review; v1 found a menu ceiling; v2 found within-class chance behavior and constant policy. The mechanism remains unearned and reopens only on its sealed admission trigger |
 | Earned-property composition | **Closed `not_engaged`; integration unearned** | [Body-0 findings](BODY_0_FINDINGS.md) | R/C failed recurrence while A/X answered without the earned path. Machinery held, but causal need was absent |
+| Consequence-bound obligation at a changing-world action boundary | **Parked candidate; admission lineage closed** | [frontier candidate](FRONTIER_OBLIGATION_CANDIDATE.md), [admission findings](FRONTIER_OBLIGATION_ADMISSION_FINDINGS.md) | Terminal candidate returned 8/12 exact commitments; four bare `WAIT` values failed the frozen action-label wire. No treatment was built and the conjecture remains untested |
 | Metabolic proprioception | **Provisional sketch** | Check-cost and wire-causal events | No real carry-cost or benefit finding |
 | Provenance-health retirement | **Provisional sketch** | External warrant-revision sweep | Demonstrates dependency flow, not correctness |
 | Semantic failure geometry | **Unlicensed office** | Architecture only | Would introduce another classifier requiring its own license |
@@ -88,8 +89,13 @@ scientific superiority. Its deterministic behavior is authored.
 
 ## Current candidate work
 
-No new scientific mechanism is licensed. The epistemic-frame candidate remains
-parked after three typed refusals:
+No new scientific mechanism is licensed. Active frontier search is
+[paused](FRONTIER_PAUSE.md). Unplanned observations from other work go to the
+[passive anomaly log](ANOMALY_LOG.md) and are reviewed monthly or after three
+materially similar entries. Log capture does not promote a candidate slice or
+change any maturity label in this map.
+
+The epistemic-frame candidate remains parked after three typed refusals:
 
 ```text
 world-checked failure
@@ -115,6 +121,21 @@ narrow properties when composed in one persistent loop. Its real run closed
 the earned path. The protected projection and replayed cost machinery held, but
 the composition edge remains provisional because no causal integration result
 was earned. See [findings](BODY_0_FINDINGS.md).
+
+The next frontier pass nominated one exact consequence-bound obligation whose
+status may change after the ordinary offer snapshot and before commitment. Its
+first cold review blocked the missing placement comparator. The bounded repair
+added an offer-only lane with the same snapshot, bidirectional post-offer world
+changes, and stable-world cost losses; a fresh final review endorsed that
+concept. Its exact-hash-endorsed
+[admission proposal](FRONTIER_OBLIGATION_ADMISSION_PROPOSAL.md) produced a
+reviewed packet, runner, checker, and one terminal candidate pin. The twelve
+admission calls completed, but four bare `WAIT` values failed the exact
+artifact-qualified action wire. The checker closed
+`admission_refused(commitment_invalid)`. No retry, replacement candidate, or
+treatment is licensed. See the
+[candidate note](FRONTIER_OBLIGATION_CANDIDATE.md) and
+[admission findings](FRONTIER_OBLIGATION_ADMISSION_FINDINGS.md).
 
 ## Update contract
 

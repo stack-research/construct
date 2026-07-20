@@ -1,0 +1,29 @@
+{
+  "concept_review_sha256": "b5a105032263effb763231ba9a26c2b9476b5094707e6c24fea9bc7a43bda3fb",
+  "entries": [
+    {
+      "path": "decision_rule.txt",
+      "role": "verbatim_explicit_policy",
+      "sha256": "7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb"
+    },
+    {
+      "path": "fixtures.json",
+      "role": "six_pair_twelve_call_battery",
+      "sha256": "9674958c78a98bcc93fe33d469cd8adcd93e5802adec518240cd6f14e2df8793"
+    },
+    {
+      "path": "renderer_contract.json",
+      "role": "closed_prompt_surface",
+      "sha256": "f2acdf664c05c5e28c32239c38fea6e672eb988f10cc2d8f827d8392df9028c0"
+    },
+    {
+      "path": "response_contract.json",
+      "role": "closed_two_action_commitment_wire",
+      "sha256": "8dd86501c64bb04a10e66c92cde558130b06c86e65346bfab0307c60bfad743f"
+    }
+  ],
+  "hash_definition": "lowercase SHA-256 of exact file bytes; entry paths are relative to this index",
+  "packet_id": "frontier-obligation-admission-v0.1",
+  "proposal_review_sha256": "19214f49b5b34f61ea9c0aaa024efff94049039b1bbf78dc3097eeff02cca004",
+  "status": "authored_pending_wire_review"
+}

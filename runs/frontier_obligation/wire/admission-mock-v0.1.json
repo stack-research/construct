@@ -1,0 +1,389 @@
+{
+  "base_url": "http://localhost:1234/v1",
+  "calls_attempted": 12,
+  "calls_completed": 12,
+  "completion_tokens_total": 24,
+  "contact_class": "admission_only_not_evidence",
+  "created_at": "2026-07-19T22:11:26Z",
+  "decision_rule_sha256": "7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb",
+  "engine_backend": "mock",
+  "engine_backend_cli": "mock",
+  "execution_pin_path": null,
+  "execution_pin_sha256": null,
+  "max_calls": 12,
+  "max_output_tokens_per_call": 512,
+  "observed_model": "mock-engine-v1",
+  "packet_index_sha256": "5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+  "prompt_tokens_total": 0,
+  "reasoning_mode": "none_nonreasoning_model",
+  "receipt_id": "frontier-obligation-admission-1784499086",
+  "refusal": null,
+  "renderer_sha256": "f2acdf664c05c5e28c32239c38fea6e672eb988f10cc2d8f827d8392df9028c0",
+  "requested_model": "mock-engine-v1",
+  "response_contract_sha256": "8dd86501c64bb04a10e66c92cde558130b06c86e65346bfab0307c60bfad743f",
+  "rows": [
+    {
+      "action_set": [
+        "PROMOTE adm-cedar-17",
+        "WAIT adm-cedar-17"
+      ],
+      "artifact_id": "adm-cedar-17",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-cedar-17",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-cedar-17"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P1-first",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "first",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P1",
+      "prompt_sha256": "ed08d51af40c2b4f16c78ba2b9a4f351d3598bf140f78e99f47402764a97c01a",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"PROMOTE adm-cedar-17\"}",
+      "raw_answer_sha256": "76554c1d6d8df3ac8bcc5fe5b09120dda0314398265828abd1b2cdd988525987",
+      "raw_response_sha256": "93f251e8140808dd51f6c7e419ff1a771c749fecb6add273fe21de5d990de7fe",
+      "request_sha256": "37c88fcaf6eb86ae2442adb899624261c3539c9f363c2c4d4fb21f842e0b9935",
+      "selection": "PROMOTE adm-cedar-17",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-cedar-17",
+        "WAIT adm-cedar-17"
+      ],
+      "artifact_id": "adm-cedar-17",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-cedar-17",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-cedar-17"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P1-later",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "later",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P1",
+      "prompt_sha256": "e7e9a196452c2e9d66794a236e6abf77766c233215acdc196d610164570b0d0f",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"WAIT adm-cedar-17\"}",
+      "raw_answer_sha256": "ea7d4cc7c7818881f4bf4596d449f39f5a5d5019726600094b8e1cb239f6b8ea",
+      "raw_response_sha256": "0fe88251c1f4670b41f7e00e6e9313b17093bd0d7ad1382407c5ec5a4ec4abaf",
+      "request_sha256": "cfb942519785188f211af34a283be47f895a8cca8462ab7ea1f6764fa3872177",
+      "selection": "WAIT adm-cedar-17",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-flint-28",
+        "PROMOTE adm-flint-28"
+      ],
+      "artifact_id": "adm-flint-28",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-flint-28",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-flint-28"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P2-first",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "first",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P2",
+      "prompt_sha256": "76b1ab02bbec31d4189c24c4feb6de70d536986cc6485fac61fe0bc6c5162f8e",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"PROMOTE adm-flint-28\"}",
+      "raw_answer_sha256": "e83fd5d90d79aa2354e2ff113b4db8ff8d41edd66cd024531a4832960900279b",
+      "raw_response_sha256": "c4b3b5f1a656f951890b1b71d455af7315b3966a5981866dd1c691c0a24a21eb",
+      "request_sha256": "7daef117a91f70eb8e98180bbfeeaa0077af632264d8f541459c64d7283d626b",
+      "selection": "PROMOTE adm-flint-28",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-flint-28",
+        "PROMOTE adm-flint-28"
+      ],
+      "artifact_id": "adm-flint-28",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-flint-28",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-flint-28"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P2-later",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "later",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P2",
+      "prompt_sha256": "815de42f289d0063def752ec153cc664e5586cecb6e6c3889a19c4dc7ceb2ff2",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"WAIT adm-flint-28\"}",
+      "raw_answer_sha256": "cb8c6f337e42efa384ae57b97c40d4ba0484bbfe641931a95bcf2d9ab649a14f",
+      "raw_response_sha256": "2dad93f60f22e991f624b2e61368b9733680e4dc5f761f8246041785a8faccd3",
+      "request_sha256": "bac47e0000298fb770ae83cbd82d0eb7875a785efba5afc258792e629e0572a3",
+      "selection": "WAIT adm-flint-28",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-harbor-39",
+        "WAIT adm-harbor-39"
+      ],
+      "artifact_id": "adm-harbor-39",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-harbor-39",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-harbor-39"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P3-first",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "first",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P3",
+      "prompt_sha256": "48d746bb5deca8199e474d4b4e4870b6f4126569028a4a914ad12635c2bccd1b",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"PROMOTE adm-harbor-39\"}",
+      "raw_answer_sha256": "70614c16215142ef2fb4db3b2c0f0e9eac1fc98ae9854169ee198b87e47f4747",
+      "raw_response_sha256": "7b7f78b9c66eaf68a2deea0ae6a52f3109f7e3c2569bb3ec9f0da2b5c2525664",
+      "request_sha256": "4caf54d3bb391d780fd182643aeb233b3fbac90a787e68399bc0e7a2b2a12417",
+      "selection": "PROMOTE adm-harbor-39",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-harbor-39",
+        "WAIT adm-harbor-39"
+      ],
+      "artifact_id": "adm-harbor-39",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-harbor-39",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-harbor-39"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P3-later",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "later",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P3",
+      "prompt_sha256": "e760809db7c9855549a7e5bd6c969212dee66e9e8e710b299eb9212736b05eeb",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"WAIT adm-harbor-39\"}",
+      "raw_answer_sha256": "3146166dfef98c36f80c1ddd277b4b0e18dd894499df7359ab849b506045a29c",
+      "raw_response_sha256": "f5a9198e90c37399c0d27c234c37cdf49a7287b778df591aa4345c9893b29cb5",
+      "request_sha256": "27f4b05533df2cf24bf1c6c0e1f302b9a5b0b90197920732c256e611fcd73159",
+      "selection": "WAIT adm-harbor-39",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-ivory-41",
+        "PROMOTE adm-ivory-41"
+      ],
+      "artifact_id": "adm-ivory-41",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-ivory-41",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-ivory-41"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P4-first",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "first",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P4",
+      "prompt_sha256": "6c209d91db66b0128064198e67a5ae7e23bfe44b2530cc5278d8159d5438427e",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"WAIT adm-ivory-41\"}",
+      "raw_answer_sha256": "96f6e416e1ffdd719f5348efd4109bb3a937fdfb3f725f4cc59d449a54f65420",
+      "raw_response_sha256": "ef6569e55a6886728bffbb5e5882351fea260119d5d5c1b4a42ed16ddc3bdd0b",
+      "request_sha256": "05ef10b5f7e3f64f0e152fe603a90d2fbd6a5e8491115985169c0e6f7b8e9c8e",
+      "selection": "WAIT adm-ivory-41",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-ivory-41",
+        "PROMOTE adm-ivory-41"
+      ],
+      "artifact_id": "adm-ivory-41",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-ivory-41",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-ivory-41"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P4-later",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "later",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P4",
+      "prompt_sha256": "fafcc300061101a454af67891b600b651928376e9c3984be737adee9f5bfcbfe",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"PROMOTE adm-ivory-41\"}",
+      "raw_answer_sha256": "a8af13acc456d77b649453ca9913d8d0dbd55b3bc18f2a52b18164d03d59dc17",
+      "raw_response_sha256": "e07428d1fa5cb02817e12bb28f3adf57dc79e6fda0641e76e38e4ec1dc2c40e3",
+      "request_sha256": "eb087ac83dac6fcda4a990b15f1769cccff31c6aa325a0730e37b4d73824a237",
+      "selection": "PROMOTE adm-ivory-41",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-juniper-52",
+        "WAIT adm-juniper-52"
+      ],
+      "artifact_id": "adm-juniper-52",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-juniper-52",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-juniper-52"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P5-first",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "first",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P5",
+      "prompt_sha256": "af48041635b3725b82acb6b4b2be77a0db1b634d628ad36c28f43fee4e8dc3e8",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"WAIT adm-juniper-52\"}",
+      "raw_answer_sha256": "5bf94b36d0b3820f0ad887b5e1325b244879ee53ffb2666034105009cb7a7b7b",
+      "raw_response_sha256": "e02c76e2f134dc4b2cd40b20fbce1893790b36d985e6534d67bafbabd34f7b7d",
+      "request_sha256": "380f0b90d8979ce738a003f5a3b95c872d8d2a6cdf76220ca0403db42af53495",
+      "selection": "WAIT adm-juniper-52",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-juniper-52",
+        "WAIT adm-juniper-52"
+      ],
+      "artifact_id": "adm-juniper-52",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-juniper-52",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-juniper-52"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P5-later",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "later",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P5",
+      "prompt_sha256": "2e8b227fa85ba596a15d64eac823fb5b51a26497fa48aa37a554fe63ea8fe6a2",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"PROMOTE adm-juniper-52\"}",
+      "raw_answer_sha256": "b1f0126eeb5c2d7ec4adf3a983d1ac7253d8aab6b1b99c15c43125ad46cfb731",
+      "raw_response_sha256": "8536643308d0cddf9db8f89eac715b9583bac334f7aa30ded849525cf3a0ad14",
+      "request_sha256": "98a35b556e7404495bcb0c1e299a440e17cb045598e9d0d3ede9c30cd56424c8",
+      "selection": "PROMOTE adm-juniper-52",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-kestrel-63",
+        "PROMOTE adm-kestrel-63"
+      ],
+      "artifact_id": "adm-kestrel-63",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-kestrel-63",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-kestrel-63"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P6-first",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "first",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P6",
+      "prompt_sha256": "f85741e55f0775df21caf183c1ad1247b8c9e1c6ad5fcb4f3175ad4bc5dd6e3e",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"WAIT adm-kestrel-63\"}",
+      "raw_answer_sha256": "38baddebe4e5b1e0f1b082ad1ba6f9f5c5d43b787df9db4444f9273caac6c08e",
+      "raw_response_sha256": "6cf0498bc8c39e06e2cd7b23006394aeea7905130867e378eb9bf06a412fe3b0",
+      "request_sha256": "62669fff2b8361fb040d228bb12112bae3e9cc0ca67f5c2f53ccf0c88ce85aca",
+      "selection": "WAIT adm-kestrel-63",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-kestrel-63",
+        "PROMOTE adm-kestrel-63"
+      ],
+      "artifact_id": "adm-kestrel-63",
+      "completion_tokens": 2,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-kestrel-63",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-kestrel-63"
+      },
+      "extraction_mode": "full_json",
+      "fixture_id": "P6-later",
+      "invalid_reason": null,
+      "latency_ms": 0,
+      "member": "later",
+      "observed_model": "mock-engine-v1",
+      "pair_id": "P6",
+      "prompt_sha256": "b6c371965a91f8aa074ea6e6e7aa40bc4d0267e0a54b7ccfe8944227fb6583c0",
+      "prompt_tokens": 0,
+      "raw_answer": "{\"commitment_enum\":\"PROMOTE adm-kestrel-63\"}",
+      "raw_answer_sha256": "9fa21d106f72befd2df3d1167924b9c7db9a907b328d50843b86126965c6e6e0",
+      "raw_response_sha256": "83785f8f6cad6ca95dcf28f1ed306506aadd57888b681fafd4276c791a89fd54",
+      "request_sha256": "1eb6a1ddd50b8487fb10a58a299f8dff02d0f191936f2d7724bfec4911b506bb",
+      "selection": "PROMOTE adm-kestrel-63",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    }
+  ],
+  "status": "complete",
+  "temperature": 0,
+  "wire_only": true
+}

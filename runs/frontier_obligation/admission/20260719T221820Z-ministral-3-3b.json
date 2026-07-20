@@ -1,0 +1,390 @@
+{
+  "base_url": "http://localhost:1234/v1",
+  "calls_attempted": 12,
+  "calls_completed": 12,
+  "completion_tokens_total": 305,
+  "contact_class": "admission_only_not_evidence",
+  "created_at": "2026-07-19T22:22:30Z",
+  "decision_rule_sha256": "7ea83cea1059fc12227458bd53f03c32f08887adde98b5aac5969a4c1973f9bb",
+  "engine_backend": "local_openai_compat",
+  "engine_backend_cli": "local",
+  "execution_pin_path": "notes/frontier_obligation_execution_pin.json",
+  "execution_pin_sha256": "36fc289158df1a983b30a2d5b376303968c8d6e965c71614e9f23b30259f5845",
+  "max_calls": 12,
+  "max_output_tokens_per_call": 512,
+  "observed_model": "mistralai/ministral-3-3b",
+  "packet_index_sha256": "5da170547db2a779880bcfdb01827aa2d30ae9471357f6c6c53ccf977489a3b2",
+  "prompt_tokens_total": 8655,
+  "reasoning_mode": "none_nonreasoning_model",
+  "receipt_id": "frontier-obligation-admission-1784499750",
+  "refusal": null,
+  "renderer_sha256": "f2acdf664c05c5e28c32239c38fea6e672eb988f10cc2d8f827d8392df9028c0",
+  "requested_model": "mistralai/ministral-3-3b",
+  "response_contract_sha256": "8dd86501c64bb04a10e66c92cde558130b06c86e65346bfab0307c60bfad743f",
+  "rows": [
+    {
+      "action_set": [
+        "PROMOTE adm-cedar-17",
+        "WAIT adm-cedar-17"
+      ],
+      "artifact_id": "adm-cedar-17",
+      "completion_tokens": 26,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-cedar-17",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-cedar-17"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P1-first",
+      "invalid_reason": null,
+      "latency_ms": 3249,
+      "member": "first",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P1",
+      "prompt_sha256": "ed08d51af40c2b4f16c78ba2b9a4f351d3598bf140f78e99f47402764a97c01a",
+      "prompt_tokens": 713,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"PROMOTE adm-cedar-17\"\n}\n```",
+      "raw_answer_sha256": "3c25ca81cd893c01fc74b4849cda0fac0989f73ddd7b7e4dd3ddadebe414970c",
+      "raw_response_sha256": "760dc5c4f2c36a6a5421146526e5e166a2f7a741f4b57e7fef36e18ea73cc467",
+      "request_sha256": "9086d992dd24d40db6018226b523ab88bf9e3bb10053a4f040553c5c8d1dc300",
+      "selection": "PROMOTE adm-cedar-17",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-cedar-17",
+        "WAIT adm-cedar-17"
+      ],
+      "artifact_id": "adm-cedar-17",
+      "completion_tokens": 18,
+      "correct": false,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-cedar-17",
+      "extracted_wire": {
+        "commitment_enum": "WAIT"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P1-later",
+      "invalid_reason": "unknown_enum",
+      "latency_ms": 244,
+      "member": "later",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P1",
+      "prompt_sha256": "e7e9a196452c2e9d66794a236e6abf77766c233215acdc196d610164570b0d0f",
+      "prompt_tokens": 719,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"WAIT\"\n}\n```",
+      "raw_answer_sha256": "92e57e3d79ab6f3b056434309e98b860b41f595390b157b954e3d0fe5b1b5669",
+      "raw_response_sha256": "6bfce44ab6ae7af2bbcdb52616e5011a1091dd548fcfab0cfafe586f7a11dd64",
+      "request_sha256": "8a6a5556bfcf860394d1bf28c44f86d47538be59ba868184a3316123e8fc6370",
+      "selection": "WAIT",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_invalid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-flint-28",
+        "PROMOTE adm-flint-28"
+      ],
+      "artifact_id": "adm-flint-28",
+      "completion_tokens": 25,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-flint-28",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-flint-28"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P2-first",
+      "invalid_reason": null,
+      "latency_ms": 350,
+      "member": "first",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P2",
+      "prompt_sha256": "76b1ab02bbec31d4189c24c4feb6de70d536986cc6485fac61fe0bc6c5162f8e",
+      "prompt_tokens": 710,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"PROMOTE adm-flint-28\"\n}\n```",
+      "raw_answer_sha256": "b33f4e55fc3c8a916076c6e61b3a50c1558414df4a4f175130b65b72ab4e1b19",
+      "raw_response_sha256": "7dc9579ec8439ff770bb6db8f5c558c733b4d8750557bf7e5660a3cbd4c8ce34",
+      "request_sha256": "b4d7e5a79e8719fbed9243deaf2fabcf2d260a21d8dd3cf53bb256f3bd66d2b9",
+      "selection": "PROMOTE adm-flint-28",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-flint-28",
+        "PROMOTE adm-flint-28"
+      ],
+      "artifact_id": "adm-flint-28",
+      "completion_tokens": 18,
+      "correct": false,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-flint-28",
+      "extracted_wire": {
+        "commitment_enum": "WAIT"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P2-later",
+      "invalid_reason": "unknown_enum",
+      "latency_ms": 244,
+      "member": "later",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P2",
+      "prompt_sha256": "815de42f289d0063def752ec153cc664e5586cecb6e6c3889a19c4dc7ceb2ff2",
+      "prompt_tokens": 717,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"WAIT\"\n}\n```",
+      "raw_answer_sha256": "92e57e3d79ab6f3b056434309e98b860b41f595390b157b954e3d0fe5b1b5669",
+      "raw_response_sha256": "bea4763ff2f083b4ad02978410bc942565c790480e21c8c48a3addcdf2a9d303",
+      "request_sha256": "09697db97e59397aaa0ba5d42273b6db9be4e0dccfa394aefc6176d62ee6817f",
+      "selection": "WAIT",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_invalid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-harbor-39",
+        "WAIT adm-harbor-39"
+      ],
+      "artifact_id": "adm-harbor-39",
+      "completion_tokens": 26,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-harbor-39",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-harbor-39"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P3-first",
+      "invalid_reason": null,
+      "latency_ms": 361,
+      "member": "first",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P3",
+      "prompt_sha256": "48d746bb5deca8199e474d4b4e4870b6f4126569028a4a914ad12635c2bccd1b",
+      "prompt_tokens": 720,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"PROMOTE adm-harbor-39\"\n}\n```",
+      "raw_answer_sha256": "07d462072447dfc60525e0cb1a197a1d958e4499d611f0453b1b108d0c128646",
+      "raw_response_sha256": "e7926507cbc6122d38899639b996d6907be656447a6d5e2a83e0b59d88876ece",
+      "request_sha256": "70ca40c9621fbdd68bbd61d321d0f82dfdf7c7520f19e6940b96f1b94264824a",
+      "selection": "PROMOTE adm-harbor-39",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-harbor-39",
+        "WAIT adm-harbor-39"
+      ],
+      "artifact_id": "adm-harbor-39",
+      "completion_tokens": 46,
+      "correct": false,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-harbor-39",
+      "extracted_wire": {
+        "commitment_enum": "WAIT",
+        "optional_prose": "Current status is revoked (event_seq=2), so promotion cannot proceed until the status is resolved."
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P3-later",
+      "invalid_reason": "unknown_enum",
+      "latency_ms": 508,
+      "member": "later",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P3",
+      "prompt_sha256": "e760809db7c9855549a7e5bd6c969212dee66e9e8e710b299eb9212736b05eeb",
+      "prompt_tokens": 730,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"WAIT\",\n  \"optional_prose\": \"Current status is revoked (event_seq=2), so promotion cannot proceed until the status is resolved.\"\n}\n```",
+      "raw_answer_sha256": "f50d12552d4f7d0174b06224474049cd57d00a7c9adc429a9e2d400286ed86d3",
+      "raw_response_sha256": "2ea83a73342fda3e84aab57cacb67b44bdc8750722fa6f9cab25ae72fc7e8519",
+      "request_sha256": "6af18df597cfe43109326164d9618417e96a421343ceef726fe75368282322dd",
+      "selection": "WAIT",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_invalid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-ivory-41",
+        "PROMOTE adm-ivory-41"
+      ],
+      "artifact_id": "adm-ivory-41",
+      "completion_tokens": 25,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-ivory-41",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-ivory-41"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P4-first",
+      "invalid_reason": null,
+      "latency_ms": 356,
+      "member": "first",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P4",
+      "prompt_sha256": "6c209d91db66b0128064198e67a5ae7e23bfe44b2530cc5278d8159d5438427e",
+      "prompt_tokens": 719,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"WAIT adm-ivory-41\"\n}\n```",
+      "raw_answer_sha256": "9c225b9f80c3897c36b6ebcc97185e682d9086177d3052df30b5d258b1641691",
+      "raw_response_sha256": "c01c6d2e704a8d3019d46b66fb18d1696058723c577ade746f8e35d41d04e664",
+      "request_sha256": "b610aadd14ae82d7a76d9355517a459a8004b51f0eae47ea10f92b4656f13e89",
+      "selection": "WAIT adm-ivory-41",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-ivory-41",
+        "PROMOTE adm-ivory-41"
+      ],
+      "artifact_id": "adm-ivory-41",
+      "completion_tokens": 26,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-ivory-41",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-ivory-41"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P4-later",
+      "invalid_reason": null,
+      "latency_ms": 322,
+      "member": "later",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P4",
+      "prompt_sha256": "fafcc300061101a454af67891b600b651928376e9c3984be737adee9f5bfcbfe",
+      "prompt_tokens": 729,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"PROMOTE adm-ivory-41\"\n}\n```",
+      "raw_answer_sha256": "bce8fc5e4023015c70280e56079915034729fc3f961b3bd43bc8d42032de1570",
+      "raw_response_sha256": "fdd0f3b13e3203b3284ca32a7d8c0661722a435d596eaea03ad142ec90081394",
+      "request_sha256": "5c3c1e671a6ed1c0a62fc91792b97c20279c4169d4b1c42589913445a885a078",
+      "selection": "PROMOTE adm-ivory-41",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-juniper-52",
+        "WAIT adm-juniper-52"
+      ],
+      "artifact_id": "adm-juniper-52",
+      "completion_tokens": 18,
+      "correct": false,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-juniper-52",
+      "extracted_wire": {
+        "commitment_enum": "WAIT"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P5-first",
+      "invalid_reason": "unknown_enum",
+      "latency_ms": 290,
+      "member": "first",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P5",
+      "prompt_sha256": "af48041635b3725b82acb6b4b2be77a0db1b634d628ad36c28f43fee4e8dc3e8",
+      "prompt_tokens": 719,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"WAIT\"\n}\n```",
+      "raw_answer_sha256": "92e57e3d79ab6f3b056434309e98b860b41f595390b157b954e3d0fe5b1b5669",
+      "raw_response_sha256": "adf5a261123d51fae10374b96c54d85d5cff67c7080ac67bfcce26d2d8829b34",
+      "request_sha256": "01df327fbafa91ca3d3033149a4eb660e4df73f0cd87554ce578d94b87dd0c8c",
+      "selection": "WAIT",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_invalid"
+    },
+    {
+      "action_set": [
+        "PROMOTE adm-juniper-52",
+        "WAIT adm-juniper-52"
+      ],
+      "artifact_id": "adm-juniper-52",
+      "completion_tokens": 26,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-juniper-52",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-juniper-52"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P5-later",
+      "invalid_reason": null,
+      "latency_ms": 320,
+      "member": "later",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P5",
+      "prompt_sha256": "2e8b227fa85ba596a15d64eac823fb5b51a26497fa48aa37a554fe63ea8fe6a2",
+      "prompt_tokens": 729,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"PROMOTE adm-juniper-52\"\n}\n```",
+      "raw_answer_sha256": "f122d4e40bcaf7f57b051d3dbbcda212c0bfa607a4e6bd455495cde467402b67",
+      "raw_response_sha256": "0e0186ff820585883afbf1f37154767ed766bc6aa31b8fa5511d2a596d10913c",
+      "request_sha256": "eeee4e623305e45d82ed23912b7d8f3a61e41100c0f7fc6754d2c45c095aed55",
+      "selection": "PROMOTE adm-juniper-52",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-kestrel-63",
+        "PROMOTE adm-kestrel-63"
+      ],
+      "artifact_id": "adm-kestrel-63",
+      "completion_tokens": 25,
+      "correct": true,
+      "expected_role": "WAIT",
+      "expected_selection": "WAIT adm-kestrel-63",
+      "extracted_wire": {
+        "commitment_enum": "WAIT adm-kestrel-63"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P6-first",
+      "invalid_reason": null,
+      "latency_ms": 349,
+      "member": "first",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P6",
+      "prompt_sha256": "f85741e55f0775df21caf183c1ad1247b8c9e1c6ad5fcb4f3175ad4bc5dd6e3e",
+      "prompt_tokens": 720,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"WAIT adm-kestrel-63\"\n}\n```",
+      "raw_answer_sha256": "5e5297a7ff85dd80b4cac85a2a7ab272071c9f3209173989cfdcca4651c920a3",
+      "raw_response_sha256": "39b5f80fb7ab0bf0d80d743c8a7234fe8784f12c7b5e5509f9038b5419274717",
+      "request_sha256": "f985f48451abd80312a5f27dfe0b26da36c6b8ceda03335e41c542459cf93870",
+      "selection": "WAIT adm-kestrel-63",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    },
+    {
+      "action_set": [
+        "WAIT adm-kestrel-63",
+        "PROMOTE adm-kestrel-63"
+      ],
+      "artifact_id": "adm-kestrel-63",
+      "completion_tokens": 26,
+      "correct": true,
+      "expected_role": "PROMOTE",
+      "expected_selection": "PROMOTE adm-kestrel-63",
+      "extracted_wire": {
+        "commitment_enum": "PROMOTE adm-kestrel-63"
+      },
+      "extraction_mode": "json_substring",
+      "fixture_id": "P6-later",
+      "invalid_reason": null,
+      "latency_ms": 316,
+      "member": "later",
+      "observed_model": "mistralai/ministral-3-3b",
+      "pair_id": "P6",
+      "prompt_sha256": "b6c371965a91f8aa074ea6e6e7aa40bc4d0267e0a54b7ccfe8944227fb6583c0",
+      "prompt_tokens": 730,
+      "raw_answer": "```json\n{\n  \"commitment_enum\": \"PROMOTE adm-kestrel-63\"\n}\n```",
+      "raw_answer_sha256": "5caa2af17463678882e1f0cb577939ca1019d897c572907a08825da9917088a0",
+      "raw_response_sha256": "a29976c251d19ce1e843587ed696d1f9c4218556c9e900912130c7e1f3afa175",
+      "request_sha256": "dcc7d3cdf894eb50582f5fc72d252520ab3258280abd51f9be0eea8566ca7d8e",
+      "selection": "PROMOTE adm-kestrel-63",
+      "tool_calls_present": false,
+      "validation_outcome": "commitment_valid"
+    }
+  ],
+  "status": "complete",
+  "temperature": 0,
+  "wire_only": false
+}

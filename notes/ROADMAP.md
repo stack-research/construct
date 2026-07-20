@@ -15,6 +15,14 @@ another in-lineage surface repair. See [PRF_FINDINGS.md](PRF_FINDINGS.md),
 [EFC_V1_FINDINGS.md](EFC_V1_FINDINGS.md), and
 [EFC_V2_FINDINGS.md](EFC_V2_FINDINGS.md).
 
+Active frontier search is [paused](FRONTIER_PAUSE.md) from 2026-07-20 for
+opportunity cost, not exhaustion. Ordinary work now supplies a
+[passive anomaly log](ANOMALY_LOG.md), reviewed monthly or after three
+materially similar observations. Funding alone does not reopen search; a
+reviewed cluster needs raw evidence, a downstream consumer, an external oracle,
+a competing explanation, and a visible loses-condition before one cold
+frontier pass is warranted.
+
 [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) remains the cold-reviewed whole-body
 direction; [BODY_MAP.md](BODY_MAP.md) is the living maturity map; the
 [embodiment sketch](../sketches/next_substrate/README.md) remains
@@ -65,7 +73,36 @@ occurred, and the Body-1 conjecture remains untested
 Both admission calls completed, but both answers fell outside the frozen
 grammar; the checker failed `surface_control` and `probe_ignorance`. The
 precommitted terminal rule now closes Body-1 candidate search. No scored
-contact or behavioral verdict exists. Next direction: frontier search.
+contact or behavioral verdict exists. The next frontier pass is recorded
+below.
+
+**Frontier obligation candidate (2026-07-19):** a first pass nominated one
+exact consequence-bound obligation as a persistent carrier consumed after
+offer selection and before commitment
+([candidate](FRONTIER_OBLIGATION_CANDIDATE.md)). The initial cold review
+blocked `G/S/N` as `placement_unfalsified`: consumer ablation did not prove
+that action-boundary placement beat an ordinary synchronous offer. The single
+bounded repair added a first-class offer-only lane `O`, byte-identical
+offer-time status snapshots, and precommitted passed-to-revoked and
+pending-to-passed transitions after the snapshot. Stable-status cells make the
+recheck lose on deterministic cost; the controller may not rewrite or block
+the model action. A fresh exact-hash review by `cursor/grok-4.5` and
+`cursor/composer-2.5` unanimously endorsed the repaired concept. This licenses
+one sealed admission-packet proposal only. That
+[proposal](FRONTIER_OBLIGATION_ADMISSION_PROPOSAL.md) now freezes six paired
+flips / twelve calls, balanced action roles and menu positions, a
+machine-derived latest-status rule, the inherited JSON commitment wire, and
+one terminal candidate. Exact-hash cold review unanimously endorsed it without
+repair. The admission packet and runner then passed an exact-manifest wire
+review, followed by a separate terminal execution-pin review. The pinned
+`mistralai/ministral-3-3b` run completed all twelve calls, but the checker
+returned `admission_refused(commitment_invalid)`: eight exact labels were valid
+and correct; four `WAIT` responses omitted the required artifact id. The
+precommitted terminal rule closes the lineage with no repair, retry,
+replacement candidate, or treatment. The obligation conjecture remains
+untested. Active frontier search is paused under the repository-wide
+[pause and anomaly cadence](FRONTIER_PAUSE.md)
+([findings](FRONTIER_OBLIGATION_ADMISSION_FINDINGS.md)).
 
 **Review-budget law (EFC v0, 2026-07-15):** predeclare terminal review depth
 before authoring. Default: one authoring pass, one independent cold review, one

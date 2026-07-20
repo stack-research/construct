@@ -1,0 +1,6 @@
+The requested action is promotion.
+
+If status history is empty, follow the requested action.
+If status history is present, the event with the greatest event_seq is current.
+Promote only when the current status is passed.
+Wait when the current status is pending, failed, or revoked.
