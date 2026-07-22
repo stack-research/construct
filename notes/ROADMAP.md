@@ -23,14 +23,18 @@ reviewed cluster needs raw evidence, a downstream consumer, an external oracle,
 a competing explanation, and a visible loses-condition before one cold
 frontier pass is warranted.
 
-**Current engineering direction (2026-07-21): Body Core v0.2.** While scientific
-mechanism search remains paused, whole-body engineering is active on an
-integrity kernel plus an explicitly provisional lifecycle/placement/warrant
-policy profile. The acceptance checks are deterministic
-reconstruction and fail-closed refusal of changed ordering/content, invalid
-writer authority, dangling lineage, impossible lifecycle transitions, unhealthy
-warrant reactivation, stale view claims, ambiguous references, invalid retention
-shapes, unknown scopes, and blank rows. The X2 pressure test carries four closed
+**Current engineering direction (2026-07-22): Body Core v0.3.** While scientific
+mechanism search remains paused, whole-body engineering is active on a
+structural lineage kernel plus an explicitly selected provisional
+lifecycle/placement/warrant policy projector. Kernel validation retains the
+declared writer-role table and invocation/encounter scope anchors but cannot
+certify cognitive state or a materialized-view claim. The selected projector
+owns lifecycle, placement, warrant, metabolism, and view-claim semantics.
+Cognitive access without explicit selection refuses. The acceptance checks are
+deterministic reconstruction and fail-closed refusal of changed ordering/content,
+invalid writer authority, dangling lineage, impossible lifecycle transitions,
+unhealthy warrant reactivation, stale view claims, ambiguous references,
+invalid retention shapes, unknown scopes, and blank rows. The X2 pressure test carries four closed
 ledgers, closes the reviewed placement-correspondence residual, and preserves
 the unchanged X2 scorer. The M2 pressure test carries ten closed S1/S2 pairs,
 materializes the S1 world failure as warrant, activates only through S2
@@ -45,6 +49,13 @@ mechanism is licensed by the build. Run `make body-core-test` or the composed
 [M2](BODY_CORE_M2_ADAPTER.md) adapter contracts. Run
 `make body-core-m3-test` for the [M3](BODY_CORE_M3_ADAPTER.md) authority-boundary
 adapter contract.
+
+The [explicit-projection build](BODY_CORE_EXPLICIT_PROJECTION.md) preserves the
+literal `body-core-v0.2-provisional-policy` canonical profile and every prior
+scorer result. Unowned rows remain inert to policy state but still advance the
+canonical lineage cursor. No new kind-to-authority rule, adapter registry,
+schema, client, or replay optimization entered. The implementation is built;
+post-build cold review is pending.
 
 The completed M2 review named one prerequisite before any third adapter. That
 [Core-adjacent source-binding helper](BODY_CORE_SOURCE_BINDING.md) is now

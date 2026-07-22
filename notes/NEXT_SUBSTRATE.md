@@ -1,6 +1,6 @@
 # NEXT substrate — a body for an intermittent mind
 
-Status: **architect's proposal, cold-reviewed; provisional Body Core v0.2
+Status: **architect's proposal, cold-reviewed; provisional Body Core v0.3
 engineering active**. Written from a blank page and reviewed on 2026-07-10 in
 substrate thread `next-substrate`. This is not a scored finding. The current
 provisional engineering slice is described below and remains
@@ -9,7 +9,7 @@ wire/integration-only.
 Scientific milestone: **none yet**. This names a wanted direction. Cold review
 found no block on the wanted body and sharpened one candidate first slice. Any
 selected mechanism must still pass its own admission gate, oracle, and
-loses-conditions before its behavior becomes a finding. Body Core v0.2 serves
+loses-conditions before its behavior becomes a finding. Body Core v0.3 serves
 whole-body composition engineering while active frontier search is paused; its
 checks are replay and invariant checks, not a behavioral oracle.
 
@@ -436,36 +436,42 @@ substrate that lets the model certify itself builds a persuasive diary.
 
 ---
 
-## Current build while frontier search is paused: Body Core v0.2
+## Current build while frontier search is paused: Body Core v0.3
 
-Body Core v0.2 makes the provisional whole traversable without choosing another
-cognitive mechanism. Its integrity kernel extracts three facilities from the
-walking skeleton:
+Body Core v0.3 makes the provisional whole traversable without choosing another
+cognitive mechanism. It makes the already-declared kernel/policy distinction
+executable rather than adding a fourth adapter.
 
-1. a small integrity-kernel lineage envelope with deterministic ordering, a
+The structural kernel retains:
+
+1. a small lineage envelope with deterministic ordering, a
    hash chain, declared writer role and authority, causal parents, warrant
    pointers, invocation and encounter scope, and
    inline/reference/redacted retention;
-2. untrusting replay that refuses malformed ordering, changed rows, dangling
-   references, unauthorized writer/authority combinations, impossible state
-   transitions, and state reactivation under an invalid warrant;
-3. recomputable views of current state, warrant health, warrant dependents,
-   hot/cold placement, and reported metabolic totals.
+2. validation that refuses malformed ordering, changed rows, dangling
+   references, unauthorized writer/authority combinations, unknown scopes, and
+   invalid retention shapes;
+3. explicit delegation to a selected semantic projector.
 
-The lifecycle table, binary hot/cold placement, three-value warrant vocabulary,
-and automatic invalid-warrant suspension are a **provisional policy profile**,
-not mechanism-neutral law. Keeping that boundary explicit lets later bodies
-reuse the integrity kernel without silently inheriting this ontology.
+The kernel is cognitive-policy-neutral at this seam, not ontology-free: its
+writer-role table and the `invocation_started` / `encounter_observed` scope
+anchors remain provisional structural vocabulary. The lifecycle table, binary
+hot/cold placement, three-value warrant vocabulary, automatic invalid-warrant
+suspension, metabolic fold, and materialized-view verification now live in an
+explicitly selected **provisional policy projector**. A caller cannot obtain
+cognitive state or append a view claim without selecting it.
 
-Materialized-view rows are cache claims. Replay independently recomputes the
-view and refuses a stale digest; a logged summary never becomes authority merely
-because the runtime wrote it. The existing epistemic-frame demonstration now
-consumes this core as one explicitly stubbed client. It does not define the
-core's generic event envelope.
+Materialized-view rows remain cache claims. The kernel can validate their
+envelopes but cannot certify their semantic digest. The selected projector
+independently recomputes the view and refuses a stale claim; a logged summary
+never becomes authority merely because the runtime wrote it.
 
 The implementation is
-[`sketches/next_substrate/core.py`](../sketches/next_substrate/core.py), exercised
-by `make body-core-test` and transitively by `make body-sketch-test`. The first
+[`sketches/next_substrate/core.py`](../sketches/next_substrate/core.py) and
+[`sketches/next_substrate/policy.py`](../sketches/next_substrate/policy.py),
+exercised by `make body-core-test` and transitively by `make body-sketch-test`.
+The exact build boundary is [recorded here](BODY_CORE_EXPLICIT_PROJECTION.md).
+The first
 non-stub pressure test is the reversible
 [X2 adapter](BODY_CORE_X2_ADAPTER.md), exercised by
 `make body-core-x2-test`: four checked-in closed X2 ledgers pass through Core
@@ -491,13 +497,18 @@ state for Track-B ingestion rows. The exact implementation was independently
 [endorsed](BODY_CORE_M3_ADAPTER_REVIEW.md) without repair and does not repair or
 reinterpret any M3 breach.
 
+The literal `body-core-v0.2-provisional-policy` profile id and complete canonical
+view remain unchanged. Every validated row still advances the canonical cursor,
+including a kind the projector does not own; such a row changes no policy-state
+field. The split deliberately adds no generic kind-to-authority binding.
+
 The current hash chain is tamper-evident only relative to a trusted chain head.
 It is not a signature system: writer identities and roles are enforced runtime
 claims, not cryptographically authenticated principals. Full replay is still
 the authority. The implementation is single-process and does not yet supply
 concurrent-writer locking, an external chain-head anchor, signatures,
 compaction, or migration. Append validation remains quadratic in lineage
-length. v0.2 does not claim reduced reconstruction cost,
+length. v0.3 does not claim reduced reconstruction cost,
 product-schema stability, mechanism value, or scientific superiority.
 
 This work serves the whole because any later mechanism needs trustworthy

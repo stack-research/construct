@@ -1,0 +1,56 @@
+{
+  "claim_boundary": "wire integration preservation only; no scientific, security, composition, or reconstruction-cost claim",
+  "design_thread": {
+    "convergence_entry": "20260722T160409589Z__codex%2Fgpt-5.6-sol.md",
+    "convergence_entry_sha256": "c3b60e95ca3c22355a5cd9ff6b9aec3a2c0f306716aef23719b42f750ca2e538",
+    "review_entries": {
+      "20260722T154527601Z__cursor%2Fgrok-4.5.md": "ca85a60a2e1f7e5795d9fa5f5c09628ed108ccabd979f395187ee4b5a330f0a0",
+      "20260722T155009660Z__claude%2Ffable-5.md": "2c083ac9db1934814ffad4e84eb05e6de13754d4a103132eb83af536cf0b71ec"
+    },
+    "thread": "explicit-projection-boundary",
+    "through_version": 6
+  },
+  "files": {
+    "AGENTS.md": "1d55ebb71fe3209d6cbcd1b6668ae9fad9a3cb79e68387a14a8a9f345a430887",
+    "README.md": "8615f0b1710c1e2a290e1936b332ec111494be3aa07ca1863cb2aa77ae2005c0",
+    "notes/BODY_CORE_EXPLICIT_PROJECTION.md": "208ad34b58a71bcf692cbfca44a37428d03cb8ca00b2904c9e62bc8a1c890b76",
+    "notes/BODY_MAP.md": "087df1600511e9166cd2335c3c374b96a3f39b8db01c7381c4623d6913537c9d",
+    "notes/NEXT_SUBSTRATE.md": "44070e8fc73f9ffb42c4dadfcc098c35a6e55814aa1be26062f69b5da0322cfd",
+    "notes/ROADMAP.md": "1c3bf53d35d56848fd6b86db9a518a180520f072fdc99aa84d7db5fd0f9f6294",
+    "notes/walkthrough/21_BODY_CORE_ADAPTERS.md": "ce85510bc42f24908d57a679910141d2be6f61b4144784062005660718321396",
+    "sketches/next_substrate/README.md": "86badc446e112fc9086d593f97fb010bcae61935119354679bd6f4d382ce581b",
+    "sketches/next_substrate/core.py": "25a1acbb8471879ae43e78d7ae97da422b6ea6a67cfaf7098af662136b4d417f",
+    "sketches/next_substrate/m2_adapter.py": "6119b2cf19d6ea9e991263e36a3e3f4d00b18395baea6bcded06c0509a404f25",
+    "sketches/next_substrate/m3_adapter.py": "eaf70a59ac9c24ab366b4493e3e433d1e6e6859655794898bc754b0e29be801d",
+    "sketches/next_substrate/policy.py": "bfa6db92156ffdc25f268cc3d433c57756548f4744cec260ca7b90433ad59022",
+    "sketches/next_substrate/runtime.py": "05daca4bcea0e8541aad4ca96bc5de79e98eb763e1711bf6596c6231642a2463",
+    "sketches/next_substrate/x2_adapter.py": "fd22d3f2933137801adc13cad48f9b78ddf309a33285d6d4ab37bf32b5cdb474",
+    "tests/test_body_core.py": "dff4bbc45e3870761b87d36c3a8d64eda150175582741b64860980070e319a42",
+    "tests/test_body_core_m2_adapter.py": "74a6386b74c040e489704cddd94e248cc68fdce8b04838aa7deb7af443c9555b",
+    "tests/test_body_core_m3_adapter.py": "9222d2671c475d3cb584f2eb9bac727f4c7abba3feadb51886b376f6531cdbbd",
+    "tests/test_body_core_x2_adapter.py": "9610e46fb17dc03225e5a0bad1bd0fa2738717c4100110872a6c076c7dbab0dc",
+    "tests/test_next_substrate_sketch.py": "d07a57e2dfeee752764de315060202b76ca92f3bf1a9bc30b1f6a4d78d9c36d0"
+  },
+  "parent_commit": "10cdcd7736db18b6e7321142b00395f2202d4409",
+  "policy_profile_id": "body-core-v0.2-provisional-policy",
+  "verification": {
+    "commands": [
+      "make body-core-test body-core-x2-test body-core-m2-test body-core-m3-test body-sketch-test",
+      "make x2-test m2-test m3-test",
+      "uv run ruff check sketches/next_substrate/core.py sketches/next_substrate/policy.py sketches/next_substrate/runtime.py sketches/next_substrate/x2_adapter.py sketches/next_substrate/m2_adapter.py sketches/next_substrate/m3_adapter.py tests/test_body_core.py tests/test_body_core_x2_adapter.py tests/test_body_core_m2_adapter.py tests/test_body_core_m3_adapter.py tests/test_next_substrate_sketch.py",
+      "git diff --check"
+    ],
+    "expected_counts": {
+      "body_core_projector": 26,
+      "body_core_x2_adapter": 9,
+      "body_core_m2_adapter": 11,
+      "body_core_m3_adapter": 14,
+      "walking_skeleton": 6,
+      "legacy_x2": 16,
+      "legacy_m2_resident_oracle_scorer": 19,
+      "legacy_m3_redteam": 8
+    },
+    "historical_walking_skeleton_digest": "c2041076508d84b730d1bd8a486f6d0a8988448824921b25fd9d526ed6a23de3"
+  },
+  "version": "body-core-v0.3-explicit-projection"
+}

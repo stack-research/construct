@@ -1,7 +1,7 @@
 # NEXT substrate orientation map
 
-Status: **living orientation map**. Updated 2026-07-21 for provisional Body Core
-v0.2 engineering and its X2 and M2 adapters after active frontier search paused;
+Status: **living orientation map**. Updated 2026-07-22 for provisional Body Core
+v0.3 explicit projection after active frontier search paused;
 previously updated after the terminal frontier-obligation, Body-1, EFC v2, and
 Body-0 closes.
 
@@ -24,9 +24,9 @@ proposed anatomy into findings. The architecture lives in
 ```mermaid
 flowchart TD
     World["World / task"] --> Encounter["Encounter boundary<br/>PROVISIONAL SKETCH"]
-    Encounter --> Lineage["Durable lineage<br/>EARNED DISCIPLINE<br/>BODY CORE v0.2 PROVISIONAL"]
+    Encounter --> Lineage["Durable lineage<br/>EARNED DISCIPLINE<br/>BODY CORE v0.3 PROVISIONAL"]
 
-    Lineage --> Core["Body Core v0.2<br/>integrity kernel + policy profile<br/>PROVISIONAL ENGINEERING"]
+    Lineage --> Core["Body Core v0.3<br/>structural kernel + explicit projector<br/>PROVISIONAL ENGINEERING"]
     Core --> Materialization["Governed cognitive materialization<br/>PROVISIONAL SKETCH"]
     Materialization --> Activation["Sparse activation field<br/>OFFER BOUNDARY EARNED<br/>WHOLE FIELD PROVISIONAL"]
     Activation --> Model["Language model<br/>INTERMITTENT ENGINE"]
@@ -59,8 +59,8 @@ that every node exists as a product component. Read the labels before the nouns.
 
 | Body concern | Current state | Evidence or artifact | Honest boundary |
 | --- | --- | --- | --- |
-| Integrity kernel | **Earned discipline**; **Body Core v0.2 provisional implementation** | Harness ledgers across the lab; [Body Core](../sketches/next_substrate/core.py) JSONL | Ordering, hash linkage, declared authority, references, scopes, retention shapes, and replay-over-cache; not cryptographic writer authentication or product schema |
-| Provisional policy profile | **Provisional engineering** | Body Core v0.2; `make body-core-test` | Lifecycle, binary hot/cold, warrant vocabulary, and invalid-warrant suspension are policy choices under test, not neutral ontology |
+| Structural lineage kernel | **Earned discipline**; **Body Core v0.3 provisional implementation** | Harness ledgers across the lab; [kernel](../sketches/next_substrate/core.py) | Ordering, hash linkage, declared authority, references, scopes, and retention shapes; cognitive-policy-neutral at this seam, not ontology-free or cryptographic authentication |
+| Explicit provisional policy projector | **Built; post-build review pending** | [projector](../sketches/next_substrate/policy.py), [build boundary](BODY_CORE_EXPLICIT_PROJECTION.md); `make body-core-test` | Literal v0.2 canonical profile preserved; lifecycle, binary hot/cold, warrant vocabulary, metabolism, invalid-warrant suspension, and view-claim verification remain policy choices |
 | X2-to-Core adapter | **v0.2 cold-reviewed; endorsed** | [adapter contract](BODY_CORE_X2_ADAPTER.md), [v0.1 review](BODY_CORE_X2_REVIEW.md), [v0.2 review](BODY_CORE_M2_REVIEW.md); `make body-core-x2-test` | Four closed ledgers round-trip through the unchanged scorer; v0.2 closes arbitrary placement-event correspondence; wire preservation only |
 | M2-to-Core adapter | **Cold-reviewed; endorsed after one repair** | [adapter contract](BODY_CORE_M2_ADAPTER.md), [review](BODY_CORE_M2_REVIEW.md); `make body-core-m2-test` | Ten closed S1/S2 pairs reverse-project with digest equality; exercises world-failure warrants and session-seam lifecycle; no new M2 evidence |
 | Governed offer boundary | **Earned** | M-track specs, rubric, and findings through M3 | Governs present influence; not the whole body |
@@ -86,8 +86,9 @@ that every node exists as a product component. Read the labels before the nouns.
   action-boundary control, model action, consequence, metabolic accounting, and
   provenance revision.
 - Materialized state can be rebuilt from disk between invocations.
-- Body Core v0.2 can independently verify its envelope and view claims, then
-  rebuild state, warrant health and dependencies, placement, and metabolic
+- Body Core v0.3 can validate the structural envelope without certifying
+  cognitive state, then an explicitly selected projector can verify view claims
+  and rebuild state, warrant health and dependencies, placement, and metabolic
   reports.
 - A non-matching task can remain silent.
 - An external warrant revision can suspend dependent state without model appeal.
@@ -97,14 +98,21 @@ scientific superiority. Its deterministic behavior is authored.
 
 ## Current work
 
-The active build is **Body Core v0.2** engineering: an integrity kernel and an
-explicitly provisional lifecycle/placement/warrant policy profile. X2 pressures
-placement correspondence; M2 pressures world-failure warrants and session-seam
-lifecycle. Both require unchanged scorers to reproduce closed results. This is
+The active build is **Body Core v0.3** engineering: a structural lineage kernel
+and an explicitly selected lifecycle/placement/warrant policy projector. X2
+pressures placement correspondence; M2 pressures world-failure warrants and
+session-seam lifecycle; M3 pressures audit carriage without authority
+laundering. All require unchanged scorers to reproduce closed results. This is
 allowed under the frontier pause because it has independent integration value
 for every future body slice. It remains provisional and wire/integration-only.
 It does not promote a candidate mechanism, reduce the cost of full replay, or
 change an earned boundary.
+
+The [explicit-projection build](BODY_CORE_EXPLICIT_PROJECTION.md) makes bare
+cognitive replay and view claims fail closed, while preserving the literal v0.2
+canonical view and existing append-time policy refusals. Unowned rows advance
+only the canonical cursor. No ownership registry, schema expansion, fourth
+adapter, or replay optimization was added. Post-build cold review is pending.
 
 The M2 review's prerequisite before a third adapter is now implemented and
 [cold-endorsed](BODY_CORE_SOURCE_BINDING_REVIEW.md): a Core-adjacent

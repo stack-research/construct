@@ -4,10 +4,11 @@ This is an executable walking skeleton for the body described in
 [NEXT_SUBSTRATE.md](../../notes/NEXT_SUBSTRATE.md). It exists to make the whole
 runtime traversable before any proposed organ is treated as a finding.
 
-Its base is [Body Core v0.2](core.py): a provisional integrity kernel plus an
-explicitly provisional lifecycle/placement/warrant policy profile. The
+Its base is Body Core v0.3: a [structural lineage kernel](core.py) plus an
+explicitly selected [v0.2 lifecycle/placement/warrant policy projector](policy.py).
+The
 epistemic-frame behavior in `runtime.py` is one stubbed consumer of that
-core. The policy profile is not part of a mechanism-neutral ontology.
+boundary. The policy projector is not part of a mechanism-neutral ontology.
 
 ## Evidence boundary
 
@@ -37,7 +38,7 @@ cannot establish that:
 
 The hash chain detects mutation, deletion, and reordering relative to a trusted
 chain head. It does not prevent a fully privileged writer from rebuilding a
-different chain. v0.2 is also a single-process sketch: it has no concurrent-writer
+different chain. v0.3 is also a single-process sketch: it has no concurrent-writer
 locking, external chain-head anchoring, signature verification, compaction, or
 schema migration. Reference/redaction retention validates the envelope and
 content digest shape; it does not fetch or independently verify the external
@@ -68,9 +69,10 @@ and an external provenance-health sweep.
 | Component | Sketch implementation | Maturity |
 | --- | --- | --- |
 | Language model | Replaceable port; deterministic authored stub | **Stubbed** |
-| Durable lineage | Body Core v0.2 integrity kernel: deterministic indexes, hash chain, declared authority and references | **Provisional engineering** |
-| Untrusting replay | Fail-closed envelope/state validation; stale view claims refused | **Provisional engineering** |
-| Policy profile | Lifecycle, binary hot/cold, warrant health/dependents, invalid-warrant suspension | **Provisional engineering** |
+| Durable lineage | Body Core v0.3 structural kernel: deterministic indexes, hash chain, declared authority and references | **Provisional engineering** |
+| Explicit projection | Cognitive replay and view claims require a selected projector | **Built; post-build review pending** |
+| Untrusting replay | Kernel envelope validation plus projector-owned stale-view refusal | **Provisional engineering** |
+| Policy projector | Literal v0.2 lifecycle, binary hot/cold, warrant health/dependents, invalid-warrant suspension | **Provisional engineering** |
 | Derived reports | State, placement, and reported metabolic totals | **Provisional engineering** |
 | Adapter correspondence | Shared source binding for selected post-admission state receipts; clients retain policy authority | **Cold-reviewed; endorsed** |
 | X2 adapter | Reversible field-visible transport through unchanged scorer | **v0.2 plus shared-helper refactor endorsed** |
@@ -110,11 +112,12 @@ make body-core-m3-test
 make body-sketch-test
 ```
 
-`body-core-test` checks core wire properties plus the Core-adjacent source-binding
-helper: deterministic reconstruction, derived views, authority and reference
-validation, lifecycle invariants, hash-chain tamper detection, refusal of stale
-materialized-view claims, and source-binding existence, kind, causality, and
-coordinate checks.
+`body-core-test` checks 26 Core/projector wire properties plus the Core-adjacent
+source-binding helper: explicit-selection refusal, kernel-only non-certification
+of view claims, cursor-only effects from unowned rows, unchanged kind/authority
+behavior, deterministic reconstruction, derived views, authority and reference
+validation, lifecycle invariants, hash-chain tamper detection, stale-view
+refusal, and source-binding existence, kind, causality, and coordinate checks.
 `body-core-x2-test` round-trips four closed real X2 ledgers through Core, checks
 the unchanged scorer under pinned canonical equality, and exercises four
 contract refusal legs plus the aggregate source-digest binding. It preserves

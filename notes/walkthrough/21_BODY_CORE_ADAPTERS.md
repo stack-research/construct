@@ -146,7 +146,7 @@ make body-sketch-test
 The stable summaries at this close are:
 
 ```text
-22 Body Core tests
+26 Body Core/projector tests
 9 X2 adapter tests
 11 M2 adapter tests
 14 M3 adapter tests
@@ -210,9 +210,12 @@ failed.
 
 ## What this chapter establishes—and does not
 
-Body Core v0.2 now has three independently reviewed client pressure tests. It
-can carry their closed ledgers through one integrity envelope and return them
-to unchanged scorers without changing the prior results.
+Body Core v0.2 established three independently reviewed client pressure tests.
+Body Core v0.3 then split the structural kernel from the literal v0.2 policy
+projector: cognitive replay and view claims now require explicit selection,
+while the same closed ledgers return to unchanged scorers without changing the
+prior results. The v0.3 post-build review remains pending; the historical v0.2
+review manifests continue to attest only to the bytes they froze.
 
 It does not show that the three properties compose causally. Body-0 remains
 `not_engaged`. It does not show that Core creates earned trust, closes M3's

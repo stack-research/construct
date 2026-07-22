@@ -23,14 +23,13 @@ from harness.ledger import Ledger
 
 from .correspondence import index_bound_state_receipts
 from .core import LineageStore, ReplayRefusal, Writer
+from .policy import V02_POLICY_PROJECTOR
 from .x2_adapter import canonical_verdicts
 
 
 REPO = Path(__file__).resolve().parents[2]
 ADAPTER_VERSION = "m3-body-core-adapter-v0.1"
-SOURCE_INDEX_SHA256 = (
-    "81b1a480d572a89e8a8dfab1baef84af8efb9eebdabebd13808d2451543a571d"
-)
+SOURCE_INDEX_SHA256 = "81b1a480d572a89e8a8dfab1baef84af8efb9eebdabebd13808d2451543a571d"
 DEFAULT_SOURCE_INDEX = REPO / "notes/body_core_m3_adapter_source_index.json"
 
 START_EVENT_KIND = "m3_adapter_started"
@@ -297,17 +296,14 @@ def _load_source_index(source_index_path: Path) -> dict[str, Any]:
         )
     source_index = _read_json(source_index_path)
     if (
-        source_index.get("claim_boundary")
-        != "wire_integration_preservation_only"
+        source_index.get("claim_boundary") != "wire_integration_preservation_only"
         or not isinstance(source_index.get("ledgers"), list)
         or not isinstance(source_index.get("episodes"), dict)
         or not isinstance(source_index.get("component_pins"), dict)
     ):
         raise ReplayRefusal("M3 source index has an unsupported shape")
     scorer_path = REPO / "harness/score_redteam.py"
-    expected_scorer = source_index["component_pins"].get(
-        "harness/score_redteam.py"
-    )
+    expected_scorer = source_index["component_pins"].get("harness/score_redteam.py")
     if _file_digest(scorer_path) != expected_scorer:
         raise ReplayRefusal("unchanged M3 scorer digest mismatch")
     return source_index
@@ -322,8 +318,7 @@ def _source_payload(row: dict[str, Any], source_row_index: int) -> dict[str, Any
     unknown_fields = (set(row) - {"kind"}) - allowed_fields
     if unknown_fields:
         raise ReplayRefusal(
-            f"source row {source_row_index}: undeclared fields "
-            f"{sorted(unknown_fields)}"
+            f"source row {source_row_index}: undeclared fields {sorted(unknown_fields)}"
         )
     collisions = (set(row) - {"kind"}) & (
         ADAPTER_PAYLOAD_FIELDS | FORBIDDEN_ESCROW_FIELDS
@@ -359,14 +354,14 @@ def _episode_records(episode: dict[str, Any]) -> dict[str, dict[str, Any]]:
     for record in records:
         record_id = record.get("record_id") if isinstance(record, dict) else None
         if not isinstance(record_id, str) or not record_id or record_id in indexed:
-            raise ReplayRefusal("M3 episode record ids must be unique non-empty strings")
+            raise ReplayRefusal(
+                "M3 episode record ids must be unique non-empty strings"
+            )
         indexed[record_id] = record
     return indexed
 
 
-def _indexed_ledger(
-    source_index: dict[str, Any], attack_id: str
-) -> dict[str, Any]:
+def _indexed_ledger(source_index: dict[str, Any], attack_id: str) -> dict[str, Any]:
     found = [
         entry
         for entry in source_index["ledgers"]
@@ -409,7 +404,9 @@ def _validate_source_semantics(
             or not isinstance(resident_branch, str)
             or not resident_branch
         ):
-            raise ReplayRefusal("Track-A attack requires two runs and a resident branch")
+            raise ReplayRefusal(
+                "Track-A attack requires two runs and a resident branch"
+            )
         run_configs = [row for row in rows if row["kind"] == "run_config"]
         if {row.get("run_id") for row in run_configs} != {
             clean_run_id,
@@ -421,7 +418,9 @@ def _validate_source_semantics(
                 row.get("run_id") not in {clean_run_id, attacked_run_id}
                 or row.get("branch_id") != resident_branch
             ):
-                raise ReplayRefusal("Track-A boundary decision is outside the attack pair")
+                raise ReplayRefusal(
+                    "Track-A boundary decision is outside the attack pair"
+                )
             if row.get("record_id") not in records:
                 raise ReplayRefusal(
                     "Track-A boundary decision names a record absent from the episode"
@@ -484,7 +483,7 @@ def ingest_m3(
     episode_digest = _file_digest(episode_path)
     scorer_digest = source_index["component_pins"]["harness/score_redteam.py"]
 
-    store = LineageStore(lineage_path)
+    store = LineageStore(lineage_path, projector=V02_POLICY_PROJECTOR)
     started = store.append(
         START_EVENT_KIND,
         writer=ADAPTER_WRITER,
@@ -636,7 +635,7 @@ def project_m3(
         if isinstance(store_or_path, LineageStore)
         else LineageStore(Path(store_or_path))
     )
-    result = store.replay()
+    result = store.replay(projector=V02_POLICY_PROJECTOR)
     source_index = _load_source_index(source_index_path)
     episode_path = Path(episode_path)
     episode = _read_json(episode_path)
@@ -657,8 +656,7 @@ def project_m3(
         or start_payload.get("episode_id") != episode.get("episode_id")
         or start_payload.get("scorer_digest")
         != source_index["component_pins"]["harness/score_redteam.py"]
-        or start_payload.get("claim_boundary")
-        != "wire integration preservation only"
+        or start_payload.get("claim_boundary") != "wire integration preservation only"
     ):
         raise ReplayRefusal("M3 adapter start pin mismatch")
 
@@ -699,13 +697,11 @@ def project_m3(
     attack_id = attack["attack_id"]
     item_prefix = f"m3:{attack_id}:"
     track_a = attack["attack_surface"] in TRACK_A_SURFACES
-    expected_item_ids = {
-        _item_id(attack_id, record_id) for record_id in records
-    } if track_a else set()
+    expected_item_ids = (
+        {_item_id(attack_id, record_id) for record_id in records} if track_a else set()
+    )
 
-    declarations = [
-        row for row in result.rows if row["kind"] == DECLARATION_EVENT_KIND
-    ]
+    declarations = [row for row in result.rows if row["kind"] == DECLARATION_EVENT_KIND]
     admissions = [
         row
         for row in result.rows
@@ -804,7 +800,9 @@ def project_m3(
         )
     ]
     if unhealthy:
-        raise ReplayRefusal(f"M3 projection refused unhealthy state {sorted(unhealthy)}")
+        raise ReplayRefusal(
+            f"M3 projection refused unhealthy state {sorted(unhealthy)}"
+        )
     if any(
         receipt["payload"].get("item_id") not in expected_item_ids
         for receipt in receipts
@@ -848,7 +846,9 @@ def project_m3(
                 "source_reason": payload["reason"],
             }
             if receipt_payload != expected:
-                raise ReplayRefusal("M3 boundary receipt disagrees with source decision")
+                raise ReplayRefusal(
+                    "M3 boundary receipt disagrees with source decision"
+                )
         elif bound:
             raise ReplayRefusal("M3 non-decision source has a boundary receipt")
     return projected
@@ -879,9 +879,7 @@ def _fresh_m3_verdicts(
         text=True,
     )
     if completed.returncode != 0:
-        raise ReplayRefusal(
-            f"unchanged M3 scorer failed: {completed.stderr.strip()}"
-        )
+        raise ReplayRefusal(f"unchanged M3 scorer failed: {completed.stderr.strip()}")
     verdicts = [
         row for row in Ledger(ledger_path).rows() if row["kind"] == "cell_verdict"
     ]
@@ -898,22 +896,14 @@ def verify_unchanged_scorer_round_trip(
     source_index_path: Path = DEFAULT_SOURCE_INDEX,
 ) -> M3AdapterReceipt:
     """Ingest, project, and require fresh unchanged-scorer equality."""
-    receipt = ingest_m3(
-        source_path, episode_path, lineage_path, source_index_path
-    )
+    receipt = ingest_m3(source_path, episode_path, lineage_path, source_index_path)
     source_rows = _read_jsonl(source_path)
     projected_rows = project_m3(lineage_path, episode_path, source_index_path)
     work_dir = Path(work_dir)
-    before = _fresh_m3_verdicts(
-        source_rows, episode_path, work_dir, "source"
-    )
-    after = _fresh_m3_verdicts(
-        projected_rows, episode_path, work_dir, "projected"
-    )
+    before = _fresh_m3_verdicts(source_rows, episode_path, work_dir, "source")
+    after = _fresh_m3_verdicts(projected_rows, episode_path, work_dir, "projected")
     if canonical_verdicts(before) != canonical_verdicts(after):
-        raise ReplayRefusal(
-            "unchanged M3 scorer output changed after Core round trip"
-        )
+        raise ReplayRefusal("unchanged M3 scorer output changed after Core round trip")
     source_index = _load_source_index(source_index_path)
     attack = _one_required(source_rows, "attack")
     indexed = _indexed_ledger(source_index, attack["attack_id"])

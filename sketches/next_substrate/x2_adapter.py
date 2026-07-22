@@ -19,6 +19,7 @@ from harness.score_prune import score_prune
 
 from .correspondence import index_bound_state_receipts
 from .core import LineageStore, ReplayRefusal, Writer
+from .policy import V02_POLICY_PROJECTOR
 
 
 ADAPTER_VERSION = "x2-body-core-adapter-v0.2"
@@ -345,7 +346,7 @@ def ingest_x2(source_path: Path, lineage_path: Path) -> AdapterReceipt:
     if not set(record_ids) <= set(record_texts):
         raise ReplayRefusal(f"{source_path}: record_texts does not cover lineage")
 
-    store = LineageStore(lineage_path)
+    store = LineageStore(lineage_path, projector=V02_POLICY_PROJECTOR)
     started = store.append(
         "x2_adapter_started",
         writer=ADAPTER_WRITER,
@@ -461,7 +462,7 @@ def project_x2(store_or_path: LineageStore | Path) -> list[dict[str, Any]]:
         if isinstance(store_or_path, LineageStore)
         else LineageStore(Path(store_or_path))
     )
-    result = store.replay()
+    result = store.replay(projector=V02_POLICY_PROJECTOR)
     starts = [row for row in result.rows if row["kind"] == "x2_adapter_started"]
     if len(starts) != 1:
         raise ReplayRefusal("X2 projection requires exactly one adapter start")

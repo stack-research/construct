@@ -167,9 +167,11 @@ explanations but no mechanism design. The log is reviewed monthly, or earlier
 after three materially similar observations. A credible cluster can license
 one cold frontier pass; it cannot silently license a build or engine contact.
 
-While that search is paused, **Body Core v0.2** is the active provisional
-engineering direction: an integrity kernel for lineage and untrusting replay,
-plus an explicitly provisional lifecycle/placement/warrant policy profile. Its
+While that search is paused, **Body Core v0.3** is the active provisional
+engineering direction: a structural lineage kernel plus an explicitly selected
+v0.2 lifecycle/placement/warrant policy projector. Cognitive replay and view
+claims now fail closed without that selection, so the provisional policy is no
+longer silent Core law. Its
 X2 client carries four closed ledgers and closes policy-placement
 correspondence; its M2 client carries ten closed S1/S2 pairs through
 world-failure warranting and session-seam activation. Both require unchanged
@@ -181,6 +183,7 @@ authentication, full replay remains authoritative, append/replay remains
 quadratic, and no mechanism or
 reconstruction-cost claim is licensed
 ([orientation](notes/BODY_MAP.md);
+[explicit projection boundary](notes/BODY_CORE_EXPLICIT_PROJECTION.md);
 [X2 adapter](notes/BODY_CORE_X2_ADAPTER.md);
 [M2 adapter](notes/BODY_CORE_M2_ADAPTER.md)). The shared
 [source-binding helper](notes/BODY_CORE_SOURCE_BINDING.md) is cold-endorsed.

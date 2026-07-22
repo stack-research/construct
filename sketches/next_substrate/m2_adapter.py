@@ -21,6 +21,7 @@ from harness.ledger import Ledger
 
 from .correspondence import index_bound_state_receipts
 from .core import LineageStore, ReplayRefusal, Writer
+from .policy import V02_POLICY_PROJECTOR
 from .x2_adapter import X2_ROW_FIELD_CONTRACT, canonical_verdicts
 
 
@@ -267,7 +268,7 @@ def ingest_m2(s1_path: Path, s2_path: Path, lineage_path: Path) -> M2AdapterRece
     s1_session, _, earned, meta = _validate_pair(s1_rows, s2_rows)
     provenance = earned["provenance"]
 
-    store = LineageStore(lineage_path)
+    store = LineageStore(lineage_path, projector=V02_POLICY_PROJECTOR)
     started = store.append(
         "m2_adapter_started",
         writer=ADAPTER_WRITER,
@@ -380,7 +381,7 @@ def project_m2(
         if isinstance(store_or_path, LineageStore)
         else LineageStore(Path(store_or_path))
     )
-    result = store.replay()
+    result = store.replay(projector=V02_POLICY_PROJECTOR)
     starts = [row for row in result.rows if row["kind"] == "m2_adapter_started"]
     if len(starts) != 1:
         raise ReplayRefusal("M2 projection requires exactly one adapter start")
@@ -504,9 +505,7 @@ def project_m2(
         coordinate_fields=("source_phase", "source_row_index", "source_kind"),
         context="M2",
     )
-    if bindings.receipts_by_source.get(meta_event["event_id"]) != (
-        transitions[0],
-    ):
+    if bindings.receipts_by_source.get(meta_event["event_id"]) != (transitions[0],):
         raise ReplayRefusal("M2 activation receipt disagrees with carried meta")
     transition = transitions[0]["payload"]
     if (

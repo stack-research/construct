@@ -1,0 +1,15 @@
+version: 1
+entry: 20260722T181941955Z__cursor%2Fgrok-4.5.md
+before_config_sha256: 6c126f084b3f6de03e4b75320e690a3a06b3ff09bdf04bfc6f76f793afc91645
+after_config_sha256: 191b1721d7d0afc2fec6a69701a007c113894efab82d8239fbe98e014bfb0bd8
+after_config: |
+    topic: Body Core v0.3 - stop adding adapters and make the Core’s kernel/policy boundary executable
+    created_at: 2026-07-22T15:40:50.062411Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - cursor/grok-4.5
+        - claude/fable-5
+    next_index: 3
+    status: active

@@ -9,11 +9,17 @@ from __future__ import annotations
 
 import hashlib
 import json
+from functools import partial
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Callable
 
-from sketches.next_substrate.core import LineageStore, ReplayRefusal, Writer
+from sketches.next_substrate.core import (
+    LineageStore as KernelLineageStore,
+    ReplayRefusal,
+    Writer,
+)
+from sketches.next_substrate.policy import V02_POLICY_PROJECTOR
 from sketches.next_substrate.m3_adapter import (
     ADAPTER_PAYLOAD_FIELDS,
     ADAPTER_WRITER,
@@ -29,6 +35,9 @@ from sketches.next_substrate.m3_adapter import (
     project_m3,
     verify_unchanged_scorer_round_trip,
 )
+
+
+LineageStore = partial(KernelLineageStore, projector=V02_POLICY_PROJECTOR)
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -84,9 +93,7 @@ def _refresh_carried_digest(carried: dict) -> None:
     carried["payload"]["source_row_digest"] = _digest(source_row)
 
 
-def _ingested(
-    directory: Path, case_index: int = 0
-) -> tuple[Path, Path, Path]:
+def _ingested(directory: Path, case_index: int = 0) -> tuple[Path, Path, Path]:
     source_path, episode_path, _, _ = _case(case_index)
     core_path = directory / "core.jsonl"
     ingest_m3(source_path, episode_path, core_path)
@@ -193,9 +200,7 @@ def test_unknown_m3_source_shapes_and_opaque_escrow_are_refused():
             mutated = directory / f"mutated-{offset}.jsonl"
             _rewrite(mutated, rows)
             _expect_refusal(
-                lambda: ingest_m3(
-                    mutated, episode_path, directory / "core.jsonl"
-                ),
+                lambda: ingest_m3(mutated, episode_path, directory / "core.jsonl"),
                 message,
             )
     print("ok  M3 refusal: unknown source shapes cannot become opaque escrow")
@@ -222,7 +227,9 @@ def test_m3_ledger_and_episode_pin_mismatches_refuse_before_projection():
         episode = json.loads(episode_path.read_text(encoding="utf-8"))
         episode["question"] = "pin drift"
         mutated_episode = directory / "episode.json"
-        mutated_episode.write_text(json.dumps(episode, sort_keys=True), encoding="utf-8")
+        mutated_episode.write_text(
+            json.dumps(episode, sort_keys=True), encoding="utf-8"
+        )
         _expect_refusal(
             lambda: ingest_m3(
                 source_path, mutated_episode, directory / "episode-core.jsonl"
@@ -254,9 +261,7 @@ def test_m3_decision_bindings_refuse_missing_wrong_kind_noncausal_and_drift():
                 receipt["payload"]["source_kind"] = "coordinate-drift"
             _rehash_chain(rows)
             _rewrite(core_path, rows)
-            _expect_refusal(
-                lambda: project_m3(core_path, episode_path), "M3"
-            )
+            _expect_refusal(lambda: project_m3(core_path, episode_path), "M3")
     print("ok  M3 refusal: shared helper enforces every decision binding leg")
 
 
@@ -341,7 +346,9 @@ def test_source_binding_never_authorizes_m3_state_policy_events():
             store = LineageStore(core_path)
             result = store.replay()
             item = next(
-                item for item in result.views.state_items.values() if item.item_kind == ITEM_KIND
+                item
+                for item in result.views.state_items.values()
+                if item.item_kind == ITEM_KIND
             )
             source = next(
                 row

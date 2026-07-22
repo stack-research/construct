@@ -39,6 +39,10 @@ def test_full_demo_traverses_the_body():
         assert phases["after_external_warrant_revision"]["score"] == 0.0
         assert phases["after_external_warrant_revision"]["fired_disposition_ids"] == []
         assert summary["suspended_disposition_ids"] == ["disp-epistemic-frame-001"]
+        assert (
+            summary["body_core"]["view_digest"]
+            == "c2041076508d84b730d1bd8a486f6d0a8988448824921b25fd9d526ed6a23de3"
+        )
         print("ok  demo: failure -> transfer -> silence -> external suspension")
 
 
@@ -69,17 +73,23 @@ def test_required_check_is_on_the_action_boundary():
         run_demo(lineage)
         rows = _rows(lineage)
         start = next(
-            row for row in rows
+            row
+            for row in rows
             if row["kind"] == "invocation_started"
             and row["payload"]["task_id"] == "wake-2-operations-source"
         )
         kinds = [
-            row["kind"] for row in rows
+            row["kind"]
+            for row in rows
             if row["scope"].get("invocation_id") == start["event_id"]
         ]
 
-        assert kinds.index("activation_field_built") < kinds.index("action_boundary_entered")
-        assert kinds.index("action_boundary_entered") < kinds.index("controller_check_executed")
+        assert kinds.index("activation_field_built") < kinds.index(
+            "action_boundary_entered"
+        )
+        assert kinds.index("action_boundary_entered") < kinds.index(
+            "controller_check_executed"
+        )
         assert kinds.index("controller_check_executed") < kinds.index("model_action")
         print("ok  placement: offer phase -> action boundary -> check -> model action")
 

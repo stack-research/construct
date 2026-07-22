@@ -1,4 +1,4 @@
-"""Wire tests for Body Core v0.2.
+"""Wire tests for Body Core v0.3 and its preserved v0.2 policy projector.
 
 These tests establish envelope integrity, fail-closed replay, and deterministic
 views only. They are not memory evidence.
@@ -8,11 +8,24 @@ from __future__ import annotations
 
 import hashlib
 import json
+from functools import partial
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from sketches.next_substrate.correspondence import index_bound_state_receipts
-from sketches.next_substrate.core import LineageStore, ReplayRefusal, Writer
+from sketches.next_substrate.core import (
+    LineageStore as KernelLineageStore,
+    ReplayRefusal,
+    Writer,
+)
+from sketches.next_substrate.policy import (
+    POLICY_MUTATING_EVENT_KINDS,
+    POLICY_PROFILE_ID,
+    V02_POLICY_PROJECTOR,
+)
+
+
+LineageStore = partial(KernelLineageStore, projector=V02_POLICY_PROJECTOR)
 
 
 RUNTIME = Writer("test-runtime", "runtime")
@@ -735,6 +748,102 @@ def test_blank_line_is_refused_instead_of_silently_skipped():
         print("ok  refusal: blank lineage rows fail closed")
 
 
+def test_cognitive_replay_and_view_claim_require_explicit_projector():
+    with TemporaryDirectory() as td:
+        store = KernelLineageStore(Path(td) / "lineage.jsonl")
+        store.append(
+            "sketch_started",
+            writer=RUNTIME,
+            authority="administration",
+            payload={"claim_boundary": "kernel only"},
+        )
+        assert len(store.rows()) == 1
+        for operation in (
+            store.replay,
+            lambda: store.append_view_claim(writer=RUNTIME),
+        ):
+            try:
+                operation()
+            except ReplayRefusal as exc:
+                assert "explicit projector required" in str(exc)
+            else:
+                raise AssertionError("kernel-only store certified cognitive state")
+        print("ok  projection refusal: cognitive access requires explicit selection")
+
+
+def test_kernel_validation_does_not_certify_policy_view_claim():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        policy_store = LineageStore(path)
+        _seed(policy_store)
+        claim = policy_store.append_view_claim(writer=RUNTIME)
+        rows = policy_store.raw_rows()
+        rows[-1]["payload"]["view_digest"] = "f" * 64
+        _rehash(rows[-1])
+        _rewrite(path, rows)
+
+        kernel_store = KernelLineageStore(path)
+        assert kernel_store.rows()[-1]["event_id"] == claim["event_id"]
+        try:
+            policy_store.replay()
+        except ReplayRefusal as exc:
+            assert "view digest mismatch" in str(exc)
+        else:
+            raise AssertionError("policy projector trusted a stale view claim")
+        print("ok  projection refusal: kernel validation cannot certify a view claim")
+
+
+def test_unowned_kind_changes_only_the_policy_cursor():
+    with TemporaryDirectory() as td:
+        store = LineageStore(Path(td) / "lineage.jsonl")
+        _seed(store)
+        before = store.replay().views
+        before_canonical = before.canonical()
+
+        unowned_kind = "wire_causal_probe"
+        assert unowned_kind not in POLICY_MUTATING_EVENT_KINDS
+        row = store.append(
+            unowned_kind,
+            writer=CONTROLLER,
+            authority="wire_diagnostic",
+            payload={"effect": "authored probe only"},
+        )
+        after = store.replay().views
+        after_canonical = after.canonical()
+
+        assert before.policy_profile_id == after.policy_profile_id == POLICY_PROFILE_ID
+        assert after.event_count == before.event_count + 1
+        assert after.through_event_id == row["event_id"]
+        assert before.digest() != after.digest()
+        for cursor_field in ("event_count", "through_event_id"):
+            before_canonical.pop(cursor_field)
+            after_canonical.pop(cursor_field)
+        assert before_canonical == after_canonical
+        print(
+            "ok  projection: unowned row advances cursor without mutating policy state"
+        )
+
+
+def test_split_does_not_add_a_generic_kind_authority_rule():
+    with TemporaryDirectory() as td:
+        store = LineageStore(Path(td) / "lineage.jsonl")
+        _, warrant = _seed(store)
+        store.append(
+            "state_item_admitted",
+            writer=MODEL,
+            authority="model_proposal",
+            warrant_event_ids=[warrant["event_id"]],
+            payload={
+                "item_id": "historical-route-shape",
+                "item_kind": "test",
+                "status": "probationary",
+                "placement": "hot",
+            },
+        )
+        assert "historical-route-shape" in store.replay().views.state_items
+        print("ok  preservation: split adds no generic kind-authority policy")
+
+
 if __name__ == "__main__":
     tests = sorted(
         (name, fn)
@@ -743,4 +852,4 @@ if __name__ == "__main__":
     )
     for _, fn in tests:
         fn()
-    print(f"\nALL {len(tests)} BODY CORE V0.2 TESTS PASS")
+    print(f"\nALL {len(tests)} BODY CORE V0.3 TESTS PASS")

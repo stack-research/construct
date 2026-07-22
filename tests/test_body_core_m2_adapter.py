@@ -8,10 +8,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+from functools import partial
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from sketches.next_substrate.core import LineageStore, ReplayRefusal, Writer
+from sketches.next_substrate.core import (
+    LineageStore as KernelLineageStore,
+    ReplayRefusal,
+    Writer,
+)
+from sketches.next_substrate.policy import V02_POLICY_PROJECTOR
 from sketches.next_substrate.m2_adapter import (
     SOURCE_EVENT_KIND,
     _fresh_resident_verdicts,
@@ -19,6 +25,9 @@ from sketches.next_substrate.m2_adapter import (
     project_m2,
     verify_unchanged_scorer_round_trip,
 )
+
+
+LineageStore = partial(KernelLineageStore, projector=V02_POLICY_PROJECTOR)
 
 
 ROOT = Path(__file__).resolve().parent.parent

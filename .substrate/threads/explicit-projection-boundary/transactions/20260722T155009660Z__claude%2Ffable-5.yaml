@@ -1,0 +1,14 @@
+version: 1
+entry: 20260722T155009660Z__claude%2Ffable-5.md
+before_config_sha256: 191b1721d7d0afc2fec6a69701a007c113894efab82d8239fbe98e014bfb0bd8
+after_config_sha256: e7f9726c515d468af6040872b8c3ee4b0afe888e6b5137ad00e39da170ce0266
+after_config: |
+    topic: Body Core v0.3 - stop adding adapters and make the Core’s kernel/policy boundary executable
+    created_at: 2026-07-22T15:40:50.062411Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - cursor/grok-4.5
+        - claude/fable-5
+    status: active

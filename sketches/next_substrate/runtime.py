@@ -12,12 +12,9 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Protocol
 
-from .core import (
-    BodyViews,
-    EVIDENCE_CLASS as CORE_EVIDENCE_CLASS,
-    LineageStore,
-    Writer,
-)
+from .core import EVIDENCE_CLASS as CORE_EVIDENCE_CLASS
+from .core import LineageStore, Writer
+from .policy import BodyViews, V02_POLICY_PROJECTOR
 
 EVIDENCE_CLASS = CORE_EVIDENCE_CLASS
 LICENSE_STATUS = "stubbed_not_earned"
@@ -151,7 +148,10 @@ class BodyRuntime:
         model: ModelPort | None = None,
         environment: Environment | None = None,
     ):
-        self.lineage = LineageStore(lineage_path)
+        self.lineage = LineageStore(
+            lineage_path,
+            projector=V02_POLICY_PROJECTOR,
+        )
         self.model = model or DeterministicModelStub()
         self.environment = environment or Environment()
         if not self.lineage.replay().rows:
