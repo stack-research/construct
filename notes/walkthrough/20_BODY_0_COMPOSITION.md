@@ -1,6 +1,6 @@
 # Chapter 20 — When earned parts do not yet make an earned whole
 
-Previous: [Six pins, four runs, and the band nobody lives in](19_EFC_V2_UNOCCUPIED_BAND.md) · [Walkthrough index](README.md) · Next: [Frontier episode candidate](../FRONTIER_EPISODE_CANDIDATE.md)
+Previous: [Six pins, four runs, and the band nobody lives in](19_EFC_V2_UNOCCUPIED_BAND.md) · [Walkthrough index](README.md) · Next: [The carrier is not the judge](21_BODY_CORE_ADAPTERS.md)
 
 **Status: CLOSED — `not_engaged`; no integration claim earned.** The
 authoritative result is [BODY_0_FINDINGS.md](../BODY_0_FINDINGS.md). Body-0 was
@@ -188,4 +188,4 @@ both the intended win and a governance-should-lose branch.
 
 ---
 
-Previous: [Six pins, four runs, and the band nobody lives in](19_EFC_V2_UNOCCUPIED_BAND.md) · [Walkthrough index](README.md) · Next: [Frontier episode candidate](../FRONTIER_EPISODE_CANDIDATE.md)
+Previous: [Six pins, four runs, and the band nobody lives in](19_EFC_V2_UNOCCUPIED_BAND.md) · [Walkthrough index](README.md) · Next: [The carrier is not the judge](21_BODY_CORE_ADAPTERS.md)

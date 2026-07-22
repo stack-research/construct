@@ -6,6 +6,11 @@ endorsed**. Wire/integration engineering only. See the v0.1
 [cross-client review](BODY_CORE_M2_REVIEW.md). This adapter does not create a
 new X2 run, alter the closed X2 finding, or license a scientific mechanism.
 
+Implementation note (2026-07-21): the source-binding logic was factored through
+a shared Core-adjacent [helper](BODY_CORE_SOURCE_BINDING.md) and independently
+[endorsed](BODY_CORE_SOURCE_BINDING_REVIEW.md). The prior review hashes remain
+historical attestations; the helper review separately pins the refactored bytes.
+
 ## Milestone gate
 
 Scientific milestone: **none**. This is the first non-stub pressure test of the

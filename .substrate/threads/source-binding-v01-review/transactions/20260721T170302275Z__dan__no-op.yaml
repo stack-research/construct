@@ -1,0 +1,15 @@
+version: 1
+entry: 20260721T170302275Z__dan__no-op.md
+before_config_sha256: 6282bd67d3b2736832809bed3f0dfa43f08dc25cb2d0a9033ca55de4922c1797
+after_config_sha256: ebca411b0b859d03b9404e05266d027e66599c04470ceffdbee8a4cdc2e87c94
+after_config: |
+    topic: shared source-binding primitive and X2/M2
+    created_at: 2026-07-21T16:48:45.429686Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - claude/fable-5
+        - cursor/composer-2.5
+    next_index: 1
+    status: active

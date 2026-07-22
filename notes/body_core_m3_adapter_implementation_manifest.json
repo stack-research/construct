@@ -1,0 +1,58 @@
+{
+  "artifact": "Body Core M3 adapter v0.1 implementation",
+  "claim_boundary": "wire_integration_preservation_only",
+  "created_date": "2026-07-21",
+  "files": {
+    "AGENTS.md": "599b7af7a0034b6e4da7e12a7024791071b8391a8991bf0594c8a3d9c8245f6e",
+    "Makefile": "01e13f1503b2fac50706262f5cbbc0cb20b9033d4b3893de123503037e65b074",
+    "README.md": "97baa6bc2a0303b1b247b8c65e7d7cee5b33c656f1b5acb9d77fb54abebb299d",
+    "harness/score_redteam.py": "05fa66c760cf2b7564ca3ad0a58a0373b4bb81f9c74f55c43ed90df7fe8d92d1",
+    "notes/BODY_CORE_M3_ADAPTER.md": "d8e3a2677d13f7e027d8050bbc23bcb710081e137d85637c106da14e498af656",
+    "notes/BODY_CORE_M3_ADAPTER_PROPOSAL.md": "7e75fdffe2d400550486934efc663556cf662982839e888c43c95ba6f2e7bc8e",
+    "notes/BODY_MAP.md": "aad15ad0bcb679e8f2558621038a8a2520757318d3df310a1174a63bf38253c4",
+    "notes/NEXT_SUBSTRATE.md": "1860107ebd22d159172235a6afbf16636fead59ea67243894184e87d59ee2b7e",
+    "notes/ROADMAP.md": "4f699b80b2d2a4768d2dbb96111812648dceb8d14aa75ac9af91088c1f4bb08c",
+    "notes/body_core_m3_adapter_proposal_review_manifest.json": "ba2fad62d3be090f48bbe1dec018fee976683ce0ee129749cd91196eb31679a4",
+    "notes/body_core_m3_adapter_source_index.json": "81b1a480d572a89e8a8dfab1baef84af8efb9eebdabebd13808d2451543a571d",
+    "sketches/next_substrate/README.md": "58cec4edab3bd952929f60f9dd79272488dc95088f786a265a8f8fe70e42cd1a",
+    "sketches/next_substrate/core.py": "9ed829fd583def9cfdfaf82e244bb76757a36f8666894c44c03d1233df0535c9",
+    "sketches/next_substrate/correspondence.py": "af6afc0b047e233d3388b03b067ca710d682748450e4f87ac9d53dd4a3ea2b84",
+    "sketches/next_substrate/m3_adapter.py": "1a81c48b12e73dae54e863c3774905086c7f0a4d735b3b7bb55cad0380f09694",
+    "tests/test_body_core_m3_adapter.py": "8632bbfeaf79836998a492696a84752b1c6bd62e67cb2266057cee21cbc4e959",
+    "tests/test_redteam.py": "cc880d6a31f9ce51dce6ab93c5acf4a03b1e91113d50062ca52c0344888ca7bd"
+  },
+  "review_contract": {
+    "allowed_outcomes": [
+      "ENDORSE",
+      "BLOCK"
+    ],
+    "repair_budget": 1,
+    "scope": [
+      "exact source-index, ledger, episode, and scorer preflight",
+      "Track-A episode-record admission and boundary-receipt correspondence",
+      "Track-B no-state refusal and asserted-trust breach preservation",
+      "exact adapter writer and authority routing",
+      "reverse projection and unchanged-scorer evidence equality",
+      "fourteen named preservation and refusal probes",
+      "wire-only documentation and deterministic work disclosure"
+    ],
+    "excluded": [
+      "engine contact or new M3 evidence",
+      "frontier reopening or mechanism design",
+      "security or cryptographic-authentication claims",
+      "causal composition or reconstruction-cost claims",
+      "product-schema promotion"
+    ]
+  },
+  "verification": [
+    "/usr/bin/jq empty notes/body_core_m3_adapter_source_index.json notes/body_core_m3_adapter_proposal_review_manifest.json notes/body_core_m3_adapter_implementation_manifest.json",
+    "/usr/bin/jq -r '.files | to_entries[] | \"\\(.value)  \\(.key)\"' notes/body_core_m3_adapter_implementation_manifest.json | shasum -a 256 -c -",
+    "/usr/bin/jq -r '.component_pins | to_entries[] | \"\\(.value)  \\(.key)\"' notes/body_core_m3_adapter_source_index.json | shasum -a 256 -c -",
+    "/usr/bin/jq -r '.episodes | to_entries[] | \"\\(.value.sha256)  \\(.key)\"' notes/body_core_m3_adapter_source_index.json | shasum -a 256 -c -",
+    "/usr/bin/jq -r '.ledgers[] | \"\\(.sha256)  \\(.path)\"' notes/body_core_m3_adapter_source_index.json | shasum -a 256 -c -",
+    "make body-core-x2-test body-core-m2-test body-core-m3-test body-sketch-test",
+    "UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m tests.test_redteam",
+    "UV_CACHE_DIR=/private/tmp/uv-cache uv run ruff check sketches/next_substrate/correspondence.py sketches/next_substrate/x2_adapter.py sketches/next_substrate/m2_adapter.py sketches/next_substrate/m3_adapter.py tests/test_body_core.py tests/test_body_core_x2_adapter.py tests/test_body_core_m2_adapter.py tests/test_body_core_m3_adapter.py tests/test_next_substrate_sketch.py",
+    "git diff --check"
+  ]
+}

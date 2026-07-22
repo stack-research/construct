@@ -182,7 +182,13 @@ quadratic, and no mechanism or
 reconstruction-cost claim is licensed
 ([orientation](notes/BODY_MAP.md);
 [X2 adapter](notes/BODY_CORE_X2_ADAPTER.md);
-[M2 adapter](notes/BODY_CORE_M2_ADAPTER.md)).
+[M2 adapter](notes/BODY_CORE_M2_ADAPTER.md)). The shared
+[source-binding helper](notes/BODY_CORE_SOURCE_BINDING.md) is cold-endorsed.
+The exact-source-indexed [M3 adapter proposal](notes/BODY_CORE_M3_ADAPTER_PROPOSAL.md)
+and [wire implementation](notes/BODY_CORE_M3_ADAPTER.md) are cold-endorsed. The
+adapter carries eleven closed ledgers without repairing the asserted-trust
+breaches; topology and test-strength debts remain explicit in the
+[review record](notes/BODY_CORE_M3_ADAPTER_REVIEW.md).
 
 The process also exposed a review-loop failure mode: author and reviewer can co-adapt until passing means accommodation to known objections rather than validity on unseen cases. The remedy is now named and in use — the [review budget](notes/GLOSSARY.md#review-budget): one authoring pass, one cold review, one bounded repair, one final isolated review, then run or close. EFC v1 was the first instrument built under it from birth.
 

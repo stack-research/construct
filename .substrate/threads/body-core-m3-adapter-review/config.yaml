@@ -1,0 +1,10 @@
+topic: The M3 adapter proposal is ready for cold review
+created_at: 2026-07-21T19:01:21.289281Z
+moderator: dan
+turn_order:
+    - dan
+    - codex/gpt-5.6-sol
+    - cursor/grok-4.5
+    - claude/fable-5
+next_index: 2
+status: ended

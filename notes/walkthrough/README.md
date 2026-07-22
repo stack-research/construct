@@ -33,7 +33,9 @@ narrowed frontier beyond X4, the lab's audit of itself, the two instruments
 (the warming budget and the pause/resume frontier), the fourth-family day that
 paused the pay-window question, and the epistemic-frame experiment that its
 oracle refused before contact, followed by the whole-body composition attempt
-that exposed why individually earned properties do not compose by assumption.
+that exposed why individually earned properties do not compose by assumption,
+and finally the shared Body Core carrier that preserves the three closed client
+surfaces without promoting them into a new finding.
 
 | Chapter | Guiding question | Status |
 |---|---|---|
@@ -58,6 +60,7 @@ that exposed why individually earned properties do not compose by assumption.
 | [The instrument that priced its own surface](18_EFC_V1_CALIBRATION_CLOSE.md) | What did the first live engine contact buy? | Closed — `confounded(menu_ceiling)`; wire positive replicated; reopen condition recorded |
 | [Six pins, four runs, and the band nobody lives in](19_EFC_V2_UNOCCUPIED_BAND.md) | Does any small engine occupy the admission band? | Closed — `confounded(admission_band)`; two engines formally typed; third unoccupied-band sighting |
 | [When earned parts do not yet make an earned whole](20_BODY_0_COMPOSITION.md) | Do the earned M2, M3, and X2 properties remain causally legible when composed? | Closed — `not_engaged`; integration machinery held, causal need absent |
+| [The carrier is not the judge](21_BODY_CORE_ADAPTERS.md) | Can one integrity kernel preserve X2, M2, and M3 without changing their claims? | Provisional wire engineering; three client adapters cold-endorsed |
 
 The living thesis and short milestone summaries remain in the project [README](../../README.md#the-journey). Current status and gates remain in the [ROADMAP](../ROADMAP.md#milestones).
 

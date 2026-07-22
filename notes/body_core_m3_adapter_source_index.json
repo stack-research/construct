@@ -1,0 +1,212 @@
+{
+  "artifact": "Body Core M3 adapter proposal source index",
+  "claim_boundary": "wire_integration_preservation_only",
+  "created_date": "2026-07-21",
+  "component_pins": {
+    "corpus/retractions/rw-0001.json": "46cc7671b6b4980df8bbdd55f1647acc16b048728e961cececb0e529312440b6",
+    "harness/run_m3.py": "fb94dc09f0fe47f3936c6a271b8f1187dbe40f668eaee353a0997a7e66823d96",
+    "harness/score_redteam.py": "05fa66c760cf2b7564ca3ad0a58a0373b4bb81f9c74f55c43ed90df7fe8d92d1",
+    "notes/M3_FINDINGS.md": "e93f36da9075e2e8299f0df7a64ee66aa9593bb83fda917c179ef63b2f276dea",
+    "notes/SPEC_M3_ADVERSARIAL_AIR_GAP.md": "52514518e0e26aa4b2b5f122a2858414e8ec03d60f801e6dcb2961ce4ca164cb",
+    "runs/m3/redteam/close/close_evidence.json": "dffffa6ad11b55563c26bcbca3dce468a5481d65f99dfe908dda78d5b9d5b278",
+    "sketches/next_substrate/core.py": "9ed829fd583def9cfdfaf82e244bb76757a36f8666894c44c03d1233df0535c9",
+    "sketches/next_substrate/correspondence.py": "af6afc0b047e233d3388b03b067ca710d682748450e4f87ac9d53dd4a3ea2b84",
+    "tests/test_redteam.py": "cc880d6a31f9ce51dce6ab93c5acf4a03b1e91113d50062ca52c0344888ca7bd"
+  },
+  "episodes": {
+    "runs/m3/redteam/close/world-spoof-def-attacked.json": {
+      "episode_id": "m3-world-spoof",
+      "sha256": "4435bbdd0e4bf5251280a374a2e29c0b8d74b3e8fff0bbfc995cde306713c69d"
+    },
+    "runs/m3/redteam/world-attacked.json": {
+      "episode_id": "m3-world-e2",
+      "sha256": "3e3b2f7cb555ffb7879ae4674b94704709774b3eb5c3e01673a6f55424d3f1af"
+    },
+    "runs/m3/redteam/world-ingestion.json": {
+      "episode_id": "m3-world-ingestion",
+      "sha256": "66504a2ed1bb6c9086cecb5ef4a41a0cdd745d2109de36d0da54f075945b72ec"
+    },
+    "runs/m3/redteam/world-spoof-attacked.json": {
+      "episode_id": "m3-world-spoof",
+      "sha256": "7e329447731b4fb68481b680a7af69aab804e1669d7ea723d1396f41965c0384"
+    }
+  },
+  "ledgers": [
+    {
+      "attack_surface": "foreground_text",
+      "episode": "runs/m3/redteam/world-attacked.json",
+      "expected_verdicts": {
+        "AG-1": "pass",
+        "AG-U1": "pass",
+        "AG-loses": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/fg/atk-34cd24fc.jsonl",
+      "rows": 9,
+      "sha256": "1f1e03977e98cdfd6e9f223118d225d0bac844f71543a415e9954fb7817c6e66"
+    },
+    {
+      "attack_surface": "foreground_text",
+      "episode": "runs/m3/redteam/world-attacked.json",
+      "expected_verdicts": {
+        "AG-1": "pass",
+        "AG-U1": "pass",
+        "AG-loses": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/fg/atk-3ba73c65.jsonl",
+      "rows": 9,
+      "sha256": "b726e3e0ad13395b413485b65ebc2e47565ef075b36770eb4fad7fe35c04e9a7"
+    },
+    {
+      "attack_surface": "foreground_text",
+      "episode": "runs/m3/redteam/world-attacked.json",
+      "expected_verdicts": {
+        "AG-1": "pass",
+        "AG-U1": "pass",
+        "AG-loses": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/fg/atk-3f3e635f.jsonl",
+      "rows": 9,
+      "sha256": "db249de27497e78d12c5cbd8f5ff24bac5b21aa2346ffa8db470c1e2f9d44dd6"
+    },
+    {
+      "attack_surface": "foreground_text",
+      "episode": "runs/m3/redteam/world-attacked.json",
+      "expected_verdicts": {
+        "AG-1": "pass",
+        "AG-U1": "pass",
+        "AG-loses": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/fg/atk-ceef5ec3.jsonl",
+      "rows": 9,
+      "sha256": "695a3bb71bc5ab731e70be355d42e2972520188242a5af96f0ad6dc4c35e9ccf"
+    },
+    {
+      "attack_surface": "foreground_text",
+      "episode": "runs/m3/redteam/world-attacked.json",
+      "expected_verdicts": {
+        "AG-1": "pass",
+        "AG-U1": "pass",
+        "AG-loses": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/fg/atk-f18ec98d.jsonl",
+      "rows": 9,
+      "sha256": "b6dd203e6dc2fee63be6c9337c0bceb9e48c84da1739675f551261614cec3cc2"
+    },
+    {
+      "attack_surface": "live_channel_spoof",
+      "episode": "runs/m3/redteam/world-spoof-attacked.json",
+      "expected_verdicts": {
+        "AG-U1": "pass",
+        "AG-channel": "pass",
+        "AG-channel-defended": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/spoof/atk-78051d95.jsonl",
+      "rows": 9,
+      "sha256": "4073c23f8f15ab2e064a0ef4ce210e1eb53fd7ddc95cfe587f28bb38ebd3434a"
+    },
+    {
+      "attack_surface": "live_channel_spoof",
+      "episode": "runs/m3/redteam/world-spoof-attacked.json",
+      "expected_verdicts": {
+        "AG-U1": "pass",
+        "AG-channel": "pass",
+        "AG-channel-defended": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/spoof/atk-7d351dcd.jsonl",
+      "rows": 9,
+      "sha256": "a1d1eabbf2457c8df980c48d92b643a1ac94ff8fc4460b928db0658af0f22b1a"
+    },
+    {
+      "attack_surface": "live_channel_spoof",
+      "episode": "runs/m3/redteam/world-spoof-attacked.json",
+      "expected_verdicts": {
+        "AG-U1": "pass",
+        "AG-channel": "pass",
+        "AG-channel-defended": "not_engaged"
+      },
+      "path": "runs/m3/redteam/close/spoof/atk-ac21152d.jsonl",
+      "rows": 9,
+      "sha256": "19a18112706205f1041e0264535196025e648ba01f68e55440a4dda650c9ff6c"
+    },
+    {
+      "attack_surface": "live_channel_spoof",
+      "episode": "runs/m3/redteam/close/world-spoof-def-attacked.json",
+      "expected_verdicts": {
+        "AG-U1": "not_engaged",
+        "AG-channel": "not_engaged",
+        "AG-channel-defended": "pass"
+      },
+      "path": "runs/m3/redteam/close/defended/atk-0b850986.jsonl",
+      "rows": 9,
+      "sha256": "f020e0c2e19e6472804cb66c8822b4015017553e6c8f4bbac26e7a12eb48073e"
+    },
+    {
+      "attack_surface": "ingestion_write",
+      "episode": "runs/m3/redteam/world-attacked.json",
+      "expected_verdicts": {
+        "IN-1": "pass",
+        "IN-loses": "not_engaged"
+      },
+      "path": "runs/m3/redteam/atk-1aa2b813.jsonl",
+      "rows": 4,
+      "sha256": "b2352994e63093a86c8bd52d8d5f1dee91c9004b60df1c61d6471c93768edfe9"
+    },
+    {
+      "attack_surface": "ingestion_write",
+      "episode": "runs/m3/redteam/world-ingestion.json",
+      "expected_verdicts": {
+        "IN-1": "pass",
+        "IN-loses": "pass"
+      },
+      "path": "runs/m3/redteam/atk-b137d304.jsonl",
+      "rows": 4,
+      "sha256": "55aa5607c4200a78fc33f6c2da3de66c4f70ed65cfcabf3a54a9eafe6dfa10ac"
+    }
+  ],
+  "matrix": {
+    "close_summary": {
+      "AG-1": {
+        "pass": 5
+      },
+      "AG-U1": {
+        "pass": 8
+      },
+      "AG-channel": {
+        "not_engaged": 1,
+        "pass": 3
+      },
+      "AG-channel-defended": {
+        "not_engaged": 3,
+        "pass": 1
+      },
+      "AG-loses": {
+        "not_engaged": 5
+      }
+    },
+    "ingestion_summary": {
+      "IN-1": {
+        "pass": 2
+      },
+      "IN-loses": {
+        "not_engaged": 1,
+        "pass": 1
+      }
+    },
+    "ledger_count": 11,
+    "source_rows": 89
+  },
+  "excluded": [
+    {
+      "path": "runs/m3/redteam/atk-8826c028.jsonl",
+      "reason": "historical negation-blind oracle verdict; superseded by the patched close corpus"
+    },
+    {
+      "path": "runs/m3/redteam/atk-f23bcb6b.jsonl",
+      "reason": "phase-B live-channel evidence superseded by the three-draw patched close corpus"
+    },
+    {
+      "path": "tests/test_redteam.py::test_in1_strong_trace_auth_refusal",
+      "reason": "deterministic component smoke only; no checked-in closed strong-forgery ledger exists"
+    }
+  ]
+}

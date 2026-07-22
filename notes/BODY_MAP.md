@@ -1,6 +1,6 @@
 # NEXT substrate orientation map
 
-Status: **living orientation map**. Updated 2026-07-20 for provisional Body Core
+Status: **living orientation map**. Updated 2026-07-21 for provisional Body Core
 v0.2 engineering and its X2 and M2 adapters after active frontier search paused;
 previously updated after the terminal frontier-obligation, Body-1, EFC v2, and
 Body-0 closes.
@@ -105,6 +105,21 @@ allowed under the frontier pause because it has independent integration value
 for every future body slice. It remains provisional and wire/integration-only.
 It does not promote a candidate mechanism, reduce the cost of full replay, or
 change an earned boundary.
+
+The M2 review's prerequisite before a third adapter is now implemented and
+[cold-endorsed](BODY_CORE_SOURCE_BINDING_REVIEW.md): a Core-adjacent
+[source-binding helper](BODY_CORE_SOURCE_BINDING.md) validates selected
+post-admission receipts without granting client policy authority. X2 and M2
+retain their distinct correspondence and refusal rules. The endorsement
+licenses a third-adapter proposal only, not implementation.
+
+The exact-source-indexed [M3 adapter proposal](BODY_CORE_M3_ADAPTER_PROPOSAL.md)
+and [v0.1 implementation](BODY_CORE_M3_ADAPTER.md) are cold-endorsed without
+repair. The adapter reversibly carries M3 boundary decisions while keeping
+asserted trust as payload rather than Core authority. Fourteen
+refusal/preservation probes pass; the [review record](BODY_CORE_M3_ADAPTER_REVIEW.md)
+keeps the transport-topology and test-strength debts visible. There is no new
+M3 evidence.
 
 ## Parked candidate work
 

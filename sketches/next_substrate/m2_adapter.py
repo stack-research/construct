@@ -19,6 +19,7 @@ from typing import Any, Iterable
 
 from harness.ledger import Ledger
 
+from .correspondence import index_bound_state_receipts
 from .core import LineageStore, ReplayRefusal, Writer
 from .x2_adapter import X2_ROW_FIELD_CONTRACT, canonical_verdicts
 
@@ -495,14 +496,21 @@ def project_m2(
     )
     if len(transitions) != 1:
         raise ReplayRefusal("M2 earned state requires exactly one activation receipt")
+    bindings = index_bound_state_receipts(
+        result.rows,
+        source_event_kind=SOURCE_EVENT_KIND,
+        receipt_event_kinds={"state_item_transition"},
+        affected_item_ids={item_id},
+        coordinate_fields=("source_phase", "source_row_index", "source_kind"),
+        context="M2",
+    )
+    if bindings.receipts_by_source.get(meta_event["event_id"]) != (
+        transitions[0],
+    ):
+        raise ReplayRefusal("M2 activation receipt disagrees with carried meta")
     transition = transitions[0]["payload"]
     if (
-        transition.get("source_event_id") != meta_event["event_id"]
-        or transition.get("source_phase") != "s2"
-        or transition.get("source_kind") != "m2_run_meta"
-        or transition.get("source_row_index")
-        != meta_event["payload"]["source_row_index"]
-        or transition.get("from_status") != "probationary"
+        transition.get("from_status") != "probationary"
         or transition.get("to_status") != "active"
         or meta["earned_record_id"] != earned["record_id"]
     ):

@@ -17,6 +17,7 @@ from typing import Any, Iterable
 
 from harness.score_prune import score_prune
 
+from .correspondence import index_bound_state_receipts
 from .core import LineageStore, ReplayRefusal, Writer
 
 
@@ -484,25 +485,20 @@ def project_x2(store_or_path: LineageStore | Path) -> list[dict[str, Any]]:
             f"X2 projection refused: unhealthy carried state {sorted(unhealthy)}"
         )
 
-    policy_by_source: dict[str, list[dict[str, Any]]] = {}
-    for row in result.rows:
-        if row["kind"] != POLICY_EVENT_KIND:
-            continue
-        item_id = row["payload"].get("item_id")
-        source_event_id = row["payload"].get("source_event_id")
-        if item_id in x2_items and not isinstance(source_event_id, str):
-            raise ReplayRefusal(
-                f"{row['event_id']}: X2 placement change lacks source_event_id"
-            )
-        if source_event_id is not None:
-            policy_by_source.setdefault(source_event_id, []).append(row)
+    bindings = index_bound_state_receipts(
+        result.rows,
+        source_event_kind=SOURCE_EVENT_KIND,
+        receipt_event_kinds={POLICY_EVENT_KIND},
+        affected_item_ids=x2_items,
+        coordinate_fields=("source_row_index", "source_kind"),
+        context="X2",
+    )
+    policy_by_source = bindings.receipts_by_source
 
     projected_by_index: dict[int, dict[str, Any]] = {}
-    carried_event_ids: set[str] = set()
     for event in result.rows:
         if event["kind"] != SOURCE_EVENT_KIND:
             continue
-        carried_event_ids.add(event["event_id"])
         payload = event["payload"]
         source_row_index = payload.get("source_row_index")
         source_kind = payload.get("source_kind")
@@ -536,9 +532,7 @@ def project_x2(store_or_path: LineageStore | Path) -> list[dict[str, Any]]:
             expected_from = "hot" if source_kind == "prune" else "cold"
             expected_to = "cold" if source_kind == "prune" else "hot"
             if (
-                receipt.get("source_row_index") != source_row_index
-                or receipt.get("source_kind") != source_kind
-                or receipt.get("item_id")
+                receipt.get("item_id")
                 != _item_id(row.get("branch_id"), row.get("record_id"))
                 or receipt.get("from_placement") != expected_from
                 or receipt.get("to_placement") != expected_to
@@ -554,11 +548,6 @@ def project_x2(store_or_path: LineageStore | Path) -> list[dict[str, Any]]:
     indexes = sorted(projected_by_index)
     if indexes != list(range(len(indexes))):
         raise ReplayRefusal(f"non-contiguous source row indexes: {indexes}")
-    orphan_receipts = set(policy_by_source) - carried_event_ids
-    if orphan_receipts:
-        raise ReplayRefusal(
-            f"placement receipts reference non-source events: {sorted(orphan_receipts)}"
-        )
     projected = [projected_by_index[index] for index in indexes]
     if start_payload.get("source_rows") != len(projected):
         raise ReplayRefusal("projected row count disagrees with adapter start")

@@ -1,0 +1,38 @@
+{
+  "artifact": "Body Core M3 adapter proposal",
+  "claim_boundary": "wire_integration_preservation_only",
+  "created_date": "2026-07-21",
+  "files": {
+    "notes/BODY_CORE_M3_ADAPTER_PROPOSAL.md": "7e75fdffe2d400550486934efc663556cf662982839e888c43c95ba6f2e7bc8e",
+    "notes/body_core_m3_adapter_source_index.json": "81b1a480d572a89e8a8dfab1baef84af8efb9eebdabebd13808d2451543a571d"
+  },
+  "review_contract": {
+    "allowed_outcomes": [
+      "ENDORSE",
+      "BLOCK"
+    ],
+    "repair_budget": 1,
+    "scope": [
+      "Track-A materialized-record and boundary-receipt mapping",
+      "Track-B no-state refusal and breach preservation",
+      "eleven-ledger source-corpus sufficiency",
+      "unchanged-scorer sovereignty and historical-verdict stripping",
+      "attacker-controlled data cannot become Core authority",
+      "adapter jurisdiction over explicitly claimed item ids"
+    ],
+    "excluded": [
+      "adapter implementation",
+      "engine contact or new red-team evidence",
+      "frontier reopening or new mechanism design",
+      "scientific, security, composition, or reconstruction-cost claims"
+    ]
+  },
+  "verification": [
+    "jq empty notes/body_core_m3_adapter_source_index.json notes/body_core_m3_adapter_proposal_review_manifest.json",
+    "jq -r '.component_pins | to_entries[] | \"\\(.value)  \\(.key)\"' notes/body_core_m3_adapter_source_index.json | shasum -a 256 -c -",
+    "jq -r '.episodes | to_entries[] | \"\\(.value.sha256)  \\(.key)\"' notes/body_core_m3_adapter_source_index.json | shasum -a 256 -c -",
+    "jq -r '.ledgers[] | \"\\(.sha256)  \\(.path)\"' notes/body_core_m3_adapter_source_index.json | shasum -a 256 -c -",
+    "UV_CACHE_DIR=/private/tmp/uv-cache uv run --no-project python -m tests.test_redteam",
+    "git diff --check"
+  ]
+}

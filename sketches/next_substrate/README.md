@@ -72,8 +72,10 @@ and an external provenance-health sweep.
 | Untrusting replay | Fail-closed envelope/state validation; stale view claims refused | **Provisional engineering** |
 | Policy profile | Lifecycle, binary hot/cold, warrant health/dependents, invalid-warrant suspension | **Provisional engineering** |
 | Derived reports | State, placement, and reported metabolic totals | **Provisional engineering** |
-| X2 adapter | Reversible field-visible transport through unchanged scorer | **v0.2 cold-reviewed; endorsed** |
-| M2 adapter | Paired S1/S2 transport; world-failure warrant; session-seam activation | **Cold-reviewed; endorsed after one repair** |
+| Adapter correspondence | Shared source binding for selected post-admission state receipts; clients retain policy authority | **Cold-reviewed; endorsed** |
+| X2 adapter | Reversible field-visible transport through unchanged scorer | **v0.2 plus shared-helper refactor endorsed** |
+| M2 adapter | Paired S1/S2 transport; world-failure warrant; session-seam activation | **v0.2 plus shared-helper refactor endorsed** |
+| M3 adapter | Eleven-ledger reversible boundary-decision transport without authority laundering | **v0.1 cold-endorsed; wire only** |
 | Cognitive materialization | Full replay from lineage on each reawakening | **Provisional sketch** |
 | Activation field | Empty ordinary offer phase plus action-boundary placement | **Provisional sketch** |
 | Disposition mechanism license | Hard-coded epistemic-frame template | **Stubbed, not earned** |
@@ -104,12 +106,15 @@ The command refuses to append a second demo to an existing non-empty lineage.
 make body-core-test
 make body-core-x2-test
 make body-core-m2-test
+make body-core-m3-test
 make body-sketch-test
 ```
 
-`body-core-test` checks only core wire properties: deterministic reconstruction,
-derived views, authority and reference validation, lifecycle invariants,
-hash-chain tamper detection, and refusal of stale materialized-view claims.
+`body-core-test` checks core wire properties plus the Core-adjacent source-binding
+helper: deterministic reconstruction, derived views, authority and reference
+validation, lifecycle invariants, hash-chain tamper detection, refusal of stale
+materialized-view claims, and source-binding existence, kind, causality, and
+coordinate checks.
 `body-core-x2-test` round-trips four closed real X2 ledgers through Core, checks
 the unchanged scorer under pinned canonical equality, and exercises four
 contract refusal legs plus the aggregate source-digest binding. It preserves
@@ -119,5 +124,8 @@ and recorded policy-view correspondence, now closed in v0.2, as debt.
 `body-core-m2-test` round-trips ten closed S1/S2 pairs, fresh-scores both sides
 with the unchanged resident scorer, and checks warrant and lifecycle refusal
 paths. It creates no M2 finding.
+`body-core-m3-test` round-trips eleven indexed M3 ledgers, fresh-scores source
+and projection with the unchanged red-team scorer, and exercises the endorsed
+Track-A receipt and Track-B no-state refusal surface. It creates no M3 finding.
 `body-sketch-test` also checks complete traversal, action-boundary placement,
 silence on a non-matching task, and refusal of an unresolved warrant.

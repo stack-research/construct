@@ -482,6 +482,15 @@ inheritance metadata activates it across the session seam. This pressures
 lifecycle and warrant semantics without creating a new M2 finding. Every Core row
 remains `wire_integration_only`.
 
+The shared [source-binding helper](BODY_CORE_SOURCE_BINDING.md) used by X2 and
+M2 is cold-endorsed. An exact-source-indexed
+[M3 adapter proposal](BODY_CORE_M3_ADAPTER_PROPOSAL.md) is cold-endorsed. Its
+[v0.1 wire implementation](BODY_CORE_M3_ADAPTER.md) uses source-bound audit
+receipts for Track-A offer-boundary decisions and deliberately creates no Core
+state for Track-B ingestion rows. The exact implementation was independently
+[endorsed](BODY_CORE_M3_ADAPTER_REVIEW.md) without repair and does not repair or
+reinterpret any M3 breach.
+
 The current hash chain is tamper-evident only relative to a trusted chain head.
 It is not a signature system: writer identities and roles are enforced runtime
 claims, not cryptographically authenticated principals. Full replay is still

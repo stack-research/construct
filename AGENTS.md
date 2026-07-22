@@ -149,7 +149,8 @@ Mock-engine runs are valid for **wire tests only**. They must not be cited as me
 Body Core v0.2 wire checks (no model, no scientific claim):
 `make body-core-test`. The X2 round-trip pressure test is
 `make body-core-x2-test`; the paired M2 pressure test is
-`make body-core-m2-test`. The composed walking skeleton remains
+`make body-core-m2-test`; the M3 authority-boundary pressure test is
+`make body-core-m3-test`. The composed walking skeleton remains
 `make body-sketch-test`.
 
 ## Working on code

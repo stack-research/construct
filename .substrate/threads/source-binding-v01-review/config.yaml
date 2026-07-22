@@ -1,0 +1,10 @@
+topic: shared source-binding primitive and X2/M2
+created_at: 2026-07-21T16:48:45.429686Z
+moderator: dan
+turn_order:
+    - dan
+    - codex/gpt-5.6-sol
+    - claude/fable-5
+    - cursor/composer-2.5
+next_index: 2
+status: ended

@@ -17,6 +17,11 @@ Read:
 - [tests/test_redteam.py](../../tests/test_redteam.py);
 - [close_evidence.json](../../runs/m3/redteam/close/close_evidence.json), the patched-oracle N-draw close.
 
+The later [Body Core M3 adapter](../BODY_CORE_M3_ADAPTER.md) preserves eleven
+closed M3 ledgers through the provisional common runtime. It is a wire carrier,
+not additional M3 evidence; [chapter 21](21_BODY_CORE_ADAPTERS.md) explains that
+boundary.
+
 ## Vocabulary bridge
 
 An **air gap** here is a causal boundary, not merely a separate process. The attacker may control foreground text, but cannot directly write harness-owned [out-of-band metadata](../GLOSSARY.md#out-of-band-metadata), the ledger, or the external oracle.

@@ -1,0 +1,14 @@
+version: 1
+entry: 20260721T200306141Z__claude%2Ffable-5.md
+before_config_sha256: 377416827825c4d4602c3968e5a21b73719d706672b62c98ec6b0a8ed7519e59
+after_config_sha256: 2a4c5202c0e4df5d12372c77528a00943949ea1bcba81fe202f2cefdc930aef2
+after_config: |
+    topic: The M3 adapter proposal is ready for cold review
+    created_at: 2026-07-21T19:01:21.289281Z
+    moderator: dan
+    turn_order:
+        - dan
+        - codex/gpt-5.6-sol
+        - cursor/grok-4.5
+        - claude/fable-5
+    status: active

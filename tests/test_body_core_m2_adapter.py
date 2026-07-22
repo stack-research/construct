@@ -258,6 +258,45 @@ def test_m2_placement_change_without_declared_correspondence_is_refused():
     print("ok  M2 refusal: undeclared placement events cannot alter carried state")
 
 
+def test_m2_source_binding_does_not_authorize_placement():
+    s1_path, s2_path, _ = _paths()
+    with TemporaryDirectory() as td:
+        path = Path(td) / "core.jsonl"
+        ingest_m2(s1_path, s2_path, path)
+        store = LineageStore(path)
+        item = next(iter(store.replay().views.state_items.values()))
+        meta_event = next(
+            row
+            for row in store.rows()
+            if row["kind"] == SOURCE_EVENT_KIND
+            and row["payload"].get("source_phase") == "s2"
+            and row["payload"].get("source_kind") == "m2_run_meta"
+        )
+        store.append(
+            "placement_changed",
+            writer=CONTROLLER,
+            authority="controller_transition",
+            causal_parent_ids=[meta_event["event_id"]],
+            payload={
+                "item_id": item.item_id,
+                "from_placement": "hot",
+                "to_placement": "cold",
+                "reason": "well-bound but unauthorized placement probe",
+                "source_event_id": meta_event["event_id"],
+                "source_phase": "s2",
+                "source_row_index": meta_event["payload"]["source_row_index"],
+                "source_kind": "m2_run_meta",
+            },
+        )
+        try:
+            project_m2(store)
+        except ReplayRefusal as exc:
+            assert "does not authorize placement-change receipts" in str(exc)
+        else:
+            raise AssertionError("source binding granted M2 placement authority")
+    print("ok  M2 refusal: valid source binding does not grant policy authority")
+
+
 def test_m2_metabolic_event_without_declared_correspondence_is_refused():
     s1_path, s2_path, _ = _paths()
     with TemporaryDirectory() as td:

@@ -23,7 +23,7 @@ reviewed cluster needs raw evidence, a downstream consumer, an external oracle,
 a competing explanation, and a visible loses-condition before one cold
 frontier pass is warranted.
 
-**Current engineering direction (2026-07-20): Body Core v0.2.** While scientific
+**Current engineering direction (2026-07-21): Body Core v0.2.** While scientific
 mechanism search remains paused, whole-body engineering is active on an
 integrity kernel plus an explicitly provisional lifecycle/placement/warrant
 policy profile. The acceptance checks are deterministic
@@ -42,7 +42,25 @@ claimed, and no scientific
 mechanism is licensed by the build. Run `make body-core-test` or the composed
 `make body-sketch-test`; run `make body-core-x2-test` and
 `make body-core-m2-test` for the [X2](BODY_CORE_X2_ADAPTER.md) and
-[M2](BODY_CORE_M2_ADAPTER.md) adapter contracts.
+[M2](BODY_CORE_M2_ADAPTER.md) adapter contracts. Run
+`make body-core-m3-test` for the [M3](BODY_CORE_M3_ADAPTER.md) authority-boundary
+adapter contract.
+
+The completed M2 review named one prerequisite before any third adapter. That
+[Core-adjacent source-binding helper](BODY_CORE_SOURCE_BINDING.md) is now
+[cold-endorsed](BODY_CORE_SOURCE_BINDING_REVIEW.md). It validates selected
+post-admission receipt provenance while leaving authorization and semantics with
+each adapter. The endorsement licenses a third-adapter proposal only, not
+implementation.
+
+That [M3 adapter proposal](BODY_CORE_M3_ADAPTER_PROPOSAL.md) was cold-endorsed
+without repair against an exact index of eleven checked-in ledgers. Its
+[v0.1 implementation](BODY_CORE_M3_ADAPTER.md) now reversibly carries the
+earned-versus-asserted trust distinction without turning attacker-controlled
+trust fields into Core authority or repairing the recorded breaches. All
+fourteen named refusal/preservation probes pass. Two independent reviewers
+[endorsed the exact implementation](BODY_CORE_M3_ADAPTER_REVIEW.md) without
+repair; transport-topology and test-strength observations remain carried debt.
 
 [NEXT_SUBSTRATE.md](NEXT_SUBSTRATE.md) remains the cold-reviewed whole-body
 direction; [BODY_MAP.md](BODY_MAP.md) is the living maturity map; the

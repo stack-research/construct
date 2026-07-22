@@ -5,6 +5,12 @@ engineering only. See the [review record](BODY_CORE_M2_REVIEW.md). This adapter
 does not rerun M2, strengthen its closed finding, or license a scientific
 mechanism.
 
+Implementation note (2026-07-21): the activation-source checks were factored
+through a shared Core-adjacent [helper](BODY_CORE_SOURCE_BINDING.md) and
+independently [endorsed](BODY_CORE_SOURCE_BINDING_REVIEW.md). The prior review
+hashes remain historical attestations; the helper review separately pins the
+refactored bytes.
+
 ## Milestone gate
 
 Scientific milestone: **none**. This is the second independent pressure test of
@@ -113,7 +119,9 @@ Named tests require:
 7. carried fork-identity drift reaches the unchanged scorer and fails
    `cold_identity`;
 8. an undeclared placement event affecting the M2 item is refused;
-9. an undeclared metabolic event affecting the M2 item is refused.
+9. an undeclared metabolic event affecting the M2 item is refused;
+10. a valid source binding does not grant an otherwise unauthorized placement
+    event policy authority.
 
 ## Review budget
 

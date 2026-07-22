@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from sketches.next_substrate.correspondence import index_bound_state_receipts
 from sketches.next_substrate.core import LineageStore, ReplayRefusal, Writer
 
 
@@ -42,6 +43,158 @@ def _rewrite(path: Path, rows: list[dict]) -> None:
         "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
         encoding="utf-8",
     )
+
+
+def _rehash(row: dict) -> None:
+    unsigned = {key: value for key, value in row.items() if key != "event_hash"}
+    canonical = json.dumps(
+        unsigned, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    )
+    row["event_hash"] = hashlib.sha256(canonical.encode()).hexdigest()
+
+
+def _rehash_chain(rows: list[dict]) -> None:
+    previous = "0" * 64
+    for row in rows:
+        row["previous_event_hash"] = previous
+        _rehash(row)
+        previous = row["event_hash"]
+
+
+def _source_bound_store(path: Path) -> tuple[LineageStore, dict, dict]:
+    store = LineageStore(path)
+    _, warrant = _seed(store)
+    source = store.append(
+        "test_source_row_carried",
+        writer=OBSERVER,
+        authority="external_observation",
+        causal_parent_ids=[warrant["event_id"]],
+        payload={
+            "source_phase": "s2",
+            "source_row_index": 7,
+            "source_kind": "meta",
+        },
+    )
+    store.append(
+        "state_item_admitted",
+        writer=CONTROLLER,
+        authority="controller_transition",
+        causal_parent_ids=[source["event_id"]],
+        warrant_event_ids=[warrant["event_id"]],
+        payload={
+            "item_id": "bound-item",
+            "item_kind": "test",
+            "status": "probationary",
+            "placement": "hot",
+            "detail": {},
+        },
+    )
+    receipt = store.append(
+        "state_item_transition",
+        writer=CONTROLLER,
+        authority="controller_transition",
+        causal_parent_ids=[source["event_id"]],
+        payload={
+            "item_id": "bound-item",
+            "from_status": "probationary",
+            "to_status": "active",
+            "source_event_id": source["event_id"],
+            "source_phase": "s2",
+            "source_row_index": 7,
+            "source_kind": "meta",
+        },
+    )
+    return store, source, receipt
+
+
+def _index_test_receipts(store: LineageStore):
+    return index_bound_state_receipts(
+        store.replay().rows,
+        source_event_kind="test_source_row_carried",
+        receipt_event_kinds={"state_item_transition"},
+        affected_item_ids={"bound-item"},
+        coordinate_fields=("source_phase", "source_row_index", "source_kind"),
+        context="test",
+    )
+
+
+def test_source_binding_indexes_valid_receipts():
+    with TemporaryDirectory() as td:
+        store, source, receipt = _source_bound_store(Path(td) / "lineage.jsonl")
+        bindings = _index_test_receipts(store)
+        assert bindings.receipts == (receipt,)
+        assert bindings.receipts_by_source == {source["event_id"]: (receipt,)}
+    print("ok  correspondence: valid source-bound receipt is indexed")
+
+
+def test_source_binding_requires_explicit_source_id():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        store, _, receipt = _source_bound_store(path)
+        rows = store.raw_rows()
+        rows[receipt["event_index"] - 1]["payload"].pop("source_event_id")
+        _rehash_chain(rows)
+        _rewrite(path, rows)
+        try:
+            _index_test_receipts(store)
+        except ReplayRefusal as exc:
+            assert "lacks source_event_id" in str(exc)
+        else:
+            raise AssertionError("state receipt without source id was indexed")
+    print("ok  correspondence refusal: explicit source id is required")
+
+
+def test_source_binding_requires_causal_parent():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        store, _, receipt = _source_bound_store(path)
+        rows = store.raw_rows()
+        rows[receipt["event_index"] - 1]["causal_parent_ids"] = []
+        _rehash_chain(rows)
+        _rewrite(path, rows)
+        try:
+            _index_test_receipts(store)
+        except ReplayRefusal as exc:
+            assert "must be a causal parent" in str(exc)
+        else:
+            raise AssertionError("non-causal source binding was indexed")
+    print("ok  correspondence refusal: source id must be a causal parent")
+
+
+def test_source_binding_requires_declared_source_kind():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        store, _, receipt = _source_bound_store(path)
+        rows = store.raw_rows()
+        rows[receipt["event_index"] - 1]["payload"]["source_event_id"] = receipt[
+            "event_id"
+        ]
+        _rehash_chain(rows)
+        _rewrite(path, rows)
+        try:
+            _index_test_receipts(store)
+        except ReplayRefusal as exc:
+            assert "is not a test_source_row_carried event" in str(exc)
+        else:
+            raise AssertionError("binding to a non-source event was indexed")
+    print("ok  correspondence refusal: binding target must be a carried source")
+
+
+def test_source_binding_requires_exact_coordinates():
+    with TemporaryDirectory() as td:
+        path = Path(td) / "lineage.jsonl"
+        store, _, receipt = _source_bound_store(path)
+        rows = store.raw_rows()
+        rows[receipt["event_index"] - 1]["payload"]["source_row_index"] = 8
+        _rehash_chain(rows)
+        _rewrite(path, rows)
+        try:
+            _index_test_receipts(store)
+        except ReplayRefusal as exc:
+            assert "source coordinate 'source_row_index'" in str(exc)
+        else:
+            raise AssertionError("coordinate-drifted source binding was indexed")
+    print("ok  correspondence refusal: source coordinates must match")
 
 
 def test_replay_derives_state_warrant_placement_and_metabolism():

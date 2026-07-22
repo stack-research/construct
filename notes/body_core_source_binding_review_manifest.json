@@ -1,0 +1,51 @@
+{
+  "artifact": "Body Core adapter source-binding factoring",
+  "claim_boundary": "wire_integration_only",
+  "created_date": "2026-07-21",
+  "files": {
+    "notes/BODY_CORE_M2_ADAPTER.md": "1ad670fc3207a1429d7d7d33c11b0f7489a010acb850dad52a76c000e59e7cf1",
+    "notes/BODY_CORE_M2_REVIEW.md": "b1b29ede98897bd2449531f0fcf9825d702f36958282f2e14661983495b73cff",
+    "notes/BODY_CORE_SOURCE_BINDING.md": "5593b99055045d71728f8e75c8c02757ba3db8e8c2ccf2c06d46e305dc736f5a",
+    "notes/BODY_CORE_X2_ADAPTER.md": "444451352479a5aac156ac3f7ff3a78f30d0de11c5451ae749917c32976d0642",
+    "notes/BODY_MAP.md": "4b3604f9c66393a2e48eb6ef3891d22a9e2ef5bbaae366b3fe85ba5f3a95684b",
+    "notes/ROADMAP.md": "6c83709521d4a9dbce1bd2565ab8236ed696925f7371eb112e1de86b540e308f",
+    "sketches/next_substrate/README.md": "ae17772fda6f4a4b1feee4f5a0fc0324c2579452f71e2e0b0d79fb65c8a16693",
+    "sketches/next_substrate/core.py": "9ed829fd583def9cfdfaf82e244bb76757a36f8666894c44c03d1233df0535c9",
+    "sketches/next_substrate/correspondence.py": "af6afc0b047e233d3388b03b067ca710d682748450e4f87ac9d53dd4a3ea2b84",
+    "sketches/next_substrate/m2_adapter.py": "6a050b60be801aa89ebebc06361eb1d9e02bb195af2f8b29f9a49ec7f1b1db90",
+    "sketches/next_substrate/x2_adapter.py": "d34dfe3c9a2ac79547e53eb4f81bd884b246f2ac471a2e626d8ee779e105cfd3",
+    "tests/test_body_core.py": "5ebde7335474c04f7a3899d485d19f00105b3c53743d908d7fd25f07bc9ea4f6",
+    "tests/test_body_core_m2_adapter.py": "507223791e5ee1d43f0a89c58a72aed787db06b9734d0dba1db89bf1f34f0c65",
+    "tests/test_body_core_x2_adapter.py": "fa61e9daa76086d522019bc5f2579a635bc1ba6267c54432c41455dd77faa608"
+  },
+  "review_contract": {
+    "allowed_outcomes": [
+      "ENDORSE",
+      "BLOCK"
+    ],
+    "repair_budget": 1,
+    "scope": [
+      "source binding exists and targets the declared carried-source kind",
+      "source binding is a backward causal reference",
+      "declared source coordinates agree exactly",
+      "X2 and M2 client policy remains distinct",
+      "prior reverse projections and unchanged scorer outputs are preserved",
+      "historical review hashes remain historical"
+    ],
+    "excluded": [
+      "third-adapter design or implementation",
+      "new mechanism design",
+      "frontier reopening",
+      "engine contact",
+      "scientific, security, or reconstruction-cost claims"
+    ]
+  },
+  "verification": [
+    "make body-core-test",
+    "make body-core-x2-test",
+    "make body-core-m2-test",
+    "make body-sketch-test",
+    "uv run ruff check sketches/next_substrate/correspondence.py sketches/next_substrate/x2_adapter.py sketches/next_substrate/m2_adapter.py tests/test_body_core.py tests/test_body_core_x2_adapter.py tests/test_body_core_m2_adapter.py",
+    "git diff --check"
+  ]
+}
